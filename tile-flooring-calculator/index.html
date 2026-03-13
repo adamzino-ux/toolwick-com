@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tile & Flooring Coverage Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate how many tiles you need for any room. Enter room size, tile size, and waste percentage to get exact coverage estimates instantly.">
+<link rel="canonical" href="https://toolwick.com/tile-flooring-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Tile & Flooring Coverage Calculator",
+  "url": "https://toolwick.com/tile-flooring-calculator/",
+  "description": "Calculate how many tiles you need for any room with waste allowance and cost estimation.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f4f6f8;color:#1a1a2e;font-size:16px;line-height:1.5}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0 1.5rem}
+.nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;height:48px}
+.nav-brand{font-weight:700;font-size:1.1rem;color:#0077b6}
+main{max-width:640px;margin:2rem auto;padding:0 1rem}
+h1{font-size:1.5rem;font-weight:700;margin-bottom:.4rem;color:#1a1a2e}
+.subtitle{color:#555;font-size:.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.section-title{font-size:1rem;font-weight:700;color:#0077b6;text-transform:uppercase;letter-spacing:.04em;margin-bottom:1.2rem;border-bottom:2px solid #e8f4fb;padding-bottom:.5rem}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.field{margin-bottom:1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:.95rem;color:#1a1a2e;background:#fff;transition:border-color .2s,box-shadow .2s;min-height:44px}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,.15)}
+input.error,select.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:.8rem;margin-top:.3rem;display:none}
+.error-msg.show{display:block}
+.unit-toggle{display:flex;gap:.5rem;margin-bottom:1.2rem}
+.unit-btn{flex:1;padding:9px;border:1px solid #ddd;border-radius:6px;background:#fff;color:#555;font-size:.85rem;font-weight:500;cursor:pointer;min-height:44px;transition:all .2s}
+.unit-btn.active{background:#0077b6;color:#fff;border-color:#0077b6}
+.hint{font-size:.78rem;color:#888;margin-top:.3rem}
+.slider-wrap{margin-bottom:1rem}
+input[type=range]{padding:0;height:6px;-webkit-appearance:none;appearance:none;background:#ddd;border-radius:3px;border:none;box-shadow:none}
+input[type=range]:focus{box-shadow:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#0077b6;cursor:pointer}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#0077b6;cursor:pointer;border:none}
+.slider-labels{display:flex;justify-content:space-between;font-size:.75rem;color:#888;margin-top:.3rem}
+.waste-val{font-weight:700;color:#0077b6}
+.btn{display:block;width:100%;background:#0077b6;color:#fff;border:none;padding:13px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;min-height:44px;transition:background .2s;margin-top:1.2rem}
+.btn:hover{background:#006299}
+.btn-clear{background:#fff;color:#0077b6;border:1px solid #0077b6;margin-top:.6rem}
+.btn-clear:hover{background:#f0f7fc}
+.results{opacity:0;transition:opacity .3s ease;margin-top:2rem}
+.results.show{opacity:1}
+.result-hero{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.hero-card{background:#f0f7fc;border:1px solid #b8d9ee;border-radius:8px;padding:1.2rem;text-align:center}
+.hero-card.accent{background:#0077b6;border-color:#0077b6;color:#fff}
+.hero-label{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;opacity:.75;margin-bottom:.3rem}
+.hero-val{font-size:2rem;font-weight:800;line-height:1;color:#0077b6}
+.hero-card.accent .hero-val{color:#fff}
+.hero-card.accent .hero-label{opacity:.85}
+.hero-sub{font-size:.78rem;margin-top:.3rem;opacity:.7}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{background:#f0f0f0;text-align:left;padding:8px 10px;font-weight:600;color:#444;font-size:.8rem;text-transform:uppercase;letter-spacing:.03em}
+td{padding:8px 10px;border-bottom:1px solid #eee;vertical-align:top}
+tr:nth-child(even) td{background:#fafafa}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.table-wrap{overflow-x:auto;border-radius:6px;border:1px solid #e0e0e0;margin-bottom:1.5rem}
+.cost-note{font-size:.8rem;color:#888;margin-top:.5rem}
+.copy-btn{background:#fff;color:#0077b6;border:1px solid #0077b6;padding:7px 14px;border-radius:5px;font-size:.8rem;cursor:pointer;min-height:36px;transition:all .2s;float:right}
+.copy-btn:hover{background:#f0f7fc}
+.result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
+.box-vis{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:.5rem}
+.box-sq{width:16px;height:16px;border-radius:2px;background:#0077b6;opacity:.7}
+.box-sq.waste{background:#e74c3c;opacity:.6}
+.box-sq.partial{background:#0077b6;opacity:.35}
+.vis-legend{font-size:.75rem;color:#666;display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.leg-dot{width:12px;height:12px;border-radius:2px;display:inline-block;margin-right:4px;vertical-align:middle}
+.ad-slot{background:#f8f9fa;border:1px dashed #ccc;border-radius:6px;min-height:90px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:.8rem;margin:2rem 0}
+.how-to{background:#f8f9fa;border-radius:8px;padding:1.5rem;margin:2rem 0}
+.how-to h2{font-size:1rem;font-weight:700;margin-bottom:.7rem;color:#1a1a2e}
+.how-to p{font-size:.88rem;color:#555;margin-bottom:.5rem}
+.related{margin:2rem 0}
+.related h2{font-size:1rem;font-weight:700;margin-bottom:.8rem}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.related-link{background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:.8rem 1rem;font-size:.85rem;font-weight:500;color:#0077b6;transition:border-color .2s}
+.related-link:hover{border-color:#0077b6;text-decoration:none;background:#f0f7fc}
+footer{background:#fff;border-top:1px solid #e0e0e0;padding:1.2rem 1rem;text-align:center;font-size:.82rem;color:#666;margin-top:2rem}
+footer a{color:#0077b6;margin:0 .5rem}
+@media(max-width:640px){
+  .field-row{grid-template-columns:1fr}
+  .result-hero{grid-template-columns:1fr 1fr}
+  .related-grid{grid-template-columns:1fr}
+  h1{font-size:1.3rem}
+  .card{padding:1.3rem}
+  .hero-val{font-size:1.6rem}
+}
+@media(max-width:400px){
+  .result-hero{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">toolwick.com</a>
+  </div>
+</nav>
+<main>
+  <h1>Tile & Flooring Coverage Calculator</h1>
+  <p class="subtitle">Calculate exactly how many tiles you need, including waste — plus cost estimates.</p>
+
+  <div class="card">
+    <div class="section-title">Unit System</div>
+    <div class="unit-toggle">
+      <button class="unit-btn active" id="btnFt" onclick="setUnit('imperial')">Feet / Inches</button>
+      <button class="unit-btn" id="btnM" onclick="setUnit('metric')">Meters / cm</button>
+    </div>
+
+    <div class="section-title">Room Dimensions</div>
+    <div class="field-row">
+      <div class="field">
+        <label id="lblRoomL">Room Length (ft)</label>
+        <input type="number" id="roomLength" placeholder="e.g. 12" min="0.1" step="0.01">
+        <div class="error-msg" id="errRoomL">Please enter a valid room length.</div>
+      </div>
+      <div class="field">
+        <label id="lblRoomW">Room Width (ft)</label>
+        <input type="number" id="roomWidth" placeholder="e.g. 10" min="0.1" step="0.01">
+        <div class="error-msg" id="errRoomW">Please enter a valid room width.</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Deductions (obstacles, closets, etc.) <span id="unitAreaLabel">ft²</span></label>
+      <input type="number" id="deductions" placeholder="0" min="0" step="0.01" value="0">
+      <div class="hint">Enter total area to subtract (optional)</div>
+    </div>
+
+    <div class="section-title" style="margin-top:1.5rem">Tile Size</div>
+    <div class="field-row">
+      <div class="field">
+        <label id="lblTileL">Tile Length (in)</label>
+        <input type="number" id="tileLength" placeholder="e.g. 12" min="0.1" step="0.01">
+        <div class="error-msg" id="errTileL">Please enter a valid tile length.</div>
+      </div>
+      <div class="field">
+        <label id="lblTileW">Tile Width (in)</label>
+        <input type="number" id="tileWidth" placeholder="e.g. 12" min="0.1" step="0.01">
+        <div class="error-msg" id="errTileW">Please enter a valid tile width.</div>
+      </div>
+    </div>
+    <div class="field">
+      <label id="lblGrout">Grout Joint Size (in)</label>
+      <input type="number" id="groutJoint" placeholder="e.g. 0.125" min="0" step="0.0625" value="0.125">
+      <div class="hint">Common sizes: 1/16" (0.0625), 1/8" (0.125), 3/16" (0.1875)</div>
+    </div>
+
+    <div class="section-title" style="margin-top:1.5rem">Waste & Cost</div>
+    <div class="slider-wrap">
+      <label>Waste Allowance: <span class="waste-val" id="wasteDisplay">10%</span></label>
+      <input type="range" id="wasteSlider" min="5" max="30" value="10" step="1" oninput="updateWaste()">
+      <div class="slider-labels"><span>5% (straight lay)</span><span>15% (diagonal)</span><span>30% (complex)</span></div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Tiles per Box</label>
+        <input type="number" id="tilesPerBox" placeholder="e.g. 10" min="1" step="1" value="10">
+      </div>
+      <div class="field">
+        <label>Price per Box ($)</label>
+        <input type="number" id="pricePerBox" placeholder="e.g. 35.00" min="0" step="0.01">
+      </div>
+    </div>
+
+    <button class="btn" onclick="calculate()">Calculate Coverage</button>
+    <button class="btn btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+
+  <div class="results" id="results">
+    <div class="card">
+      <div class="result-header">
+        <span class="section-title" style="margin:0;border:none;padding:0">Results</span>
+        <button class="copy-btn" onclick="copyResults()" id="copyBtn">Copy Results</button>
+      </div>
+
+      <div class="result-hero">
+        <div class="hero-card accent">
+          <div class="hero-label">Tiles Needed</div>
+          <div class="hero-val" id="rTilesNeeded">—</div>
+          <div class="hero-sub">including waste</div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-label">Boxes to Buy</div>
+          <div class="hero-val" id="rBoxes">—</div>
+          <div class="hero-sub" id="rBoxesSub">tiles per box</div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-label">Net Area</div>
+          <div class="hero-val" id="rArea">—</div>
+          <div class="hero-sub" id="rAreaUnit">sq ft</div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-label">Total Cost</div>
+          <div class="hero-val" id="rCost">—</div>
+          <div class="hero-sub" id="rCostSub">est. material cost</div>
+        </div>
+      </div>
+
+      <div id="visSection" style="margin-bottom:1.2rem">
+        <div style="font-size:.8rem;font-weight:600;color:#444;margin-bottom:.5rem">Visual Breakdown (each square = 1 tile)</div>
+        <div class="box-vis" id="boxVis"></div>
+        <div class="vis-legend">
+          <span><span class="leg-dot" style="background:#0077b6;opacity:.7"></span>Net tiles</span>
+          <span><span class="leg-dot" style="background:#e74c3c;opacity:.6"></span>Waste tiles</span>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table id="summaryTable">
+          <thead>
+            <tr><th>Item</th><th class="num">Value</th></tr>
+          </thead>
+          <tbody id="summaryBody"></tbody>
+        </table>
+      </div>
+
+      <div id="costSection" style="display:none">
+        <div style="font-weight:600;font-size:.9rem;margin-bottom:.6rem;color:#1a1a2e">Cost Breakdown</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Item</th><th class="num">Value</th></tr></thead>
+            <tbody id="costBody"></tbody>
+          </table>
+        </div>
+        <p class="cost-note">* Material cost only. Does not include labor, adhesive, grout, or installation costs.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid">Advertisement</div>
+
+  <div class="how-to card">
+    <h2>How to Use This Tile Calculator</h2>
+    <p>Enter your room's length and width, then input your tile dimensions and grout joint size. Adjust the waste percentage slider — use 10% for standard straight-lay patterns, 15% for offset/brick patterns, and 20–30% for diagonal or complex designs.</p>
+    <p>Add tiles per box and price per box to get instant cost estimates. Use the deductions field to subtract areas like islands, bathtubs, or built-in cabinets that won't be tiled.</p>
+    <p>The calculator rounds up to whole tiles and whole boxes, so you'll always have enough material to complete your project.</p>
+  </div>
+
+  <div class="related">
+    <h2>Related Tools</h2>
+    <div class="related-grid">
+      <a href="/electrical-load-calculator/" class="related-link">⚡ Electrical Load & Circuit Breaker Calculator</a>
+      <a href="/stair-stringer-calculator/" class="related-link">📐 Stair Stringer Calculator</a>
+      <a href="/roof-pitch-rafter-calculator/" class="related-link">🏠 Roof Pitch & Rafter Length Calculator</a>
+      <a href="/concrete-volume-calculator/" class="related-link">🪨 Concrete Volume Calculator</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom">Advertisement</div>
+</main>
+
+<footer>
+  <div>
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <div style="margin-top:.4rem">© <span id="yr"></span> toolwick.com</div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+let unit = 'imperial';
+
+function setUnit(u) {
+  unit = u;
+  document.getElementById('btnFt').classList.toggle('active', u === 'imperial');
+  document.getElementById('btnM').classList.toggle('active', u === 'metric');
+  if (u === 'imperial') {
+    document.getElementById('lblRoomL').textContent = 'Room Length (ft)';
+    document.getElementById('lblRoomW').textContent = 'Room Width (ft)';
+    document.getElementById('lblTileL').textContent = 'Tile Length (in)';
+    document.getElementById('lblTileW').textContent = 'Tile Width (in)';
+    document.getElementById('lblGrout').textContent = 'Grout Joint Size (in)';
+    document.getElementById('unitAreaLabel').textContent = 'ft²';
+    document.getElementById('roomLength').placeholder = 'e.g. 12';
+    document.getElementById('roomWidth').placeholder = 'e.g. 10';
+    document.getElementById('tileLength').placeholder = 'e.g. 12';
+    document.getElementById('tileWidth').placeholder = 'e.g. 12';
+    document.getElementById('groutJoint').value = '0.125';
+  } else {
+    document.getElementById('lblRoomL').textContent = 'Room Length (m)';
+    document.getElementById('lblRoomW').textContent = 'Room Width (m)';
+    document.getElementById('lblTileL').textContent = 'Tile Length (cm)';
+    document.getElementById('lblTileW').textContent = 'Tile Width (cm)';
+    document.getElementById('lblGrout').textContent = 'Grout Joint Size (cm)';
+    document.getElementById('unitAreaLabel').textContent = 'm²';
+    document.getElementById('roomLength').placeholder = 'e.g. 3.6';
+    document.getElementById('roomWidth').placeholder = 'e.g. 3.0';
+    document.getElementById('tileLength').placeholder = 'e.g. 30';
+    document.getElementById('tileWidth').placeholder = 'e.g. 30';
+    document.getElementById('groutJoint').value = '0.3';
+  }
+}
+
+function updateWaste() {
+  const v = document.getElementById('wasteSlider').value;
+  document.getElementById('wasteDisplay').textContent = v + '%';
+}
+
+function fmt(n, dec) {
+  if (dec === undefined) dec = 0;
+  return Number(n).toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+}
+
+function fmtCur(n) {
+  return '$' + Number(n).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+}
+
+function clearErr(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+function showErr(inputId, msgId) {
+  document.getElementById(inputId).classList.add('error');
+  document.getElementById(msgId).classList.add('show');
+}
+
+function clearInput(inputId, msgId) {
+  if (msgId) {
+    document.getElementById(inputId).classList.remove('error');
+    document.getElementById(msgId).classList.remove('show');
+  }
+}
+
+function validate() {
+  let ok = true;
+  ['roomLength','roomWidth','tileLength','tileWidth'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('error');
+  });
+  ['errRoomL','errRoomW','errTileL','errTileW'].forEach(id => {
+    document.getElementById(id).classList.remove('show');
+  });
+
+  const rl = parseFloat(document.getElementById('roomLength').value);
+  const rw = parseFloat(document.getElementById('roomWidth').value);
+  const tl = parseFloat(document.getElementById('tileLength').value);
+  const tw = parseFloat(document.getElementById('tileWidth').value);
+
+  if (!rl || rl <= 0) { showErr('roomLength','errRoomL'); ok = false; }
+  if (!rw || rw <= 0) { showErr('roomWidth','errRoomW'); ok = false; }
+  if (!tl || tl <= 0) { showErr('tileLength','errTileL'); ok = false; }
+  if (!tw || tw <= 0) { showErr('tileWidth','errTileW'); ok = false; }
+  return ok;
+}
+
+let lastResults = null;
+
+function calculate() {
+  if (!validate()) return;
+
+  const rl = parseFloat(document.getElementById('roomLength').value);
+  const rw = parseFloat(document.getElementById('roomWidth').value);
+  const ded = parseFloat(document.getElementById('deductions').value) || 0;
+  const tl = parseFloat(document.getElementById('tileLength').value);
+  const tw = parseFloat(document.getElementById('tileWidth').value);
+  const grout = parseFloat(document.getElementById('groutJoint').value) || 0;
+  const wastePct = parseInt(document.getElementById('wasteSlider').value);
+  const tilesPerBox = parseInt(document.getElementById('tilesPerBox').value) || 1;
+  const pricePerBox = parseFloat(document.getElementById('pricePerBox').value) || 0;
+
+  // Convert everything to consistent units (sq inches or sq cm)
+  let roomAreaUnit, tileAreaUnit, areaLabel, tileAreaDisplay, tileAreaDispUnit;
+
+  if (unit === 'imperial') {
+    // room in ft, tile in inches
+    const roomAreaFt = rl * rw;
+    const netAreaFt = Math.max(0, roomAreaFt - ded);
+    const netAreaIn = netAreaFt * 144;
+    const tileLWithGrout = tl + grout;
+    const tileWWithGrout = tw + grout;
+    const tileAreaIn = tileLWithGrout * tileWWithGrout;
+    const tileAreaFt = tileAreaIn / 144;
+    const tilesNet = netAreaIn / tileAreaIn;
+    const tilesWithWaste = tilesNet * (1 + wastePct / 100);
+    const tilesNeeded = Math.ceil(tilesWithWaste);
+    const wasteTiles = tilesNeeded - Math.ceil(tilesNet);
+    const boxesNeeded = Math.ceil(tilesNeeded / tilesPerBox);
+    const totalCost = boxesNeeded * pricePerBox;
+    const coveragePerBox = tilesPerBox * tileAreaFt;
+
+    lastResults = {
+      roomArea: fmt(roomAreaFt, 2),
+      netArea: fmt(netAreaFt, 2),
+      areaUnit: 'ft²',
+      tileSize: fmt(tl, 2) + '" × ' + fmt(tw, 2) + '"',
+      tileArea: fmt(tileAreaFt, 4),
+      tileAreaUnit: 'ft²',
+      tilesNetRaw: tilesNet,
+      tilesNet: Math.ceil(tilesNet),
+      wastePct,
+      wasteTiles,
+      tilesNeeded,
+      tilesPerBox,
+      boxesNeeded,
+      coveragePerBox: fmt(coveragePerBox, 2),
+      coverageUnit: 'ft²',
+      pricePerBox,
+      totalCost,
+      hasPrice: pricePerBox > 0,
+      grout: grout + '"'
+    };
+  } else {
+    // room in m, tile in cm
+    const roomAreaM = rl * rw;
+    const netAreaM = Math.max(0, roomAreaM - ded);
+    const netAreaCm = netAreaM * 10000;
+    const tileLWithGrout = tl + grout;
+    const tileWWithGrout = tw + grout;
+    const tileAreaCm = tileLWithGrout * tileWWithGrout;
+    const tileAreaM = tileAreaCm / 10000;
+    const tilesNet = netAreaCm / tileAreaCm;
+    const tilesWithWaste = tilesNet * (1 + wastePct / 100);
+    const tilesNeeded = Math.ceil(tilesWithWaste);
+    const wasteTiles = tilesNeeded - Math.ceil(tilesNet);
+    const boxesNeeded = Math.ceil(tilesNeeded / tilesPerBox);
+    const totalCost = boxesNeeded * pricePerBox;
+    const coveragePerBox = tilesPerBox * tileAreaM;
+
+    lastResults = {
+      roomArea: fmt(roomAreaM, 2),
+      netArea: fmt(netAreaM, 2),
+      areaUnit: 'm²',
+      tileSize: fmt(tl, 1) + 'cm × ' + fmt(tw, 1) + 'cm',
+      tileArea: fmt(tileAreaM, 4),
+      tileAreaUnit: 'm²',
+      tilesNetRaw: tilesNet,
+      tilesNet: Math.ceil(tilesNet),
+      wastePct,
+      wasteTiles,
+      tilesNeeded,
+      tilesPerBox,
+      boxesNeeded,
+      coveragePerBox: fmt(coveragePerBox, 2),
+      coverageUnit: 'm²',
+      pricePerBox,
+      totalCost,
+      hasPrice: pricePerBox > 0,
+      grout: grout + 'cm'
+    };
+  }
+
+  renderResults(lastResults);
+}
+
+function renderResults(r) {
+  document.getElementById('rTilesNeeded').textContent = fmt(r.tilesNeeded);
+  document.getElementById('rBoxes').textContent = fmt(r.boxesNeeded);
+  document.getElementById('rBoxesSub').textContent = r.tilesPerBox + ' tiles/box';
+  document.getElementById('rArea').textContent = r.netArea;
+  document.getElementById('rAreaUnit').textContent = r.areaUnit;
+
+  if (r.hasPrice) {
+    document.getElementById('rCost').textContent = fmtCur(r.totalCost);
+    document.getElementById('rCostSub').textContent = 'est. material cost';
+  } else {
+    document.getElementById('rCost').textContent = '—';
+    document.getElementById('rCostSub').textContent = 'enter price/box';
+  }
+
+  // Visualization
+  const vis = document.getElementById('boxVis');
+  vis.innerHTML = '';
+  const total = r.tilesNeeded;
+  const netCount = r.tilesNet;
+  const wasteCount = r.wasteTiles;
+  const maxShow = 100;
+  const scale = total > maxShow ? maxShow / total : 1;
+  const showNet = Math.round(netCount * scale);
+  const showWaste = Math.round(wasteCount * scale);
+
+  for (let i = 0; i < showNet; i++) {
+    const d = document.createElement('div');
+    d.className = 'box-sq';
+    vis.appendChild(d);
+  }
+  for (let i = 0; i < showWaste; i++) {
+    const d = document.createElement('div');
+    d.className = 'box-sq waste';
+    vis.appendChild(d);
+  }
+  if (total > maxShow) {
+    const note = document.createElement('span');
+    note.style.cssText = 'font-size:.7rem;color:#888;align-self:center';
+    note.textContent = '(scaled to 100 squares)';
+    vis.appendChild(note);
+  }
+
+  // Summary table
+  const tbody = document.getElementById('summaryBody');
+  const rows = [
+    ['Room Area', r.roomArea + ' ' + r.areaUnit],
+    ['Area After Deductions', r.netArea + ' ' + r.areaUnit],
+    ['Tile Size (face)', r.tileSize],
+    ['Grout Joint', r.grout],
+    ['Tile Area (with grout)', r.tileArea + ' ' + r.tileAreaUnit],
+    ['Tiles Required (net)', fmt(r.tilesNet)],
+    ['Waste Allowance', r.wastePct + '%'],
+    ['Waste Tiles', fmt(r.wasteTiles)],
+    ['Total Tiles to Buy', fmt(r.tilesNeeded)],
+    ['Tiles per Box', fmt(r.tilesPerBox)],
+    ['Boxes to Purchase', fmt(r.boxesNeeded)],
+    ['Box Coverage', r.coveragePerBox + ' ' + r.coverageUnit],
+  ];
+  tbody.innerHTML = rows.map((row, i) =>
+    `<tr><td>${row[0]}</td><td class="num">${row[1]}</td></tr>`
+  ).join('');
+
+  // Cost section
+  const costSec = document.getElementById('costSection');
+  if (r.hasPrice) {
+    costSec.style.display = 'block';
+    const costBody = document.getElementById('costBody');
+    const costRows = [
+      ['Price per Box', fmtCur(r.pricePerBox)],
+      ['Number of Boxes', fmt(r.boxesNeeded)],
+      ['Total Material Cost', fmtCur(r.totalCost)],
+      ['Cost per ' + r.areaUnit, fmtCur(r.totalCost / parseFloat(r.netArea) || 0)],
+    ];
+    costBody.innerHTML = costRows.map(row =>
+      `<tr><td>${row[0]}</td><td class="num">${row[1]}</td></tr>`
+    ).join('');
+  } else {
+    costSec.style.display = 'none';
+  }
+
+  const res = document.getElementById('results');
+  res.classList.add('show');
+  res.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function copyResults() {
+  if (!lastResults) return;
+  const r = lastResults;
+  let text = `Tile & Flooring Calculator Results\n`;
+  text += `=====================================\n`;
+  text += `Room Area: ${r.roomArea} ${r.areaUnit}\n`;
+  text += `Net Area: ${r.netArea} ${r.areaUnit}\n`;
+  text += `Tile Size: ${r.tileSize}\n`;
+  text += `Grout Joint: ${r.grout}\n`;
+  text += `Waste Allowance: ${r.wastePct}%\n`;
+  text += `Tiles Required (net): ${fmt(r.tilesNet)}\n`;
+  text += `Waste Tiles: ${fmt(r.wasteTiles)}\n`;
+  text += `Total Tiles to Buy: ${fmt(r.tilesNeeded)}\n`;
+  text += `Tiles per Box: ${fmt(r.tilesPerBox)}\n`;
+  text += `Boxes to Purchase: ${fmt(r.boxesNeeded)}\n`;
+  if (r.hasPrice) {
+    text += `Price per Box: ${fmtCur(r.pricePerBox)}\n`;
+    text += `Total Material Cost: ${fmtCur(r.totalCost)}\n`;
+  }
+  text += `\nCalculated at toolwick.com/tile-flooring-calculator/`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy Results', 2000);
+  }).catch(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Failed';
+    setTimeout(() => btn.textContent = 'Copy Results', 2000);
+  });
+}
+
+function clearAll() {
+  ['roomLength','roomWidth','deductions','tileLength','tileWidth','tilesPerBox','pricePerBox'].forEach(id => {
+    document.getElementById(id).value = '';
+    document.getElementById(id).classList.remove('error');
+  });
+  document.getElementById('deductions').value = '0';
+  document.getElementById('tilesPerBox').value = '10';
+  document.getElementById('groutJoint').value = unit === 'imperial' ? '0.125' : '0.3';
+  document.getElementById('wasteSlider').value = '10';
+  updateWaste();
+  ['errRoomL','errRoomW','errTileL','errTileW'].forEach(id => {
+    document.getElementById(id).classList.remove('show');
+  });
+  const res = document.getElementById('results');
+  res.classList.remove('show');
+  lastResults = null;
+}
+
+// Enter key support
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    const tag = document.activeElement.tagName;
+    if (tag === 'INPUT') calculate();
+  }
+});
+
+// Input clear errors on input
+['roomLength','roomWidth','tileLength','tileWidth'].forEach((id, i) => {
+  const errIds = ['errRoomL','errRoomW','errTileL','errTileW'];
+  document.getElementById(id).addEventListener('input', () => {
+    document.getElementById(id).classList.remove('error');
+    document.getElementById(errIds[i]).classList.remove('show');
+  });
+});
+</script>
+</body>
+</html>
