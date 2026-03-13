@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gravel Driveway Calculator — Free Online Tool | toolwick.com</title>
+  <meta name="description" content="Calculate how much gravel you need for your driveway. Enter dimensions and get cubic yards, tons, and cost estimates instantly. Free gravel driveway calculator.">
+  <link rel="canonical" href="https://toolwick.com/gravel-driveway-calculator/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Gravel Driveway Calculator",
+    "url": "https://toolwick.com/gravel-driveway-calculator/",
+    "description": "Calculate how much gravel you need for your driveway including cubic yards, tons, and estimated cost.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fff;
+      color: #1a1a2e;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    a { color: #0077b6; text-decoration: none; }
+    a:hover { text-decoration: underline; color: #006299; }
+    nav {
+      border-bottom: 1px solid #e0e0e0;
+      padding: 0.75rem 1.5rem;
+      background: #fff;
+    }
+    nav .nav-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+    }
+    nav .site-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #0077b6;
+    }
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 0.4rem;
+    }
+    .subtitle {
+      color: #555;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+    .tool-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 2rem;
+    }
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    .form-group { margin-bottom: 1.25rem; }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #444;
+      margin-bottom: 0.4rem;
+    }
+    .label-hint {
+      font-weight: 400;
+      color: #888;
+      font-size: 0.8rem;
+    }
+    input[type="number"], select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: inherit;
+      color: #1a1a2e;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      min-height: 44px;
+    }
+    input[type="number"]:focus, select:focus {
+      outline: none;
+      border-color: #0077b6;
+      box-shadow: 0 0 0 3px rgba(0,119,182,0.15);
+    }
+    input.error { border-color: #e74c3c; }
+    .error-msg {
+      color: #e74c3c;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      display: none;
+    }
+    .error-msg.show { display: block; }
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .slider-group { margin-bottom: 1.25rem; }
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    input[type="range"] {
+      flex: 1;
+      accent-color: #0077b6;
+      height: 6px;
+      cursor: pointer;
+    }
+    .slider-val {
+      min-width: 52px;
+      text-align: right;
+      font-weight: 600;
+      color: #0077b6;
+      font-size: 0.9rem;
+    }
+    .btn {
+      background: #0077b6;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      min-height: 44px;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+    .btn:hover { background: #006299; }
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #1a1a2e;
+      border: 1px solid #ddd;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      min-height: 36px;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+    .btn-secondary:hover { background: #e0e0e0; }
+    .results {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: none;
+    }
+    .results.show {
+      display: block;
+      opacity: 1;
+    }
+    .key-numbers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .key-card {
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      text-align: center;
+    }
+    .key-card .kc-label {
+      font-size: 0.78rem;
+      color: #666;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .key-card .kc-value {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #0077b6;
+      line-height: 1.1;
+    }
+    .key-card .kc-unit {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 0.15rem;
+    }
+    .key-card.accent {
+      background: #0077b6;
+      border-color: #0077b6;
+    }
+    .key-card.accent .kc-label { color: rgba(255,255,255,0.8); }
+    .key-card.accent .kc-value { color: #fff; }
+    .key-card.accent .kc-unit { color: rgba(255,255,255,0.7); }
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .copy-btn {
+      background: transparent;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      color: #666;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover { border-color: #0077b6; color: #0077b6; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+    th {
+      background: #f0f0f0;
+      text-align: left;
+      padding: 9px 12px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      color: #444;
+      border-bottom: 1px solid #ddd;
+    }
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #1a1a2e;
+    }
+    tr:nth-child(even) td { background: #fafafa; }
+    td.num, th.num { text-align: right; }
+    .table-wrap { overflow-x: auto; }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .bar-label {
+      width: 110px;
+      font-size: 0.82rem;
+      color: #555;
+      flex-shrink: 0;
+    }
+    .bar-track {
+      flex: 1;
+      background: #e0e0e0;
+      border-radius: 4px;
+      height: 18px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      background: #0077b6;
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+    .bar-val {
+      width: 70px;
+      text-align: right;
+      font-size: 0.82rem;
+      color: #0077b6;
+      font-weight: 600;
+    }
+    .ad-slot {
+      background: #f8f9fa;
+      border: 1px dashed #ccc;
+      border-radius: 6px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      font-size: 0.85rem;
+      margin: 2rem 0;
+    }
+    .content-section { margin-bottom: 2.5rem; }
+    .content-section h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    .content-section p { color: #444; margin-bottom: 0.75rem; font-size: 0.95rem; }
+    .content-section ul { padding-left: 1.25rem; color: #444; font-size: 0.95rem; }
+    .content-section ul li { margin-bottom: 0.4rem; }
+    details {
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      margin-bottom: 0.6rem;
+      overflow: hidden;
+    }
+    summary {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.92rem;
+      background: #f8f9fa;
+      color: #1a1a2e;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '+';
+      font-size: 1.1rem;
+      color: #0077b6;
+      font-weight: 700;
+    }
+    details[open] summary::after { content: '−'; }
+    details p {
+      padding: 0.75rem 1rem;
+      color: #444;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      border-top: 1px solid #e0e0e0;
+      margin: 0;
+    }
+    .formula-box {
+      background: #f0f7ff;
+      border: 1px solid #c0dff5;
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      font-family: monospace;
+      font-size: 0.88rem;
+      color: #1a1a2e;
+      margin: 0.75rem 0;
+      line-height: 1.8;
+    }
+    .related-tools {
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .related-tools h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #1a1a2e;
+    }
+    .related-tools a {
+      display: inline-block;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      color: #0077b6;
+      margin: 0.25rem 0.25rem 0.25rem 0;
+      transition: all 0.2s;
+    }
+    .related-tools a:hover { border-color: #0077b6; background: #f0f7ff; text-decoration: none; }
+    footer {
+      border-top: 1px solid #e0e0e0;
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: #888;
+    }
+    footer a { color: #888; margin: 0 0.4rem; }
+    footer a:hover { color: #0077b6; }
+    .divider { margin: 1.5rem 0; border: none; border-top: 1px solid #e0e0e0; }
+    @media (max-width: 480px) {
+      .key-numbers { grid-template-columns: 1fr 1fr; }
+      .key-card .kc-value { font-size: 1.3rem; }
+      .row-2 { grid-template-columns: 1fr; }
+      h1 { font-size: 1.35rem; }
+      .tool-card { padding: 1.25rem; }
+      .bar-label { width: 85px; font-size: 0.75rem; }
+      .bar-val { width: 60px; font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="site-name">toolwick.com</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Gravel Driveway Calculator</h1>
+  <p class="subtitle">Calculate cubic yards, tons, and cost for your gravel driveway project.</p>
+
+  <div class="tool-card">
+    <div class="section-title">Driveway Dimensions</div>
+
+    <div class="row-2">
+      <div class="form-group">
+        <label for="length">Length <span class="label-hint">(feet)</span></label>
+        <input type="number" id="length" placeholder="e.g. 100" min="1" step="0.1">
+        <div class="error-msg" id="err-length">Please enter a valid length (> 0).</div>
+      </div>
+      <div class="form-group">
+        <label for="width">Width <span class="label-hint">(feet)</span></label>
+        <input type="number" id="width" placeholder="e.g. 12" min="1" step="0.1">
+        <div class="error-msg" id="err-width">Please enter a valid width (> 0).</div>
+      </div>
+    </div>
+
+    <div class="slider-group">
+      <label>Depth <span class="label-hint">(inches)</span></label>
+      <div class="slider-row">
+        <input type="range" id="depth-slider" min="1" max="12" value="4" step="0.5">
+        <span class="slider-val" id="depth-display">4 in</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#aaa; margin-top:2px;">
+        <span>1 in (light)</span><span>4 in (standard)</span><span>12 in (heavy)</span>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <div class="section-title">Gravel Type & Cost</div>
+
+    <div class="form-group">
+      <label for="gravel-type">Gravel Type</label>
+      <select id="gravel-type">
+        <option value="1.4">Pea Gravel (~1.4 tons/yd³)</option>
+        <option value="1.35">Crushed Stone / #57 (~1.35 tons/yd³)</option>
+        <option value="1.5" selected>Crushed Granite (~1.5 tons/yd³)</option>
+        <option value="1.45">Limestone Gravel (~1.45 tons/yd³)</option>
+        <option value="1.6">River Rock (~1.6 tons/yd³)</option>
+        <option value="1.55">Decomposed Granite (~1.55 tons/yd³)</option>
+        <option value="custom">Custom weight</option>
+      </select>
+    </div>
+
+    <div class="form-group" id="custom-weight-group" style="display:none;">
+      <label for="custom-weight">Custom Weight <span class="label-hint">(tons per cubic yard)</span></label>
+      <input type="number" id="custom-weight" placeholder="e.g. 1.4" min="0.5" max="3" step="0.01">
+      <div class="error-msg" id="err-custom">Enter a value between 0.5 and 3.</div>
+    </div>
+
+    <div class="row-2">
+      <div class="form-group">
+        <label for="price-per-ton">Price per Ton <span class="label-hint">(USD, optional)</span></label>
+        <input type="number" id="price-per-ton" placeholder="e.g. 45" min="0" step="0.01">
+      </div>
+      <div class="form-group">
+        <label for="delivery-cost">Delivery Cost <span class="label-hint">(USD, optional)</span></label>
+        <input type="number" id="delivery-cost" placeholder="e.g. 75" min="0" step="0.01">
+      </div>
+    </div>
+
+    <button class="btn" id="calc-btn">Calculate Gravel Needed</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+    <div class="tool-card">
+      <div class="results-header">
+        <div class="section-title" style="border:none; margin:0; padding:0;">Your Results</div>
+        <button class="copy-btn" id="copy-btn">Copy Results</button>
+      </div>
+
+      <div class="key-numbers">
+        <div class="key-card accent">
+          <div class="kc-label">Cubic Yards</div>
+          <div class="kc-value" id="res-cuyd">—</div>
+          <div class="kc-unit">yd³ needed</div>
+        </div>
+        <div class="key-card">
+          <div class="kc-label">Tons</div>
+          <div class="kc-value" id="res-tons">—</div>
+          <div class="kc-unit">tons needed</div>
+        </div>
+        <div class="key-card">
+          <div class="kc-label">Cubic Feet</div>
+          <div class="kc-value" id="res-cuft">—</div>
+          <div class="kc-unit">ft³ needed</div>
+        </div>
+        <div class="key-card" id="cost-card">
+          <div class="kc-label">Est. Total Cost</div>
+          <div class="kc-value" id="res-cost">—</div>
+          <div class="kc-unit">USD</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table id="breakdown-table">
+          <thead>
+            <tr>
+              <th>Detail</th>
+              <th class="num">Value</th>
+            </tr>
+          </thead>
+          <tbody id="breakdown-body">
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="divider">
+      <div class="section-title" style="margin-bottom:0.75rem;">Coverage Comparison</div>
+      <div id="depth-bars"></div>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid">Advertisement</div>
+
+  <!-- CONTENT SECTIONS -->
+  <div class="content-section">
+    <h2>How to Use This Gravel Driveway Calculator</h2>
+    <p>Enter your driveway's length and width in feet, then use the slider to set your desired gravel depth in inches. Select the type of gravel you plan to use (each has a different weight per cubic yard), and optionally enter your price per ton and delivery fee. Click <strong>Calculate Gravel Needed</strong> to instantly see cubic yards, tons, cubic feet, and a total cost estimate.</p>
+    <p>The results update based on your exact inputs. You can adjust the depth slider and recalculate to compare how different depths affect the total material needed.</p>
+  </div>
+
+  <div class="content-section">
+    <h2>Why This Matters</h2>
+    <p>Ordering too little gravel means a second delivery trip — which often costs as much as the first. Order too much and you're paying to haul away excess material or leaving it piled in your yard for years. Getting the number right matters both financially and practically.</p>
+    <p>A standard residential driveway that's 100 feet long and 12 feet wide at 4 inches deep needs about 14.8 cubic yards or roughly 22 tons of crushed granite — that's a significant purchase. At $45/ton plus $75 delivery, you're looking at nearly $1,065. A longer driveway at 200 feet jumps to about $2,055. These are real numbers that justify taking 60 seconds to calculate before you call your supplier.</p>
+    <p>This tool is useful for homeowners planning new driveways, contractors pricing jobs, landscapers replenishing coverage on existing gravel paths, and anyone expanding or regrading a driveway. Even if you're just getting a ballpark for a renovation budget, having a proper cubic yard and tonnage figure prevents the most common (and expensive) ordering mistake: guessing.</p>
+  </div>
+
+  <div class="content-section">
+    <h2>How It's Calculated</h2>
+    <p>The calculation follows standard volumetric math used by gravel suppliers and contractors. Here's exactly what's happening:</p>
+    <div class="formula-box">
+      Volume (ft³) = Length (ft) × Width (ft) × Depth (ft)<br>
+      Depth (ft) = Depth (in) ÷ 12<br>
+      <br>
+      Volume (yd³) = Volume (ft³) ÷ 27<br>
+      <br>
+      Weight (tons) = Volume (yd³) × Tons per Cubic Yard<br>
+      <br>
+      Total Cost = (Weight × Price per Ton) + Delivery Cost
+    </div>
+    <p>There are 27 cubic feet in one cubic yard. Gravel weight varies by material: crushed granite runs about 1.5 tons/yd³, while pea gravel is lighter at ~1.4 tons/yd³ and river rock heavier at ~1.6 tons/yd³. These figures are industry averages — your supplier may quote slightly different densities depending on moisture content and specific rock source.</p>
+    <p>A standard recommendation is <strong>4 inches of depth</strong> for a new driveway base layer. For a top dressing refresh, 2 inches is often sufficient. High-traffic or heavy-vehicle driveways benefit from 6 inches.</p>
+  </div>
+
+  <div class="content-section">
+    <h2>Tips &amp; Common Mistakes</h2>
+    <ul>
+      <li><strong>Add a 10% buffer.</strong> Always order slightly more than you calculate — gravel settles and compacts over time, and minor measurement errors are common. Most suppliers round to the nearest half-ton anyway.</li>
+      <li><strong>Measure carefully.</strong> If your driveway isn't a rectangle, break it into sections. Calculate each rectangle separately and add the totals together before ordering.</li>
+      <li><strong>Don't confuse cubic yards with tons.</strong> Suppliers quote prices in tons; your calculation starts in cubic yards. Use the density factor for your specific gravel type to convert accurately.</li>
+      <li><strong>Check minimum delivery loads.</strong> Many gravel suppliers have a minimum delivery of 10 or 15 tons. If your project is small, a pickup truckload from a landscape supply yard may be more economical.</li>
+      <li><strong>Base vs. top layer.</strong> A well-built driveway often has two layers: a coarse base (crushed stone #3 or #4) topped with a finer finishing gravel (pea gravel or #57 stone). Calculate each layer separately using this tool.</li>
+    </ul>
+  </div>
+
+  <div class="content-section">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>How deep should my gravel driveway be?</summary>
+      <p>For a new driveway, the industry-standard recommendation is 4 inches of compacted gravel as a base, often with an additional 2-inch top layer of finer material. If you're just topping off an existing gravel driveway that's gotten thin, 1–2 inches is usually sufficient. Driveways that handle heavy trucks or frequent traffic benefit from a 6-inch base.</p>
+    </details>
+    <details>
+      <summary>What type of gravel is best for driveways?</summary>
+      <p>Crushed stone (#57 or #411) is the most common choice for driveways because angular edges lock together and compact well. Pea gravel looks attractive but tends to scatter and doesn't compact as firmly. Decomposed granite is popular in dry climates and binds well when wet. Your local supplier will know what material holds up best in your region.</p>
+    </details>
+    <details>
+      <summary>How many tons are in a cubic yard of gravel?</summary>
+      <p>It depends on the gravel type, but most crushed stone and gravel weighs between 1.35 and 1.6 tons per cubic yard. A commonly used average is 1.5 tons per cubic yard for general estimation. Always confirm the specific density with your supplier before placing a large order, since moisture content can shift the weight.</p>
+    </details>
+    <details>
+      <summary>Can I use this for a circular or curved driveway?</summary>
+      <p>This calculator handles rectangular shapes directly. For a circular turnaround, calculate the area using the formula: Area = π × radius². For irregular curves, break the driveway into straight rectangular sections, calculate each, and add the totals. A landscape professional can also measure irregular shapes with a measuring wheel for precision.</p>
+    </details>
+  </div>
+
+  <div class="related-tools">
+    <h2>Related Tools</h2>
+    <a href="/">View All Tools on toolwick.com →</a>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom">Advertisement</div>
+</div>
+
+<footer>
+  <div>
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <div style="margin-top:0.4rem;">© <span id="yr"></span> toolwick.com — Free Online Tools</div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  const depthSlider = document.getElementById('depth-slider');
+  const depthDisplay = document.getElementById('depth-display');
+  const gravelType = document.getElementById('gravel-type');
+  const customWeightGroup = document.getElementById('custom-weight-group');
+
+  depthSlider.addEventListener('input', function () {
+    depthDisplay.textContent = this.value + ' in';
+  });
+
+  gravelType.addEventListener('change', function () {
+    customWeightGroup.style.display = this.value === 'custom' ? 'block' : 'none';
+  });
+
+  function fmt(n, dec = 2) {
+    if (isNaN(n)) return '—';
+    return Number(n).toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  }
+
+  function fmtCur(n) {
+    if (isNaN(n)) return '—';
+    return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function setError(inputEl, msgEl, show) {
+    if (show) {
+      inputEl.classList.add('error');
+      msgEl.classList.add('show');
+    } else {
+      inputEl.classList.remove('error');
+      msgEl.classList.remove('show');
+    }
+  }
+
+  function calculate() {
+    const lengthEl = document.getElementById('length');
+    const widthEl = document.getElementById('width');
+    const customWeightEl = document.getElementById('custom-weight');
+
+    const length = parseFloat(lengthEl.value);
+    const width = parseFloat(widthEl.value);
+    const depth = parseFloat(depthSlider.value);
+
+    let hasError = false;
+
+    if (!lengthEl.value || isNaN(length) || length <= 0) {
+      setError(lengthEl, document.getElementById('err-length'), true);
+      hasError = true;
+    } else {
+      setError(lengthEl, document.getElementById('err-length'), false);
+    }
+
+    if (!widthEl.value || isNaN(width) || width <= 0) {
+      setError(widthEl, document.getElementById('err-width'), true);
+      hasError = true;
+    } else {
+      setError(widthEl, document.getElementById('err-width'), false);
+    }
+
+    let tonsPerYd = parseFloat(gravelType.value);
+    if (gravelType.value === 'custom') {
+      const cw = parseFloat(customWeightEl.value);
+      if (!customWeightEl.value || isNaN(cw) || cw < 0.5 || cw > 3) {
+        setError(customWeightEl, document.getElementById('err-custom'), true);
+        hasError = true;
+      } else {
+        setError(customWeightEl, document.getElementById('err-custom'), false);
+        tonsPerYd = cw;
+      }
+    }
+
+    if (hasError) return;
+
+    const depthFt = depth / 12;
+    const cubicFt = length * width * depthFt;
+    const cubicYd = cubicFt / 27;
+    const tons = cubicYd * tonsPerYd;
+    const sqFt = length * width;
+
+    const pricePerTon = parseFloat(document.getElementById('price-per-ton').value);
+    const deliveryCost = parseFloat(document.getElementById('delivery-cost').value);
+
+    const hasCost = !isNaN(pricePerTon) && pricePerTon > 0;
+    const hasDelivery = !isNaN(deliveryCost) && deliveryCost > 0;
+
+    let materialCost = hasCost ? tons * pricePerTon : null;
+    let totalCost = materialCost !== null ? materialCost + (hasDelivery ? deliveryCost : 0) : null;
+
+    document.getElementById('res-cuyd').textContent = fmt(cubicYd);
+    document.getElementById('res-tons').textContent = fmt(tons);
+    document.getElementById('res-cuft').textContent = fmt(cubicFt, 1);
+
+    const costCard = document.getElementById('cost-card');
+    if (totalCost !== null) {
+      document.getElementById('res-cost').textContent = fmtCur(totalCost);
+    } else {
+      document.getElementById('res-cost').textContent = 'N/A';
+      document.getElementById('cost-card').querySelector('.kc-unit').textContent = 'enter price above';
+    }
+
+    // Breakdown table
+    const gravelNames = {
+      '1.4': 'Pea Gravel',
+      '1.35': 'Crushed Stone / #57',
+      '1.5': 'Crushed Granite',
+      '1.45': 'Limestone Gravel',
+      '1.6': 'River Rock',
+      '1.55': 'Decomposed Granite',
+      'custom': 'Custom'
+    };
+    const gravelName = gravelNames[gravelType.value] || 'Custom';
+
+    const rows = [
+      ['Driveway Length', fmt(length, 1) + ' ft'],
+      ['Driveway Width', fmt(width, 1) + ' ft'],
+      ['Gravel Depth', depth + ' inches (' + fmt(depthFt, 3) + ' ft)'],
+      ['Surface Area', fmt(sqFt, 0) + ' sq ft'],
+      ['Gravel Type', gravelName],
+      ['Density', fmt(tonsPerYd, 2) + ' tons/yd³'],
+      ['Volume (cubic feet)', fmt(cubicFt, 2) + ' ft³'],
+      ['Volume (cubic yards)', fmt(cubicYd, 2) + ' yd³'],
+      ['Weight (tons)', fmt(tons, 2) + ' tons'],
+      ['Weight (lbs)', fmt(tons * 2000, 0) + ' lbs'],
+    ];
+
+    if (hasCost) {
+      rows.push(['Material Cost', fmtCur(materialCost)]);
+      if (hasDelivery) rows.push(['Delivery Cost', fmtCur(deliveryCost)]);
+      rows.push(['Total Estimated Cost', fmtCur(totalCost)]);
+    }
+
+    // Recommendation note
+    const recommendedTons = Math.ceil(tons * 1.1 * 2) / 2;
+    rows.push(['Recommended Order (+10%)', fmt(recommendedTons, 1) + ' tons']);
+
+    const tbody = document.getElementById('breakdown-body');
+    tbody.innerHTML = rows.map((r, i) => {
+      const lastThree = hasCost ? (rows.length - (hasDelivery ? 3 : 2)) : -1;
+      const bold = (i === rows.length - 1 || (hasCost && i >= rows.length - (hasDelivery ? 3 : 2)));
+      return `<tr><td${bold ? ' style="font-weight:600"' : ''}>${r[0]}</td><td class="num"${bold ? ' style="font-weight:600; color:#0077b6"' : ''}>${r[1]}</td></tr>`;
+    }).join('');
+
+    // Depth comparison bars
+    const depths = [2, 4, 6, 8];
+    const barsHTML = depths.map(d => {
+      const v = (length * width * (d / 12)) / 27;
+      const t = v * tonsPerYd;
+      const pct = Math.min(100, (d / 12) * 100);
+      return `<div class="bar-row">
+        <span class="bar-label">${d}" depth</span>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+        <span class="bar-val">${fmt(t, 1)} tons</span>
+      </div>`;
+    }).join('');
+    document.getElementById('depth-bars').innerHTML = barsHTML;
+
+    // Show results
+    const resultsEl = document.getElementById('results');
+    resultsEl.style.display = 'block';
+    requestAnimationFrame(() => { resultsEl.classList.add('show'); });
+
+    // Store text for copy
+    resultsEl.dataset.copyText = [
+      'GRAVEL DRIVEWAY CALCULATOR RESULTS',
+      '=====================================',
+      ...rows.map(r => r[0].padEnd(30) + r[1])
+    ].join('\n');
+  }
+
+  document.getElementById('calc-btn').addEventListener('click', calculate);
+
+  document.querySelectorAll('input[type="number"]').forEach(inp => {
+    inp.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') calculate();
+    });
+  });
+
+  document.getElementById('copy-btn').addEventListener('click', function () {
+    const text = document.getElementById('results').dataset.copyText || '';
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      this.textContent = 'Copied!';
+      setTimeout(() => { this.textContent = 'Copy Results'; }, 2000);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      this.textContent = 'Copied!';
+      setTimeout(() => { this.textContent = 'Copy Results'; }, 2000);
+    });
+  });
+</script>
+</body>
+</html>
