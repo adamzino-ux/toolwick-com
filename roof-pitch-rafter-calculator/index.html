@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roof Pitch & Rafter Length Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate roof pitch, rafter length, and roof angle instantly. Enter run and rise to get precise measurements for your roofing project. Free online tool.">
+<link rel="canonical" href="https://toolwick.com/roof-pitch-rafter-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Roof Pitch & Rafter Length Calculator",
+  "url": "https://toolwick.com/roof-pitch-rafter-calculator/",
+  "description": "Calculate roof pitch, rafter length, and roof angle instantly. Enter run and rise to get precise measurements for your roofing project.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8f9fa;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:12px 20px}
+nav .brand{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+nav .brand span{color:#0077b6}
+.container{max-width:640px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.5rem;font-weight:700;margin-bottom:6px;color:#1a1a2e}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:24px}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-bottom:2rem}
+.section-title{font-size:1rem;font-weight:700;color:#0077b6;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.04em;font-size:0.8rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.form-group{margin-bottom:16px}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:6px}
+input[type=number],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:0.95rem;color:#1a1a2e;background:#fff;transition:border-color 0.2s,box-shadow 0.2s;height:44px}
+input[type=number]:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:4px;display:none}
+.error-msg.show{display:block}
+.slider-group{margin-bottom:16px}
+.slider-label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.slider-val{font-weight:700;color:#0077b6}
+input[type=range]{width:100%;height:6px;accent-color:#0077b6;cursor:pointer;margin-bottom:2px}
+.pitch-marks{display:flex;justify-content:space-between;font-size:0.7rem;color:#888}
+.btn{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background 0.2s}
+.btn:hover{background:#006299}
+.btn:active{background:#005580}
+.results{opacity:0;transition:opacity 0.3s ease;pointer-events:none}
+.results.show{opacity:1;pointer-events:all}
+.key-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.metric-card{background:#f0f8ff;border:1px solid #b8ddf5;border-radius:8px;padding:14px 16px;text-align:center}
+.metric-card.accent{background:#0077b6;border-color:#0077b6}
+.metric-card.accent .metric-label{color:rgba(255,255,255,0.8)}
+.metric-card.accent .metric-val{color:#fff}
+.metric-label{font-size:0.75rem;font-weight:500;color:#555;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em}
+.metric-val{font-size:1.5rem;font-weight:800;color:#0077b6;line-height:1.1}
+.metric-unit{font-size:0.75rem;font-weight:500;color:#888;margin-top:2px}
+table{width:100%;border-collapse:collapse;font-size:0.88rem}
+thead th{background:#f0f0f0;padding:10px 12px;text-align:left;font-weight:600;font-size:0.8rem;color:#444;border-bottom:2px solid #ddd}
+thead th:last-child{text-align:right}
+tbody tr:nth-child(even){background:#fafafa}
+tbody td{padding:9px 12px;border-bottom:1px solid #eee;color:#333}
+tbody td:last-child{text-align:right;font-weight:500;color:#0077b6}
+.table-wrap{overflow-x:auto}
+.pitch-diagram{margin:16px 0;background:#f8f9fa;border-radius:8px;padding:16px}
+.diagram-label{font-size:0.8rem;font-weight:600;color:#555;margin-bottom:10px}
+.pitch-visual{position:relative;width:100%;max-width:320px;margin:0 auto}
+.pitch-svg{width:100%;height:auto}
+.copy-btn{background:transparent;border:1px solid #0077b6;color:#0077b6;padding:6px 14px;border-radius:4px;font-size:0.8rem;cursor:pointer;transition:all 0.2s;float:right;min-height:32px}
+.copy-btn:hover{background:#0077b6;color:#fff}
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.results-header h2{font-size:1rem;font-weight:700;color:#1a1a2e}
+.unit-toggle{display:flex;gap:0;margin-bottom:16px;border:1px solid #ddd;border-radius:6px;overflow:hidden;width:fit-content}
+.unit-btn{background:#fff;border:none;padding:8px 18px;font-size:0.85rem;cursor:pointer;color:#555;transition:all 0.15s;min-height:36px}
+.unit-btn.active{background:#0077b6;color:#fff;font-weight:600}
+.how-to{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:1.5rem;margin-bottom:2rem}
+.how-to h2{font-size:1rem;font-weight:700;margin-bottom:10px}
+.how-to p{font-size:0.88rem;color:#555;margin-bottom:8px}
+.related{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1.5rem;margin-bottom:2rem}
+.related h2{font-size:1rem;font-weight:700;margin-bottom:10px}
+.related ul{list-style:none;padding:0}
+.related ul li{padding:4px 0}
+.related ul li a{font-size:0.9rem}
+.ad-slot{background:#f0f0f0;border:1px dashed #ccc;border-radius:6px;min-height:90px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:0.8rem;margin-bottom:2rem}
+footer{text-align:center;padding:20px 16px;font-size:0.82rem;color:#888;border-top:1px solid #e0e0e0;background:#fff}
+footer a{color:#888;margin:0 8px}
+footer a:hover{color:#0077b6}
+.formula-note{background:#f8f9fa;border-left:3px solid #0077b6;padding:10px 14px;font-size:0.82rem;color:#555;border-radius:0 4px 4px 0;margin-top:12px}
+.formula-note strong{color:#0077b6}
+@media(max-width:640px){
+  .form-row{grid-template-columns:1fr}
+  .key-metrics{grid-template-columns:1fr 1fr}
+  .card{padding:1.25rem}
+  h1{font-size:1.25rem}
+}
+@media(max-width:420px){
+  .key-metrics{grid-template-columns:1fr}
+  .metric-val{font-size:1.3rem}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="brand">tool<span>wick</span>.com</a>
+</nav>
+<div class="container">
+  <h1>Roof Pitch & Rafter Length Calculator</h1>
+  <p class="subtitle">Calculate roof pitch, rafter length, angle, and slope for any roofing project.</p>
+
+  <div class="card">
+    <div class="section-title">Units</div>
+    <div class="unit-toggle">
+      <button class="unit-btn active" id="unitFt" onclick="setUnit('ft')">Feet & Inches</button>
+      <button class="unit-btn" id="unitM" onclick="setUnit('m')">Meters</button>
+    </div>
+
+    <div class="section-title">Input Method</div>
+    <div class="unit-toggle" style="margin-bottom:20px">
+      <button class="unit-btn active" id="modeRise" onclick="setMode('rise')">Rise & Run</button>
+      <button class="unit-btn" id="modePitch" onclick="setMode('pitch')">Pitch Ratio</button>
+      <button class="unit-btn" id="modeAngle" onclick="setMode('angle')">Angle °</button>
+    </div>
+
+    <!-- Rise & Run Mode -->
+    <div id="riseRunInputs">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="runVal">Horizontal Run <span id="runUnit">(ft)</span></label>
+          <input type="number" id="runVal" placeholder="e.g. 12" min="0.01" step="any">
+          <div class="error-msg" id="runErr">Please enter a valid positive run value.</div>
+        </div>
+        <div class="form-group">
+          <label for="riseVal">Vertical Rise <span id="riseUnit">(ft)</span></label>
+          <input type="number" id="riseVal" placeholder="e.g. 6" min="0" step="any">
+          <div class="error-msg" id="riseErr">Please enter a valid rise value (≥ 0).</div>
+        </div>
+      </div>
+      <div class="slider-group">
+        <div class="slider-label-row">
+          <label style="margin:0">Rise-per-12 Slider <span style="font-weight:400;color:#888">(pitch)</span></label>
+          <span class="slider-val" id="sliderDisplay">6/12</span>
+        </div>
+        <input type="range" id="pitchSlider" min="0" max="24" step="0.5" value="6" oninput="sliderChanged()">
+        <div class="pitch-marks">
+          <span>0/12</span><span>4/12</span><span>8/12</span><span>12/12</span><span>16/12</span><span>20/12</span><span>24/12</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pitch Ratio Mode -->
+    <div id="pitchRatioInputs" style="display:none">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="pitchRise">Rise (X in X:12)</label>
+          <input type="number" id="pitchRise" placeholder="e.g. 6" min="0" step="any">
+          <div class="error-msg" id="pitchRiseErr">Please enter a valid rise value.</div>
+        </div>
+        <div class="form-group">
+          <label for="runValP">Horizontal Run <span id="runUnitP">(ft)</span></label>
+          <input type="number" id="runValP" placeholder="e.g. 12" min="0.01" step="any">
+          <div class="error-msg" id="runErrP">Please enter a valid positive run value.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Angle Mode -->
+    <div id="angleInputs" style="display:none">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="angleVal">Roof Angle (degrees)</label>
+          <input type="number" id="angleVal" placeholder="e.g. 26.57" min="0.01" max="89" step="any">
+          <div class="error-msg" id="angleErr">Please enter an angle between 0 and 89 degrees.</div>
+        </div>
+        <div class="form-group">
+          <label for="runValA">Horizontal Run <span id="runUnitA">(ft)</span></label>
+          <input type="number" id="runValA" placeholder="e.g. 12" min="0.01" step="any">
+          <div class="error-msg" id="runErrA">Please enter a valid positive run value.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-bottom:0">
+      <label for="overhangVal">Eave Overhang <span id="overhangUnit">(ft)</span> <span style="font-weight:400;color:#888;font-size:0.8rem">optional</span></label>
+      <input type="number" id="overhangVal" placeholder="e.g. 1.5" min="0" step="any" value="0">
+    </div>
+
+    <br>
+    <button class="btn" onclick="calculate()">Calculate Roof Pitch & Rafter Length</button>
+  </div>
+
+  <!-- Results -->
+  <div class="card results" id="results">
+    <div class="results-header">
+      <h2>Results</h2>
+      <button class="copy-btn" onclick="copyResults()" id="copyBtn">Copy Results</button>
+    </div>
+
+    <div class="key-metrics">
+      <div class="metric-card accent">
+        <div class="metric-label">Roof Pitch</div>
+        <div class="metric-val" id="resPitch">—</div>
+        <div class="metric-unit">X : 12</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Roof Angle</div>
+        <div class="metric-val" id="resAngle">—</div>
+        <div class="metric-unit">degrees</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Rafter Length</div>
+        <div class="metric-val" id="resRafter">—</div>
+        <div class="metric-unit" id="resRafterUnit">ft</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Slope %</div>
+        <div class="metric-val" id="resSlope">—</div>
+        <div class="metric-unit">percent</div>
+      </div>
+    </div>
+
+    <!-- Pitch Diagram -->
+    <div class="pitch-diagram">
+      <div class="diagram-label">Roof Cross-Section Diagram</div>
+      <svg id="pitchSvg" class="pitch-svg" viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+        <rect width="320" height="160" fill="#f8f9fa" rx="6"/>
+        <!-- Ground -->
+        <line x1="20" y1="130" x2="300" y2="130" stroke="#aaa" stroke-width="2"/>
+        <!-- Wall left -->
+        <line x1="50" y1="130" x2="50" y2="60" stroke="#888" stroke-width="2" stroke-dasharray="4,3"/>
+        <!-- Run arrow -->
+        <line x1="50" y1="138" x2="200" y2="138" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arr2)"/>
+        <!-- Rise arrow -->
+        <line x1="208" y1="60" x2="208" y2="130" stroke="#e67e22" stroke-width="1.5" marker-end="url(#arrO)" marker-start="url(#arrO2)"/>
+        <!-- Rafter -->
+        <line id="rafterLine" x1="50" y1="60" x2="200" y2="60" stroke="#27ae60" stroke-width="2.5"/>
+        <!-- Labels -->
+        <text x="125" y="155" text-anchor="middle" font-size="11" fill="#0077b6" font-weight="600" id="runLabel">Run</text>
+        <text x="228" y="100" text-anchor="start" font-size="11" fill="#e67e22" font-weight="600" id="riseLabel">Rise</text>
+        <text id="rafterLabel" x="115" y="52" text-anchor="middle" font-size="11" fill="#27ae60" font-weight="600">Rafter</text>
+        <text id="angleLabel" x="68" y="122" font-size="10" fill="#9b59b6">θ</text>
+        <defs>
+          <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#0077b6"/></marker>
+          <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#0077b6"/></marker>
+          <marker id="arrO" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e67e22"/></marker>
+          <marker id="arrO2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#e67e22"/></marker>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Measurement</th><th>Value</th></tr>
+        </thead>
+        <tbody id="detailTable"></tbody>
+      </table>
+    </div>
+
+    <div class="formula-note">
+      <strong>Formulas used:</strong> Rafter = √(Run² + Rise²) | Pitch = Rise/Run × 12 | Angle = arctan(Rise/Run) | Slope% = Rise/Run × 100
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid">Advertisement</div>
+
+  <div class="how-to card" style="border:1px solid #e0e0e0">
+    <h2>How to Use This Calculator</h2>
+    <p>Enter your roof's horizontal <strong>run</strong> (half the building width) and vertical <strong>rise</strong> to instantly get the pitch ratio, rafter length, angle, and slope. You can also use the slider to explore different pitch ratios, or switch to "Pitch Ratio" or "Angle" input modes. Add an eave overhang for total rafter length including the overhang.</p>
+    <p>Results include a visual diagram and a detailed breakdown table. Toggle between feet and meters for metric projects.</p>
+  </div>
+
+  <div class="related">
+    <h2>Related Tools</h2>
+    <ul>
+      <li><a href="/concrete-volume-calculator/">Concrete Volume Calculator</a></li>
+    </ul>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom">Advertisement</div>
+
+  <footer>
+    <div>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+    </div>
+    <div style="margin-top:6px">© <span id="yr"></span> toolwick.com — Free Online Tools</div>
+  </footer>
+</div>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+let currentUnit = 'ft';
+let currentMode = 'rise';
+
+function setUnit(u) {
+  currentUnit = u;
+  document.getElementById('unitFt').classList.toggle('active', u === 'ft');
+  document.getElementById('unitM').classList.toggle('active', u === 'm');
+  const label = u === 'ft' ? '(ft)' : '(m)';
+  document.getElementById('runUnit').textContent = label;
+  document.getElementById('riseUnit').textContent = label;
+  document.getElementById('runUnitP').textContent = label;
+  document.getElementById('runUnitA').textContent = label;
+  document.getElementById('overhangUnit').textContent = label;
+  document.getElementById('resRafterUnit').textContent = u;
+}
+
+function setMode(m) {
+  currentMode = m;
+  document.getElementById('modeRise').classList.toggle('active', m === 'rise');
+  document.getElementById('modePitch').classList.toggle('active', m === 'pitch');
+  document.getElementById('modeAngle').classList.toggle('active', m === 'angle');
+  document.getElementById('riseRunInputs').style.display = m === 'rise' ? '' : 'none';
+  document.getElementById('pitchRatioInputs').style.display = m === 'pitch' ? '' : 'none';
+  document.getElementById('angleInputs').style.display = m === 'angle' ? '' : 'none';
+}
+
+function sliderChanged() {
+  const v = parseFloat(document.getElementById('pitchSlider').value);
+  document.getElementById('sliderDisplay').textContent = v + '/12';
+  const run = parseFloat(document.getElementById('runVal').value) || 12;
+  const rise = (v / 12) * run;
+  document.getElementById('riseVal').value = Math.round(rise * 1000) / 1000;
+}
+
+function fmt(n, d = 2) {
+  if (isNaN(n)) return '—';
+  return n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+}
+
+function clearErrors() {
+  document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('input').forEach(e => e.classList.remove('error'));
+}
+
+function showError(inputId, msgId) {
+  document.getElementById(inputId).classList.add('error');
+  document.getElementById(msgId).classList.add('show');
+}
+
+function calculate() {
+  clearErrors();
+  let run, rise, overhang;
+  let valid = true;
+
+  overhang = parseFloat(document.getElementById('overhangVal').value) || 0;
+  if (overhang < 0) overhang = 0;
+
+  if (currentMode === 'rise') {
+    run = parseFloat(document.getElementById('runVal').value);
+    rise = parseFloat(document.getElementById('riseVal').value);
+    if (!run || run <= 0 || isNaN(run)) { showError('runVal', 'runErr'); valid = false; }
+    if (isNaN(rise) || rise < 0) { showError('riseVal', 'riseErr'); valid = false; }
+  } else if (currentMode === 'pitch') {
+    const pr = parseFloat(document.getElementById('pitchRise').value);
+    run = parseFloat(document.getElementById('runValP').value);
+    if (isNaN(pr) || pr < 0) { showError('pitchRise', 'pitchRiseErr'); valid = false; }
+    if (!run || run <= 0 || isNaN(run)) { showError('runValP', 'runErrP'); valid = false; }
+    if (valid) rise = (pr / 12) * run;
+  } else if (currentMode === 'angle') {
+    const ang = parseFloat(document.getElementById('angleVal').value);
+    run = parseFloat(document.getElementById('runValA').value);
+    if (isNaN(ang) || ang <= 0 || ang >= 90) { showError('angleVal', 'angleErr'); valid = false; }
+    if (!run || run <= 0 || isNaN(run)) { showError('runValA', 'runErrA'); valid = false; }
+    if (valid) rise = run * Math.tan(ang * Math.PI / 180);
+  }
+
+  if (!valid) return;
+
+  // Core calculations
+  const angle = Math.atan2(rise, run) * 180 / Math.PI;
+  const pitch = (rise / run) * 12;
+  const slope = (rise / run) * 100;
+  const rafterCore = Math.sqrt(run * run + rise * rise);
+  const overhangRise = (rise / run) * overhang;
+  const overhangHyp = Math.sqrt(overhang * overhang + overhangRise * overhangRise);
+  const totalRafter = rafterCore + overhangHyp;
+
+  // Convert to inches if ft
+  const unitLabel = currentUnit;
+  const inInches = currentUnit === 'ft';
+
+  const rafterIn = rafterCore * 12;
+  const totalRafterIn = totalRafter * 12;
+
+  // Update key metrics
+  document.getElementById('resPitch').textContent = fmt(pitch, 2);
+  document.getElementById('resAngle').textContent = fmt(angle, 2);
+  document.getElementById('resRafter').textContent = fmt(totalRafter, 3);
+  document.getElementById('resSlope').textContent = fmt(slope, 1);
+
+  // Update slider if in rise/run mode
+  if (currentMode === 'rise') {
+    document.getElementById('pitchSlider').value = Math.min(24, pitch);
+    document.getElementById('sliderDisplay').textContent = fmt(pitch, 2) + '/12';
+  }
+
+  // Pitch category
+  let category = '';
+  if (pitch < 2) category = 'Low/Flat (< 2:12) — may need special waterproofing';
+  else if (pitch < 4) category = 'Low Pitch (2–4:12) — limited shingle options';
+  else if (pitch < 6) category = 'Moderate Pitch (4–6:12) — standard residential';
+  else if (pitch < 9) category = 'Steep Pitch (6–9:12) — extra material & labor';
+  else if (pitch < 12) category = 'Very Steep (9–12:12) — safety equipment required';
+  else category = 'Extreme Pitch (> 12:12) — specialist work required';
+
+  // Detail table
+  const rows = [
+    ['Horizontal Run', fmt(run, 3) + ' ' + unitLabel],
+    ['Vertical Rise', fmt(rise, 3) + ' ' + unitLabel],
+    ['Roof Pitch', fmt(pitch, 3) + ' : 12'],
+    ['Roof Angle', fmt(angle, 2) + '°'],
+    ['Slope Percentage', fmt(slope, 1) + '%'],
+    ['Rafter Length (no overhang)', fmt(rafterCore, 3) + ' ' + unitLabel],
+    inInches ? ['Rafter Length (inches)', fmt(rafterIn, 2) + ' in'] : null,
+    overhang > 0 ? ['Eave Overhang', fmt(overhang, 3) + ' ' + unitLabel] : null,
+    overhang > 0 ? ['Total Rafter (w/ overhang)', fmt(totalRafter, 3) + ' ' + unitLabel] : null,
+    inInches && overhang > 0 ? ['Total Rafter (inches)', fmt(totalRafterIn, 2) + ' in'] : null,
+    ['Pitch Category', category],
+  ].filter(Boolean);
+
+  const tbody = document.getElementById('detailTable');
+  tbody.innerHTML = rows.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+
+  // Update diagram
+  updateDiagram(run, rise, angle);
+
+  // Show results
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  // Store for copy
+  window._calcResults = { run, rise, pitch, angle, slope, rafterCore, totalRafter, overhang, unitLabel, category };
+}
+
+function updateDiagram(run, rise, angle) {
+  const svg = document.getElementById('pitchSvg');
+  // Diagram area: x 50..200 for run, y 130 ground
+  const maxRatio = Math.max(rise / run, 0.01);
+  const clampedRatio = Math.min(maxRatio, 2.5);
+  const groundY = 130;
+  const leftX = 50;
+  const rightX = 200;
+  const runPx = rightX - leftX;
+  const risePx = Math.min(clampedRatio * runPx, 100);
+  const peakY = groundY - risePx;
+
+  // Rafter line (from left wall top to right wall top — simplified flat top)
+  const rafterLine = document.getElementById('rafterLine');
+  rafterLine.setAttribute('x1', leftX);
+  rafterLine.setAttribute('y1', peakY);
+  rafterLine.setAttribute('x2', rightX);
+  rafterLine.setAttribute('y2', groundY);
+
+  // Update rise line
+  const rising = svg.querySelector('#riseLine');
+  // Update wall
+  const wall = svg.querySelectorAll('line')[1];
+  wall.setAttribute('y2', peakY);
+  // Update rise arrow lines
+  const riseArrowLine = svg.querySelectorAll('line')[2]; // rise arrow line
+  riseArrowLine.setAttribute('y1', peakY);
+
+  // Update labels
+  document.getElementById('rafterLabel').setAttribute('x', (leftX + rightX) / 2 - 10);
+  document.getElementById('rafterLabel').setAttribute('y', (peakY + groundY) / 2 - 6);
+  document.getElementById('riseLabel').setAttribute('y', (peakY + groundY) / 2 + 4);
+  document.getElementById('runLabel').textContent = 'Run: ' + fmt(run, 1);
+  document.getElementById('riseLabel').textContent = 'Rise: ' + fmt(rise, 1);
+  document.getElementById('rafterLabel').textContent = fmt(Math.sqrt(run*run+rise*rise), 2);
+  document.getElementById('angleLabel').textContent = fmt(angle, 1) + '°';
+  document.getElementById('angleLabel').setAttribute('y', groundY - 12);
+}
+
+function copyResults() {
+  const r = window._calcResults;
+  if (!r) return;
+  const text = [
+    'Roof Pitch Calculator Results',
+    '==============================',
+    `Run: ${fmt(r.run, 3)} ${r.unitLabel}`,
+    `Rise: ${fmt(r.rise, 3)} ${r.unitLabel}`,
+    `Pitch: ${fmt(r.pitch, 3)} : 12`,
+    `Angle: ${fmt(r.angle, 2)}°`,
+    `Slope: ${fmt(r.slope, 1)}%`,
+    `Rafter Length: ${fmt(r.rafterCore, 3)} ${r.unitLabel}`,
+    r.overhang > 0 ? `Total Rafter (w/ overhang): ${fmt(r.totalRafter, 3)} ${r.unitLabel}` : null,
+    `Category: ${r.category}`,
+  ].filter(Boolean).join('\n');
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy Results', 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy Results', 2000);
+  });
+}
+
+// Enter key triggers calculate
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') calculate();
+});
+
+// Sync slider when run changes
+document.getElementById('runVal').addEventListener('input', function() {
+  const run = parseFloat(this.value) || 12;
+  const rise = parseFloat(document.getElementById('riseVal').value) || 0;
+  const pitch = (rise / run) * 12;
+  document.getElementById('pitchSlider').value = Math.min(24, pitch);
+  document.getElementById('sliderDisplay').textContent = fmt(pitch, 2) + '/12';
+});
+
+document.getElementById('riseVal').addEventListener('input', function() {
+  const run = parseFloat(document.getElementById('runVal').value) || 12;
+  const rise = parseFloat(this.value) || 0;
+  const pitch = (rise / run) * 12;
+  document.getElementById('pitchSlider').value = Math.min(24, pitch);
+  document.getElementById('sliderDisplay').textContent = fmt(pitch, 2) + '/12';
+});
+</script>
+</body>
+</html>
