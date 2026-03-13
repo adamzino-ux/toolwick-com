@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Electrical Load & Circuit Breaker Calculator — Free Online Tool | toolwick.com</title>
-<meta name="description" content="Calculate total electrical load, circuit breaker size, wire gauge, and amperage for any circuit. Free online electrical load calculator for homeowners and electricians.">
+<meta name="description" content="Calculate electrical load, amperage, and recommended circuit breaker size instantly. Free online electrical load calculator for homes, workshops, and job sites.">
 <link rel="canonical" href="https://toolwick.com/electrical-load-calculator/">
 <script type="application/ld+json">
 {
@@ -12,503 +12,797 @@
   "@type": "WebApplication",
   "name": "Electrical Load & Circuit Breaker Calculator",
   "url": "https://toolwick.com/electrical-load-calculator/",
-  "description": "Calculate total electrical load, circuit breaker size, wire gauge, and amperage for any circuit.",
+  "description": "Calculate electrical load, amperage, and recommended circuit breaker size for any circuit or appliance combination.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "toolwick.com", "url": "https://toolwick.com" }
 }
 </script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f4f8;color:#1a1a2e;font-size:16px;line-height:1.6}
-a{color:#0077b6;text-decoration:none}
-a:hover{text-decoration:underline}
-nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0 1rem}
-.nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;height:48px}
-.nav-brand{font-weight:700;font-size:1.1rem;color:#1a1a2e}
-.nav-brand span{color:#0077b6}
-main{max-width:640px;margin:0 auto;padding:1.5rem 1rem 2rem}
-h1{font-size:1.5rem;font-weight:700;color:#1a1a2e;margin-bottom:0.35rem}
-.subtitle{font-size:0.9rem;color:#555;margin-bottom:1.5rem}
-.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 1px 4px rgba(0,0,0,0.06);margin-bottom:2rem}
-.section-title{font-size:1rem;font-weight:700;color:#1a1a2e;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:2px solid #e8f4fd}
-label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:5px}
-input[type=text],input[type=number],select{width:100%;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font-size:1rem;color:#1a1a2e;background:#fff;transition:border-color 0.2s,box-shadow 0.2s;outline:none;min-height:44px}
-input:focus,select:focus{border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
-input.error,select.error{border-color:#e74c3c;box-shadow:0 0 0 3px rgba(231,76,60,0.1)}
-.error-msg{font-size:0.78rem;color:#e74c3c;margin-top:4px;display:none}
-.error-msg.show{display:block}
-.field{margin-bottom:1.25rem}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem}
-button.btn{background:#0077b6;color:#fff;border:none;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;transition:background 0.2s;min-height:44px;width:100%}
-button.btn:hover{background:#006299}
-button.btn-sm{background:#0077b6;color:#fff;border:none;border-radius:4px;padding:6px 14px;font-size:0.8rem;font-weight:500;cursor:pointer;transition:background 0.2s;min-height:36px}
-button.btn-sm:hover{background:#006299}
-button.btn-secondary{background:#f0f0f0;color:#1a1a2e;border:1px solid #ddd;border-radius:6px;padding:10px 20px;font-size:0.9rem;font-weight:500;cursor:pointer;transition:background 0.2s;min-height:44px}
-button.btn-secondary:hover{background:#e0e0e0}
-button.btn-danger{background:#fff;color:#e74c3c;border:1px solid #e74c3c;border-radius:4px;padding:6px 12px;font-size:0.78rem;font-weight:500;cursor:pointer;min-height:32px;transition:background 0.2s}
-button.btn-danger:hover{background:#fdf2f2}
-.appliance-row{background:#f8f9fa;border:1px solid #e8e8e8;border-radius:6px;padding:0.85rem;margin-bottom:0.75rem;position:relative}
-.appliance-row .row3{align-items:end}
-.appliance-row label{font-size:0.78rem}
-.appliance-row input,
-.appliance-row select{padding:8px 10px;font-size:0.9rem;min-height:36px}
-.remove-btn-wrap{display:flex;align-items:flex-end;padding-bottom:1px}
-.add-wrap{display:flex;gap:0.75rem;margin-bottom:1.25rem;flex-wrap:wrap}
-.results{opacity:0;transition:opacity 0.3s ease;pointer-events:none}
-.results.visible{opacity:1;pointer-events:all}
-.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
-.kpi{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1rem 1.25rem;text-align:center}
-.kpi-val{font-size:1.8rem;font-weight:700;color:#0077b6;line-height:1.1}
-.kpi-val.warn{color:#e67e22}
-.kpi-val.danger{color:#e74c3c}
-.kpi-val.ok{color:#27ae60}
-.kpi-lbl{font-size:0.75rem;color:#666;margin-top:3px;font-weight:500;text-transform:uppercase;letter-spacing:0.03em}
-.kpi-sub{font-size:0.72rem;color:#888;margin-top:2px}
-table{width:100%;border-collapse:collapse;font-size:0.88rem}
-th{background:#f0f0f0;color:#333;font-weight:600;padding:8px 10px;text-align:left;border-bottom:2px solid #ddd}
-th.right,td.right{text-align:right}
-td{padding:7px 10px;border-bottom:1px solid #f0f0f0}
-tr:nth-child(even) td{background:#fafafa}
-tr:nth-child(odd) td{background:#fff}
-.tbl-wrap{overflow-x:auto}
-.status-badge{display:inline-block;font-size:0.72rem;font-weight:700;padding:2px 7px;border-radius:10px;text-transform:uppercase}
-.badge-ok{background:#d4efdf;color:#1e8449}
-.badge-warn{background:#fdebd0;color:#d35400}
-.badge-danger{background:#fadbd8;color:#c0392b}
-.bar-wrap{background:#e8e8e8;border-radius:4px;height:10px;width:100%;min-width:60px;overflow:hidden}
-.bar-fill{height:100%;border-radius:4px;background:#0077b6;transition:width 0.4s ease}
-.bar-fill.warn{background:#e67e22}
-.bar-fill.danger{background:#e74c3c}
-.copy-row{display:flex;justify-content:flex-end;margin-bottom:0.75rem}
-.tip{background:#e8f4fd;border-left:3px solid #0077b6;border-radius:0 6px 6px 0;padding:0.75rem 1rem;font-size:0.83rem;color:#1a1a2e;margin-top:1rem}
-.tip strong{color:#0077b6}
-.how-to{margin-bottom:2rem}
-.how-to p{font-size:0.9rem;color:#444;margin-bottom:0.5rem}
-.related{margin-bottom:2rem}
-.related-links{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.75rem}
-.related-links a{background:#f0f4f8;border:1px solid #dde;border-radius:20px;padding:6px 14px;font-size:0.83rem;color:#0077b6;transition:background 0.2s}
-.related-links a:hover{background:#e8f4fd;text-decoration:none}
-.ad-slot{background:#f8f9fa;border:1px dashed #ccc;border-radius:6px;min-height:90px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:0.8rem;margin-bottom:2rem}
-footer{border-top:1px solid #e0e0e0;background:#fff;padding:1rem;text-align:center;font-size:0.8rem;color:#666}
-footer a{color:#0077b6;margin:0 0.4rem}
-.voltage-tabs{display:flex;gap:0.5rem;margin-bottom:1.25rem}
-.vtab{border:1px solid #ddd;background:#f8f9fa;color:#555;border-radius:6px;padding:8px 16px;font-size:0.85rem;font-weight:500;cursor:pointer;transition:all 0.2s;min-height:36px}
-.vtab.active{background:#0077b6;color:#fff;border-color:#0077b6}
-.formula-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.75rem 1rem;font-size:0.82rem;color:#444;margin-top:1rem;font-family:monospace}
-@media(max-width:640px){
-  .row2,.row3{grid-template-columns:1fr}
-  .kpi-grid{grid-template-columns:1fr 1fr}
-  .add-wrap{flex-direction:column}
-  .add-wrap button{width:100%}
-  h1{font-size:1.25rem}
-  .kpi-val{font-size:1.5rem}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #1a1a2e; font-size: 16px; line-height: 1.6; }
+a { color: #0077b6; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.container { max-width: 640px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+
+/* NAV */
+nav { border-bottom: 1px solid #e0e0e0; padding: 0.9rem 1.5rem; margin-bottom: 2rem; }
+.nav-inner { max-width: 640px; margin: 0 auto; display: flex; align-items: center; }
+.site-name { font-weight: 700; font-size: 1.1rem; color: #1a1a2e; }
+.site-name:hover { text-decoration: none; color: #0077b6; }
+
+/* HEADINGS */
+h1 { font-size: 1.6rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.4rem; }
+.subtitle { color: #555; font-size: 0.95rem; margin-bottom: 2rem; }
+h2 { font-size: 1.15rem; font-weight: 700; color: #1a1a2e; margin: 2rem 0 0.75rem; }
+h3 { font-size: 1rem; font-weight: 600; color: #1a1a2e; margin-bottom: 0.5rem; }
+
+/* CARD */
+.card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 2rem; }
+
+/* TABS */
+.tabs { display: flex; gap: 0; margin-bottom: 1.5rem; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; }
+.tab-btn { flex: 1; padding: 10px 8px; background: #f8f9fa; border: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; color: #555; transition: background 0.2s, color 0.2s; min-height: 44px; }
+.tab-btn.active { background: #0077b6; color: #fff; }
+.tab-btn:hover:not(.active) { background: #e9ecef; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* FORM ELEMENTS */
+.field { margin-bottom: 1.25rem; }
+label { display: block; font-size: 0.85rem; font-weight: 500; color: #444; margin-bottom: 0.35rem; }
+input[type="number"], input[type="text"], select {
+  width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 6px;
+  font-size: 0.95rem; color: #1a1a2e; background: #fff; outline: none;
+  transition: box-shadow 0.2s, border-color 0.2s; min-height: 44px;
 }
-@media(max-width:400px){
-  .kpi-grid{grid-template-columns:1fr}
+input:focus, select:focus { border-color: #0077b6; box-shadow: 0 0 0 3px rgba(0,119,182,0.15); }
+input.error { border-color: #e74c3c; }
+.error-msg { font-size: 0.8rem; color: #e74c3c; margin-top: 0.3rem; display: none; }
+.error-msg.show { display: block; }
+
+/* ROWS */
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; }
+
+/* APPLIANCE TABLE INPUTS */
+.appliance-list { margin-bottom: 1rem; }
+.appliance-row { display: grid; grid-template-columns: 1fr 80px 70px 36px; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem; }
+.appliance-row input, .appliance-row select { padding: 8px 10px; font-size: 0.85rem; min-height: 40px; }
+.appliance-header { display: grid; grid-template-columns: 1fr 80px 70px 36px; gap: 0.5rem; margin-bottom: 0.3rem; }
+.appliance-header span { font-size: 0.75rem; font-weight: 600; color: #666; }
+.remove-btn { background: #e74c3c; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.remove-btn:hover { background: #c0392b; }
+.add-btn { background: transparent; border: 1px dashed #0077b6; color: #0077b6; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; width: 100%; margin-bottom: 1rem; min-height: 40px; }
+.add-btn:hover { background: rgba(0,119,182,0.06); }
+
+/* BUTTONS */
+.btn-primary { background: #0077b6; color: #fff; border: none; padding: 12px 24px; border-radius: 6px; font-size: 0.95rem; font-weight: 600; cursor: pointer; width: 100%; min-height: 44px; transition: background 0.2s; }
+.btn-primary:hover { background: #006299; }
+.btn-secondary { background: #f0f0f0; color: #444; border: none; padding: 10px 20px; border-radius: 6px; font-size: 0.85rem; font-weight: 500; cursor: pointer; min-height: 40px; transition: background 0.2s; }
+.btn-secondary:hover { background: #e0e0e0; }
+
+/* RESULTS */
+.result-section { opacity: 0; transition: opacity 0.3s ease; display: none; }
+.result-section.show { display: block; opacity: 1; }
+.result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+.result-card { background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1rem; text-align: center; }
+.result-card .big-num { font-size: 1.8rem; font-weight: 700; color: #0077b6; line-height: 1.1; }
+.result-card .unit { font-size: 0.75rem; color: #777; font-weight: 500; }
+.result-card .lbl { font-size: 0.78rem; color: #555; margin-top: 0.3rem; }
+.result-card.highlight { background: #0077b6; border-color: #0077b6; }
+.result-card.highlight .big-num, .result-card.highlight .unit, .result-card.highlight .lbl { color: #fff; }
+.result-card.warn { background: #fff3cd; border-color: #ffc107; }
+.result-card.warn .big-num { color: #856404; }
+.result-card.danger { background: #fde8e8; border-color: #e74c3c; }
+.result-card.danger .big-num { color: #c0392b; }
+
+.breaker-badge { display: inline-block; background: #0077b6; color: #fff; font-size: 1.3rem; font-weight: 700; padding: 0.5rem 1.5rem; border-radius: 6px; margin: 0.75rem 0; }
+.status-bar { height: 12px; border-radius: 6px; background: #e0e0e0; margin: 0.5rem 0; overflow: hidden; }
+.status-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease; }
+.status-ok { background: #27ae60; }
+.status-warn { background: #f39c12; }
+.status-danger { background: #e74c3c; }
+.status-label { font-size: 0.8rem; color: #555; display: flex; justify-content: space-between; margin-bottom: 0.2rem; }
+
+/* TABLE */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+thead th { background: #f0f0f0; padding: 8px 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #ddd; white-space: nowrap; }
+thead th.num { text-align: right; }
+tbody tr:nth-child(even) { background: #fafafa; }
+tbody tr:nth-child(odd) { background: #fff; }
+tbody td { padding: 8px 12px; border-bottom: 1px solid #eee; }
+tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tfoot td { padding: 8px 12px; border-top: 2px solid #ddd; font-weight: 700; background: #f0f0f0; }
+tfoot td.num { text-align: right; }
+
+/* COPY BTN */
+.copy-row { display: flex; justify-content: flex-end; margin-top: 0.75rem; }
+.copy-btn { background: transparent; border: 1px solid #0077b6; color: #0077b6; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: background 0.2s; }
+.copy-btn:hover { background: rgba(0,119,182,0.08); }
+
+/* AD SLOT */
+.ad-slot { background: #f8f9fa; border: 1px dashed #ddd; border-radius: 6px; min-height: 90px; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 0.8rem; margin: 2rem 0; }
+
+/* CONTENT SECTION */
+.content-section { font-size: 0.95rem; color: #333; }
+.content-section p { margin-bottom: 1rem; }
+.content-section ul { margin: 0.5rem 0 1rem 1.5rem; }
+.content-section ul li { margin-bottom: 0.4rem; }
+details { border: 1px solid #e0e0e0; border-radius: 6px; margin-bottom: 0.75rem; }
+summary { padding: 0.85rem 1rem; font-weight: 600; cursor: pointer; font-size: 0.95rem; color: #1a1a2e; }
+summary:hover { background: #f8f9fa; }
+details[open] summary { border-bottom: 1px solid #e0e0e0; }
+details p { padding: 0.85rem 1rem; font-size: 0.9rem; color: #444; }
+
+/* RELATED TOOLS */
+.related-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+.related-card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
+.related-card:hover { border-color: #0077b6; box-shadow: 0 2px 8px rgba(0,119,182,0.1); text-decoration: none; }
+.related-card .rc-name { font-weight: 600; font-size: 0.9rem; color: #0077b6; display: block; }
+.related-card .rc-desc { font-size: 0.8rem; color: #666; margin-top: 0.25rem; }
+
+/* FOOTER */
+footer { border-top: 1px solid #e0e0e0; padding: 1.5rem; text-align: center; font-size: 0.82rem; color: #888; }
+footer a { color: #666; margin: 0 0.5rem; }
+footer a:hover { color: #0077b6; }
+.footer-links { margin-bottom: 0.5rem; }
+
+/* NOTE BOX */
+.note-box { background: #e8f4fd; border-left: 3px solid #0077b6; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; font-size: 0.85rem; color: #333; margin-bottom: 1.25rem; }
+.warn-box { background: #fff3cd; border-left: 3px solid #ffc107; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; font-size: 0.85rem; color: #856404; margin-bottom: 1.25rem; }
+
+/* SLIDER */
+.slider-row { display: flex; align-items: center; gap: 0.75rem; }
+input[type="range"] { flex: 1; accent-color: #0077b6; }
+.slider-val { font-weight: 700; color: #0077b6; min-width: 48px; text-align: right; font-size: 0.95rem; }
+
+@media (max-width: 640px) {
+  h1 { font-size: 1.35rem; }
+  .row2, .row3 { grid-template-columns: 1fr; }
+  .result-grid { grid-template-columns: 1fr 1fr; }
+  .appliance-row { grid-template-columns: 1fr 72px 64px 32px; }
+  .related-tools { grid-template-columns: 1fr; }
+  .card { padding: 1.25rem; }
+  .tabs { flex-direction: column; }
+  .tab-btn { border-bottom: 1px solid #ddd; }
+  .tab-btn:last-child { border-bottom: none; }
+}
+@media (max-width: 400px) {
+  .result-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
+
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-brand">tool<span>wick</span>.com</a>
+    <a href="/" class="site-name">⚡ toolwick.com</a>
   </div>
 </nav>
-<main>
+
+<div class="container">
   <h1>Electrical Load & Circuit Breaker Calculator</h1>
-  <p class="subtitle">Add appliances and devices to calculate total amperage, circuit breaker size, and wire gauge recommendations.</p>
+  <p class="subtitle">Calculate total load in watts/amps, find the right breaker size, and check if your circuit can handle the demand.</p>
 
   <div class="card">
-    <div class="section-title">⚡ System Settings</div>
-    <div class="row2">
-      <div class="field">
-        <label>System Voltage</label>
-        <div class="voltage-tabs" id="voltageTabs">
-          <button class="vtab active" data-v="120">120V (USA)</button>
-          <button class="vtab" data-v="240">240V (USA)</button>
-          <button class="vtab" data-v="230">230V (EU/UK)</button>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('multi')">Multiple Appliances</button>
+      <button class="tab-btn" onclick="switchTab('single')">Single Circuit</button>
+      <button class="tab-btn" onclick="switchTab('breaker')">Breaker Sizing</button>
+    </div>
+
+    <!-- TAB 1: MULTIPLE APPLIANCES -->
+    <div id="tab-multi" class="tab-content active">
+      <div class="note-box">Add all devices/appliances on a circuit. Enter name, watts (or amps), and quantity.</div>
+      
+      <div class="row2" style="margin-bottom:1rem;">
+        <div class="field" style="margin-bottom:0;">
+          <label>Voltage (V)</label>
+          <select id="m-voltage">
+            <option value="120">120V (US Standard)</option>
+            <option value="240">240V (US Heavy)</option>
+            <option value="208">208V (3-Phase Low)</option>
+            <option value="277">277V (Commercial)</option>
+            <option value="480">480V (Industrial)</option>
+          </select>
         </div>
-        <input type="hidden" id="systemVoltage" value="120">
+        <div class="field" style="margin-bottom:0;">
+          <label>Power Factor</label>
+          <div class="slider-row">
+            <input type="range" id="m-pf-slider" min="0.5" max="1.0" step="0.05" value="1.0" oninput="document.getElementById('m-pf-val').textContent=parseFloat(this.value).toFixed(2)">
+            <span class="slider-val" id="m-pf-val">1.00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="appliance-header">
+        <span>Device / Appliance</span>
+        <span>Watts</span>
+        <span>Qty</span>
+        <span></span>
+      </div>
+      <div class="appliance-list" id="appliance-list"></div>
+      <button class="add-btn" onclick="addAppliance()">+ Add Another Device</button>
+
+      <div id="m-err" class="error-msg"></div>
+      <button class="btn-primary" onclick="calcMulti()">Calculate Load & Breaker Size</button>
+    </div>
+
+    <!-- TAB 2: SINGLE CIRCUIT -->
+    <div id="tab-single" class="tab-content">
+      <div class="row2">
+        <div class="field">
+          <label>Voltage (V)</label>
+          <select id="s-voltage">
+            <option value="120">120V (Standard)</option>
+            <option value="240">240V (Heavy Duty)</option>
+            <option value="208">208V (3-Phase Low)</option>
+            <option value="277">277V (Commercial)</option>
+            <option value="480">480V (Industrial)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Known Value Type</label>
+          <select id="s-type" onchange="toggleSingleInputs()">
+            <option value="watts">Watts (W)</option>
+            <option value="amps">Amperes (A)</option>
+            <option value="kva">Kilovolt-Amperes (kVA)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" id="s-val-field">
+        <label id="s-val-label">Power (Watts)</label>
+        <input type="number" id="s-value" placeholder="e.g. 1500" min="0">
+        <div class="error-msg" id="s-val-err">Please enter a valid positive number.</div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Power Factor (0.5–1.0)</label>
+          <div class="slider-row">
+            <input type="range" id="s-pf-slider" min="0.5" max="1.0" step="0.05" value="1.0" oninput="document.getElementById('s-pf-val').textContent=parseFloat(this.value).toFixed(2)">
+            <span class="slider-val" id="s-pf-val">1.00</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Safety Margin</label>
+          <select id="s-margin">
+            <option value="1.25">125% (NEC Standard)</option>
+            <option value="1.0">100% (No Margin)</option>
+            <option value="1.5">150% (Extra Safe)</option>
+            <option value="1.8">180% (Motor Load)</option>
+          </select>
+        </div>
+      </div>
+      <div id="s-err" class="error-msg"></div>
+      <button class="btn-primary" onclick="calcSingle()">Calculate</button>
+    </div>
+
+    <!-- TAB 3: BREAKER SIZING -->
+    <div id="tab-breaker" class="tab-content">
+      <div class="note-box">Already know your amperage? Find the correct breaker size and wire gauge.</div>
+      <div class="row2">
+        <div class="field">
+          <label>Load Current (Amps)</label>
+          <input type="number" id="b-amps" placeholder="e.g. 18.5" min="0" step="0.1">
+          <div class="error-msg" id="b-amps-err">Enter a valid amperage.</div>
+        </div>
+        <div class="field">
+          <label>Load Type</label>
+          <select id="b-type">
+            <option value="1.25">General (125% NEC)</option>
+            <option value="1.25">Lighting (125%)</option>
+            <option value="1.25">Receptacles (125%)</option>
+            <option value="1.8">Motor Load (180%)</option>
+            <option value="1.5">HVAC (150%)</option>
+            <option value="1.0">Heater / No Margin</option>
+          </select>
+        </div>
       </div>
       <div class="field">
-        <label for="safetyFactor">Safety Factor (%)</label>
-        <select id="safetyFactor">
-          <option value="80" selected>80% — NEC Standard (recommended)</option>
-          <option value="100">100% — No safety margin</option>
-          <option value="125">125% — Extra safety margin</option>
+        <label>Voltage (for reference)</label>
+        <select id="b-voltage">
+          <option value="120">120V</option>
+          <option value="240">240V</option>
+          <option value="208">208V</option>
+          <option value="277">277V</option>
+          <option value="480">480V</option>
         </select>
       </div>
+      <div id="b-err" class="error-msg"></div>
+      <button class="btn-primary" onclick="calcBreaker()">Find Breaker Size</button>
     </div>
-
-    <div class="section-title" style="margin-top:1.5rem">🔌 Appliances / Devices</div>
-    <div id="applianceList"></div>
-    <div class="add-wrap">
-      <button class="btn-secondary" id="addCustomBtn" style="flex:1;min-width:140px">+ Add Custom Device</button>
-      <button class="btn-secondary" id="addPresetBtn" style="flex:1;min-width:140px">+ Add from Presets</button>
-    </div>
-
-    <div id="presetPanel" style="display:none;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;margin-bottom:1rem">
-      <label style="margin-bottom:0.5rem">Select a preset device to add:</label>
-      <div style="display:flex;gap:0.5rem;flex-wrap:wrap" id="presetButtons"></div>
-    </div>
-
-    <button class="btn" id="calcBtn">Calculate Load & Breaker Size</button>
   </div>
 
-  <div class="results card" id="resultsSection">
-    <div class="copy-row">
-      <button class="btn-sm" id="copyBtn">Copy Results</button>
+  <!-- RESULTS -->
+  <div class="result-section" id="result-section">
+    <div class="card">
+      <div id="result-content"></div>
+      <div class="copy-row">
+        <button class="copy-btn" id="copy-btn" onclick="copyResults()">Copy Results</button>
+      </div>
     </div>
-    <div class="section-title">📊 Summary</div>
-    <div class="kpi-grid" id="kpiGrid"></div>
-
-    <div class="tip" id="breakerTip"></div>
-
-    <div class="section-title" style="margin-top:1.5rem">📋 Load Breakdown</div>
-    <div class="tbl-wrap">
-      <table id="breakdownTable">
-        <thead>
-          <tr>
-            <th>Device</th>
-            <th class="right">Watts</th>
-            <th class="right">Amps</th>
-            <th class="right">% of Load</th>
-            <th>Load Bar</th>
-          </tr>
-        </thead>
-        <tbody id="breakdownBody"></tbody>
-        <tfoot id="breakdownFoot"></tfoot>
-      </table>
-    </div>
-
-    <div class="section-title" style="margin-top:1.5rem">🔧 Wire Gauge Recommendations</div>
-    <div class="tbl-wrap">
-      <table id="wireTable">
-        <thead>
-          <tr><th>Breaker Size</th><th>Wire Gauge (AWG)</th><th>Max Ampacity</th><th>Suitable For This Load</th></tr>
-        </thead>
-        <tbody id="wireBody"></tbody>
-      </table>
-    </div>
-
-    <div class="formula-box" id="formulaBox"></div>
   </div>
 
   <div class="ad-slot" id="ad-mid">Advertisement</div>
 
-  <div class="card how-to">
-    <div class="section-title">📖 How to Use This Calculator</div>
-    <p>Select your system voltage and safety factor, then add each appliance or device you want on the circuit — either by entering custom wattage or choosing from the presets. The calculator computes total amperage, recommends the correct circuit breaker size (following NEC 80% rule by default), and suggests the appropriate wire gauge.</p>
-    <p>The NEC (National Electrical Code) requires that continuous loads not exceed 80% of a breaker's rated ampacity. For a 20A breaker, the maximum continuous load should be 16A. This tool applies that rule automatically unless you change the safety factor.</p>
-    <p>Always consult a licensed electrician before performing electrical work. This tool is for estimation purposes only.</p>
-  </div>
+  <!-- CONTENT SECTION -->
+  <div class="content-section">
 
-  <div class="card related">
-    <div class="section-title">🔗 Related Tools</div>
-    <div class="related-links">
-      <a href="/stair-stringer-calculator/">Stair Stringer Calculator</a>
-      <a href="/roof-pitch-rafter-calculator/">Roof Pitch & Rafter Length Calculator</a>
-      <a href="/concrete-volume-calculator/">Concrete Volume Calculator</a>
+    <h2>How to Use This Electrical Load Calculator</h2>
+    <p>This tool has three modes. The <strong>Multiple Appliances</strong> tab lets you add every device on a circuit to see the total load and recommended breaker. The <strong>Single Circuit</strong> tab converts between watts, amps, and kVA for one load. The <strong>Breaker Sizing</strong> tab takes a known amperage and returns the correct breaker and wire gauge per NEC guidelines. Enter your voltage, fill in the load details, and click Calculate.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Choosing the wrong circuit breaker is one of the most common — and most dangerous — electrical mistakes homeowners and contractors make. An undersized breaker trips constantly and creates fire hazards from repeated overheating. An oversized breaker won't trip when it should, leaving wires unprotected during an overload or fault.</p>
+    <p>Consider a typical home kitchen circuit running at 120V. A coffee maker (1,200W), a microwave (1,100W), and a toaster (900W) running simultaneously draw about 26.7 amps — well beyond the 15-amp or even 20-amp breaker that many kitchens have. The NEC (National Electrical Code) requires circuits serving continuous loads be sized at 125% of the calculated load, meaning that 26.7A scenario actually needs a 34-amp minimum design, pointing to dedicated 20A circuits for each major appliance.</p>
+    <p>For workshops, electricians typically size for motor loads at 180% of full-load current, per NEC Article 430. A 10-amp table saw motor should be on a 20-amp breaker minimum. These calculations are critical for permits, insurance, and safety inspections.</p>
+
+    <h2>How It's Calculated</h2>
+    <p>The core formulas used in this tool:</p>
+    <ul>
+      <li><strong>Amps from Watts:</strong> A = W ÷ (V × PF)</li>
+      <li><strong>Watts from Amps:</strong> W = A × V × PF</li>
+      <li><strong>kVA:</strong> kVA = (V × A) ÷ 1,000</li>
+      <li><strong>Breaker Size:</strong> Calculated Amps × Safety Margin → round up to next standard breaker size</li>
+      <li><strong>Standard breaker sizes (amps):</strong> 15, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 100, 110, 125, 150, 175, 200, 225, 250, 300, 400</li>
+    </ul>
+    <p>The <strong>power factor (PF)</strong> accounts for reactive loads like motors, transformers, and fluorescent lighting that draw more current than their wattage implies. Purely resistive loads (heaters, incandescent bulbs) have PF = 1.0. Motors typically run 0.80–0.90. When unsure, 0.9 is a safe estimate for mixed loads.</p>
+
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Always use the 125% NEC rule</strong> for continuous loads (anything running 3+ hours). Don't size a breaker exactly at your load — it will run hot and trip prematurely.</li>
+      <li><strong>Don't mix voltages on one circuit.</strong> A 240V circuit needs both legs from your panel; a 120V circuit uses one leg plus neutral. Verify voltage before calculating.</li>
+      <li><strong>Account for motor startup surge.</strong> Motors draw 6–8× their running amps at startup. Use the 180% motor-load margin or a time-delay breaker to avoid nuisance tripping.</li>
+      <li><strong>Wire gauge must match the breaker.</strong> A 20A breaker requires 12 AWG minimum; a 15A needs 14 AWG. Never put a larger breaker on undersized wire — this creates fire risk.</li>
+      <li><strong>Don't overload a circuit to 80% in practice.</strong> NEC says 80% for continuous loads, but this is a maximum — plan for realistic simultaneous use, not just theoretical maximums.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is the NEC 80% rule for circuit breakers?</summary>
+      <p>The NEC (National Electrical Code) requires that continuous loads (operating 3 hours or more) not exceed 80% of a circuit breaker's rated capacity. This means a 20A breaker should carry no more than 16A of continuous load. This is why the standard safety margin in this calculator defaults to 125% — the reciprocal of 80%.</p>
+    </details>
+    <details>
+      <summary>How do I calculate amps if I only know watts?</summary>
+      <p>Divide watts by voltage (and multiply by power factor if it's not 1.0). For example, a 1,500W space heater on 120V: 1,500 ÷ 120 = 12.5 amps. Apply the 125% NEC margin: 12.5 × 1.25 = 15.6A, which rounds up to a 20-amp breaker. This calculator does all of this automatically.</p>
+    </details>
+    <details>
+      <summary>What wire gauge do I need for my breaker?</summary>
+      <p>In the US, standard residential wire sizing: 15A breaker → 14 AWG, 20A → 12 AWG, 30A → 10 AWG, 40A–50A → 8 AWG, 60A → 6 AWG, 100A → 4 AWG or 3 AWG. This tool shows recommended wire gauge with every breaker result. Always verify with a licensed electrician for your specific installation.</p>
+    </details>
+    <details>
+      <summary>Should I use a single-pole or double-pole breaker?</summary>
+      <p>Single-pole breakers (one slot in the panel) handle 120V circuits. Double-pole breakers (two slots) handle 240V circuits like dryers, ranges, water heaters, and EV chargers. If your voltage is 240V, you need a double-pole breaker. This calculator notes which type is appropriate based on the voltage you select.</p>
+    </details>
+
+    <h2>Related Tools</h2>
+    <div class="related-tools">
+      <a href="/gravel-driveway-calculator/" class="related-card">
+        <span class="rc-name">Gravel Driveway Calculator</span>
+        <span class="rc-desc">Estimate gravel volume and cost for driveways and pathways.</span>
+      </a>
+      <a href="/tile-flooring-calculator/" class="related-card">
+        <span class="rc-name">Tile & Flooring Coverage Calculator</span>
+        <span class="rc-desc">Calculate tiles needed, waste factor, and material costs.</span>
+      </a>
     </div>
+
   </div>
 
   <div class="ad-slot" id="ad-bottom">Advertisement</div>
-</main>
+
+</div>
+
 <footer>
-  <a href="/about/">About</a>
-  <a href="/privacy/">Privacy</a>
-  <a href="/contact/">Contact</a>
-  <span>© <span id="yr"></span> toolwick.com</span>
+  <div class="footer-links">
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <div>© <span id="yr"></span> toolwick.com — Free Online Tools</div>
 </footer>
+
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
 
-const PRESETS = [
-  {name:'Refrigerator',watts:150},{name:'Microwave',watts:1200},{name:'Dishwasher',watts:1800},
-  {name:'Electric Oven',watts:2400},{name:'Toaster',watts:900},{name:'Coffee Maker',watts:1000},
-  {name:'Washer',watts:1200},{name:'Dryer (Electric)',watts:5000},{name:'TV 55"',watts:130},
-  {name:'Desktop PC',watts:300},{name:'Laptop',watts:65},{name:'LED Bulb 10W',watts:10},
-  {name:'Air Conditioner Window',watts:1500},{name:'Central AC 3-ton',watts:3500},
-  {name:'Electric Heater',watts:1500},{name:'Hair Dryer',watts:1800},
-  {name:'Vacuum Cleaner',watts:1400},{name:'EV Charger (L2)',watts:7200},
-  {name:'Hot Tub',watts:5500},{name:'Ceiling Fan',watts:75}
+// ── STANDARD BREAKER SIZES ──
+const BREAKER_SIZES = [15,20,25,30,35,40,50,60,70,80,90,100,110,125,150,175,200,225,250,300,400];
+
+// ── WIRE GAUGE TABLE (amps → AWG at 60°C, copper) ──
+const WIRE_GAUGE = [
+  [15,'14 AWG'],[20,'12 AWG'],[25,'10 AWG'],[30,'10 AWG'],
+  [35,'8 AWG'],[40,'8 AWG'],[50,'8 AWG'],[60,'6 AWG'],
+  [70,'4 AWG'],[80,'4 AWG'],[90,'3 AWG'],[100,'3 AWG'],
+  [110,'2 AWG'],[125,'2 AWG'],[150,'1 AWG'],[175,'1/0 AWG'],
+  [200,'2/0 AWG'],[225,'3/0 AWG'],[250,'4/0 AWG'],
+  [300,'350 kcmil'],[400,'500 kcmil']
 ];
 
-const WIRE_DATA = [
-  {breaker:15,gauge:'14 AWG',ampacity:15},
-  {breaker:20,gauge:'12 AWG',ampacity:20},
-  {breaker:30,gauge:'10 AWG',ampacity:30},
-  {breaker:40,gauge:'8 AWG',ampacity:40},
-  {breaker:50,gauge:'6 AWG',ampacity:55},
-  {breaker:60,gauge:'4 AWG',ampacity:70},
-  {breaker:100,gauge:'2 AWG',ampacity:95},
-  {breaker:125,gauge:'1 AWG',ampacity:110},
-  {breaker:150,gauge:'1/0 AWG',ampacity:125},
-  {breaker:200,gauge:'3/0 AWG',ampacity:200}
-];
-
-let applianceId = 0;
-let appliances = [];
-
-function fmt(n, dec=2){
-  if(isNaN(n)) return '—';
-  return Number(n).toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+function getWireGauge(amps) {
+  for (const [a, g] of WIRE_GAUGE) { if (amps <= a) return g; }
+  return '500+ kcmil';
 }
-function fmtW(n){return fmt(n,0);}
 
-// Voltage tabs
-document.querySelectorAll('.vtab').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.vtab').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('systemVoltage').value = btn.dataset.v;
+function nextBreakerSize(amps) {
+  for (const s of BREAKER_SIZES) { if (s >= amps) return s; }
+  return Math.ceil(amps / 50) * 50;
+}
+
+function fmtNum(n, dec=2) {
+  if (isNaN(n)) return '—';
+  return n.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+}
+
+function fmtInt(n) {
+  if (isNaN(n)) return '—';
+  return Math.round(n).toLocaleString('en-US');
+}
+
+// ── TABS ──
+function switchTab(t) {
+  ['multi','single','breaker'].forEach(id => {
+    document.getElementById('tab-'+id).classList.remove('active');
   });
-});
-
-// Preset panel
-const presetPanel = document.getElementById('presetPanel');
-const presetButtonsEl = document.getElementById('presetButtons');
-PRESETS.forEach(p=>{
-  const b = document.createElement('button');
-  b.className='btn-secondary';
-  b.style.cssText='padding:5px 10px;font-size:0.78rem;min-height:32px';
-  b.textContent=p.name;
-  b.addEventListener('click',()=>{
-    addAppliance(p.name, p.watts, 1);
-    presetPanel.style.display='none';
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.remove('active');
+    if (['multi','single','breaker'][i] === t) b.classList.add('active');
   });
-  presetButtonsEl.appendChild(b);
-});
+  document.getElementById('tab-'+t).classList.add('active');
+  hideResults();
+}
 
-document.getElementById('addPresetBtn').addEventListener('click',()=>{
-  presetPanel.style.display = presetPanel.style.display==='none'?'block':'none';
-});
-document.getElementById('addCustomBtn').addEventListener('click',()=>{
-  presetPanel.style.display='none';
-  addAppliance('', '', 1);
-});
+function hideResults() {
+  const r = document.getElementById('result-section');
+  r.classList.remove('show');
+  setTimeout(() => { r.style.display='none'; }, 310);
+}
 
-function addAppliance(name='', watts='', qty=1){
-  const id = ++applianceId;
-  appliances.push({id});
-  const list = document.getElementById('applianceList');
+function showResults(html) {
+  const r = document.getElementById('result-section');
+  document.getElementById('result-content').innerHTML = html;
+  r.style.display = 'block';
+  requestAnimationFrame(() => r.classList.add('show'));
+  r.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+// ── APPLIANCE LIST ──
+let appCount = 0;
+function addAppliance(name='', watts='', qty=1) {
+  appCount++;
+  const id = appCount;
   const div = document.createElement('div');
-  div.className='appliance-row';
-  div.id='row-'+id;
-  div.innerHTML=`
-    <div class="row3">
-      <div class="field" style="margin-bottom:0">
-        <label>Device Name</label>
-        <input type="text" id="name-${id}" placeholder="e.g. Refrigerator" value="${name}" maxlength="40">
+  div.className = 'appliance-row';
+  div.id = 'app-row-'+id;
+  div.innerHTML = `
+    <input type="text" placeholder="e.g. Microwave" value="${name}" id="app-name-${id}">
+    <input type="number" placeholder="Watts" min="0" value="${watts}" id="app-watts-${id}">
+    <input type="number" placeholder="1" min="1" value="${qty}" id="app-qty-${id}" style="text-align:center;">
+    <button class="remove-btn" onclick="removeAppliance(${id})" title="Remove">×</button>`;
+  document.getElementById('appliance-list').appendChild(div);
+}
+
+function removeAppliance(id) {
+  const el = document.getElementById('app-row-'+id);
+  if (el) el.remove();
+}
+
+// Pre-fill some common appliances
+addAppliance('LED TV', 150, 1);
+addAppliance('Refrigerator', 150, 1);
+addAppliance('Laptop', 65, 1);
+
+// ── CALC: MULTIPLE APPLIANCES ──
+function calcMulti() {
+  const errEl = document.getElementById('m-err');
+  errEl.classList.remove('show');
+  const rows = document.getElementById('appliance-list').querySelectorAll('.appliance-row');
+  if (!rows.length) { errEl.textContent='Add at least one device.'; errEl.classList.add('show'); return; }
+  const voltage = parseFloat(document.getElementById('m-voltage').value);
+  const pf = parseFloat(document.getElementById('m-pf-slider').value);
+  
+  let items = [];
+  let totalW = 0;
+  let hasError = false;
+
+  rows.forEach(row => {
+    const idMatch = row.id.match(/app-row-(\d+)/);
+    if (!idMatch) return;
+    const id = idMatch[1];
+    const name = document.getElementById('app-name-'+id).value.trim() || 'Device';
+    const wattsVal = parseFloat(document.getElementById('app-watts-'+id).value);
+    const qty = parseInt(document.getElementById('app-qty-'+id).value) || 1;
+    if (isNaN(wattsVal) || wattsVal < 0) { hasError = true; return; }
+    const lineW = wattsVal * qty;
+    const lineA = lineW / (voltage * pf);
+    items.push({name, watts: wattsVal, qty, lineW, lineA});
+    totalW += lineW;
+  });
+
+  if (hasError) { errEl.textContent='Some rows have invalid wattage. Please check.'; errEl.classList.add('show'); return; }
+  if (!items.length) { errEl.textContent='No valid devices found.'; errEl.classList.add('show'); return; }
+
+  const totalA = totalW / (voltage * pf);
+  const totalKVA = (voltage * totalA) / 1000;
+  const minA = totalA * 1.25;
+  const breaker = nextBreakerSize(minA);
+  const wire = getWireGauge(breaker);
+  const poleType = voltage >= 240 ? 'Double-Pole' : 'Single-Pole';
+  const utilPct = (totalA / breaker) * 100;
+  const statusClass = utilPct > 80 ? 'status-danger' : utilPct > 65 ? 'status-warn' : 'status-ok';
+
+  let tableRows = items.map(it => `
+    <tr>
+      <td>${it.name}</td>
+      <td class="num">${fmtInt(it.watts)}</td>
+      <td class="num">${it.qty}</td>
+      <td class="num">${fmtInt(it.lineW)}</td>
+      <td class="num">${fmtNum(it.lineA, 2)}</td>
+    </tr>`).join('');
+
+  const html = `
+    <h3>Load Summary</h3>
+    <div class="result-grid">
+      <div class="result-card highlight">
+        <div class="big-num">${fmtNum(totalA,1)}</div>
+        <div class="unit">Amps</div>
+        <div class="lbl">Total Load</div>
       </div>
-      <div class="field" style="margin-bottom:0">
-        <label>Watts (W)</label>
-        <input type="number" id="watts-${id}" placeholder="e.g. 150" value="${watts}" min="0" max="100000">
-        <span class="error-msg" id="err-${id}">Enter a valid wattage.</span>
+      <div class="result-card">
+        <div class="big-num">${fmtInt(totalW)}</div>
+        <div class="unit">Watts</div>
+        <div class="lbl">Total Power</div>
       </div>
-      <div class="field" style="margin-bottom:0">
-        <label>Qty</label>
-        <input type="number" id="qty-${id}" value="${qty}" min="1" max="999" style="min-width:60px">
+      <div class="result-card">
+        <div class="big-num">${fmtNum(totalKVA,2)}</div>
+        <div class="unit">kVA</div>
+        <div class="lbl">Apparent Power</div>
       </div>
     </div>
-    <div style="display:flex;align-items:center;justify-content:flex-end;margin-top:0.5rem">
-      <button class="btn-danger" onclick="removeAppliance(${id})">Remove</button>
+
+    <div style="margin-bottom:1.25rem;">
+      <div class="status-label"><span>Circuit Utilization (vs. breaker)</span><span>${fmtNum(utilPct,1)}%</span></div>
+      <div class="status-bar"><div class="status-fill ${statusClass}" style="width:${Math.min(utilPct,100)}%"></div></div>
+    </div>
+
+    <h3>Recommended Breaker</h3>
+    <table style="margin-bottom:1rem;"><tbody>
+      <tr><td>Minimum Required (×1.25 NEC)</td><td class="num"><strong>${fmtNum(minA,1)} A</strong></td></tr>
+      <tr><td style="background:#fafafa;">Recommended Breaker</td><td class="num" style="background:#fafafa;"><span class="breaker-badge">${breaker}A</span></td></tr>
+      <tr><td>Breaker Type</td><td class="num">${poleType}</td></tr>
+      <tr><td style="background:#fafafa;">Minimum Wire Gauge</td><td class="num" style="background:#fafafa;">${wire}</td></tr>
+      <tr><td>Voltage</td><td class="num">${voltage}V</td></tr>
+      <tr><td style="background:#fafafa;">Power Factor</td><td class="num" style="background:#fafafa;">${fmtNum(pf,2)}</td></tr>
+    </tbody></table>
+
+    <h3>Device Breakdown</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Device</th><th class="num">W each</th><th class="num">Qty</th><th class="num">Total W</th><th class="num">Amps</th></tr></thead>
+      <tbody>${tableRows}</tbody>
+      <tfoot><tr><td><strong>TOTAL</strong></td><td class="num"></td><td class="num"></td><td class="num">${fmtInt(totalW)} W</td><td class="num">${fmtNum(totalA,2)} A</td></tr></tfoot>
+    </table>
     </div>`;
-  list.appendChild(div);
-  div.querySelector('#name-'+id).addEventListener('keydown', onEnter);
-  div.querySelector('#watts-'+id).addEventListener('keydown', onEnter);
-  div.querySelector('#qty-'+id).addEventListener('keydown', onEnter);
+
+  showResults(html);
 }
 
-function removeAppliance(id){
-  appliances = appliances.filter(a=>a.id!==id);
-  const el = document.getElementById('row-'+id);
-  if(el) el.remove();
+// ── TOGGLE SINGLE INPUTS ──
+function toggleSingleInputs() {
+  const t = document.getElementById('s-type').value;
+  const labels = {watts:'Power (Watts)', amps:'Current (Amperes)', kva:'Apparent Power (kVA)'};
+  document.getElementById('s-val-label').textContent = labels[t];
+  const placeholders = {watts:'e.g. 1500', amps:'e.g. 12.5', kva:'e.g. 1.8'};
+  document.getElementById('s-value').placeholder = placeholders[t];
 }
 
-function onEnter(e){
-  if(e.key==='Enter') calculate();
-}
-document.getElementById('calcBtn').addEventListener('click', calculate);
+// ── CALC: SINGLE CIRCUIT ──
+function calcSingle() {
+  const errEl = document.getElementById('s-val-err');
+  const sErr = document.getElementById('s-err');
+  errEl.classList.remove('show');
+  sErr.classList.remove('show');
+  document.getElementById('s-value').classList.remove('error');
 
-function getBreakers(totalAmps, safetyFactor){
-  const required = totalAmps / (safetyFactor/100);
-  const sizes = [15,20,30,40,50,60,70,80,100,110,125,150,175,200,225,250,300,400];
-  for(const s of sizes){ if(s>=required) return {size:s, required:required}; }
-  return {size:400, required:required};
-}
+  const voltage = parseFloat(document.getElementById('s-voltage').value);
+  const type = document.getElementById('s-type').value;
+  const val = parseFloat(document.getElementById('s-value').value);
+  const pf = parseFloat(document.getElementById('s-pf-slider').value);
+  const margin = parseFloat(document.getElementById('s-margin').value);
 
-function getWireForBreaker(bSize){
-  for(let i=WIRE_DATA.length-1;i>=0;i--){
-    if(WIRE_DATA[i].breaker<=bSize) return WIRE_DATA[i];
-  }
-  return WIRE_DATA[0];
-}
-
-function loadClass(pct){
-  if(pct>100) return 'danger';
-  if(pct>80) return 'warn';
-  return 'ok';
-}
-
-function calculate(){
-  let hasError=false;
-  const voltage = parseFloat(document.getElementById('systemVoltage').value)||120;
-  const safetyFactor = parseFloat(document.getElementById('safetyFactor').value)||80;
-
-  const rows = document.querySelectorAll('.appliance-row');
-  if(rows.length===0){
-    alert('Please add at least one appliance or device.');
+  if (isNaN(val) || val <= 0) {
+    document.getElementById('s-value').classList.add('error');
+    errEl.classList.add('show');
     return;
   }
 
-  let items=[];
-  rows.forEach(row=>{
-    const id = row.id.replace('row-','');
-    const nameEl = document.getElementById('name-'+id);
-    const wattsEl = document.getElementById('watts-'+id);
-    const qtyEl = document.getElementById('qty-'+id);
-    const errEl = document.getElementById('err-'+id);
-    const w = parseFloat(wattsEl.value);
-    const q = parseInt(qtyEl.value)||1;
-    const n = nameEl.value.trim()||'Device';
-    wattsEl.classList.remove('error');
-    errEl.classList.remove('show');
-    if(isNaN(w)||w<0){
-      wattsEl.classList.add('error');
-      errEl.classList.add('show');
-      hasError=true;
-      return;
-    }
-    items.push({name:n, watts:w, qty:q, total:w*q});
-  });
-  if(hasError) return;
-  if(items.length===0) return;
-
-  const totalWatts = items.reduce((s,i)=>s+i.total,0);
-  const totalAmps = totalWatts/voltage;
-  const {size:breakerSize, required:requiredAmps} = getBreakers(totalAmps, safetyFactor);
-  const loadPct = (totalAmps/(breakerSize*(safetyFactor/100)))*100;
-  const kva = totalWatts/1000;
-
-  // KPIs
-  const kpiGrid = document.getElementById('kpiGrid');
-  const ampsClass = loadPct>100?'danger':loadPct>80?'warn':'ok';
-  kpiGrid.innerHTML=`
-    <div class="kpi">
-      <div class="kpi-val">${fmtW(totalWatts)} W</div>
-      <div class="kpi-lbl">Total Load</div>
-      <div class="kpi-sub">${fmt(kva,2)} kVA</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-val ${ampsClass}">${fmt(totalAmps,2)} A</div>
-      <div class="kpi-lbl">Total Amperage</div>
-      <div class="kpi-sub">at ${voltage}V</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-val">${breakerSize}A</div>
-      <div class="kpi-lbl">Recommended Breaker</div>
-      <div class="kpi-sub">min. ${fmt(requiredAmps,1)}A needed</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-val ${ampsClass}">${fmt(loadPct,1)}%</div>
-      <div class="kpi-lbl">Capacity Used</div>
-      <div class="kpi-sub">of ${breakerSize}A breaker</div>
-    </div>`;
-
-  // Tip
-  const tipEl = document.getElementById('breakerTip');
-  if(loadPct>100){
-    tipEl.innerHTML=`<strong>⚠️ Overloaded!</strong> This load exceeds the breaker's rated capacity. You need a larger breaker or must reduce the load. Consider splitting across multiple circuits.`;
-  } else if(loadPct>90){
-    tipEl.innerHTML=`<strong>⚠️ Near Capacity:</strong> This circuit is running at ${fmt(loadPct,1)}% of the breaker limit. Under the NEC 80% rule, continuous loads should stay at or below 80%. Consider upsizing to a <strong>${getBreakers(totalAmps, 100).size}A breaker</strong> or reducing load.`;
-  } else if(loadPct>80){
-    tipEl.innerHTML=`<strong>Note:</strong> Load is ${fmt(loadPct,1)}% of this breaker. The NEC 80% rule requires continuous loads ≤ 80% of breaker capacity (${fmt(breakerSize*0.8,0)}A). You are slightly over — consider a larger breaker for continuous use.`;
+  let watts, amps, kva;
+  if (type === 'watts') {
+    watts = val;
+    amps = watts / (voltage * pf);
+    kva = (voltage * amps) / 1000;
+  } else if (type === 'amps') {
+    amps = val;
+    watts = amps * voltage * pf;
+    kva = (voltage * amps) / 1000;
   } else {
-    tipEl.innerHTML=`<strong>✅ Good:</strong> A <strong>${breakerSize}A breaker</strong> safely handles this load at ${fmt(loadPct,1)}% capacity (${safetyFactor}% safety factor applied). The minimum required wire gauge is shown below.`;
+    kva = val;
+    amps = (kva * 1000) / voltage;
+    watts = amps * voltage * pf;
   }
 
-  // Breakdown table
-  const tbody = document.getElementById('breakdownBody');
-  const tfoot = document.getElementById('breakdownFoot');
-  tbody.innerHTML='';
-  items.forEach(item=>{
-    const amps = item.total/voltage;
-    const pct = totalWatts>0?(item.total/totalWatts)*100:0;
-    const cls = loadClass(pct);
-    const barW = Math.min(100,pct);
-    tbody.innerHTML+=`<tr>
-      <td>${item.name}${item.qty>1?` × ${item.qty}`:''}</td>
-      <td class="right">${fmtW(item.total)}</td>
-      <td class="right">${fmt(amps,2)}</td>
-      <td class="right">${fmt(pct,1)}%</td>
-      <td style="min-width:80px"><div class="bar-wrap"><div class="bar-fill ${cls}" style="width:${barW}%"></div></div></td>
-    </tr>`;
-  });
-  tfoot.innerHTML=`<tr style="font-weight:700;background:#f0f0f0">
-    <td>TOTAL (${items.length} device${items.length!==1?'s':''})</td>
-    <td class="right">${fmtW(totalWatts)}</td>
-    <td class="right">${fmt(totalAmps,2)}</td>
-    <td class="right">100%</td>
-    <td></td>
-  </tr>`;
+  const minA = amps * margin;
+  const breaker = nextBreakerSize(minA);
+  const wire = getWireGauge(breaker);
+  const poleType = voltage >= 240 ? 'Double-Pole' : 'Single-Pole';
+  const utilPct = (amps / breaker) * 100;
+  const statusClass = utilPct > 80 ? 'status-danger' : utilPct > 65 ? 'status-warn' : 'status-ok';
+  const marginLabel = {1.25:'125% (NEC Standard)', 1.0:'100% (No Margin)', 1.5:'150% (Extra Safe)', 1.8:'180% (Motor Load)'}[margin] || (margin*100)+'%';
 
-  // Wire table
-  const wireBody = document.getElementById('wireBody');
-  wireBody.innerHTML='';
-  WIRE_DATA.forEach(w=>{
-    const suitable = w.ampacity >= totalAmps;
-    const isRec = w.breaker === breakerSize;
-    const badge = suitable?(isRec?`<span class="status-badge badge-ok">✓ Recommended</span>`:`<span class="status-badge badge-ok">✓ Suitable</span>`):`<span class="status-badge badge-danger">✗ Too Small</span>`;
-    wireBody.innerHTML+=`<tr ${isRec?'style="font-weight:600;background:#e8f4fd"':''}>
-      <td>${w.breaker}A${isRec?' ★':''}</td>
-      <td>${w.gauge}</td>
-      <td class="right">${w.ampacity}A</td>
-      <td>${badge}</td>
-    </tr>`;
-  });
+  const html = `
+    <h3>Circuit Calculation Results</h3>
+    <div class="result-grid">
+      <div class="result-card highlight">
+        <div class="big-num">${fmtNum(amps,2)}</div>
+        <div class="unit">Amps</div>
+        <div class="lbl">Load Current</div>
+      </div>
+      <div class="result-card">
+        <div class="big-num">${fmtInt(watts)}</div>
+        <div class="unit">Watts</div>
+        <div class="lbl">Real Power</div>
+      </div>
+      <div class="result-card">
+        <div class="big-num">${fmtNum(kva,3)}</div>
+        <div class="unit">kVA</div>
+        <div class="lbl">Apparent Power</div>
+      </div>
+    </div>
 
-  // Formula
-  document.getElementById('formulaBox').innerHTML=
-    `Amps = Watts ÷ Volts → ${fmtW(totalWatts)}W ÷ ${voltage}V = ${fmt(totalAmps,2)}A\n`+
-    `Breaker (at ${safetyFactor}% load) = ${fmt(totalAmps,2)}A ÷ ${safetyFactor/100} = ${fmt(requiredAmps,1)}A → Use ${breakerSize}A breaker`;
+    <div style="margin-bottom:1.25rem;">
+      <div class="status-label"><span>Load vs. Breaker</span><span>${fmtNum(utilPct,1)}%</span></div>
+      <div class="status-bar"><div class="status-fill ${statusClass}" style="width:${Math.min(utilPct,100)}%"></div></div>
+    </div>
 
-  const results = document.getElementById('resultsSection');
-  results.classList.add('visible');
-  setTimeout(()=>results.scrollIntoView({behavior:'smooth',block:'start'}),100);
+    <h3>Breaker Recommendation</h3>
+    <table><tbody>
+      <tr><td>Load Current</td><td class="num">${fmtNum(amps,2)} A</td></tr>
+      <tr><td style="background:#fafafa;">Safety Margin Applied</td><td class="num" style="background:#fafafa;">${marginLabel}</td></tr>
+      <tr><td>Design Current (after margin)</td><td class="num">${fmtNum(minA,2)} A</td></tr>
+      <tr><td style="background:#fafafa;">Recommended Breaker</td><td class="num" style="background:#fafafa;"><span class="breaker-badge">${breaker}A</span></td></tr>
+      <tr><td>Breaker Type</td><td class="num">${poleType}</td></tr>
+      <tr><td style="background:#fafafa;">Minimum Wire Gauge</td><td class="num" style="background:#fafafa;">${wire}</td></tr>
+      <tr><td>Voltage</td><td class="num">${voltage}V</td></tr>
+      <tr><td style="background:#fafafa;">Power Factor</td><td class="num" style="background:#fafafa;">${fmtNum(pf,2)}</td></tr>
+    </tbody></table>`;
+
+  showResults(html);
 }
 
-// Copy button
-document.getElementById('copyBtn').addEventListener('click',function(){
-  const voltage = document.getElementById('systemVoltage').value;
-  const rows = document.querySelectorAll('.appliance-row');
-  let text='Electrical Load Calculator Results\n'+'='.repeat(35)+'\n';
-  rows.forEach(row=>{
-    const id = row.id.replace('row-','');
-    const n = document.getElementById('name-'+id)?.value||'Device';
-    const w = document.getElementById('watts-'+id)?.value||'0';
-    const q = document.getElementById('qty-'+id)?.value||'1';
-    text+=`${n}: ${w}W × ${q}\n`;
-  });
-  const kpis = document.querySelectorAll('.kpi');
-  text+='\nSummary:\n';
-  kpis.forEach(k=>{
-    const v=k.querySelector('.kpi-val')?.textContent||'';
-    const l=k.querySelector('.kpi-lbl')?.textContent||'';
-    text+=`${l}: ${v}\n`;
-  });
-  navigator.clipboard.writeText(text).then(()=>{
-    const btn=document.getElementById('copyBtn');
-    btn.textContent='Copied!';
-    setTimeout(()=>btn.textContent='Copy Results',2000);
-  }).catch(()=>alert('Copy failed. Please select and copy manually.'));
-});
+// ── CALC: BREAKER SIZING ──
+function calcBreaker() {
+  const errEl = document.getElementById('b-amps-err');
+  const bErr = document.getElementById('b-err');
+  errEl.classList.remove('show');
+  bErr.classList.remove('show');
+  document.getElementById('b-amps').classList.remove('error');
 
-// Init with 2 example items
-addAppliance('Refrigerator', 150, 1);
-addAppliance('LED Lighting', 60, 4);
+  const amps = parseFloat(document.getElementById('b-amps').value);
+  const margin = parseFloat(document.getElementById('b-type').value);
+  const voltage = parseFloat(document.getElementById('b-voltage').value);
+
+  if (isNaN(amps) || amps <= 0) {
+    document.getElementById('b-amps').classList.add('error');
+    errEl.classList.add('show');
+    return;
+  }
+
+  const minA = amps * margin;
+  const breaker = nextBreakerSize(minA);
+  const wire = getWireGauge(breaker);
+  const poleType = voltage >= 240 ? 'Double-Pole' : 'Single-Pole';
+  const watts = amps * voltage;
+  const kva = (voltage * amps) / 1000;
+  const utilPct = (amps / breaker) * 100;
+  const statusClass = utilPct > 80 ? 'status-danger' : utilPct > 65 ? 'status-warn' : 'status-ok';
+
+  // Show next two breaker sizes for comparison
+  let idx = BREAKER_SIZES.indexOf(breaker);
+  const altBreakers = [];
+  for (let i = Math.max(0, idx-1); i <= Math.min(BREAKER_SIZES.length-1, idx+2); i++) {
+    altBreakers.push({
+      size: BREAKER_SIZES[i],
+      wire: getWireGauge(BREAKER_SIZES[i]),
+      ok: BREAKER_SIZES[i] >= minA,
+      rec: i === idx
+    });
+  }
+
+  const altRows = altBreakers.map(a => `
+    <tr style="${a.rec ? 'background:#e8f4fd;font-weight:700;' : ''}">
+      <td>${a.size}A ${a.rec ? '← <strong>Recommended</strong>' : ''}</td>
+      <td class="num">${a.wire}</td>
+      <td class="num">${a.ok ? '✅ Safe' : '❌ Undersized'}</td>
+    </tr>`).join('');
+
+  const html = `
+    <h3>Breaker Sizing Result</h3>
+    <div class="result-grid">
+      <div class="result-card highlight">
+        <div class="big-num">${breaker}</div>
+        <div class="unit">Amps</div>
+        <div class="lbl">Recommended Breaker</div>
+      </div>
+      <div class="result-card">
+        <div class="big-num">${wire}</div>
+        <div class="unit"></div>
+        <div class="lbl">Min Wire Gauge</div>
+      </div>
+      <div class="result-card">
+        <div class="big-num">${poleType.split('-')[0]}</div>
+        <div class="unit">Pole</div>
+        <div class="lbl">${poleType}</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:1.25rem;">
+      <div class="status-label"><span>Load vs. Breaker Capacity</span><span>${fmtNum(utilPct,1)}%</span></div>
+      <div class="status-bar"><div class="status-fill ${statusClass}" style="width:${Math.min(utilPct,100)}%"></div></div>
+    </div>
+
+    <table style="margin-bottom:1.25rem;"><tbody>
+      <tr><td>Input Load Current</td><td class="num">${fmtNum(amps,2)} A</td></tr>
+      <tr><td style="background:#fafafa;">Safety Margin</td><td class="num" style="background:#fafafa;">${Math.round(margin*100)}%</td></tr>
+      <tr><td>Design Current</td><td class="num">${fmtNum(minA,2)} A</td></tr>
+      <tr><td style="background:#fafafa;">Equivalent Power (@ ${voltage}V)</td><td class="num" style="background:#fafafa;">${fmtInt(watts)} W / ${fmtNum(kva,2)} kVA</td></tr>
+      <tr><td>Recommended Breaker</td><td class="num"><span class="breaker-badge">${breaker}A</span></td></tr>
+      <tr><td style="background:#fafafa;">Min Wire Gauge (Cu, 60°C)</td><td class="num" style="background:#fafafa;">${wire}</td></tr>
+    </tbody></table>
+
+    <h3>Breaker Size Comparison</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Breaker Size</th><th class="num">Wire Gauge</th><th class="num">Status</th></tr></thead>
+      <tbody>${altRows}</tbody>
+    </table>
+    </div>`;
+
+  showResults(html);
+}
+
+// ── COPY RESULTS ──
+function copyResults() {
+  const content = document.getElementById('result-content');
+  const text = content.innerText || content.textContent;
+  const btn = document.getElementById('copy-btn');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = 'Copy Results'; }, 2000);
+    });
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy Results'; }, 2000);
+  }
+}
+
+// ── ENTER KEY SUPPORT ──
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Enter') return;
+  const active = document.querySelector('.tab-content.active');
+  if (!active) return;
+  if (active.id === 'tab-multi') calcMulti();
+  else if (active.id === 'tab-single') calcSingle();
+  else if (active.id === 'tab-breaker') calcBreaker();
+});
 </script>
 </body>
 </html>
