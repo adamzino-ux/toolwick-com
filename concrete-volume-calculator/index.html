@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concrete Volume Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate concrete volume for slabs, footings, columns, and more. Free online concrete calculator with instant results in cubic yards, feet, and meters.">
+<link rel="canonical" href="https://toolwick.com/concrete-volume-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Concrete Volume Calculator",
+  "url": "https://toolwick.com/concrete-volume-calculator/",
+  "description": "Calculate concrete volume for slabs, footings, columns, and more. Free online concrete calculator.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f4f8;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0.75rem 1.5rem}
+nav .brand{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+nav .brand span{color:#0077b6}
+.container{max-width:640px;margin:0 auto;padding:1.5rem 1rem 3rem}
+h1{font-size:1.5rem;font-weight:700;margin-bottom:0.25rem;color:#1a1a2e}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:1.5rem}
+.section-title{font-size:1rem;font-weight:700;color:#0077b6;margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.04em;font-size:0.8rem}
+.shape-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.shape-tab{padding:8px 14px;border:1px solid #ddd;border-radius:6px;background:#f8f9fa;cursor:pointer;font-size:0.85rem;font-weight:500;color:#444;transition:all 0.2s;min-height:44px;display:flex;align-items:center}
+.shape-tab:hover{border-color:#0077b6;color:#0077b6}
+.shape-tab.active{background:#0077b6;border-color:#0077b6;color:#fff}
+.shape-panel{display:none}
+.shape-panel.active{display:block}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:0.35rem}
+.field input,.field select{width:100%;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font-size:1rem;font-family:inherit;outline:none;transition:border-color 0.2s,box-shadow 0.2s;background:#fff;min-height:44px}
+.field input:focus,.field select:focus{border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+.field input.error{border-color:#e74c3c}
+.field .err-msg{font-size:0.8rem;color:#e74c3c;margin-top:0.3rem;display:none}
+.field input.error+.err-msg,.err-msg.show{display:block}
+.qty-row{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.qty-row label{font-size:0.85rem;font-weight:500;color:#444;white-space:nowrap}
+.qty-row input[type=range]{flex:1;accent-color:#0077b6}
+.qty-val{font-weight:700;color:#0077b6;min-width:2.5rem;text-align:right}
+.btn-calc{width:100%;background:#0077b6;color:#fff;border:none;padding:14px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;transition:background 0.2s;min-height:44px}
+.btn-calc:hover{background:#006299}
+.results{opacity:0;transition:opacity 0.3s ease;pointer-events:none}
+.results.visible{opacity:1;pointer-events:all}
+.big-result{text-align:center;padding:1.5rem 1rem;background:#f0f8ff;border-radius:8px;margin-bottom:1rem;border:1px solid #bde0f5}
+.big-num{font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1.1}
+.big-label{font-size:0.9rem;color:#555;margin-top:0.25rem}
+.unit-pills{display:flex;justify-content:center;gap:0.5rem;margin-top:0.75rem;flex-wrap:wrap}
+.unit-pill{padding:5px 14px;border-radius:20px;border:1px solid #0077b6;font-size:0.82rem;font-weight:600;cursor:pointer;color:#0077b6;background:#fff;transition:all 0.2s;min-height:34px;display:flex;align-items:center}
+.unit-pill.active{background:#0077b6;color:#fff}
+.table-wrap{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:0.9rem}
+th{background:#f0f0f0;padding:9px 12px;text-align:left;font-weight:600;font-size:0.82rem;color:#333}
+td{padding:9px 12px;border-bottom:1px solid #eee;color:#1a1a2e}
+tr:nth-child(even) td{background:#fafafa}
+td:last-child,th:last-child{text-align:right}
+.btn-copy{background:#f8f9fa;border:1px solid #ddd;border-radius:6px;padding:8px 16px;font-size:0.85rem;cursor:pointer;color:#444;font-weight:500;transition:all 0.2s;min-height:44px}
+.btn-copy:hover{border-color:#0077b6;color:#0077b6}
+.copy-row{display:flex;justify-content:flex-end;margin-bottom:1rem}
+.note-box{background:#fffbea;border:1px solid #f0d080;border-radius:6px;padding:0.9rem 1rem;font-size:0.85rem;color:#5a4800;margin-bottom:1rem}
+.ad-slot{background:#f8f9fa;border:1px dashed #ccc;border-radius:6px;min-height:90px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:0.8rem;margin:1.5rem 0}
+.how-to{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1.5rem;margin-bottom:1.5rem}
+.how-to h2{font-size:1.05rem;font-weight:700;margin-bottom:0.5rem}
+.how-to p{font-size:0.9rem;color:#444}
+.related{margin-bottom:1.5rem}
+.related h2{font-size:1.05rem;font-weight:700;margin-bottom:0.5rem}
+.related p{font-size:0.9rem;color:#555;font-style:italic}
+footer{border-top:1px solid #e0e0e0;background:#fff;padding:1rem 1.5rem;font-size:0.82rem;color:#666;text-align:center}
+footer a{color:#555;margin:0 0.5rem}
+@media(max-width:500px){
+  .field-row{grid-template-columns:1fr}
+  .big-num{font-size:2.2rem}
+  .shape-tab{font-size:0.78rem;padding:6px 10px}
+  .card{padding:1.25rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="brand">tool<span>wick</span>.com</a>
+</nav>
+
+<div class="container">
+  <h1>Concrete Volume Calculator</h1>
+  <p class="subtitle">Calculate how much concrete you need for slabs, footings, columns, circular pads, and stairs.</p>
+
+  <div class="card">
+    <div class="section-title">Select Shape</div>
+    <div class="shape-tabs">
+      <div class="shape-tab active" data-shape="slab">📐 Slab / Footing</div>
+      <div class="shape-tab" data-shape="column">🏛 Column</div>
+      <div class="shape-tab" data-shape="tube">⭕ Circular Pad</div>
+      <div class="shape-tab" data-shape="stairs">🪜 Stairs</div>
+    </div>
+
+    <!-- SLAB -->
+    <div class="shape-panel active" id="panel-slab">
+      <div class="section-title">Dimensions</div>
+      <div class="field-row">
+        <div class="field">
+          <label for="slab-l">Length</label>
+          <input type="number" id="slab-l" placeholder="e.g. 12" min="0" step="any">
+          <span class="err-msg" id="slab-l-err">Please enter a valid length.</span>
+        </div>
+        <div class="field">
+          <label for="slab-w">Width</label>
+          <input type="number" id="slab-w" placeholder="e.g. 10" min="0" step="any">
+          <span class="err-msg" id="slab-w-err">Please enter a valid width.</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="slab-d">Depth / Thickness</label>
+        <input type="number" id="slab-d" placeholder="e.g. 4" min="0" step="any">
+        <span class="err-msg" id="slab-d-err">Please enter a valid depth.</span>
+      </div>
+      <div class="field">
+        <label for="slab-unit">Unit</label>
+        <select id="slab-unit">
+          <option value="ft">Feet (ft)</option>
+          <option value="in">Inches (in)</option>
+          <option value="m">Meters (m)</option>
+          <option value="cm">Centimeters (cm)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- COLUMN -->
+    <div class="shape-panel" id="panel-column">
+      <div class="section-title">Dimensions</div>
+      <div class="field-row">
+        <div class="field">
+          <label for="col-w">Width</label>
+          <input type="number" id="col-w" placeholder="e.g. 12" min="0" step="any">
+          <span class="err-msg" id="col-w-err">Please enter a valid width.</span>
+        </div>
+        <div class="field">
+          <label for="col-d">Depth</label>
+          <input type="number" id="col-d" placeholder="e.g. 12" min="0" step="any">
+          <span class="err-msg" id="col-d-err">Please enter a valid depth.</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="col-h">Height</label>
+        <input type="number" id="col-h" placeholder="e.g. 8" min="0" step="any">
+        <span class="err-msg" id="col-h-err">Please enter a valid height.</span>
+      </div>
+      <div class="field">
+        <label for="col-unit">Unit</label>
+        <select id="col-unit">
+          <option value="ft">Feet (ft)</option>
+          <option value="in">Inches (in)</option>
+          <option value="m">Meters (m)</option>
+          <option value="cm">Centimeters (cm)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- CIRCULAR -->
+    <div class="shape-panel" id="panel-tube">
+      <div class="section-title">Dimensions</div>
+      <div class="field-row">
+        <div class="field">
+          <label for="tube-d">Diameter</label>
+          <input type="number" id="tube-d" placeholder="e.g. 12" min="0" step="any">
+          <span class="err-msg" id="tube-d-err">Please enter a valid diameter.</span>
+        </div>
+        <div class="field">
+          <label for="tube-h">Depth / Height</label>
+          <input type="number" id="tube-h" placeholder="e.g. 36" min="0" step="any">
+          <span class="err-msg" id="tube-h-err">Please enter a valid depth.</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="tube-unit">Unit</label>
+        <select id="tube-unit">
+          <option value="ft">Feet (ft)</option>
+          <option value="in">Inches (in)</option>
+          <option value="m">Meters (m)</option>
+          <option value="cm">Centimeters (cm)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- STAIRS -->
+    <div class="shape-panel" id="panel-stairs">
+      <div class="section-title">Stair Dimensions</div>
+      <div class="field-row">
+        <div class="field">
+          <label for="st-run">Run (tread depth)</label>
+          <input type="number" id="st-run" placeholder="e.g. 12" min="0" step="any">
+          <span class="err-msg" id="st-run-err">Please enter a valid run.</span>
+        </div>
+        <div class="field">
+          <label for="st-rise">Rise (step height)</label>
+          <input type="number" id="st-rise" placeholder="e.g. 7" min="0" step="any">
+          <span class="err-msg" id="st-rise-err">Please enter a valid rise.</span>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="st-width">Width</label>
+          <input type="number" id="st-width" placeholder="e.g. 36" min="0" step="any">
+          <span class="err-msg" id="st-width-err">Please enter a valid width.</span>
+        </div>
+        <div class="field">
+          <label for="st-steps">Number of Steps</label>
+          <input type="number" id="st-steps" placeholder="e.g. 5" min="1" step="1">
+          <span class="err-msg" id="st-steps-err">Please enter a valid number (≥1).</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="st-unit">Unit</label>
+        <select id="st-unit">
+          <option value="in">Inches (in)</option>
+          <option value="ft">Feet (ft)</option>
+          <option value="cm">Centimeters (cm)</option>
+          <option value="m">Meters (m)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Quantity slider -->
+    <div class="qty-row">
+      <label for="qty-slider">Qty:</label>
+      <input type="range" id="qty-slider" min="1" max="50" value="1">
+      <span class="qty-val" id="qty-display">1</span>
+    </div>
+
+    <!-- Waste % slider -->
+    <div class="qty-row">
+      <label for="waste-slider">Waste %:</label>
+      <input type="range" id="waste-slider" min="0" max="25" value="10">
+      <span class="qty-val" id="waste-display">10%</span>
+    </div>
+
+    <button class="btn-calc" id="btn-calc">Calculate Concrete Volume</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="card results" id="results-card">
+    <div class="big-result">
+      <div class="big-num" id="big-num">0.00</div>
+      <div class="big-label" id="big-label">cubic yards</div>
+      <div class="unit-pills">
+        <div class="unit-pill active" data-unit="yd3">yd³</div>
+        <div class="unit-pill" data-unit="ft3">ft³</div>
+        <div class="unit-pill" data-unit="m3">m³</div>
+      </div>
+    </div>
+
+    <div class="copy-row">
+      <button class="btn-copy" id="btn-copy">📋 Copy Results</button>
+    </div>
+
+    <div class="section-title">Breakdown</div>
+    <div class="table-wrap">
+      <table id="results-table">
+        <thead>
+          <tr><th>Item</th><th>Value</th></tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+      </table>
+    </div>
+
+    <div class="note-box" id="bags-note"></div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid">Advertisement</div>
+
+  <div class="how-to card">
+    <h2>How to Use This Calculator</h2>
+    <p>Select your shape (slab, column, circular pad, or stairs), enter the dimensions in your preferred unit, then click <strong>Calculate</strong>. Adjust the quantity slider if you need multiple identical pieces and the waste percentage to account for spillage and overpour. Results appear instantly in cubic yards, feet, and meters.</p>
+  </div>
+
+  <div class="related card">
+    <h2>Related Tools</h2>
+    <p>More construction and measurement tools are coming soon to toolwick.com. Check back soon!</p>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom">Advertisement</div>
+</div>
+
+<footer>
+  <a href="/about/">About</a>
+  <a href="/privacy/">Privacy</a>
+  <a href="/contact/">Contact</a>
+  <span style="display:block;margin-top:0.3rem">© 2024 toolwick.com</span>
+</footer>
+
+<script>
+(function(){
+  // --- State ---
+  let activeShape = 'slab';
+  let activeUnit = 'yd3';
+  let lastCubicFeet = 0; // base volume in ft³ (single piece, no waste)
+  let lastResults = {};
+
+  // --- Shape tabs ---
+  document.querySelectorAll('.shape-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.shape-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.shape-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      activeShape = tab.dataset.shape;
+      document.getElementById('panel-' + activeShape).classList.add('active');
+      hideResults();
+    });
+  });
+
+  // --- Sliders ---
+  const qtySlider = document.getElementById('qty-slider');
+  const qtyDisplay = document.getElementById('qty-display');
+  const wasteSlider = document.getElementById('waste-slider');
+  const wasteDisplay = document.getElementById('waste-display');
+
+  qtySlider.addEventListener('input', () => {
+    qtyDisplay.textContent = qtySlider.value;
+    if(lastCubicFeet > 0) recalcDisplay();
+  });
+  wasteSlider.addEventListener('input', () => {
+    wasteDisplay.textContent = wasteSlider.value + '%';
+    if(lastCubicFeet > 0) recalcDisplay();
+  });
+
+  // --- Unit pills ---
+  document.querySelectorAll('.unit-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.unit-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      activeUnit = pill.dataset.unit;
+      if(lastCubicFeet > 0) recalcDisplay();
+    });
+  });
+
+  // --- Enter key ---
+  document.querySelectorAll('input[type=number]').forEach(inp => {
+    inp.addEventListener('keydown', e => { if(e.key === 'Enter') calculate(); });
+  });
+
+  // --- Calculate button ---
+  document.getElementById('btn-calc').addEventListener('click', calculate);
+
+  // --- Copy button ---
+  document.getElementById('btn-copy').addEventListener('click', () => {
+    const rows = document.querySelectorAll('#results-body tr');
+    let text = 'Concrete Volume Calculation\n';
+    rows.forEach(r => {
+      const cells = r.querySelectorAll('td');
+      text += cells[0].textContent + ': ' + cells[1].textContent + '\n';
+    });
+    text += document.getElementById('bags-note').textContent + '\n';
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('btn-copy');
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => btn.textContent = '📋 Copy Results', 2000);
+    });
+  });
+
+  // --- Helpers ---
+  function fmt(n, dec) {
+    dec = dec === undefined ? 2 : dec;
+    return Number(n).toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+  }
+
+  const unitToFt = { ft: 1, in: 1/12, m: 3.28084, cm: 0.0328084 };
+
+  function toFt(val, unit) { return val * unitToFt[unit]; }
+
+  function clearError(id) {
+    const el = document.getElementById(id);
+    if(el){ el.classList.remove('error'); }
+    const em = document.getElementById(id + '-err');
+    if(em){ em.classList.remove('show'); }
+  }
+
+  function showError(id) {
+    const el = document.getElementById(id);
+    if(el){ el.classList.add('error'); }
+    const em = document.getElementById(id + '-err');
+    if(em){ em.classList.add('show'); }
+  }
+
+  function getVal(id) {
+    const el = document.getElementById(id);
+    if(!el) return null;
+    clearError(id);
+    const v = parseFloat(el.value);
+    if(isNaN(v) || v <= 0){
+      showError(id);
+      return null;
+    }
+    return v;
+  }
+
+  function hideResults() {
+    document.getElementById('results-card').classList.remove('visible');
+  }
+
+  function showResults() {
+    document.getElementById('results-card').classList.add('visible');
+  }
+
+  function calculate() {
+    let cubicFeet = null;
+    let label = '';
+    let dims = {};
+
+    if(activeShape === 'slab'){
+      const u = document.getElementById('slab-unit').value;
+      const l = getVal('slab-l');
+      const w = getVal('slab-w');
+      const d = getVal('slab-d');
+      if(l === null || w === null || d === null) return;
+      const lf = toFt(l, u), wf = toFt(w, u), df = toFt(d, u);
+      cubicFeet = lf * wf * df;
+      label = 'Slab / Footing';
+      dims = {
+        'Length': fmt(l) + ' ' + u,
+        'Width': fmt(w) + ' ' + u,
+        'Depth': fmt(d) + ' ' + u,
+        'Length (ft)': fmt(lf) + ' ft',
+        'Width (ft)': fmt(wf) + ' ft',
+        'Depth (ft)': fmt(df) + ' ft'
+      };
+    } else if(activeShape === 'column'){
+      const u = document.getElementById('col-unit').value;
+      const w = getVal('col-w');
+      const d = getVal('col-d');
+      const h = getVal('col-h');
+      if(w === null || d === null || h === null) return;
+      const wf = toFt(w, u), df = toFt(d, u), hf = toFt(h, u);
+      cubicFeet = wf * df * hf;
+      label = 'Column';
+      dims = {
+        'Width': fmt(w) + ' ' + u,
+        'Depth': fmt(d) + ' ' + u,
+        'Height': fmt(h) + ' ' + u,
+        'Width (ft)': fmt(wf) + ' ft',
+        'Depth (ft)': fmt(df) + ' ft',
+        'Height (ft)': fmt(hf) + ' ft'
+      };
+    } else if(activeShape === 'tube'){
+      const u = document.getElementById('tube-unit').value;
+      const d = getVal('tube-d');
+      const h = getVal('tube-h');
+      if(d === null || h === null) return;
+      const df = toFt(d, u), hf = toFt(h, u);
+      const r = df / 2;
+      cubicFeet = Math.PI * r * r * hf;
+      label = 'Circular Pad / Tube';
+      dims = {
+        'Diameter': fmt(d) + ' ' + u,
+        'Depth': fmt(h) + ' ' + u,
+        'Diameter (ft)': fmt(df) + ' ft',
+        'Radius (ft)': fmt(r) + ' ft',
+        'Depth (ft)': fmt(hf) + ' ft',
+        'Formula': 'π × r² × h'
+      };
+    } else if(activeShape === 'stairs'){
+      const u = document.getElementById('st-unit').value;
+      const run = getVal('st-run');
+      const rise = getVal('st-rise');
+      const width = getVal('st-width');
+      const steps = getVal('st-steps');
+      if(run === null || rise === null || width === null || steps === null) return;
+      if(steps < 1 || !Number.isInteger(steps) && steps !== Math.floor(steps)){
+        showError('st-steps'); return;
+      }
+      const runf = toFt(run, u), risef = toFt(rise, u), widthf = toFt(width, u);
+      const nSteps = Math.round(steps);
+      // Volume = width × rise × (run × n + run/2 × ... ) 
+      // Each step is a rectangular prism but stacked: 
+      // Step i has volume = width × rise × run (treating each step as full block up to that height)
+      // Actual stair concrete volume = width × run × rise × n(n+1)/2... 
+      // Standard method: V = (width × rise/2 × (run × steps)) — triangular prism of steps
+      // Better: each step k (1..n) contributes width × run × (k * rise), total = width*run*rise * n*(n+1)/2
+      // But typical approach: treat as solid block = width * (n*run) * (n*rise) / 2
+      cubicFeet = widthf * runf * risef * nSteps * (nSteps + 1) / 2;
+      label = 'Stairs';
+      dims = {
+        'Run (tread depth)': fmt(run) + ' ' + u,
+        'Rise (step height)': fmt(rise) + ' ' + u,
+        'Width': fmt(width) + ' ' + u,
+        'Number of Steps': nSteps,
+        'Run (ft)': fmt(runf) + ' ft',
+        'Rise (ft)': fmt(risef) + ' ft',
+        'Width (ft)': fmt(widthf) + ' ft'
+      };
+    }
+
+    if(cubicFeet === null || cubicFeet <= 0){
+      hideResults(); return;
+    }
+
+    lastCubicFeet = cubicFeet;
+    lastResults = { dims, label };
+    recalcDisplay();
+    showResults();
+    document.getElementById('results-card').scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+
+  function recalcDisplay(){
+    const qty = parseInt(qtySlider.value);
+    const waste = parseInt(wasteSlider.value);
+    const base = lastCubicFeet * qty;
+    const total = base * (1 + waste / 100);
+
+    const yd3 = total / 27;
+    const ft3 = total;
+    const m3 = total * 0.0283168;
+
+    let displayVal, displayLabel;
+    if(activeUnit === 'yd3'){ displayVal = yd3; displayLabel = 'cubic yards'; }
+    else if(activeUnit === 'ft3'){ displayVal = ft3; displayLabel = 'cubic feet'; }
+    else { displayVal = m3; displayLabel = 'cubic meters'; }
+
+    document.getElementById('big-num').textContent = fmt(displayVal);
+    document.getElementById('big-label').textContent = displayLabel + (qty > 1 ? ' (total × ' + qty + ')' : '');
+
+    // Table
+    const tbody = document.getElementById('results-body');
+    tbody.innerHTML = '';
+
+    const dims = lastResults.dims || {};
+    Object.entries(dims).forEach(([k, v]) => addRow(tbody, k, v));
+
+    addRow(tbody, '— Single piece (ft³)', fmt(lastCubicFeet) + ' ft³');
+    addRow(tbody, 'Quantity', qty);
+    addRow(tbody, 'Subtotal (ft³)', fmt(base) + ' ft³');
+    addRow(tbody, 'Waste allowance', waste + '%');
+    addRow(tbody, 'Total (ft³)', fmt(total) + ' ft³');
+    addRow(tbody, 'Total (yd³)', fmt(yd3) + ' yd³');
+    addRow(tbody, 'Total (m³)', fmt(m3) + ' m³');
+
+    // Bags estimate
+    const bags60 = Math.ceil(total * 27 / 0.45); // 60lb bag ≈ 0.45 cu ft
+    const bags80 = Math.ceil(total * 27 / 0.60); // 80lb bag ≈ 0.60 cu ft
+    // total is already ft³
+    const b60 = Math.ceil(total / 0.45);
+    const b80 = Math.ceil(total / 0.60);
+
+    document.getElementById('bags-note').textContent =
+      `💡 Estimated bags needed: ~${fmt(b60, 0)} bags (60 lb) or ~${fmt(b80, 0)} bags (80 lb). ` +
+      `For large pours, consider ordering ready-mix concrete (1 yd³ minimum typically).`;
+  }
+
+  function addRow(tbody, label, value){
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${label}</td><td>${value}</td>`;
+    tbody.appendChild(tr);
+  }
+
+})();
+</script>
+</body>
+</html>
