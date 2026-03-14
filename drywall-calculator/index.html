@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Drywall Calculator — Free Online Tool | toolwick.com</title>
-<meta name="description" content="Calculate exactly how many drywall sheets you need for any room. Enter dimensions, get sheet count, waste factor, and cost estimate instantly.">
+<meta name="description" content="Calculate exactly how many drywall sheets you need for any room. Free drywall calculator with waste factor, cost estimate, and screws/tape breakdown.">
 <link rel="canonical" href="https://toolwick.com/drywall-calculator/">
 <script type="application/ld+json">
 {
@@ -12,7 +12,7 @@
   "@type": "WebApplication",
   "name": "Drywall Calculator",
   "url": "https://toolwick.com/drywall-calculator/",
-  "description": "Calculate exactly how many drywall sheets you need for any room. Enter dimensions, get sheet count, waste factor, and cost estimate instantly.",
+  "description": "Calculate exactly how many drywall sheets you need for any room, including waste factor, cost estimate, and materials breakdown.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "offers": {
@@ -24,545 +24,520 @@
 </script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f4f8;color:#1a1a2e;font-size:16px;line-height:1.6}
 a{color:#0077b6;text-decoration:none}
 a:hover{text-decoration:underline}
-nav{border-bottom:1px solid #e0e0e0;padding:0.75rem 1.5rem;background:#fff}
-nav a{font-weight:600;font-size:1rem;color:#1a1a2e}
-nav a:hover{color:#0077b6;text-decoration:none}
-main{max-width:640px;margin:0 auto;padding:1.5rem}
-h1{font-size:1.6rem;font-weight:700;margin-bottom:0.4rem;color:#1a1a2e}
-.subtitle{color:#555;margin-bottom:1.5rem;font-size:0.95rem}
-.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0 1rem}
+.nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;height:52px}
+.nav-brand{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+.nav-brand span{color:#0077b6}
+main{max-width:640px;margin:0 auto;padding:1.5rem 1rem 2rem}
+h1{font-size:1.6rem;font-weight:800;color:#1a1a2e;margin-bottom:0.4rem}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-bottom:2rem}
 .diagram-wrap{margin-bottom:1.5rem;text-align:center}
-svg.room-diagram{max-width:100%;height:auto}
-.form-group{margin-bottom:1.2rem}
-label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:0.4rem}
-input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;transition:border-color 0.2s,box-shadow 0.2s;min-height:44px}
+.diagram-wrap svg{max-width:100%;height:auto}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:500px){.form-grid{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:0.3rem}
+.form-group.full{grid-column:1/-1}
+label{font-size:0.85rem;font-weight:500;color:#444}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff;transition:border-color 0.2s,box-shadow 0.2s;min-height:44px}
 input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
-input.error,select.error{border-color:#e74c3c}
-.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:0.3rem;display:none}
+input.error{border-color:#e74c3c}
+.error-msg{font-size:0.8rem;color:#e74c3c;margin-top:2px;display:none}
 .error-msg.show{display:block}
-.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem}
-.section-title{font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#888;margin:1.2rem 0 0.8rem;border-top:1px solid #f0f0f0;padding-top:1rem}
-.btn{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background 0.2s;margin-top:0.5rem}
+.btn{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;transition:background 0.2s;min-height:44px;width:100%;margin-top:0.75rem}
 .btn:hover{background:#006299}
-.btn-secondary{background:#f0f0f0;color:#1a1a2e;margin-top:0.5rem}
-.btn-secondary:hover{background:#e0e0e0}
-.btn-sm{width:auto;padding:6px 14px;font-size:0.82rem;min-height:36px;margin-top:0}
+.btn-secondary{background:#f0f4f8;color:#1a1a2e;border:1px solid #ddd;font-weight:500;margin-top:0.5rem}
+.btn-secondary:hover{background:#e0e8f0}
 .results{opacity:0;transition:opacity 0.3s ease;pointer-events:none}
-.results.visible{opacity:1;pointer-events:all}
-.result-hero{background:#f0f8ff;border:1px solid #bee3f8;border-radius:8px;padding:1.5rem;text-align:center;margin-bottom:1.5rem}
-.result-hero .big-num{font-size:3rem;font-weight:800;color:#0077b6;line-height:1}
-.result-hero .big-label{font-size:1rem;color:#555;margin-top:0.3rem}
-.result-hero .sub-nums{display:flex;justify-content:center;gap:2rem;margin-top:1rem;flex-wrap:wrap}
-.result-hero .sub-num{text-align:center}
-.result-hero .sub-num span{display:block;font-size:1.4rem;font-weight:700;color:#0077b6}
-.result-hero .sub-num small{font-size:0.78rem;color:#666}
+.results.visible{opacity:1;pointer-events:auto}
+.results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem}
+.results-header h2{font-size:1.1rem;font-weight:700}
+.copy-btn{background:#f0f4f8;color:#444;border:1px solid #ddd;padding:6px 14px;border-radius:5px;font-size:0.82rem;cursor:pointer;transition:all 0.2s;min-height:36px}
+.copy-btn:hover{background:#e0e8f0}
+.key-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+@media(max-width:440px){.key-metrics{grid-template-columns:1fr 1fr}}
+.metric{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1rem;text-align:center}
+.metric-val{font-size:1.8rem;font-weight:800;color:#0077b6;line-height:1.1}
+.metric-lbl{font-size:0.75rem;color:#666;margin-top:0.25rem}
+.metric.accent{background:#0077b6;border-color:#0077b6}
+.metric.accent .metric-val{color:#fff}
+.metric.accent .metric-lbl{color:rgba(255,255,255,0.8)}
 .table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:0.88rem}
-th{background:#f0f0f0;padding:8px 12px;text-align:left;font-weight:600;color:#333;border-bottom:2px solid #ddd}
-td{padding:8px 12px;border-bottom:1px solid #eee;color:#1a1a2e}
-tr:nth-child(even) td{background:#fafafa}
-.num{text-align:right}
-.copy-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1rem}
-.copy-row p{font-size:0.82rem;color:#666}
-.copied-msg{font-size:0.8rem;color:#28a745;display:none}
-.copied-msg.show{display:inline}
-.waste-slider{display:flex;align-items:center;gap:0.75rem;margin-top:0.4rem}
-.waste-slider input[type=range]{flex:1;padding:0;min-height:auto;border:none;box-shadow:none;accent-color:#0077b6;cursor:pointer}
-.waste-slider span{font-weight:600;color:#0077b6;min-width:2.5rem;font-size:0.95rem}
-.walls-section{background:#f8f9fa;border-radius:6px;padding:1rem;margin-bottom:1rem}
-.walls-section .wall-row{display:grid;grid-template-columns:auto 1fr 1fr;gap:0.6rem;align-items:end;margin-bottom:0.6rem}
-.walls-section .wall-row label{font-size:0.78rem}
-.walls-section .wall-lbl{font-size:0.82rem;font-weight:600;color:#555;align-self:center;padding-bottom:2px}
-.add-btn{background:none;border:1px dashed #0077b6;color:#0077b6;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:0.82rem;min-height:36px;transition:background 0.2s}
-.add-btn:hover{background:#f0f8ff}
-.remove-btn{background:none;border:none;color:#e74c3c;cursor:pointer;font-size:1.1rem;padding:0 4px;min-height:36px;line-height:1}
-.openings-section{background:#f8f9fa;border-radius:6px;padding:1rem;margin-bottom:1rem}
-.opening-row{display:grid;grid-template-columns:auto 1fr 1fr 1fr auto;gap:0.5rem;align-items:end;margin-bottom:0.6rem}
-.opening-row label{font-size:0.78rem}
-.opening-lbl{font-size:0.82rem;font-weight:600;color:#555;align-self:center;padding-bottom:2px}
-h2{font-size:1.15rem;font-weight:700;margin:2rem 0 0.6rem;color:#1a1a2e}
-.content-section p{margin-bottom:0.8rem;color:#333;font-size:0.95rem}
-.content-section ul{margin:0.5rem 0 0.8rem 1.2rem}
-.content-section li{margin-bottom:0.4rem;color:#333;font-size:0.95rem}
-details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:0.6rem}
-summary{padding:0.75rem 1rem;font-weight:600;cursor:pointer;font-size:0.92rem;list-style:none;position:relative;padding-right:2rem}
-summary::after{content:'▼';position:absolute;right:1rem;top:50%;transform:translateY(-50%);font-size:0.7rem;color:#888;transition:transform 0.2s}
-details[open] summary::after{transform:translateY(-50%) rotate(180deg)}
-summary::-webkit-details-marker{display:none}
-details p{padding:0 1rem 0.75rem;font-size:0.92rem;color:#444}
-.related-tools{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-top:0.75rem}
-.related-tools a{display:block;padding:0.75rem 1rem;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;font-size:0.88rem;color:#0077b6;font-weight:500;transition:background 0.2s}
-.related-tools a:hover{background:#e8f4fb;text-decoration:none}
+table{width:100%;border-collapse:collapse;font-size:0.9rem}
+thead th{background:#f0f0f0;padding:10px 12px;text-align:left;font-weight:600;color:#333;border-bottom:2px solid #ddd}
+thead th:last-child{text-align:right}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+tbody td{padding:9px 12px;border-bottom:1px solid #eee;color:#1a1a2e}
+tbody td:last-child{text-align:right;font-weight:500}
+tfoot td{padding:10px 12px;background:#f0f4f8;font-weight:700;border-top:2px solid #ddd}
+tfoot td:last-child{text-align:right;color:#0077b6}
+.section-title{font-size:0.85rem;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:0.05em;margin:1.5rem 0 0.75rem}
+.waste-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.waste-row input[type=range]{flex:1;min-width:120px;accent-color:#0077b6}
+.waste-val{font-size:0.9rem;font-weight:600;color:#0077b6;min-width:36px;text-align:right}
+.info-box{background:#f0f7ff;border-left:3px solid #0077b6;border-radius:4px;padding:0.75rem 1rem;font-size:0.85rem;color:#334}
+.content-section{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.04);margin-bottom:2rem}
+.content-section h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin-bottom:0.75rem;margin-top:1.5rem}
+.content-section h2:first-child{margin-top:0}
+.content-section p{color:#444;font-size:0.95rem;margin-bottom:0.75rem}
+.content-section ul{padding-left:1.4rem;color:#444;font-size:0.95rem}
+.content-section ul li{margin-bottom:0.4rem}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:0.5rem}
+summary{padding:0.75rem 1rem;cursor:pointer;font-weight:600;font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::after{content:'＋';font-size:1rem;color:#0077b6}
+details[open] summary::after{content:'－'}
+details[open] summary{border-bottom:1px solid #e0e0e0}
+.details-body{padding:0.75rem 1rem;font-size:0.9rem;color:#444}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+@media(max-width:440px){.related-grid{grid-template-columns:1fr}}
+.related-link{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.75rem 1rem;font-size:0.9rem;color:#0077b6;font-weight:500;transition:background 0.15s}
+.related-link:hover{background:#e8f4fb;text-decoration:none}
 .ad-slot{min-height:0;margin:0}
-footer{border-top:1px solid #e0e0e0;padding:1.2rem 1.5rem;text-align:center;font-size:0.82rem;color:#888;background:#f8f9fa;margin-top:2rem}
-footer a{color:#888;margin:0 0.5rem}
-footer a:hover{color:#0077b6}
-@media(max-width:480px){
-  .row-2,.row-3{grid-template-columns:1fr}
-  .result-hero .sub-nums{gap:1.2rem}
-  .result-hero .big-num{font-size:2.4rem}
-  .related-tools{grid-template-columns:1fr}
-  .walls-section .wall-row{grid-template-columns:auto 1fr 1fr}
-  .opening-row{grid-template-columns:1fr 1fr;row-gap:0.4rem}
-  .opening-lbl{display:none}
-  .opening-type-cell{grid-column:1/-1}
-}
+footer{background:#fff;border-top:1px solid #e0e0e0;padding:1.25rem 1rem;margin-top:1rem}
+.footer-inner{max-width:640px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;font-size:0.85rem;color:#666}
+.footer-links{display:flex;gap:1.25rem}
+.formula{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.75rem 1rem;font-family:monospace;font-size:0.88rem;color:#1a1a2e;margin:0.5rem 0 0.75rem}
 </style>
 </head>
 <body>
-<nav><a href="/">toolwick.com</a></nav>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">tool<span>wick</span>.com</a>
+  </div>
+</nav>
+
 <main>
-<h1>Drywall Calculator</h1>
-<p class="subtitle">Estimate how many drywall sheets you need, including waste, openings, and cost.</p>
+  <h1>Drywall Calculator</h1>
+  <p class="subtitle">Estimate drywall sheets, screws, tape, and total cost for any room.</p>
 
-<div class="card">
-  <!-- SVG Diagram -->
-  <div class="diagram-wrap">
-    <svg class="room-diagram" id="roomSvg" viewBox="0 0 540 200" xmlns="http://www.w3.org/2000/svg" aria-label="Room dimension diagram">
-      <!-- Floor/room box -->
-      <rect x="60" y="20" width="420" height="140" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="1.5"/>
-      <!-- Wall fill indicators -->
-      <rect x="60" y="20" width="420" height="14" fill="#0077b6" opacity="0.15"/>
-      <rect x="60" y="146" width="420" height="14" fill="#0077b6" opacity="0.15"/>
-      <rect x="60" y="20" width="14" height="140" fill="#0077b6" opacity="0.15"/>
-      <rect x="466" y="20" width="14" height="140" fill="#0077b6" opacity="0.15"/>
-      <!-- Width arrow -->
-      <defs>
-        <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
-          <path d="M0,0 L8,4 L0,8 Z" fill="#0077b6"/>
-        </marker>
-        <marker id="arr2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
-          <path d="M0,0 L8,4 L0,8 Z" fill="#0077b6"/>
-        </marker>
-      </defs>
-      <line x1="60" y1="175" x2="480" y2="175" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arr2)" marker-end="url(#arr)"/>
-      <text id="svgWidth" x="270" y="192" text-anchor="middle" font-size="12" fill="#1a1a2e" font-family="sans-serif">Width (ft)</text>
-      <!-- Height arrow -->
-      <line x1="30" y1="20" x2="30" y2="160" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arr2)" marker-end="url(#arr)"/>
-      <text id="svgHeight" x="15" y="95" text-anchor="middle" font-size="12" fill="#1a1a2e" font-family="sans-serif" transform="rotate(-90,15,95)">Height (ft)</text>
-      <!-- Sheet grid inside walls -->
-      <g opacity="0.3" stroke="#0077b6" stroke-width="0.8">
-        <line x1="180" y1="20" x2="180" y2="160"/>
-        <line x1="300" y1="20" x2="300" y2="160"/>
-        <line x1="420" y1="20" x2="420" y2="160"/>
-        <line x1="60" y1="90" x2="480" y2="90"/>
-      </g>
-      <!-- Sheet label -->
-      <text x="270" y="80" text-anchor="middle" font-size="11" fill="#0077b6" font-family="sans-serif" opacity="0.7">4×8 sheets</text>
-      <!-- Window cutout example -->
-      <rect x="190" y="50" width="60" height="50" fill="#fff" stroke="#888" stroke-width="1" stroke-dasharray="4,2"/>
-      <text x="220" y="82" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">opening</text>
-      <!-- Ceiling label -->
-      <text id="svgCeiling" x="480" y="90" text-anchor="start" font-size="10" fill="#555" font-family="sans-serif" dx="5">ceiling</text>
-      <!-- Sheet size label -->
-      <text id="svgSheet" x="270" y="108" text-anchor="middle" font-size="10" fill="#555" font-family="sans-serif" opacity="0.6">4 × 8 sheet</text>
-    </svg>
+  <div class="card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg id="roomSvg" viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px">
+        <!-- Room walls isometric-ish flat layout -->
+        <!-- Back wall (ceiling) -->
+        <rect x="120" y="20" width="320" height="100" fill="#f0f7ff" stroke="#0077b6" stroke-width="2"/>
+        <!-- Left wall -->
+        <rect x="20" y="20" width="90" height="100" fill="#e8f4fb" stroke="#0077b6" stroke-width="2" stroke-dasharray="4,3"/>
+        <!-- Right wall -->
+        <rect x="450" y="20" width="90" height="100" fill="#e8f4fb" stroke="#0077b6" stroke-width="2" stroke-dasharray="4,3"/>
+        <!-- Ceiling -->
+        <rect x="120" y="130" width="320" height="70" fill="#f5f5ff" stroke="#0077b6" stroke-width="2" stroke-dasharray="4,3"/>
+
+        <!-- Width arrow (top) -->
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,1 L7,4 L0,7 Z" fill="#0077b6"/>
+          </marker>
+          <marker id="arrl" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+            <path d="M0,1 L7,4 L0,7 Z" fill="#0077b6"/>
+          </marker>
+        </defs>
+        <line x1="120" y1="8" x2="440" y2="8" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arrl)"/>
+        <text id="svgWidth" x="280" y="6" text-anchor="middle" font-size="12" fill="#0077b6" font-weight="700" dy="-1">Width (ft)</text>
+
+        <!-- Height arrow (left) -->
+        <line x1="8" y1="20" x2="8" y2="120" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arrl)"/>
+        <text id="svgHeight" x="6" y="72" text-anchor="middle" font-size="12" fill="#0077b6" font-weight="700" transform="rotate(-90,6,72)">Height (ft)</text>
+
+        <!-- Length arrow (bottom of main wall) -->
+        <line x1="120" y1="212" x2="440" y2="212" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arrl)"/>
+        <text id="svgLength" x="280" y="212" text-anchor="middle" font-size="12" fill="#0077b6" font-weight="700" dy="0">Length (ft)</text>
+
+        <!-- Labels -->
+        <text x="280" y="75" text-anchor="middle" font-size="13" fill="#1a1a2e" font-weight="600">Main Wall</text>
+        <text x="65" y="75" text-anchor="middle" font-size="11" fill="#555">Side</text>
+        <text x="495" y="75" text-anchor="middle" font-size="11" fill="#555">Side</text>
+        <text x="280" y="170" text-anchor="middle" font-size="11" fill="#555">Ceiling</text>
+
+        <!-- Sheet indicator -->
+        <rect x="135" y="30" width="50" height="30" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <text x="160" y="49" text-anchor="middle" font-size="10" fill="#e74c3c">4×8 sheet</text>
+      </svg>
+    </div>
+
+    <!-- Inputs -->
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="roomLength">Room Length (ft)</label>
+        <input type="number" id="roomLength" placeholder="e.g. 12" min="1" max="500" step="0.5">
+        <span class="error-msg" id="err-length">Enter a valid length (1–500 ft)</span>
+      </div>
+      <div class="form-group">
+        <label for="roomWidth">Room Width (ft)</label>
+        <input type="number" id="roomWidth" placeholder="e.g. 10" min="1" max="500" step="0.5">
+        <span class="error-msg" id="err-width">Enter a valid width (1–500 ft)</span>
+      </div>
+      <div class="form-group">
+        <label for="ceilingHeight">Ceiling Height (ft)</label>
+        <input type="number" id="ceilingHeight" placeholder="e.g. 8" min="4" max="30" step="0.5" value="8">
+        <span class="error-msg" id="err-height">Enter a valid height (4–30 ft)</span>
+      </div>
+      <div class="form-group">
+        <label for="sheetSize">Sheet Size</label>
+        <select id="sheetSize">
+          <option value="32">4×8 ft (32 sq ft)</option>
+          <option value="48">4×12 ft (48 sq ft)</option>
+          <option value="54">4×13.5 ft (54 sq ft)</option>
+          <option value="64">4×16 ft (64 sq ft)</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label for="includeCeiling">Include Ceiling?</label>
+        <select id="includeCeiling">
+          <option value="yes">Yes — include ceiling</option>
+          <option value="no">No — walls only</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Openings (doors & windows) — total sq ft to subtract</label>
+        <input type="number" id="openings" placeholder="e.g. 60" min="0" max="9999" step="1" value="0">
+        <span class="error-msg" id="err-openings">Enter 0 or a positive number</span>
+      </div>
+      <div class="form-group full">
+        <label>Waste / Overlap Factor: <span class="waste-val" id="wasteDisplay">10%</span></label>
+        <div class="waste-row">
+          <input type="range" id="wasteFactor" min="0" max="30" step="1" value="10">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="costPerSheet">Cost per Sheet ($)</label>
+        <input type="number" id="costPerSheet" placeholder="e.g. 18" min="0" max="500" step="0.01" value="18">
+        <span class="error-msg" id="err-cost">Enter a valid cost (0–$500)</span>
+      </div>
+      <div class="form-group">
+        <label for="laborCost">Labor Cost per Sheet ($)</label>
+        <input type="number" id="laborCost" placeholder="e.g. 12" min="0" max="500" step="0.01" value="0">
+      </div>
+    </div>
+
+    <button class="btn" id="calcBtn">Calculate Drywall Needed</button>
+    <button class="btn btn-secondary" id="clearBtn">Clear / Reset</button>
   </div>
 
-  <!-- Inputs -->
-  <div class="section-title">Room Dimensions</div>
-  <div class="row-3">
-    <div class="form-group">
-      <label for="roomLength">Length (ft)</label>
-      <input type="number" id="roomLength" min="1" max="999" step="0.5" placeholder="e.g. 12">
-      <div class="error-msg" id="errLength">Enter a valid length (> 0)</div>
+  <!-- Results -->
+  <div class="card results" id="resultsCard">
+    <div class="results-header">
+      <h2>Results</h2>
+      <button class="copy-btn" id="copyBtn">Copy Results</button>
     </div>
-    <div class="form-group">
-      <label for="roomWidth">Width (ft)</label>
-      <input type="number" id="roomWidth" min="1" max="999" step="0.5" placeholder="e.g. 10">
-      <div class="error-msg" id="errWidth">Enter a valid width (> 0)</div>
-    </div>
-    <div class="form-group">
-      <label for="wallHeight">Wall Height (ft)</label>
-      <input type="number" id="wallHeight" min="1" max="30" step="0.5" placeholder="e.g. 8">
-      <div class="error-msg" id="errHeight">Enter a valid height (> 0)</div>
+
+    <div id="resultsContent"></div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+    <h2>How to Use This Drywall Calculator</h2>
+    <p>Enter your room's length, width, and ceiling height in feet. Select the sheet size you plan to use (4×8 is most common), choose whether to include the ceiling, and enter any total square footage for openings like doors and windows. Adjust the waste factor slider to add a buffer for cuts and errors, then hit <strong>Calculate</strong>.</p>
+    <p>The tool outputs total sheets needed, total square footage, materials breakdown (screws, joint tape, compound), and an estimated cost — all in one click.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Buying too little drywall mid-project means emergency hardware store runs and potential dye-lot mismatches. Buying too much wastes money and creates disposal headaches. For a typical 12×14 ft bedroom with 8-foot ceilings, you're looking at roughly 30–35 sheets of 4×8 drywall once you include all four walls and the ceiling — that's $540–$630 just in materials at $18/sheet.</p>
+    <p>Professional drywall estimators always add a <strong>10–15% waste factor</strong> to account for cuts around windows, outlets, and irregular shapes. First-time DIYers often skip this step and end up short. This calculator bakes that buffer in so you get it right the first time. Whether you're drywalling a single bedroom, a basement, or an entire house addition, accurate estimates help you negotiate better prices on bulk material orders and prevent costly delays.</p>
+
+    <h2>How It's Calculated</h2>
+    <div class="formula">Total Wall Area = 2 × (Length + Width) × Ceiling Height</div>
+    <div class="formula">Ceiling Area = Length × Width (if included)</div>
+    <div class="formula">Net Area = Total Area − Openings</div>
+    <div class="formula">Sheets = CEIL( Net Area × (1 + Waste%) ÷ Sheet Size )</div>
+    <p>Joint tape is estimated at 3 linear feet per sheet. Drywall screws are estimated at 32 screws per sheet (every 8 inches on studs). Joint compound is roughly 0.053 gallons per square foot of finished area.</p>
+
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Don't skip the waste factor.</strong> Even pros use 10–12% for simple rectangular rooms and 15–20% for rooms with angled ceilings or lots of windows.</li>
+      <li><strong>Measure openings accurately.</strong> A standard exterior door is about 21 sq ft, an interior door is ~18 sq ft, and a typical double-hung window is 12–15 sq ft.</li>
+      <li><strong>Choose the right thickness.</strong> 1/2" is standard for most walls. Use 5/8" Type X for fire-rated assemblies or garage walls adjacent to living space.</li>
+      <li><strong>Account for tall walls.</strong> For 9- or 10-foot ceilings, consider 4×10 or 4×12 sheets to minimize horizontal seams and reduce taping work.</li>
+      <li><strong>Order all at once.</strong> Many suppliers offer per-unit discounts at 50, 100, or 200+ sheet thresholds. It often costs less to round up to the next tier.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>How many screws do I need per sheet of drywall?</summary>
+      <div class="details-body">A common rule of thumb is approximately 32 screws per 4×8 sheet, based on placing screws every 8 inches into studs 16 inches on center. For 4×12 sheets, plan on about 48 screws. Always buy an extra box — screws are cheap and running out mid-job is frustrating.</div>
+    </details>
+    <details>
+      <summary>Should I include the ceiling in my estimate?</summary>
+      <div class="details-body">Yes, unless your ceiling is already drywalled or you're using a different material. Ceiling drywall is often the same 1/2" standard board for residential spaces. Toggle the option in the calculator to see exactly how much the ceiling adds to your total.</div>
+    </details>
+    <details>
+      <summary>What's the standard drywall sheet size?</summary>
+      <div class="details-body">The most common size is 4×8 feet (32 sq ft), available at virtually every home center. For rooms with ceilings taller than 8 feet, 4×9 or 4×10 sheets reduce the need for a horizontal seam. For commercial or large residential jobs, 4×12 or even 4×16 sheets speed up installation.</div>
+    </details>
+    <details>
+      <summary>How much joint compound do I need?</summary>
+      <div class="details-body">A general estimate is one 4.5-gallon bucket of pre-mixed joint compound per 200 square feet of drywall surface. This calculator estimates ~0.053 gallons per square foot of finished area. For textured finishes or skip-trowel, add another 20–30% on top.</div>
+    </details>
+  </div>
+
+  <!-- Related Tools -->
+  <div class="content-section">
+    <h2 style="margin-top:0">Related Tools</h2>
+    <div class="related-grid">
+      <a href="/deck-material-cost-estimator/" class="related-link">🪵 Deck Material &amp; Cost Estimator</a>
+      <a href="/paint-coverage-calculator/" class="related-link">🎨 Paint Coverage Calculator</a>
+      <a href="/lumber-board-foot-calculator/" class="related-link">📐 Lumber &amp; Board Foot Calculator</a>
+      <a href="/gravel-driveway-calculator/" class="related-link">🪨 Gravel Driveway Calculator</a>
+      <a href="/tile-flooring-calculator/" class="related-link">🏠 Tile &amp; Flooring Coverage Calculator</a>
+      <a href="/electrical-load-calculator/" class="related-link">⚡ Electrical Load &amp; Circuit Breaker Calculator</a>
     </div>
   </div>
 
-  <div class="section-title">Sheet Size</div>
-  <div class="row-2">
-    <div class="form-group">
-      <label for="sheetSize">Sheet Size</label>
-      <select id="sheetSize">
-        <option value="32" data-w="4" data-h="8" selected>4 × 8 ft (32 sq ft)</option>
-        <option value="48" data-w="4" data-h="12">4 × 12 ft (48 sq ft)</option>
-        <option value="54" data-w="4.5" data-h="12">4.5 × 12 ft (54 sq ft)</option>
-        <option value="custom">Custom size…</option>
-      </select>
-    </div>
-    <div class="form-group" id="customSizeGroup" style="display:none">
-      <label for="customSqft">Custom Sheet Area (sq ft)</label>
-      <input type="number" id="customSqft" min="1" max="200" step="0.5" placeholder="e.g. 40">
-      <div class="error-msg" id="errCustom">Enter a valid sheet area</div>
-    </div>
-    <div class="form-group">
-      <label for="pricePerSheet">Price per Sheet ($)</label>
-      <input type="number" id="pricePerSheet" min="0" step="0.01" placeholder="e.g. 14.50" value="14.50">
-    </div>
-  </div>
-
-  <div class="section-title">Surfaces to Cover</div>
-  <div class="row-2">
-    <div class="form-group">
-      <label><input type="checkbox" id="doWalls" checked style="width:auto;min-height:auto;margin-right:6px"> Walls</label>
-    </div>
-    <div class="form-group">
-      <label><input type="checkbox" id="doCeiling" style="width:auto;min-height:auto;margin-right:6px"> Ceiling</label>
-    </div>
-  </div>
-
-  <div class="section-title">Openings (Doors &amp; Windows)</div>
-  <div class="openings-section" id="openingsSection">
-    <div style="display:grid;grid-template-columns:auto 1fr 1fr 1fr auto;gap:0.5rem;margin-bottom:0.4rem">
-      <span class="opening-lbl">#</span>
-      <span class="opening-lbl">Type</span>
-      <span class="opening-lbl">Width (ft)</span>
-      <span class="opening-lbl">Height (ft)</span>
-      <span></span>
-    </div>
-    <div id="openingsList"></div>
-    <button class="add-btn" id="addOpeningBtn" type="button">+ Add Opening</button>
-  </div>
-
-  <div class="section-title">Waste Factor</div>
-  <div class="form-group">
-    <label for="wastePct">Waste / Overage (%)</label>
-    <div class="waste-slider">
-      <input type="range" id="wastePct" min="5" max="30" step="1" value="10">
-      <span id="wasteVal">10%</span>
-    </div>
-    <div style="font-size:0.78rem;color:#888;margin-top:0.3rem">Recommended: 10–15% for typical rooms; 15–20% for rooms with many angles or cuts.</div>
-  </div>
-
-  <button class="btn" id="calcBtn" type="button">Calculate Drywall</button>
-  <button class="btn btn-secondary" id="clearBtn" type="button">Clear</button>
-</div>
-
-<!-- Results -->
-<div class="results card" id="results">
-  <div class="result-hero">
-    <div class="big-num" id="resSheets">0</div>
-    <div class="big-label">Sheets Needed (with waste)</div>
-    <div class="sub-nums">
-      <div class="sub-num"><span id="resSqft">0</span><small>Total Sq Ft</small></div>
-      <div class="sub-num"><span id="resCost">$0</span><small>Est. Cost</small></div>
-      <div class="sub-num"><span id="resWaste">0</span><small>Extra Sheets (waste)</small></div>
-    </div>
-  </div>
-  <div class="table-wrap">
-    <table id="breakdownTable">
-      <thead><tr><th>Surface</th><th class="num">Area (sq ft)</th><th class="num">Sheets (raw)</th></tr></thead>
-      <tbody id="breakdownBody"></tbody>
-      <tfoot><tr><td><strong>Total</strong></td><td class="num" id="totArea"><strong>0</strong></td><td class="num" id="totSheets"><strong>0</strong></td></tr></tfoot>
-    </table>
-  </div>
-  <div class="copy-row">
-    <p>Copy a summary of your results to clipboard</p>
-    <div style="display:flex;align-items:center;gap:0.75rem">
-      <button class="btn btn-sm" id="copyBtn" type="button">Copy Results</button>
-      <span class="copied-msg" id="copiedMsg">Copied!</span>
-    </div>
-  </div>
-</div>
-
-<div class="ad-slot" id="ad-mid"></div>
-
-<!-- Content -->
-<div class="content-section">
-<h2>How to Use This Drywall Calculator</h2>
-<p>Enter your room's length, width, and wall height. Choose whether to cover walls, ceiling, or both. Add any doors or windows so their area gets subtracted from the total. Adjust the waste slider, pick your sheet size, and hit <strong>Calculate Drywall</strong>. You'll instantly see how many sheets to buy, the total square footage, and an estimated material cost.</p>
-
-<h2>Why This Matters</h2>
-<p>Buying the wrong amount of drywall is one of the most common (and costly) mistakes in home renovation. Under-buy and you'll make a second trip to the hardware store mid-project — delays, mismatched lot numbers, extra labor hours. Over-buy and you're stuck storing bulky 4×8 sheets or absorbing a return fee.</p>
-<p>For a typical 12×12 room with 8-foot ceilings, you need roughly 384 sq ft of wall area (minus doors and windows) plus 144 sq ft of ceiling — that's around 17–20 sheets of 4×8 drywall before waste. Add 10–15% for cuts around outlets, corners, and doorframes, and that number climbs to 19–23 sheets. Professional drywalling crews always over-order by at least 10% for this exact reason.</p>
-<p>Whether you're a weekend DIYer tackling a basement finish or a contractor bidding a multi-room job, accurate sheet counts keep your budget on track from day one.</p>
-
-<h2>How It's Calculated</h2>
-<p>The calculator follows these steps:</p>
-<p><strong>1. Total wall area</strong> = 2 × (Length + Width) × Wall Height</p>
-<p><strong>2. Subtract openings</strong> = Total wall area − Σ(door width × door height) − Σ(window width × window height)</p>
-<p><strong>3. Add ceiling (optional)</strong> = Length × Width</p>
-<p><strong>4. Net area</strong> = Wall area (net) + Ceiling area</p>
-<p><strong>5. Raw sheets</strong> = Net area ÷ Sheet area (always rounded up)</p>
-<p><strong>6. Sheets with waste</strong> = Raw sheets × (1 + Waste% ÷ 100), rounded up to nearest whole sheet</p>
-<p><strong>7. Cost</strong> = Sheets with waste × Price per sheet</p>
-
-<h2>Tips &amp; Common Mistakes</h2>
-<ul>
-  <li><strong>Always round up</strong> — you can't buy half a sheet. Every partial sheet counts as one full sheet.</li>
-  <li><strong>Don't skip the waste factor</strong> — even a simple rectangular room requires cuts at every corner, window, and outlet box. 10% is the bare minimum; use 15% for L-shaped rooms or vaulted ceilings.</li>
-  <li><strong>Match sheet height to ceiling height</strong> — 4×12 sheets are standard for 9-ft ceilings and reduce horizontal seams significantly, cutting taping time.</li>
-  <li><strong>Subtract only 50% of openings if doors are wide</strong> — some pros keep the door area in to account for the extra cuts and strips needed around the frame. This calculator subtracts 100%; add a few extra sheets manually if in doubt.</li>
-  <li><strong>Check panel thickness</strong> — 1/2" is standard for walls; 5/8" Type X is required for fire-rated assemblies (garage walls, stairwells). This doesn't affect sheet count but does affect weight and price.</li>
-</ul>
-
-<h2>Frequently Asked Questions</h2>
-<details>
-  <summary>How much drywall do I need for a 12×12 room?</summary>
-  <p>A 12×12 room with 8-ft ceilings has about 384 sq ft of wall area. Subtract one standard door (21 sq ft) and one window (12 sq ft) = ~351 sq ft net. With a 10% waste factor, you need roughly 13 sheets of 4×8 for walls alone. Add the 144 sq ft ceiling and that's ~18 total sheets.</p>
-</details>
-<details>
-  <summary>Should I use 4×8 or 4×12 sheets?</summary>
-  <p>4×12 sheets create fewer seams and are preferred for rooms with 9–10 ft ceilings. They're heavier and harder to maneuver solo, but professional finishers favor them because less taping = less finishing labor. For 8-ft ceilings, 4×8 is the most common choice.</p>
-</details>
-<details>
-  <summary>What waste factor should I use?</summary>
-  <p>10% is the standard for simple rectangular rooms. Use 15% for rooms with multiple corners, angled ceilings, archways, or lots of windows. For curved walls or complex geometry, go 20%+. It's better to have two extra sheets than to run short halfway through taping.</p>
-</details>
-<details>
-  <summary>Does this calculator account for double-layer drywall?</summary>
-  <p>Not automatically. For double-layer applications (common in soundproofing or fire-rated assemblies), simply multiply the total sheets by 2. Run the calculator once and double the sheet count and cost manually.</p>
-</details>
-
-<h2>Related Tools</h2>
-<div class="related-tools">
-  <a href="/deck-material-cost-estimator/">Deck Material &amp; Cost Estimator</a>
-  <a href="/paint-coverage-calculator/">Paint Coverage Calculator</a>
-  <a href="/lumber-board-foot-calculator/">Lumber &amp; Board Foot Calculator</a>
-  <a href="/gravel-driveway-calculator/">Gravel Driveway Calculator</a>
-  <a href="/tile-flooring-calculator/">Tile &amp; Flooring Coverage Calculator</a>
-  <a href="/electrical-load-calculator/">Electrical Load &amp; Circuit Breaker Calculator</a>
-</div>
-</div>
-
-<div class="ad-slot" id="ad-bottom"></div>
+  <div class="ad-slot" id="ad-bottom"></div>
 </main>
+
 <footer>
-  <a href="/about/">About</a> | <a href="/privacy/">Privacy</a> | <a href="/contact/">Contact</a>
-  <br style="margin-bottom:0.4rem">
-  <span>© <span id="yr"></span> toolwick.com — Free Online Tools</span>
+  <div class="footer-inner">
+    <span>© <span id="yr"></span> toolwick.com</span>
+    <div class="footer-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+    </div>
+  </div>
 </footer>
 
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
 
-// --- Openings management ---
-let openings = [];
-let openingId = 0;
-
-function addOpening(type='Door', w=3, h=6.8) {
-  const id = ++openingId;
-  openings.push({id, type, w, h});
-  renderOpenings();
-}
-
-function removeOpening(id) {
-  openings = openings.filter(o => o.id !== id);
-  renderOpenings();
-}
-
-function renderOpenings() {
-  const list = document.getElementById('openingsList');
-  list.innerHTML = '';
-  openings.forEach((o, i) => {
-    const row = document.createElement('div');
-    row.className = 'opening-row';
-    row.innerHTML = `
-      <span class="opening-lbl">${i+1}</span>
-      <select data-id="${o.id}" data-field="type" style="padding:8px 10px;min-height:40px;font-size:0.85rem">
-        <option${o.type==='Door'?' selected':''}>Door</option>
-        <option${o.type==='Window'?' selected':''}>Window</option>
-        <option${o.type==='Other'?' selected':''}>Other</option>
-      </select>
-      <input type="number" data-id="${o.id}" data-field="w" value="${o.w}" min="0.5" step="0.5" placeholder="Width" style="padding:8px 10px;min-height:40px;font-size:0.85rem">
-      <input type="number" data-id="${o.id}" data-field="h" value="${o.h}" min="0.5" step="0.5" placeholder="Height" style="padding:8px 10px;min-height:40px;font-size:0.85rem">
-      <button class="remove-btn" data-id="${o.id}" type="button" title="Remove">×</button>
-    `;
-    list.appendChild(row);
-  });
-
-  list.querySelectorAll('select,input[type=number]').forEach(el => {
-    el.addEventListener('change', () => {
-      const id = parseInt(el.dataset.id);
-      const field = el.dataset.field;
-      const o = openings.find(x => x.id === id);
-      if (!o) return;
-      if (field === 'type') o.type = el.value;
-      else o[field] = parseFloat(el.value) || 0;
-    });
-  });
-  list.querySelectorAll('.remove-btn').forEach(btn => {
-    btn.addEventListener('click', () => removeOpening(parseInt(btn.dataset.id)));
-  });
-}
-
-// default openings
-addOpening('Door', 3, 6.8);
-addOpening('Window', 3, 4);
-
-document.getElementById('addOpeningBtn').addEventListener('click', () => addOpening());
-
-// --- Waste slider ---
-const wastePct = document.getElementById('wastePct');
-const wasteVal = document.getElementById('wasteVal');
-wastePct.addEventListener('input', () => { wasteVal.textContent = wastePct.value + '%'; });
-
-// --- Custom sheet size ---
-const sheetSize = document.getElementById('sheetSize');
-const customSizeGroup = document.getElementById('customSizeGroup');
-sheetSize.addEventListener('change', () => {
-  customSizeGroup.style.display = sheetSize.value === 'custom' ? '' : 'none';
+// Waste slider
+const wasteSlider = document.getElementById('wasteFactor');
+const wasteDisplay = document.getElementById('wasteDisplay');
+wasteSlider.addEventListener('input', () => {
+  wasteDisplay.textContent = wasteSlider.value + '%';
 });
 
-// --- Helpers ---
-function fmt(n, dec=0) {
-  if (isNaN(n)) return '0';
-  return n.toLocaleString('en-US', {minimumFractionDigits:dec,maximumFractionDigits:dec});
-}
-function fmtMoney(n) {
-  return '$' + n.toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2});
-}
-function getVal(id) { return parseFloat(document.getElementById(id).value) || 0; }
-function setError(fieldId, msgId, show) {
-  const el = document.getElementById(fieldId);
-  const msg = document.getElementById(msgId);
-  if (show) { el.classList.add('error'); msg.classList.add('show'); }
-  else { el.classList.remove('error'); msg.classList.remove('show'); }
+// SVG label updater
+function updateDiagram(len, wid, ht) {
+  const svgW = document.getElementById('svgWidth');
+  const svgL = document.getElementById('svgLength');
+  const svgH = document.getElementById('svgHeight');
+  svgW.textContent = (wid && !isNaN(wid)) ? wid + ' ft wide' : 'Width (ft)';
+  svgL.textContent = (len && !isNaN(len)) ? len + ' ft long' : 'Length (ft)';
+  svgH.textContent = (ht && !isNaN(ht)) ? ht + ' ft tall' : 'Height (ft)';
 }
 
-// --- Main calculation ---
+function fmt(n, dec) {
+  if (dec === undefined) dec = 0;
+  return n.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+}
+
+function validate() {
+  let ok = true;
+  const fields = [
+    {id:'roomLength', errId:'err-length', min:1, max:500},
+    {id:'roomWidth', errId:'err-width', min:1, max:500},
+    {id:'ceilingHeight', errId:'err-height', min:4, max:30},
+    {id:'openings', errId:'err-openings', min:0, max:99999},
+    {id:'costPerSheet', errId:'err-cost', min:0, max:500},
+  ];
+  fields.forEach(f => {
+    const el = document.getElementById(f.id);
+    const errEl = document.getElementById(f.errId);
+    const val = parseFloat(el.value);
+    if (errEl) {
+      if (isNaN(val) || val < f.min || val > f.max) {
+        el.classList.add('error');
+        errEl.classList.add('show');
+        ok = false;
+      } else {
+        el.classList.remove('error');
+        errEl.classList.remove('show');
+      }
+    }
+  });
+  return ok;
+}
+
 function calculate() {
-  const length = getVal('roomLength');
-  const width = getVal('roomWidth');
-  const height = getVal('wallHeight');
+  if (!validate()) return;
 
-  let valid = true;
-  if (length <= 0) { setError('roomLength','errLength',true); valid=false; } else setError('roomLength','errLength',false);
-  if (width <= 0) { setError('roomWidth','errWidth',true); valid=false; } else setError('roomWidth','errWidth',false);
-  if (height <= 0) { setError('wallHeight','errHeight',true); valid=false; } else setError('wallHeight','errHeight',false);
+  const len = parseFloat(document.getElementById('roomLength').value);
+  const wid = parseFloat(document.getElementById('roomWidth').value);
+  const ht = parseFloat(document.getElementById('ceilingHeight').value);
+  const sheetSqFt = parseFloat(document.getElementById('sheetSize').value);
+  const includeCeil = document.getElementById('includeCeiling').value === 'yes';
+  const openings = parseFloat(document.getElementById('openings').value) || 0;
+  const waste = parseFloat(wasteSlider.value) / 100;
+  const costPerSheet = parseFloat(document.getElementById('costPerSheet').value) || 0;
+  const laborPerSheet = parseFloat(document.getElementById('laborCost').value) || 0;
 
-  let sheetArea;
-  if (sheetSize.value === 'custom') {
-    sheetArea = getVal('customSqft');
-    if (sheetArea <= 0) { setError('customSqft','errCustom',true); valid=false; } else setError('customSqft','errCustom',false);
-  } else {
-    sheetArea = parseFloat(sheetSize.value);
-    setError('customSqft','errCustom',false);
-  }
+  // Calculations
+  const wallArea = 2 * (len + wid) * ht;
+  const ceilArea = includeCeil ? len * wid : 0;
+  const totalRaw = wallArea + ceilArea;
+  const netArea = Math.max(0, totalRaw - openings);
+  const areaWithWaste = netArea * (1 + waste);
+  const sheets = Math.ceil(areaWithWaste / sheetSqFt);
 
-  if (!valid) return;
+  // Materials
+  const screws = Math.ceil(sheets * 32);
+  const screw_boxes = Math.ceil(screws / 200); // 200 screws per box typically
+  const tape_ft = Math.ceil(sheets * 3);
+  const tape_rolls = Math.ceil(tape_ft / 500); // 500 ft roll
+  const compound_gal = +(netArea * 0.053).toFixed(1);
+  const compound_buckets = Math.ceil(compound_gal / 4.5);
 
-  const doWalls = document.getElementById('doWalls').checked;
-  const doCeiling = document.getElementById('doCeiling').checked;
+  // Cost
+  const materialCost = sheets * costPerSheet;
+  const laborCost = sheets * laborPerSheet;
+  const totalCost = materialCost + laborCost;
 
-  if (!doWalls && !doCeiling) {
-    alert('Please select at least one surface (Walls or Ceiling).');
-    return;
-  }
+  // Sheet size label
+  const sizeLabels = {32:'4×8 ft', 48:'4×12 ft', 54:'4×13.5 ft', 64:'4×16 ft'};
+  const sizeLabel = sizeLabels[sheetSqFt] || (sheetSqFt + ' sq ft');
 
-  const waste = parseInt(wastePct.value) / 100;
-  const price = getVal('pricePerSheet');
+  updateDiagram(len, wid, ht);
 
-  // Wall area
-  const grossWallArea = 2 * (length + width) * height;
-  let openingArea = 0;
-  openings.forEach(o => { openingArea += (o.w || 0) * (o.h || 0); });
-  openingArea = Math.min(openingArea, grossWallArea);
-  const netWallArea = grossWallArea - openingArea;
+  const rows = [
+    ['Total wall area', fmt(wallArea) + ' sq ft', ''],
+    [includeCeil ? 'Ceiling area' : 'Ceiling area (excluded)', includeCeil ? fmt(ceilArea) + ' sq ft' : '—', ''],
+    ['Gross area', fmt(totalRaw) + ' sq ft', ''],
+    ['Less openings', '−' + fmt(openings) + ' sq ft', ''],
+    ['Net area', fmt(netArea) + ' sq ft', ''],
+    ['Waste factor', waste * 100 + '%', ''],
+    ['Area with waste', fmt(areaWithWaste, 1) + ' sq ft', ''],
+    ['Sheet size', sizeLabel, ''],
+  ];
 
-  // Ceiling area
-  const ceilArea = length * width;
+  const materialsRows = [
+    ['Drywall sheets', fmt(sheets) + ' sheets', costPerSheet > 0 ? '$' + fmt(materialCost, 2) : '—'],
+    ['Drywall screws (~' + fmt(screws) + ')', screw_boxes + ' box' + (screw_boxes !== 1 ? 'es' : '') + ' (200/box)', ''],
+    ['Joint tape (~' + fmt(tape_ft) + ' ft)', tape_rolls + ' roll' + (tape_rolls !== 1 ? 's' : '') + ' (500 ft/roll)', ''],
+    ['Joint compound (~' + fmt(compound_gal, 1) + ' gal)', compound_buckets + ' bucket' + (compound_buckets !== 1 ? 's' : '') + ' (4.5 gal)', ''],
+    ['Labor', laborPerSheet > 0 ? sheets + ' sheets × $' + fmt(laborPerSheet, 2) : 'Not included', laborPerSheet > 0 ? '$' + fmt(laborCost, 2) : '—'],
+  ];
 
-  // Breakdown
-  const rows = [];
-  let totalArea = 0;
-  let totalRawSheets = 0;
-
-  if (doWalls) {
-    const wallSheets = Math.ceil(netWallArea / sheetArea);
-    rows.push({label:'Walls (gross)', area:grossWallArea, sheets:null, sub:true});
-    if (openingArea > 0) rows.push({label:'  − Openings', area:-openingArea, sheets:null, sub:true});
-    rows.push({label:'Walls (net)', area:netWallArea, sheets:wallSheets, sub:false});
-    totalArea += netWallArea;
-    totalRawSheets += wallSheets;
-  }
-  if (doCeiling) {
-    const ceilSheets = Math.ceil(ceilArea / sheetArea);
-    rows.push({label:'Ceiling', area:ceilArea, sheets:ceilSheets, sub:false});
-    totalArea += ceilArea;
-    totalRawSheets += ceilSheets;
-  }
-
-  const rawSheets = Math.ceil(totalArea / sheetArea);
-  const sheetsWithWaste = Math.ceil(rawSheets * (1 + waste));
-  const extraSheets = sheetsWithWaste - rawSheets;
-  const totalCost = sheetsWithWaste * price;
-
-  // Populate results
-  document.getElementById('resSheets').textContent = fmt(sheetsWithWaste);
-  document.getElementById('resSqft').textContent = fmt(totalArea);
-  document.getElementById('resCost').textContent = price > 0 ? fmtMoney(totalCost) : 'N/A';
-  document.getElementById('resWaste').textContent = fmt(extraSheets);
-
-  const tbody = document.getElementById('breakdownBody');
-  tbody.innerHTML = '';
+  let tableHtml = `<div class="table-wrap"><table>
+    <thead><tr><th>Item</th><th>Detail</th><th>Cost</th></tr></thead>
+    <tbody>`;
   rows.forEach(r => {
-    const tr = document.createElement('tr');
-    const sheetsDisplay = r.sheets !== null ? fmt(r.sheets) : '—';
-    const areaSign = r.area < 0 ? '−' : '';
-    const absArea = Math.abs(r.area);
-    tr.innerHTML = `<td style="${r.sub?'color:#666;font-size:0.85rem':''}">${r.label}</td><td class="num">${areaSign}${fmt(absArea)} sq ft</td><td class="num">${sheetsDisplay}</td>`;
-    tbody.appendChild(tr);
+    tableHtml += `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`;
   });
-  document.getElementById('totArea').innerHTML = `<strong>${fmt(totalArea)} sq ft</strong>`;
-  document.getElementById('totSheets').innerHTML = `<strong>${fmt(rawSheets)}</strong>`;
+  tableHtml += `</tbody></table></div>`;
 
-  // Update SVG labels
-  const sheetOpt = sheetSize.options[sheetSize.selectedIndex];
-  const sw = sheetOpt.dataset.w || '?';
-  const sh = sheetOpt.dataset.h || '?';
-  document.getElementById('svgWidth').textContent = width + ' ft wide';
-  document.getElementById('svgHeight').textContent = length + ' ft long';
-  document.getElementById('svgSheet').textContent = sheetSize.value === 'custom' ? `${sheetArea} sq ft sheet` : `${sw} × ${sh} ft sheet`;
+  let matHtml = `<div class="table-wrap"><table>
+    <thead><tr><th>Material</th><th>Quantity</th><th>Est. Cost</th></tr></thead>
+    <tbody>`;
+  materialsRows.forEach(r => {
+    matHtml += `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`;
+  });
+  if (totalCost > 0) {
+    matHtml += `</tbody><tfoot><tr><td colspan="2"><strong>Total Estimated Cost</strong></td><td>$${fmt(totalCost, 2)}</td></tr></tfoot>`;
+  } else {
+    matHtml += `</tbody>`;
+  }
+  matHtml += `</table></div>`;
 
-  document.getElementById('results').classList.add('visible');
-  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+  const infoHtml = `<div class="info-box" style="margin-top:1rem">💡 Tip: Add a <strong>10–15% waste buffer</strong> for cuts around windows, doors, and outlets. You used ${waste * 100}% — ${waste < 0.10 ? 'consider increasing to at least 10%.' : 'good choice!'}</div>`;
+
+  const html = `
+    <div class="key-metrics">
+      <div class="metric accent">
+        <div class="metric-val">${fmt(sheets)}</div>
+        <div class="metric-lbl">Sheets Needed</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">${fmt(netArea)}</div>
+        <div class="metric-lbl">Net Sq Ft</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">${totalCost > 0 ? '$' + fmt(totalCost, 0) : '—'}</div>
+        <div class="metric-lbl">Est. Total Cost</div>
+      </div>
+    </div>
+    <div class="section-title">Area Breakdown</div>
+    ${tableHtml}
+    <div class="section-title">Materials Estimate</div>
+    ${matHtml}
+    ${infoHtml}
+  `;
+
+  requestAnimationFrame(() => {
+    document.getElementById('resultsContent').innerHTML = html;
+    const card = document.getElementById('resultsCard');
+    card.classList.add('visible');
+    card.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+    // Store for copy
+    const copyText = [
+      'DRYWALL ESTIMATE',
+      '================',
+      `Room: ${len} × ${wid} ft, Ceiling: ${ht} ft`,
+      `Sheet Size: ${sizeLabel}`,
+      `Net Area: ${fmt(netArea)} sq ft`,
+      `Sheets Needed: ${fmt(sheets)}`,
+      `Screws: ~${fmt(screws)} (${screw_boxes} box${screw_boxes !== 1 ? 'es' : ''})`,
+      `Joint Tape: ~${fmt(tape_ft)} ft (${tape_rolls} roll${tape_rolls !== 1 ? 's' : ''})`,
+      `Compound: ~${fmt(compound_gal, 1)} gal (${compound_buckets} bucket${compound_buckets !== 1 ? 's' : ''})`,
+      totalCost > 0 ? `Total Cost: $${fmt(totalCost, 2)}` : '',
+      '',
+      'Generated at toolwick.com/drywall-calculator/'
+    ].filter(Boolean).join('\n');
+
+    document.getElementById('copyBtn').dataset.text = copyText;
+  });
 }
 
-// Copy results
-document.getElementById('copyBtn').addEventListener('click', () => {
-  const sheets = document.getElementById('resSheets').textContent;
-  const sqft = document.getElementById('resSqft').textContent;
-  const cost = document.getElementById('resCost').textContent;
-  const waste = document.getElementById('resWaste').textContent;
-  const l = document.getElementById('roomLength').value;
-  const w = document.getElementById('roomWidth').value;
-  const h = document.getElementById('wallHeight').value;
-  const text = `Drywall Calculator Results (toolwick.com)\nRoom: ${l} × ${w} ft, ${h} ft ceiling\nTotal Area: ${sqft} sq ft\nSheets Needed (with waste): ${sheets}\nExtra Sheets (waste): ${waste}\nEstimated Cost: ${cost}`;
-  navigator.clipboard.writeText(text).then(() => {
-    const msg = document.getElementById('copiedMsg');
-    msg.classList.add('show');
-    setTimeout(() => msg.classList.remove('show'), 2000);
-  });
+document.getElementById('calcBtn').addEventListener('click', () => {
+  requestAnimationFrame(() => calculate());
 });
 
-// Clear
 document.getElementById('clearBtn').addEventListener('click', () => {
-  ['roomLength','roomWidth','wallHeight','pricePerSheet'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('pricePerSheet').value = '14.50';
-  document.getElementById('doWalls').checked = true;
-  document.getElementById('doCeiling').checked = false;
-  wastePct.value = 10; wasteVal.textContent = '10%';
-  openings = []; openingId = 0;
-  addOpening('Door', 3, 6.8);
-  addOpening('Window', 3, 4);
-  document.getElementById('results').classList.remove('visible');
-  ['errLength','errWidth','errHeight','errCustom'].forEach(id => document.getElementById(id).classList.remove('show'));
-  ['roomLength','roomWidth','wallHeight','customSqft'].forEach(id => document.getElementById(id).classList.remove('error'));
-  document.getElementById('svgWidth').textContent = 'Width (ft)';
-  document.getElementById('svgHeight').textContent = 'Height (ft)';
-  document.getElementById('svgSheet').textContent = '4 × 8 sheet';
+  ['roomLength','roomWidth','openings'].forEach(id => {
+    document.getElementById(id).value = '';
+    document.getElementById(id).classList.remove('error');
+  });
+  document.getElementById('ceilingHeight').value = '8';
+  document.getElementById('costPerSheet').value = '18';
+  document.getElementById('laborCost').value = '0';
+  document.getElementById('wasteFactor').value = '10';
+  wasteDisplay.textContent = '10%';
+  document.getElementById('sheetSize').value = '32';
+  document.getElementById('includeCeiling').value = 'yes';
+  document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
+  document.getElementById('resultsCard').classList.remove('visible');
+  updateDiagram('','','');
 });
-
-document.getElementById('calcBtn').addEventListener('click', calculate);
 
 // Enter key
-document.querySelectorAll('input[type=number]').forEach(el => {
-  el.addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
+document.querySelectorAll('input').forEach(inp => {
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      requestAnimationFrame(() => calculate());
+    }
+  });
+});
+
+// Copy button
+document.getElementById('copyBtn').addEventListener('click', function() {
+  const text = this.dataset.text || '';
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = this.textContent;
+    this.textContent = 'Copied!';
+    setTimeout(() => { this.textContent = orig; }, 2000);
+  }).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const orig = this.textContent;
+    this.textContent = 'Copied!';
+    setTimeout(() => { this.textContent = orig; }, 2000);
+  });
 });
 </script>
 </body>
