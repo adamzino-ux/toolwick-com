@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paint Coverage Calculator — Free Online Tool | toolwick.com</title>
+  <meta name="description" content="Calculate exactly how much paint you need for any room or surface. Enter dimensions, choose coats, and get instant paint quantity results. Free paint coverage calculator.">
+  <link rel="canonical" href="https://toolwick.com/paint-coverage-calculator/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Paint Coverage Calculator",
+    "url": "https://toolwick.com/paint-coverage-calculator/",
+    "description": "Calculate exactly how much paint you need for any room or surface. Free online tool.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #1a1a2e; font-size: 16px; line-height: 1.6; }
+    a { color: #0077b6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    nav { border-bottom: 1px solid #e0e0e0; padding: 0.75rem 1.5rem; }
+    nav .nav-inner { max-width: 640px; margin: 0 auto; display: flex; align-items: center; }
+    nav .site-name { font-weight: 700; font-size: 1.1rem; color: #0077b6; }
+    .container { max-width: 640px; margin: 0 auto; padding: 1.5rem; }
+    h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.4rem; color: #1a1a2e; }
+    .subtitle { color: #555; font-size: 0.95rem; margin-bottom: 1.5rem; }
+    .card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 2rem; }
+    .diagram-wrap { margin-bottom: 1.5rem; background: #f8f9fa; border-radius: 8px; padding: 1rem; border: 1px solid #e0e0e0; }
+    .diagram-wrap svg { width: 100%; height: auto; display: block; }
+    .section-title { font-size: 1rem; font-weight: 600; color: #0077b6; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .mode-tabs { display: flex; gap: 0; margin-bottom: 1.5rem; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; }
+    .mode-tab { flex: 1; padding: 10px; text-align: center; cursor: pointer; background: #f8f9fa; font-size: 0.9rem; font-weight: 500; color: #555; border: none; transition: background 0.2s, color 0.2s; min-height: 44px; }
+    .mode-tab.active { background: #0077b6; color: #fff; }
+    .mode-tab:not(.active):hover { background: #e8f4fd; color: #0077b6; }
+    .form-group { margin-bottom: 1.2rem; }
+    label { display: block; font-size: 0.85rem; font-weight: 500; color: #444; margin-bottom: 6px; }
+    input[type="number"], input[type="text"], select { width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; color: #1a1a2e; background: #fff; transition: box-shadow 0.2s, border-color 0.2s; appearance: none; -webkit-appearance: none; min-height: 44px; }
+    input:focus, select:focus { outline: none; border-color: #0077b6; box-shadow: 0 0 0 3px rgba(0,119,182,0.15); }
+    input.error { border-color: #e74c3c; box-shadow: 0 0 0 3px rgba(231,76,60,0.15); }
+    .error-msg { color: #e74c3c; font-size: 0.8rem; margin-top: 4px; display: none; }
+    .error-msg.visible { display: block; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8rem; }
+    .slider-group { margin-bottom: 1.2rem; }
+    .slider-row { display: flex; align-items: center; gap: 1rem; }
+    input[type="range"] { flex: 1; accent-color: #0077b6; height: 6px; min-height: 44px; cursor: pointer; }
+    .slider-val { min-width: 36px; text-align: right; font-weight: 600; color: #0077b6; font-size: 0.95rem; }
+    .btn { background: #0077b6; color: #fff; border: none; padding: 12px 24px; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; min-height: 44px; }
+    .btn:hover { background: #006299; }
+    .btn-secondary { background: #f0f0f0; color: #444; border: 1px solid #ddd; padding: 8px 18px; border-radius: 6px; font-size: 0.85rem; font-weight: 500; cursor: pointer; min-height: 44px; transition: background 0.2s; }
+    .btn-secondary:hover { background: #e0e0e0; }
+    .results { opacity: 0; transition: opacity 0.3s ease; }
+    .results.visible { opacity: 1; }
+    .result-primary { background: #f0f8ff; border: 1px solid #b3d9f2; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
+    .result-primary .big-number { font-size: 2.8rem; font-weight: 800; color: #0077b6; line-height: 1; }
+    .result-primary .big-label { font-size: 0.9rem; color: #555; margin-top: 4px; }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+    .result-card { background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 1rem; text-align: center; }
+    .result-card .val { font-size: 1.5rem; font-weight: 700; color: #1a1a2e; }
+    .result-card .lbl { font-size: 0.8rem; color: #666; margin-top: 2px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    thead th { background: #f0f0f0; padding: 10px 12px; text-align: left; font-weight: 600; color: #444; border-bottom: 2px solid #ddd; }
+    thead th:last-child { text-align: right; }
+    tbody tr:nth-child(even) { background: #fafafa; }
+    tbody tr:nth-child(odd) { background: #fff; }
+    tbody td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; }
+    tbody td:last-child { text-align: right; font-weight: 500; }
+    .table-scroll { overflow-x: auto; }
+    .copy-row { display: flex; justify-content: flex-end; margin-bottom: 0.5rem; }
+    .copy-btn { background: transparent; border: 1px solid #ddd; color: #555; padding: 6px 14px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; min-height: 36px; }
+    .copy-btn:hover { background: #f0f0f0; }
+    .paint-bar-wrap { margin-bottom: 1.5rem; }
+    .bar-label { font-size: 0.85rem; font-weight: 500; color: #444; margin-bottom: 6px; display: flex; justify-content: space-between; }
+    .bar-track { background: #e0e0e0; border-radius: 4px; height: 12px; overflow: hidden; }
+    .bar-fill { height: 100%; background: linear-gradient(90deg, #0077b6, #00b4d8); border-radius: 4px; transition: width 0.5s ease; }
+    .note-box { background: #fffbe6; border: 1px solid #ffe58f; border-radius: 6px; padding: 0.9rem 1rem; font-size: 0.85rem; color: #7a6a00; margin-bottom: 1.5rem; }
+    .ad-slot { min-height: 0; margin: 0; }
+    h2 { font-size: 1.15rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.6rem; margin-top: 2rem; }
+    h2:first-of-type { margin-top: 0; }
+    .content-section { margin-bottom: 2rem; }
+    .content-section p { margin-bottom: 0.8rem; color: #333; }
+    .content-section ul { padding-left: 1.4rem; color: #333; }
+    .content-section ul li { margin-bottom: 0.5rem; }
+    details { border: 1px solid #e0e0e0; border-radius: 6px; padding: 0.8rem 1rem; margin-bottom: 0.6rem; }
+    details[open] { background: #f8f9fa; }
+    summary { font-weight: 600; cursor: pointer; color: #0077b6; font-size: 0.95rem; list-style: none; padding: 2px 0; }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '+ '; font-weight: 700; }
+    details[open] summary::before { content: '− '; }
+    details p { margin-top: 0.6rem; font-size: 0.9rem; color: #444; }
+    .related-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-top: 0.8rem; }
+    .related-tools a { background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 0.7rem 1rem; font-size: 0.88rem; color: #0077b6; display: block; transition: background 0.2s; }
+    .related-tools a:hover { background: #e8f4fd; text-decoration: none; }
+    footer { border-top: 1px solid #e0e0e0; padding: 1.5rem; text-align: center; font-size: 0.85rem; color: #888; }
+    footer a { color: #888; margin: 0 0.4rem; }
+    footer a:hover { color: #0077b6; }
+    .surface-list { margin-bottom: 1.2rem; }
+    .surface-item { display: flex; align-items: center; gap: 0.5rem; background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 0.5rem 0.8rem; margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .surface-item button { margin-left: auto; background: transparent; border: none; color: #e74c3c; cursor: pointer; font-size: 1rem; min-width: 30px; min-height: 30px; border-radius: 4px; }
+    .surface-item button:hover { background: #fee; }
+    @media (max-width: 640px) {
+      .card { padding: 1.2rem; }
+      .row-2, .row-3 { grid-template-columns: 1fr; gap: 0; }
+      .result-grid { grid-template-columns: 1fr 1fr; }
+      .related-tools { grid-template-columns: 1fr; }
+      h1 { font-size: 1.3rem; }
+      .result-primary .big-number { font-size: 2.2rem; }
+      .mode-tab { font-size: 0.82rem; padding: 8px 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="site-name">🔧 toolwick.com</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Paint Coverage Calculator</h1>
+  <p class="subtitle">Calculate exactly how many gallons of paint you need for walls, ceilings, trim, and more.</p>
+
+  <div class="card">
+    <!-- SVG DIAGRAM -->
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" aria-label="Paint coverage room diagram">
+        <!-- Room outline -->
+        <rect x="30" y="30" width="220" height="150" fill="#f0f8ff" stroke="#0077b6" stroke-width="2"/>
+        <!-- Window cutout -->
+        <rect x="80" y="55" width="60" height="40" fill="#e0f4ff" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="110" y="79" text-anchor="middle" font-size="10" fill="#0077b6">Window</text>
+        <!-- Door cutout -->
+        <rect x="160" y="120" width="40" height="60" fill="#e0f4ff" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="180" y="153" text-anchor="middle" font-size="10" fill="#0077b6">Door</text>
+        <!-- Width arrow -->
+        <line x1="30" y1="194" x2="250" y2="194" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+        <text x="140" y="206" text-anchor="middle" font-size="11" fill="#1a1a2e" id="lbl-width">Width: 12 ft</text>
+        <!-- Height arrow -->
+        <line x1="10" y1="30" x2="10" y2="180" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+        <text x="7" y="110" text-anchor="middle" font-size="11" fill="#1a1a2e" transform="rotate(-90,7,110)" id="lbl-height">Height: 9 ft</text>
+        <!-- Length arrow -->
+        <line x1="260" y1="30" x2="260" y2="180" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <!-- Coats visual -->
+        <rect x="310" y="30" width="220" height="150" fill="none" stroke="#e0e0e0" stroke-width="1.5"/>
+        <rect x="310" y="30" width="220" height="150" fill="#cce8f7" opacity="0.3"/>
+        <rect x="320" y="40" width="200" height="130" fill="#0077b6" opacity="0.12" rx="3"/>
+        <rect x="330" y="50" width="180" height="110" fill="#0077b6" opacity="0.15" rx="3"/>
+        <text x="420" y="95" text-anchor="middle" font-size="12" fill="#1a1a2e" font-weight="600" id="lbl-coats">2 Coats</text>
+        <text x="420" y="112" text-anchor="middle" font-size="10" fill="#0077b6" id="lbl-gallons">≈ 1.2 gal</text>
+        <text x="420" y="165" text-anchor="middle" font-size="9" fill="#888">Paint Layers</text>
+        <!-- Arrows marker -->
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M1,1 L7,4 L1,7 Z" fill="#0077b6"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+
+    <!-- MODE TABS -->
+    <div class="mode-tabs" role="tablist">
+      <button class="mode-tab active" onclick="switchMode('room')" id="tab-room" role="tab">Room Mode</button>
+      <button class="mode-tab" onclick="switchMode('surface')" id="tab-surface" role="tab">Surface Mode</button>
+      <button class="mode-tab" onclick="switchMode('custom')" id="tab-custom" role="tab">Custom Area</button>
+    </div>
+
+    <!-- ROOM MODE -->
+    <div id="mode-room">
+      <div class="section-title">Room Dimensions</div>
+      <div class="row-2">
+        <div class="form-group">
+          <label for="room-length">Room Length</label>
+          <input type="number" id="room-length" placeholder="e.g. 14" min="0" step="0.1">
+          <div class="error-msg" id="err-length">Enter a valid length.</div>
+        </div>
+        <div class="form-group">
+          <label for="room-width">Room Width</label>
+          <input type="number" id="room-width" placeholder="e.g. 12" min="0" step="0.1">
+          <div class="error-msg" id="err-width">Enter a valid width.</div>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="form-group">
+          <label for="room-height">Ceiling Height</label>
+          <input type="number" id="room-height" placeholder="e.g. 9" min="0" step="0.1" value="9">
+          <div class="error-msg" id="err-height">Enter a valid height.</div>
+        </div>
+        <div class="form-group">
+          <label for="room-unit">Unit</label>
+          <select id="room-unit">
+            <option value="ft">Feet</option>
+            <option value="m">Meters</option>
+            <option value="in">Inches</option>
+          </select>
+        </div>
+      </div>
+      <div class="section-title" style="margin-top:0.5rem;">Deductions (optional)</div>
+      <div class="row-3">
+        <div class="form-group">
+          <label for="num-doors">Doors</label>
+          <input type="number" id="num-doors" placeholder="0" min="0" step="1" value="0">
+        </div>
+        <div class="form-group">
+          <label for="num-windows">Windows</label>
+          <input type="number" id="num-windows" placeholder="0" min="0" step="1" value="0">
+        </div>
+        <div class="form-group">
+          <label for="paint-ceiling">Ceiling?</label>
+          <select id="paint-ceiling">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SURFACE MODE -->
+    <div id="mode-surface" style="display:none;">
+      <div class="section-title">Add Surfaces</div>
+      <div class="surface-list" id="surface-list"></div>
+      <div class="row-3">
+        <div class="form-group">
+          <label for="surf-name">Surface Name</label>
+          <input type="text" id="surf-name" placeholder="e.g. Accent Wall">
+        </div>
+        <div class="form-group">
+          <label for="surf-w">Width/Length</label>
+          <input type="number" id="surf-w" placeholder="ft" min="0" step="0.1">
+        </div>
+        <div class="form-group">
+          <label for="surf-h">Height</label>
+          <input type="number" id="surf-h" placeholder="ft" min="0" step="0.1">
+        </div>
+      </div>
+      <button class="btn-secondary" onclick="addSurface()" style="margin-bottom:1.2rem; width:100%;">+ Add Surface</button>
+      <div class="error-msg" id="err-surface" style="margin-bottom:0.8rem;"></div>
+    </div>
+
+    <!-- CUSTOM AREA MODE -->
+    <div id="mode-custom" style="display:none;">
+      <div class="section-title">Total Area</div>
+      <div class="row-2">
+        <div class="form-group">
+          <label for="custom-area">Total Area to Paint</label>
+          <input type="number" id="custom-area" placeholder="e.g. 400" min="0" step="1">
+          <div class="error-msg" id="err-custom">Enter a valid area.</div>
+        </div>
+        <div class="form-group">
+          <label for="custom-unit">Unit</label>
+          <select id="custom-unit">
+            <option value="sqft">sq ft</option>
+            <option value="sqm">sq m</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHARED SETTINGS -->
+    <div class="section-title" style="margin-top:0.5rem;">Paint Settings</div>
+    <div class="row-2">
+      <div class="form-group">
+        <label for="paint-type">Paint Type</label>
+        <select id="paint-type" onchange="updateCoverage()">
+          <option value="400">Standard Latex (400 sq ft/gal)</option>
+          <option value="350">Primer (350 sq ft/gal)</option>
+          <option value="300">Thick/Textured (300 sq ft/gal)</option>
+          <option value="450">Premium Acrylic (450 sq ft/gal)</option>
+          <option value="500">Exterior Finish (500 sq ft/gal)</option>
+          <option value="custom">Custom…</option>
+        </select>
+      </div>
+      <div class="form-group" id="custom-cov-group" style="display:none;">
+        <label for="custom-cov">Coverage Rate (sq ft/gal)</label>
+        <input type="number" id="custom-cov" placeholder="e.g. 380" min="1" step="1">
+      </div>
+    </div>
+    <div class="slider-group">
+      <label>Number of Coats: <span id="coat-label" style="color:#0077b6;font-weight:700;">2</span></label>
+      <div class="slider-row">
+        <input type="range" id="coats-slider" min="1" max="4" step="1" value="2" oninput="updateCoatLabel(this.value)">
+        <span class="slider-val" id="coat-val">2</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="waste-pct">Waste / Overage Buffer (%)</label>
+      <select id="waste-pct">
+        <option value="0">None (0%)</option>
+        <option value="10" selected>Standard (10%)</option>
+        <option value="15">Safe (15%)</option>
+        <option value="20">Conservative (20%)</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="calculate()">Calculate Paint Needed</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="card results" id="results">
+    <div class="copy-row">
+      <button class="copy-btn" onclick="copyResults()" id="copy-btn">📋 Copy Results</button>
+    </div>
+    <div class="result-primary">
+      <div class="big-number" id="res-gallons">—</div>
+      <div class="big-label">Gallons of Paint Needed</div>
+    </div>
+    <div class="result-grid">
+      <div class="result-card">
+        <div class="val" id="res-liters">—</div>
+        <div class="lbl">Liters</div>
+      </div>
+      <div class="result-card">
+        <div class="val" id="res-quarts">—</div>
+        <div class="lbl">Quarts</div>
+      </div>
+      <div class="result-card">
+        <div class="val" id="res-area">—</div>
+        <div class="lbl">Total Area (sq ft)</div>
+      </div>
+      <div class="result-card">
+        <div class="val" id="res-cans">—</div>
+        <div class="lbl">1-Gal Cans to Buy</div>
+      </div>
+    </div>
+
+    <div class="paint-bar-wrap">
+      <div class="bar-label">
+        <span>Area Coverage Progress</span>
+        <span id="bar-pct-lbl">0%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" id="coverage-bar" style="width:0%"></div>
+      </div>
+      <div style="font-size:0.78rem;color:#888;margin-top:4px;">Relative to a standard 1-gallon coverage per coat</div>
+    </div>
+
+    <div class="note-box" id="res-note"></div>
+
+    <div class="section-title">Breakdown</div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody id="breakdown-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- CONTENT SECTION -->
+  <div class="content-section">
+    <h2>How to Use This Paint Coverage Calculator</h2>
+    <p>Choose your preferred input mode: <strong>Room Mode</strong> lets you enter a room's length, width, and ceiling height to automatically calculate wall and ceiling area. <strong>Surface Mode</strong> lets you add individual surfaces (accent walls, stairwells, trim panels) one by one. <strong>Custom Area Mode</strong> is for when you already know the square footage. Then set your paint type, number of coats, and waste buffer — hit Calculate to see exactly how many gallons you need.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Running out of paint mid-project is a nightmare — especially if your exact color batch is unavailable later. Buying too much wastes money and creates disposal headaches. A precise paint estimate prevents both problems.</p>
+    <p>Consider a typical 12×14 ft bedroom with 9-ft ceilings and one door and window: that's roughly 476 sq ft of wall space. With two coats of standard latex at 400 sq ft/gallon, you need about 2.4 gallons — which means buying 3 one-gallon cans. Without calculating, most people either buy 2 (not enough) or 4 (overspending by $30–50).</p>
+    <p>Professional painters always calculate coverage rates first. Paint type matters too: thick elastomeric paints cover 200–250 sq ft/gallon, while thin stains can cover 600+ sq ft. A cheap paint requiring three coats often costs more than a premium paint needing only two.</p>
+
+    <h2>How It's Calculated</h2>
+    <p>The formula is straightforward:</p>
+    <p><strong>Wall Area = 2 × (Length + Width) × Height</strong></p>
+    <p><strong>Ceiling Area = Length × Width</strong> (if painting)</p>
+    <p><strong>Deductions = Doors (21 sq ft each) + Windows (15 sq ft each)</strong></p>
+    <p><strong>Net Area = Wall Area + Ceiling Area − Deductions</strong></p>
+    <p><strong>Paint Needed (gal) = (Net Area × Coats) ÷ Coverage Rate × (1 + Waste%)</strong></p>
+    <p>Coverage rate is typically 350–450 sq ft per gallon for one coat. The waste factor accounts for edges, porous surfaces, roller nap absorption, and touch-ups.</p>
+
+    <h2>Tips &amp; Common Mistakes</h2>
+    <ul>
+      <li><strong>Don't skip the waste buffer.</strong> Even pros add 10–15% — surfaces are never perfectly smooth, and cut-in edges use more paint than rolling.</li>
+      <li><strong>Round up to whole cans.</strong> Paint stores can't reseal opened cans. Always buy full gallons; leftover paint stores well for touch-ups.</li>
+      <li><strong>Dark-to-light transitions need primer.</strong> Going from red to white? Add a primer coat to your count, not just the finish color coats.</li>
+      <li><strong>Textured or new drywall absorbs more.</strong> Drop your coverage estimate by 20–25% for unpainted drywall or heavy orange-peel texture.</li>
+      <li><strong>Don't over-deduct for small openings.</strong> Trim and reveals around windows actually add paintable surface; the net deduction is smaller than you'd think.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>How much does one gallon of paint cover?</summary>
+      <p>One gallon of standard latex or acrylic paint covers approximately 350–400 square feet with a single coat on a smooth, previously painted surface. Rough textures, bare drywall, or very porous masonry can reduce coverage to 200–300 sq ft per gallon.</p>
+    </details>
+    <details>
+      <summary>Should I calculate by room or by total area?</summary>
+      <p>For a single room, Room Mode is fastest. For multi-room projects, add each room's area separately (to account for different colors) or sum them in Custom Area mode if using one color throughout. Keeping rooms separate lets you buy the right quantity per color.</p>
+    </details>
+    <details>
+      <summary>How many coats of paint do I actually need?</summary>
+      <p>Two coats is the standard for most painting projects and gives full color depth and durability. One coat may suffice for light colors over similar existing colors or with high-hide paints. Three or more coats are typically needed when switching from a very dark to a very light color, or painting bare new drywall.</p>
+    </details>
+    <details>
+      <summary>What's included in the door and window deduction?</summary>
+      <p>This calculator deducts 21 sq ft per standard interior door (3×7 ft) and 15 sq ft per standard window (3×5 ft). Large windows, sliding doors, or French doors are larger — for those, use Custom Area mode and manually subtract their dimensions.</p>
+    </details>
+  </div>
+
+  <div class="content-section">
+    <h2>Related Tools</h2>
+    <div class="related-tools">
+      <a href="/lumber-board-foot-calculator/">🪵 Lumber &amp; Board Foot Calculator</a>
+      <a href="/gravel-driveway-calculator/">🪨 Gravel Driveway Calculator</a>
+      <a href="/tile-flooring-calculator/">🔲 Tile &amp; Flooring Coverage Calculator</a>
+      <a href="/electrical-load-calculator/">⚡ Electrical Load &amp; Circuit Breaker Calculator</a>
+      <a href="/roof-pitch-rafter-calculator/">🏠 Roof Pitch &amp; Rafter Length Calculator</a>
+      <a href="/concrete-volume-calculator/">🏗️ Concrete Volume Calculator</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</div>
+
+<footer>
+  <div>© <span id="yr"></span> toolwick.com &nbsp;|&nbsp;
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  let currentMode = 'room';
+  let surfaces = [];
+
+  function switchMode(mode) {
+    currentMode = mode;
+    ['room','surface','custom'].forEach(m => {
+      document.getElementById('mode-'+m).style.display = m === mode ? '' : 'none';
+      document.getElementById('tab-'+m).classList.toggle('active', m === mode);
+    });
+  }
+
+  function updateCoatLabel(v) {
+    document.getElementById('coat-label').textContent = v;
+    document.getElementById('coat-val').textContent = v;
+    updateDiagramCoats(v);
+  }
+
+  function updateCoverage() {
+    const sel = document.getElementById('paint-type').value;
+    document.getElementById('custom-cov-group').style.display = sel === 'custom' ? '' : 'none';
+  }
+
+  function getCoverageRate() {
+    const sel = document.getElementById('paint-type').value;
+    if (sel === 'custom') {
+      const v = parseFloat(document.getElementById('custom-cov').value);
+      return isNaN(v) || v <= 0 ? null : v;
+    }
+    return parseFloat(sel);
+  }
+
+  function addSurface() {
+    const name = document.getElementById('surf-name').value.trim() || ('Surface ' + (surfaces.length+1));
+    const w = parseFloat(document.getElementById('surf-w').value);
+    const h = parseFloat(document.getElementById('surf-h').value);
+    const errEl = document.getElementById('err-surface');
+    if (isNaN(w) || w <= 0 || isNaN(h) || h <= 0) {
+      errEl.textContent = 'Enter valid width and height for the surface.';
+      errEl.classList.add('visible');
+      return;
+    }
+    errEl.classList.remove('visible');
+    surfaces.push({ name, w, h });
+    renderSurfaceList();
+    document.getElementById('surf-name').value = '';
+    document.getElementById('surf-w').value = '';
+    document.getElementById('surf-h').value = '';
+  }
+
+  function removeSurface(i) {
+    surfaces.splice(i, 1);
+    renderSurfaceList();
+  }
+
+  function renderSurfaceList() {
+    const el = document.getElementById('surface-list');
+    el.innerHTML = '';
+    surfaces.forEach((s, i) => {
+      const div = document.createElement('div');
+      div.className = 'surface-item';
+      div.innerHTML = `<span><strong>${escHtml(s.name)}</strong> &mdash; ${fmt(s.w)} × ${fmt(s.h)} ft = ${fmt(s.w*s.h)} sq ft</span><button onclick="removeSurface(${i})" aria-label="Remove">✕</button>`;
+      el.appendChild(div);
+    });
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function fmt(n, dec=2) {
+    if (isNaN(n)) return '—';
+    return n.toLocaleString('en-US', { minimumFractionDigits: dec > 0 ? 0 : 0, maximumFractionDigits: dec });
+  }
+
+  function fmtFixed(n, dec=2) {
+    if (isNaN(n)) return '—';
+    return n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  }
+
+  function toSqFt(val, unit) {
+    if (unit === 'm') return val * 3.28084;
+    if (unit === 'in') return val / 12;
+    return val;
+  }
+
+  function setError(id, show, msg) {
+    const inp = document.getElementById(id);
+    const err = document.getElementById('err-' + id.replace('room-',''));
+    if (!inp) return;
+    if (show) {
+      inp.classList.add('error');
+      if (err) { err.textContent = msg || 'Invalid value.'; err.classList.add('visible'); }
+    } else {
+      inp.classList.remove('error');
+      if (err) err.classList.remove('visible');
+    }
+  }
+
+  function calculate() {
+    let totalAreaSqFt = 0;
+    let hasError = false;
+
+    if (currentMode === 'room') {
+      const unit = document.getElementById('room-unit').value;
+      const L = parseFloat(document.getElementById('room-length').value);
+      const W = parseFloat(document.getElementById('room-width').value);
+      const H = parseFloat(document.getElementById('room-height').value);
+      const doors = parseInt(document.getElementById('num-doors').value) || 0;
+      const windows = parseInt(document.getElementById('num-windows').value) || 0;
+      const ceiling = document.getElementById('paint-ceiling').value === 'yes';
+
+      if (isNaN(L) || L <= 0) { setError('room-length', true, 'Enter a valid length.'); hasError = true; } else setError('room-length', false);
+      if (isNaN(W) || W <= 0) { setError('room-width', true, 'Enter a valid width.'); hasError = true; } else setError('room-width', false);
+      if (isNaN(H) || H <= 0) { setError('room-height', true, 'Enter a valid ceiling height.'); hasError = true; } else setError('room-height', false);
+      if (hasError) return;
+
+      const Lft = toSqFt(L, unit), Wft = toSqFt(W, unit), Hft = toSqFt(H, unit);
+      const wallArea = 2 * (Lft + Wft) * Hft;
+      const ceilArea = ceiling ? Lft * Wft : 0;
+      const deductions = (doors * 21) + (windows * 15);
+      totalAreaSqFt = Math.max(0, wallArea + ceilArea - deductions);
+
+      updateDiagram(Lft, Wft, Hft);
+
+    } else if (currentMode === 'surface') {
+      if (surfaces.length === 0) {
+        const err = document.getElementById('err-surface');
+        err.textContent = 'Add at least one surface before calculating.';
+        err.classList.add('visible');
+        return;
+      }
+      surfaces.forEach(s => { totalAreaSqFt += s.w * s.h; });
+
+    } else if (currentMode === 'custom') {
+      const area = parseFloat(document.getElementById('custom-area').value);
+      const unit = document.getElementById('custom-unit').value;
+      if (isNaN(area) || area <= 0) { setError('custom-area', true, 'Enter a valid area.'); return; }
+      setError('custom-area', false);
+      totalAreaSqFt = unit === 'sqm' ? area * 10.7639 : area;
+    }
+
+    const coverageRate = getCoverageRate();
+    if (!coverageRate) {
+      document.getElementById('custom-cov').classList.add('error');
+      return;
+    }
+    const coats = parseInt(document.getElementById('coats-slider').value);
+    const wasteFactor = 1 + (parseInt(document.getElementById('waste-pct').value) / 100);
+
+    const gallonsRaw = (totalAreaSqFt * coats / coverageRate) * wasteFactor;
+    const gallons = Math.round(gallonsRaw * 100) / 100;
+    const liters = gallons * 3.78541;
+    const quarts = gallons * 4;
+    const cans = Math.ceil(gallons);
+    const gallonsNoWaste = totalAreaSqFt * coats / coverageRate;
+
+    document.getElementById('res-gallons').textContent = fmtFixed(gallons, 2);
+    document.getElementById('res-liters').textContent = fmtFixed(liters, 1);
+    document.getElementById('res-quarts').textContent = fmtFixed(quarts, 1);
+    document.getElementById('res-area').textContent = fmt(totalAreaSqFt, 0);
+    document.getElementById('res-cans').textContent = cans;
+
+    const barPct = Math.min(100, (gallons / Math.max(gallons, 10)) * 100);
+    const visualPct = Math.min(100, (gallons / (cans * 1.2)) * 100);
+    document.getElementById('coverage-bar').style.width = Math.max(5, visualPct) + '%';
+    document.getElementById('bar-pct-lbl').textContent = fmtFixed(totalAreaSqFt / coverageRate * 100 / 100, 0) + ' sq ft per coat';
+
+    const wasteGals = gallons - gallonsNoWaste;
+    const note = `Painting ${fmt(totalAreaSqFt, 0)} sq ft with ${coats} coat${coats>1?'s':''} at ${fmt(coverageRate,0)} sq ft/gal. Buy <strong>${cans} × 1-gallon can${cans>1?'s':''}</strong>. Buffer adds ${fmtFixed(wasteGals,2)} gal for waste/touch-ups.`;
+    document.getElementById('res-note').innerHTML = note;
+
+    const waste = parseInt(document.getElementById('waste-pct').value);
+    const rows = [
+      ['Total Paintable Area', fmt(totalAreaSqFt, 0) + ' sq ft'],
+      ['Coverage Rate', fmt(coverageRate, 0) + ' sq ft/gal per coat'],
+      ['Number of Coats', coats],
+      ['Gallons (before buffer)', fmtFixed(gallonsNoWaste, 2) + ' gal'],
+      ['Waste/Overage Buffer', waste + '%'],
+      ['Gallons (with buffer)', fmtFixed(gallons, 2) + ' gal'],
+      ['Liters', fmtFixed(liters, 2) + ' L'],
+      ['Quarts', fmtFixed(quarts, 1) + ' qt'],
+      ['1-Gallon Cans to Buy', cans],
+      ['Estimated Area per Can', fmt(coverageRate, 0) + ' sq ft × ' + coats + ' coat(s)'],
+    ];
+    const tbody = document.getElementById('breakdown-body');
+    tbody.innerHTML = '';
+    rows.forEach(([label, val]) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${label}</td><td>${val}</td>`;
+      tbody.appendChild(tr);
+    });
+
+    updateDiagramGallons(gallons, coats);
+
+    const res = document.getElementById('results');
+    res.classList.add('visible');
+    res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Store for copy
+    window._lastResult = {totalAreaSqFt, gallons, liters, quarts, cans, coats, coverageRate, waste};
+  }
+
+  function updateDiagram(L, W, H) {
+    const wLbl = document.getElementById('lbl-width');
+    const hLbl = document.getElementById('lbl-height');
+    if (wLbl) wLbl.textContent = 'Width: ' + fmtFixed(W, 1) + ' ft';
+    if (hLbl) hLbl.textContent = 'Height: ' + fmtFixed(H, 1) + ' ft';
+  }
+
+  function updateDiagramCoats(coats) {
+    const el = document.getElementById('lbl-coats');
+    if (el) el.textContent = coats + ' Coat' + (coats > 1 ? 's' : '');
+  }
+
+  function updateDiagramGallons(gal, coats) {
+    const el = document.getElementById('lbl-gallons');
+    if (el) el.textContent = '≈ ' + fmtFixed(gal, 1) + ' gal';
+    updateDiagramCoats(coats);
+  }
+
+  function copyResults() {
+    const r = window._lastResult;
+    if (!r) return;
+    const text = [
+      'Paint Coverage Calculator Results',
+      '─────────────────────────────────',
+      `Total Area: ${fmt(r.totalAreaSqFt, 0)} sq ft`,
+      `Coats: ${r.coats}`,
+      `Coverage Rate: ${fmt(r.coverageRate, 0)} sq ft/gal`,
+      `Gallons Needed: ${fmtFixed(r.gallons, 2)} gal`,
+      `Liters: ${fmtFixed(r.liters, 2)} L`,
+      `Quarts: ${fmtFixed(r.quarts, 1)} qt`,
+      `1-Gal Cans to Buy: ${r.cans}`,
+      `Buffer: ${r.waste}%`,
+      '─────────────────────────────────',
+      'Calculated at toolwick.com/paint-coverage-calculator/'
+    ].join('\n');
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => { btn.textContent = '📋 Copy Results'; }, 2000);
+    }).catch(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = '❌ Failed';
+      setTimeout(() => { btn.textContent = '📋 Copy Results'; }, 2000);
+    });
+  }
+
+  // Enter key support
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      const tag = document.activeElement.tagName.toLowerCase();
+      if (tag === 'input' || tag === 'select') calculate();
+    }
+  });
+
+  // Init
+  updateCoatLabel(2);
+  updateCoverage();
+</script>
+</body>
+</html>
