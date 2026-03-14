@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stair Stringer Calculator — Free Online Tool | toolwick.com</title>
-<meta name="description" content="Calculate stair stringer dimensions instantly. Enter total rise & run to get riser height, tread depth, stringer length, cut angles, and lumber needed.">
+<meta name="description" content="Calculate stair stringer dimensions, rise, run, angle, and number of steps instantly. Free stair calculator for deck, basement, and exterior stairs.">
 <link rel="canonical" href="https://toolwick.com/stair-stringer-calculator/">
 <script type="application/ld+json">
 {
@@ -12,93 +12,87 @@
   "@type": "WebApplication",
   "name": "Stair Stringer Calculator",
   "url": "https://toolwick.com/stair-stringer-calculator/",
-  "description": "Calculate stair stringer dimensions including riser height, tread depth, stringer length, and lumber requirements.",
+  "description": "Calculate stair stringer dimensions, rise, run, angle, and lumber length for any staircase project.",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
 }
 </script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
 a{color:#0077b6;text-decoration:none}
-a:hover{text-decoration:underline;color:#006299}
-nav{border-bottom:1px solid #e0e0e0;padding:0 1rem}
-nav .nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;height:52px}
-nav .site-name{font-weight:700;font-size:1.1rem;color:#1a1a2e}
-nav .site-name:hover{text-decoration:none;color:#0077b6}
-.container{max-width:640px;margin:0 auto;padding:1.5rem 1rem 3rem}
-h1{font-size:1.6rem;font-weight:700;color:#1a1a2e;margin-bottom:.4rem}
-.tagline{color:#555;font-size:.95rem;margin-bottom:1.8rem}
-.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.5rem}
-.form-group{display:flex;flex-direction:column;gap:.3rem}
-.form-group.full{grid-column:1/-1}
-label{font-size:.85rem;font-weight:500;color:#444}
-input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:.95rem;color:#1a1a2e;background:#fff;transition:border-color .2s,box-shadow .2s;min-height:44px}
-input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,.15)}
-input.error,select.error{border-color:#e74c3c}
-.error-msg{font-size:.78rem;color:#e74c3c;margin-top:2px;min-height:1rem}
-.hint{font-size:.78rem;color:#888;margin-top:2px}
-.btn{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;transition:background .2s;min-height:44px;width:100%}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #e0e0e0;padding:0.75rem 1.5rem}
+.nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center}
+.site-name{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+.site-name:hover{text-decoration:none;color:#0077b6}
+.container{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;font-weight:700;margin-bottom:0.4rem;color:#1a1a2e}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+svg.stair-diagram{width:100%;max-width:480px;height:auto}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:0.3rem}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;transition:border-color 0.2s,box-shadow 0.2s;min-height:44px}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:0.3rem;display:none}
+.error-msg.show{display:block}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem}
+.field{margin-bottom:1rem}
+.field:last-child{margin-bottom:0}
+.btn{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background 0.2s}
 .btn:hover{background:#006299}
-.btn-secondary{background:#f0f0f0;color:#1a1a2e;font-size:.85rem;font-weight:500;padding:8px 16px;border-radius:6px;border:1px solid #ddd;cursor:pointer;min-height:36px;transition:background .2s}
+.btn-secondary{background:#f0f0f0;color:#1a1a2e;border:1px solid #ddd;padding:8px 16px;border-radius:6px;font-size:0.85rem;cursor:pointer;min-height:36px;transition:background 0.2s}
 .btn-secondary:hover{background:#e0e0e0}
-.section-divider{margin:1.5rem 0;border:none;border-top:1px solid #e8e8e8}
-.results{opacity:0;transition:opacity .3s ease;pointer-events:none}
-.results.visible{opacity:1;pointer-events:auto}
-.key-metric{background:linear-gradient(135deg,#f0f8ff,#e8f4fd);border:1px solid #cce5f5;border-radius:8px;padding:1.2rem 1.5rem;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
-.key-metric .label{font-size:.85rem;color:#555;font-weight:500}
-.key-metric .value{font-size:1.6rem;font-weight:700;color:#0077b6}
-.key-metric .sub{font-size:.8rem;color:#888;width:100%}
-.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
-.metric-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.9rem 1rem}
-.metric-box .m-label{font-size:.78rem;color:#666;font-weight:500;margin-bottom:.15rem}
-.metric-box .m-value{font-size:1.1rem;font-weight:700;color:#1a1a2e}
-.metric-box .m-note{font-size:.72rem;color:#999;margin-top:.1rem}
-.compliance{border-radius:6px;padding:.7rem 1rem;font-size:.85rem;font-weight:500;margin-bottom:1.2rem}
-.compliance.ok{background:#e8f8ee;border:1px solid #a8dbb8;color:#1a6b35}
-.compliance.warn{background:#fff8e8;border:1px solid #f0d080;color:#7a5500}
-.compliance.bad{background:#fef0f0;border:1px solid #f5c0c0;color:#9e2020}
-.table-wrap{overflow-x:auto;border-radius:6px;border:1px solid #e0e0e0;margin-bottom:1rem}
-table{width:100%;border-collapse:collapse;font-size:.88rem}
-thead th{background:#f0f0f0;padding:9px 12px;text-align:left;font-weight:600;white-space:nowrap;border-bottom:2px solid #ddd}
-thead th.num{text-align:right}
-tbody tr:nth-child(even){background:#fafafa}
-tbody td{padding:8px 12px;border-bottom:1px solid #f0f0f0}
-tbody td.num{text-align:right;font-variant-numeric:tabular-nums}
-.copy-row{display:flex;justify-content:flex-end;margin-top:.6rem}
-.diagram{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1.5rem;margin-bottom:1.2rem;font-family:monospace;font-size:.78rem;color:#444;white-space:pre;overflow-x:auto}
-.section-title{font-size:1rem;font-weight:700;color:#1a1a2e;margin-bottom:.8rem;margin-top:1.2rem}
-.ad-slot{background:#f8f9fa;border:1px dashed #ddd;border-radius:6px;min-height:90px;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:.8rem;margin:1.5rem 0}
-.content-section{margin-top:2rem}
-.content-section h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin:1.8rem 0 .6rem}
-.content-section p{color:#444;font-size:.93rem;margin-bottom:.8rem}
-.content-section ul{padding-left:1.4rem;color:#444;font-size:.93rem}
-.content-section ul li{margin-bottom:.4rem}
-details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:.6rem}
-summary{padding:.8rem 1rem;cursor:pointer;font-weight:500;font-size:.93rem;color:#1a1a2e;list-style:none;display:flex;justify-content:space-between;align-items:center}
-summary::after{content:"＋";font-size:.9rem;color:#0077b6}
-details[open] summary::after{content:"－"}
-details .faq-body{padding:.5rem 1rem 1rem;font-size:.9rem;color:#444;border-top:1px solid #f0f0f0}
-.related{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1.2rem 1.5rem;margin:2rem 0}
-.related h3{font-size:1rem;font-weight:700;margin-bottom:.8rem}
-.related ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
-.related ul li a{font-size:.93rem;color:#0077b6;display:inline-flex;align-items:center;gap:.3rem}
-.related ul li a::before{content:"→"}
-footer{border-top:1px solid #e0e0e0;padding:1.2rem 1rem;text-align:center;font-size:.8rem;color:#888}
-footer a{color:#0077b6;margin:0 .5rem}
+.btn-sm{font-size:0.82rem;padding:6px 14px;min-height:36px}
+.result-section{display:none;opacity:0;transition:opacity 0.3s ease}
+.result-section.show{display:block;animation:fadeIn 0.3s ease forwards}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.key-number{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.1}
+.key-label{font-size:0.9rem;color:#555;margin-bottom:1.2rem}
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.metric-box{background:#f8f9fa;border-radius:6px;padding:1rem;text-align:center}
+.metric-val{font-size:1.3rem;font-weight:700;color:#0077b6}
+.metric-lbl{font-size:0.78rem;color:#666;margin-top:0.2rem}
+.result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.result-header h2{font-size:1.1rem;font-weight:700}
+.copy-btn{background:#f0f0f0;color:#1a1a2e;border:1px solid #ddd;padding:6px 14px;border-radius:5px;font-size:0.8rem;cursor:pointer;min-height:36px;transition:background 0.2s}
+.copy-btn:hover{background:#e0e0e0}
+table{width:100%;border-collapse:collapse;font-size:0.9rem}
+th{background:#f0f0f0;padding:8px 10px;text-align:left;font-weight:600;font-size:0.82rem;color:#444}
+th.num,td.num{text-align:right}
+td{padding:8px 10px;border-bottom:1px solid #eee}
+tr:nth-child(even) td{background:#fafafa}
+.table-wrap{overflow-x:auto;margin-bottom:1rem}
+.step-table-wrap{overflow-x:auto;margin-bottom:0.5rem}
+.show-all-btn{display:none}
+.section{margin-bottom:2rem}
+h2.section-title{font-size:1.2rem;font-weight:700;color:#1a1a2e;margin-bottom:0.6rem}
+h3.sub-title{font-size:1rem;font-weight:600;color:#1a1a2e;margin-bottom:0.4rem;margin-top:1rem}
+.content-section{margin-bottom:2rem}
+details{border:1px solid #e0e0e0;border-radius:6px;padding:0.8rem 1rem;margin-bottom:0.6rem}
+summary{font-weight:600;cursor:pointer;font-size:0.95rem}
+details p{margin-top:0.6rem;color:#444;font-size:0.92rem}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem}
+.related-link{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.75rem 1rem;font-size:0.9rem;color:#0077b6;display:block;transition:background 0.2s}
+.related-link:hover{background:#e8f4fd;text-decoration:none}
+.ad-slot{background:#f8f9fa;border:1px dashed #ccc;border-radius:6px;padding:1.5rem;text-align:center;color:#aaa;font-size:0.85rem;margin:2rem 0}
+footer{border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;color:#666;font-size:0.85rem}
+footer a{color:#0077b6;margin:0 0.5rem}
+.tips ul{padding-left:1.2rem}
+.tips ul li{margin-bottom:0.5rem;color:#444;font-size:0.93rem}
+.formula-box{background:#f0f6fb;border-left:4px solid #0077b6;border-radius:0 6px 6px 0;padding:1rem 1.2rem;margin:0.8rem 0;font-family:monospace;font-size:0.9rem;color:#1a1a2e}
+.warning-box{background:#fff9e6;border-left:4px solid #f0a500;border-radius:0 6px 6px 0;padding:0.8rem 1rem;margin:0.8rem 0;font-size:0.9rem;color:#7a5700;display:none}
+.warning-box.show{display:block}
 @media(max-width:640px){
-  .form-grid{grid-template-columns:1fr}
-  .form-group.full{grid-column:1}
-  .metrics-grid{grid-template-columns:1fr 1fr}
-  h1{font-size:1.35rem}
-  .card{padding:1.25rem}
-  .key-metric .value{font-size:1.3rem}
-  .diagram{font-size:.68rem}
-}
-@media(max-width:400px){
-  .metrics-grid{grid-template-columns:1fr}
+  .row,.row-3,.metrics-grid,.related-grid{grid-template-columns:1fr}
+  .card{padding:1.2rem}
+  h1{font-size:1.3rem}
+  .key-number{font-size:1.9rem}
+  svg.stair-diagram{max-width:100%}
 }
 </style>
 </head>
@@ -106,221 +100,284 @@ footer a{color:#0077b6;margin:0 .5rem}
 
 <nav>
   <div class="nav-inner">
-    <a href="/" class="site-name">🔧 toolwick.com</a>
+    <a href="/" class="site-name">toolwick.com</a>
   </div>
 </nav>
 
 <div class="container">
+
   <h1>Stair Stringer Calculator</h1>
-  <p class="tagline">Calculate riser heights, tread depths, stringer length, and board requirements for your staircase project.</p>
+  <p class="subtitle">Calculate rise, run, stringer length, angle, and a full step-by-step cut list for any staircase.</p>
 
   <div class="card">
-    <div class="form-grid">
-      <div class="form-group full">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg class="stair-diagram" viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background -->
+        <rect width="480" height="280" fill="#fff"/>
+        <!-- Guide lines -->
+        <line x1="60" y1="40" x2="60" y2="240" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4,3"/>
+        <line x1="60" y1="240" x2="420" y2="240" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4,3"/>
+        <!-- Stringer diagonal line -->
+        <line x1="60" y1="40" x2="420" y2="240" stroke="#0077b6" stroke-width="2.5" stroke-dasharray="6,3"/>
+        <!-- Stair steps -->
+        <polyline points="60,40 60,80 117,80 117,120 174,120 174,160 231,160 231,200 288,200 288,240 420,240" fill="none" stroke="#0077b6" stroke-width="2.5"/>
+        <!-- Ground/floor lines -->
+        <line x1="40" y1="240" x2="440" y2="240" stroke="#1a1a2e" stroke-width="2"/>
+        <line x1="40" y1="40" x2="80" y2="40" stroke="#1a1a2e" stroke-width="2"/>
+        <!-- Total Rise arrow -->
+        <defs>
+          <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#0077b6"/>
+          </marker>
+          <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#0077b6"/>
+          </marker>
+        </defs>
+        <line x1="28" y1="40" x2="28" y2="240" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arr2)" marker-end="url(#arr)"/>
+        <text id="svg-rise-label" x="22" y="145" font-size="11" fill="#0077b6" text-anchor="middle" transform="rotate(-90,22,140)">Total Rise</text>
+        <!-- Total Run arrow -->
+        <line x1="60" y1="258" x2="288" y2="258" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arr2)" marker-end="url(#arr)"/>
+        <text id="svg-run-label" x="174" y="272" font-size="11" fill="#0077b6" text-anchor="middle">Total Run</text>
+        <!-- Step Rise arrow (one step) -->
+        <line x1="130" y1="80" x2="130" y2="120" stroke="#e74c3c" stroke-width="1.3" marker-start="url(#arr2)" marker-end="url(#arr)"/>
+        <text id="svg-step-rise" x="145" y="104" font-size="10" fill="#e74c3c">Rise</text>
+        <!-- Step Run arrow (one step) -->
+        <line x1="117" y1="134" x2="174" y2="134" stroke="#e74c3c" stroke-width="1.3" marker-start="url(#arr2)" marker-end="url(#arr)"/>
+        <text id="svg-step-run" x="140" y="146" font-size="10" fill="#e74c3c" text-anchor="middle">Run</text>
+        <!-- Angle arc -->
+        <path d="M 300,240 A 30,30 0 0,0 278,221" fill="none" stroke="#888" stroke-width="1.2"/>
+        <text id="svg-angle" x="316" y="233" font-size="11" fill="#555">angle</text>
+        <!-- Stringer label -->
+        <text id="svg-stringer" x="250" y="128" font-size="11" fill="#0077b6" text-anchor="middle" transform="rotate(30,250,128)">Stringer Length</text>
+        <!-- Step count -->
+        <text id="svg-steps" x="420" y="236" font-size="10" fill="#1a1a2e" text-anchor="end">5 steps shown</text>
+      </svg>
+    </div>
+
+    <!-- Inputs -->
+    <div class="row">
+      <div class="field">
         <label for="unit">Unit System</label>
         <select id="unit">
           <option value="imperial">Imperial (inches / feet)</option>
           <option value="metric">Metric (mm / cm)</option>
         </select>
       </div>
-
-      <div class="form-group">
-        <label for="totalRise" id="riseLabel">Total Rise (inches)</label>
-        <input type="number" id="totalRise" placeholder="e.g. 108" min="1" step="0.125">
-        <span class="error-msg" id="riseErr"></span>
-        <span class="hint" id="riseHint">Floor-to-floor vertical height</span>
+      <div class="field">
+        <label for="stringer-width">Stringer Board Width</label>
+        <select id="stringer-width">
+          <option value="11.25">2×12 (11.25")</option>
+          <option value="9.25">2×10 (9.25")</option>
+          <option value="7.25">2×8 (7.25")</option>
+          <option value="custom">Custom</option>
+        </select>
       </div>
-
-      <div class="form-group">
-        <label for="totalRun" id="runLabel">Total Run (inches)</label>
-        <input type="number" id="totalRun" placeholder="e.g. 120" min="1" step="0.125">
-        <span class="error-msg" id="runErr"></span>
-        <span class="hint" id="runHint">Horizontal distance (optional)</span>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="total-rise" id="lbl-rise">Total Rise (inches)</label>
+        <input type="number" id="total-rise" placeholder="e.g. 84" min="1" step="0.01">
+        <div class="error-msg" id="err-rise">Please enter a valid total rise.</div>
       </div>
-
-      <div class="form-group">
-        <label for="numSteps">Number of Steps (risers)</label>
-        <input type="number" id="numSteps" placeholder="e.g. 9" min="1" max="100" step="1">
-        <span class="error-msg" id="stepsErr"></span>
-        <span class="hint">Leave blank to auto-calculate</span>
+      <div class="field">
+        <label for="step-rise" id="lbl-step-rise">Desired Riser Height (inches)</label>
+        <input type="number" id="step-rise" placeholder="e.g. 7 (6–8 ideal)" min="1" step="0.01">
+        <div class="error-msg" id="err-step-rise">Riser height must be between 4 and 12 inches.</div>
       </div>
-
-      <div class="form-group">
-        <label for="treadDepth" id="treadLabel">Tread Depth (inches)</label>
-        <input type="number" id="treadDepth" placeholder="e.g. 10" min="1" step="0.125">
-        <span class="error-msg" id="treadErr"></span>
-        <span class="hint">Horizontal tread surface depth</span>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="step-run" id="lbl-step-run">Tread Depth / Run (inches)</label>
+        <input type="number" id="step-run" placeholder="e.g. 10 (9–11 ideal)" min="1" step="0.01">
+        <div class="error-msg" id="err-step-run">Tread depth must be between 6 and 20 inches.</div>
       </div>
-
-      <div class="form-group">
-        <label for="numStringers">Number of Stringers</label>
-        <input type="number" id="numStringers" value="3" min="1" max="20" step="1">
-        <span class="error-msg" id="stringersErr"></span>
+      <div class="field" id="custom-width-field" style="display:none">
+        <label for="custom-board-width" id="lbl-custom-width">Custom Board Width (inches)</label>
+        <input type="number" id="custom-board-width" placeholder="e.g. 11.25" min="1" step="0.01">
+        <div class="error-msg" id="err-custom-width">Enter a valid board width.</div>
       </div>
-
-      <div class="form-group">
-        <label for="boardWidth" id="boardLabel">Stringer Board Width (inches)</label>
-        <input type="number" id="boardWidth" value="11.25" min="1" step="0.125">
-        <span class="hint">2×12 lumber = 11.25"</span>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="num-stringers">Number of Stringers</label>
+        <input type="number" id="num-stringers" value="3" min="1" max="20" step="1" placeholder="e.g. 3">
+        <div class="error-msg" id="err-stringers">Enter 1–20 stringers.</div>
       </div>
-
-      <div class="form-group">
-        <label for="nosing" id="nosingLabel">Tread Nosing (inches)</label>
-        <input type="number" id="nosing" value="1" min="0" max="4" step="0.125">
-        <span class="hint">Overhang beyond riser face</span>
-      </div>
-
-      <div class="form-group">
-        <label for="kickerThick" id="kickerLabel">Kicker Plate Thickness (inches)</label>
-        <input type="number" id="kickerThick" value="1.5" min="0" step="0.125">
-        <span class="hint">Bottom plate that adjusts first riser</span>
+      <div class="field">
+        <label for="tread-thickness" id="lbl-tread-thick">Tread Thickness (inches)</label>
+        <input type="number" id="tread-thickness" value="1.5" min="0" step="0.01" placeholder="e.g. 1.5">
       </div>
     </div>
 
-    <hr class="section-divider">
-    <button class="btn" id="calcBtn">Calculate Stair Stringer</button>
+    <div class="warning-box" id="rise-warning">
+      ⚠️ Riser height outside the recommended 6"–8" range. Check local building codes before building.
+    </div>
+    <div class="warning-box" id="run-warning">
+      ⚠️ Tread depth outside the recommended 9"–11" range. Check local building codes before building.
+    </div>
+    <div class="warning-box" id="notch-warning">
+      ⚠️ The notch depth may exceed 1/3 of the board width. Consider a wider board for structural safety.
+    </div>
+
+    <button class="btn" id="calc-btn">Calculate Stringer</button>
   </div>
 
-  <!-- RESULTS -->
-  <div class="results card" id="results">
+  <!-- Results -->
+  <div class="card result-section" id="results">
+    <div class="result-header">
+      <h2>Results</h2>
+      <button class="copy-btn" id="copy-btn">Copy Results</button>
+    </div>
 
-    <div id="complianceBox" class="compliance ok"></div>
-
-    <div class="key-metric" id="keyRiser">
+    <div style="display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap;margin-bottom:1.2rem">
       <div>
-        <div class="label">Riser Height</div>
-        <div class="sub" id="keyRiserSub"></div>
+        <div class="key-number" id="res-steps">—</div>
+        <div class="key-label">Number of Steps</div>
       </div>
-      <div class="value" id="keyRiserVal"></div>
-    </div>
-
-    <div class="key-metric" id="keyStringer">
       <div>
-        <div class="label">Stringer Length (board length needed)</div>
-        <div class="sub" id="keyStringerSub"></div>
+        <div class="key-number" id="res-stringer-len">—</div>
+        <div class="key-label">Stringer Length (board needed)</div>
       </div>
-      <div class="value" id="keyStringerVal"></div>
     </div>
 
-    <div class="section-title">Step Dimensions</div>
-    <div class="metrics-grid" id="metricsGrid"></div>
-
-    <div class="section-title">Stringer Cut Angles</div>
-    <div class="metrics-grid" id="anglesGrid"></div>
-
-    <div class="section-title">Lumber & Material Estimate</div>
-    <div class="table-wrap">
-      <table id="materialTable">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th class="num">Quantity</th>
-            <th>Size / Notes</th>
-          </tr>
-        </thead>
-        <tbody id="materialBody"></tbody>
-      </table>
+    <div class="metrics-grid">
+      <div class="metric-box">
+        <div class="metric-val" id="res-actual-rise">—</div>
+        <div class="metric-lbl">Actual Riser Height</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-val" id="res-actual-run">—</div>
+        <div class="metric-lbl">Tread Depth (Run)</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-val" id="res-total-run">—</div>
+        <div class="metric-lbl">Total Horizontal Run</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-val" id="res-angle">—</div>
+        <div class="metric-lbl">Stringer Angle</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-val" id="res-notch-depth">—</div>
+        <div class="metric-lbl">Max Notch Depth</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-val" id="res-lumber-total">—</div>
+        <div class="metric-lbl">Total Lumber Length</div>
+      </div>
     </div>
 
-    <div class="section-title">Step-by-Step Cut List</div>
-    <div class="table-wrap">
-      <table>
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.6rem">Step-by-Step Cut List</h3>
+    <div class="step-table-wrap">
+      <table id="step-table">
         <thead>
           <tr>
             <th>Step #</th>
-            <th class="num">Rise (from top)</th>
-            <th class="num">Run (from back)</th>
-            <th class="num">Plumb Cut</th>
-            <th class="num">Level Cut</th>
+            <th class="num">Riser Height</th>
+            <th class="num">Tread Depth</th>
+            <th class="num">Cumul. Rise</th>
+            <th class="num">Cumul. Run</th>
           </tr>
         </thead>
-        <tbody id="cutListBody"></tbody>
+        <tbody id="step-tbody"></tbody>
       </table>
     </div>
+    <button class="btn-secondary show-all-btn" id="show-all-btn">Show All Steps</button>
 
-    <div class="section-title">Visual Diagram</div>
-    <div class="diagram" id="diagramBox"></div>
-
-    <div class="copy-row">
-      <button class="btn-secondary" id="copyBtn">📋 Copy Results</button>
+    <h3 style="font-size:1rem;font-weight:700;margin:1.2rem 0 0.6rem">Summary Table</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Parameter</th><th class="num">Value</th></tr></thead>
+        <tbody id="summary-tbody"></tbody>
+      </table>
     </div>
   </div>
-  <!-- /RESULTS -->
 
   <div class="ad-slot" id="ad-mid">Advertisement</div>
 
+  <!-- Content Section -->
   <div class="content-section">
-    <h2>How to Use This Stair Stringer Calculator</h2>
-    <p>Enter your total rise (the full vertical height from one floor to the next), your tread depth preference, and the number of stringers you need. If you already know how many steps you want, enter that too — otherwise the calculator will suggest the optimal number based on code-compliant riser heights. Hit <strong>Calculate</strong> to instantly get every dimension you need.</p>
-    <p>Switch between Imperial (inches) and Metric (mm) using the unit selector. The results include riser height, tread depth, stringer board length, plumb and level cut angles, and a full material list.</p>
+    <div class="section">
+      <h2 class="section-title">How to Use This Stair Stringer Calculator</h2>
+      <p>Enter your <strong>total rise</strong> (floor-to-floor vertical height), your <strong>desired riser height</strong>, and your preferred <strong>tread depth</strong>. The calculator will automatically find the optimal number of steps, recalculate the exact riser height to fit evenly, and output the stringer length, angle, and a complete cut list for each step.</p>
+    </div>
 
-    <h2>Why This Matters</h2>
-    <p>Stair stringers are the diagonal backbone of any staircase, and even a small miscalculation can create stairs that are uncomfortable, unsafe, or fail building code inspection. The IRC (International Residential Code) requires riser heights between 4" and 7¾" and tread depths of at least 10". If your risers vary by more than ⅜" from one step to the next, you fail inspection — and someone can trip.</p>
-    <p>Consider a deck with a total rise of 108" (9 feet). Divide by 9 steps and you get a 12" riser — way too tall. Divide by 14 steps and you get 7.71" — just barely compliant. This calculator does that math instantly and flags violations. Builders, remodelers, and serious DIYers use this tool before they ever pick up a saw, saving hours of rework and expensive lumber waste on a typical project costing $400–$2,000 in materials alone.</p>
+    <div class="section">
+      <h2 class="section-title">Why This Matters</h2>
+      <p>Getting stair stringers right is one of the most critical parts of any deck, basement, or exterior stair project. A miscalculation of even half an inch per step compounds across every tread — resulting in stairs that feel off, fail inspection, or worse, become a safety hazard.</p>
+      <p style="margin-top:0.7rem">Consider a common scenario: you're building a deck that sits 84 inches off the ground. With a target 7" riser, you'd calculate 12 steps. But if you ordered lumber based on rough math and cut it wrong, you could end up with an uneven bottom or top step — a code violation in most jurisdictions. Most building codes (IRC 2021) require risers between <strong>4" and 7¾"</strong> and treads at least <strong>10"</strong> deep. Stringer boards must also maintain a minimum <strong>3.5" net section</strong> after notching to preserve structural integrity.</p>
+      <p style="margin-top:0.7rem">This calculator also shows the <strong>notch depth</strong> — how deep you're cutting into the stringer — so you can verify you're not weakening the board. Choosing 2×12 lumber over 2×10 gives you crucial extra margin when notch depth is tight.</p>
+    </div>
 
-    <h2>How It's Calculated</h2>
-    <p>The core formula is straightforward:</p>
-    <ul>
-      <li><strong>Riser Height</strong> = Total Rise ÷ Number of Risers</li>
-      <li><strong>Number of Risers</strong> = ⌈Total Rise ÷ 7⌉ (aiming for ≤7" per riser)</li>
-      <li><strong>Total Run</strong> = (Number of Risers − 1) × Tread Depth (treads = risers − 1)</li>
-      <li><strong>Stringer Length</strong> = √(Total Rise² + Total Run²) — the hypotenuse of the rise/run triangle</li>
-      <li><strong>Plumb Cut Angle</strong> = arctan(Rise ÷ Run) — angle of the vertical cuts</li>
-      <li><strong>Level Cut Angle</strong> = 90° − Plumb Cut Angle</li>
-      <li><strong>Minimum Board Width</strong> = Riser Height + Tread Depth (to ensure enough material remains after cuts)</li>
-    </ul>
-    <p>The kicker plate thickness is subtracted from the first riser height to keep all steps equal after the bottom plate is installed.</p>
+    <div class="section">
+      <h2 class="section-title">How It's Calculated</h2>
+      <div class="formula-box">
+        Number of Risers = Round(Total Rise ÷ Desired Riser Height)<br>
+        Actual Riser = Total Rise ÷ Number of Risers<br>
+        Total Run = (Number of Risers − 1) × Tread Depth<br>
+        Stringer Length = √(Total Rise² + Total Run²)<br>
+        Angle = arctan(Total Rise ÷ Total Run) in degrees<br>
+        Notch Depth = √(Actual Riser² + Tread Depth²) − Board Width + small margin
+      </div>
+      <p>The number of steps equals the number of risers. The top landing is the floor itself, so the total run uses <em>risers − 1</em> treads. The stringer length is the hypotenuse of the right triangle formed by total rise and total run, plus a small overhang margin. The notch depth check ensures you have at least 3.5" of solid wood remaining in the stringer after each cut.</p>
+    </div>
 
-    <h2>Tips & Common Mistakes</h2>
-    <ul>
-      <li><strong>Measure twice, cut once:</strong> Always measure total rise from finished floor to finished floor — not subfloor to subfloor. Adding flooring material later changes your riser height.</li>
-      <li><strong>The 18" rule:</strong> Riser + Tread should equal 17"–18" for comfortable walking. A 7" riser with an 11" tread = 18" — perfect.</li>
-      <li><strong>Don't ignore the kicker plate:</strong> The bottom riser must be reduced by the thickness of your bottom plate (typically 1.5") or your bottom step will be taller than all others.</li>
-      <li><strong>Board width matters:</strong> After cutting notches for each step, you must have at least 3.5" of wood remaining on the stringer for structural integrity.</li>
-      <li><strong>Code compliance first:</strong> Always check local building codes — some jurisdictions are stricter than the IRC minimums, especially for commercial or public stairs.</li>
-    </ul>
+    <div class="section tips">
+      <h2 class="section-title">Tips & Common Mistakes</h2>
+      <ul>
+        <li><strong>Measure total rise accurately.</strong> Measure from finished floor to finished floor — not subfloor to subfloor. Tread thickness changes your effective rise at the bottom step.</li>
+        <li><strong>Account for tread thickness at the bottom.</strong> The bottom riser is typically shorter by one tread thickness so every step feels the same height when walking up.</li>
+        <li><strong>Don't cut too deep into stringers.</strong> Over-notching weakens the board structurally. If notch depth exceeds 1/3 of the board width, use a wider board or a different rise/run combination.</li>
+        <li><strong>Check the angle.</strong> A comfortable stair angle is typically 30°–37°. Steeper than 45° is uncomfortable and may not be code-compliant for occupied buildings.</li>
+        <li><strong>Order 10–15% extra lumber.</strong> Cutting errors happen, and lumber lengths come in standard foot increments. Round up to the nearest even foot.</li>
+      </ul>
+    </div>
 
-    <h2>Frequently Asked Questions</h2>
-
-    <details>
-      <summary>What is a stair stringer?</summary>
-      <div class="faq-body">A stair stringer is the diagonal structural board (usually a 2×12) that runs along each side (and sometimes center) of a staircase, supporting the treads and risers. It's notched in a zigzag pattern — each notch receives one tread (horizontal surface) and one riser (vertical face). Most residential staircases use 3 stringers.</div>
-    </details>
-
-    <details>
-      <summary>How many risers do I need?</summary>
-      <div class="faq-body">Divide your total rise by your desired riser height (typically 7") and round up to the nearest whole number. For example, a 91" total rise ÷ 7" = 13 risers. Note that the number of treads is always one less than the number of risers, because the top landing counts as the final "tread."</div>
-    </details>
-
-    <details>
-      <summary>What lumber size should I use for stringers?</summary>
-      <div class="faq-body">2×12 dimensional lumber (actual: 1.5" × 11.25") is the standard for stair stringers. After notching for treads and risers, you need at least 3.5" of solid wood remaining — called the "effective depth." For very steep or wide stairs, engineered lumber (LVL) may be required.</div>
-    </details>
-
-    <details>
-      <summary>What is the "comfortable" stair formula?</summary>
-      <div class="faq-body">The traditional comfort formula is: Riser + Tread = 17" to 18", or alternatively 2 × Riser + Tread = 24" to 25". A 7" riser with a 10" tread sums to 17" — comfortably within the comfortable range and meets IRC code minimums. Steeper stairs (higher riser, shallower tread) are tiring; shallower stairs use more floor space.</div>
-    </details>
-
+    <div class="section">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <details>
+        <summary>What is the ideal rise and run for stairs?</summary>
+        <p>Most building codes specify a maximum riser height of 7¾" and a minimum tread depth of 10". A comfortable rule of thumb is that rise + run should equal approximately 17–18 inches. For example, a 7" rise with an 11" run sums to 18" — a very comfortable stair.</p>
+      </details>
+      <details>
+        <summary>How many stringers do I need for a staircase?</summary>
+        <p>For stairs up to 36" wide, 3 stringers (two outer, one center) are standard. Wider stairs need additional stringers to prevent tread flex. Most codes require stringers no more than 16" apart on center for 2× lumber treads.</p>
+      </details>
+      <details>
+        <summary>What size lumber should I use for stair stringers?</summary>
+        <p>2×12 dimensional lumber (actual size 1.5" × 11.25") is the most common choice because it leaves the most wood after notching. 2×10 works for smaller rise/run combinations, but you should always verify that at least 3.5" of solid wood remains after the largest notch cut.</p>
+      </details>
+      <details>
+        <summary>Why does my bottom step feel different than the rest?</summary>
+        <p>This is almost always because the tread thickness was not subtracted from the bottom riser height. The bottom riser should be reduced by one tread thickness (e.g., 1.5" for 5/4 deck boards) so that the vertical distance from finished floor to finished tread surface matches every other step.</p>
+      </details>
+    </div>
   </div>
 
-  <div class="related">
-    <h3>Related Tools</h3>
-    <ul>
-      <li><a href="/gravel-driveway-calculator/">Gravel Driveway Calculator</a></li>
-      <li><a href="/tile-flooring-calculator/">Tile & Flooring Coverage Calculator</a></li>
-      <li><a href="/electrical-load-calculator/">Electrical Load & Circuit Breaker Calculator</a></li>
-    </ul>
+  <!-- Related Tools -->
+  <div class="section">
+    <h2 class="section-title">Related Tools</h2>
+    <div class="related-grid">
+      <a href="/gravel-driveway-calculator/" class="related-link">🪨 Gravel Driveway Calculator</a>
+      <a href="/tile-flooring-calculator/" class="related-link">🟦 Tile & Flooring Coverage Calculator</a>
+      <a href="/electrical-load-calculator/" class="related-link">⚡ Electrical Load & Circuit Breaker Calculator</a>
+      <a href="/roof-pitch-rafter-calculator/" class="related-link">🏠 Roof Pitch & Rafter Length Calculator</a>
+      <a href="/concrete-volume-calculator/" class="related-link">🧱 Concrete Volume Calculator</a>
+    </div>
   </div>
 
   <div class="ad-slot" id="ad-bottom">Advertisement</div>
+
 </div>
 
 <footer>
-  <a href="/about/">About</a>
-  <a href="/privacy/">Privacy</a>
-  <a href="/contact/">Contact</a>
-  <span style="margin-left:.5rem">© <span id="yr"></span> toolwick.com</span>
+  <p style="margin-bottom:0.4rem">
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </p>
+  <p>© <span id="yr"></span> toolwick.com — Free Online Tools</p>
 </footer>
 
 <script>
@@ -328,384 +385,283 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 
 // Unit labels
 const unitLabels = {
-  imperial: {
-    rise: 'Total Rise (inches)',
-    run: 'Total Run (inches)',
-    tread: 'Tread Depth (inches)',
-    board: 'Stringer Board Width (inches)',
-    nosing: 'Tread Nosing (inches)',
-    kicker: 'Kicker Plate Thickness (inches)',
-    riseHint: 'Floor-to-floor vertical height',
-    runHint: 'Horizontal distance (optional)',
-    shortUnit: 'in',
-    longUnit: 'inches',
-    feetLabel: 'ft',
-    minRiser: 4, maxRiser: 7.75, minTread: 10,
-    maxVariance: 0.375
-  },
-  metric: {
-    rise: 'Total Rise (mm)',
-    run: 'Total Run (mm)',
-    tread: 'Tread Depth (mm)',
-    board: 'Stringer Board Width (mm)',
-    nosing: 'Tread Nosing (mm)',
-    kicker: 'Kicker Plate Thickness (mm)',
-    riseHint: 'Floor-to-floor vertical height',
-    runHint: 'Horizontal distance (optional)',
-    shortUnit: 'mm',
-    longUnit: 'mm',
-    feetLabel: 'cm',
-    minRiser: 102, maxRiser: 197, minTread: 254,
-    maxVariance: 9.5
-  }
+  imperial: { rise:'Total Rise (inches)', stepRise:'Desired Riser Height (inches)', stepRun:'Tread Depth / Run (inches)', treadThick:'Tread Thickness (inches)', customWidth:'Custom Board Width (inches)', suffix:'in', sfxFt:'ft' },
+  metric:   { rise:'Total Rise (mm)', stepRise:'Desired Riser Height (mm)', stepRun:'Tread Depth / Run (mm)', treadThick:'Tread Thickness (mm)', customWidth:'Custom Board Width (mm)', suffix:'mm', sfxFt:'mm' }
 };
 
-const unitSel = document.getElementById('unit');
-unitSel.addEventListener('change', updateUnitLabels);
+const metricBoardWidths = {
+  '11.25': '285', // 2×12 approx mm
+  '9.25': '235',
+  '7.25': '185',
+  'custom': 'custom'
+};
 
-function updateUnitLabels(){
-  const u = unitSel.value;
-  const L = unitLabels[u];
-  document.getElementById('riseLabel').textContent = L.rise;
-  document.getElementById('runLabel').textContent = L.run;
-  document.getElementById('treadLabel').textContent = L.tread;
-  document.getElementById('boardLabel').textContent = L.board;
-  document.getElementById('nosingLabel').textContent = L.nosing;
-  document.getElementById('kickerLabel').textContent = L.kicker;
-  document.getElementById('riseHint').textContent = L.riseHint;
-  document.getElementById('runHint').textContent = L.runHint;
+const unitSel     = document.getElementById('unit');
+const swSel       = document.getElementById('stringer-width');
+const customField = document.getElementById('custom-width-field');
+const riseIn      = document.getElementById('total-rise');
+const stepRiseIn  = document.getElementById('step-rise');
+const stepRunIn   = document.getElementById('step-run');
+const numStrIn    = document.getElementById('num-stringers');
+const treadThkIn  = document.getElementById('tread-thickness');
+const customWIn   = document.getElementById('custom-board-width');
 
-  if(u === 'metric'){
-    document.getElementById('totalRise').placeholder = 'e.g. 2743';
-    document.getElementById('totalRun').placeholder = 'e.g. 3048';
-    document.getElementById('treadDepth').placeholder = 'e.g. 254';
-    document.getElementById('boardWidth').value = '286';
-    document.getElementById('nosing').value = '25';
-    document.getElementById('kickerThick').value = '38';
+function updateLabels() {
+  const u = unitLabels[unitSel.value];
+  document.getElementById('lbl-rise').textContent         = u.rise;
+  document.getElementById('lbl-step-rise').textContent    = u.stepRise;
+  document.getElementById('lbl-step-run').textContent     = u.stepRun;
+  document.getElementById('lbl-tread-thick').textContent  = u.treadThick;
+  document.getElementById('lbl-custom-width').textContent = u.customWidth;
+  // Update stringer width select for metric
+  if (unitSel.value === 'metric') {
+    swSel.options[0].text = '2×12 (285mm)';
+    swSel.options[1].text = '2×10 (235mm)';
+    swSel.options[2].text = '2×8 (185mm)';
   } else {
-    document.getElementById('totalRise').placeholder = 'e.g. 108';
-    document.getElementById('totalRun').placeholder = 'e.g. 120';
-    document.getElementById('treadDepth').placeholder = 'e.g. 10';
-    document.getElementById('boardWidth').value = '11.25';
-    document.getElementById('nosing').value = '1';
-    document.getElementById('kickerThick').value = '1.5';
+    swSel.options[0].text = '2×12 (11.25")';
+    swSel.options[1].text = '2×10 (9.25")';
+    swSel.options[2].text = '2×8 (7.25")';
   }
 }
+unitSel.addEventListener('change', updateLabels);
 
-function fmt(n, dec=2){
-  if(isNaN(n)) return '—';
-  return Number(n.toFixed(dec)).toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+swSel.addEventListener('change', function() {
+  customField.style.display = (this.value === 'custom') ? 'block' : 'none';
+});
+
+function getBoardWidth() {
+  if (swSel.value === 'custom') return parseFloat(customWIn.value) || 0;
+  if (unitSel.value === 'metric') {
+    return parseFloat(metricBoardWidths[swSel.value]) || 0;
+  }
+  return parseFloat(swSel.value) || 0;
 }
 
-function fmtInt(n){
+function fmt(n, dec=2) {
+  if (isNaN(n)) return '—';
+  return n.toLocaleString('en-US', {minimumFractionDigits:dec, maximumFractionDigits:dec});
+}
+function fmtInt(n) {
   return Math.round(n).toLocaleString('en-US');
 }
 
-function toFraction(decimal){
-  const wholeNum = Math.floor(decimal);
-  const frac = decimal - wholeNum;
-  const fracs = [[0,''], [0.0625,'1/16'],[0.125,'1/8'],[0.1875,'3/16'],[0.25,'1/4'],[0.3125,'5/16'],
-    [0.375,'3/8'],[0.4375,'7/16'],[0.5,'1/2'],[0.5625,'9/16'],[0.625,'5/8'],
-    [0.6875,'11/16'],[0.75,'3/4'],[0.8125,'13/16'],[0.875,'7/8'],[0.9375,'15/16'],[1,'']];
-  let closest = fracs[0], minDiff = Math.abs(frac - fracs[0][0]);
-  for(let f of fracs){ const d = Math.abs(frac - f[0]); if(d < minDiff){minDiff=d; closest=f;} }
-  let result = '';
-  const w = wholeNum + (closest[0] >= 1 ? 1 : 0);
-  if(w > 0) result += w;
-  const fr = closest[0] >= 1 ? '' : closest[1];
-  if(fr) result += (w ? ' ' : '') + fr;
-  return result || '0';
-}
-
-function clearErrors(){
-  ['riseErr','runErr','stepsErr','treadErr','stringersErr'].forEach(id=>{
-    document.getElementById(id).textContent='';
+function clearErrors() {
+  ['err-rise','err-step-rise','err-step-run','err-custom-width','err-stringers'].forEach(id => {
+    document.getElementById(id).classList.remove('show');
   });
-  ['totalRise','totalRun','numSteps','treadDepth','numStringers'].forEach(id=>{
-    document.getElementById(id).classList.remove('error');
+  [riseIn, stepRiseIn, stepRunIn, customWIn, numStrIn].forEach(el => el.classList.remove('error'));
+  ['rise-warning','run-warning','notch-warning'].forEach(id => {
+    document.getElementById(id).classList.remove('show');
   });
 }
 
-function showError(inputId, errId, msg){
-  document.getElementById(inputId).classList.add('error');
-  document.getElementById(errId).textContent = msg;
-}
+let allSteps = [];
+let lastResultText = '';
+let showingAll = false;
+const PREVIEW_ROWS = 10;
 
-document.getElementById('calcBtn').addEventListener('click', calculate);
-document.querySelectorAll('input').forEach(inp=>{
-  inp.addEventListener('keydown', e=>{if(e.key==='Enter') calculate();});
-});
-
-function calculate(){
+function calculate() {
   clearErrors();
-  const u = unitSel.value;
-  const L = unitLabels[u];
-
-  const totalRise = parseFloat(document.getElementById('totalRise').value);
-  const totalRunInput = parseFloat(document.getElementById('totalRun').value);
-  const numStepsInput = parseInt(document.getElementById('numSteps').value);
-  const treadDepthInput = parseFloat(document.getElementById('treadDepth').value);
-  const numStringers = parseInt(document.getElementById('numStringers').value);
-  const boardWidth = parseFloat(document.getElementById('boardWidth').value);
-  const nosing = parseFloat(document.getElementById('nosing').value) || 0;
-  const kickerThick = parseFloat(document.getElementById('kickerThick').value) || 0;
+  const isMetric = unitSel.value === 'metric';
+  const suffix   = isMetric ? 'mm' : '"';
 
   let valid = true;
+  const totalRise  = parseFloat(riseIn.value);
+  const desiredRise= parseFloat(stepRiseIn.value);
+  const treadDepth = parseFloat(stepRunIn.value);
+  const numStr     = parseInt(numStrIn.value);
+  const treadThk   = parseFloat(treadThkIn.value) || 0;
+  const boardWidth = getBoardWidth();
 
-  if(isNaN(totalRise) || totalRise <= 0){
-    showError('totalRise','riseErr','Please enter a valid total rise greater than 0.');
-    valid = false;
-  }
-  if(!isNaN(totalRunInput) && totalRunInput <= 0){
-    showError('totalRun','runErr','Total run must be greater than 0 if provided.');
-    valid = false;
-  }
-  if(!isNaN(numStepsInput) && (numStepsInput < 1 || numStepsInput > 100)){
-    showError('numSteps','stepsErr','Number of steps must be between 1 and 100.');
-    valid = false;
-  }
-  if(!isNaN(treadDepthInput) && treadDepthInput <= 0){
-    showError('treadDepth','treadErr','Tread depth must be greater than 0 if provided.');
-    valid = false;
-  }
-  if(isNaN(numStringers) || numStringers < 1){
-    showError('numStringers','stringersErr','Number of stringers must be at least 1.');
-    valid = false;
-  }
-  if(!valid) return;
+  const minRise = isMetric ? 100 : 4;
+  const maxRise = isMetric ? 300 : 12;
+  const minRun  = isMetric ? 150 : 6;
+  const maxRun  = isMetric ? 500 : 20;
 
-  // Determine number of risers
-  let numRisers;
-  if(!isNaN(numStepsInput) && numStepsInput >= 1){
-    numRisers = numStepsInput;
+  if (!totalRise || totalRise <= 0) { showErr('err-rise', riseIn); valid = false; }
+  if (!desiredRise || desiredRise < minRise || desiredRise > maxRise) { showErr('err-step-rise', stepRiseIn); valid = false; }
+  if (!treadDepth || treadDepth < minRun || treadDepth > maxRun) { showErr('err-step-run', stepRunIn); valid = false; }
+  if (!numStr || numStr < 1 || numStr > 20) { showErr('err-stringers', numStrIn); valid = false; }
+  if (swSel.value === 'custom' && (!boardWidth || boardWidth <= 0)) { showErr('err-custom-width', customWIn); valid = false; }
+  if (!valid) return;
+
+  // Check ideal ranges
+  const riseMin = isMetric ? 152 : 6;
+  const riseMax = isMetric ? 203 : 8;
+  const runMin  = isMetric ? 229 : 9;
+  const runMax  = isMetric ? 280 : 11;
+  if (desiredRise < riseMin || desiredRise > riseMax) document.getElementById('rise-warning').classList.add('show');
+  if (treadDepth < runMin || treadDepth > runMax) document.getElementById('run-warning').classList.add('show');
+
+  // Core calculations
+  const numRisers    = Math.round(totalRise / desiredRise);
+  const actualRiser  = totalRise / numRisers;
+  const numTreads    = numRisers - 1;
+  const totalRun     = numTreads * treadDepth;
+  const stringerLen  = Math.sqrt(totalRise * totalRise + totalRun * totalRun);
+  const angleRad     = Math.atan2(totalRise, totalRun);
+  const angleDeg     = angleRad * (180 / Math.PI);
+
+  // Notch depth: diagonal of rise+run minus remaining width
+  const stepDiag = Math.sqrt(actualRiser * actualRiser + treadDepth * treadDepth);
+  const notchDepth = stepDiag - boardWidth; // remaining wood after notch from outside corner
+  // Better formula: notch depth = board_width - sqrt(board_width^2 - (rise^2 + run^2)/2... )
+  // Actually: the cut-out triangle hypotenuse = stepDiag, and remaining section = boardWidth - (stepDiag - boardWidth) -- not standard
+  // Standard: remaining section after notch = boardWidth - max(riser, tread) is rough
+  // Correct: net remaining = boardWidth - notchPerpDepth; notchPerpDepth = (rise * run) / stepDiag (altitude of right triangle)
+  const notchPerpDepth = (actualRiser * treadDepth) / stepDiag;
+  const remaining = boardWidth - notchPerpDepth;
+
+  if (boardWidth > 0 && notchPerpDepth > boardWidth / 3) {
+    document.getElementById('notch-warning').classList.add('show');
+  }
+
+  // Adjust bottom riser for tread thickness
+  const bottomRiser = actualRiser - treadThk;
+
+  // Stringer board length — add small extra for top/bottom bearing (1.5x board width each end approx)
+  const stringerBoardLen = stringerLen + (boardWidth * 0.5);
+
+  const totalLumber = stringerBoardLen * numStr;
+
+  // Build step list
+  allSteps = [];
+  for (let i = 1; i <= numRisers; i++) {
+    const riser = (i === 1) ? bottomRiser : actualRiser;
+    allSteps.push({
+      step: i,
+      riser: riser,
+      tread: (i < numRisers) ? treadDepth : 0,
+      cumulRise: actualRiser * i - (treadThk || 0),
+      cumulRun: (i - 1) * treadDepth
+    });
+  }
+
+  // Display
+  const sfx = isMetric ? ' mm' : '"';
+  const sfxFt = isMetric ? ' mm' : '"';
+
+  document.getElementById('res-steps').textContent = numRisers;
+  document.getElementById('res-stringer-len').textContent = fmt(stringerBoardLen) + sfx;
+  document.getElementById('res-actual-rise').textContent = fmt(actualRiser) + sfx;
+  document.getElementById('res-actual-run').textContent = fmt(treadDepth) + sfx;
+  document.getElementById('res-total-run').textContent = fmt(totalRun) + sfx;
+  document.getElementById('res-angle').textContent = fmt(angleDeg, 1) + '°';
+  document.getElementById('res-notch-depth').textContent = fmt(notchPerpDepth) + sfx;
+  document.getElementById('res-lumber-total').textContent = fmt(totalLumber) + sfx;
+
+  // Summary table
+  const summaryRows = [
+    ['Total Rise', fmt(totalRise) + sfx],
+    ['Total Run', fmt(totalRun) + sfx],
+    ['Number of Risers', numRisers],
+    ['Actual Riser Height', fmt(actualRiser) + sfx],
+    ['Tread Depth', fmt(treadDepth) + sfx],
+    ['Bottom Riser (adjusted)', fmt(bottomRiser) + sfx],
+    ['Stringer Length (each)', fmt(stringerLen) + sfx],
+    ['Board Length Needed (each)', fmt(stringerBoardLen) + sfx],
+    ['Number of Stringers', numStr],
+    ['Total Lumber Length', fmt(totalLumber) + sfx],
+    ['Stringer Angle', fmt(angleDeg, 1) + '°'],
+    ['Notch Perpendicular Depth', fmt(notchPerpDepth) + sfx],
+    ['Remaining Section After Notch', fmt(remaining) + sfx],
+    ['Tread Thickness', fmt(treadThk) + sfx],
+    ['Board Width Used', boardWidth > 0 ? fmt(boardWidth) + sfx : 'N/A'],
+  ];
+  const summTbody = document.getElementById('summary-tbody');
+  summTbody.innerHTML = summaryRows.map((r,i) =>
+    `<tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`
+  ).join('');
+
+  // Step table
+  renderStepTable(false);
+  showingAll = false;
+  const showAllBtn = document.getElementById('show-all-btn');
+  if (numRisers > PREVIEW_ROWS) {
+    showAllBtn.style.display = 'block';
+    showAllBtn.textContent = 'Show All ' + numRisers + ' Steps';
   } else {
-    const targetRiser = u === 'metric' ? 178 : 7;
-    numRisers = Math.ceil(totalRise / targetRiser);
-    if(numRisers < 1) numRisers = 1;
+    showAllBtn.style.display = 'none';
   }
 
-  const riserHeight = totalRise / numRisers;
-  const numTreads = numRisers - 1; // treads = risers - 1 (top landing is the floor)
-
-  // Tread depth
-  let treadDepth;
-  if(!isNaN(treadDepthInput) && treadDepthInput > 0){
-    treadDepth = treadDepthInput;
-  } else {
-    // Comfort formula: 2*rise + tread = 25 (imperial), 635mm (metric)
-    treadDepth = u === 'metric' ? Math.max(L.minTread, 635 - 2*riserHeight) : Math.max(L.minTread, 25 - 2*riserHeight);
-    treadDepth = Math.max(treadDepth, L.minTread);
-  }
-
-  // Total run
-  let totalRun;
-  if(!isNaN(totalRunInput) && totalRunInput > 0){
-    totalRun = totalRunInput;
-  } else {
-    totalRun = numTreads * treadDepth;
-  }
-
-  // Stringer length (hypotenuse + a bit extra for seat cut)
-  const rawLength = Math.sqrt(totalRise * totalRise + totalRun * totalRun);
-  // Add extra for top plumb cut overhang and bottom seat cut
-  const extraLength = u === 'metric' ? 100 : 4;
-  const stringerLength = rawLength + extraLength;
-
-  // Angles
-  const plumbAngle = Math.atan2(riserHeight, treadDepth) * (180 / Math.PI);
-  const levelAngle = 90 - plumbAngle;
-
-  // Check minimum board width (must have at least effective depth remaining)
-  const minBoardWidthNeeded = Math.sqrt(riserHeight*riserHeight + treadDepth*treadDepth);
-  const effectiveDepth = boardWidth - minBoardWidthNeeded / Math.sqrt(2);
-
-  // Adjusted first riser (subtract kicker plate)
-  const firstRiser = riserHeight - kickerThick;
-
-  // Comfort check: riser+tread sum
-  const comfortSum = riserHeight + treadDepth;
-  const comfortTarget = u === 'metric' ? [432, 457] : [17, 18];
-
-  // Compliance check
-  let complianceStatus = 'ok';
-  let complianceMsgs = [];
-
-  if(riserHeight < L.minRiser){
-    complianceMsgs.push(`Riser height ${fmt(riserHeight,2)}${L.shortUnit} is below minimum ${L.minRiser}${L.shortUnit} (IRC 4").`);
-    complianceStatus = 'bad';
-  }
-  if(riserHeight > L.maxRiser){
-    complianceMsgs.push(`Riser height ${fmt(riserHeight,2)}${L.shortUnit} exceeds maximum ${L.maxRiser}${L.shortUnit} (IRC 7¾").`);
-    complianceStatus = 'bad';
-  }
-  if(treadDepth < L.minTread){
-    complianceMsgs.push(`Tread depth ${fmt(treadDepth,2)}${L.shortUnit} is below minimum ${L.minTread}${L.shortUnit} (IRC 10").`);
-    if(complianceStatus !== 'bad') complianceStatus = 'bad';
-  }
-  if(firstRiser < 0){
-    complianceMsgs.push(`Kicker plate too thick — first riser would be negative.`);
-    complianceStatus = 'bad';
-  }
-  if(boardWidth < (riserHeight + treadDepth) * 0.7){
-    complianceMsgs.push(`Board width may be insufficient — consider a wider board.`);
-    if(complianceStatus !== 'bad') complianceStatus = 'warn';
-  }
-  if(complianceMsgs.length === 0){
-    complianceMsgs.push(`✓ All dimensions comply with IRC residential stair code requirements.`);
-  }
-
-  // Render compliance
-  const compBox = document.getElementById('complianceBox');
-  compBox.className = 'compliance ' + complianceStatus;
-  compBox.innerHTML = complianceMsgs.map(m=>`<div>${m}</div>`).join('');
-
-  // Key metrics
-  const su = L.shortUnit;
-  const fu = u === 'imperial' ? 'ft' : 'cm';
-  const divFactor = u === 'imperial' ? 12 : 10;
-  document.getElementById('keyRiserVal').textContent = fmt(riserHeight,3) + '"';
-  document.getElementById('keyRiserSub').textContent =
-    `Per step (${numRisers} total risers) · First riser: ${fmt(firstRiser,3)}${su} (after kicker plate)`;
-
-  document.getElementById('keyStringerVal').textContent = fmt(stringerLength/divFactor,2) + fu;
-  document.getElementById('keyStringerSub').textContent =
-    `${fmt(stringerLength,2)}${su} raw hypotenuse · Add waste for seat & plumb cuts`;
-
-  // Metrics grid
-  const mg = document.getElementById('metricsGrid');
-  mg.innerHTML = '';
-  const metrics = [
-    {label:'Number of Risers', value: numRisers, unit:'', note:'Tread count = '+(numTreads)},
-    {label:'Riser Height', value: fmt(riserHeight,3), unit:su, note: u==='imperial'?'Fraction: '+toFraction(riserHeight)+'"':''},
-    {label:'Tread Depth', value: fmt(treadDepth,3), unit:su, note:'+ '+fmt(nosing,3)+su+' nosing = '+fmt(treadDepth+nosing,3)+su},
-    {label:'Total Run', value: fmt(totalRun,2), unit:su, note:fmt(totalRun/divFactor,2)+fu},
-    {label:'Comfort Sum (R+T)', value: fmt(comfortSum,2), unit:su, note:'Target: '+comfortTarget[0]+'–'+comfortTarget[1]+su},
-    {label:'Net Tread Width', value: fmt(treadDepth+nosing,3), unit:su, note:'With nosing'},
-  ];
-  metrics.forEach(m=>{
-    mg.innerHTML += `<div class="metric-box"><div class="m-label">${m.label}</div><div class="m-value">${m.value}${m.unit ? ' '+m.unit : ''}</div>${m.note?`<div class="m-note">${m.note}</div>`:''}</div>`;
-  });
-
-  // Angles grid
-  const ag = document.getElementById('anglesGrid');
-  ag.innerHTML = '';
-  const angles = [
-    {label:'Plumb Cut Angle', value: fmt(plumbAngle,2)+'°', note:'Angle of vertical riser cuts'},
-    {label:'Level Cut Angle', value: fmt(levelAngle,2)+'°', note:'Angle of horizontal tread cuts'},
-    {label:'Slope (Rise:Run)', value: fmt(riserHeight,2)+':'+fmt(treadDepth,2), note:'Pitch ratio'},
-    {label:'Stringer Slope %', value: fmt((riserHeight/treadDepth)*100,1)+'%', note:'Grade percentage'},
-  ];
-  angles.forEach(m=>{
-    ag.innerHTML += `<div class="metric-box"><div class="m-label">${m.label}</div><div class="m-value">${m.value}</div>${m.note?`<div class="m-note">${m.note}</div>`:''}</div>`;
-  });
-
-  // Material table
-  const mb = document.getElementById('materialBody');
-  mb.innerHTML = '';
-  const boardLengthFt = u === 'imperial' ? Math.ceil(stringerLength/12) : Math.ceil(stringerLength/1000)*1000;
-  const boardLengthLabel = u === 'imperial'
-    ? Math.ceil(stringerLength/12)+' ft ('+Math.ceil(stringerLength/12/2)*2+' ft standard)'
-    : Math.ceil(stringerLength/1000)+'m standard';
-
-  const treadsNeeded = numTreads;
-  const risersNeeded = numRisers;
-
-  const materials = [
-    ['Stringer Boards', numStringers, u==='imperial'?`2×12 × ${Math.ceil(stringerLength/12)}ft`:`${Math.ceil(stringerLength/1000)}m board`],
-    ['Tread Boards', treadsNeeded, u==='imperial'?'2×12 or 5/4×12 decking':'Tread lumber'],
-    ['Riser Boards', risersNeeded, u==='imperial'?'1×8 or 2×8 per riser':'Riser lumber'],
-    ['Kicker Plate', 1, u==='imperial'?'2×4 pressure treated':'Pressure treated'],
-    ['Structural Screws', Math.ceil(numStringers * numRisers * 3 / 100) * 100, u==='imperial'?'3" exterior screws':'75mm exterior screws'],
-    ['Joist Hangers', numStringers, 'Top/bottom connection hardware'],
-    ['Carriage Bolts', numStringers * 2, u==='imperial'?'½" × 3.5"':'12mm × 90mm'],
-  ];
-  materials.forEach(([item, qty, note])=>{
-    mb.innerHTML += `<tr><td>${item}</td><td class="num">${typeof qty==='number'?qty.toLocaleString():qty}</td><td>${note}</td></tr>`;
-  });
-
-  // Cut list
-  const cl = document.getElementById('cutListBody');
-  cl.innerHTML = '';
-  for(let i=1; i<=numRisers; i++){
-    const riseFromTop = riserHeight * i;
-    const runFromBack = treadDepth * (i-1);
-    cl.innerHTML += `<tr>
-      <td>${i}</td>
-      <td class="num">${fmt(riseFromTop,3)}${su}</td>
-      <td class="num">${fmt(runFromBack,3)}${su}</td>
-      <td class="num">${fmt(plumbAngle,2)}°</td>
-      <td class="num">${fmt(levelAngle,2)}°</td>
-    </tr>`;
-  }
-
-  // ASCII Diagram
-  const diag = document.getElementById('diagramBox');
-  const r = Math.round(riserHeight);
-  const t = Math.round(treadDepth);
-  const lines = [
-    `  Stair Stringer Diagram`,
-    `  ┌─────────────────────────────────┐`,
-    `  │         ╔══════╗               │`,
-    `  │         ║  T   ║               │`,
-    `  │   ╔══════╝      ║   Tread depth│`,
-    `  │   ║  T          ║   = ${fmt(treadDepth,2)} ${su}     │`,
-    `  ╔════╝             ║              │`,
-    `  ║  T               ║  Rise height│`,
-    `  ║                  ║  = ${fmt(riserHeight,2)} ${su}    │`,
-    `  ╚══════════════════╝              │`,
-    `  │                                │`,
-    `  │  ← Total Run: ${fmt(totalRun,1)} ${su} →       │`,
-    `  │  ↕ Total Rise: ${fmt(totalRise,1)} ${su}          │`,
-    `  │  Stringer: ${fmt(stringerLength/divFactor,2)} ${fu} · Angle: ${fmt(plumbAngle,1)}°  │`,
-    `  │  Risers: ${numRisers} · Treads: ${numTreads}              │`,
-    `  └─────────────────────────────────┘`,
-  ];
-  diag.textContent = lines.join('\n');
+  // Update SVG
+  updateSVG(totalRise, totalRun, actualRiser, treadDepth, angleDeg, stringerBoardLen, numRisers, sfx);
 
   // Build copy text
-  const copyText = [
-    'STAIR STRINGER CALCULATION RESULTS',
-    '=====================================',
-    `Total Rise: ${fmt(totalRise,2)} ${su}`,
-    `Total Run: ${fmt(totalRun,2)} ${su}`,
-    `Number of Risers: ${numRisers}`,
-    `Number of Treads: ${numTreads}`,
-    `Riser Height: ${fmt(riserHeight,3)} ${su}`,
-    `Tread Depth: ${fmt(treadDepth,3)} ${su}`,
-    `First Riser (adjusted): ${fmt(firstRiser,3)} ${su}`,
-    `Stringer Length: ${fmt(stringerLength,2)} ${su} (${fmt(stringerLength/divFactor,2)} ${fu})`,
-    `Plumb Cut Angle: ${fmt(plumbAngle,2)}°`,
-    `Level Cut Angle: ${fmt(levelAngle,2)}°`,
-    `Comfort Sum (R+T): ${fmt(comfortSum,2)} ${su}`,
-    '-------------------------------------',
-    'Compliance: ' + complianceMsgs.join(' | '),
+  lastResultText = [
+    'STAIR STRINGER CALCULATOR RESULTS',
+    '==================================',
+    ...summaryRows.map(r => `${r[0]}: ${r[1]}`),
+    '',
+    'CUT LIST:',
+    'Step | Riser | Tread | Cum. Rise | Cum. Run',
+    ...allSteps.map(s => `${s.step} | ${fmt(s.riser)}${sfx} | ${s.tread > 0 ? fmt(s.tread)+sfx : 'Top'} | ${fmt(s.cumulRise)}${sfx} | ${fmt(s.cumulRun)}${sfx}`)
   ].join('\n');
 
-  document.getElementById('copyBtn').dataset.text = copyText;
-
-  // Show results
-  document.getElementById('results').classList.add('visible');
-  document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+  const res = document.getElementById('results');
+  res.style.display = 'block';
+  res.classList.add('show');
+  res.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
-// Copy button
-document.getElementById('copyBtn').addEventListener('click', function(){
-  const text = this.dataset.text || 'No results to copy.';
-  navigator.clipboard.writeText(text).then(()=>{
-    const orig = this.textContent;
-    this.textContent = '✓ Copied!';
-    setTimeout(()=>{ this.textContent = orig; }, 2000);
-  }).catch(()=>{
+function renderStepTable(all) {
+  const sfx = unitSel.value === 'metric' ? ' mm' : '"';
+  const rows = all ? allSteps : allSteps.slice(0, PREVIEW_ROWS);
+  const tbody = document.getElementById('step-tbody');
+  tbody.innerHTML = rows.map(s => `
+    <tr>
+      <td>${s.step}</td>
+      <td class="num">${fmt(s.riser)}${sfx}</td>
+      <td class="num">${s.tread > 0 ? fmt(s.tread)+sfx : '—'}</td>
+      <td class="num">${fmt(s.cumulRise)}${sfx}</td>
+      <td class="num">${fmt(s.cumulRun)}${sfx}</td>
+    </tr>
+  `).join('');
+}
+
+document.getElementById('show-all-btn').addEventListener('click', function() {
+  showingAll = !showingAll;
+  renderStepTable(showingAll);
+  this.textContent = showingAll ? 'Show Less' : 'Show All ' + allSteps.length + ' Steps';
+});
+
+function updateSVG(totalRise, totalRun, riser, run, angle, stringerLen, nSteps, sfx) {
+  document.getElementById('svg-rise-label').textContent = 'Rise: ' + fmt(totalRise) + sfx;
+  document.getElementById('svg-run-label').textContent  = 'Run: '  + fmt(totalRun)  + sfx;
+  document.getElementById('svg-step-rise').textContent  = fmt(riser,1) + sfx;
+  document.getElementById('svg-step-run').textContent   = fmt(run,1)   + sfx;
+  document.getElementById('svg-angle').textContent      = fmt(angle,1) + '°';
+  document.getElementById('svg-stringer').textContent   = 'Stringer: ' + fmt(stringerLen,1) + sfx;
+  document.getElementById('svg-steps').textContent      = nSteps + ' risers';
+}
+
+function showErr(errId, inputEl) {
+  document.getElementById(errId).classList.add('show');
+  inputEl.classList.add('error');
+}
+
+document.getElementById('calc-btn').addEventListener('click', calculate);
+
+[riseIn, stepRiseIn, stepRunIn, numStrIn, treadThkIn, customWIn].forEach(el => {
+  el.addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
+});
+
+document.getElementById('copy-btn').addEventListener('click', function() {
+  if (!lastResultText) return;
+  navigator.clipboard.writeText(lastResultText).then(() => {
+    const btn = this;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy Results', 2000);
+  }).catch(() => {
     const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position='fixed';ta.style.opacity='0';
+    ta.value = lastResultText;
     document.body.appendChild(ta);
     ta.select();
     document.execCommand('copy');
     document.body.removeChild(ta);
-    const orig = this.textContent;
-    this.textContent = '✓ Copied!';
-    setTimeout(()=>{ this.textContent = orig; }, 2000);
+    this.textContent = 'Copied!';
+    setTimeout(() => this.textContent = 'Copy Results', 2000);
   });
 });
 </script>
