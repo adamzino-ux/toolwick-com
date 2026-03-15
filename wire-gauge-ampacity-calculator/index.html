@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wire Gauge & Ampacity Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate wire gauge ampacity, find the right AWG wire size for your current load, voltage drop, and circuit type. Free online wire gauge ampacity calculator.">
+<link rel="canonical" href="https://toolwick.com/wire-gauge-ampacity-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Wire Gauge & Ampacity Calculator",
+  "url": "https://toolwick.com/wire-gauge-ampacity-calculator/",
+  "description": "Calculate wire gauge ampacity and find the right AWG wire size for any electrical circuit.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #e0e0e0;padding:12px 16px;background:#fff}
+.nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center}
+.nav-brand{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+.nav-brand:hover{text-decoration:none;color:#0077b6}
+.container{max-width:640px;margin:0 auto;padding:1.5rem 1rem 2rem}
+h1{font-size:1.6rem;font-weight:700;margin-bottom:.4rem;color:#1a1a2e}
+.subtitle{color:#555;font-size:.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:1.75rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:1.5rem}
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+.diagram-wrap svg{max-width:100%;height:auto}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:5px}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;outline:none;transition:box-shadow .2s,border-color .2s;min-height:44px}
+input:focus,select:focus{border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,.15)}
+input.error,select.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:.8rem;margin-top:4px;display:none}
+.field{margin-bottom:1.1rem}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:480px){.row-2{grid-template-columns:1fr}}
+button.primary{width:100%;background:#0077b6;color:#fff;border:none;padding:13px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;min-height:44px;transition:background .2s}
+button.primary:hover{background:#006299}
+.result-section{display:none;opacity:0;transition:opacity .3s ease}
+.result-section.visible{display:block;animation:fadeIn .3s ease forwards}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.result-hero{text-align:center;padding:1.2rem;background:linear-gradient(135deg,#e8f4fd,#f0f9ff);border-radius:8px;margin-bottom:1.2rem;position:relative}
+.result-hero-label{font-size:.85rem;color:#555;margin-bottom:4px}
+.result-hero-value{font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1}
+.result-hero-unit{font-size:1rem;color:#555;margin-top:4px}
+.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.78rem;font-weight:600;margin-top:8px}
+.badge-ok{background:#d4edda;color:#155724}
+.badge-warn{background:#fff3cd;color:#856404}
+.badge-danger{background:#f8d7da;color:#721c24}
+.copy-btn{position:absolute;top:10px;right:10px;background:#0077b6;color:#fff;border:none;padding:5px 12px;border-radius:4px;font-size:.75rem;cursor:pointer;transition:background .2s}
+.copy-btn:hover{background:#006299}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{background:#f0f0f0;padding:8px 10px;text-align:left;font-weight:600;border-bottom:2px solid #ddd}
+td{padding:7px 10px;border-bottom:1px solid #eee}
+tr:nth-child(even) td{background:#fafafa}
+.num{text-align:right}
+.tbl-wrap{overflow-x:auto;border-radius:6px;border:1px solid #e0e0e0}
+.highlight-row td{background:#e8f4fd!important;font-weight:600;color:#0077b6}
+.section-title{font-size:1rem;font-weight:700;margin-bottom:.7rem;color:#1a1a2e}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1rem}
+@media(max-width:480px){.info-grid{grid-template-columns:1fr}}
+.info-box{background:#f8f9fa;border-radius:6px;padding:.7rem 1rem;border-left:3px solid #0077b6}
+.info-box-label{font-size:.75rem;color:#666}
+.info-box-value{font-size:1.05rem;font-weight:700;color:#1a1a2e}
+.tab-row{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.tab{padding:8px 16px;border:1px solid #ddd;border-radius:20px;font-size:.85rem;cursor:pointer;background:#fff;color:#555;transition:all .2s;min-height:36px}
+.tab.active{background:#0077b6;color:#fff;border-color:#0077b6}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.slider-row{display:flex;align-items:center;gap:.7rem}
+.slider-row input[type=range]{flex:1;min-height:auto;padding:0;border:none;box-shadow:none}
+.slider-val{min-width:52px;text-align:right;font-weight:600;color:#0077b6}
+.vd-bar-wrap{background:#e0e0e0;border-radius:4px;height:12px;margin-top:4px;overflow:hidden}
+.vd-bar{height:100%;border-radius:4px;transition:width .4s ease,background .4s}
+.content-section h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin:1.5rem 0 .5rem}
+.content-section p{color:#333;margin-bottom:.8rem;font-size:.95rem}
+.content-section ul{padding-left:1.3rem;color:#333;font-size:.95rem}
+.content-section ul li{margin-bottom:.4rem}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:.6rem}
+summary{padding:.8rem 1rem;font-weight:600;cursor:pointer;font-size:.95rem;color:#1a1a2e;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::after{content:'＋';font-size:1rem;color:#0077b6}
+details[open] summary::after{content:'－'}
+details p{padding:.2rem 1rem 1rem;color:#333;font-size:.9rem}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+@media(max-width:480px){.related-grid{grid-template-columns:1fr}}
+.related-link{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.7rem 1rem;font-size:.88rem;color:#0077b6;transition:background .2s}
+.related-link:hover{background:#e8f4fd;text-decoration:none}
+.ad-slot{min-height:0;margin:0}
+footer{background:#f8f9fa;border-top:1px solid #e0e0e0;padding:1.2rem 1rem;text-align:center;font-size:.82rem;color:#666}
+footer a{color:#0077b6;margin:0 .4rem}
+.show-all-btn{background:transparent;border:1px solid #0077b6;color:#0077b6;padding:7px 18px;border-radius:6px;cursor:pointer;font-size:.85rem;margin-top:.7rem;display:block;width:100%;transition:all .2s}
+.show-all-btn:hover{background:#0077b6;color:#fff}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">⚡ toolwick.com</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Wire Gauge & Ampacity Calculator</h1>
+  <p class="subtitle">Find the right AWG wire size, check ampacity, and calculate voltage drop for any circuit.</p>
+
+  <!-- SVG Diagram -->
+  <div class="diagram-wrap">
+    <svg id="wireDiagram" viewBox="0 0 580 160" xmlns="http://www.w3.org/2000/svg" style="max-width:580px;width:100%">
+      <!-- Background -->
+      <rect width="580" height="160" fill="#f8f9fa" rx="8"/>
+      <!-- Source box -->
+      <rect x="20" y="55" width="80" height="50" rx="6" fill="#e8f4fd" stroke="#0077b6" stroke-width="2"/>
+      <text x="60" y="77" text-anchor="middle" font-size="11" font-weight="700" fill="#0077b6">SOURCE</text>
+      <text id="dVoltage" x="60" y="93" text-anchor="middle" font-size="10" fill="#1a1a2e">120V</text>
+      <!-- Wire top -->
+      <line x1="100" y1="68" x2="480" y2="68" stroke="#0077b6" stroke-width="4" stroke-linecap="round"/>
+      <!-- Wire bottom -->
+      <line x1="100" y1="92" x2="480" y2="92" stroke="#555" stroke-width="4" stroke-linecap="round"/>
+      <!-- Insulation indication -->
+      <rect x="100" y="63" width="380" height="9" rx="3" fill="none" stroke="#0077b6" stroke-width="1.2" stroke-dasharray="6,4"/>
+      <rect x="100" y="88" width="380" height="9" rx="3" fill="none" stroke="#555" stroke-width="1.2" stroke-dasharray="6,4"/>
+      <!-- Length arrow -->
+      <line x1="100" y1="130" x2="480" y2="130" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arrow)" marker-start="url(#arrowL)"/>
+      <text id="dLength" x="290" y="148" text-anchor="middle" font-size="12" fill="#1a1a2e" font-weight="600">100 ft</text>
+      <!-- AWG label on wire -->
+      <rect x="240" y="60" width="100" height="20" rx="4" fill="#fff" stroke="#0077b6" stroke-width="1.5"/>
+      <text id="dAWG" x="290" y="75" text-anchor="middle" font-size="11" font-weight="700" fill="#0077b6">AWG #12</text>
+      <!-- Load box -->
+      <rect x="480" y="55" width="80" height="50" rx="6" fill="#fff3cd" stroke="#e67e22" stroke-width="2"/>
+      <text x="520" y="77" text-anchor="middle" font-size="11" font-weight="700" fill="#e67e22">LOAD</text>
+      <text id="dAmps" x="520" y="93" text-anchor="middle" font-size="10" fill="#1a1a2e">20A</text>
+      <!-- Voltage drop label -->
+      <text id="dVdrop" x="290" y="52" text-anchor="middle" font-size="10" fill="#e74c3c">ΔV = — V</text>
+      <!-- Arrows -->
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0077b6"/></marker>
+        <marker id="arrowL" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto"><polygon points="8 0,0 3,8 6" fill="#0077b6"/></marker>
+      </defs>
+      <!-- Current arrow -->
+      <text x="290" y="12" text-anchor="middle" font-size="10" fill="#555">→ Current Flow →</text>
+      <line x1="240" y1="15" x2="340" y2="15" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+    </svg>
+  </div>
+
+  <!-- Tool Card -->
+  <div class="card">
+    <!-- Tabs -->
+    <div class="tab-row">
+      <button class="tab active" onclick="switchTab('find')">Find Wire Gauge</button>
+      <button class="tab" onclick="switchTab('check')">Check Existing Wire</button>
+      <button class="tab" onclick="switchTab('vdrop')">Voltage Drop</button>
+    </div>
+
+    <!-- Tab: Find Wire Gauge -->
+    <div class="tab-content active" id="tab-find">
+      <div class="row-2">
+        <div class="field">
+          <label for="findAmps">Current Load (Amps)</label>
+          <input type="number" id="findAmps" placeholder="e.g. 20" min="0.1" step="0.1">
+          <div class="error-msg" id="err-findAmps">Enter a valid amperage (0.1–400 A).</div>
+        </div>
+        <div class="field">
+          <label for="findVoltage">Voltage (V)</label>
+          <select id="findVoltage">
+            <option value="120">120V (residential)</option>
+            <option value="240">240V (residential)</option>
+            <option value="208">208V (3-phase)</option>
+            <option value="480">480V (industrial)</option>
+          </select>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label for="findLength">One-Way Wire Length (ft)</label>
+          <input type="number" id="findLength" placeholder="e.g. 50" min="1" step="1" value="50">
+          <div class="error-msg" id="err-findLength">Enter a valid length (1–5000 ft).</div>
+        </div>
+        <div class="field">
+          <label for="findInsulation">Wire Type / Insulation</label>
+          <select id="findInsulation">
+            <option value="60">60°C (THWN, NM-B)</option>
+            <option value="75" selected>75°C (THWN-2, XHHW)</option>
+            <option value="90">90°C (THHN, XHHW-2)</option>
+          </select>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label for="findInstall">Installation Type</label>
+          <select id="findInstall">
+            <option value="conduit">In conduit / raceway</option>
+            <option value="free">Free air</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="findPhase">Phase</label>
+          <select id="findPhase">
+            <option value="single">Single-phase</option>
+            <option value="three">Three-phase</option>
+          </select>
+        </div>
+      </div>
+      <button class="primary" onclick="calcFind()">Find Recommended Wire Gauge</button>
+    </div>
+
+    <!-- Tab: Check Existing Wire -->
+    <div class="tab-content" id="tab-check">
+      <div class="row-2">
+        <div class="field">
+          <label for="checkAWG">Wire Gauge (AWG)</label>
+          <select id="checkAWG">
+            <option value="18">AWG 18</option>
+            <option value="16">AWG 16</option>
+            <option value="14">AWG 14</option>
+            <option value="12" selected>AWG 12</option>
+            <option value="10">AWG 10</option>
+            <option value="8">AWG 8</option>
+            <option value="6">AWG 6</option>
+            <option value="4">AWG 4</option>
+            <option value="3">AWG 3</option>
+            <option value="2">AWG 2</option>
+            <option value="1">AWG 1</option>
+            <option value="0">AWG 1/0</option>
+            <option value="-1">AWG 2/0</option>
+            <option value="-2">AWG 3/0</option>
+            <option value="-3">AWG 4/0</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="checkAmps">Actual Current (Amps)</label>
+          <input type="number" id="checkAmps" placeholder="e.g. 15" min="0.1" step="0.1">
+          <div class="error-msg" id="err-checkAmps">Enter a valid amperage.</div>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label for="checkInsulation">Wire Insulation Rating</label>
+          <select id="checkInsulation">
+            <option value="60">60°C</option>
+            <option value="75" selected>75°C</option>
+            <option value="90">90°C</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="checkInstall">Installation</label>
+          <select id="checkInstall">
+            <option value="conduit">In conduit</option>
+            <option value="free">Free air</option>
+          </select>
+        </div>
+      </div>
+      <button class="primary" onclick="calcCheck()">Check Wire Suitability</button>
+    </div>
+
+    <!-- Tab: Voltage Drop -->
+    <div class="tab-content" id="tab-vdrop">
+      <div class="row-2">
+        <div class="field">
+          <label for="vdAWG">Wire Gauge (AWG)</label>
+          <select id="vdAWG">
+            <option value="18">AWG 18</option>
+            <option value="16">AWG 16</option>
+            <option value="14">AWG 14</option>
+            <option value="12" selected>AWG 12</option>
+            <option value="10">AWG 10</option>
+            <option value="8">AWG 8</option>
+            <option value="6">AWG 6</option>
+            <option value="4">AWG 4</option>
+            <option value="2">AWG 2</option>
+            <option value="0">AWG 1/0</option>
+            <option value="-1">AWG 2/0</option>
+            <option value="-2">AWG 3/0</option>
+            <option value="-3">AWG 4/0</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="vdVoltage">Source Voltage (V)</label>
+          <select id="vdVoltage">
+            <option value="120">120V</option>
+            <option value="240" selected>240V</option>
+            <option value="208">208V</option>
+            <option value="480">480V</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="vdAmps">Current (Amps): <span id="vdAmpsLabel" class="slider-val">20 A</span></label>
+        <div class="slider-row">
+          <input type="range" id="vdAmps" min="1" max="200" value="20" step="1" oninput="syncSlider()">
+        </div>
+      </div>
+      <div class="field">
+        <label for="vdLength">One-Way Length (ft): <span id="vdLengthLabel" class="slider-val">100 ft</span></label>
+        <div class="slider-row">
+          <input type="range" id="vdLength" min="5" max="1000" value="100" step="5" oninput="syncSlider()">
+        </div>
+      </div>
+      <div class="field">
+        <label for="vdPhase">Phase</label>
+        <select id="vdPhase">
+          <option value="single" selected>Single-phase</option>
+          <option value="three">Three-phase</option>
+        </select>
+      </div>
+      <button class="primary" onclick="calcVdrop()">Calculate Voltage Drop</button>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="result-section" id="resultSection">
+    <div class="card">
+      <div class="result-hero" id="resultHero">
+        <button class="copy-btn" onclick="copyResult()">Copy</button>
+        <div class="result-hero-label" id="heroLabel">Recommended Wire Gauge</div>
+        <div class="result-hero-value" id="heroValue">—</div>
+        <div class="result-hero-unit" id="heroUnit"></div>
+        <span class="badge" id="heroBadge"></span>
+      </div>
+      <div class="info-grid" id="infoGrid"></div>
+      <div class="section-title" id="tableTitle">Wire Specifications</div>
+      <div class="tbl-wrap"><table id="resultTable"><thead id="tblHead"></thead><tbody id="tblBody"></tbody></table></div>
+      <button class="show-all-btn" id="showAllBtn" style="display:none" onclick="showAllRows()">Show Full AWG Reference Table</button>
+
+      <!-- Voltage drop bar -->
+      <div id="vdropBarArea" style="display:none;margin-top:1rem">
+        <div style="display:flex;justify-content:space-between;font-size:.82rem;color:#555">
+          <span>Voltage Drop</span><span id="vdBarPct">0%</span>
+        </div>
+        <div class="vd-bar-wrap"><div class="vd-bar" id="vdBar" style="width:0%"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:.75rem;color:#999;margin-top:2px"><span>0%</span><span>3% (NEC rec.)</span><span>5% max</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+    <h2>How to Use This Wire Gauge Ampacity Calculator</h2>
+    <p>Select your calculation mode using the tabs above. In <strong>Find Wire Gauge</strong>, enter your circuit's current load, voltage, wire length, and insulation type — the tool will recommend the minimum safe AWG and flag any voltage drop concerns. In <strong>Check Existing Wire</strong>, enter your current wire gauge and actual load to verify it's rated safely. In <strong>Voltage Drop</strong>, use the sliders to instantly see how wire gauge and length affect voltage loss.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Undersized wire is one of the leading causes of electrical fires in homes and commercial buildings. When a wire carries more current than it's rated for, it heats up — and heat means resistance, more heat, and eventually insulation damage or worse. The NEC (National Electrical Code) establishes ampacity ratings for good reason.</p>
+    <p>Here's a real-world example: a homeowner adds a 20-amp kitchen circuit, but uses leftover AWG 14 wire rated for 15 amps at 75°C. The breaker won't trip at 18 amps — but the wire is silently degrading. Over time, that's a fire hazard. The fix? AWG 12, which handles 20 amps comfortably.</p>
+    <p>Voltage drop matters too. Run a 20-amp, 120V circuit 150 feet with AWG 12 and you'll lose about 5.6 volts — nearly 5%. Lights may flicker and motors run hot. Upsizing to AWG 10 drops that loss to 3.5 volts, keeping everything inside NEC's recommended 3% guideline.</p>
+    <p>Electricians, DIYers, solar installers, RV builders, and marine electricians all depend on accurate wire sizing. This calculator uses NEC Table 310.15 ampacity values and the standard voltage drop formula for instant, reliable results.</p>
+
+    <h2>How It's Calculated</h2>
+    <p><strong>Ampacity</strong> is looked up from NEC Table 310.15(B)(16) based on wire gauge (AWG) and insulation temperature rating. The calculator selects the smallest gauge whose ampacity exceeds your load, then applies a 125% continuous load factor where applicable.</p>
+    <p><strong>Voltage Drop Formula (single-phase):</strong></p>
+    <p style="background:#f0f0f0;padding:.6rem 1rem;border-radius:6px;font-family:monospace;font-size:.9rem">VD = (2 × K × I × L) / CM</p>
+    <p>Where: <strong>K</strong> = resistivity constant (12.9 for copper, 21.2 for aluminum), <strong>I</strong> = current in amps, <strong>L</strong> = one-way length in feet, <strong>CM</strong> = circular mils of the wire. For three-phase: multiply by √3 / 2 (factor ≈ 0.866).</p>
+    <p>Voltage drop percentage = (VD / Source Voltage) × 100. NEC recommends staying under 3% for branch circuits.</p>
+
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Always upsize, never downsize.</strong> If your load is 19 amps, don't use a wire rated for exactly 20A — use the next size up for a safety margin.</li>
+      <li><strong>Temperature rating matters.</strong> Don't derate a 90°C wire to 75°C values unless it's actually running in conduit with other wires that force derating.</li>
+      <li><strong>Use one-way length in the formula.</strong> The current travels there and back, so the formula already doubles the length for you.</li>
+      <li><strong>Conduit fill affects ampacity.</strong> More than 3 current-carrying conductors in the same conduit requires derating. This calculator shows standard NEC values.</li>
+      <li><strong>Motor circuits need 125% sizing.</strong> Motors draw locked-rotor current on startup. Size the wire at 125% of the motor's full-load amperage minimum.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What AWG wire for a 20-amp circuit?</summary>
+      <p>AWG 12 copper at 75°C is the standard choice for a 20-amp branch circuit in residential wiring. It's rated for 20 amps in conduit and up to 25 amps free-air. Always use a 20-amp breaker with AWG 12 — never a 15-amp breaker, which would be undersized for the wire's capacity.</p>
+    </details>
+    <details>
+      <summary>What's the difference between AWG and wire diameter?</summary>
+      <p>AWG (American Wire Gauge) is an inverse scale — a lower number means a thicker wire. AWG 4 is much thicker than AWG 14. Each 6-gauge decrease roughly doubles the cross-sectional area. AWG 0 (commonly written 1/0) is followed by 2/0, 3/0, and 4/0 for very large conductors.</p>
+    </details>
+    <details>
+      <summary>How much voltage drop is acceptable?</summary>
+      <p>NEC recommends a maximum of 3% voltage drop on branch circuits and 5% total (including feeder) for optimal efficiency. For sensitive electronics or long motor runs, keep it under 2%. Excessive drop causes equipment to run hot, reduces efficiency, and can shorten appliance lifespan.</p>
+    </details>
+    <details>
+      <summary>Can I use aluminum wire instead of copper?</summary>
+      <p>Yes, aluminum is commonly used for service entrance conductors and large feeders where the cost savings are significant. However, aluminum requires larger gauge wire (typically two sizes up from copper), anti-oxidant compound on connections, and AL-rated connectors. AWG 2 aluminum has roughly the same ampacity as AWG 4 copper at 75°C.</p>
+    </details>
+  </div>
+
+  <!-- Related Tools -->
+  <div style="margin-top:2rem">
+    <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:.8rem">Related Tools</h2>
+    <div class="related-grid">
+      <a href="/drywall-calculator/" class="related-link">📐 Drywall Calculator</a>
+      <a href="/deck-material-cost-estimator/" class="related-link">🪵 Deck Material & Cost Estimator</a>
+      <a href="/paint-coverage-calculator/" class="related-link">🎨 Paint Coverage Calculator</a>
+      <a href="/lumber-board-foot-calculator/" class="related-link">📏 Lumber & Board Foot Calculator</a>
+      <a href="/gravel-driveway-calculator/" class="related-link">🪨 Gravel Driveway Calculator</a>
+      <a href="/tile-flooring-calculator/" class="related-link">🔲 Tile & Flooring Coverage Calculator</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</div>
+
+<footer>
+  <div>
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <div style="margin-top:.4rem">© <span id="yr"></span> toolwick.com — Free Online Calculators</div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// ─── AWG DATA ────────────────────────────────────────────────────────────────
+// gauge: AWG number (negative for 0-gauge series: 0=-1/0, -1=2/0, etc.)
+// name: display name
+// cm: circular mils
+// amp60, amp75, amp90: NEC 310.15 conduit ampacity
+// ampFree60/75/90: free-air ampacity
+// ohm1k: resistance ohms per 1000 ft (copper)
+const AWG_TABLE = [
+  {g:18,name:'AWG 18',cm:1624, amp60:null, amp75:null, amp90:null, free60:null, free75:null, free90:null, ohm:6.385},
+  {g:16,name:'AWG 16',cm:2583, amp60:null, amp75:null, amp90:null, free60:null, free75:null, free90:null, ohm:4.016},
+  {g:14,name:'AWG 14',cm:4107, amp60:15,   amp75:20,   amp90:25,  free60:20, free75:25, free90:30, ohm:2.525},
+  {g:12,name:'AWG 12',cm:6530, amp60:20,   amp75:25,   amp90:30,  free60:25, free75:30, free90:35, ohm:1.588},
+  {g:10,name:'AWG 10',cm:10380,amp60:30,   amp75:35,   amp90:40,  free60:40, free75:50, free90:55, ohm:0.9989},
+  {g:8, name:'AWG 8', cm:16510,amp60:40,   amp75:50,   amp90:55,  free60:60, free75:70, free90:80, ohm:0.6282},
+  {g:6, name:'AWG 6', cm:26250,amp60:55,   amp75:65,   amp90:75,  free60:80, free75:95, free90:105,ohm:0.3951},
+  {g:4, name:'AWG 4', cm:41740,amp60:70,   amp75:85,   amp90:95,  free60:105,free75:125,free90:140,ohm:0.2485},
+  {g:3, name:'AWG 3', cm:52620,amp60:85,   amp75:100,  amp90:115, free60:120,free75:145,free90:165,ohm:0.1970},
+  {g:2, name:'AWG 2', cm:66360,amp60:95,   amp75:115,  amp90:130, free60:135,free75:165,free90:190,ohm:0.1563},
+  {g:1, name:'AWG 1', cm:83690,amp60:110,  amp75:130,  amp90:145, free60:160,free75:195,free90:220,ohm:0.1239},
+  {g:0, name:'AWG 1/0',cm:105600,amp60:125,amp75:150,  amp90:170, free60:195,free75:230,free90:260,ohm:0.09827},
+  {g:-1,name:'AWG 2/0',cm:133100,amp60:145,amp75:175,  amp90:195, free60:225,free75:265,free90:300,ohm:0.07793},
+  {g:-2,name:'AWG 3/0',cm:167800,amp60:165,amp75:200,  amp90:225, free60:260,free75:310,free90:350,ohm:0.06180},
+  {g:-3,name:'AWG 4/0',cm:211600,amp60:195,amp75:230,  amp90:260, free60:300,free75:360,free90:405,ohm:0.04901},
+];
+
+// Small gauge low-amp defaults (NEC 310.15 small conductor values)
+AWG_TABLE[0].amp60=7; AWG_TABLE[0].amp75=7; AWG_TABLE[0].amp90=7;
+AWG_TABLE[0].free60=14; AWG_TABLE[0].free75=14; AWG_TABLE[0].free90=14;
+AWG_TABLE[1].amp60=10; AWG_TABLE[1].amp75=10; AWG_TABLE[1].amp90=10;
+AWG_TABLE[1].free60=18; AWG_TABLE[1].free75=18; AWG_TABLE[1].free90=18;
+
+function getAmpacity(row, tempC, install) {
+  const k = install==='free' ? 'free' : 'amp';
+  const t = String(tempC);
+  return row[k+t] || row['amp75'];
+}
+
+function getRowByG(g) { return AWG_TABLE.find(r=>r.g===parseInt(g)); }
+
+function fmtNum(n,dec=2){
+  if(n===null||n===undefined||isNaN(n)) return '—';
+  return n.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+}
+
+// ─── TAB SWITCHING ────────────────────────────────────────────────────────────
+function switchTab(t) {
+  document.querySelectorAll('.tab').forEach((b,i)=>{
+    const ids=['find','check','vdrop'];
+    b.classList.toggle('active', ids[i]===t);
+    document.getElementById('tab-'+ids[i]).classList.toggle('active', ids[i]===t);
+  });
+  hideResults();
+}
+
+function hideResults(){
+  const s=document.getElementById('resultSection');
+  s.classList.remove('visible');
+  s.style.display='none';
+}
+
+function showResults(){
+  const s=document.getElementById('resultSection');
+  s.style.display='block';
+  requestAnimationFrame(()=>{ s.classList.add('visible'); });
+}
+
+// ─── SLIDER SYNC ──────────────────────────────────────────────────────────────
+function syncSlider(){
+  document.getElementById('vdAmpsLabel').textContent = document.getElementById('vdAmps').value + ' A';
+  document.getElementById('vdLengthLabel').textContent = document.getElementById('vdLength').value + ' ft';
+}
+
+// ─── VALIDATE ─────────────────────────────────────────────────────────────────
+function clearErrors(ids){
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.classList.remove('error');}
+    const em=document.getElementById('err-'+id);
+    if(em) em.style.display='none';
+  });
+}
+function showError(id,msg){
+  const el=document.getElementById(id);
+  if(el) el.classList.add('error');
+  const em=document.getElementById('err-'+id);
+  if(em){em.textContent=msg;em.style.display='block';}
+  return false;
+}
+
+// ─── CALC: FIND WIRE GAUGE ────────────────────────────────────────────────────
+function calcFind(){
+  clearErrors(['findAmps','findLength']);
+  const amps = parseFloat(document.getElementById('findAmps').value);
+  const voltage = parseFloat(document.getElementById('findVoltage').value);
+  const length = parseFloat(document.getElementById('findLength').value);
+  const temp = parseInt(document.getElementById('findInsulation').value);
+  const install = document.getElementById('findInstall').value;
+  const phase = document.getElementById('findPhase').value;
+
+  if(isNaN(amps)||amps<=0||amps>400) return showError('findAmps','Enter a valid amperage (0.1–400 A).');
+  if(isNaN(length)||length<=0||length>5000) return showError('findLength','Enter a valid length (1–5000 ft).');
+
+  const needed = amps * 1.25; // 125% for continuous
+  let rec = null;
+  for(let i=0;i<AWG_TABLE.length;i++){
+    const a = getAmpacity(AWG_TABLE[i], temp, install);
+    if(a && a >= needed){ rec=AWG_TABLE[i]; break; }
+  }
+  if(!rec) rec = AWG_TABLE[AWG_TABLE.length-1];
+
+  // Voltage drop for recommended gauge
+  const vd = calcVD(rec.ohm, amps, length, phase);
+  const vdPct = (vd/voltage)*100;
+
+  // Also check if upsizing reduces VD below 3%
+  let vdRec = rec;
+  const idx = AWG_TABLE.indexOf(rec);
+  if(vdPct > 3 && idx < AWG_TABLE.length-1){
+    for(let j=idx+1;j<AWG_TABLE.length;j++){
+      const vd2 = calcVD(AWG_TABLE[j].ohm, amps, length, phase);
+      if((vd2/voltage)*100 <= 3){ vdRec=AWG_TABLE[j]; break; }
+    }
+  }
+  const finalRec = (vdRec.g < rec.g) ? vdRec : rec; // lower AWG number = larger wire
+  const finalVD = calcVD(finalRec.ohm, amps, length, phase);
+  const finalPct = (finalVD/voltage)*100;
+  const recAmp = getAmpacity(finalRec, temp, install);
+  const utilPct = (amps/recAmp)*100;
+
+  // Badge
+  let badge='', badgeClass='';
+  if(utilPct<=80){badge='✓ Well Within Rating';badgeClass='badge-ok';}
+  else if(utilPct<=100){badge='⚠ Near Capacity';badgeClass='badge-warn';}
+  else{badge='✗ Overloaded';badgeClass='badge-danger';}
+
+  // Update diagram
+  updateDiagram(document.getElementById('findVoltage').value, finalRec.name, amps, length, finalVD);
+
+  // Build result HTML
+  const infoHtml = `
+    <div class="info-box"><div class="info-box-label">Ampacity Rating</div><div class="info-box-value">${recAmp} A</div></div>
+    <div class="info-box"><div class="info-box-label">Load Utilization</div><div class="info-box-value">${fmtNum(utilPct,1)}%</div></div>
+    <div class="info-box"><div class="info-box-label">Voltage Drop</div><div class="info-box-value">${fmtNum(finalVD,2)} V</div></div>
+    <div class="info-box"><div class="info-box-label">VD Percentage</div><div class="info-box-value">${fmtNum(finalPct,2)}%</div></div>
+  `;
+
+  const tblHead = '<tr><th>AWG</th><th class="num">Ampacity</th><th class="num">Load %</th><th class="num">VD (V)</th><th class="num">VD %</th><th>Status</th></tr>';
+  let tblBody = '';
+  AWG_TABLE.forEach(row=>{
+    const a = getAmpacity(row, temp, install);
+    if(!a) return;
+    const vdR = calcVD(row.ohm, amps, length, phase);
+    const vdP = (vdR/voltage)*100;
+    const u = (amps/a)*100;
+    const isFinal = row.g === finalRec.g;
+    let st = u>100 ? '<span style="color:#e74c3c">✗ Over</span>' : vdP>5 ? '<span style="color:#e67e22">⚠ VD High</span>' : '<span style="color:#27ae60">✓ OK</span>';
+    tblBody += `<tr${isFinal?' class="highlight-row"':''}><td>${row.name}</td><td class="num">${a} A</td><td class="num">${fmtNum(u,1)}%</td><td class="num">${fmtNum(vdR,2)}</td><td class="num">${fmtNum(vdP,2)}%</td><td>${st}</td></tr>`;
+  });
+
+  requestAnimationFrame(()=>{
+    document.getElementById('heroLabel').textContent = 'Recommended Wire Gauge';
+    document.getElementById('heroValue').textContent = finalRec.name;
+    document.getElementById('heroUnit').textContent = `${recAmp}A rated • ${fmtNum(finalVD,2)}V drop (${fmtNum(finalPct,2)}%)`;
+    const b=document.getElementById('heroBadge'); b.textContent=badge; b.className='badge '+badgeClass;
+    document.getElementById('infoGrid').innerHTML=infoHtml;
+    document.getElementById('tableTitle').textContent='All AWG Options Compared';
+    document.getElementById('tblHead').innerHTML=tblHead;
+    document.getElementById('tblBody').innerHTML=tblBody;
+    document.getElementById('showAllBtn').style.display='none';
+    document.getElementById('vdropBarArea').style.display='block';
+    const pct=Math.min(finalPct,10);
+    document.getElementById('vdBar').style.width=(pct/10*100)+'%';
+    document.getElementById('vdBar').style.background=finalPct<=3?'#27ae60':finalPct<=5?'#e67e22':'#e74c3c';
+    document.getElementById('vdBarPct').textContent=fmtNum(finalPct,2)+'%';
+    showResults();
+  });
+}
+
+// ─── CALC: CHECK WIRE ─────────────────────────────────────────────────────────
+function calcCheck(){
+  clearErrors(['checkAmps']);
+  const g = parseInt(document.getElementById('checkAWG').value);
+  const amps = parseFloat(document.getElementById('checkAmps').value);
+  const temp = parseInt(document.getElementById('checkInsulation').value);
+  const install = document.getElementById('checkInstall').value;
+
+  if(isNaN(amps)||amps<=0) return showError('checkAmps','Enter a valid amperage.');
+
+  const row = getRowByG(g);
+  if(!row) return;
+  const rated = getAmpacity(row, temp, install);
+  const utilPct = (amps/rated)*100;
+
+  let badge='', badgeClass='';
+  if(utilPct<=80){badge='✓ Safe — Wire is adequately sized';badgeClass='badge-ok';}
+  else if(utilPct<=100){badge='⚠ Acceptable but near limit';badgeClass='badge-warn';}
+  else{badge='✗ OVERLOADED — Upgrade wire immediately';badgeClass='badge-danger';}
+
+  const headroom = rated - amps;
+  const infoHtml = `
+    <div class="info-box"><div class="info-box-label">Wire Rating</div><div class="info-box-value">${rated} A</div></div>
+    <div class="info-box"><div class="info-box-label">Actual Load</div><div class="info-box-value">${fmtNum(amps,1)} A</div></div>
+    <div class="info-box"><div class="info-box-label">Utilization</div><div class="info-box-value">${fmtNum(utilPct,1)}%</div></div>
+    <div class="info-box"><div class="info-box-label">Headroom</div><div class="info-box-value">${headroom>=0?fmtNum(headroom,1)+' A':'−'+fmtNum(Math.abs(headroom),1)+' A'}</div></div>
+  `;
+
+  const tblHead = '<tr><th>Property</th><th class="num">Value</th></tr>';
+  const k=temp===60?'60':temp===75?'75':'90';
+  const tblBody = `
+    <tr><td>Wire Gauge</td><td class="num">${row.name}</td></tr>
+    <tr><td>Circular Mils</td><td class="num">${row.cm.toLocaleString()}</td></tr>
+    <tr><td>Ampacity (${temp}°C, ${install==='conduit'?'conduit':'free air'})</td><td class="num">${rated} A</td></tr>
+    <tr><td>Resistance (per 1000 ft)</td><td class="num">${row.ohm} Ω</td></tr>
+    <tr><td>Actual Load</td><td class="num">${fmtNum(amps,1)} A</td></tr>
+    <tr><td>Load Utilization</td><td class="num">${fmtNum(utilPct,1)}%</td></tr>
+    <tr><td>Ampacity Headroom</td><td class="num">${headroom>=0?fmtNum(headroom,1)+' A over rated':'OVER by '+fmtNum(Math.abs(headroom),1)+' A'}</td></tr>
+  `;
+
+  requestAnimationFrame(()=>{
+    document.getElementById('heroLabel').textContent = 'Wire Status';
+    document.getElementById('heroValue').textContent = utilPct<=100 ? fmtNum(utilPct,1)+'%' : 'OVER!';
+    document.getElementById('heroUnit').textContent = `Load utilization of rated ${rated}A capacity`;
+    const b=document.getElementById('heroBadge'); b.textContent=badge; b.className='badge '+badgeClass;
+    document.getElementById('infoGrid').innerHTML=infoHtml;
+    document.getElementById('tableTitle').textContent='Wire Specifications';
+    document.getElementById('tblHead').innerHTML=tblHead;
+    document.getElementById('tblBody').innerHTML=tblBody;
+    document.getElementById('showAllBtn').style.display='none';
+    document.getElementById('vdropBarArea').style.display='none';
+    showResults();
+  });
+}
+
+// ─── CALC: VOLTAGE DROP ───────────────────────────────────────────────────────
+function calcVdrop(){
+  const g = parseInt(document.getElementById('vdAWG').value);
+  const voltage = parseFloat(document.getElementById('vdVoltage').value);
+  const amps = parseFloat(document.getElementById('vdAmps').value);
+  const length = parseFloat(document.getElementById('vdLength').value);
+  const phase = document.getElementById('vdPhase').value;
+
+  const row = getRowByG(g);
+  if(!row) return;
+
+  const vd = calcVD(row.ohm, amps, length, phase);
+  const vdPct = (vd/voltage)*100;
+  const endV = voltage - vd;
+
+  let badge='', badgeClass='';
+  if(vdPct<=3){badge='✓ Within NEC 3% Recommendation';badgeClass='badge-ok';}
+  else if(vdPct<=5){badge='⚠ Above 3% — Consider Larger Wire';badgeClass='badge-warn';}
+  else{badge='✗ Excessive — Upsize Wire or Shorten Run';badgeClass='badge-danger';}
+
+  const infoHtml = `
+    <div class="info-box"><div class="info-box-label">Voltage Drop</div><div class="info-box-value">${fmtNum(vd,2)} V</div></div>
+    <div class="info-box"><div class="info-box-label">Drop Percentage</div><div class="info-box-value">${fmtNum(vdPct,2)}%</div></div>
+    <div class="info-box"><div class="info-box-label">Voltage at Load End</div><div class="info-box-value">${fmtNum(endV,1)} V</div></div>
+    <div class="info-box"><div class="info-box-label">Wire Resistance</div><div class="info-box-value">${fmtNum((row.ohm*2*length/1000),4)} Ω</div></div>
+  `;
+
+  // Show comparison table for different gauges
+  const tblHead = '<tr><th>AWG</th><th class="num">VD (V)</th><th class="num">VD %</th><th class="num">End Voltage</th><th>NEC Status</th></tr>';
+  let tblBody = '';
+  AWG_TABLE.forEach(r=>{
+    const v=calcVD(r.ohm,amps,length,phase);
+    const p=(v/voltage)*100;
+    const isCur=r.g===row.g;
+    let st=p<=3?'<span style="color:#27ae60">✓ ≤3%</span>':p<=5?'<span style="color:#e67e22">⚠ ≤5%</span>':'<span style="color:#e74c3c">✗ >5%</span>';
+    tblBody+=`<tr${isCur?' class="highlight-row"':''}><td>${r.name}</td><td class="num">${fmtNum(v,2)}</td><td class="num">${fmtNum(p,2)}%</td><td class="num">${fmtNum(voltage-v,1)} V</td><td>${st}</td></tr>`;
+  });
+
+  updateDiagram(voltage, row.name, amps, length, vd);
+
+  requestAnimationFrame(()=>{
+    document.getElementById('heroLabel').textContent = 'Voltage Drop';
+    document.getElementById('heroValue').textContent = fmtNum(vd,2)+' V';
+    document.getElementById('heroUnit').textContent = `${fmtNum(vdPct,2)}% of ${voltage}V source`;
+    const b=document.getElementById('heroBadge'); b.textContent=badge; b.className='badge '+badgeClass;
+    document.getElementById('infoGrid').innerHTML=infoHtml;
+    document.getElementById('tableTitle').textContent='Voltage Drop by Wire Gauge';
+    document.getElementById('tblHead').innerHTML=tblHead;
+    document.getElementById('tblBody').innerHTML=tblBody;
+    document.getElementById('showAllBtn').style.display='none';
+    document.getElementById('vdropBarArea').style.display='block';
+    const pct=Math.min(vdPct,10);
+    document.getElementById('vdBar').style.width=(pct/10*100)+'%';
+    document.getElementById('vdBar').style.background=vdPct<=3?'#27ae60':vdPct<=5?'#e67e22':'#e74c3c';
+    document.getElementById('vdBarPct').textContent=fmtNum(vdPct,2)+'%';
+    showResults();
+  });
+}
+
+// ─── VOLTAGE DROP FORMULA ─────────────────────────────────────────────────────
+function calcVD(ohm1k, amps, length, phase){
+  // Resistance of round trip in ohms
+  const K = 12.9; // copper
+  // Using actual resistance: ohm1k is Ω per 1000 ft
+  // Total round-trip resistance = 2 * length * (ohm1k/1000)
+  const R = 2 * length * (ohm1k / 1000);
+  const factor = phase==='three' ? 0.866 : 1;
+  return amps * R * factor;
+}
+
+// ─── UPDATE DIAGRAM ───────────────────────────────────────────────────────────
+function updateDiagram(voltage, awgName, amps, length, vd){
+  document.getElementById('dVoltage').textContent = voltage+'V';
+  document.getElementById('dAWG').textContent = awgName;
+  document.getElementById('dAmps').textContent = fmtNum(amps,1)+'A';
+  document.getElementById('dLength').textContent = fmtNum(length,0)+' ft';
+  document.getElementById('dVdrop').textContent = 'ΔV = '+fmtNum(vd,2)+' V';
+}
+
+// ─── SHOW ALL ─────────────────────────────────────────────────────────────────
+function showAllRows(){
+  document.getElementById('showAllBtn').style.display='none';
+}
+
+// ─── COPY ─────────────────────────────────────────────────────────────────────
+function copyResult(){
+  const heroVal = document.getElementById('heroValue').textContent;
+  const heroUnit = document.getElementById('heroUnit').textContent;
+  const badge = document.getElementById('heroBadge').textContent;
+  const text = `${document.getElementById('heroLabel').textContent}: ${heroVal}\n${heroUnit}\n${badge}`;
+  navigator.clipboard.writeText(text).catch(()=>{});
+  const btn = document.querySelector('.copy-btn');
+  const orig = btn.textContent;
+  btn.textContent='Copied!';
+  setTimeout(()=>{ btn.textContent=orig; }, 2000);
+}
+
+// ─── ENTER KEY ────────────────────────────────────────────────────────────────
+document.querySelectorAll('input[type=number]').forEach(inp=>{
+  inp.addEventListener('keydown', e=>{
+    if(e.key==='Enter'){
+      const activeTab = document.querySelector('.tab-content.active').id;
+      if(activeTab==='tab-find') calcFind();
+      else if(activeTab==='tab-check') calcCheck();
+      else calcVdrop();
+    }
+  });
+});
+
+// Init slider labels
+syncSlider();
+</script>
+</body>
+</html>
