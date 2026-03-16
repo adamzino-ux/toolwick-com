@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pipe Sizing & Flow Rate Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate pipe size, flow rate, velocity, and pressure drop instantly. Free pipe size calculator for water, HVAC, and plumbing — supports multiple pipe materials.">
+<link rel="canonical" href="https://toolwick.com/pipe-sizing-flow-rate-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Pipe Sizing & Flow Rate Calculator",
+  "url": "https://toolwick.com/pipe-sizing-flow-rate-calculator/",
+  "description": "Calculate pipe size, flow rate, velocity, and pressure drop for water, plumbing, and HVAC systems.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #e0e0e0;padding:0.75rem 1.5rem;background:#fff}
+nav a{font-weight:600;font-size:1rem;color:#1a1a2e}
+.container{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;font-weight:700;color:#1a1a2e;margin-bottom:0.4rem}
+.subtitle{color:#666;font-size:0.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
+.diagram-wrap{text-align:center;margin-bottom:1.5rem}
+svg#pipeDiagram{width:100%;max-width:580px;height:auto}
+.tabs{display:flex;gap:0;border-bottom:2px solid #e0e0e0;margin-bottom:1.5rem}
+.tab-btn{padding:0.6rem 1.2rem;border:none;background:none;cursor:pointer;font-size:0.9rem;font-weight:500;color:#666;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color 0.2s;min-height:44px}
+.tab-btn.active{color:#0077b6;border-bottom-color:#0077b6}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:0.3rem;margin-top:1rem}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:0.95rem;font-family:inherit;color:#1a1a2e;background:#fff;transition:box-shadow 0.2s,border-color 0.2s;min-height:44px}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error,select.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:0.25rem;display:none}
+.error-msg.show{display:block}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.btn{display:block;width:100%;padding:12px 24px;background:#0077b6;color:#fff;border:none;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:1.5rem;transition:background 0.2s;min-height:44px}
+.btn:hover{background:#006299}
+.btn-secondary{background:#f0f0f0;color:#1a1a2e;font-size:0.85rem;padding:8px 16px;border-radius:6px;border:none;cursor:pointer;margin-top:0.5rem;width:auto;display:inline-block;min-height:44px;font-family:inherit}
+.btn-secondary:hover{background:#e0e0e0}
+.results{display:none;opacity:0;transition:opacity 0.3s ease}
+.results.show{display:block;opacity:1}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.kpi{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1rem;text-align:center}
+.kpi-val{font-size:1.8rem;font-weight:700;color:#0077b6;line-height:1.2}
+.kpi-unit{font-size:0.8rem;color:#666;margin-top:0.1rem}
+.kpi-label{font-size:0.78rem;color:#555;margin-top:0.3rem;font-weight:500}
+.status-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.78rem;font-weight:600;margin-left:8px}
+.status-ok{background:#d4edda;color:#155724}
+.status-warn{background:#fff3cd;color:#856404}
+.status-bad{background:#f8d7da;color:#721c24}
+table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.table-wrap{overflow-x:auto}
+th{background:#f0f0f0;padding:8px 12px;text-align:left;font-weight:600;border-bottom:1px solid #ddd}
+th.num,td.num{text-align:right}
+td{padding:8px 12px;border-bottom:1px solid #f0f0f0}
+tr:nth-child(even) td{background:#fafafa}
+.copy-wrap{display:flex;justify-content:flex-end;margin-top:0.75rem}
+.copy-btn{background:#f0f0f0;border:1px solid #ddd;border-radius:6px;padding:6px 14px;font-size:0.8rem;cursor:pointer;font-family:inherit;min-height:36px}
+.copy-btn:hover{background:#e0e0e0}
+.section-title{font-size:1rem;font-weight:700;color:#1a1a2e;margin:1.5rem 0 0.75rem}
+.info-box{background:#e8f4fd;border-left:3px solid #0077b6;padding:0.75rem 1rem;border-radius:0 6px 6px 0;font-size:0.85rem;color:#1a1a2e;margin-top:1rem}
+.bar-row{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;font-size:0.82rem}
+.bar-label{width:90px;flex-shrink:0;color:#444}
+.bar-bg{flex:1;background:#e0e0e0;border-radius:4px;height:14px;overflow:hidden}
+.bar-fill{height:100%;background:#0077b6;border-radius:4px;transition:width 0.4s ease}
+.bar-val{width:70px;flex-shrink:0;text-align:right;color:#1a1a2e;font-weight:500}
+.content-section{margin-top:2rem}
+.content-section h2{font-size:1.2rem;font-weight:700;color:#1a1a2e;margin-bottom:0.6rem;margin-top:1.5rem}
+.content-section p{color:#333;font-size:0.95rem;margin-bottom:0.75rem}
+.content-section ul{padding-left:1.4rem;color:#333;font-size:0.95rem}
+.content-section li{margin-bottom:0.4rem}
+details{border:1px solid #e0e0e0;border-radius:6px;padding:0.75rem 1rem;margin-bottom:0.5rem}
+summary{font-weight:600;cursor:pointer;font-size:0.92rem;color:#1a1a2e}
+summary:hover{color:#0077b6}
+details p{margin-top:0.5rem;font-size:0.88rem;color:#444}
+.related{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-top:0.75rem}
+.related a{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.7rem 1rem;font-size:0.88rem;color:#0077b6;display:block;transition:background 0.2s}
+.related a:hover{background:#e8f4fd;text-decoration:none}
+.ad-slot{min-height:0;margin:0}
+footer{background:#f8f9fa;border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:0.85rem;color:#666;margin-top:2rem}
+footer a{color:#0077b6;margin:0 0.5rem}
+@media(max-width:640px){
+  .row-2{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .kpi-val{font-size:1.4rem}
+  .related{grid-template-columns:1fr}
+  h1{font-size:1.35rem}
+  .card{padding:1.25rem}
+}
+@media(max-width:400px){
+  .kpi-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav><a href="/">⚙ toolwick.com</a></nav>
+
+<div class="container">
+  <h1>Pipe Sizing & Flow Rate Calculator</h1>
+  <p class="subtitle">Calculate flow rate, velocity, pressure drop, and recommended pipe size for water and plumbing systems.</p>
+
+  <div class="card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg id="pipeDiagram" viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" aria-label="Pipe cross-section diagram">
+        <!-- Pipe body -->
+        <rect x="40" y="70" width="480" height="60" rx="0" fill="#e8f4fd" stroke="#0077b6" stroke-width="2"/>
+        <!-- Pipe walls top/bottom -->
+        <rect x="40" y="60" width="480" height="12" rx="0" fill="#0077b6" opacity="0.18"/>
+        <rect x="40" y="128" width="480" height="12" rx="0" fill="#0077b6" opacity="0.18"/>
+        <!-- Pipe outline -->
+        <rect x="40" y="60" width="480" height="80" rx="4" fill="none" stroke="#0077b6" stroke-width="2.5"/>
+        <!-- Flow arrows -->
+        <g fill="#0077b6" opacity="0.7">
+          <polygon points="120,100 100,93 100,107"/>
+          <line x1="70" y1="100" x2="118" y2="100" stroke="#0077b6" stroke-width="2"/>
+          <polygon points="230,100 210,93 210,107"/>
+          <line x1="180" y1="100" x2="228" y2="100" stroke="#0077b6" stroke-width="2"/>
+          <polygon points="340,100 320,93 320,107"/>
+          <line x1="290" y1="100" x2="338" y2="100" stroke="#0077b6" stroke-width="2"/>
+          <polygon points="450,100 430,93 430,107"/>
+          <line x1="400" y1="100" x2="448" y2="100" stroke="#0077b6" stroke-width="2"/>
+        </g>
+        <!-- Diameter arrow -->
+        <line x1="20" y1="60" x2="20" y2="140" stroke="#1a1a2e" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+        <polygon points="20,60 16,70 24,70" fill="#1a1a2e"/>
+        <polygon points="20,140 16,130 24,130" fill="#1a1a2e"/>
+        <!-- Labels -->
+        <text id="dLabel" x="10" y="103" font-size="11" fill="#1a1a2e" text-anchor="middle" transform="rotate(-90,10,100)" font-family="sans-serif" font-weight="600">D = ?</text>
+        <text id="flowLabel" x="280" y="56" font-size="11" fill="#0077b6" text-anchor="middle" font-family="sans-serif" font-weight="600">Flow →</text>
+        <text id="velLabel" x="280" y="155" font-size="11" fill="#1a1a2e" text-anchor="middle" font-family="sans-serif">Velocity = ? ft/s</text>
+        <text id="qLabel" x="280" y="170" font-size="11" fill="#555" text-anchor="middle" font-family="sans-serif">Flow Rate = ? GPM</text>
+        <!-- Length indicator -->
+        <line x1="40" y1="186" x2="520" y2="186" stroke="#aaa" stroke-width="1" stroke-dasharray="4,3"/>
+        <polygon points="40,186 50,182 50,190" fill="#aaa"/>
+        <polygon points="520,186 510,182 510,190" fill="#aaa"/>
+        <text id="lenLabel" x="280" y="198" font-size="11" fill="#888" text-anchor="middle" font-family="sans-serif">Pipe Length = ? ft</text>
+      </svg>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('flow')">Flow Rate</button>
+      <button class="tab-btn" onclick="switchTab('size')">Find Pipe Size</button>
+      <button class="tab-btn" onclick="switchTab('pressure')">Pressure Drop</button>
+    </div>
+
+    <!-- TAB 1: Flow Rate given diameter -->
+    <div id="tab-flow" class="tab-panel active">
+      <div class="row-2">
+        <div>
+          <label for="f_diam">Pipe Inner Diameter (in)</label>
+          <input type="number" id="f_diam" placeholder="e.g. 2" min="0.1" step="0.01">
+          <div class="error-msg" id="f_diam_err">Enter a valid diameter (> 0)</div>
+        </div>
+        <div>
+          <label for="f_vel">Flow Velocity (ft/s)</label>
+          <input type="number" id="f_vel" placeholder="e.g. 5" min="0.01" step="0.1">
+          <div class="error-msg" id="f_vel_err">Enter a valid velocity (> 0)</div>
+        </div>
+      </div>
+      <div class="row-2">
+        <div>
+          <label for="f_len">Pipe Length (ft)</label>
+          <input type="number" id="f_len" placeholder="e.g. 100" min="0.1" step="1">
+          <div class="error-msg" id="f_len_err">Enter a valid length (> 0)</div>
+        </div>
+        <div>
+          <label for="f_mat">Pipe Material</label>
+          <select id="f_mat">
+            <option value="0.0000015">Steel (new)</option>
+            <option value="0.00085">Cast Iron</option>
+            <option value="0.000005" selected>Copper / PEX</option>
+            <option value="0.000001">PVC / CPVC</option>
+            <option value="0.003">Galvanized Steel</option>
+            <option value="0.01">Concrete</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn" onclick="requestAnimationFrame(()=>calcFlow())">Calculate Flow Rate</button>
+    </div>
+
+    <!-- TAB 2: Find Pipe Size -->
+    <div id="tab-size" class="tab-panel">
+      <div class="row-2">
+        <div>
+          <label for="s_gpm">Desired Flow Rate (GPM)</label>
+          <input type="number" id="s_gpm" placeholder="e.g. 20" min="0.01" step="0.1">
+          <div class="error-msg" id="s_gpm_err">Enter a valid flow rate (> 0)</div>
+        </div>
+        <div>
+          <label for="s_vel">Max Velocity (ft/s)</label>
+          <input type="number" id="s_vel" placeholder="e.g. 5" min="0.1" step="0.1">
+          <div class="error-msg" id="s_vel_err">Enter a valid max velocity (> 0)</div>
+        </div>
+      </div>
+      <div class="row-2">
+        <div>
+          <label for="s_len">Pipe Length (ft)</label>
+          <input type="number" id="s_len" placeholder="e.g. 100" min="0.1" step="1">
+          <div class="error-msg" id="s_len_err">Enter a valid length (> 0)</div>
+        </div>
+        <div>
+          <label for="s_mat">Pipe Material</label>
+          <select id="s_mat">
+            <option value="0.0000015">Steel (new)</option>
+            <option value="0.00085">Cast Iron</option>
+            <option value="0.000005" selected>Copper / PEX</option>
+            <option value="0.000001">PVC / CPVC</option>
+            <option value="0.003">Galvanized Steel</option>
+            <option value="0.01">Concrete</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn" onclick="requestAnimationFrame(()=>calcSize())">Find Pipe Size</button>
+    </div>
+
+    <!-- TAB 3: Pressure Drop -->
+    <div id="tab-pressure" class="tab-panel">
+      <div class="row-2">
+        <div>
+          <label for="p_diam">Pipe Inner Diameter (in)</label>
+          <input type="number" id="p_diam" placeholder="e.g. 2" min="0.1" step="0.01">
+          <div class="error-msg" id="p_diam_err">Enter a valid diameter (> 0)</div>
+        </div>
+        <div>
+          <label for="p_gpm">Flow Rate (GPM)</label>
+          <input type="number" id="p_gpm" placeholder="e.g. 20" min="0.01" step="0.1">
+          <div class="error-msg" id="p_gpm_err">Enter a valid flow rate (> 0)</div>
+        </div>
+      </div>
+      <div class="row-2">
+        <div>
+          <label for="p_len">Pipe Length (ft)</label>
+          <input type="number" id="p_len" placeholder="e.g. 100" min="0.1" step="1">
+          <div class="error-msg" id="p_len_err">Enter a valid length (> 0)</div>
+        </div>
+        <div>
+          <label for="p_mat">Pipe Material</label>
+          <select id="p_mat">
+            <option value="0.0000015">Steel (new)</option>
+            <option value="0.00085">Cast Iron</option>
+            <option value="0.000005" selected>Copper / PEX</option>
+            <option value="0.000001">PVC / CPVC</option>
+            <option value="0.003">Galvanized Steel</option>
+            <option value="0.01">Concrete</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn" onclick="requestAnimationFrame(()=>calcPressure())">Calculate Pressure Drop</button>
+    </div>
+
+    <!-- Results -->
+    <div class="results" id="results">
+      <div class="section-title" id="res-title">Results</div>
+      <div class="kpi-grid" id="kpi-grid"></div>
+      <div id="res-bars"></div>
+      <div id="res-table-wrap"></div>
+      <div class="copy-wrap">
+        <button class="copy-btn" onclick="copyResults()" id="copyBtn">📋 Copy Results</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+    <h2>How to Use This Pipe Size Calculator</h2>
+    <p>Choose a calculation mode using the tabs: <strong>Flow Rate</strong> (find GPM and pressure drop for a known pipe diameter), <strong>Find Pipe Size</strong> (determine the minimum diameter for a desired flow rate), or <strong>Pressure Drop</strong> (calculate head loss and PSI drop for a given pipe and flow). Enter your values, select the pipe material, and click Calculate. Results update the diagram above automatically.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Getting pipe sizing wrong is one of the most expensive mistakes in residential and commercial plumbing. Undersized pipes create excessive pressure drops — a 1-inch water main might look fine on paper, but at 20 GPM it can generate over 10 PSI of friction loss per 100 feet, starving fixtures and stressing the system. Oversized pipes waste money on material and installation, and in hot water systems they increase wait time and heat loss.</p>
+    <p>HVAC engineers sizing chilled-water loops typically target velocities between 2–6 ft/s to balance friction losses against pump energy costs. Fire suppression designers must meet NFPA 13 flow requirements, where pipe sizing directly affects sprinkler coverage. Even a simple home irrigation system benefits from proper sizing — a ¾-inch supply line can support up to 4 zones at moderate pressure, while pushing 5 zones causes annoying low-pressure issues at heads farther from the source.</p>
+    <p>This calculator uses the <strong>Darcy-Weisbach equation</strong> — the gold standard for friction head loss — combined with the Colebrook-White friction factor approximation, giving results accurate to within 1–2% for turbulent water flow.</p>
+
+    <h2>How It's Calculated</h2>
+    <p>The core relationships are:</p>
+    <ul>
+      <li><strong>Cross-sectional Area:</strong> A = π × (D/2)²</li>
+      <li><strong>Flow Rate:</strong> Q = A × V &nbsp;|&nbsp; Q(GPM) = Q(ft³/s) × 448.83</li>
+      <li><strong>Reynolds Number:</strong> Re = V × D / ν &nbsp;(ν = 1.08×10⁻⁵ ft²/s for water at 60°F)</li>
+      <li><strong>Friction Factor (Swamee-Jain):</strong> f = 0.25 / [log(ε/(3.7D) + 5.74/Re⁰·⁹)]²</li>
+      <li><strong>Darcy-Weisbach Head Loss:</strong> h = f × (L/D) × V²/(2g)</li>
+      <li><strong>Pressure Drop:</strong> ΔP(psi) = h × ρg / 144 &nbsp;→ simplified: h(ft H₂O) / 2.31</li>
+    </ul>
+    <p>Where D = diameter (ft), L = length (ft), V = velocity (ft/s), g = 32.174 ft/s², ε = pipe roughness (ft), ν = kinematic viscosity.</p>
+
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Use inner diameter, not nominal size.</strong> A nominal 2-inch Schedule 40 pipe has an actual inner diameter of 2.067 inches — using the wrong value can skew results by 5–10%.</li>
+      <li><strong>Target velocity for water: 2–5 ft/s.</strong> Below 1 ft/s, sediment can settle. Above 8 ft/s, erosion and noise become significant issues.</li>
+      <li><strong>Add 20–30% for fittings.</strong> This calculator gives straight-pipe friction loss. Elbows, tees, and valves add equivalent pipe length — a rule of thumb is to add 30–50% to your pipe length for fittings.</li>
+      <li><strong>Don't ignore elevation.</strong> Pressure drop from friction is separate from static head. A system pumping 20 feet uphill needs 20 ÷ 2.31 ≈ 8.7 PSI more pressure just for elevation, before friction losses.</li>
+      <li><strong>PVC and copper roughness are similar.</strong> The big differences are between smooth plastics/copper vs. older galvanized or concrete pipe, where friction factors can be 5–10× higher.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What velocity should I target for residential water supply?</summary>
+      <p>For residential cold water, 2–5 ft/s is the recommended range. Hot water recirculation loops are often kept below 3 ft/s to reduce noise and erosion on the copper pipe walls. Most plumbing codes allow up to 8 ft/s as an absolute maximum.</p>
+    </details>
+    <details>
+      <summary>What's the difference between nominal pipe size and actual inner diameter?</summary>
+      <p>Nominal pipe size (NPS) is a label, not a measurement. For example, a ½-inch Schedule 40 PVC pipe has an actual OD of 0.840 inches and an ID of 0.622 inches. Always use the actual inner diameter for flow calculations — check a pipe schedule chart for your material and schedule.</p>
+    </details>
+    <details>
+      <summary>Does this calculator work for gas lines?</summary>
+      <p>No — this tool is designed for water (liquid) flow using Darcy-Weisbach. Gas line sizing involves compressibility, specific gravity corrections, and different pressure standards (AGA equations). Use a dedicated gas pipe sizing chart or calculator for natural gas or propane systems.</p>
+    </details>
+    <details>
+      <summary>How accurate is the Swamee-Jain friction factor approximation?</summary>
+      <p>The Swamee-Jain approximation is accurate to within ±3% of the Colebrook-White equation for Reynolds numbers between 5,000 and 100,000,000 and roughness ratios of 0.000001 to 0.05. For practical engineering calculations in water supply and HVAC, this is more than sufficient precision.</p>
+    </details>
+
+    <h2>Related Tools</h2>
+    <div class="related">
+      <a href="/conduit-fill-calculator/">Conduit Fill Calculator</a>
+      <a href="/excavation-earthwork-volume-calculator/">Excavation & Earthwork Volume Calculator</a>
+      <a href="/roof-truss-span-spacing-calculator/">Truss Span & Spacing Calculator</a>
+      <a href="/rebar-spacing-weight-calculator/">Rebar Spacing & Weight Calculator</a>
+      <a href="/plywood-sheet-goods-cut-optimizer/">Plywood & Sheet Goods Cut Optimizer</a>
+      <a href="/fence-material-calculator/">Fence Material Calculator</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</div>
+
+<footer>
+  <div>
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <div style="margin-top:0.5rem">© 2024 toolwick.com</div>
+</footer>
+
+<script>
+// ---- CONSTANTS ----
+const G = 32.174; // ft/s²
+const NU = 1.08e-5; // kinematic viscosity water at 60°F (ft²/s)
+const RHO = 62.4; // lb/ft³ water
+const GPM_CONV = 448.831; // 1 ft³/s = 448.831 GPM
+
+// Standard pipe sizes (nominal ID inches for Schedule 40)
+const STD_PIPES = [
+  {label:'½" Sch40', id:0.622},
+  {label:'¾" Sch40', id:0.824},
+  {label:'1" Sch40', id:1.049},
+  {label:'1¼" Sch40', id:1.380},
+  {label:'1½" Sch40', id:1.610},
+  {label:'2" Sch40', id:2.067},
+  {label:'2½" Sch40', id:2.469},
+  {label:'3" Sch40', id:3.068},
+  {label:'4" Sch40', id:4.026},
+  {label:'6" Sch40', id:6.065},
+  {label:'8" Sch40', id:7.981},
+  {label:'10" Sch40', id:10.02},
+  {label:'12" Sch40', id:11.938}
+];
+
+// ---- HELPERS ----
+function fmt(n, dec=2){ return isNaN(n)?'—':n.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+function fmt0(n){ return isNaN(n)?'—':Math.round(n).toLocaleString('en-US'); }
+
+function frictionFactor(Re, eps, D_ft){
+  if(Re < 2300) return 64/Re; // laminar
+  // Swamee-Jain approximation
+  const rel = eps/(3.7*D_ft) + 5.74/Math.pow(Re,0.9);
+  return 0.25/(Math.log10(rel)*Math.log10(rel));
+}
+
+function calcHeadLoss(D_in, V_fps, L_ft, eps){
+  const D_ft = D_in/12;
+  const Re = V_fps * D_ft / NU;
+  const f = frictionFactor(Re, eps, D_ft);
+  const h = f * (L_ft/D_ft) * (V_fps*V_fps)/(2*G);
+  const psi = h / 2.307;
+  return {Re, f, h, psi};
+}
+
+function velBadge(v){
+  if(v < 1) return '<span class="status-badge status-warn">Too Slow</span>';
+  if(v <= 5) return '<span class="status-badge status-ok">Good</span>';
+  if(v <= 8) return '<span class="status-badge status-warn">Fast</span>';
+  return '<span class="status-badge status-bad">Too Fast</span>';
+}
+
+function clearErrors(ids){ ids.forEach(id=>{ document.getElementById(id).classList.remove('error'); document.getElementById(id+'_err') && (document.getElementById(id+'_err').classList.remove('show')); }); }
+function showError(inputId){ document.getElementById(inputId).classList.add('error'); document.getElementById(inputId+'_err') && (document.getElementById(inputId+'_err').classList.add('show')); }
+
+function updateDiagram(D_in, vel, gpm, len){
+  document.getElementById('dLabel').textContent = D_in ? 'D = '+fmt(D_in,2)+'"' : 'D = ?';
+  document.getElementById('velLabel').textContent = vel ? 'Velocity = '+fmt(vel,2)+' ft/s' : 'Velocity = ? ft/s';
+  document.getElementById('qLabel').textContent = gpm ? 'Flow Rate = '+fmt(gpm,1)+' GPM' : 'Flow Rate = ? GPM';
+  document.getElementById('lenLabel').textContent = len ? 'Pipe Length = '+fmt0(len)+' ft' : 'Pipe Length = ? ft';
+}
+
+function showResults(html, title){
+  const res = document.getElementById('results');
+  res.classList.remove('show');
+  document.getElementById('res-title').textContent = title||'Results';
+  // inject into appropriate sub-containers handled inside calc functions
+  setTimeout(()=>res.classList.add('show'),10);
+}
+
+let lastResultText = '';
+
+function copyResults(){
+  navigator.clipboard.writeText(lastResultText).then(()=>{
+    const btn = document.getElementById('copyBtn');
+    btn.textContent='✓ Copied!';
+    setTimeout(()=>btn.textContent='📋 Copy Results',2000);
+  }).catch(()=>{
+    const btn = document.getElementById('copyBtn');
+    btn.textContent='Copy failed';
+    setTimeout(()=>btn.textContent='📋 Copy Results',2000);
+  });
+}
+
+// ---- TAB SWITCHING (CSS only, no rebuild) ----
+function switchTab(name){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  // hide results on tab switch
+  document.getElementById('results').classList.remove('show');
+}
+
+// ---- CALC 1: Flow Rate ----
+function calcFlow(){
+  const D = parseFloat(document.getElementById('f_diam').value);
+  const V = parseFloat(document.getElementById('f_vel').value);
+  const L = parseFloat(document.getElementById('f_len').value);
+  const eps = parseFloat(document.getElementById('f_mat').value);
+  clearErrors(['f_diam','f_vel','f_len']);
+  let valid = true;
+  if(!D||D<=0){showError('f_diam');valid=false;}
+  if(!V||V<=0){showError('f_vel');valid=false;}
+  if(!L||L<=0){showError('f_len');valid=false;}
+  if(!valid) return;
+
+  const D_ft = D/12;
+  const A = Math.PI*D_ft*D_ft/4;
+  const Q_cfs = A*V;
+  const Q_gpm = Q_cfs*GPM_CONV;
+  const {Re,f,h,psi} = calcHeadLoss(D,V,L,eps);
+  const psi100 = psi*(100/L);
+
+  updateDiagram(D,V,Q_gpm,L);
+
+  const kpiHTML = `
+    <div class="kpi"><div class="kpi-val">${fmt(Q_gpm,1)}</div><div class="kpi-unit">GPM</div><div class="kpi-label">Flow Rate</div></div>
+    <div class="kpi"><div class="kpi-val">${fmt(V,2)}</div><div class="kpi-unit">ft/s${velBadge(V)}</div><div class="kpi-label">Velocity</div></div>
+    <div class="kpi"><div class="kpi-val">${fmt(psi,2)}</div><div class="kpi-unit">PSI</div><div class="kpi-label">Pressure Drop (total)</div></div>
+    <div class="kpi"><div class="kpi-val">${fmt(psi100,2)}</div><div class="kpi-unit">PSI/100 ft</div><div class="kpi-label">Pressure Drop Rate</div></div>
+  `;
+
+  const tableHTML = `
+    <div class="section-title">Detailed Results</div>
+    <div class="table-wrap"><table>
+      <tr><th>Parameter</th><th class="num">Value</th><th>Unit</th></tr>
+      <tr><td>Inner Diameter</td><td class="num">${fmt(D,3)}</td><td>in</td></tr>
+      <tr><td>Flow Area</td><td class="num">${fmt(A*144,4)}</td><td>in²</td></tr>
+      <tr><td>Flow Rate</td><td class="num">${fmt(Q_gpm,2)}</td><td>GPM</td></tr>
+      <tr><td>Flow Rate</td><td class="num">${fmt(Q_cfs*1000,2)}</td><td>L/s (approx)</td></tr>
+      <tr><td>Velocity</td><td class="num">${fmt(V,3)}</td><td>ft/s</td></tr>
+      <tr><td>Reynolds Number</td><td class="num">${fmt0(Re)}</td><td>—</td></tr>
+      <tr><td>Flow Regime</td><td class="num" colspan="2">${Re<2300?'Laminar':'Turbulent'}</td></tr>
+      <tr><td>Darcy Friction Factor</td><td class="num">${fmt(f,5)}</td><td>—</td></tr>
+      <tr><td>Head Loss</td><td class="num">${fmt(h,3)}</td><td>ft H₂O</td></tr>
+      <tr><td>Pressure Drop</td><td class="num">${fmt(psi,3)}</td><td>PSI</td></tr>
+      <tr><td>Pressure Drop / 100 ft</td><td class="num">${fmt(psi100,3)}</td><td>PSI/100 ft</td></tr>
+    </table></div>
+  `;
+
+  lastResultText = `Pipe Flow Rate Results\n---\nDiameter: ${fmt(D,3)} in\nFlow Rate: ${fmt(Q_gpm,2)} GPM\nVelocity: ${fmt(V,3)} ft/s\nReynolds Number: ${fmt0(Re)}\nFriction Factor: ${fmt(f,5)}\nHead Loss: ${fmt(h,3)} ft\nPressure Drop: ${fmt(psi,3)} PSI\nPressure Drop/100ft: ${fmt(psi100,3)} PSI/100ft`;
+
+  document.getElementById('kpi-grid').innerHTML = kpiHTML;
+  document.getElementById('res-bars').innerHTML = '';
+  document.getElementById('res-table-wrap').innerHTML = tableHTML;
+  showResults('','Flow Rate Results');
+}
+
+// ---- CALC 2: Find Pipe Size ----
+function calcSize(){
+  const Q_gpm = parseFloat(document.getElementById('s_gpm').value);
+  const Vmax = parseFloat(document.getElementById('s_vel').value);
+  const L = parseFloat(document.getElementById('s_len').value);
+  const eps = parseFloat(document.getElementById('s_mat').value);
+  clearErrors(['s_gpm','s_vel','s_len']);
+  let valid = true;
+  if(!Q_gpm||Q_gpm<=0){showError('s_gpm');valid=false;}
+  if(!Vmax||Vmax<=0){showError('s_vel');valid=false;}
+  if(!L||L<=0){showError('s_len');valid=false;}
+  if(!valid) return;
+
+  const Q_cfs = Q_gpm/GPM_CONV;
+  // min area => min diameter from velocity
+  const A_min = Q_cfs/Vmax;
+  const D_min_ft = Math.sqrt(4*A_min/Math.PI);
+  const D_min_in = D_min_ft*12;
+
+  // Find recommended standard pipe
+  let rec = null;
+  for(let p of STD_PIPES){
+    const A = Math.PI*(p.id/12)*(p.id/12)/4;
+    const V = Q_cfs/A;
+    if(p.id >= D_min_in){ rec = {pipe:p, V}; break; }
+  }
+  if(!rec) rec = {pipe:STD_PIPES[STD_PIPES.length-1], V: Q_cfs/(Math.PI*(STD_PIPES[STD_PIPES.length-1].id/12)**2/4)};
+
+  // Table for all sizes
+  let rows = '';
+  let barsHTML = '<div class="section-title">Velocity by Pipe Size</div>';
+  let maxV = 0;
+  const pipeData = STD_PIPES.map(p=>{
+    const D_ft2 = p.id/12;
+    const A2 = Math.PI*D_ft2*D_ft2/4;
+    const V2 = Q_cfs/A2;
+    const {psi} = calcHeadLoss(p.id, V2, L, eps);
+    const psi100 = psi*(100/L);
+    if(V2>maxV) maxV=V2;
+    return {p, V2, psi, psi100};
+  });
+
+  pipeData.forEach(({p,V2,psi,psi100})=>{
+    const highlight = p.id===rec.pipe.id ? 'style="background:#e8f4fd;font-weight:600"' : '';
+    const tag = p.id===rec.pipe.id ? ' ← Recommended' : '';
+    rows += `<tr ${highlight}><td>${p.label}${tag}</td><td class="num">${fmt(p.id,3)}</td><td class="num">${fmt(V2,2)}</td><td class="num">${fmt(psi,2)}</td><td class="num">${fmt(psi100,2)}</td></tr>`;
+    const barPct = Math.min(100, (V2/Math.max(maxV,1))*100);
+    const barColor = V2<=5?'#0077b6':V2<=8?'#f0a500':'#e74c3c';
+    barsHTML += `<div class="bar-row"><div class="bar-label">${p.label}</div><div class="bar-bg"><div class="bar-fill" style="width:${barPct}%;background:${barColor}"></div></div><div class="bar-val">${fmt(V2,2)} ft/s</div></div>`;
+  });
+
+  const kpiHTML = `
+    <div class="kpi"><div class="kpi-val">${fmt(D_min_in,2)}"</div><div class="kpi-unit">in (min)</div><div class="kpi-label">Minimum Diameter</div></div>
+    <div class="kpi"><div class="kpi-val">${rec.pipe.label}</div><div class="kpi-unit"></div><div class="kpi-label">Recommended Standard Size</div></div>
+    <div class="kpi"><div class="kpi-val">${fmt(rec.V,2)}</div><div class="kpi-unit">ft/s${velBadge(rec.V)}</div><div class="kpi-label">Actual Velocity</div></div>
+    <div class="kpi"><div class="kpi-val">${fmt(calcHeadLoss(rec.pipe.id,rec.V,L,eps).psi,2)}</div><div class="kpi-unit">PSI</div><div class="kpi-label">Pressure Drop</div></div>
+  `;
+
+  const tableHTML = `<div class="section-title">All Standard Sizes Comparison</div>
+    <div class="table-wrap"><table>
+      <tr><th>Size</th><th class="num">ID (in)</th><th class="num">Velocity (ft/s)</th><th class="num">ΔP (PSI)</th><th class="num">ΔP/100ft</th></tr>
+      ${rows}
+    </table></div>`;
+
+  updateDiagram(rec.pipe.id, rec.V, Q_gpm, L);
+
+  lastResultText = `Pipe Size Recommendation\n---\nFlow Rate: ${fmt(Q_gpm,2)} GPM\nMin Diameter: ${fmt(D_min_in,3)} in\nRecommended: ${rec.pipe.label} (ID ${fmt(rec.pipe.id,3)}")\nActual Velocity: ${fmt(rec.V,2)} ft/s\nPressure Drop: ${fmt(calcHeadLoss(rec.pipe.id,rec.V,L,eps).psi,2)} PSI`;
+
+  document.getElementById('kpi-grid').innerHTML = kpiHTML;
+  document.getElementById('res-bars').innerHTML = barsHTML;
+  document.getElementById('res-table-wrap').innerHTML = tableHTML;
+  showResults('','Pipe Size Results');
+}
+
+// ---- CALC 3: Pressure Drop ----
+function calcPressure(){
+  const D = parseFloat(document.getElementById('p_diam').value);
+  const Q_gpm = parseFloat(document.getElementById('p_gpm').value);
+  const L = parseFloat(document.getElementById('p_len').value);
+  const eps = parseFloat(document.getElementById('p_mat').value);
+  clearErrors(['p_diam','p_gpm','p_len']);
+  let valid = true;
+  if(!D||D<=0){showError('p_diam');valid=false;}
+  if(!Q_gpm||Q_gpm<=0){showError('p_gpm');valid=false;}
+  if(!L||L<=0){showError('p_len');valid=false;}
+  if(!valid) return;
+
+  const D_ft = D/12;
+  const A = Math.PI*D_ft*D_ft/4;
+  const Q_cfs = Q_gpm/GPM_CONV;
+  const V = Q_cfs/A;
+  const {Re,f,h,psi} = calcHeadLoss(D,V,L,eps);
+  const psi100 = psi*(100/L);
+  const hKPA = h*0.298907; // ft to kPa approx
+
+  updateDiagram(D,V,Q_gpm,L);
+
+  const kpiHTML = `
+    <div class="kpi"><div class="kpi-val">${fmt(psi,2)}</div><div class="kpi-unit">PSI</div><div class="kpi-label">Total Pressure Drop</div></div>
+    <div class="kpi"><div class="kpi-val">${fmt(psi100,2)}</div><div class="kpi-unit">PSI/100 ft</div><div class="kpi-label">Pressure Drop Rate</div></div>
+    <div class="kpi"><div class="kpi-val">${fmt(h,1)}</div><div class="kpi-unit">ft H₂O</div><div class="kpi-label">Head Loss</div></div>
+    <div class="kpi"><div class="kpi-val">${fmt(V,2)}</div><div class="kpi-unit">ft/s${velBadge(V)}</div><div class="kpi-label">Velocity</div></div>
+  `;
+
+  // Breakdown bars
+  const maxPsi = psi;
+  const lossFittings = psi*0.3; // estimated 30% for fittings as indicator
+  let barsHTML = '<div class="section-title">Pressure Loss Breakdown (estimated)</div>';
+  const items = [
+    {label:'Pipe friction', val:psi},
+    {label:'Est. fittings (+30%)', val:lossFittings},
+    {label:'Total estimated', val:psi+lossFittings}
+  ];
+  const bMax = psi+lossFittings;
+  items.forEach(item=>{
+    const pct = Math.min(100,(item.val/bMax)*100);
+    barsHTML += `<div class="bar-row"><div class="bar-label">${item.label}</div><div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div><div class="bar-val">${fmt(item.val,2)} PSI</div></div>`;
+  });
+
+  const tableHTML = `
+    <div class="section-title">Detailed Results</div>
+    <div class="table-wrap"><table>
+      <tr><th>Parameter</th><th class="num">Value</th><th>Unit</th></tr>
+      <tr><td>Pipe Inner Diameter</td><td class="num">${fmt(D,3)}</td><td>in</td></tr>
+      <tr><td>Flow Rate</td><td class="num">${fmt(Q_gpm,2)}</td><td>GPM</td></tr>
+      <tr><td>Flow Velocity</td><td class="num">${fmt(V,3)}</td><td>ft/s</td></tr>
+      <tr><td>Reynolds Number</td><td class="num">${fmt0(Re)}</td><td>—</td></tr>
+      <tr><td>Flow Regime</td><td class="num" colspan="2">${Re<2300?'Laminar':'Turbulent'}</td></tr>
+      <tr><td>Darcy Friction Factor</td><td class="num">${fmt(f,5)}</td><td>—</td></tr>
+      <tr><td>Head Loss</td><td class="num">${fmt(h,3)}</td><td>ft H₂O</td></tr>
+      <tr><td>Pressure Drop</td><td class="num">${fmt(psi,3)}</td><td>PSI</td></tr>
+      <tr><td>Pressure Drop / 100 ft</td><td class="num">${fmt(psi100,3)}</td><td>PSI/100 ft</td></tr>
+      <tr><td>Approx. Head Loss</td><td class="num">${fmt(hKPA,2)}</td><td>kPa</td></tr>
+    </table></div>
+    <div class="info-box">💡 Fittings and valves add friction losses not captured here. Multiply pipe length by 1.3–1.5 to estimate total system losses including fittings.</div>
+  `;
+
+  lastResultText = `Pressure Drop Results\n---\nDiameter: ${fmt(D,3)} in\nFlow Rate: ${fmt(Q_gpm,2)} GPM\nVelocity: ${fmt(V,3)} ft/s\nReynolds Number: ${fmt0(Re)}\nHead Loss: ${fmt(h,3)} ft\nPressure Drop: ${fmt(psi,3)} PSI\nPressure Drop/100ft: ${fmt(psi100,3)} PSI/100ft`;
+
+  document.getElementById('kpi-grid').innerHTML = kpiHTML;
+  document.getElementById('res-bars').innerHTML = barsHTML;
+  document.getElementById('res-table-wrap').innerHTML = tableHTML;
+  showResults('','Pressure Drop Results');
+}
+
+// ---- ENTER KEY SUPPORT ----
+document.addEventListener('keydown', function(e){
+  if(e.key==='Enter'){
+    const active = document.querySelector('.tab-panel.active').id;
+    if(active==='tab-flow') requestAnimationFrame(()=>calcFlow());
+    else if(active==='tab-size') requestAnimationFrame(()=>calcSize());
+    else if(active==='tab-pressure') requestAnimationFrame(()=>calcPressure());
+  }
+});
+</script>
+</body>
+</html>
