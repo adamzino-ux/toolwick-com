@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HVAC Duct Size Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate HVAC duct size by CFM and velocity. Find the right round or rectangular duct dimensions for any airflow requirement. Free, instant results.">
+<link rel="canonical" href="https://toolwick.com/hvac-duct-size-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "HVAC Duct Size Calculator",
+  "url": "https://toolwick.com/hvac-duct-size-calculator/",
+  "description": "Calculate HVAC duct size by CFM and velocity for round and rectangular ducts.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #e0e0e0;padding:12px 16px}
+.nav-inner{max-width:640px;margin:0 auto}
+.nav-inner a{font-weight:600;font-size:1rem;color:#0077b6}
+.container{max-width:640px;margin:0 auto;padding:1.5rem 1rem 3rem}
+h1{font-size:1.6rem;font-weight:700;color:#1a1a2e;margin-bottom:.5rem}
+.subtitle{color:#555;font-size:.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+svg.duct-diagram{width:100%;max-width:560px;height:auto}
+.tabs{display:flex;gap:0;margin-bottom:1.5rem;border:1px solid #ddd;border-radius:6px;overflow:hidden}
+.tab-btn{flex:1;padding:10px 8px;border:none;background:#f8f9fa;cursor:pointer;font-size:.9rem;font-weight:500;color:#555;transition:background .2s,color .2s;min-height:44px}
+.tab-btn.active{background:#0077b6;color:#fff}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.form-group{margin-bottom:1.2rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:5px}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;transition:border-color .2s,box-shadow .2s;min-height:44px}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,.15)}
+input.error,select.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:.8rem;margin-top:4px;display:none}
+.error-msg.show{display:block}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.hint{font-size:.78rem;color:#888;margin-top:3px}
+.btn-primary{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background .2s}
+.btn-primary:hover{background:#006299}
+.results{opacity:0;transition:opacity .3s ease;pointer-events:none}
+.results.show{opacity:1;pointer-events:all}
+.result-hero{text-align:center;padding:1.5rem;background:#f0f8ff;border-radius:8px;margin-bottom:1.5rem;border:1px solid #cce4f5}
+.result-hero .label{font-size:.85rem;color:#555;margin-bottom:.3rem}
+.result-hero .value{font-size:2.4rem;font-weight:700;color:#0077b6;line-height:1.1}
+.result-hero .unit{font-size:1rem;color:#555;margin-top:.3rem}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.metric-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;text-align:center}
+.metric-box .m-label{font-size:.78rem;color:#666;margin-bottom:.3rem}
+.metric-box .m-val{font-size:1.3rem;font-weight:700;color:#1a1a2e}
+.metric-box .m-unit{font-size:.78rem;color:#888}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead th{background:#f0f0f0;padding:9px 10px;text-align:left;font-weight:600;color:#444;border-bottom:2px solid #ddd}
+tbody tr:nth-child(even){background:#fafafa}
+tbody td{padding:8px 10px;border-bottom:1px solid #eee}
+.num{text-align:right}
+.table-wrap{overflow-x:auto;margin-bottom:1rem}
+.copy-btn{background:#f8f9fa;border:1px solid #ddd;color:#444;padding:6px 14px;border-radius:4px;font-size:.8rem;cursor:pointer;transition:background .2s;margin-left:8px}
+.copy-btn:hover{background:#e8e8e8}
+.section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
+.section-hd h3{font-size:1rem;font-weight:600;color:#1a1a2e}
+.ad-slot{min-height:0;margin:0}
+.content-section{margin-top:2.5rem}
+.content-section h2{font-size:1.2rem;font-weight:700;color:#1a1a2e;margin-bottom:.8rem;padding-bottom:.4rem;border-bottom:2px solid #e0e0e0}
+.content-section p{color:#333;margin-bottom:.9rem;font-size:.95rem}
+.content-section ul{margin-left:1.2rem;margin-bottom:.9rem}
+.content-section ul li{margin-bottom:.4rem;font-size:.95rem;color:#333}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:.6rem}
+summary{padding:.8rem 1rem;cursor:pointer;font-weight:500;font-size:.95rem;color:#1a1a2e;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::after{content:'▼';font-size:.75rem;color:#888;transition:transform .2s}
+details[open] summary::after{transform:rotate(180deg)}
+details p{padding:.5rem 1rem 1rem;font-size:.9rem;color:#444}
+.related-tools{background:#f8f9fa;border-radius:8px;padding:1.5rem;margin-top:2rem}
+.related-tools h2{font-size:1rem;font-weight:700;margin-bottom:.8rem;color:#1a1a2e;border:none;padding:0}
+.related-tools ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.related-tools ul li a{font-size:.88rem;color:#0077b6;display:block;padding:6px 8px;background:#fff;border:1px solid #e0e0e0;border-radius:4px;transition:border-color .2s}
+.related-tools ul li a:hover{border-color:#0077b6;text-decoration:none}
+footer{border-top:1px solid #e0e0e0;padding:1.2rem 1rem;text-align:center;font-size:.82rem;color:#888}
+footer a{color:#888;margin:0 8px}
+footer a:hover{color:#0077b6}
+.velocity-bar{margin-top:1rem}
+.bar-label{display:flex;justify-content:space-between;font-size:.78rem;color:#666;margin-bottom:4px}
+.bar-track{background:#e0e0e0;border-radius:99px;height:10px;overflow:hidden}
+.bar-fill{background:#0077b6;height:100%;border-radius:99px;transition:width .4s ease}
+.bar-fill.warn{background:#f39c12}
+.bar-fill.danger{background:#e74c3c}
+.status-badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.78rem;font-weight:600;margin-left:8px}
+.status-ok{background:#d4edda;color:#155724}
+.status-warn{background:#fff3cd;color:#856404}
+.status-bad{background:#f8d7da;color:#721c24}
+@media(max-width:600px){
+  .row-2{grid-template-columns:1fr}
+  .result-grid{grid-template-columns:1fr 1fr}
+  .related-tools ul{grid-template-columns:1fr}
+  h1{font-size:1.35rem}
+  .result-hero .value{font-size:1.9rem}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner"><a href="/">toolwick.com</a></div>
+</nav>
+<div class="container">
+  <h1>HVAC Duct Size Calculator</h1>
+  <p class="subtitle">Calculate the correct duct size (round or rectangular) based on airflow (CFM) and target velocity. Instant, accurate results for any HVAC system.</p>
+
+  <div class="card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg class="duct-diagram" viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" aria-label="Duct size diagram">
+        <!-- Round duct -->
+        <g id="round-diag">
+          <ellipse cx="100" cy="100" rx="60" ry="60" fill="#f0f8ff" stroke="#0077b6" stroke-width="2"/>
+          <ellipse cx="100" cy="100" rx="60" ry="60" fill="none" stroke="#0077b6" stroke-width="2" stroke-dasharray="6,4" transform="rotate(0 100 100)"/>
+          <!-- diameter arrow -->
+          <line x1="40" y1="100" x2="160" y2="100" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arrl)"/>
+          <text id="d-label" x="100" y="90" text-anchor="middle" font-size="13" fill="#1a1a2e" font-weight="600">Ø = ?</text>
+          <text x="100" y="175" text-anchor="middle" font-size="11" fill="#888">Round Duct</text>
+          <!-- flow arrow -->
+          <line x1="175" y1="100" x2="235" y2="100" stroke="#0077b6" stroke-width="2" marker-end="url(#arr2)"/>
+          <text x="205" y="93" text-anchor="middle" font-size="10" fill="#0077b6">CFM</text>
+        </g>
+        <!-- Rectangular duct -->
+        <g id="rect-diag">
+          <rect x="290" y="50" width="200" height="100" rx="4" fill="#f0f8ff" stroke="#0077b6" stroke-width="2"/>
+          <!-- width arrow -->
+          <line x1="290" y1="170" x2="490" y2="170" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arrl)"/>
+          <text id="w-label" x="390" y="185" text-anchor="middle" font-size="13" fill="#1a1a2e" font-weight="600">W = ?</text>
+          <!-- height arrow -->
+          <line x1="510" y1="50" x2="510" y2="150" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arrl)"/>
+          <text id="h-label" x="540" y="107" text-anchor="middle" font-size="13" fill="#1a1a2e" font-weight="600">H = ?</text>
+          <text x="390" y="107" text-anchor="middle" font-size="11" fill="#888">Rectangular Duct</text>
+        </g>
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#0077b6"/>
+          </marker>
+          <marker id="arrl" markerWidth="8" markerHeight="8" refX="0" refY="3" orient="auto">
+            <path d="M6,0 L0,3 L6,6 Z" fill="#0077b6"/>
+          </marker>
+          <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#0077b6"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" onclick="switchTab('round')" role="tab" aria-selected="true">Round Duct</button>
+      <button class="tab-btn" onclick="switchTab('rect')" role="tab" aria-selected="false">Rectangular Duct</button>
+      <button class="tab-btn" onclick="switchTab('compare')" role="tab" aria-selected="false">Size Comparison</button>
+    </div>
+
+    <!-- Round Duct Panel -->
+    <div id="panel-round" class="tab-panel active">
+      <div class="form-group">
+        <label for="cfm_r">Airflow (CFM) <span style="color:#888;font-weight:400">— cubic feet per minute</span></label>
+        <input type="number" id="cfm_r" placeholder="e.g. 400" min="1" max="100000" step="1">
+        <div class="hint">Typical residential supply: 100–800 CFM per room</div>
+        <div class="error-msg" id="err_cfm_r">Please enter a valid CFM value (1–100,000).</div>
+      </div>
+      <div class="form-group">
+        <label for="vel_r">Target Velocity (FPM) <span style="color:#888;font-weight:400">— feet per minute</span></label>
+        <input type="number" id="vel_r" placeholder="e.g. 800" min="50" max="5000" step="50" value="800">
+        <div class="hint">Residential: 600–900 FPM · Commercial: 1,000–1,600 FPM · Max: 2,500 FPM</div>
+        <div class="error-msg" id="err_vel_r">Please enter a velocity between 50 and 5,000 FPM.</div>
+      </div>
+      <button class="btn-primary" onclick="requestAnimationFrame(calcRound)">Calculate Round Duct Size</button>
+    </div>
+
+    <!-- Rect Duct Panel -->
+    <div id="panel-rect" class="tab-panel">
+      <div class="form-group">
+        <label for="cfm_rect">Airflow (CFM)</label>
+        <input type="number" id="cfm_rect" placeholder="e.g. 400" min="1" max="100000" step="1">
+        <div class="error-msg" id="err_cfm_rect">Please enter a valid CFM value (1–100,000).</div>
+      </div>
+      <div class="row-2">
+        <div class="form-group">
+          <label for="vel_rect">Target Velocity (FPM)</label>
+          <input type="number" id="vel_rect" placeholder="e.g. 800" min="50" max="5000" step="50" value="800">
+          <div class="error-msg" id="err_vel_rect">Enter velocity 50–5,000 FPM.</div>
+        </div>
+        <div class="form-group">
+          <label for="aspect_rect">Aspect Ratio (W:H)</label>
+          <select id="aspect_rect">
+            <option value="1">1:1 (Square)</option>
+            <option value="1.5">1.5:1</option>
+            <option value="2" selected>2:1</option>
+            <option value="3">3:1</option>
+            <option value="4">4:1</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" id="custom-aspect-group" style="display:none">
+        <label for="custom_w">Custom Width (inches) — enter one dimension, height auto-calculated</label>
+        <input type="number" id="custom_w" placeholder="e.g. 20" min="1" max="120">
+        <div class="error-msg" id="err_custom_w">Enter a width between 1 and 120 inches.</div>
+      </div>
+      <button class="btn-primary" onclick="requestAnimationFrame(calcRect)">Calculate Rectangular Duct Size</button>
+    </div>
+
+    <!-- Compare Panel -->
+    <div id="panel-compare" class="tab-panel">
+      <div class="row-2">
+        <div class="form-group">
+          <label for="cfm_cmp">Airflow (CFM)</label>
+          <input type="number" id="cfm_cmp" placeholder="e.g. 500" min="1" max="100000" step="1">
+          <div class="error-msg" id="err_cfm_cmp">Enter 1–100,000 CFM.</div>
+        </div>
+        <div class="form-group">
+          <label for="vel_cmp">Velocity (FPM)</label>
+          <input type="number" id="vel_cmp" placeholder="e.g. 800" min="50" max="5000" step="50" value="800">
+          <div class="error-msg" id="err_vel_cmp">Enter 50–5,000 FPM.</div>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="requestAnimationFrame(calcCompare)">Generate Size Comparison Table</button>
+    </div>
+
+    <!-- Results area -->
+    <div class="results" id="results" style="margin-top:1.5rem"></div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+    <h2>How to Use This Duct Size Calculator</h2>
+    <p>Enter your required airflow in CFM (cubic feet per minute) and your target air velocity in FPM (feet per minute). Choose between round duct, rectangular duct (with adjustable aspect ratio), or use the comparison tab to see multiple sizes side by side. Hit Calculate to instantly get the recommended duct dimensions, actual velocity, and an efficiency rating.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Duct sizing is one of the most consequential decisions in HVAC design — and one of the most frequently botched. An undersized duct creates excessive velocity, producing noise, pressure drop, and higher energy bills. An oversized duct wastes money on materials and can cause poor air distribution and comfort complaints.</p>
+    <p>For a typical 2,000 sq ft house, the main trunk duct might carry 1,600–2,000 CFM. Branch ducts to individual rooms typically range from 100 to 600 CFM. A 400 CFM branch duct should be sized to carry air at 700–900 FPM — which works out to about a 10" round duct. Using an 8" round instead would push velocity above 1,100 FPM, creating audible whistling and causing the system to work harder.</p>
+    <p>HVAC contractors, mechanical engineers, building inspectors, and advanced DIYers all use duct sizing calculations on nearly every project. Even a simple bathroom exhaust fan upgrade benefits from proper duct sizing to ensure adequate CFM delivery.</p>
+
+    <h2>How It's Calculated</h2>
+    <p>All duct sizing uses the fundamental airflow equation:</p>
+    <p style="background:#f8f9fa;padding:12px 16px;border-radius:6px;font-family:monospace;font-size:.95rem;border-left:3px solid #0077b6"><strong>CFM = Area (ft²) × Velocity (FPM)</strong></p>
+    <p>Rearranged: <strong>Area = CFM ÷ Velocity</strong></p>
+    <p>For a <strong>round duct</strong>: Area = π × (D/2)² → solve for D: <code>D = 2 × √(CFM ÷ (π × Velocity)) × 12 inches</code></p>
+    <p>For a <strong>rectangular duct</strong>: Area = W × H. Given an aspect ratio R = W/H, then H = √(Area ÷ R) and W = H × R. The <strong>equivalent diameter</strong> (for comparing to round ducts) uses the ASHRAE formula: <code>De = 1.3 × (a×b)^0.625 ÷ (a+b)^0.25</code></p>
+
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Don't size for maximum velocity.</strong> Residential ducts should stay under 900 FPM for supply and 700 FPM for return to keep noise levels acceptable.</li>
+      <li><strong>Round up to standard sizes.</strong> Flex duct comes in 4", 5", 6", 8", 10", 12", 14", and 16" diameters. Always round up to the next standard size, never down.</li>
+      <li><strong>Account for duct friction.</strong> Each 90° elbow adds roughly 10–15 feet of equivalent length. Long duct runs need to be sized for the total equivalent length, not just actual distance.</li>
+      <li><strong>Aspect ratios above 4:1 are inefficient.</strong> A 2:1 ratio is ideal for rectangular ducts — it minimizes surface area relative to cross-sectional area, reducing heat loss and material cost.</li>
+      <li><strong>System static pressure matters.</strong> These calculations give you the correct free-area size. Always verify your blower fan can deliver the required CFM against your system's total static pressure.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What CFM should I use for each room?</summary>
+      <p>A general rule of thumb is 1 CFM per square foot of conditioned space for standard 8-foot ceilings. A 200 sq ft bedroom would need approximately 200 CFM, though a proper Manual J load calculation will give you a more precise number based on insulation, windows, and climate.</p>
+    </details>
+    <details>
+      <summary>What velocity is too loud for residential HVAC?</summary>
+      <p>Above 900 FPM in supply ducts and 700 FPM in return ducts, occupants typically begin to notice airflow noise. For bedrooms and quiet spaces, staying below 700 FPM is recommended. Commercial spaces tolerate up to 1,600 FPM without significant comfort complaints.</p>
+    </details>
+    <details>
+      <summary>How do I convert between round and rectangular duct sizes?</summary>
+      <p>Use the equivalent diameter formula (ASHRAE 2009): De = 1.3 × (a×b)^0.625 ÷ (a+b)^0.25, where a and b are the duct width and height in inches. This gives you a round duct diameter with the same pressure drop characteristics as the rectangular duct — not the same cross-sectional area.</p>
+    </details>
+    <details>
+      <summary>Should I size for the main trunk or branch ducts?</summary>
+      <p>Both. The main trunk carries total system CFM and should be sized at commercial velocities (1,000–1,200 FPM) to keep it compact. Branch ducts carry individual room CFM and should be sized at residential velocities (600–900 FPM) for quiet operation. Trunk-and-branch systems need the trunk to step down in size after each branch takeoff.</p>
+    </details>
+  </div>
+
+  <div class="related-tools">
+    <h2>Related Tools</h2>
+    <ul>
+      <li><a href="/btu-heating-cooling-load-calculator/">BTU Heating &amp; Cooling Load Calculator</a></li>
+      <li><a href="/pipe-sizing-flow-rate-calculator/">Pipe Sizing &amp; Flow Rate Calculator</a></li>
+      <li><a href="/conduit-fill-calculator/">Conduit Fill Calculator</a></li>
+      <li><a href="/excavation-earthwork-volume-calculator/">Excavation &amp; Earthwork Volume Calculator</a></li>
+      <li><a href="/roof-truss-span-spacing-calculator/">Truss Span &amp; Spacing Calculator</a></li>
+      <li><a href="/rebar-spacing-weight-calculator/">Rebar Spacing &amp; Weight Calculator</a></li>
+    </ul>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</div>
+
+<footer>
+  <a href="/about/">About</a>
+  <a href="/privacy/">Privacy</a>
+  <a href="/contact/">Contact</a>
+  <span style="margin-left:8px">© <span id="yr"></span> toolwick.com</span>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Standard round duct sizes (inches)
+const STD_ROUND = [4,5,6,7,8,9,10,11,12,13,14,15,16,18,20,22,24];
+
+// Standard rectangular duct sizes
+const STD_RECT_W = [6,8,10,12,14,16,18,20,22,24,28,30,36,42,48];
+const STD_RECT_H = [4,6,8,10,12,14,16,18,20,24];
+
+function fmt(n, dec=1) {
+  if (!isFinite(n)) return '—';
+  return n.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+}
+function fmtI(n) {
+  return n.toLocaleString('en-US', {maximumFractionDigits: 0});
+}
+
+function velStatus(v) {
+  if (v <= 900) return {cls:'status-ok', txt:'Quiet / Residential', bar:'ok'};
+  if (v <= 1600) return {cls:'status-warn', txt:'Commercial Range', bar:'warn'};
+  return {cls:'status-bad', txt:'Too High — Noisy', bar:'danger'};
+}
+
+function velBar(vel, max=2500) {
+  const pct = Math.min(100, (vel/max)*100);
+  const st = velStatus(vel);
+  return `<div class="velocity-bar">
+    <div class="bar-label"><span>0 FPM</span><span>900</span><span>1,600</span><span>2,500 FPM</span></div>
+    <div class="bar-track"><div class="bar-fill ${st.bar}" style="width:${pct}%"></div></div>
+  </div>`;
+}
+
+// Tab switching
+let currentTab = 'round';
+function switchTab(t) {
+  currentTab = t;
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{b.classList.remove('active');b.setAttribute('aria-selected','false')});
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  const idx = ['round','rect','compare'].indexOf(t);
+  document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+  document.querySelectorAll('.tab-btn')[idx].setAttribute('aria-selected','true');
+  document.getElementById('panel-'+t).classList.add('active');
+  // Show/hide diagram parts
+  const rd = document.getElementById('round-diag');
+  const rectd = document.getElementById('rect-diag');
+  if (t==='round') { rd.style.display=''; rectd.style.display=''; }
+  else if (t==='rect') { rd.style.display='none'; rectd.style.display=''; }
+  else { rd.style.display=''; rectd.style.display=''; }
+  hideResults();
+}
+
+document.getElementById('aspect_rect').addEventListener('change', function(){
+  document.getElementById('custom-aspect-group').style.display = this.value==='custom' ? '' : 'none';
+});
+
+function hideResults() {
+  const r = document.getElementById('results');
+  r.classList.remove('show');
+  r.innerHTML = '';
+}
+
+function showError(id, show) {
+  const el = document.getElementById(id);
+  const inp = el.previousElementSibling.tagName === 'INPUT' || el.previousElementSibling.tagName === 'SELECT'
+    ? el.previousElementSibling : null;
+  el.classList.toggle('show', show);
+  if (inp) inp.classList.toggle('error', show);
+}
+function clearErrors(...ids) { ids.forEach(id => showError(id, false)); }
+
+function calcRound() {
+  clearErrors('err_cfm_r','err_vel_r');
+  const cfm = parseFloat(document.getElementById('cfm_r').value);
+  const vel = parseFloat(document.getElementById('vel_r').value);
+  let ok = true;
+  if (!cfm || cfm < 1 || cfm > 100000) { showError('err_cfm_r', true); ok=false; }
+  if (!vel || vel < 50 || vel > 5000) { showError('err_vel_r', true); ok=false; }
+  if (!ok) return;
+
+  const area_ft2 = cfm / vel;
+  const area_in2 = area_ft2 * 144;
+  const diam_exact = 2 * Math.sqrt(area_in2 / Math.PI);
+  const diam_std = STD_ROUND.find(d => d >= diam_exact) || STD_ROUND[STD_ROUND.length-1];
+  const area_std = Math.PI * Math.pow(diam_std/2, 2);
+  const vel_actual = cfm / (area_std / 144);
+  const st = velStatus(vel_actual);
+  const pBar = Math.min(100, (vel_actual/2500)*100);
+
+  // Update SVG
+  document.getElementById('d-label').textContent = `Ø = ${fmt(diam_std,0)}"`;
+
+  // Build standard size table
+  const rows = STD_ROUND.map(d => {
+    const a = Math.PI * Math.pow(d/2, 2) / 144;
+    const v = cfm / a;
+    const vs = velStatus(v);
+    const isRec = d === diam_std ? ' style="background:#e8f4fd;font-weight:600"' : '';
+    return `<tr${isRec}><td>${d}"</td><td class="num">${fmt(a*144,1)}</td><td class="num">${fmtI(v)}</td><td><span class="status-badge ${vs.cls}">${vs.txt}</span></td></tr>`;
+  }).join('');
+
+  document.getElementById('results').innerHTML = `
+    <div class="result-hero">
+      <div class="label">Recommended Round Duct Diameter</div>
+      <div class="value">${diam_std}"</div>
+      <div class="unit">Standard Size &nbsp;|&nbsp; Exact: ${fmt(diam_exact,2)}" &nbsp;|&nbsp; Actual Velocity: ${fmtI(vel_actual)} FPM
+        <span class="status-badge ${st.cls}">${st.txt}</span>
+      </div>
+    </div>
+    <div class="result-grid">
+      <div class="metric-box"><div class="m-label">Required Area</div><div class="m-val">${fmt(area_in2,1)}</div><div class="m-unit">in²</div></div>
+      <div class="metric-box"><div class="m-label">Standard Area</div><div class="m-val">${fmt(area_std,1)}</div><div class="m-unit">in²</div></div>
+      <div class="metric-box"><div class="m-label">Airflow</div><div class="m-val">${fmtI(cfm)}</div><div class="m-unit">CFM</div></div>
+      <div class="metric-box"><div class="m-label">Actual Velocity</div><div class="m-val">${fmtI(vel_actual)}</div><div class="m-unit">FPM</div></div>
+    </div>
+    ${velBar(vel_actual)}
+    <div class="section-hd" style="margin-top:1.2rem"><h3>All Standard Round Sizes @ ${fmtI(cfm)} CFM</h3>
+      <button class="copy-btn" onclick="copyResults()">Copy</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Diameter</th><th class="num">Area (in²)</th><th class="num">Velocity (FPM)</th><th>Rating</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <p style="font-size:.78rem;color:#888;margin-top:.5rem">★ Highlighted row = recommended size. Sizes in bold blue are within residential comfort range.</p>
+  `;
+  document.getElementById('results').classList.add('show');
+}
+
+function calcRect() {
+  clearErrors('err_cfm_rect','err_vel_rect','err_custom_w');
+  const cfm = parseFloat(document.getElementById('cfm_rect').value);
+  const vel = parseFloat(document.getElementById('vel_rect').value);
+  const aspectSel = document.getElementById('aspect_rect').value;
+  let ok = true;
+  if (!cfm || cfm < 1 || cfm > 100000) { showError('err_cfm_rect', true); ok=false; }
+  if (!vel || vel < 50 || vel > 5000) { showError('err_vel_rect', true); ok=false; }
+
+  let w_exact, h_exact;
+  if (aspectSel === 'custom') {
+    const cw = parseFloat(document.getElementById('custom_w').value);
+    if (!cw || cw < 1 || cw > 120) { showError('err_custom_w', true); ok=false; }
+    if (!ok) return;
+    w_exact = cw;
+    const area_in2 = (cfm / vel) * 144;
+    h_exact = area_in2 / cw;
+  } else {
+    const ratio = parseFloat(aspectSel);
+    if (!ok) return;
+    const area_in2 = (cfm / vel) * 144;
+    h_exact = Math.sqrt(area_in2 / ratio);
+    w_exact = h_exact * ratio;
+  }
+  if (!ok) return;
+
+  // Find standard sizes
+  const area_in2 = (cfm / vel) * 144;
+  // Round up to nearest available
+  const w_std = STD_RECT_W.find(w => w >= w_exact) || STD_RECT_W[STD_RECT_W.length-1];
+  const h_std = STD_RECT_H.find(h => h >= h_exact) || STD_RECT_H[STD_RECT_H.length-1];
+  const area_std = w_std * h_std;
+  const vel_actual = cfm / (area_std / 144);
+  const st = velStatus(vel_actual);
+
+  // Equivalent diameter (ASHRAE)
+  const de = 1.3 * Math.pow(w_std * h_std, 0.625) / Math.pow(w_std + h_std, 0.25);
+
+  // Update SVG
+  document.getElementById('w-label').textContent = `W = ${w_std}"`;
+  document.getElementById('h-label').textContent = `H = ${h_std}"`;
+
+  // Comparison table for different aspect ratios
+  const ratios = [1, 1.5, 2, 3, 4];
+  const cmpRows = ratios.map(r => {
+    const h = Math.sqrt(area_in2 / r);
+    const w = h * r;
+    const hs = STD_RECT_H.find(x => x >= h) || STD_RECT_H[STD_RECT_H.length-1];
+    const ws = STD_RECT_W.find(x => x >= w) || STD_RECT_W[STD_RECT_W.length-1];
+    const as = ws * hs;
+    const va = cfm / (as / 144);
+    const vs = velStatus(va);
+    const perim = 2*(ws+hs);
+    const isSel = Math.abs(r - (aspectSel==='custom' ? w_exact/h_exact : parseFloat(aspectSel))) < 0.01;
+    const rowStyle = isSel ? ' style="background:#e8f4fd;font-weight:600"' : '';
+    return `<tr${rowStyle}><td>${r}:1</td><td>${ws}" × ${hs}"</td><td class="num">${fmtI(va)}</td><td class="num">${perim}"</td><td><span class="status-badge ${vs.cls}">${vs.txt.split(' ')[0]}</span></td></tr>`;
+  }).join('');
+
+  document.getElementById('results').innerHTML = `
+    <div class="result-hero">
+      <div class="label">Recommended Rectangular Duct Size</div>
+      <div class="value">${w_std}" × ${h_std}"</div>
+      <div class="unit">Exact: ${fmt(w_exact,1)}" × ${fmt(h_exact,1)}" &nbsp;|&nbsp; Equiv. Round: ${fmt(de,1)}" &nbsp;|&nbsp;
+        <span class="status-badge ${st.cls}">${st.txt}</span>
+      </div>
+    </div>
+    <div class="result-grid">
+      <div class="metric-box"><div class="m-label">Cross-Section Area</div><div class="m-val">${fmt(area_std,1)}</div><div class="m-unit">in²</div></div>
+      <div class="metric-box"><div class="m-label">Equivalent Diameter</div><div class="m-val">${fmt(de,1)}"</div><div class="m-unit">ASHRAE Method</div></div>
+      <div class="metric-box"><div class="m-label">Airflow</div><div class="m-val">${fmtI(cfm)}</div><div class="m-unit">CFM</div></div>
+      <div class="metric-box"><div class="m-label">Actual Velocity</div><div class="m-val">${fmtI(vel_actual)}</div><div class="m-unit">FPM</div></div>
+    </div>
+    ${velBar(vel_actual)}
+    <div class="section-hd" style="margin-top:1.2rem"><h3>Aspect Ratio Comparison @ ${fmtI(cfm)} CFM</h3>
+      <button class="copy-btn" onclick="copyResults()">Copy</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ratio</th><th>Size (W × H)</th><th class="num">Velocity (FPM)</th><th class="num">Perimeter</th><th>Rating</th></tr></thead>
+        <tbody>${cmpRows}</tbody>
+      </table>
+    </div>
+  `;
+  document.getElementById('results').classList.add('show');
+}
+
+function calcCompare() {
+  clearErrors('err_cfm_cmp','err_vel_cmp');
+  const cfm = parseFloat(document.getElementById('cfm_cmp').value);
+  const vel = parseFloat(document.getElementById('vel_cmp').value);
+  let ok = true;
+  if (!cfm || cfm < 1 || cfm > 100000) { showError('err_cfm_cmp', true); ok=false; }
+  if (!vel || vel < 50 || vel > 5000) { showError('err_vel_cmp', true); ok=false; }
+  if (!ok) return;
+
+  const area_need = (cfm / vel) * 144;
+  const diam_exact = 2 * Math.sqrt(area_need / Math.PI);
+  const diam_std = STD_ROUND.find(d => d >= diam_exact) || STD_ROUND[STD_ROUND.length-1];
+
+  // Round options
+  const roundRows = STD_ROUND.filter(d => {
+    const a = Math.PI * Math.pow(d/2,2);
+    const v = cfm / (a/144);
+    return v > 100 && v < 5000;
+  }).slice(0,12).map(d => {
+    const a = Math.PI * Math.pow(d/2,2);
+    const v = cfm / (a/144);
+    const vs = velStatus(v);
+    const isBest = d === diam_std ? ' style="background:#e8f4fd;font-weight:600"' : '';
+    return `<tr${isBest}><td>Round ${d}"</td><td class="num">${fmt(a,1)}</td><td class="num">${fmtI(v)}</td><td><span class="status-badge ${vs.cls}">${vs.txt}</span></td></tr>`;
+  }).join('');
+
+  // Rect options (2:1 ratio options)
+  const rectOptions = [[8,6],[10,6],[10,8],[12,8],[12,10],[14,10],[16,10],[16,12],[18,12],[20,12],[20,16],[24,16],[24,20],[30,20]];
+  const rectRows = rectOptions.filter(([w,h]) => {
+    const a = w*h;
+    const v = cfm / (a/144);
+    return v > 100 && v < 5000;
+  }).slice(0,10).map(([w,h]) => {
+    const a = w*h;
+    const v = cfm / (a/144);
+    const vs = velStatus(v);
+    const de = 1.3 * Math.pow(a, 0.625) / Math.pow(w+h, 0.25);
+    return `<tr><td>Rect ${w}"×${h}"</td><td class="num">${a}</td><td class="num">${fmtI(v)}</td><td><span class="status-badge ${vs.cls}">${vs.txt}</span></td></tr>`;
+  }).join('');
+
+  document.getElementById('results').innerHTML = `
+    <div class="result-hero">
+      <div class="label">Best Match for ${fmtI(cfm)} CFM @ ${fmtI(vel)} FPM</div>
+      <div class="value">${diam_std}" Round or ${(STD_RECT_W.find(w=>w>=Math.sqrt(area_need*2))||16)}"×${(STD_RECT_H.find(h=>h>=Math.sqrt(area_need/2))||10)}" Rect</div>
+    </div>
+    <div class="section-hd"><h3>Round Duct Options</h3>
+      <button class="copy-btn" onclick="copyResults()">Copy</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Duct Size</th><th class="num">Area (in²)</th><th class="num">Velocity (FPM)</th><th>Rating</th></tr></thead>
+        <tbody>${roundRows}</tbody>
+      </table>
+    </div>
+    <div class="section-hd" style="margin-top:1.2rem"><h3>Rectangular Duct Options (common sizes)</h3></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Duct Size</th><th class="num">Area (in²)</th><th class="num">Velocity (FPM)</th><th>Rating</th></tr></thead>
+        <tbody>${rectRows}</tbody>
+      </table>
+    </div>
+    <p style="font-size:.78rem;color:#888;margin-top:.5rem">★ Highlighted = closest recommended size for your target velocity. All sizes shown are available standard dimensions.</p>
+  `;
+  document.getElementById('results').classList.add('show');
+}
+
+function copyResults() {
+  const r = document.getElementById('results');
+  const text = r.innerText.replace(/\t/g,' ').replace(/\n{3,}/g,'\n\n');
+  const btn = r.querySelector('.copy-btn');
+  navigator.clipboard.writeText(text).then(()=>{
+    if (btn) { btn.textContent='Copied!'; setTimeout(()=>{ btn.textContent='Copy'; }, 2000); }
+  }).catch(()=>{ if (btn) { btn.textContent='Failed'; setTimeout(()=>{ btn.textContent='Copy'; },2000); } });
+}
+
+// Enter key support
+document.querySelectorAll('input').forEach(inp => {
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      requestAnimationFrame(() => {
+        if (currentTab === 'round') calcRound();
+        else if (currentTab === 'rect') calcRect();
+        else calcCompare();
+      });
+    }
+  });
+});
+</script>
+</body>
+</html>
