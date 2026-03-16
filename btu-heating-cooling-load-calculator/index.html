@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BTU Heating & Cooling Load Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate BTU heating and cooling loads for any room size. Enter room dimensions, insulation, climate zone, and get accurate BTU requirements instantly.">
+<link rel="canonical" href="https://toolwick.com/btu-heating-cooling-load-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "BTU Heating & Cooling Load Calculator",
+  "url": "https://toolwick.com/btu-heating-cooling-load-calculator/",
+  "description": "Calculate BTU heating and cooling loads for any room or space based on room dimensions, insulation quality, climate zone, windows, and occupancy.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0.75rem 1.5rem}
+nav .nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center}
+nav .site-name{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+nav .site-name:hover{text-decoration:none;color:#0077b6}
+.container{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;font-weight:700;color:#1a1a2e;margin-bottom:0.5rem}
+.subtitle{color:#555;margin-bottom:1.5rem;font-size:0.95rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
+.section-title{font-size:1rem;font-weight:700;color:#0077b6;margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.04em;font-size:0.8rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-group{margin-bottom:1rem}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:0.4rem}
+input[type=number],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e;transition:border-color 0.2s,box-shadow 0.2s;min-height:44px}
+input[type=number]:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:0.3rem;display:none}
+.error-msg.show{display:block}
+.btn{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background 0.2s}
+.btn:hover{background:#006299}
+.btn-secondary{background:#f0f0f0;color:#1a1a2e;font-size:0.85rem;padding:8px 16px;border-radius:6px;border:none;cursor:pointer;min-height:36px;font-family:inherit}
+.btn-secondary:hover{background:#e0e0e0}
+.results{opacity:0;transition:opacity 0.3s ease;display:none}
+.results.show{opacity:1;display:block}
+.big-number{font-size:2.5rem;font-weight:800;color:#0077b6;line-height:1}
+.big-label{font-size:0.9rem;color:#555;margin-top:0.3rem}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.result-card{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1.25rem;text-align:center}
+.result-card.primary{background:#e8f4fd;border-color:#0077b6}
+.result-card .unit{font-size:0.75rem;color:#888;text-transform:uppercase;margin-top:0.2rem}
+table{width:100%;border-collapse:collapse;font-size:0.9rem}
+th{background:#f0f0f0;padding:10px 12px;text-align:left;font-weight:600;font-size:0.8rem;color:#444;border-bottom:2px solid #ddd}
+td{padding:9px 12px;border-bottom:1px solid #eee}
+tr:nth-child(even) td{background:#fafafa}
+td:last-child,th:last-child{text-align:right}
+.table-wrap{overflow-x:auto}
+.copy-row{display:flex;justify-content:flex-end;margin-top:0.75rem}
+.copy-btn{background:transparent;border:1px solid #ddd;color:#555;padding:6px 14px;border-radius:4px;cursor:pointer;font-size:0.8rem;font-family:inherit;transition:all 0.2s}
+.copy-btn:hover{border-color:#0077b6;color:#0077b6}
+.bar-wrap{margin:0.5rem 0}
+.bar-label{font-size:0.78rem;color:#555;margin-bottom:0.2rem;display:flex;justify-content:space-between}
+.bar-track{background:#e0e0e0;border-radius:4px;height:10px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;background:#0077b6;transition:width 0.5s ease}
+.bar-fill.warm{background:#e07b39}
+.svg-wrap{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1rem;margin-bottom:1.5rem;text-align:center}
+.svg-wrap svg{max-width:100%;height:auto}
+h2{font-size:1.2rem;font-weight:700;color:#1a1a2e;margin:2rem 0 0.75rem}
+.content-section{margin-bottom:2rem}
+.content-section p{margin-bottom:0.75rem;color:#333}
+.content-section ul{padding-left:1.4rem}
+.content-section li{margin-bottom:0.4rem;color:#333}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:0.75rem;overflow:hidden}
+summary{padding:0.9rem 1rem;cursor:pointer;font-weight:600;font-size:0.95rem;background:#f8f9fa;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:44px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';font-size:1.2rem;color:#0077b6}
+details[open] summary::after{content:'−'}
+details p{padding:1rem;font-size:0.9rem;color:#333;border-top:1px solid #e0e0e0}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-top:0.75rem}
+.related-link{display:block;padding:0.75rem 1rem;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;font-size:0.88rem;color:#0077b6;transition:background 0.2s}
+.related-link:hover{background:#e8f4fd;text-decoration:none}
+.ad-slot{min-height:0;margin:0}
+footer{background:#f8f9fa;border-top:1px solid #e0e0e0;padding:1.5rem;margin-top:2rem}
+footer .foot-inner{max-width:640px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;font-size:0.85rem;color:#666}
+footer a{color:#555}
+footer a:hover{color:#0077b6}
+.tab-row{display:flex;gap:0.5rem;margin-bottom:1.5rem;border-bottom:2px solid #e0e0e0;padding-bottom:0}
+.tab-btn{padding:10px 20px;border:none;background:none;cursor:pointer;font-size:0.9rem;font-weight:600;color:#888;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.2s;font-family:inherit;min-height:44px}
+.tab-btn.active{color:#0077b6;border-bottom-color:#0077b6}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+.divider{border:none;border-top:1px solid #e0e0e0;margin:1.5rem 0}
+.note{background:#fffbea;border:1px solid #f0d060;border-radius:6px;padding:0.75rem 1rem;font-size:0.85rem;color:#664d00;margin-bottom:1rem}
+@media(max-width:640px){
+  .form-row{grid-template-columns:1fr}
+  .result-grid{grid-template-columns:1fr}
+  .related-grid{grid-template-columns:1fr}
+  h1{font-size:1.35rem}
+  .big-number{font-size:2rem}
+  .card{padding:1.25rem}
+  footer .foot-inner{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="site-name">⚙️ toolwick.com</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>BTU Heating &amp; Cooling Load Calculator</h1>
+  <p class="subtitle">Estimate the heating and cooling BTU requirements for any room or space based on dimensions, insulation, climate, and occupancy.</p>
+
+  <!-- SVG Diagram -->
+  <div class="svg-wrap">
+    <svg id="roomDiagram" viewBox="0 0 580 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Room BTU load diagram">
+      <!-- Room outline -->
+      <rect x="60" y="40" width="280" height="160" fill="#f0f8ff" stroke="#0077b6" stroke-width="2.5"/>
+      <!-- Window on top wall -->
+      <rect x="140" y="40" width="60" height="8" fill="#b3d9f5" stroke="#0077b6" stroke-width="1.5"/>
+      <text x="170" y="32" text-anchor="middle" font-size="10" fill="#0077b6">Window</text>
+      <!-- Door on right wall -->
+      <rect x="336" y="130" width="4" height="40" fill="#c8a96e" stroke="#888" stroke-width="1"/>
+      <text x="358" y="155" font-size="10" fill="#888">Door</text>
+      <!-- Width arrow -->
+      <line x1="60" y1="220" x2="340" y2="220" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arrow)" marker-start="url(#arrowR)"/>
+      <text id="lblWidth" x="200" y="235" text-anchor="middle" font-size="11" fill="#1a1a2e">Width: — ft</text>
+      <!-- Height arrow -->
+      <line x1="20" y1="40" x2="20" y2="200" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arrow)" marker-start="url(#arrowR)"/>
+      <text id="lblLength" x="14" y="125" text-anchor="middle" font-size="11" fill="#1a1a2e" transform="rotate(-90,14,125)">Length: — ft</text>
+      <!-- Ceiling height indicator -->
+      <line x1="380" y1="40" x2="380" y2="200" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowG)" marker-start="url(#arrowGR)"/>
+      <text id="lblCeiling" x="400" y="125" font-size="11" fill="#888">Ceiling: — ft</text>
+      <!-- Sun rays for cooling -->
+      <circle cx="530" cy="60" r="20" fill="#ffe066" stroke="#f0c040" stroke-width="1.5"/>
+      <line x1="530" y1="30" x2="530" y2="18" stroke="#f0c040" stroke-width="2"/>
+      <line x1="530" y1="90" x2="530" y2="102" stroke="#f0c040" stroke-width="2"/>
+      <line x1="500" y1="60" x2="488" y2="60" stroke="#f0c040" stroke-width="2"/>
+      <line x1="560" y1="60" x2="572" y2="60" stroke="#f0c040" stroke-width="2"/>
+      <line x1="509" y1="39" x2="500" y2="30" stroke="#f0c040" stroke-width="2"/>
+      <line x1="551" y1="81" x2="560" y2="90" stroke="#f0c040" stroke-width="2"/>
+      <!-- Floor area label -->
+      <text id="lblArea" x="200" y="125" text-anchor="middle" font-size="13" fill="#0077b6" font-weight="600">Floor Area: — sq ft</text>
+      <text id="lblVolume" x="200" y="143" text-anchor="middle" font-size="11" fill="#555">Volume: — cu ft</text>
+      <!-- Arrows defs -->
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#0077b6"/>
+        </marker>
+        <marker id="arrowR" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse">
+          <path d="M0,0 L0,6 L8,3 z" fill="#0077b6"/>
+        </marker>
+        <marker id="arrowG" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#aaa"/>
+        </marker>
+        <marker id="arrowGR" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse">
+          <path d="M0,0 L0,6 L8,3 z" fill="#aaa"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="card">
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('single')">Single Room</button>
+      <button class="tab-btn" onclick="switchTab('multi')">Multi-Room</button>
+    </div>
+
+    <!-- Single Room Tab -->
+    <div id="tab-single" class="tab-pane active">
+      <div class="section-title">Room Dimensions</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="roomLength">Room Length (ft)</label>
+          <input type="number" id="roomLength" placeholder="e.g. 16" min="1" max="500" step="0.1">
+          <div class="error-msg" id="err-length">Enter a valid length (1–500 ft)</div>
+        </div>
+        <div class="form-group">
+          <label for="roomWidth">Room Width (ft)</label>
+          <input type="number" id="roomWidth" placeholder="e.g. 14" min="1" max="500" step="0.1">
+          <div class="error-msg" id="err-width">Enter a valid width (1–500 ft)</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="ceilHeight">Ceiling Height (ft)</label>
+          <input type="number" id="ceilHeight" placeholder="e.g. 9" min="6" max="30" step="0.5" value="9">
+        </div>
+        <div class="form-group">
+          <label for="numWindows">Number of Windows</label>
+          <input type="number" id="numWindows" placeholder="e.g. 2" min="0" max="20" step="1" value="2">
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top:0.5rem">Room & Climate</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="insulation">Insulation Quality</label>
+          <select id="insulation">
+            <option value="poor">Poor (old/drafty)</option>
+            <option value="average" selected>Average (standard)</option>
+            <option value="good">Good (well-insulated)</option>
+            <option value="excellent">Excellent (new build)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="climate">Climate Zone</label>
+          <select id="climate">
+            <option value="hot">Hot (Miami, Phoenix)</option>
+            <option value="warm">Warm (Atlanta, Dallas)</option>
+            <option value="mixed" selected>Mixed (Kansas City, Denver)</option>
+            <option value="cold">Cold (Chicago, Minneapolis)</option>
+            <option value="veryCold">Very Cold (Anchorage, Duluth)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="sunExposure">Sun Exposure</label>
+          <select id="sunExposure">
+            <option value="shaded">Shaded / North-facing</option>
+            <option value="average" selected>Average / Mixed</option>
+            <option value="sunny">Sunny / South-facing</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="occupants">Number of Occupants</label>
+          <input type="number" id="occupants" placeholder="e.g. 2" min="0" max="50" step="1" value="2">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="roomType">Room Type</label>
+        <select id="roomType">
+          <option value="bedroom">Bedroom</option>
+          <option value="living" selected>Living Room / Family Room</option>
+          <option value="kitchen">Kitchen</option>
+          <option value="office">Home Office</option>
+          <option value="garage">Garage</option>
+          <option value="basement">Basement</option>
+        </select>
+      </div>
+
+      <button class="btn" id="calcBtn">Calculate BTU Load</button>
+    </div>
+
+    <!-- Multi-Room Tab -->
+    <div id="tab-multi" class="tab-pane">
+      <div class="note">Add multiple rooms to calculate a combined whole-home load estimate.</div>
+      <div id="multiRooms">
+        <div class="multi-room-row" data-idx="0" style="background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;margin-bottom:0.75rem">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
+            <strong style="font-size:0.9rem">Room 1</strong>
+            <button class="btn-secondary" onclick="removeRoom(0)" style="color:#e74c3c;display:none">Remove</button>
+          </div>
+          <div class="form-row">
+            <div class="form-group" style="margin-bottom:0">
+              <label>Length (ft)</label>
+              <input type="number" class="mr-len" placeholder="16" min="1" max="500" step="0.1">
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label>Width (ft)</label>
+              <input type="number" class="mr-wid" placeholder="14" min="1" max="500" step="0.1">
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn-secondary" onclick="addRoom()" style="margin-bottom:1rem;width:100%;min-height:44px">+ Add Another Room</button>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="mInsulation">Insulation Quality</label>
+          <select id="mInsulation">
+            <option value="poor">Poor</option>
+            <option value="average" selected>Average</option>
+            <option value="good">Good</option>
+            <option value="excellent">Excellent</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="mClimate">Climate Zone</label>
+          <select id="mClimate">
+            <option value="hot">Hot</option>
+            <option value="warm">Warm</option>
+            <option value="mixed" selected>Mixed</option>
+            <option value="cold">Cold</option>
+            <option value="veryCold">Very Cold</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn" id="calcMultiBtn">Calculate Combined Load</button>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results" id="results">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem">
+        <div>
+          <div class="section-title">Your BTU Results</div>
+          <div class="big-number" id="mainBtu">—</div>
+          <div class="big-label" id="mainBtuLabel">BTU/hr Cooling Load</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:0.8rem;color:#888;margin-bottom:0.3rem">Tonnage</div>
+          <div style="font-size:1.8rem;font-weight:800;color:#1a1a2e" id="mainTons">—</div>
+          <div style="font-size:0.75rem;color:#888">tons of cooling</div>
+        </div>
+      </div>
+
+      <div class="result-grid">
+        <div class="result-card primary">
+          <div style="font-size:0.75rem;color:#0077b6;font-weight:600;text-transform:uppercase">Cooling</div>
+          <div style="font-size:1.5rem;font-weight:800;color:#0077b6" id="coolingBtu">—</div>
+          <div class="unit">BTU/hr</div>
+        </div>
+        <div class="result-card" style="background:#fff4ee;border-color:#e07b39">
+          <div style="font-size:0.75rem;color:#e07b39;font-weight:600;text-transform:uppercase">Heating</div>
+          <div style="font-size:1.5rem;font-weight:800;color:#e07b39" id="heatingBtu">—</div>
+          <div class="unit">BTU/hr</div>
+        </div>
+      </div>
+
+      <div class="section-title">Load Breakdown</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Load Factor</th><th>Cooling BTU</th><th>Heating BTU</th></tr>
+          </thead>
+          <tbody id="breakdownBody"></tbody>
+        </table>
+      </div>
+
+      <hr class="divider">
+      <div class="section-title">Visual Load Distribution (Cooling)</div>
+      <div id="barCharts"></div>
+
+      <hr class="divider">
+      <div class="section-title">Recommended Equipment Size</div>
+      <div id="equipRec"></div>
+
+      <div class="copy-row">
+        <button class="copy-btn" id="copyBtn" onclick="copyResults()">📋 Copy Results</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+    <h2>How to Use This BTU Calculator</h2>
+    <p>Enter your room's length and width in feet, ceiling height, the number of windows, and select your insulation quality, climate zone, sun exposure, and number of occupants. Click <strong>Calculate BTU Load</strong> and the tool instantly shows your cooling and heating requirements in BTU/hr, plus equipment tonnage and a full breakdown by load factor.</p>
+    <p>Use the <strong>Multi-Room</strong> tab to add several rooms and estimate a whole-home or commercial HVAC system size. Adjust insulation and climate settings to model different scenarios.</p>
+  </div>
+
+  <div class="content-section">
+    <h2>Why This Matters</h2>
+    <p>Choosing the wrong size HVAC unit is one of the most expensive mistakes homeowners make. An undersized 1.5-ton unit trying to cool a 600 sq ft room in Phoenix will run constantly, jack up electricity bills, and fail prematurely. An oversized 5-ton system in a 900 sq ft Minneapolis apartment will short-cycle — cooling air so fast the system never dehumidifies properly, leaving you cold but clammy.</p>
+    <p>Industry rule of thumb gives you 20 BTU per square foot — but that's wildly inaccurate for real-world conditions. A south-facing Florida sunroom needs 50+ BTU/sq ft. A well-insulated Minnesota bedroom might need only 15 BTU/sq ft for cooling but 40 BTU/sq ft for heating. This calculator adjusts for climate zone (heating degree days), insulation quality, solar gain from sun exposure, occupant heat load (each person generates ~250 BTU/hr at rest), and kitchen appliance loads.</p>
+    <p>HVAC contractors use Manual J load calculations for this exact purpose. This tool gives you a solid ballpark before calling a contractor — so you walk in knowing whether that 3-ton quote makes sense or if you're being upsold.</p>
+  </div>
+
+  <div class="content-section">
+    <h2>How It's Calculated</h2>
+    <p>The base load starts with floor area and ceiling height to get room volume, then applies BTU-per-square-foot factors adjusted by climate and insulation:</p>
+    <p><strong>Base Cooling Load = Floor Area × Base BTU/sq ft × Insulation Factor × Climate Factor</strong></p>
+    <p><strong>Window Load = Number of Windows × Avg Window Area × Solar Heat Gain × Sun Factor</strong></p>
+    <p><strong>Occupant Load = Occupants × 250 BTU/hr</strong></p>
+    <p><strong>Total Cooling BTU = Base + Window + Occupant + Room-Type Appliance Load</strong></p>
+    <p>Heating load uses a similar method but with heating degree-day factors. Climate multipliers range from 0.7× (hot climates need less heating) to 1.6× (very cold climates). Insulation multipliers range from 1.3× (poor) to 0.75× (excellent). Tonnage is derived by dividing BTU/hr by 12,000 (1 ton = 12,000 BTU/hr).</p>
+    <p>These values align with ASHRAE residential guidelines and Manual J simplified methods for preliminary sizing.</p>
+  </div>
+
+  <div class="content-section">
+    <h2>Tips &amp; Common Mistakes</h2>
+    <ul>
+      <li><strong>Don't ignore insulation:</strong> Upgrading from poor to good insulation can cut your BTU requirement by 35–40%, saving hundreds per year in energy costs.</li>
+      <li><strong>Account for climate:</strong> The same 400 sq ft room needs ~8,000 BTU cooling in San Francisco but ~14,000 BTU in Houston.</li>
+      <li><strong>Kitchens run hot:</strong> Stoves, ovens, and refrigerators add 1,000–4,000 BTU/hr of heat. Always size kitchen AC higher than living areas of equal square footage.</li>
+      <li><strong>Don't forget basement conditions:</strong> Basements often have stable temperatures. Oversizing a basement unit leads to moisture problems from short-cycling.</li>
+      <li><strong>Always get a Manual J:</strong> For new construction or full system replacement, ask your HVAC contractor for a full Manual J load calculation — this tool gives you a solid estimate, not a certified engineering report.</li>
+    </ul>
+  </div>
+
+  <div class="content-section">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What does BTU/hr actually mean?</summary>
+      <p>BTU stands for British Thermal Unit — the energy required to raise 1 pound of water by 1°F. In HVAC, BTU/hr (often shortened to BTU) measures how fast a heating or cooling system adds or removes heat. A 12,000 BTU/hr air conditioner removes 12,000 BTUs of heat energy from your space every hour.</p>
+    </details>
+    <details>
+      <summary>How many BTUs per square foot is standard?</summary>
+      <p>A commonly cited figure is 20 BTU per square foot for cooling — so a 500 sq ft room would need a 10,000 BTU unit. However, this ignores climate, ceiling height, windows, and insulation. In a hot, sunny climate with poor insulation, you might need 35–45 BTU/sq ft. In a cool climate with excellent insulation, 12–15 BTU/sq ft may suffice.</p>
+    </details>
+    <details>
+      <summary>What size AC unit do I need for 1,000 sq ft?</summary>
+      <p>At the 20 BTU/sq ft baseline, a 1,000 sq ft space needs roughly 20,000 BTU — that's a 1.5-ton to 2-ton unit. But adjust for your climate: in Phoenix or Miami, lean toward 2.5 tons; in Seattle or Denver with good insulation, 1.5 tons may be sufficient. This calculator will give you a personalized number.</p>
+    </details>
+    <details>
+      <summary>Is a bigger HVAC unit always better?</summary>
+      <p>No — this is a common and costly mistake. Oversized units short-cycle: they blast cold air quickly, then shut off before completing a full humidity-removal cycle. This leaves rooms feeling clammy and humid even at the right temperature. It also stresses components, reducing equipment lifespan. Proper sizing is critical for both comfort and efficiency.</p>
+    </details>
+  </div>
+
+  <div class="content-section">
+    <h2>Related Tools</h2>
+    <div class="related-grid">
+      <a href="/conduit-fill-calculator/" class="related-link">⚡ Conduit Fill Calculator</a>
+      <a href="/excavation-earthwork-volume-calculator/" class="related-link">🪣 Excavation &amp; Earthwork Volume Calculator</a>
+      <a href="/roof-truss-span-spacing-calculator/" class="related-link">🏠 Truss Span &amp; Spacing Calculator</a>
+      <a href="/pipe-sizing-flow-rate-calculator/" class="related-link">🔧 Pipe Sizing &amp; Flow Rate Calculator</a>
+      <a href="/rebar-spacing-weight-calculator/" class="related-link">🔩 Rebar Spacing &amp; Weight Calculator</a>
+      <a href="/plywood-sheet-goods-cut-optimizer/" class="related-link">🪵 Plywood &amp; Sheet Goods Cut Optimizer</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</div>
+
+<footer>
+  <div class="foot-inner">
+    <span>© <span id="yr"></span> toolwick.com</span>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Tab switching
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
+    b.classList.toggle('active', (i===0&&name==='single')||(i===1&&name==='multi'));
+  });
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.getElementById('results').classList.remove('show');
+}
+
+// Multi-room management
+let roomCount = 1;
+function addRoom() {
+  const idx = roomCount++;
+  const container = document.getElementById('multiRooms');
+  const div = document.createElement('div');
+  div.className = 'multi-room-row';
+  div.setAttribute('data-idx', idx);
+  div.style.cssText = 'background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;margin-bottom:0.75rem';
+  div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem"><strong style="font-size:0.9rem">Room ${idx+1}</strong><button class="btn-secondary" onclick="removeRoom(${idx})" style="color:#e74c3c">Remove</button></div><div class="form-row"><div class="form-group" style="margin-bottom:0"><label>Length (ft)</label><input type="number" class="mr-len" placeholder="16" min="1" max="500" step="0.1"></div><div class="form-group" style="margin-bottom:0"><label>Width (ft)</label><input type="number" class="mr-wid" placeholder="14" min="1" max="500" step="0.1"></div></div>`;
+  container.appendChild(div);
+  updateRemoveBtns();
+}
+function removeRoom(idx) {
+  const el = document.querySelector(`.multi-room-row[data-idx="${idx}"]`);
+  if(el) el.remove();
+  updateRemoveBtns();
+}
+function updateRemoveBtns() {
+  const rows = document.querySelectorAll('.multi-room-row');
+  rows.forEach(r=>{
+    const btn = r.querySelector('button');
+    if(btn) btn.style.display = rows.length > 1 ? 'inline-block' : 'none';
+  });
+}
+
+// Factors
+const insulationCoolFactor = {poor:1.3, average:1.0, good:0.82, excellent:0.72};
+const insulationHeatFactor  = {poor:1.4, average:1.0, good:0.80, excellent:0.68};
+const climateCoolFactor  = {hot:1.35, warm:1.15, mixed:1.0, cold:0.80, veryCold:0.65};
+const climateHeatFactor  = {hot:0.60, warm:0.80, mixed:1.0, cold:1.30, veryCold:1.65};
+const sunCoolFactor = {shaded:0.85, average:1.0, sunny:1.20};
+const sunHeatFactor = {shaded:1.10, average:1.0, sunny:0.92};
+const roomTypeCool  = {bedroom:0, living:500, kitchen:3000, office:800, garage:1500, basement:-500};
+const roomTypeHeat  = {bedroom:0, living:0, kitchen:-500, office:0, garage:1000, basement:-800};
+const BASE_COOL_BTU_SQFT = 22;
+const BASE_HEAT_BTU_SQFT = 30;
+const WIN_COOL_BTU = 1500;
+const WIN_HEAT_BTU = 900;
+const OCC_COOL_BTU = 250;
+const OCC_HEAT_BTU = -100;
+
+function fmt(n){return Math.round(n).toLocaleString('en-US');}
+
+function calcRoom(len, wid, ceil, windows, insul, climate, sun, occupants, type) {
+  const area = len * wid;
+  const volume = area * ceil;
+  // Base loads
+  const baseCool = area * BASE_COOL_BTU_SQFT * insulationCoolFactor[insul] * climateCoolFactor[climate];
+  const baseHeat = area * BASE_HEAT_BTU_SQFT * insulationHeatFactor[insul] * climateHeatFactor[climate];
+  // Window loads
+  const winCool = windows * WIN_COOL_BTU * sunCoolFactor[sun] * climateCoolFactor[climate];
+  const winHeat = windows * WIN_HEAT_BTU * sunHeatFactor[sun] * climateHeatFactor[climate];
+  // Volume adjustment (ceiling height >8 adds load)
+  const volAdj = ceil > 8 ? (ceil - 8) * area * 2.5 : 0;
+  // Occupant loads
+  const occCool = occupants * OCC_COOL_BTU;
+  const occHeat = Math.max(0, occupants * OCC_HEAT_BTU * -1); // occupants reduce heating need
+  // Room type adder
+  const rtCool = roomTypeCool[type] || 0;
+  const rtHeat = roomTypeHeat[type] || 0;
+  // Totals
+  const totalCool = Math.max(3000, baseCool + winCool + volAdj + occCool + rtCool);
+  const totalHeat = Math.max(3000, baseHeat + winHeat + volAdj - occHeat + rtHeat);
+  return {
+    area, volume,
+    baseCool, baseHeat, winCool, winHeat, volAdj, occCool, occHeat, rtCool, rtHeat,
+    totalCool, totalHeat
+  };
+}
+
+function formatTons(btu) {
+  return (btu / 12000).toFixed(1);
+}
+
+function nearestTon(btu) {
+  const tons = btu / 12000;
+  const sizes = [0.5,0.75,1,1.25,1.5,2,2.5,3,3.5,4,4.5,5,6,7,8,10];
+  let closest = sizes[sizes.length-1];
+  for(let s of sizes){ if(s >= tons){ closest=s; break; } }
+  return closest;
+}
+
+function validate() {
+  let ok = true;
+  const len = parseFloat(document.getElementById('roomLength').value);
+  const wid = parseFloat(document.getElementById('roomWidth').value);
+  const lenErr = document.getElementById('err-length');
+  const widErr = document.getElementById('err-width');
+  const lenInput = document.getElementById('roomLength');
+  const widInput = document.getElementById('roomWidth');
+  if(!len || len < 1 || len > 500) {
+    lenInput.classList.add('error'); lenErr.classList.add('show'); ok=false;
+  } else { lenInput.classList.remove('error'); lenErr.classList.remove('show'); }
+  if(!wid || wid < 1 || wid > 500) {
+    widInput.classList.add('error'); widErr.classList.add('show'); ok=false;
+  } else { widInput.classList.remove('error'); widErr.classList.remove('show'); }
+  return ok;
+}
+
+function calculate() {
+  if(!validate()) return;
+  const len = parseFloat(document.getElementById('roomLength').value);
+  const wid = parseFloat(document.getElementById('roomWidth').value);
+  const ceil = parseFloat(document.getElementById('ceilHeight').value) || 9;
+  const windows = parseInt(document.getElementById('numWindows').value) || 0;
+  const insul = document.getElementById('insulation').value;
+  const climate = document.getElementById('climate').value;
+  const sun = document.getElementById('sunExposure').value;
+  const occupants = parseInt(document.getElementById('occupants').value) || 0;
+  const type = document.getElementById('roomType').value;
+
+  const r = calcRoom(len, wid, ceil, windows, insul, climate, sun, occupants, type);
+  updateDiagram(len, wid, ceil, r.area, r.volume);
+
+  const breakdownRows = [
+    ['Base Room Load', r.baseCool, r.baseHeat],
+    ['Window Load', r.winCool, r.winHeat],
+    ['Ceiling Height Adjustment', r.volAdj, r.volAdj],
+    ['Occupant Load', r.occCool, -r.occHeat],
+    ['Room Type Factor', r.rtCool, r.rtHeat],
+    ['<strong>Total</strong>', r.totalCool, r.totalHeat],
+  ];
+
+  const factors = [
+    {label:'Base Room Load', val:r.baseCool},
+    {label:'Windows', val:r.winCool},
+    {label:'Height Adj.', val:r.volAdj},
+    {label:'Occupants', val:r.occCool},
+    {label:'Room Type', val:Math.max(0,r.rtCool)},
+  ];
+  const maxBar = r.totalCool;
+
+  const recTon = nearestTon(r.totalCool);
+  const recHeatTon = nearestTon(r.totalHeat);
+
+  let bHTML = '';
+  for(const row of breakdownRows){
+    const c = typeof row[1]==='number' ? fmt(row[1]) : row[1];
+    const h = typeof row[2]==='number' ? fmt(row[2]) : row[2];
+    bHTML += `<tr><td>${row[0]}</td><td>${c}</td><td>${h}</td></tr>`;
+  }
+
+  let barsHTML = '';
+  for(const f of factors){
+    const pct = Math.round(Math.max(0,f.val)/maxBar*100);
+    barsHTML += `<div class="bar-wrap"><div class="bar-label"><span>${f.label}</span><span>${fmt(Math.max(0,f.val))} BTU</span></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div></div>`;
+  }
+
+  const equipHTML = `
+    <div class="table-wrap"><table>
+    <thead><tr><th>Purpose</th><th>BTU/hr</th><th>Tons</th><th>Recommended Size</th></tr></thead>
+    <tbody>
+    <tr><td>Cooling (AC)</td><td>${fmt(r.totalCool)}</td><td>${formatTons(r.totalCool)}</td><td><strong>${recTon} ton</strong></td></tr>
+    <tr><td>Heating</td><td>${fmt(r.totalHeat)}</td><td>${formatTons(r.totalHeat)}</td><td><strong>${recHeatTon} ton equiv.</strong></td></tr>
+    </tbody></table></div>
+    <p style="font-size:0.82rem;color:#666;margin-top:0.5rem">Rounded up to nearest standard equipment size. Confirm with a licensed HVAC contractor using Manual J.</p>`;
+
+  requestAnimationFrame(() => {
+    document.getElementById('mainBtu').textContent = fmt(r.totalCool);
+    document.getElementById('mainBtuLabel').textContent = 'BTU/hr Cooling Load';
+    document.getElementById('mainTons').textContent = formatTons(r.totalCool);
+    document.getElementById('coolingBtu').textContent = fmt(r.totalCool);
+    document.getElementById('heatingBtu').textContent = fmt(r.totalHeat);
+    document.getElementById('breakdownBody').innerHTML = bHTML;
+    document.getElementById('barCharts').innerHTML = barsHTML;
+    document.getElementById('equipRec').innerHTML = equipHTML;
+    const res = document.getElementById('results');
+    res.style.display = 'block';
+    requestAnimationFrame(() => { res.classList.add('show'); });
+    res.scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
+}
+
+function calculateMulti() {
+  const rows = document.querySelectorAll('.multi-room-row');
+  const insul = document.getElementById('mInsulation').value;
+  const climate = document.getElementById('mClimate').value;
+  let totalCool = 0, totalHeat = 0, totalArea = 0;
+  let valid = true;
+
+  rows.forEach(row => {
+    const len = parseFloat(row.querySelector('.mr-len').value);
+    const wid = parseFloat(row.querySelector('.mr-wid').value);
+    if(!len || !wid || len<1 || wid<1) { valid=false; return; }
+    const r = calcRoom(len, wid, 9, 2, insul, climate, 'average', 1, 'living');
+    totalCool += r.totalCool;
+    totalHeat += r.totalHeat;
+    totalArea += r.area;
+  });
+
+  if(!valid) { alert('Please enter valid dimensions for all rooms.'); return; }
+
+  const recTon = nearestTon(totalCool);
+  const recHeatTon = nearestTon(totalHeat);
+
+  const bHTML = `<tr><td>Combined Cooling</td><td>${fmt(totalCool)}</td><td>${formatTons(totalCool)}</td></tr><tr><td>Combined Heating</td><td>${fmt(totalHeat)}</td><td>${formatTons(totalHeat)}</td></tr><tr><td>Total Floor Area</td><td colspan="2">${fmt(totalArea)} sq ft</td></tr>`;
+
+  const equipHTML = `
+    <div class="table-wrap"><table>
+    <thead><tr><th>Purpose</th><th>BTU/hr</th><th>Tons</th><th>Recommended Size</th></tr></thead>
+    <tbody>
+    <tr><td>Cooling (AC)</td><td>${fmt(totalCool)}</td><td>${formatTons(totalCool)}</td><td><strong>${recTon} ton</strong></td></tr>
+    <tr><td>Heating</td><td>${fmt(totalHeat)}</td><td>${formatTons(totalHeat)}</td><td><strong>${recHeatTon} ton equiv.</strong></td></tr>
+    </tbody></table></div>
+    <p style="font-size:0.82rem;color:#666;margin-top:0.5rem">Multi-room estimate uses 9 ft ceilings and 2 windows per room. For precision, use Single Room mode per space.</p>`;
+
+  requestAnimationFrame(() => {
+    document.getElementById('mainBtu').textContent = fmt(totalCool);
+    document.getElementById('mainBtuLabel').textContent = 'BTU/hr Combined Cooling Load';
+    document.getElementById('mainTons').textContent = formatTons(totalCool);
+    document.getElementById('coolingBtu').textContent = fmt(totalCool);
+    document.getElementById('heatingBtu').textContent = fmt(totalHeat);
+    document.getElementById('breakdownBody').innerHTML = bHTML;
+    document.getElementById('barCharts').innerHTML = '';
+    document.getElementById('equipRec').innerHTML = equipHTML;
+    const res = document.getElementById('results');
+    res.style.display = 'block';
+    requestAnimationFrame(() => { res.classList.add('show'); });
+    res.scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
+}
+
+function updateDiagram(len, wid, ceil, area, volume) {
+  document.getElementById('lblLength').textContent = `Length: ${len} ft`;
+  document.getElementById('lblWidth').textContent = `Width: ${wid} ft`;
+  document.getElementById('lblCeiling').textContent = `Ceiling: ${ceil} ft`;
+  document.getElementById('lblArea').textContent = `Floor Area: ${fmt(area)} sq ft`;
+  document.getElementById('lblVolume').textContent = `Volume: ${fmt(volume)} cu ft`;
+}
+
+function copyResults() {
+  const cool = document.getElementById('coolingBtu').textContent;
+  const heat = document.getElementById('heatingBtu').textContent;
+  const tons = document.getElementById('mainTons').textContent;
+  const text = `BTU Load Calculator Results\nCooling: ${cool} BTU/hr\nHeating: ${heat} BTU/hr\nTonnage: ${tons} tons\nGenerated at toolwick.com/btu-heating-cooling-load-calculator/`;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(()=>{ btn.textContent = '📋 Copy Results'; }, 2000);
+  }).catch(()=>{
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copy failed';
+    setTimeout(()=>{ btn.textContent = '📋 Copy Results'; }, 2000);
+  });
+}
+
+// Event listeners
+document.getElementById('calcBtn').addEventListener('click', () => {
+  requestAnimationFrame(() => { calculate(); });
+});
+document.getElementById('calcMultiBtn').addEventListener('click', () => {
+  requestAnimationFrame(() => { calculateMulti(); });
+});
+
+// Enter key on inputs
+document.getElementById('tab-single').querySelectorAll('input,select').forEach(el => {
+  el.addEventListener('keydown', e => { if(e.key==='Enter') { requestAnimationFrame(()=>calculate()); } });
+});
+</script>
+</body>
+</html>
