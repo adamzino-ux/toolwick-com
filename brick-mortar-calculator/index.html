@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brick & Mortar Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate how many bricks you need for any wall or project. Free brick calculator — enter dimensions, get brick count, mortar quantity, and cost estimate instantly.">
+<link rel="canonical" href="https://toolwick.com/brick-mortar-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Brick & Mortar Calculator",
+  "url": "https://toolwick.com/brick-mortar-calculator/",
+  "description": "Calculate how many bricks you need for any wall, estimate mortar quantity, and get cost estimates for your brick project.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0.75rem 1.5rem}
+nav .nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+nav .site-name{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+nav .site-name a{color:#1a1a2e}
+.container{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;font-weight:700;margin-bottom:0.4rem;color:#1a1a2e}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.tool-card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+.diagram-wrap svg{width:100%;max-width:500px;height:auto}
+.tabs{display:flex;gap:0;border-bottom:2px solid #e0e0e0;margin-bottom:1.5rem}
+.tab-btn{background:none;border:none;padding:10px 18px;font-size:0.9rem;font-weight:500;color:#666;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color 0.2s}
+.tab-btn.active{color:#0077b6;border-bottom-color:#0077b6}
+.tab-btn:hover{color:#0077b6}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:6px}
+.form-group input,.form-group select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:0.95rem;color:#1a1a2e;background:#fff;outline:none;transition:border-color 0.2s,box-shadow 0.2s;min-height:44px}
+.form-group input:focus,.form-group select:focus{border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+.form-group input.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:4px;display:none}
+.form-group input.error + .error-msg{display:block}
+.hint{font-size:0.78rem;color:#888;margin-top:4px}
+.btn{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background 0.2s}
+.btn:hover{background:#006299}
+.btn-clear{background:#f8f9fa;color:#555;border:1px solid #ddd;margin-top:0.5rem}
+.btn-clear:hover{background:#e9e9e9}
+.results-section{opacity:0;transition:opacity 0.3s ease;margin-top:1.5rem}
+.results-section.visible{opacity:1}
+.big-number{font-size:2.8rem;font-weight:700;color:#0077b6;line-height:1.1}
+.big-label{font-size:0.9rem;color:#555;margin-top:4px;margin-bottom:1.2rem}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.result-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;text-align:center}
+.result-box .val{font-size:1.5rem;font-weight:700;color:#0077b6}
+.result-box .lbl{font-size:0.8rem;color:#666;margin-top:2px}
+.copy-btn{background:#f0f7ff;border:1px solid #0077b6;color:#0077b6;padding:6px 14px;border-radius:5px;font-size:0.82rem;cursor:pointer;transition:background 0.2s;min-height:36px}
+.copy-btn:hover{background:#dbeeff}
+.section-title{font-size:1rem;font-weight:600;margin-bottom:0.75rem;color:#1a1a2e;display:flex;align-items:center;gap:8px;justify-content:space-between}
+table{width:100%;border-collapse:collapse;font-size:0.88rem}
+thead th{background:#f0f0f0;padding:8px 10px;text-align:left;font-weight:600;color:#333;border-bottom:2px solid #ddd}
+thead th.num{text-align:right}
+tbody tr:nth-child(even){background:#fafafa}
+tbody td{padding:8px 10px;border-bottom:1px solid #eee;color:#333}
+tbody td.num{text-align:right;font-variant-numeric:tabular-nums}
+.tbl-wrap{overflow-x:auto;margin-bottom:1.5rem}
+.ad-slot{min-height:0;margin:0}
+.content-section{margin-top:2rem}
+.content-section h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin:1.8rem 0 0.6rem}
+.content-section p{color:#444;margin-bottom:0.8rem;font-size:0.95rem}
+.content-section ul{padding-left:1.4rem;margin-bottom:0.8rem}
+.content-section ul li{color:#444;margin-bottom:0.4rem;font-size:0.95rem}
+details{border:1px solid #e0e0e0;border-radius:6px;padding:0.75rem 1rem;margin-bottom:0.6rem}
+details summary{font-weight:600;cursor:pointer;color:#1a1a2e;font-size:0.95rem;list-style:none;display:flex;align-items:center;justify-content:space-between}
+details summary::after{content:"＋";font-size:1rem;color:#0077b6}
+details[open] summary::after{content:"－"}
+details p{margin-top:0.6rem;color:#444;font-size:0.9rem}
+.related-tools{background:#f8f9fa;border-radius:8px;padding:1.5rem;margin-top:2rem}
+.related-tools h2{font-size:1.05rem;font-weight:700;margin-bottom:1rem;color:#1a1a2e}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem}
+.related-grid a{background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:0.7rem 1rem;font-size:0.85rem;color:#0077b6;transition:border-color 0.2s}
+.related-grid a:hover{border-color:#0077b6;text-decoration:none}
+footer{background:#f8f9fa;border-top:1px solid #e0e0e0;padding:1.2rem 1.5rem;text-align:center;font-size:0.82rem;color:#777;margin-top:2rem}
+footer a{color:#0077b6;margin:0 0.5rem}
+.waste-slider-wrap{display:flex;align-items:center;gap:12px;margin-top:6px}
+.waste-slider-wrap input[type=range]{flex:1;accent-color:#0077b6;min-height:24px}
+.waste-val{font-weight:600;color:#0077b6;min-width:36px;text-align:right}
+.formula-box{background:#f8f9fa;border-left:3px solid #0077b6;padding:0.75rem 1rem;border-radius:0 6px 6px 0;font-family:monospace;font-size:0.85rem;color:#1a1a2e;margin-bottom:1rem}
+@media(max-width:640px){
+  .form-row{grid-template-columns:1fr}
+  .results-grid{grid-template-columns:1fr 1fr}
+  .related-grid{grid-template-columns:1fr}
+  .tool-card{padding:1.25rem}
+  h1{font-size:1.3rem}
+  .big-number{font-size:2.2rem}
+}
+@media(max-width:380px){
+  .results-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="site-name"><a href="/">toolwick.com</a></div>
+    <span style="font-size:0.8rem;color:#888">Construction Calculators</span>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Brick &amp; Mortar Calculator</h1>
+  <p class="subtitle">Calculate how many bricks you need, estimate mortar volume, and get a project cost breakdown — instantly.</p>
+
+  <div class="tool-card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" id="brickDiagram" role="img" aria-label="Brick wall diagram">
+        <!-- Wall outline -->
+        <rect x="60" y="30" width="320" height="120" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+        <!-- Brick rows - row 1 -->
+        <rect x="62" y="32" width="75" height="28" fill="#fde8d8" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="139" y="32" width="75" height="28" fill="#fde8d8" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="216" y="32" width="75" height="28" fill="#fde8d8" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="293" y="32" width="87" height="28" fill="#fde8d8" stroke="#aaa" stroke-width="0.8"/>
+        <!-- row 2 (offset) -->
+        <rect x="62" y="62" width="38" height="28" fill="#fdd5c0" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="102" y="62" width="75" height="28" fill="#fdd5c0" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="179" y="62" width="75" height="28" fill="#fdd5c0" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="256" y="62" width="75" height="28" fill="#fdd5c0" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="333" y="62" width="47" height="28" fill="#fdd5c0" stroke="#aaa" stroke-width="0.8"/>
+        <!-- row 3 -->
+        <rect x="62" y="92" width="75" height="28" fill="#fde8d8" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="139" y="92" width="75" height="28" fill="#fde8d8" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="216" y="92" width="75" height="28" fill="#fde8d8" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="293" y="92" width="87" height="28" fill="#fde8d8" stroke="#aaa" stroke-width="0.8"/>
+        <!-- row 4 (offset) -->
+        <rect x="62" y="122" width="38" height="26" fill="#fdd5c0" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="102" y="122" width="75" height="26" fill="#fdd5c0" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="179" y="122" width="75" height="26" fill="#fdd5c0" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="256" y="122" width="75" height="26" fill="#fdd5c0" stroke="#aaa" stroke-width="0.8"/>
+        <rect x="333" y="122" width="47" height="26" fill="#fdd5c0" stroke="#aaa" stroke-width="0.8"/>
+
+        <!-- Width dimension line -->
+        <line x1="60" y1="168" x2="380" y2="168" stroke="#0077b6" stroke-width="1.5"/>
+        <line x1="60" y1="163" x2="60" y2="173" stroke="#0077b6" stroke-width="1.5"/>
+        <line x1="380" y1="163" x2="380" y2="173" stroke="#0077b6" stroke-width="1.5"/>
+        <text id="svgWidth" x="220" y="183" text-anchor="middle" font-size="12" fill="#0077b6" font-family="sans-serif">Width</text>
+
+        <!-- Height dimension line -->
+        <line x1="400" y1="30" x2="400" y2="150" stroke="#0077b6" stroke-width="1.5"/>
+        <line x1="395" y1="30" x2="405" y2="30" stroke="#0077b6" stroke-width="1.5"/>
+        <line x1="395" y1="150" x2="405" y2="150" stroke="#0077b6" stroke-width="1.5"/>
+        <text id="svgHeight" x="430" y="96" text-anchor="middle" font-size="12" fill="#0077b6" font-family="sans-serif" transform="rotate(90,430,96)">Height</text>
+
+        <!-- Mortar joint label -->
+        <line x1="139" y1="46" x2="25" y2="12" stroke="#888" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="5" y="10" font-size="10" fill="#555" font-family="sans-serif">Mortar joint</text>
+
+        <!-- Brick label -->
+        <line x1="176" y1="76" x2="450" y2="10" stroke="#888" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="430" y="8" font-size="10" fill="#555" font-family="sans-serif">Brick</text>
+
+        <!-- Thickness label -->
+        <text id="svgThickness" x="220" y="22" text-anchor="middle" font-size="10" fill="#888" font-family="sans-serif">Thickness →</text>
+      </svg>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('wall')">Wall / Area</button>
+      <button class="tab-btn" onclick="switchTab('custom')">Custom Brick Size</button>
+      <button class="tab-btn" onclick="switchTab('cost')">Cost Estimate</button>
+    </div>
+
+    <!-- Tab: Wall / Area -->
+    <div class="tab-panel active" id="tab-wall">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="wallWidth">Wall Width</label>
+          <input type="number" id="wallWidth" placeholder="e.g. 10" min="0.1" step="any">
+          <div class="error-msg" id="err-wallWidth">Enter a valid width greater than 0</div>
+        </div>
+        <div class="form-group">
+          <label for="wallHeight">Wall Height</label>
+          <input type="number" id="wallHeight" placeholder="e.g. 8" min="0.1" step="any">
+          <div class="error-msg" id="err-wallHeight">Enter a valid height greater than 0</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="wallUnit">Dimensions Unit</label>
+          <select id="wallUnit">
+            <option value="ft">Feet (ft)</option>
+            <option value="m">Metres (m)</option>
+            <option value="in">Inches (in)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="brickType">Brick Type / Size</label>
+          <select id="brickType" onchange="onBrickTypeChange()">
+            <option value="standard">Standard (3⅝″ × 2¼″ × 7⅝″)</option>
+            <option value="modular">Modular (3⅝″ × 2¼″ × 7⅝″)</option>
+            <option value="queen">Queen (3⅛″ × 2¾″ × 9¾″)</option>
+            <option value="king">King (3″ × 2¾″ × 9⅝″)</option>
+            <option value="norman">Norman (3⅝″ × 2¼″ × 11⅝″)</option>
+            <option value="custom">Custom size…</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="mortarJoint">Mortar Joint Thickness (inches)</label>
+          <input type="number" id="mortarJoint" value="0.375" min="0.1" max="1" step="0.0625">
+          <div class="hint">Typical: ⅜″ (0.375) to ½″ (0.5)</div>
+        </div>
+        <div class="form-group">
+          <label for="wallThickness">Wall Thickness</label>
+          <select id="wallThickness">
+            <option value="1">Single wythe (1 brick)</option>
+            <option value="2">Double wythe (2 bricks)</option>
+            <option value="3">Triple wythe (3 bricks)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="openings">Total Opening Area (doors/windows) — same unit as above</label>
+        <input type="number" id="openings" value="0" min="0" step="any" placeholder="0">
+        <div class="hint">Enter combined area of all openings to subtract</div>
+      </div>
+      <div class="form-group">
+        <label>Waste / Breakage Factor: <span class="waste-val" id="wasteDisplay">10%</span></label>
+        <div class="waste-slider-wrap">
+          <span style="font-size:0.8rem;color:#888">5%</span>
+          <input type="range" id="wasteSlider" min="5" max="25" value="10" oninput="document.getElementById('wasteDisplay').textContent=this.value+'%'">
+          <span style="font-size:0.8rem;color:#888">25%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Custom Brick Size -->
+    <div class="tab-panel" id="tab-custom">
+      <p style="font-size:0.85rem;color:#666;margin-bottom:1rem">Enter your custom brick dimensions in inches. Mortar joint is applied on all sides.</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="custL">Brick Length (in)</label>
+          <input type="number" id="custL" placeholder="e.g. 9" min="0.5" step="any">
+          <div class="error-msg" id="err-custL">Enter a valid length</div>
+        </div>
+        <div class="form-group">
+          <label for="custH">Brick Height (in)</label>
+          <input type="number" id="custH" placeholder="e.g. 2.75" min="0.5" step="any">
+          <div class="error-msg" id="err-custH">Enter a valid height</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="custW">Brick Width / Depth (in)</label>
+          <input type="number" id="custW" placeholder="e.g. 3.625" min="0.5" step="any">
+          <div class="error-msg" id="err-custW">Enter a valid width</div>
+        </div>
+        <div class="form-group">
+          <label for="custJoint">Mortar Joint (in)</label>
+          <input type="number" id="custJoint" value="0.375" min="0.1" max="1" step="0.0625">
+        </div>
+      </div>
+      <p style="font-size:0.82rem;color:#888">After entering dimensions, switch to <b>Wall / Area</b> tab, select <em>"Custom size…"</em>, and your values will be used automatically.</p>
+    </div>
+
+    <!-- Tab: Cost Estimate -->
+    <div class="tab-panel" id="tab-cost">
+      <p style="font-size:0.85rem;color:#666;margin-bottom:1rem">Optional: fill in prices to get a full material cost breakdown.</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="brickCost">Cost per Brick ($)</label>
+          <input type="number" id="brickCost" placeholder="e.g. 0.65" min="0" step="any">
+        </div>
+        <div class="form-group">
+          <label for="mortarCost">Cost per 60-lb Mortar Bag ($)</label>
+          <input type="number" id="mortarCost" placeholder="e.g. 7.50" min="0" step="any">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="laborCost">Labor Cost per sq ft ($)</label>
+          <input type="number" id="laborCost" placeholder="e.g. 15.00" min="0" step="any">
+        </div>
+        <div class="form-group">
+          <label for="bagCoverage">One 60-lb bag covers (sq ft)</label>
+          <input type="number" id="bagCoverage" value="25" min="1" step="any">
+          <div class="hint">Typical coverage: 25–35 sq ft</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn" id="calcBtn">Calculate Bricks &amp; Mortar</button>
+    <button class="btn btn-clear" onclick="clearAll()">Clear</button>
+
+    <!-- Results -->
+    <div class="results-section" id="resultsSection">
+      <hr style="margin:1.5rem 0;border:none;border-top:1px solid #eee">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:0.25rem">
+        <div>
+          <div class="big-number" id="resBricks">—</div>
+          <div class="big-label">Total Bricks Needed (incl. waste)</div>
+        </div>
+        <button class="copy-btn" id="copyBtn" onclick="copyResults()">Copy Results</button>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-box"><div class="val" id="resArea">—</div><div class="lbl">Wall Area (sq ft)</div></div>
+        <div class="result-box"><div class="val" id="resNetBricks">—</div><div class="lbl">Net Bricks (no waste)</div></div>
+        <div class="result-box"><div class="val" id="resMortarBags">—</div><div class="lbl">Mortar Bags (60 lb)</div></div>
+        <div class="result-box"><div class="val" id="resBricksPerSqFt">—</div><div class="lbl">Bricks per sq ft</div></div>
+      </div>
+
+      <div class="tbl-wrap">
+        <div class="section-title">Project Breakdown</div>
+        <table id="breakdownTable">
+          <thead><tr><th>Item</th><th class="num">Value</th></tr></thead>
+          <tbody id="breakdownBody"></tbody>
+        </table>
+      </div>
+
+      <div id="costSection" style="display:none">
+        <div class="tbl-wrap">
+          <div class="section-title">Cost Estimate</div>
+          <table>
+            <thead><tr><th>Item</th><th class="num">Cost (USD)</th></tr></thead>
+            <tbody id="costBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+    <h2>How to Use This Brick Calculator</h2>
+    <p>Enter your wall width and height, select the unit (feet, metres, or inches), choose your brick type, and set the mortar joint thickness. Subtract door and window openings by entering their combined area, then adjust the waste slider for breakage. Hit <strong>Calculate</strong> to get your total brick count, mortar bag quantity, and optional cost estimate.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Ordering the right number of bricks before a project starts can save you hundreds of dollars and several trips to the supplier. Under-order and work stops mid-project — a common and costly mistake. Over-order and you're paying for material you'll never use, plus disposal fees.</p>
+    <p>Consider a typical backyard garden wall: 20 ft wide × 4 ft tall with standard bricks. That's 80 sq ft of wall surface, roughly 530 bricks at about 6.75 per sq ft. Add 10% waste (53 bricks) and you need 583 — about 9 boxes of 65. Without a calculator, most people guess 500 or round to 600 haphazardly. Getting this right on a larger project like a 40 ft × 8 ft retaining wall (320 sq ft) can be the difference between a $1,200 and a $1,500 brick order.</p>
+    <p>Mortar bags are just as important. A 60-lb bag typically covers about 25 sq ft of single-wythe wall. Forgetting mortar in your estimate means a day-two hardware run that kills productivity on busy job sites.</p>
+
+    <h2>How It's Calculated</h2>
+    <p>The calculator uses this sequence:</p>
+    <div class="formula-box">
+Wall Area = (Width × Height) − Opening Area<br>
+Brick Face Area = (Brick Length + Mortar Joint) × (Brick Height + Mortar Joint)<br>
+Net Bricks = Wall Area / Brick Face Area × Wall Wythe Count<br>
+Total Bricks = Net Bricks × (1 + Waste %)<br>
+Mortar Bags = Wall Area × Wythe Count / Coverage per Bag
+    </div>
+    <p>All dimensions are converted to the same unit (inches) before calculation to avoid errors. The "brick face area" includes one mortar joint on the right and top of each brick — this is the standard industry method, since joints are shared between adjacent bricks.</p>
+
+    <h2>Tips &amp; Common Mistakes</h2>
+    <ul>
+      <li><strong>Always add waste.</strong> Even experienced masons use 5–10% extra for cuts and chips. On complex patterns (herringbone, diagonal), bump this to 15–20%.</li>
+      <li><strong>Measure openings carefully.</strong> A standard door (3 ft × 6.8 ft ≈ 20.4 sq ft) represents about 137 fewer standard bricks — don't skip this input.</li>
+      <li><strong>Match your mortar joint to the bond pattern.</strong> Running bond uses ⅜″; some decorative patterns use ½″. This changes brick count per square foot noticeably.</li>
+      <li><strong>Double-wythe walls roughly double your brick count</strong> — but also provide much better insulation and structural integrity for freestanding walls over 4 ft tall.</li>
+      <li><strong>Buy from the same dye lot.</strong> Order all bricks at once. Color variations between batches are common and noticeable once the wall is built.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>How many bricks do I need per square foot?</summary>
+      <p>Standard bricks (7⅝″ × 2¼″) with a ⅜″ mortar joint cover about 6.75 bricks per square foot for a single-wythe wall. Larger bricks like Norman (11⅝″ × 2¼″) drop this to about 4.5 per sq ft. This calculator computes the exact figure based on your selected brick and joint size.</p>
+    </details>
+    <details>
+      <summary>How much mortar do I need for 1,000 bricks?</summary>
+      <p>A common rule of thumb is that one 60-lb bag of mortar covers roughly 25–35 square feet of wall, which equates to about 1 bag per 40–50 standard bricks. For 1,000 bricks that's roughly 20–25 bags, but this varies with joint thickness and brick size. Use the calculator for project-specific figures.</p>
+    </details>
+    <details>
+      <summary>What is a wythe in brick construction?</summary>
+      <p>A wythe is a single vertical layer of bricks one brick wide. A single-wythe wall is 3⅝″ thick; a double-wythe wall is roughly 7½″ thick (two layers with a collar joint). Structural walls, garden walls over 4 ft, and exterior building walls are typically double-wythe for stability.</p>
+    </details>
+    <details>
+      <summary>Should I include the foundation in my brick count?</summary>
+      <p>This calculator estimates above-grade visible wall bricks. Below-grade foundation courses are typically a separate estimate and often use a different (cheaper) brick. Calculate foundation courses separately by entering only those dimensions, or add them as an additional wall run.</p>
+    </details>
+  </div>
+
+  <!-- Related Tools -->
+  <div class="related-tools">
+    <h2>Related Construction Calculators</h2>
+    <div class="related-grid">
+      <a href="/conduit-fill-calculator/">Conduit Fill Calculator</a>
+      <a href="/excavation-earthwork-volume-calculator/">Excavation &amp; Earthwork Volume Calculator</a>
+      <a href="/roof-truss-span-spacing-calculator/">Truss Span &amp; Spacing Calculator</a>
+      <a href="/pipe-sizing-flow-rate-calculator/">Pipe Sizing &amp; Flow Rate Calculator</a>
+      <a href="/rebar-spacing-weight-calculator/">Rebar Spacing &amp; Weight Calculator</a>
+      <a href="/btu-heating-cooling-load-calculator/">BTU Heating &amp; Cooling Load Calculator</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</div>
+
+<footer>
+  <div>
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <div style="margin-top:6px">&copy; <span id="yr"></span> toolwick.com — Free Online Tools</div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Brick presets [length_in, height_in, width_in]
+const BRICK_PRESETS = {
+  standard: [7.625, 2.25, 3.625],
+  modular:  [7.625, 2.25, 3.625],
+  queen:    [9.625, 2.75, 3.125],
+  king:     [9.625, 2.75, 3.0],
+  norman:   [11.625, 2.25, 3.625],
+  custom:   null
+};
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function onBrickTypeChange() {
+  const val = document.getElementById('brickType').value;
+  if (val === 'custom') {
+    // Switch to custom tab
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-custom').classList.add('active');
+    document.querySelectorAll('.tab-btn')[1].classList.add('active');
+  }
+}
+
+function getInputVal(id) {
+  return parseFloat(document.getElementById(id).value);
+}
+
+function setError(id, show) {
+  const el = document.getElementById(id);
+  const err = document.getElementById('err-' + id);
+  if (el) el.classList.toggle('error', show);
+  if (err) err.style.display = show ? 'block' : 'none';
+}
+
+function fmt(n, dec = 0) {
+  if (isNaN(n) || !isFinite(n)) return '—';
+  return n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+}
+
+function fmtMoney(n) {
+  if (isNaN(n) || n <= 0) return null;
+  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function toFeet(val, unit) {
+  if (unit === 'ft') return val;
+  if (unit === 'm') return val * 3.28084;
+  if (unit === 'in') return val / 12;
+  return val;
+}
+
+function calculate() {
+  let hasError = false;
+
+  const width = getInputVal('wallWidth');
+  const height = getInputVal('wallHeight');
+  const unit = document.getElementById('wallUnit').value;
+  const joint = getInputVal('mortarJoint');
+  const openings = parseFloat(document.getElementById('openings').value) || 0;
+  const waste = parseInt(document.getElementById('wasteSlider').value) / 100;
+  const wythe = parseInt(document.getElementById('wallThickness').value);
+  const brickType = document.getElementById('brickType').value;
+
+  ['wallWidth','wallHeight'].forEach(id => setError(id, false));
+
+  if (!width || width <= 0) { setError('wallWidth', true); hasError = true; }
+  if (!height || height <= 0) { setError('wallHeight', true); hasError = true; }
+
+  if (hasError) return;
+
+  // Get brick dims in inches
+  let bL, bH, bW;
+  if (brickType === 'custom') {
+    bL = getInputVal('custL');
+    bH = getInputVal('custH');
+    bW = getInputVal('custW');
+    let custErr = false;
+    ['custL','custH','custW'].forEach(id => setError(id, false));
+    if (!bL || bL <= 0) { setError('custL', true); custErr = true; }
+    if (!bH || bH <= 0) { setError('custH', true); custErr = true; }
+    if (!bW || bW <= 0) { setError('custW', true); custErr = true; }
+    if (custErr) return;
+  } else {
+    [bL, bH, bW] = BRICK_PRESETS[brickType];
+  }
+
+  // Convert wall dims to feet
+  const widthFt = toFeet(width, unit);
+  const heightFt = toFeet(height, unit);
+
+  // Opening area in sq ft
+  let openFt = 0;
+  if (openings > 0) {
+    // openings entered in same unit squared
+    const unitToFt = toFeet(1, unit);
+    openFt = openings * unitToFt * unitToFt;
+  }
+
+  const wallAreaFt = Math.max(0, widthFt * heightFt - openFt);
+  const wallAreaIn = wallAreaFt * 144; // sq inches
+
+  // Brick face area with mortar (length + joint) × (height + joint)
+  const brickFaceArea = (bL + joint) * (bH + joint); // sq in
+  const bricksPerSqIn = 1 / brickFaceArea;
+  const bricksPerSqFt = bricksPerSqIn * 144;
+
+  const netBricks = Math.ceil(wallAreaIn / brickFaceArea * wythe);
+  const totalBricks = Math.ceil(netBricks * (1 + waste));
+
+  // Mortar bags: one 60-lb bag covers ~25 sq ft per wythe
+  const bagCoverageVal = parseFloat(document.getElementById('bagCoverage').value) || 25;
+  const mortarBags = Math.ceil(wallAreaFt * wythe / bagCoverageVal);
+
+  // Mortar volume (rough cubic feet): ~0.022 cu ft per brick for standard joint
+  const mortarVolCuFt = totalBricks * 0.022;
+
+  // Cost inputs
+  const brickCostPer = parseFloat(document.getElementById('brickCost').value) || 0;
+  const mortarCostPer = parseFloat(document.getElementById('mortarCost').value) || 0;
+  const laborCostPerSqFt = parseFloat(document.getElementById('laborCost').value) || 0;
+
+  const brickNames = {
+    standard:'Standard',modular:'Modular',queen:'Queen',king:'King',norman:'Norman',custom:'Custom'
+  };
+
+  const breakdown = [
+    ['Wall Width', fmt(widthFt, 2) + ' ft'],
+    ['Wall Height', fmt(heightFt, 2) + ' ft'],
+    ['Opening Area Subtracted', fmt(openFt, 2) + ' sq ft'],
+    ['Net Wall Area', fmt(wallAreaFt, 2) + ' sq ft'],
+    ['Brick Type', brickNames[brickType] || 'Custom'],
+    ['Brick Size (L × H × W)', bL + '″ × ' + bH + '″ × ' + bW + '″'],
+    ['Mortar Joint', joint + '″'],
+    ['Brick Face Area (with joint)', fmt(brickFaceArea, 3) + ' sq in'],
+    ['Bricks per sq ft', fmt(bricksPerSqFt, 2)],
+    ['Wall Wythe', wythe + (wythe===1?' (single)':(wythe===2?' (double)':' (triple)'))],
+    ['Net Bricks (no waste)', fmt(netBricks)],
+    ['Waste Factor', (waste * 100).toFixed(0) + '%'],
+    ['Waste Bricks', fmt(totalBricks - netBricks)],
+    ['Total Bricks Needed', fmt(totalBricks)],
+    ['Mortar Bags (60 lb)', fmt(mortarBags)],
+    ['Mortar Volume (approx)', fmt(mortarVolCuFt, 2) + ' cu ft'],
+  ];
+
+  let breakdownHTML = '';
+  for (const [k, v] of breakdown) {
+    breakdownHTML += `<tr><td>${k}</td><td class="num">${v}</td></tr>`;
+  }
+
+  let costHTML = '';
+  let showCost = false;
+  let totalCost = 0;
+  if (brickCostPer > 0) {
+    const bc = totalBricks * brickCostPer;
+    costHTML += `<tr><td>Bricks (${fmt(totalBricks)} × $${brickCostPer})</td><td class="num">${fmtMoney(bc)}</td></tr>`;
+    totalCost += bc; showCost = true;
+  }
+  if (mortarCostPer > 0) {
+    const mc = mortarBags * mortarCostPer;
+    costHTML += `<tr><td>Mortar Bags (${fmt(mortarBags)} × $${mortarCostPer})</td><td class="num">${fmtMoney(mc)}</td></tr>`;
+    totalCost += mc; showCost = true;
+  }
+  if (laborCostPerSqFt > 0) {
+    const lc = wallAreaFt * laborCostPerSqFt;
+    costHTML += `<tr><td>Labor (${fmt(wallAreaFt, 2)} sq ft × $${laborCostPerSqFt})</td><td class="num">${fmtMoney(lc)}</td></tr>`;
+    totalCost += lc; showCost = true;
+  }
+  if (showCost) {
+    costHTML += `<tr style="font-weight:700;background:#f0f7ff"><td>Total Estimated Cost</td><td class="num" style="color:#0077b6">${fmtMoney(totalCost)}</td></tr>`;
+  }
+
+  requestAnimationFrame(() => {
+    document.getElementById('resBricks').textContent = fmt(totalBricks);
+    document.getElementById('resArea').textContent = fmt(wallAreaFt, 1);
+    document.getElementById('resNetBricks').textContent = fmt(netBricks);
+    document.getElementById('resMortarBags').textContent = fmt(mortarBags);
+    document.getElementById('resBricksPerSqFt').textContent = fmt(bricksPerSqFt, 2);
+    document.getElementById('breakdownBody').innerHTML = breakdownHTML;
+    document.getElementById('costSection').style.display = showCost ? 'block' : 'none';
+    if (showCost) document.getElementById('costBody').innerHTML = costHTML;
+
+    // Update SVG labels
+    document.getElementById('svgWidth').textContent = fmt(widthFt, 1) + ' ft wide';
+    document.getElementById('svgHeight').textContent = fmt(heightFt, 1) + ' ft tall';
+    document.getElementById('svgThickness').textContent = wythe + ' wythe';
+
+    const rs = document.getElementById('resultsSection');
+    rs.classList.add('visible');
+    rs.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  // Store for copy
+  window._lastResults = { totalBricks, netBricks, wallAreaFt, mortarBags, bricksPerSqFt, breakdown, totalCost, showCost };
+}
+
+function copyResults() {
+  const r = window._lastResults;
+  if (!r) return;
+  let text = `Brick & Mortar Calculator Results\n`;
+  text += `=====================================\n`;
+  text += `Total Bricks Needed: ${fmt(r.totalBricks)}\n`;
+  text += `Net Wall Area: ${fmt(r.wallAreaFt, 2)} sq ft\n`;
+  text += `Net Bricks (no waste): ${fmt(r.netBricks)}\n`;
+  text += `Mortar Bags (60 lb): ${fmt(r.mortarBags)}\n`;
+  text += `Bricks per sq ft: ${fmt(r.bricksPerSqFt, 2)}\n`;
+  if (r.showCost && r.totalCost > 0) text += `Total Estimated Cost: ${fmtMoney(r.totalCost)}\n`;
+  text += `\nGenerated at toolwick.com/brick-mortar-calculator/`;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+
+function clearAll() {
+  ['wallWidth','wallHeight','openings','custL','custH','custW'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ''; el.classList.remove('error'); }
+    const err = document.getElementById('err-' + id);
+    if (err) err.style.display = 'none';
+  });
+  document.getElementById('mortarJoint').value = '0.375';
+  document.getElementById('wallThickness').value = '1';
+  document.getElementById('brickType').value = 'standard';
+  document.getElementById('wasteSlider').value = '10';
+  document.getElementById('wasteDisplay').textContent = '10%';
+  document.getElementById('brickCost').value = '';
+  document.getElementById('mortarCost').value = '';
+  document.getElementById('laborCost').value = '';
+  document.getElementById('bagCoverage').value = '25';
+  document.getElementById('resultsSection').classList.remove('visible');
+  document.getElementById('svgWidth').textContent = 'Width';
+  document.getElementById('svgHeight').textContent = 'Height';
+  document.getElementById('svgThickness').textContent = 'Thickness →';
+}
+
+document.getElementById('calcBtn').addEventListener('click', () => {
+  requestAnimationFrame(() => { calculate(); });
+});
+
+document.querySelectorAll('input').forEach(input => {
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      requestAnimationFrame(() => { calculate(); });
+    }
+  });
+});
+</script>
+</body>
+</html>
