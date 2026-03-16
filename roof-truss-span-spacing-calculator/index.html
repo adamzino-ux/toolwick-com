@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Truss Span & Spacing Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate roof truss span, spacing, count, and load estimates instantly. Free online roof truss calculator for builders, contractors, and DIYers.">
+<link rel="canonical" href="https://toolwick.com/roof-truss-span-spacing-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Truss Span & Spacing Calculator",
+  "url": "https://toolwick.com/roof-truss-span-spacing-calculator/",
+  "description": "Calculate roof truss span, spacing, count, and load estimates for residential and commercial construction projects.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f4f6f8;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0 1.5rem}
+.nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;height:52px}
+.nav-brand{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+.nav-brand:hover{text-decoration:none;color:#0077b6}
+main{max-width:640px;margin:0 auto;padding:1.5rem 1rem 2rem}
+h1{font-size:1.6rem;font-weight:700;color:#1a1a2e;margin-bottom:0.35rem}
+.tagline{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 1px 4px rgba(0,0,0,0.06);margin-bottom:1.5rem}
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+.diagram-wrap svg{max-width:100%;height:auto}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:5px}
+.field{margin-bottom:1.1rem}
+input[type=number],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;transition:border-color 0.2s,box-shadow 0.2s;-webkit-appearance:none;appearance:none}
+input[type=number]:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:4px;display:none}
+.error-msg.show{display:block}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.btn{display:block;width:100%;padding:13px 24px;background:#0077b6;color:#fff;border:none;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;transition:background 0.2s;min-height:44px}
+.btn:hover{background:#006299}
+.results{opacity:0;transition:opacity 0.3s ease;pointer-events:none}
+.results.visible{opacity:1;pointer-events:auto}
+.big-num{font-size:2.4rem;font-weight:700;color:#0077b6;line-height:1.1}
+.big-label{font-size:0.85rem;color:#666;margin-top:2px;margin-bottom:1.25rem}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.25rem}
+.summary-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.85rem 1rem}
+.summary-box .val{font-size:1.35rem;font-weight:700;color:#0077b6}
+.summary-box .lbl{font-size:0.78rem;color:#666;margin-top:2px}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:0.88rem}
+thead th{background:#f0f0f0;padding:9px 12px;text-align:left;font-weight:600;color:#444;border-bottom:2px solid #ddd}
+thead th.num{text-align:right}
+tbody tr:nth-child(even){background:#fafafa}
+tbody tr:nth-child(odd){background:#fff}
+tbody td{padding:8px 12px;border-bottom:1px solid #eee;color:#1a1a2e}
+tbody td.num{text-align:right;font-variant-numeric:tabular-nums}
+.copy-btn{background:none;border:1px solid #0077b6;color:#0077b6;padding:6px 14px;border-radius:5px;font-size:0.82rem;cursor:pointer;margin-top:1rem;transition:background 0.2s,color 0.2s}
+.copy-btn:hover{background:#0077b6;color:#fff}
+.section-title{font-size:1rem;font-weight:600;color:#1a1a2e;margin-bottom:0.75rem;margin-top:1rem}
+.section-title:first-child{margin-top:0}
+.slider-row{display:flex;align-items:center;gap:0.75rem}
+.slider-row input[type=range]{flex:1;height:6px;accent-color:#0077b6;cursor:pointer}
+.slider-val{min-width:52px;text-align:right;font-weight:600;color:#0077b6;font-size:0.95rem}
+.ad-slot{min-height:0;margin:0}
+.content-section h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin:1.75rem 0 0.6rem}
+.content-section p{color:#333;margin-bottom:0.8rem;font-size:0.95rem}
+.content-section ul{margin:0.4rem 0 0.8rem 1.3rem;color:#333;font-size:0.95rem}
+.content-section ul li{margin-bottom:0.35rem}
+details{border:1px solid #e0e0e0;border-radius:6px;padding:0.75rem 1rem;margin-bottom:0.6rem;background:#fafafa}
+details summary{cursor:pointer;font-weight:600;font-size:0.92rem;color:#1a1a2e;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▶ ";font-size:0.75rem;color:#0077b6}
+details[open] summary::before{content:"▼ "}
+details p{margin-top:0.6rem;font-size:0.9rem;color:#333}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.65rem}
+.related-link{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.7rem 0.9rem;font-size:0.88rem;color:#0077b6;transition:background 0.2s}
+.related-link:hover{background:#e8f4fb;text-decoration:none}
+footer{background:#fff;border-top:1px solid #e0e0e0;padding:1.25rem 1rem;text-align:center;font-size:0.82rem;color:#777;margin-top:1rem}
+footer a{color:#555;margin:0 0.5rem}
+footer a:hover{color:#0077b6}
+.bar-visual{margin-top:0.75rem}
+.bar-row{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.45rem;font-size:0.82rem}
+.bar-bg{flex:1;background:#e9ecef;border-radius:3px;height:14px;overflow:hidden}
+.bar-fill{height:14px;border-radius:3px;background:#0077b6;transition:width 0.4s ease}
+.bar-lbl{min-width:80px;color:#444}
+.bar-val{min-width:52px;text-align:right;font-weight:600;color:#0077b6}
+@media(max-width:640px){
+  .row-2{grid-template-columns:1fr}
+  .summary-grid{grid-template-columns:1fr 1fr}
+  .related-grid{grid-template-columns:1fr}
+  h1{font-size:1.35rem}
+  .big-num{font-size:2rem}
+  .card{padding:1.25rem}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">🔧 toolwick.com</a>
+  </div>
+</nav>
+<main>
+  <h1>Roof Truss Span &amp; Spacing Calculator</h1>
+  <p class="tagline">Instantly calculate truss count, spacing, peak height, load, and lumber requirements.</p>
+
+  <!-- SVG Diagram -->
+  <div class="diagram-wrap card" style="padding:1.25rem">
+    <svg id="trussDiagram" viewBox="0 0 580 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:580px">
+      <!-- ground line -->
+      <line x1="40" y1="175" x2="540" y2="175" stroke="#e0e0e0" stroke-width="2"/>
+      <!-- truss outline -->
+      <polyline id="dTruss" points="70,175 290,55 510,175" fill="none" stroke="#0077b6" stroke-width="2.5"/>
+      <!-- bottom chord -->
+      <line id="dChord" x1="70" y1="175" x2="510" y2="175" stroke="#0077b6" stroke-width="2.5"/>
+      <!-- web members -->
+      <line x1="180" y1="175" x2="290" y2="55" stroke="#0077b6" stroke-width="1.2" stroke-dasharray="5,3"/>
+      <line x1="400" y1="175" x2="290" y2="55" stroke="#0077b6" stroke-width="1.2" stroke-dasharray="5,3"/>
+      <line x1="180" y1="175" x2="400" y2="175" stroke="#0077b6" stroke-width="1.2" stroke-dasharray="5,3"/>
+      <!-- ridge vertical dashed -->
+      <line x1="290" y1="55" x2="290" y2="175" stroke="#aaa" stroke-width="1" stroke-dasharray="4,3"/>
+      <!-- span arrow -->
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+          <path d="M0,1 L8,4 L0,7 Z" fill="#1a1a2e"/>
+        </marker>
+        <marker id="arrowL" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+          <path d="M0,1 L8,4 L0,7 Z" fill="#1a1a2e"/>
+        </marker>
+      </defs>
+      <line x1="70" y1="195" x2="508" y2="195" stroke="#1a1a2e" stroke-width="1.2" marker-start="url(#arrowL)" marker-end="url(#arrow)"/>
+      <text id="dSpanLabel" x="290" y="210" text-anchor="middle" font-size="12" fill="#1a1a2e" font-family="sans-serif">Span: 30 ft</text>
+      <!-- height arrow -->
+      <line x1="305" y1="56" x2="305" y2="174" stroke="#1a1a2e" stroke-width="1.2" marker-start="url(#arrowL)" marker-end="url(#arrow)"/>
+      <text id="dHeightLabel" x="330" y="122" font-size="12" fill="#1a1a2e" font-family="sans-serif">Height: 7.5 ft</text>
+      <!-- pitch label -->
+      <text id="dPitchLabel" x="115" y="128" font-size="11" fill="#0077b6" font-family="sans-serif" font-style="italic">6/12 pitch</text>
+      <!-- overhang labels -->
+      <text x="50" y="168" font-size="10" fill="#888" font-family="sans-serif">↔ overhang</text>
+    </svg>
+  </div>
+
+  <!-- Tool Card -->
+  <div class="card">
+    <div class="section-title">Building Dimensions</div>
+    <div class="row-2">
+      <div class="field">
+        <label for="buildingLength">Building Length (ft)</label>
+        <input type="number" id="buildingLength" placeholder="e.g. 40" min="4" max="500" value="40">
+        <div class="error-msg" id="err-length">Enter a valid length (4–500 ft)</div>
+      </div>
+      <div class="field">
+        <label for="buildingWidth">Building Width / Span (ft)</label>
+        <input type="number" id="buildingWidth" placeholder="e.g. 30" min="4" max="200" value="30">
+        <div class="error-msg" id="err-width">Enter a valid span (4–200 ft)</div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="roofPitch">Roof Pitch</label>
+      <select id="roofPitch">
+        <option value="2">2/12 — Very Low Slope</option>
+        <option value="3">3/12 — Low Slope</option>
+        <option value="4">4/12 — Low Pitch</option>
+        <option value="5">5/12 — Moderate Low</option>
+        <option value="6" selected>6/12 — Moderate</option>
+        <option value="7">7/12 — Moderate High</option>
+        <option value="8">8/12 — Standard Steep</option>
+        <option value="9">9/12 — Steep</option>
+        <option value="10">10/12 — Very Steep</option>
+        <option value="12">12/12 — 45° Pitch</option>
+      </select>
+    </div>
+    <div class="section-title" style="margin-top:0.5rem">Truss Spacing</div>
+    <div class="field">
+      <label for="trussSpacing">Truss Spacing (inches on-center)</label>
+      <div class="slider-row">
+        <input type="range" id="spacingSlider" min="12" max="48" step="6" value="24">
+        <span class="slider-val" id="spacingSliderVal">24"</span>
+      </div>
+      <select id="trussSpacing" style="margin-top:0.6rem">
+        <option value="12">12" on-center</option>
+        <option value="16">16" on-center</option>
+        <option value="19.2">19.2" on-center</option>
+        <option value="24" selected>24" on-center (standard)</option>
+        <option value="32">32" on-center</option>
+        <option value="48">48" on-center</option>
+      </select>
+    </div>
+    <div class="section-title" style="margin-top:0.5rem">Load &amp; Overhang</div>
+    <div class="row-2">
+      <div class="field">
+        <label for="deadLoad">Dead Load (psf)</label>
+        <input type="number" id="deadLoad" placeholder="e.g. 10" min="5" max="50" value="10">
+        <div class="error-msg" id="err-dead">Enter 5–50 psf</div>
+      </div>
+      <div class="field">
+        <label for="liveLoad">Live / Snow Load (psf)</label>
+        <input type="number" id="liveLoad" placeholder="e.g. 20" min="0" max="100" value="20">
+        <div class="error-msg" id="err-live">Enter 0–100 psf</div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="overhang">Overhang Each Side (ft)</label>
+      <input type="number" id="overhang" placeholder="e.g. 1.5" min="0" max="10" step="0.5" value="1.5">
+      <div class="error-msg" id="err-overhang">Enter 0–10 ft</div>
+    </div>
+    <button class="btn" id="calcBtn">Calculate Truss Requirements</button>
+  </div>
+
+  <!-- Results -->
+  <div class="card results" id="resultsSection">
+    <div class="big-num" id="resTrussCount">—</div>
+    <div class="big-label">Trusses Required (including gable ends)</div>
+
+    <div class="summary-grid" id="summaryGrid"></div>
+
+    <div class="section-title">Truss Spacing Layout</div>
+    <div class="table-wrap">
+      <table id="spacingTable">
+        <thead>
+          <tr>
+            <th>Truss #</th>
+            <th class="num">Position (ft from end)</th>
+            <th class="num">Bay Width (in)</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody id="spacingBody"></tbody>
+      </table>
+    </div>
+    <div id="showMoreWrap" style="text-align:center;margin-top:0.6rem;display:none">
+      <button class="copy-btn" id="showMoreBtn">Show All Trusses</button>
+    </div>
+
+    <div class="section-title" style="margin-top:1.25rem">Load Distribution</div>
+    <div id="loadBars" class="bar-visual"></div>
+
+    <button class="copy-btn" id="copyBtn">📋 Copy Results to Clipboard</button>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content Section -->
+  <div class="content-section card">
+    <h2>How to Use This Roof Truss Calculator</h2>
+    <p>Enter your building length and width (span), select a roof pitch and truss spacing, then add your load values and overhang. Click <strong>Calculate</strong> to instantly see the number of trusses needed, their exact positions, total load per truss, and a full spacing layout table.</p>
+    <p>The diagram updates dynamically with your values — showing the peak height, span, and pitch angle at a glance.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Getting the truss count right saves money and prevents structural failures. Too few trusses leads to undersized roof systems that can't handle snow loads or wind uplift. Too many wastes lumber budget and adds unnecessary weight.</p>
+    <p>For a typical 40×30 ft house with 24" on-center spacing, you'll need 21 trusses — but that number changes significantly based on pitch and spacing. A 16" spacing (common in high snow-load regions) on the same building requires 31 trusses. At $80–$200 per truss, that difference is $800–$2,000.</p>
+    <p>Contractors use this type of calculation when bidding jobs, ordering materials, and scheduling crane delivery. DIYers use it to double-check framing plans or verify quotes from lumber yards. Architects use it for preliminary estimates before detailed engineering.</p>
+
+    <h2>How It's Calculated</h2>
+    <p><strong>Number of trusses:</strong></p>
+    <ul>
+      <li>Trusses = ⌈(Building Length × 12) ÷ Spacing⌉ + 1</li>
+      <li>The +1 accounts for the final truss at the end of the building.</li>
+    </ul>
+    <p><strong>Peak Height:</strong> Height = (Span ÷ 2) × (Pitch ÷ 12)</p>
+    <p><strong>Rafter Length:</strong> Rafter = √((Span/2)² + Height²) — this is the hypotenuse of the roof triangle, plus the overhang added to each side.</p>
+    <p><strong>Tributary Area per Truss:</strong> Area = Spacing (ft) × Span (ft). This is the roof area each truss supports.</p>
+    <p><strong>Total Load per Truss:</strong> Load = (Dead Load + Live Load) × Tributary Area (lbs). This is the design load each truss must carry.</p>
+
+    <h2>Tips &amp; Common Mistakes</h2>
+    <ul>
+      <li><strong>Always add gable-end trusses</strong> — the first and last truss are structural end members, already included in this calculator's count.</li>
+      <li><strong>Don't confuse span with width</strong> — span is the horizontal distance between bearing walls, not the overall building footprint width including exterior walls.</li>
+      <li><strong>Snow load varies by region</strong> — use your local ground snow load from ASCE 7 or your local building code. 20 psf is a common starting point, but mountain areas can require 70+ psf.</li>
+      <li><strong>Overhang adds rafter length</strong> — even a 1.5 ft overhang on each side adds 3 ft to the total rafter length, which matters when ordering lumber or pre-engineered trusses.</li>
+      <li><strong>Always get engineered drawings</strong> — this tool is for estimating only. Structural trusses for permitted construction require stamped engineering drawings.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is standard roof truss spacing?</summary>
+      <p>The most common spacing is 24" on-center for residential construction in North America. Some builders use 16" for extra strength or to meet specific snow load requirements. Spacing wider than 24" (32" or 48") is sometimes used with heavy timber or commercial trusses and requires specially engineered roof decking.</p>
+    </details>
+    <details>
+      <summary>How much does a roof truss cost?</summary>
+      <p>Pre-engineered wood trusses typically cost $75–$250 per truss for a standard residential roof, depending on span, pitch, and your region. Complex designs (scissors, attic, cantilevered) cost more. Delivery and crane fees add $200–$600. Always get quotes from local truss fabricators since pricing varies widely.</p>
+    </details>
+    <details>
+      <summary>Can I use this for pole barn or commercial buildings?</summary>
+      <p>Yes — enter the building length, width (clear span), and your specific load values. Commercial buildings typically use 4 psf dead load for steel roofing and site-specific snow loads. For spans over 60 ft, you'll need engineered parallel chord or bow-string trusses; a structural engineer must be involved.</p>
+    </details>
+    <details>
+      <summary>What's the difference between dead load and live load?</summary>
+      <p>Dead load is the permanent weight of roof materials — shingles, sheathing, insulation, and the truss itself (typically 8–15 psf). Live load includes temporary loads like snow, workers, or stored materials (typically 20–40 psf for residential). Both are used together to determine the total design load your trusses must safely carry.</p>
+    </details>
+  </div>
+
+  <!-- Related Tools -->
+  <div class="card">
+    <div class="section-title">Related Construction Tools</div>
+    <div class="related-grid">
+      <a href="/rebar-spacing-weight-calculator/" class="related-link">📐 Rebar Spacing &amp; Weight Calculator</a>
+      <a href="/plywood-sheet-goods-cut-optimizer/" class="related-link">🪵 Plywood &amp; Sheet Goods Cut Optimizer</a>
+      <a href="/fence-material-calculator/" class="related-link">🏗️ Fence Material Calculator</a>
+      <a href="/drywall-calculator/" class="related-link">🧱 Drywall Calculator</a>
+      <a href="/deck-material-cost-estimator/" class="related-link">🔨 Deck Material &amp; Cost Estimator</a>
+      <a href="/wire-gauge-ampacity-calculator/" class="related-link">⚡ Wire Gauge &amp; Ampacity Calculator</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</main>
+
+<footer>
+  <div>
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <div style="margin-top:0.4rem">© <span id="yr"></span> toolwick.com — Free Online Tools</div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Slider sync
+const spacingSlider = document.getElementById('spacingSlider');
+const trussSpacingSelect = document.getElementById('trussSpacing');
+const sliderVal = document.getElementById('spacingSliderVal');
+
+spacingSlider.addEventListener('input', () => {
+  const v = parseFloat(spacingSlider.value);
+  sliderVal.textContent = v + '"';
+  // find closest select option
+  const opts = trussSpacingSelect.options;
+  let best = 0, bestDiff = Infinity;
+  for (let i = 0; i < opts.length; i++) {
+    const diff = Math.abs(parseFloat(opts[i].value) - v);
+    if (diff < bestDiff) { bestDiff = diff; best = i; }
+  }
+  trussSpacingSelect.selectedIndex = best;
+});
+
+trussSpacingSelect.addEventListener('change', () => {
+  const v = parseFloat(trussSpacingSelect.value);
+  const clamped = Math.min(Math.max(Math.round(v), 12), 48);
+  spacingSlider.value = clamped;
+  sliderVal.textContent = v + '"';
+});
+
+// Enter key triggers calc
+document.querySelectorAll('input[type=number]').forEach(inp => {
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') calcBtn.click(); });
+});
+
+function fmt(n, dec = 2) {
+  return n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+}
+function fmtInt(n) {
+  return Math.round(n).toLocaleString('en-US');
+}
+
+let allRows = [];
+const PREVIEW_ROWS = 15;
+let showAll = false;
+
+document.getElementById('showMoreBtn').addEventListener('click', () => {
+  showAll = true;
+  renderTable();
+  document.getElementById('showMoreWrap').style.display = 'none';
+});
+
+function renderTable() {
+  const rows = showAll ? allRows : allRows.slice(0, PREVIEW_ROWS);
+  let html = '';
+  rows.forEach(r => {
+    html += `<tr><td>${r.num}</td><td class="num">${fmt(r.pos,2)}</td><td class="num">${fmt(r.bay,1)}</td><td>${r.note}</td></tr>`;
+  });
+  document.getElementById('spacingBody').innerHTML = html;
+}
+
+function clearErrors() {
+  document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('input.error').forEach(e => e.classList.remove('error'));
+}
+
+function showError(id, inputId) {
+  document.getElementById(id).classList.add('show');
+  document.getElementById(inputId).classList.add('error');
+}
+
+function calculate() {
+  clearErrors();
+  let hasError = false;
+
+  const length = parseFloat(document.getElementById('buildingLength').value);
+  const width = parseFloat(document.getElementById('buildingWidth').value);
+  const pitch = parseFloat(document.getElementById('roofPitch').value);
+  const spacingIn = parseFloat(trussSpacingSelect.value);
+  const deadLoad = parseFloat(document.getElementById('deadLoad').value);
+  const liveLoad = parseFloat(document.getElementById('liveLoad').value);
+  const overhang = parseFloat(document.getElementById('overhang').value);
+
+  if (isNaN(length) || length < 4 || length > 500) { showError('err-length','buildingLength'); hasError = true; }
+  if (isNaN(width) || width < 4 || width > 200) { showError('err-width','buildingWidth'); hasError = true; }
+  if (isNaN(deadLoad) || deadLoad < 5 || deadLoad > 50) { showError('err-dead','deadLoad'); hasError = true; }
+  if (isNaN(liveLoad) || liveLoad < 0 || liveLoad > 100) { showError('err-live','liveLoad'); hasError = true; }
+  if (isNaN(overhang) || overhang < 0 || overhang > 10) { showError('err-overhang','overhang'); hasError = true; }
+  if (hasError) return;
+
+  // Core calculations
+  const spacingFt = spacingIn / 12;
+  const halfSpan = width / 2;
+  const peakHeight = halfSpan * (pitch / 12);
+  const rafterLength = Math.sqrt(halfSpan * halfSpan + peakHeight * peakHeight) + overhang;
+  const roofAngleDeg = Math.atan(peakHeight / halfSpan) * (180 / Math.PI);
+  const totalLoadPsf = deadLoad + liveLoad;
+
+  // Number of trusses
+  const numBays = Math.ceil((length * 12) / spacingIn);
+  const numTrusses = numBays + 1;
+
+  // Tributary area & load per truss (inner trusses carry full spacing, end trusses carry half)
+  const innerTribArea = spacingFt * width;
+  const endTribArea = (spacingFt / 2) * width;
+  const loadPerInner = totalLoadPsf * innerTribArea;
+  const loadPerEnd = totalLoadPsf * endTribArea;
+
+  // Total roof area (sloped)
+  const slopeFactor = rafterLength / (halfSpan + overhang);
+  const totalRoofArea = 2 * rafterLength * length;
+  const totalPlanArea = width * length;
+
+  // Lumber estimate: bottom chord + 2 rafters per truss
+  const bottomChordFt = width;
+  const totalLumber = numTrusses * (bottomChordFt + 2 * rafterLength);
+
+  // Build spacing table
+  allRows = [];
+  const actualSpacingIn = (length * 12) / numBays;
+  for (let i = 0; i < numTrusses; i++) {
+    const posFt = (i * actualSpacingIn) / 12;
+    const bayIn = i === 0 ? 0 : actualSpacingIn;
+    let note = '';
+    if (i === 0) note = 'Gable end';
+    else if (i === numTrusses - 1) note = 'Gable end';
+    else if (i === 1 || i === numTrusses - 2) note = 'First interior';
+    else note = 'Interior';
+    allRows.push({ num: i + 1, pos: posFt, bay: bayIn, note });
+  }
+
+  showAll = false;
+  const needShowMore = numTrusses > PREVIEW_ROWS;
+
+  // Update SVG diagram
+  updateDiagram(width, peakHeight, pitch);
+
+  requestAnimationFrame(() => {
+    document.getElementById('resTrussCount').textContent = fmtInt(numTrusses);
+
+    const summaryData = [
+      { val: fmt(peakHeight, 1) + ' ft', lbl: 'Peak Height' },
+      { val: fmt(roofAngleDeg, 1) + '°', lbl: 'Roof Angle' },
+      { val: fmt(rafterLength, 2) + ' ft', lbl: 'Rafter Length (incl. overhang)' },
+      { val: fmt(actualSpacingIn, 2) + '"', lbl: 'Actual Spacing On-Center' },
+      { val: fmtInt(loadPerInner) + ' lbs', lbl: 'Load / Interior Truss' },
+      { val: fmtInt(loadPerEnd) + ' lbs', lbl: 'Load / End Truss' },
+      { val: fmtInt(totalRoofArea) + ' ft²', lbl: 'Total Roof Area (sloped)' },
+      { val: fmtInt(totalLumber) + ' ft', lbl: 'Est. Total Lumber' }
+    ];
+
+    let sgHtml = '';
+    summaryData.forEach(d => {
+      sgHtml += `<div class="summary-box"><div class="val">${d.val}</div><div class="lbl">${d.lbl}</div></div>`;
+    });
+    document.getElementById('summaryGrid').innerHTML = sgHtml;
+
+    renderTable();
+    document.getElementById('showMoreWrap').style.display = needShowMore ? 'block' : 'none';
+    if (needShowMore) document.getElementById('showMoreBtn').textContent = `Show All ${numTrusses} Trusses`;
+
+    // Load bars
+    const maxLoad = loadPerInner;
+    const bars = [
+      { lbl: 'Dead Load', val: deadLoad * innerTribArea, color: '#0077b6' },
+      { lbl: 'Live/Snow Load', val: liveLoad * innerTribArea, color: '#48cae4' },
+      { lbl: 'Total Load', val: loadPerInner, color: '#023e8a' }
+    ];
+    let barsHtml = '';
+    bars.forEach(b => {
+      const pct = Math.min((b.val / (maxLoad * 1.05)) * 100, 100);
+      barsHtml += `<div class="bar-row">
+        <div class="bar-lbl">${b.lbl}</div>
+        <div class="bar-bg"><div class="bar-fill" style="width:${pct}%;background:${b.color}"></div></div>
+        <div class="bar-val">${fmtInt(b.val)} lb</div>
+      </div>`;
+    });
+    document.getElementById('loadBars').innerHTML = barsHtml;
+
+    // Store for copy
+    window._calcResult = {
+      numTrusses, length, width, pitch, spacingIn, actualSpacingIn,
+      peakHeight, roofAngleDeg, rafterLength, loadPerInner, loadPerEnd,
+      totalRoofArea, totalLumber, deadLoad, liveLoad, overhang
+    };
+
+    document.getElementById('resultsSection').classList.add('visible');
+    document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+}
+
+function updateDiagram(span, height, pitch) {
+  // Scale to SVG coords: span maps to x 70–510 = 440px, height to y
+  const svgWidth = 440;
+  const svgHeight = 120; // max usable height in svg
+  const scale = Math.min(svgWidth / span, svgHeight / Math.max(height, 1));
+  const midX = 290;
+  const baseY = 175;
+  const halfW = (span / 2) * scale;
+  const drawH = height * scale;
+  const apexY = baseY - drawH;
+  const leftX = midX - halfW;
+  const rightX = midX + halfW;
+
+  document.getElementById('dTruss').setAttribute('points', `${leftX},${baseY} ${midX},${apexY} ${rightX},${baseY}`);
+  document.getElementById('dChord').setAttribute('x1', leftX);
+  document.getElementById('dChord').setAttribute('x2', rightX);
+  document.getElementById('dSpanLabel').textContent = `Span: ${span} ft`;
+  document.getElementById('dHeightLabel').textContent = `Height: ${fmt(height,1)} ft`;
+  document.getElementById('dPitchLabel').textContent = `${pitch}/12 pitch`;
+}
+
+document.getElementById('calcBtn').addEventListener('click', () => {
+  requestAnimationFrame(() => { calculate(); });
+});
+
+// Copy results
+document.getElementById('copyBtn').addEventListener('click', () => {
+  const r = window._calcResult;
+  if (!r) return;
+  const text = `ROOF TRUSS CALCULATION RESULTS
+Building: ${r.length} ft × ${r.width} ft span
+Pitch: ${r.pitch}/12 | Spacing: ${fmt(r.actualSpacingIn,2)}" o.c.
+Trusses Required: ${fmtInt(r.numTrusses)}
+Peak Height: ${fmt(r.peakHeight,2)} ft | Roof Angle: ${fmt(r.roofAngleDeg,1)}°
+Rafter Length (w/ ${r.overhang} ft overhang): ${fmt(r.rafterLength,2)} ft
+Load/Interior Truss: ${fmtInt(r.loadPerInner)} lbs (${r.deadLoad}+${r.liveLoad} psf)
+Load/End Truss: ${fmtInt(r.loadPerEnd)} lbs
+Total Roof Area: ${fmtInt(r.totalRoofArea)} ft²
+Est. Total Lumber: ${fmtInt(r.totalLumber)} ft
+Calculated at toolwick.com/roof-truss-span-spacing-calculator/`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy Results to Clipboard'; }, 2000);
+  });
+});
+
+// Auto-calc on load with defaults
+requestAnimationFrame(() => { calculate(); });
+</script>
+</body>
+</html>
