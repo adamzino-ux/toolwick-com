@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dropped Ceiling Grid Material Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate exactly how many drop ceiling tiles, main tees, cross tees, wall angles, and hangers you need. Free drop ceiling material calculator with waste factor.">
+<link rel="canonical" href="https://toolwick.com/drop-ceiling-grid-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Dropped Ceiling Grid Material Calculator",
+  "url": "https://toolwick.com/drop-ceiling-grid-calculator/",
+  "description": "Calculate drop ceiling grid materials including tiles, main tees, cross tees, wall angles, and hanger wires for any room size.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;line-height:1.6;font-size:16px}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0.75rem 1.5rem}
+nav .nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center}
+nav .site-name{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+nav .site-name span{color:#0077b6}
+.container{max-width:640px;margin:0 auto;padding:1.5rem 1rem 3rem}
+h1{font-size:1.6rem;font-weight:800;color:#1a1a2e;margin-bottom:0.4rem;line-height:1.25}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
+.diagram-wrap{text-align:center;margin-bottom:1.5rem}
+.diagram-wrap svg{max-width:100%;height:auto}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:520px){.form-grid{grid-template-columns:1fr}}
+.field{margin-bottom:0}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:0.35rem}
+input,select{width:100%;border:1px solid #ddd;border-radius:5px;padding:12px 16px;font-size:0.95rem;color:#1a1a2e;background:#fff;transition:border-color 0.2s,box-shadow 0.2s;min-height:44px}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.78rem;margin-top:0.25rem;display:none}
+.error-msg.visible{display:block}
+.full-width{grid-column:1/-1}
+.waste-row{display:flex;align-items:center;gap:1rem;margin-top:0.5rem}
+.waste-row label{margin:0;white-space:nowrap;min-width:110px}
+.waste-row input[type=range]{flex:1;padding:0;min-height:24px;border:none;box-shadow:none}
+.waste-row .waste-val{font-weight:700;color:#0077b6;min-width:36px;text-align:right}
+.btn{background:#0077b6;color:#fff;border:none;border-radius:6px;padding:13px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;margin-top:1rem;min-height:44px;transition:background 0.2s}
+.btn:hover{background:#006299}
+.results{opacity:0;transition:opacity 0.3s ease;pointer-events:none}
+.results.visible{opacity:1;pointer-events:auto}
+.result-hero{text-align:center;padding:1.5rem 1rem;background:#f0f7ff;border-radius:8px;margin-bottom:1.5rem;border:1px solid #bee0f5}
+.result-hero .big-num{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.result-hero .big-label{font-size:0.9rem;color:#555;margin-top:0.3rem}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+@media(max-width:460px){.result-grid{grid-template-columns:1fr}}
+.result-card{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;text-align:center}
+.result-card .rc-num{font-size:1.6rem;font-weight:800;color:#0077b6}
+.result-card .rc-lbl{font-size:0.78rem;color:#555;margin-top:0.15rem}
+.result-card .rc-sub{font-size:0.72rem;color:#888;margin-top:0.1rem}
+.tbl-wrap{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:0.88rem}
+thead th{background:#f0f0f0;padding:8px 10px;text-align:left;font-weight:600;border-bottom:2px solid #ddd}
+thead th:last-child{text-align:right}
+tbody tr:nth-child(even){background:#fafafa}
+tbody tr:nth-child(odd){background:#fff}
+tbody td{padding:8px 10px;border-bottom:1px solid #efefef}
+tbody td:last-child{text-align:right;font-weight:600;color:#1a1a2e}
+.copy-btn{background:transparent;border:1px solid #0077b6;color:#0077b6;border-radius:5px;padding:6px 14px;font-size:0.82rem;cursor:pointer;transition:all 0.2s;min-height:36px}
+.copy-btn:hover{background:#0077b6;color:#fff}
+.copy-row{display:flex;justify-content:flex-end;margin-bottom:0.5rem}
+.ad-slot{min-height:0;margin:0}
+h2{font-size:1.2rem;font-weight:700;color:#1a1a2e;margin-bottom:0.75rem;margin-top:2rem}
+h2:first-child{margin-top:0}
+.content-section p{color:#444;margin-bottom:0.9rem;font-size:0.95rem;line-height:1.7}
+.content-section ul{margin:0 0 0.9rem 1.4rem}
+.content-section ul li{color:#444;font-size:0.95rem;line-height:1.7;margin-bottom:0.3rem}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:0.6rem;padding:0}
+summary{padding:0.75rem 1rem;cursor:pointer;font-weight:600;font-size:0.92rem;color:#1a1a2e;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::after{content:'▼';font-size:0.75rem;color:#0077b6;transition:transform 0.2s}
+details[open] summary::after{transform:rotate(180deg)}
+details p{padding:0 1rem 0.85rem;color:#444;font-size:0.92rem;line-height:1.7}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem}
+@media(max-width:420px){.related-grid{grid-template-columns:1fr}}
+.related-grid a{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.65rem 0.85rem;font-size:0.85rem;color:#0077b6;display:block}
+.related-grid a:hover{background:#e8f4fc;text-decoration:none}
+footer{background:#f8f9fa;border-top:1px solid #e0e0e0;padding:1.2rem 1.5rem;text-align:center;font-size:0.83rem;color:#888}
+footer a{color:#555}
+footer .footer-links{margin-bottom:0.4rem}
+footer .footer-links a{margin:0 0.5rem}
+.note{background:#fffbe6;border:1px solid #ffe58f;border-radius:6px;padding:0.75rem 1rem;font-size:0.85rem;color:#7a5c00;margin-bottom:1rem}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="site-name">tool<span>wick</span>.com</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Dropped Ceiling Grid Material Calculator</h1>
+  <p class="subtitle">Get an accurate material list for tiles, main tees, cross tees, wall angles, and hanger wires.</p>
+
+  <div class="card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg id="ceilDiagram" viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Drop ceiling grid diagram">
+        <!-- Background -->
+        <rect x="0" y="0" width="560" height="220" fill="#f8f9fa" rx="6"/>
+        <!-- Grid ceiling visual -->
+        <!-- Room outline top-down perspective -->
+        <rect x="60" y="30" width="320" height="160" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+        <!-- Main tees (horizontal lines) -->
+        <line x1="60" y1="70" x2="380" y2="70" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <line x1="60" y1="110" x2="380" y2="110" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <line x1="60" y1="150" x2="380" y2="150" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <!-- Cross tees (vertical lines) -->
+        <line x1="140" y1="30" x2="140" y2="190" stroke="#1a7a3c" stroke-width="1" stroke-dasharray="3,2" opacity="0.7"/>
+        <line x1="220" y1="30" x2="220" y2="190" stroke="#1a7a3c" stroke-width="1" stroke-dasharray="3,2" opacity="0.7"/>
+        <line x1="300" y1="30" x2="300" y2="190" stroke="#1a7a3c" stroke-width="1" stroke-dasharray="3,2" opacity="0.7"/>
+        <!-- Hanger dots -->
+        <circle cx="140" cy="70" r="4" fill="#e67e22"/>
+        <circle cx="220" cy="70" r="4" fill="#e67e22"/>
+        <circle cx="300" cy="70" r="4" fill="#e67e22"/>
+        <circle cx="140" cy="110" r="4" fill="#e67e22"/>
+        <circle cx="220" cy="110" r="4" fill="#e67e22"/>
+        <circle cx="300" cy="110" r="4" fill="#e67e22"/>
+        <circle cx="140" cy="150" r="4" fill="#e67e22"/>
+        <circle cx="220" cy="150" r="4" fill="#e67e22"/>
+        <circle cx="300" cy="150" r="4" fill="#e67e22"/>
+        <!-- Width arrow -->
+        <line x1="60" y1="210" x2="380" y2="210" stroke="#1a1a2e" stroke-width="1.2"/>
+        <polygon points="60,207 60,213 52,210" fill="#1a1a2e"/>
+        <polygon points="380,207 380,213 388,210" fill="#1a1a2e"/>
+        <text id="lbl-width" x="220" y="207" text-anchor="middle" font-size="11" fill="#1a1a2e" font-family="sans-serif">Room Width (ft)</text>
+        <!-- Height arrow -->
+        <line x1="395" y1="30" x2="395" y2="190" stroke="#1a1a2e" stroke-width="1.2"/>
+        <polygon points="392,30 398,30 395,22" fill="#1a1a2e"/>
+        <polygon points="392,190 398,190 395,198" fill="#1a1a2e"/>
+        <text id="lbl-length" x="400" y="114" text-anchor="start" font-size="11" fill="#1a1a2e" font-family="sans-serif">Room Length (ft)</text>
+        <!-- Legend -->
+        <line x1="420" y1="50" x2="445" y2="50" stroke="#0077b6" stroke-width="2" stroke-dasharray="4,2"/>
+        <text x="450" y="54" font-size="10" fill="#555" font-family="sans-serif">Main Tees</text>
+        <line x1="420" y1="68" x2="445" y2="68" stroke="#1a7a3c" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.8"/>
+        <text x="450" y="72" font-size="10" fill="#555" font-family="sans-serif">Cross Tees</text>
+        <circle cx="432" cy="86" r="4" fill="#e67e22"/>
+        <text x="450" y="90" font-size="10" fill="#555" font-family="sans-serif">Hangers</text>
+        <!-- Tile size label -->
+        <text id="lbl-tile" x="80" y="58" font-size="9.5" fill="#0077b6" font-family="sans-serif">2×4 tiles</text>
+      </svg>
+    </div>
+
+    <!-- Inputs -->
+    <div class="form-grid">
+      <div class="field">
+        <label for="roomWidth">Room Width (ft)</label>
+        <input type="number" id="roomWidth" placeholder="e.g. 12" min="1" max="999" step="0.5">
+        <div class="error-msg" id="err-width">Enter a valid width (1–999 ft)</div>
+      </div>
+      <div class="field">
+        <label for="roomLength">Room Length (ft)</label>
+        <input type="number" id="roomLength" placeholder="e.g. 16" min="1" max="999" step="0.5">
+        <div class="error-msg" id="err-length">Enter a valid length (1–999 ft)</div>
+      </div>
+      <div class="field full-width">
+        <label for="tileSize">Tile / Panel Size</label>
+        <select id="tileSize">
+          <option value="2x4">2 ft × 4 ft (most common)</option>
+          <option value="2x2">2 ft × 2 ft</option>
+          <option value="1x1">1 ft × 1 ft</option>
+        </select>
+      </div>
+      <div class="field full-width">
+        <label for="gridSpacing">Main Tee Spacing</label>
+        <select id="gridSpacing">
+          <option value="4">Every 4 ft (standard for 2×4 tiles)</option>
+          <option value="2">Every 2 ft (standard for 2×2 tiles)</option>
+        </select>
+      </div>
+      <div class="field full-width">
+        <div class="waste-row">
+          <label for="wastePct">Waste / Cut Factor:</label>
+          <input type="range" id="wastePct" min="0" max="20" value="10" step="1">
+          <span class="waste-val" id="wasteDisplay">10%</span>
+        </div>
+      </div>
+    </div>
+    <button class="btn" id="calcBtn">Calculate Materials</button>
+  </div>
+
+  <!-- Results -->
+  <div class="results card" id="results">
+    <div class="copy-row">
+      <button class="copy-btn" id="copyBtn">Copy Results</button>
+    </div>
+    <div class="result-hero">
+      <div class="big-num" id="res-tiles">0</div>
+      <div class="big-label">Ceiling Tiles / Panels Needed</div>
+    </div>
+    <div class="result-grid" id="res-cards"></div>
+    <div class="note" id="res-note"></div>
+    <div class="tbl-wrap">
+      <table id="res-table">
+        <thead><tr><th>Material</th><th>Unit Size</th><th>Qty (w/ waste)</th></tr></thead>
+        <tbody id="res-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+    <h2>How to Use This Drop Ceiling Material Calculator</h2>
+    <p>Enter your room's width and length in feet, choose your tile size (2×4 ft is the most common residential and commercial choice), and set your main tee spacing. Adjust the waste/cut factor slider — 10% is typical for a rectangular room, while 15–20% makes sense for rooms with lots of obstacles or irregular shapes. Hit <strong>Calculate Materials</strong> to get your full shopping list.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Installing a dropped ceiling grid — also called a suspended ceiling — is one of the most practical ways to hide ductwork, plumbing, wiring, and uneven joists in basements, offices, and commercial spaces. Getting your material count right before heading to the hardware store can save you hundreds of dollars and a frustrating second trip.</p>
+    <p>Consider a typical 12 × 16 ft basement room. That's 192 sq ft, and a 10% waste factor brings your tile count to roughly 27 tiles (for 2×4 panels). The grid requires about 5 main tees at 12 ft each, 48 cross tees, 55 linear feet of wall angle, and around 15 hanger wires. Without a calculator, it's easy to buy too few main tees or forget wall angle for all four perimeter walls — both common mistakes that stall jobs mid-install.</p>
+    <p>Contractors use tools like this to generate quick material quotes for clients. Homeowners use it to budget a weekend project. Either way, having exact quantities — not rough guesses — is the difference between a smooth install and an afternoon wasted making hardware store runs.</p>
+
+    <h2>How It's Calculated</h2>
+    <p><strong>Tiles:</strong> <code>Tiles = ceil(Room Width / Tile Width) × ceil(Room Length / Tile Length) × (1 + Waste%)</code></p>
+    <p><strong>Main Tees:</strong> Run the full room length, spaced by your main tee spacing. <code>Main Tee Rows = ceil(Room Width / Spacing) + 1</code>. Each row needs enough 12-ft sticks to span the room length.</p>
+    <p><strong>Cross Tees:</strong> Fill the spaces between main tees at tile-width intervals across the length. <code>Cross Tees = Main Tee Rows × ceil(Room Length / Tile Length)</code></p>
+    <p><strong>Wall Angle:</strong> Perimeter of the room. <code>Wall Angle = 2 × (Width + Length)</code> in linear feet, divided by 10-ft stick length.</p>
+    <p><strong>Hanger Wires:</strong> One hanger every 4 ft along each main tee, always at least 6" from walls. <code>Hangers per row = ceil((Room Length − 1) / 4)</code>, multiplied by number of main tee rows.</p>
+
+    <h2>Tips &amp; Common Mistakes</h2>
+    <ul>
+      <li><strong>Always measure twice.</strong> Even a 6-inch measurement error on a 20-ft wall changes your material count noticeably.</li>
+      <li><strong>Don't skip wall angle.</strong> New installers often forget to calculate all four walls' perimeter. Wall angle is cheap but easy to underestimate.</li>
+      <li><strong>Use 15%+ waste for irregular rooms.</strong> L-shaped rooms, closets, columns, or rooms with lots of recessed lights need more cut tiles.</li>
+      <li><strong>Stagger main tee joints.</strong> When your room is longer than 12 ft, tees must be spliced — buy splice connectors and plan joint positions before cutting.</li>
+      <li><strong>Check ceiling height clearance.</strong> Suspended ceilings typically drop 3–6 inches. Make sure you have at least 7.5 ft of finished ceiling height after installation (code minimum in most jurisdictions is 7 ft).</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is the standard tile size for a drop ceiling?</summary>
+      <p>The most common residential and commercial tile is 2 ft × 4 ft, which works with main tees spaced 4 ft apart. 2 ft × 2 ft tiles are popular in offices because they allow easier access to individual panels. Both sizes are widely available at home improvement stores.</p>
+    </details>
+    <details>
+      <summary>How many hanger wires do I need per main tee?</summary>
+      <p>The general rule is one hanger wire every 4 feet along each main tee, plus one within 6–8 inches of each wall. This gives the grid enough support to hold the tile weight without sagging. For heavier tiles or tiles with integrated lighting, reduce spacing to every 2–3 feet.</p>
+    </details>
+    <details>
+      <summary>Can I use this calculator for a commercial office ceiling?</summary>
+      <p>Yes. Commercial grids follow the same layout logic — main tees, cross tees, wall angle, and hanger wires. Commercial projects often use a 15–20% waste factor due to HVAC grilles, sprinkler heads, lighting fixtures, and exit signs that require cut tiles. Always add extra for complex layouts.</p>
+    </details>
+    <details>
+      <summary>What waste percentage should I use?</summary>
+      <p>For a simple rectangular room with no obstructions, 10% is fine. Add 5% for each significant obstacle (beams, pipes, columns). For L-shaped or highly irregular rooms, 15–20% is safer. It's always better to have 2–3 leftover tiles than run short mid-project.</p>
+    </details>
+
+    <h2>Related Tools</h2>
+    <div class="related-grid">
+      <a href="/sump-pump-sizing-calculator/">Sump Pump Sizing Calculator</a>
+      <a href="/retaining-wall-block-calculator/">Retaining Wall Block Calculator</a>
+      <a href="/septic-tank-size-calculator/">Septic Tank Size Calculator</a>
+      <a href="/conduit-fill-calculator/">Conduit Fill Calculator</a>
+      <a href="/excavation-earthwork-volume-calculator/">Excavation &amp; Earthwork Volume Calculator</a>
+      <a href="/roof-truss-span-spacing-calculator/">Truss Span &amp; Spacing Calculator</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <div>© <span id="yr"></span> toolwick.com — Free Online Construction Calculators</div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Waste slider
+const wasteSlider = document.getElementById('wastePct');
+const wasteDisplay = document.getElementById('wasteDisplay');
+wasteSlider.addEventListener('input', () => {
+  wasteDisplay.textContent = wasteSlider.value + '%';
+});
+
+// Tile size auto-set grid spacing
+document.getElementById('tileSize').addEventListener('change', function() {
+  const gs = document.getElementById('gridSpacing');
+  if (this.value === '2x4') gs.value = '4';
+  else if (this.value === '2x2') gs.value = '2';
+  else gs.value = '2';
+});
+
+function fmt(n, dec=0) {
+  return Number(n.toFixed(dec)).toLocaleString('en-US');
+}
+
+function validateInputs() {
+  let ok = true;
+  const w = parseFloat(document.getElementById('roomWidth').value);
+  const l = parseFloat(document.getElementById('roomLength').value);
+  const wEl = document.getElementById('roomWidth');
+  const lEl = document.getElementById('roomLength');
+  const wErr = document.getElementById('err-width');
+  const lErr = document.getElementById('err-length');
+
+  wEl.classList.remove('error'); wErr.classList.remove('visible');
+  lEl.classList.remove('error'); lErr.classList.remove('visible');
+
+  if (!w || w <= 0 || w > 999) {
+    wEl.classList.add('error'); wErr.classList.add('visible'); ok = false;
+  }
+  if (!l || l <= 0 || l > 999) {
+    lEl.classList.add('error'); lErr.classList.add('visible'); ok = false;
+  }
+  return ok ? {w, l} : null;
+}
+
+function calculate() {
+  const vals = validateInputs();
+  if (!vals) return;
+
+  const {w, l} = vals;
+  const tileSel = document.getElementById('tileSize').value;
+  const gridSpacing = parseFloat(document.getElementById('gridSpacing').value);
+  const wastePct = parseFloat(document.getElementById('wastePct').value) / 100;
+
+  // Tile dimensions
+  let tileW, tileL;
+  if (tileSel === '2x4') { tileW = 2; tileL = 4; }
+  else if (tileSel === '2x2') { tileW = 2; tileL = 2; }
+  else { tileW = 1; tileL = 1; }
+
+  const tileLabel = tileSel === '2x4' ? '2×4 ft' : tileSel === '2x2' ? '2×2 ft' : '1×1 ft';
+
+  // --- Tiles ---
+  const tilesX = Math.ceil(w / tileW);
+  const tilesY = Math.ceil(l / tileL);
+  const baseTiles = tilesX * tilesY;
+  const totalTiles = Math.ceil(baseTiles * (1 + wastePct));
+
+  // --- Main Tees ---
+  // Main tees run along the room LENGTH, spaced 'gridSpacing' ft apart across the WIDTH
+  // Number of main tee rows (lanes across the width)
+  const mainTeeRows = Math.ceil(w / gridSpacing) + 1;
+  // Each main tee row spans the full length; 12-ft sticks
+  const stickLen = 12;
+  const sticksPerRow = Math.ceil(l / stickLen);
+  const totalMainTeeSticks = Math.ceil(mainTeeRows * sticksPerRow * (1 + wastePct));
+
+  // --- Cross Tees ---
+  // Cross tees connect main tees at tile-width intervals along each bay
+  // Number of bays between main tees
+  const mainTeeBays = mainTeeRows - 1; // spaces between rows
+  // Cross tees per bay = number of tile positions along the length
+  const crossTeesPerBay = Math.ceil(l / tileL);
+  const totalCrossTees = Math.ceil(mainTeeBays * crossTeesPerBay * (1 + wastePct));
+  // Cross tee length = gridSpacing ft (e.g., 4 ft pieces for 2x4, 2 ft for 2x2)
+  const crossTeeLabel = gridSpacing + '-ft pieces';
+
+  // --- Wall Angle ---
+  // Perimeter, sold in 10-ft sticks
+  const perimeter = 2 * (w + l);
+  const wallAngleSticks = Math.ceil((perimeter / 10) * (1 + wastePct));
+
+  // --- Hanger Wires ---
+  // One hanger every 4 ft along each main tee (min 6" from wall)
+  const usableLength = Math.max(l - 1, 1);
+  const hangersPerRow = Math.ceil(usableLength / 4) + 1;
+  const totalHangers = Math.ceil(mainTeeRows * hangersPerRow * (1 + wastePct));
+
+  // --- Splice Connectors ---
+  // Needed if room length > 12 ft (each main tee row needs splices)
+  const splicesPerRow = Math.max(0, sticksPerRow - 1);
+  const totalSplices = Math.ceil(mainTeeRows * splicesPerRow * (1 + wastePct));
+
+  // Summary copy string
+  const copyText = [
+    `Drop Ceiling Material List`,
+    `Room: ${w} ft × ${l} ft (${fmt(w*l)} sq ft)`,
+    `Tile Size: ${tileLabel} | Waste: ${Math.round(wastePct*100)}%`,
+    ``,
+    `Ceiling Tiles: ${fmt(totalTiles)}`,
+    `Main Tees (12-ft sticks): ${fmt(totalMainTeeSticks)}`,
+    `Cross Tees (${crossTeeLabel}): ${fmt(totalCrossTees)}`,
+    `Wall Angle (10-ft sticks): ${fmt(wallAngleSticks)}`,
+    `Hanger Wires: ${fmt(totalHangers)}`,
+    splicesPerRow > 0 ? `Splice Connectors: ${fmt(totalSplices)}` : '',
+    ``,
+    `Generated by toolwick.com/drop-ceiling-grid-calculator/`
+  ].filter(Boolean).join('\n');
+
+  const noteText = `Based on ${fmt(w)} × ${fmt(l)} ft room (${fmt(w*l, 1)} sq ft). Main tees spaced ${gridSpacing} ft apart, cross tees at ${tileL} ft intervals. Includes ${Math.round(wastePct*100)}% waste.`;
+
+  // Build result cards
+  const cardsData = [
+    {num: fmt(totalMainTeeSticks), lbl: 'Main Tees', sub: '12-ft sticks'},
+    {num: fmt(totalCrossTees), lbl: 'Cross Tees', sub: crossTeeLabel},
+    {num: fmt(wallAngleSticks), lbl: 'Wall Angle', sub: '10-ft sticks'},
+    {num: fmt(totalHangers), lbl: 'Hanger Wires', sub: '+ clips/screws'}
+  ];
+  if (splicesPerRow > 0) {
+    cardsData.push({num: fmt(totalSplices), lbl: 'Splice Connectors', sub: 'per joint'});
+  }
+
+  let cardsHTML = cardsData.map(c =>
+    `<div class="result-card"><div class="rc-num">${c.num}</div><div class="rc-lbl">${c.lbl}</div><div class="rc-sub">${c.sub}</div></div>`
+  ).join('');
+
+  // Table rows
+  const tableData = [
+    ['Ceiling Tiles / Panels', tileLabel, fmt(totalTiles)],
+    ['Main Tees', '12-ft sticks', fmt(totalMainTeeSticks)],
+    ['Cross Tees', crossTeeLabel, fmt(totalCrossTees)],
+    ['Wall Angle (L-bracket)', '10-ft sticks', fmt(wallAngleSticks)],
+    ['Hanger Wires', 'per wire', fmt(totalHangers)],
+  ];
+  if (splicesPerRow > 0) {
+    tableData.push(['Splice Connectors', 'per connector', fmt(totalSplices)]);
+  }
+  tableData.push(['Room Area', 'sq ft', fmt(w * l, 1)]);
+  tableData.push(['Perimeter', 'linear ft', fmt(perimeter, 1)]);
+
+  const tbodyHTML = tableData.map(r =>
+    `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`
+  ).join('');
+
+  // Update diagram labels
+  document.getElementById('lbl-width').textContent = w + ' ft wide';
+  document.getElementById('lbl-length').textContent = l + ' ft long';
+  document.getElementById('lbl-tile').textContent = tileLabel + ' tiles';
+
+  requestAnimationFrame(() => {
+    document.getElementById('res-tiles').textContent = fmt(totalTiles);
+    document.getElementById('res-cards').innerHTML = cardsHTML;
+    document.getElementById('res-note').textContent = noteText;
+    document.getElementById('res-tbody').innerHTML = tbodyHTML;
+
+    const resultsEl = document.getElementById('results');
+    resultsEl.classList.add('visible');
+    resultsEl.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+
+    // Store copy text
+    resultsEl.dataset.copyText = copyText;
+  });
+}
+
+document.getElementById('calcBtn').addEventListener('click', () => {
+  requestAnimationFrame(() => { calculate(); });
+});
+
+['roomWidth','roomLength'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') calculate();
+  });
+});
+
+document.getElementById('copyBtn').addEventListener('click', function() {
+  const text = document.getElementById('results').dataset.copyText;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    this.textContent = 'Copied!';
+    setTimeout(() => { this.textContent = 'Copy Results'; }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    this.textContent = 'Copied!';
+    setTimeout(() => { this.textContent = 'Copy Results'; }, 2000);
+  });
+});
+</script>
+</body>
+</html>
