@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trench Shoring & Excavation Safety Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Free trench shoring calculator for excavation safety. Calculate soil type, sloping angles, shoring requirements & OSHA compliance for trenches up to 20ft deep.">
+<link rel="canonical" href="https://toolwick.com/trench-shoring-excavation-safety-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Trench Shoring & Excavation Safety Calculator",
+  "url": "https://toolwick.com/trench-shoring-excavation-safety-calculator/",
+  "description": "Calculate trench shoring requirements, sloping angles, and excavation safety parameters based on OSHA standards.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #e0e0e0;padding:12px 20px;background:#fff}
+.nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center}
+.nav-brand{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+.nav-brand:hover{text-decoration:none;color:#0077b6}
+.container{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;font-weight:800;color:#1a1a2e;margin-bottom:.4rem;line-height:1.2}
+.subtitle{color:#555;font-size:.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+svg.trench-svg{width:100%;max-width:560px;height:auto}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.3rem}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff;transition:border-color .2s,box-shadow .2s;min-height:44px}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,.15)}
+input.error,select.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:.8rem;margin-top:.3rem;display:none}
+.error-msg.show{display:block}
+.form-row{margin-bottom:1.2rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:500px){.form-grid{grid-template-columns:1fr}}
+.btn{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background .2s}
+.btn:hover{background:#006299}
+.btn-secondary{background:#f0f0f0;color:#1a1a2e;font-size:.8rem;padding:6px 14px;border:1px solid #ddd;border-radius:4px;cursor:pointer;min-height:32px;transition:background .2s;font-family:inherit;font-weight:500}
+.btn-secondary:hover{background:#e0e0e0}
+.results{opacity:0;transition:opacity .3s ease;margin-top:1.5rem}
+.results.visible{opacity:1}
+.result-hero{text-align:center;padding:1.5rem;background:#f0f7fc;border-radius:8px;margin-bottom:1.2rem;border:1px solid #cce4f3}
+.result-hero .big-label{font-size:.85rem;font-weight:600;color:#0077b6;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem}
+.result-hero .big-value{font-size:2.2rem;font-weight:800;color:#0077b6;line-height:1.1}
+.result-hero .big-sub{font-size:.9rem;color:#444;margin-top:.3rem}
+.compliance-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.8rem;font-weight:700;margin-top:.5rem}
+.badge-safe{background:#d4edda;color:#155724}
+.badge-warn{background:#fff3cd;color:#856404}
+.badge-danger{background:#f8d7da;color:#721c24}
+.results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
+.results-header h3{font-size:1rem;font-weight:700;color:#1a1a2e}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{background:#f0f0f0;text-align:left;padding:8px 12px;font-weight:600;font-size:.82rem;color:#444}
+th.r{text-align:right}
+td{padding:8px 12px;border-bottom:1px solid #eee;vertical-align:top}
+td.r{text-align:right;font-variant-numeric:tabular-nums}
+tr:nth-child(even) td{background:#fafafa}
+.table-scroll{overflow-x:auto}
+.section-block{margin-bottom:1.2rem}
+.section-label{font-size:.78rem;font-weight:700;color:#0077b6;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.5rem;border-bottom:1px solid #e0e0e0;padding-bottom:.3rem}
+.alert{padding:10px 14px;border-radius:6px;font-size:.87rem;margin-bottom:.8rem;line-height:1.4}
+.alert-warn{background:#fff3cd;border:1px solid #ffc107;color:#856404}
+.alert-danger{background:#f8d7da;border:1px solid #f5c6cb;color:#721c24}
+.alert-info{background:#d1ecf1;border:1px solid #bee5eb;color:#0c5460}
+.tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.tab-btn{padding:8px 16px;border:1px solid #ddd;border-radius:6px;font-size:.85rem;cursor:pointer;background:#f8f9fa;color:#444;font-family:inherit;font-weight:500;min-height:36px;transition:background .15s,color .15s}
+.tab-btn.active{background:#0077b6;color:#fff;border-color:#0077b6}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.ad-slot{min-height:0;margin:0}
+.content-section h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin-bottom:.6rem;margin-top:1.8rem}
+.content-section p{color:#444;font-size:.92rem;margin-bottom:.8rem;line-height:1.65}
+.content-section ul{color:#444;font-size:.92rem;padding-left:1.3rem;margin-bottom:.8rem}
+.content-section ul li{margin-bottom:.4rem;line-height:1.6}
+details{border:1px solid #e0e0e0;border-radius:6px;padding:0;margin-bottom:.7rem}
+summary{cursor:pointer;padding:10px 14px;font-weight:600;font-size:.9rem;color:#1a1a2e;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::after{content:'▸';color:#0077b6;transition:transform .2s}
+details[open] summary::after{transform:rotate(90deg)}
+details p{padding:0 14px 12px;font-size:.88rem;color:#444;line-height:1.6}
+.related-tools{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.8rem}
+@media(max-width:480px){.related-tools{grid-template-columns:1fr}}
+.related-card{border:1px solid #e0e0e0;border-radius:6px;padding:10px 14px;font-size:.85rem;font-weight:500;color:#0077b6;transition:background .15s}
+.related-card:hover{background:#f0f7fc;text-decoration:none}
+footer{border-top:1px solid #e0e0e0;padding:20px;text-align:center;font-size:.82rem;color:#666;margin-top:2rem}
+footer a{color:#666;margin:0 8px}
+footer a:hover{color:#0077b6}
+.slider-row{display:flex;align-items:center;gap:10px}
+.slider-row input[type=range]{flex:1;padding:0;min-height:auto;border:none;box-shadow:none;cursor:pointer}
+.slider-val{font-size:.85rem;font-weight:600;color:#0077b6;min-width:50px;text-align:right}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">⚒ toolwick.com</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Trench Shoring & Excavation Safety Calculator</h1>
+  <p class="subtitle">Calculate sloping angles, shoring requirements, and OSHA compliance for safe trench excavation.</p>
+
+  <div class="card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg class="trench-svg" viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trench cross-section diagram">
+        <!-- Ground surface -->
+        <rect x="0" y="80" width="560" height="16" fill="#c8a96e" opacity=".35"/>
+        <line x1="0" y1="80" x2="560" y2="80" stroke="#8b6914" stroke-width="2"/>
+        <text x="280" y="72" text-anchor="middle" font-size="11" fill="#8b6914" font-weight="600">Ground Surface</text>
+
+        <!-- Left slope -->
+        <line x1="100" y1="80" x2="160" y2="240" stroke="#0077b6" stroke-width="2.5" id="svg-left-wall"/>
+        <!-- Right slope -->
+        <line x1="460" y1="80" x2="400" y2="240" stroke="#0077b6" stroke-width="2.5" id="svg-right-wall"/>
+        <!-- Bottom -->
+        <line x1="160" y1="240" x2="400" y2="240" stroke="#0077b6" stroke-width="2.5" id="svg-bottom"/>
+
+        <!-- Fill ground outside -->
+        <polygon points="0,80 100,80 160,240 0,240" fill="#e8d8b0" opacity=".4"/>
+        <polygon points="460,80 560,80 560,240 400,240" fill="#e8d8b0" opacity=".4"/>
+        <!-- Trench interior -->
+        <polygon points="160,240 400,240 460,80 100,80" fill="#ddeeff" opacity=".5"/>
+
+        <!-- Depth arrow -->
+        <line x1="80" y1="80" x2="80" y2="240" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <line x1="73" y1="80" x2="87" y2="80" stroke="#e74c3c" stroke-width="1.5"/>
+        <line x1="73" y1="240" x2="87" y2="240" stroke="#e74c3c" stroke-width="1.5"/>
+        <text id="svg-depth-label" x="70" y="164" text-anchor="end" font-size="11" fill="#e74c3c" font-weight="700">Depth</text>
+
+        <!-- Width arrow (bottom) -->
+        <line x1="160" y1="255" x2="400" y2="255" stroke="#1a1a2e" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <line x1="160" y1="249" x2="160" y2="261" stroke="#1a1a2e" stroke-width="1.5"/>
+        <line x1="400" y1="249" x2="400" y2="261" stroke="#1a1a2e" stroke-width="1.5"/>
+        <text id="svg-width-label" x="280" y="273" text-anchor="middle" font-size="11" fill="#1a1a2e" font-weight="700">Width</text>
+
+        <!-- Top opening width -->
+        <line x1="100" y1="60" x2="460" y2="60" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <line x1="100" y1="54" x2="100" y2="66" stroke="#0077b6" stroke-width="1.5"/>
+        <line x1="460" y1="54" x2="460" y2="66" stroke="#0077b6" stroke-width="1.5"/>
+        <text id="svg-opening-label" x="280" y="52" text-anchor="middle" font-size="11" fill="#0077b6" font-weight="700">Top Opening</text>
+
+        <!-- Slope angle arc -->
+        <path d="M 100,80 Q 115,90 110,105" fill="none" stroke="#0077b6" stroke-width="1.5"/>
+        <text id="svg-angle-label" x="118" y="114" font-size="10" fill="#0077b6" font-weight="700">Slope</text>
+
+        <!-- Shoring label (center) -->
+        <text id="svg-method-label" x="280" y="165" text-anchor="middle" font-size="13" fill="#0077b6" font-weight="800" opacity=".7">Sloped / Shored</text>
+
+        <!-- Person icon -->
+        <circle cx="280" cy="200" r="8" fill="none" stroke="#1a1a2e" stroke-width="1.5"/>
+        <line x1="280" y1="208" x2="280" y2="228" stroke="#1a1a2e" stroke-width="1.5"/>
+        <line x1="270" y1="215" x2="290" y2="215" stroke="#1a1a2e" stroke-width="1.5"/>
+        <line x1="280" y1="228" x2="272" y2="240" stroke="#1a1a2e" stroke-width="1.5"/>
+        <line x1="280" y1="228" x2="288" y2="240" stroke="#1a1a2e" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true" data-tab="basic" onclick="switchTab('basic')">Basic Inputs</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="advanced" onclick="switchTab('advanced')">Advanced / Shoring</button>
+    </div>
+
+    <div id="tab-basic" class="tab-panel active">
+      <div class="form-grid">
+        <div class="form-row">
+          <label for="trenchDepth">Trench Depth (ft)</label>
+          <input type="number" id="trenchDepth" value="8" min="0.5" max="100" step="0.5" placeholder="e.g. 8">
+          <div class="error-msg" id="err-depth">Enter a valid depth (0.5–100 ft).</div>
+        </div>
+        <div class="form-row">
+          <label for="trenchWidth">Trench Width at Bottom (ft)</label>
+          <input type="number" id="trenchWidth" value="4" min="1" max="200" step="0.5" placeholder="e.g. 4">
+          <div class="error-msg" id="err-width">Enter a valid width (1–200 ft).</div>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-row">
+          <label for="trenchLength">Trench Length (ft)</label>
+          <input type="number" id="trenchLength" value="50" min="1" max="10000" step="1" placeholder="e.g. 50">
+          <div class="error-msg" id="err-length">Enter a valid length (1–10000 ft).</div>
+        </div>
+        <div class="form-row">
+          <label for="soilType">Soil Classification</label>
+          <select id="soilType">
+            <option value="A">Type A — Stable (clay, hardpan)</option>
+            <option value="B" selected>Type B — Medium (silt, gravel)</option>
+            <option value="C">Type C — Unstable (sandy, submerged)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="protectionMethod">Protection Method</label>
+        <select id="protectionMethod">
+          <option value="slope">Sloping / Benching</option>
+          <option value="shore">Timber/Steel Shoring</option>
+          <option value="shield">Trench Shield / Box</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="tab-advanced" class="tab-panel">
+      <div class="form-grid">
+        <div class="form-row">
+          <label for="soilWeight">Soil Unit Weight (pcf)</label>
+          <input type="number" id="soilWeight" value="120" min="50" max="200" step="1" placeholder="e.g. 120">
+          <div class="error-msg" id="err-soilwt">Enter 50–200 pcf.</div>
+        </div>
+        <div class="form-row">
+          <label for="surchargeLoad">Surcharge Load (psf)</label>
+          <input type="number" id="surchargeLoad" value="0" min="0" max="5000" step="50" placeholder="e.g. 0">
+          <div class="error-msg" id="err-surcharge">Enter 0–5000 psf.</div>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-row">
+          <label for="timberSpacing">Wale/Strut Spacing (ft)</label>
+          <input type="number" id="timberSpacing" value="4" min="1" max="10" step="0.5" placeholder="e.g. 4">
+          <div class="error-msg" id="err-spacing">Enter 1–10 ft.</div>
+        </div>
+        <div class="form-row">
+          <label for="walerSize">Waler/Plank Size</label>
+          <select id="walerSize">
+            <option value="3x12">3×12 Timber</option>
+            <option value="4x12" selected>4×12 Timber</option>
+            <option value="6x8">6×8 Timber</option>
+            <option value="6x10">6×10 Timber</option>
+            <option value="steel">Steel Wide Flange</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="groundwater">Groundwater Present?</label>
+        <select id="groundwater">
+          <option value="no">No groundwater</option>
+          <option value="yes">Yes — within excavation depth</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn" id="calcBtn" onclick="calculate()">Calculate Safety Requirements</button>
+
+    <!-- Results -->
+    <div class="results" id="results"></div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+    <h2>How to Use This Trench Shoring Calculator</h2>
+    <p>Enter your trench dimensions (depth, width, length), select your soil classification and protection method, then click Calculate. The tool outputs required slope ratios, minimum setback distances, estimated lateral earth pressure, shoring member requirements, and OSHA 29 CFR 1926 Subpart P compliance status.</p>
+    <p>Use the Advanced tab to factor in soil unit weight, surcharge loads from equipment or spoil piles, strut spacing, and groundwater — all of which affect your shoring design significantly.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Trench collapses are among the most deadly construction hazards. OSHA statistics show that cave-ins kill approximately 35–50 workers every year in the United States, and a single collapse can bury a person under 3,000 lbs of soil in seconds — faster than any rescue can respond.</p>
+    <p>An 8-foot deep trench in sandy, wet soil (Type C) with no shoring and a loaded dump truck parked 4 feet away represents an extreme hazard. Proper sloping for Type C soil requires a 1.5H:1V ratio — meaning each side must step back 12 feet, giving a total top opening of 28 feet for a 4-foot wide trench. That's often impractical on urban job sites, which is why shields and timber shoring are common alternatives.</p>
+    <p>For utility contractors, municipalities, and site supervisors, this calculator helps plan excavations properly before breaking ground — saving both lives and costly OSHA fines that start at $15,625 per willful violation.</p>
+
+    <h2>How It's Calculated</h2>
+    <p><strong>Slope Method:</strong> OSHA Appendix B defines horizontal:vertical ratios by soil type: Type A = ¾H:1V, Type B = 1H:1V, Type C = 1½H:1V. The required setback per side = Depth × H/V ratio. Top opening = Bottom Width + (2 × Setback).</p>
+    <p><strong>Lateral Earth Pressure (Rankine):</strong> σh = Ka × γ × z + Ka × q, where Ka = (1 – sin φ)/(1 + sin φ), γ = soil unit weight, z = depth, q = surcharge. Friction angle φ defaults by soil type (35°, 28°, 20° for A/B/C).</p>
+    <p><strong>Shoring Load:</strong> Total lateral force per linear foot = ½ × σh_max × depth. Strut load = force × wale spacing. This drives timber section selection per OSHA Table C-2.3.</p>
+
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Never assume soil type without testing.</strong> Visual classification is a starting point; a competent person must verify using a penetrometer or thumb test per OSHA Appendix A.</li>
+      <li><strong>Surcharge matters enormously.</strong> A loaded dump truck (GVW ~80,000 lbs) within 2 ft of the trench edge can double effective lateral pressure. Keep heavy equipment back at least H/2 feet.</li>
+      <li><strong>Groundwater downgrades soil type.</strong> Even Type A soil with fissures or water present drops to Type C — always use the most conservative classification when in doubt.</li>
+      <li><strong>Shoring must be installed top-down, removed bottom-up.</strong> Reversing this sequence is a leading cause of collapse during shield/timber extraction.</li>
+      <li><strong>Any trench 5 ft or deeper requires a protective system</strong> — sloping, shoring, or a shield. Trenches 4–5 ft deep need one only if the competent person deems the soil unstable.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is a "competent person" for trench excavation?</summary>
+      <p>OSHA defines a competent person as someone who can identify hazardous or dangerous conditions and has the authority to take corrective action. For trenching, this means knowledge of soil classification, protective system requirements, and the ability to perform on-site soil tests. This calculator is a planning aid — it does not replace the judgment of a qualified competent person on site.</p>
+    </details>
+    <details>
+      <summary>What's the difference between shoring and a trench shield?</summary>
+      <p>Shoring (timber or hydraulic) actively supports the trench walls and prevents movement. A trench shield (box) does not prevent wall movement — it protects workers if a cave-in occurs by containing the collapse. Shields are typically used for short-duration work and are slid along as work progresses, while shoring is preferred for longer trenches where wall stability is critical.</p>
+    </details>
+    <details>
+      <summary>Can I slope a trench in urban areas where space is limited?</summary>
+      <p>Often not practically. In Type C soil, sloping an 8-foot deep trench requires 12 feet of setback on each side — a total ground disturbance of 28 feet for a 4-foot pipe trench. In tight urban right-of-ways, a hydraulic slide rail or trench box is usually the only viable option. Always check local regulations as they may be stricter than federal OSHA minimums.</p>
+    </details>
+    <details>
+      <summary>Is this calculator OSHA-compliant?</summary>
+      <p>This tool applies the formulas and ratios from OSHA 29 CFR 1926 Subpart P and its appendices. However, it is an educational and planning tool only, not a certified engineering document. For permit-required or complex excavations, consult a licensed geotechnical engineer and your local authority having jurisdiction (AHJ).</p>
+    </details>
+  </div>
+
+  <!-- Related Tools -->
+  <div style="margin-top:2rem">
+    <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:.8rem;color:#1a1a2e">Related Tools</h2>
+    <div class="related-tools">
+      <a href="/footing-foundation-size-calculator/" class="related-card">Footing & Foundation Size Calculator</a>
+      <a href="/paver-patio-calculator/" class="related-card">Paver Patio Base & Sand Calculator</a>
+      <a href="/spray-foam-insulation-calculator/" class="related-card">Spray Foam Insulation Coverage Calculator</a>
+      <a href="/drop-ceiling-grid-calculator/" class="related-card">Dropped Ceiling Grid Material Calculator</a>
+      <a href="/sump-pump-sizing-calculator/" class="related-card">Sump Pump Sizing Calculator</a>
+      <a href="/retaining-wall-block-calculator/" class="related-card">Retaining Wall Block Calculator</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</div>
+
+<footer>
+  <a href="/about/">About</a>
+  <a href="/privacy/">Privacy</a>
+  <a href="/contact/">Contact</a>
+  <span style="display:block;margin-top:6px">© <span id="yr"></span> toolwick.com</span>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.querySelectorAll('[data-tab="'+tab+'"]').forEach(b => { b.classList.add('active'); b.setAttribute('aria-selected','true'); });
+}
+
+function fmt(n, dec=1) {
+  if (!isFinite(n)) return '—';
+  return Number(n.toFixed(dec)).toLocaleString('en-US');
+}
+
+function clearErrors() {
+  document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('input, select').forEach(e => e.classList.remove('error'));
+}
+
+function showError(fieldId, msgId) {
+  document.getElementById(fieldId).classList.add('error');
+  document.getElementById(msgId).classList.add('show');
+}
+
+function validate() {
+  clearErrors();
+  let ok = true;
+  const depth = parseFloat(document.getElementById('trenchDepth').value);
+  const width = parseFloat(document.getElementById('trenchWidth').value);
+  const length = parseFloat(document.getElementById('trenchLength').value);
+  const soilWt = parseFloat(document.getElementById('soilWeight').value);
+  const surcharge = parseFloat(document.getElementById('surchargeLoad').value);
+  const spacing = parseFloat(document.getElementById('timberSpacing').value);
+
+  if (!depth || depth < 0.5 || depth > 100) { showError('trenchDepth','err-depth'); ok=false; }
+  if (!width || width < 1 || width > 200) { showError('trenchWidth','err-width'); ok=false; }
+  if (!length || length < 1 || length > 10000) { showError('trenchLength','err-length'); ok=false; }
+  if (!soilWt || soilWt < 50 || soilWt > 200) { showError('soilWeight','err-soilwt'); ok=false; }
+  if (isNaN(surcharge) || surcharge < 0 || surcharge > 5000) { showError('surchargeLoad','err-surcharge'); ok=false; }
+  if (!spacing || spacing < 1 || spacing > 10) { showError('timberSpacing','err-spacing'); ok=false; }
+  return ok;
+}
+
+function getSoilParams(soilType, groundwater) {
+  // friction angle (degrees), OSHA slope ratio (H:V), cohesion descriptor
+  const params = {
+    A: { phi: 35, hRatio: 0.75, label: 'Type A', desc: 'Stable cohesive (clay, hardpan)', color:'#28a745' },
+    B: { phi: 28, hRatio: 1.0,  label: 'Type B', desc: 'Medium (silt, sandy loam, gravel)', color:'#ffc107' },
+    C: { phi: 20, hRatio: 1.5,  label: 'Type C', desc: 'Unstable (dry sand, submerged)', color:'#e74c3c' }
+  };
+  let p = Object.assign({}, params[soilType]);
+  if (groundwater === 'yes' && soilType !== 'C') {
+    p.phi -= 7;
+    p.hRatio = Math.max(p.hRatio, 1.5);
+    p.label += ' → downgraded (groundwater)';
+    p.color = '#e74c3c';
+  }
+  return p;
+}
+
+function getTimberCapacity(size) {
+  // Allowable fiber stress Fb (psi), Section modulus S (in³/ft run)
+  const data = {
+    '3x12': { Fb:1500, S:72,  desc:'3×12 @ 1.5"×11.5"' },
+    '4x12': { Fb:1500, S:96,  desc:'4×12 @ 3.5"×11.5"' },
+    '6x8':  { Fb:1500, S:88,  desc:'6×8 @ 5.5"×7.5"'  },
+    '6x10': { Fb:1500, S:122, desc:'6×10 @ 5.5"×9.5"' },
+    'steel':{ Fb:24000,S:300, desc:'Steel Wide Flange'  }
+  };
+  return data[size] || data['4x12'];
+}
+
+function calculate() {
+  if (!validate()) return;
+
+  const depth     = parseFloat(document.getElementById('trenchDepth').value);
+  const width     = parseFloat(document.getElementById('trenchWidth').value);
+  const length    = parseFloat(document.getElementById('trenchLength').value);
+  const soilType  = document.getElementById('soilType').value;
+  const method    = document.getElementById('protectionMethod').value;
+  const soilWt    = parseFloat(document.getElementById('soilWeight').value);
+  const surcharge = parseFloat(document.getElementById('surchargeLoad').value);
+  const spacing   = parseFloat(document.getElementById('timberSpacing').value);
+  const walerSize = document.getElementById('walerSize').value;
+  const gw        = document.getElementById('groundwater').value;
+
+  const soil = getSoilParams(soilType, gw);
+  const timber = getTimberCapacity(walerSize);
+
+  // ---- Rankine earth pressure ----
+  const phiRad = soil.phi * Math.PI / 180;
+  const Ka = (1 - Math.sin(phiRad)) / (1 + Math.sin(phiRad));
+  const sigmaSurcharge = Ka * surcharge;
+  const sigmaBottom = Ka * soilWt * depth + sigmaSurcharge;
+  const sigmaTop = sigmaSurcharge;
+  const totalLateralForcePerFt = 0.5 * (sigmaTop + sigmaBottom) * depth; // lbs/ft
+
+  // ---- Slope / setback ----
+  const setback = depth * soil.hRatio; // per side
+  const topOpening = width + 2 * setback;
+  const slopeAngleDeg = Math.atan(1 / soil.hRatio) * 180 / Math.PI; // angle from horizontal
+
+  // ---- Volume / spoil ----
+  // Trapezoidal cross-section for sloped, rectangular for shored/shield
+  let crossSectionArea, topOpeningForVol;
+  if (method === 'slope') {
+    topOpeningForVol = topOpening;
+    crossSectionArea = 0.5 * (width + topOpeningForVol) * depth;
+  } else {
+    topOpeningForVol = width;
+    crossSectionArea = width * depth;
+  }
+  const excavVol = crossSectionArea * length / 27; // cubic yards
+  const spoilVol = excavVol * 1.25; // 25% swell
+
+  // ---- Shoring design ----
+  // Strut/wale load (lbs per strut) — simplified trapezoidal distribution
+  const stratLevels = Math.ceil(depth / spacing);
+  const strutLoad = sigmaBottom * spacing * width; // lbs per strut (worst case)
+  // Waler bending moment (simple beam): M = w*L²/8, w = lateral pressure * strut tributary
+  const walerLoad_w = sigmaBottom * spacing; // lbs/ft (tributary from strut spacing)
+  const walerSpan = width + 0.5; // ft
+  const moment_inlb = walerLoad_w * walerSpan * walerSpan / 8 * 12; // in·lbs
+  const reqS = moment_inlb / timber.Fb; // required section modulus
+  const timberOk = timber.S >= reqS;
+
+  // ---- Shield selection guide ----
+  const shieldDepth = depth <= 8 ? '≤8 ft box' : depth <= 12 ? '12 ft box' : '16–20 ft box';
+
+  // ---- Required clear distance for equipment ----
+  const equipSetback = Math.max(2, depth * 0.5);
+
+  // ---- OSHA compliance triggers ----
+  const needsProtection = depth >= 5;
+  const requiresEngineering = depth > 20;
+  const gwDowngrade = (gw === 'yes' && soilType !== 'C');
+
+  // --- compliance status ---
+  let complianceLevel = 'safe';
+  let complianceText = 'Meets OSHA minimums';
+  if (requiresEngineering) { complianceLevel = 'danger'; complianceText = 'PE Engineering Required (>20 ft)'; }
+  else if (gwDowngrade) { complianceLevel = 'warn'; complianceText = 'Review: Soil downgraded by groundwater'; }
+  else if (surcharge > 500) { complianceLevel = 'warn'; complianceText = 'Elevated surcharge — verify engineer approval'; }
+
+  // ---- Update SVG diagram ----
+  updateSVG(depth, width, topOpening, setback, slopeAngleDeg, method);
+
+  // ---- Build result HTML ----
+  let warningHtml = '';
+  if (!needsProtection) {
+    warningHtml += `<div class="alert alert-info">ℹ️ Depth under 5 ft — protective system may not be required unless soil is unstable. A competent person must still evaluate on site.</div>`;
+  }
+  if (requiresEngineering) {
+    warningHtml += `<div class="alert alert-danger">⛔ Depths over 20 ft require a registered professional engineer to design the protective system (OSHA 1926.652).</div>`;
+  }
+  if (gwDowngrade) {
+    warningHtml += `<div class="alert alert-warn">⚠️ Groundwater present: soil classification downgraded to Type C criteria for safety.</div>`;
+  }
+  if (surcharge > 0) {
+    warningHtml += `<div class="alert alert-warn">⚠️ Surcharge of ${fmt(surcharge,0)} psf detected. Keep equipment ≥ ${fmt(equipSetback,1)} ft from trench edge.</div>`;
+  }
+
+  const badgeClass = complianceLevel === 'safe' ? 'badge-safe' : complianceLevel === 'warn' ? 'badge-warn' : 'badge-danger';
+
+  const methodLabels = { slope:'Sloping / Benching', shore:'Timber / Steel Shoring', shield:'Trench Shield / Box' };
+
+  const pressureRows = [];
+  const steps = 5;
+  for (let i = 0; i <= steps; i++) {
+    const z = depth * i / steps;
+    const p = Ka * soilWt * z + sigmaSurcharge;
+    pressureRows.push(`<tr><td>${fmt(z,1)}</td><td class="r">${fmt(p,0)}</td><td class="r">${fmt(p*1/144,2)}</td></tr>`);
+  }
+
+  let shoringSection = '';
+  if (method === 'shore') {
+    shoringSection = `
+    <div class="section-block">
+      <div class="section-label">Shoring Member Analysis</div>
+      <div class="table-scroll"><table>
+        <tr><th>Parameter</th><th class="r">Value</th></tr>
+        <tr><td>Strut Levels Required</td><td class="r">${stratLevels}</td></tr>
+        <tr><td>Strut Spacing</td><td class="r">${fmt(spacing,1)} ft</td></tr>
+        <tr><td>Max Strut Load (worst)</td><td class="r">${fmt(strutLoad,0)} lbs</td></tr>
+        <tr><td>Waler Span</td><td class="r">${fmt(walerSpan,1)} ft</td></tr>
+        <tr><td>Max Waler Moment</td><td class="r">${fmt(moment_inlb/1000,1)} kip·in</td></tr>
+        <tr><td>Required Section Modulus S</td><td class="r">${fmt(reqS,1)} in³</td></tr>
+        <tr><td>${timber.desc} — Provided S</td><td class="r">${timber.S} in³</td></tr>
+        <tr><td>Member Adequacy</td><td class="r"><strong style="color:${timberOk?'#155724':'#721c24'}">${timberOk?'✓ Adequate':'✗ Undersized — upgrade'}</strong></td></tr>
+      </table></div>
+    </div>`;
+  } else if (method === 'shield') {
+    shoringSection = `
+    <div class="section-block">
+      <div class="section-label">Trench Shield Guidance</div>
+      <div class="table-scroll"><table>
+        <tr><th>Parameter</th><th class="r">Value</th></tr>
+        <tr><td>Recommended Shield Size</td><td class="r">${shieldDepth}</td></tr>
+        <tr><td>Max Lateral Pressure (base)</td><td class="r">${fmt(sigmaBottom,0)} psf</td></tr>
+        <tr><td>Shield must extend above grade</td><td class="r">≥ 18 in</td></tr>
+        <tr><td>Workers must stay inside shield</td><td class="r">Always</td></tr>
+        <tr><td>Backfill before extraction</td><td class="r">Per manufacturer spec</td></tr>
+      </table></div>
+    </div>`;
+  }
+
+  const resultHTML = `
+    ${warningHtml}
+    <div class="result-hero">
+      <div class="big-label">Protection Method</div>
+      <div class="big-value">${methodLabels[method]}</div>
+      <div class="big-sub">Soil: ${soil.label} — Ka = ${fmt(Ka,3)} — φ = ${soil.phi}°</div>
+      <span class="compliance-badge ${badgeClass}">${complianceText}</span>
+    </div>
+
+    <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-bottom:.8rem">
+      <button class="btn-secondary" onclick="copyResults()">📋 Copy Summary</button>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Geometry & Slope Requirements</div>
+      <div class="table-scroll"><table>
+        <tr><th>Parameter</th><th class="r">Value</th></tr>
+        <tr><td>Trench Depth</td><td class="r">${fmt(depth,1)} ft</td></tr>
+        <tr><td>Trench Width (bottom)</td><td class="r">${fmt(width,1)} ft</td></tr>
+        <tr><td>Trench Length</td><td class="r">${fmt(length,0)} ft</td></tr>
+        <tr><td>OSHA Slope Ratio</td><td class="r">${soil.hRatio}H : 1V</td></tr>
+        <tr><td>Slope Angle from Horizontal</td><td class="r">${fmt(slopeAngleDeg,1)}°</td></tr>
+        <tr><td>Required Setback per Side</td><td class="r">${fmt(setback,2)} ft</td></tr>
+        <tr><td>Top Opening Width (sloped)</td><td class="r">${fmt(topOpening,2)} ft</td></tr>
+        <tr><td>Min Equipment Setback</td><td class="r">${fmt(equipSetback,1)} ft</td></tr>
+      </table></div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Earth Pressure Profile</div>
+      <div class="table-scroll"><table>
+        <tr><th>Depth (ft)</th><th class="r">Pressure (psf)</th><th class="r">Pressure (psi)</th></tr>
+        ${pressureRows.join('')}
+      </table></div>
+      <p style="font-size:.78rem;color:#777;margin-top:.4rem">Rankine active pressure: σ = Kₐ·γ·z + Kₐ·q. Max = ${fmt(sigmaBottom,0)} psf at ${fmt(depth,1)} ft depth.</p>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Total Lateral Force</div>
+      <div class="table-scroll"><table>
+        <tr><th>Parameter</th><th class="r">Value</th></tr>
+        <tr><td>Lateral Force per Linear Foot</td><td class="r">${fmt(totalLateralForcePerFt,0)} lbs/ft</td></tr>
+        <tr><td>Total Force on One Wall (full length)</td><td class="r">${fmt(totalLateralForcePerFt*length/1000,1)} kips</td></tr>
+      </table></div>
+    </div>
+
+    ${shoringSection}
+
+    <div class="section-block">
+      <div class="section-label">Excavation Volume</div>
+      <div class="table-scroll"><table>
+        <tr><th>Parameter</th><th class="r">Value</th></tr>
+        <tr><td>Cross-Section Area</td><td class="r">${fmt(crossSectionArea,1)} ft²</td></tr>
+        <tr><td>Excavated Volume</td><td class="r">${fmt(excavVol,1)} yd³</td></tr>
+        <tr><td>Spoil Volume (25% swell)</td><td class="r">${fmt(spoilVol,1)} yd³</td></tr>
+      </table></div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">OSHA Checklist</div>
+      <div class="table-scroll"><table>
+        <tr><th>Requirement</th><th class="r">Status</th></tr>
+        <tr><td>Protective system required (≥5 ft)</td><td class="r">${needsProtection?'<span style="color:#e74c3c">✓ Required</span>':'<span style="color:#155724">May not be needed</span>'}</td></tr>
+        <tr><td>Competent person inspection</td><td class="r"><span style="color:#e74c3c">Always Required</span></td></tr>
+        <tr><td>Access/egress every 25 ft</td><td class="r">${depth>=4?'<span style="color:#e74c3c">Required</span>':'<span style="color:#888">N/A</span>'}</td></tr>
+        <tr><td>Spoil pile ≥2 ft from edge</td><td class="r"><span style="color:#e74c3c">Always Required</span></td></tr>
+        <tr><td>PE design required (>20 ft)</td><td class="r">${requiresEngineering?'<span style="color:#e74c3c">✓ YES</span>':'<span style="color:#155724">Not required</span>'}</td></tr>
+        <tr><td>Atmospheric testing (>4 ft)</td><td class="r">${depth>=4?'<span style="color:#e74c3c">Required</span>':'<span style="color:#888">N/A</span>'}</td></tr>
+      </table></div>
+    </div>
+  `;
+
+  requestAnimationFrame(() => {
+    const resEl = document.getElementById('results');
+    resEl.innerHTML = resultHTML;
+    resEl.classList.add('visible');
+    resEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+}
+
+function updateSVG(depth, width, topOpening, setback, angleDeg, method) {
+  // Map real dims to SVG coords
+  // SVG canvas: 560×260, ground at y=80, bottom at y=240 → 160px for depth
+  const gY = 80, botY = 240;
+  const cx = 280;
+  const maxHalfW = 220;
+
+  const halfBottom = Math.min(width / topOpening * maxHalfW, 100);
+  const halfTop = method === 'slope' ? Math.min(maxHalfW, halfBottom + (setback / topOpening) * maxHalfW * 2) : halfBottom;
+
+  const lBotX = cx - halfBottom;
+  const rBotX = cx + halfBottom;
+  const lTopX = cx - Math.min(halfTop, 210);
+  const rTopX = cx + Math.min(halfTop, 210);
+
+  // Update wall lines
+  const lw = document.getElementById('svg-left-wall');
+  const rw = document.getElementById('svg-right-wall');
+  const bw = document.getElementById('svg-bottom');
+  if (lw) { lw.setAttribute('x1', lTopX); lw.setAttribute('y1', gY); lw.setAttribute('x2', lBotX); lw.setAttribute('y2', botY); }
+  if (rw) { rw.setAttribute('x1', rTopX); rw.setAttribute('y1', gY); rw.setAttribute('x2', rBotX); rw.setAttribute('y2', botY); }
+  if (bw) { bw.setAttribute('x1', lBotX); bw.setAttribute('x2', rBotX); }
+
+  const dl = document.getElementById('svg-depth-label');
+  if (dl) dl.textContent = depth + ' ft';
+  const wl = document.getElementById('svg-width-label');
+  if (wl) wl.textContent = 'W: ' + width + ' ft';
+  const ol = document.getElementById('svg-opening-label');
+  if (ol) ol.textContent = method === 'slope' ? 'Top: ' + topOpening.toFixed(1) + ' ft' : 'Top: ' + width + ' ft';
+  const al = document.getElementById('svg-angle-label');
+  if (al) al.textContent = method === 'slope' ? angleDeg.toFixed(0) + '°' : '90°';
+  const ml = document.getElementById('svg-method-label');
+  if (ml) ml.textContent = method === 'slope' ? 'Sloped' : method === 'shore' ? 'Shored' : 'Shielded';
+}
+
+function copyResults() {
+  const depth = document.getElementById('trenchDepth').value;
+  const width = document.getElementById('trenchWidth').value;
+  const length = document.getElementById('trenchLength').value;
+  const soil = document.getElementById('soilType').value;
+  const method = document.getElementById('protectionMethod').value;
+  const txt = `Trench Shoring Summary\n\nDepth: ${depth} ft | Width: ${width} ft | Length: ${length} ft\nSoil: Type ${soil} | Method: ${method}\n\nGenerated by toolwick.com/trench-shoring-excavation-safety-calculator/`;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(txt).then(() => {
+      const btn = document.querySelector('.btn-secondary');
+      if (btn) { btn.textContent='✓ Copied!'; setTimeout(()=>btn.textContent='📋 Copy Summary',2000); }
+    });
+  }
+}
+
+// Enter key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT')) {
+    requestAnimationFrame(() => calculate());
+  }
+});
+
+// Auto-calc on load
+window.addEventListener('load', () => { requestAnimationFrame(() => calculate()); });
+</script>
+</body>
+</html>
