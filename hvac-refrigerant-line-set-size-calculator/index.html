@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HVAC Refrigerant Line Set Size Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate the correct refrigerant line set sizes for your HVAC system. Get suction and liquid line diameters, insulation specs, and pressure drop estimates instantly.">
+<link rel="canonical" href="https://toolwick.com/hvac-refrigerant-line-set-size-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "HVAC Refrigerant Line Set Size Calculator",
+  "url": "https://toolwick.com/hvac-refrigerant-line-set-size-calculator/",
+  "description": "Calculate the correct refrigerant line set sizes for your HVAC system including suction line, liquid line, and insulation requirements.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #e0e0e0;padding:12px 1.5rem;background:#fff}
+nav a{font-weight:600;font-size:1rem;color:#1a1a2e}
+nav a:hover{color:#0077b6;text-decoration:none}
+.container{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;font-weight:700;color:#1a1a2e;margin-bottom:.4rem;line-height:1.3}
+.subtitle{color:#555;font-size:.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+.diagram-wrap svg{max-width:100%;height:auto}
+.form-group{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.4rem}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;transition:border-color .2s,box-shadow .2s;min-height:44px}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,.15)}
+input.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:.8rem;margin-top:.3rem;display:none}
+.error-msg.show{display:block}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+button.calc-btn{width:100%;background:#0077b6;color:#fff;border:none;padding:14px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;transition:background .2s;min-height:48px;margin-top:.5rem}
+button.calc-btn:hover{background:#006299}
+.results{opacity:0;transition:opacity .3s ease;pointer-events:none}
+.results.visible{opacity:1;pointer-events:all}
+.result-hero{text-align:center;padding:1.5rem 0 1rem}
+.result-hero .hero-label{font-size:.85rem;color:#555;margin-bottom:.3rem}
+.result-hero .hero-val{font-size:2.2rem;font-weight:700;color:#0077b6;line-height:1.1}
+.result-hero .hero-sub{font-size:.9rem;color:#555;margin-top:.2rem}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+.res-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;text-align:center}
+.res-box .rb-label{font-size:.78rem;color:#666;margin-bottom:.25rem;font-weight:500}
+.res-box .rb-val{font-size:1.3rem;font-weight:700;color:#0077b6}
+.res-box .rb-unit{font-size:.78rem;color:#888}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#f0f0f0;font-weight:600;padding:10px 12px;text-align:left;border-bottom:2px solid #ddd}
+td{padding:9px 12px;border-bottom:1px solid #eee}
+tr:nth-child(even) td{background:#fafafa}
+td.num{text-align:right}
+.warn-box{background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:1rem 1.25rem;font-size:.88rem;color:#5a4500;margin-bottom:1rem}
+.warn-box strong{display:block;margin-bottom:.25rem}
+.copy-btn{display:inline-flex;align-items:center;gap:.4rem;background:#f0f7ff;border:1px solid #b3d4f0;color:#0077b6;padding:7px 14px;border-radius:5px;font-size:.82rem;font-weight:500;cursor:pointer;transition:background .2s;margin-top:1rem}
+.copy-btn:hover{background:#dceeff}
+.section-title{font-size:1rem;font-weight:600;color:#1a1a2e;margin-bottom:.75rem;padding-bottom:.4rem;border-bottom:2px solid #e0e0e0}
+.ad-slot{min-height:0;margin:0}
+.content-section{margin-top:2rem}
+.content-section h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin-top:1.75rem;margin-bottom:.6rem}
+.content-section p{color:#333;margin-bottom:.75rem;font-size:.95rem}
+.content-section ul{padding-left:1.25rem;color:#333;font-size:.95rem;margin-bottom:.75rem}
+.content-section ul li{margin-bottom:.4rem}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:.6rem}
+summary{padding:12px 16px;font-weight:500;cursor:pointer;font-size:.95rem;color:#1a1a2e}
+summary:hover{background:#f8f9fa}
+details[open] summary{border-bottom:1px solid #e0e0e0}
+details p{padding:12px 16px;font-size:.9rem;color:#444;line-height:1.6}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem}
+.related-card{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.75rem 1rem;font-size:.88rem;font-weight:500;color:#0077b6}
+.related-card:hover{background:#e8f4fd;text-decoration:none}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.25rem 1.5rem;text-align:center;font-size:.82rem;color:#666}
+footer a{color:#666;margin:0 .5rem}
+footer a:hover{color:#0077b6}
+@media(max-width:600px){
+  h1{font-size:1.3rem}
+  .card{padding:1.25rem}
+  .row-2{grid-template-columns:1fr}
+  .results-grid{grid-template-columns:1fr 1fr}
+  .related-grid{grid-template-columns:1fr}
+  .table-wrap{overflow-x:auto}
+}
+@media(max-width:400px){
+  .results-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/">toolwick.com</a>
+</nav>
+
+<div class="container">
+  <h1>HVAC Refrigerant Line Set Size Calculator</h1>
+  <p class="subtitle">Determine the correct suction line, liquid line diameters, and insulation specs for your HVAC system based on system capacity and line length.</p>
+
+  <div class="card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Refrigerant line set diagram">
+        <!-- Background -->
+        <rect width="560" height="220" fill="#f8f9fa" rx="8"/>
+        <!-- Outdoor unit (condenser) -->
+        <rect x="20" y="70" width="90" height="80" rx="6" fill="#e0e0e0" stroke="#0077b6" stroke-width="2"/>
+        <text x="65" y="100" text-anchor="middle" font-size="10" fill="#1a1a2e" font-weight="600">Condenser</text>
+        <text x="65" y="114" text-anchor="middle" font-size="9" fill="#555">(Outdoor)</text>
+        <text x="65" y="128" text-anchor="middle" font-size="9" fill="#555" id="diag-tons">— tons</text>
+        <!-- Indoor unit (evaporator/air handler) -->
+        <rect x="450" y="70" width="90" height="80" rx="6" fill="#e0e0e0" stroke="#0077b6" stroke-width="2"/>
+        <text x="495" y="100" text-anchor="middle" font-size="10" fill="#1a1a2e" font-weight="600">Air Handler</text>
+        <text x="495" y="114" text-anchor="middle" font-size="9" fill="#555">(Indoor)</text>
+        <!-- Suction line (larger, top) -->
+        <line x1="110" y1="90" x2="450" y2="90" stroke="#0077b6" stroke-width="6" stroke-linecap="round"/>
+        <text x="280" y="78" text-anchor="middle" font-size="10" fill="#0077b6" font-weight="600" id="diag-suction">Suction Line (gas)</text>
+        <!-- Suction line diameter label -->
+        <rect x="220" y="55" width="120" height="18" rx="4" fill="#dceeff"/>
+        <text x="280" y="68" text-anchor="middle" font-size="10" fill="#0077b6" id="diag-suction-size">— in. OD</text>
+        <!-- Liquid line (smaller, bottom) -->
+        <line x1="110" y1="130" x2="450" y2="130" stroke="#e74c3c" stroke-width="3" stroke-linecap="round"/>
+        <text x="280" y="150" text-anchor="middle" font-size="10" fill="#c0392b" font-weight="600" id="diag-liquid">Liquid Line</text>
+        <!-- Liquid line diameter label -->
+        <rect x="220" y="153" width="120" height="18" rx="4" fill="#fdecea"/>
+        <text x="280" y="166" text-anchor="middle" font-size="10" fill="#c0392b" id="diag-liquid-size">— in. OD</text>
+        <!-- Length arrow -->
+        <line x1="110" y1="195" x2="450" y2="195" stroke="#888" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr2)"/>
+        <text x="280" y="213" text-anchor="middle" font-size="10" fill="#555" id="diag-length">Line Length: — ft</text>
+        <!-- Arrow markers -->
+        <defs>
+          <marker id="arr" markerWidth="7" markerHeight="7" refX="3" refY="3.5" orient="auto">
+            <polygon points="7,0 7,7 0,3.5" fill="#888"/>
+          </marker>
+          <marker id="arr2" markerWidth="7" markerHeight="7" refX="4" refY="3.5" orient="auto-start-reverse">
+            <polygon points="7,0 7,7 0,3.5" fill="#888"/>
+          </marker>
+        </defs>
+        <!-- Insulation label -->
+        <text x="280" y="44" text-anchor="middle" font-size="9" fill="#888" id="diag-insul">Insulation: — in. wall thickness</text>
+        <!-- Vertical tick marks for length -->
+        <line x1="110" y1="188" x2="110" y2="202" stroke="#888" stroke-width="1.5"/>
+        <line x1="450" y1="188" x2="450" y2="202" stroke="#888" stroke-width="1.5"/>
+        <!-- Flow arrows on suction -->
+        <polygon points="230,87 238,90 230,93" fill="#0077b6"/>
+        <polygon points="320,87 328,90 320,93" fill="#0077b6"/>
+        <!-- Flow arrows on liquid -->
+        <polygon points="330,127 322,130 330,133" fill="#e74c3c"/>
+        <polygon points="240,127 232,130 240,133" fill="#e74c3c"/>
+      </svg>
+    </div>
+
+    <!-- Inputs -->
+    <div class="form-group">
+      <label for="capacity">System Capacity (tons)</label>
+      <input type="number" id="capacity" placeholder="e.g. 3" min="0.5" max="25" step="0.5" value="3">
+      <div class="error-msg" id="err-capacity">Please enter a valid capacity (0.5–25 tons).</div>
+    </div>
+
+    <div class="row-2">
+      <div class="form-group">
+        <label for="lineLength">Line Set Length (ft)</label>
+        <input type="number" id="lineLength" placeholder="e.g. 50" min="1" max="500" step="1" value="50">
+        <div class="error-msg" id="err-length">Enter a valid length (1–500 ft).</div>
+      </div>
+      <div class="form-group">
+        <label for="vertRise">Vertical Rise/Drop (ft)</label>
+        <input type="number" id="vertRise" placeholder="e.g. 10" min="0" max="200" step="1" value="0">
+        <div class="error-msg" id="err-rise">Enter 0 or a positive number.</div>
+      </div>
+    </div>
+
+    <div class="row-2">
+      <div class="form-group">
+        <label for="refrigerant">Refrigerant Type</label>
+        <select id="refrigerant">
+          <option value="R410A">R-410A</option>
+          <option value="R22">R-22</option>
+          <option value="R32">R-32</option>
+          <option value="R454B">R-454B (A2L)</option>
+          <option value="R407C">R-407C</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="sysType">System Type</label>
+        <select id="sysType">
+          <option value="split">Split System (A/C)</option>
+          <option value="heatpump">Heat Pump</option>
+          <option value="minisplit">Mini-Split</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="ambientTemp">Ambient Temperature (°F)</label>
+      <input type="number" id="ambientTemp" placeholder="e.g. 95" min="50" max="130" step="1" value="95">
+      <div class="error-msg" id="err-temp">Enter a temperature between 50°F and 130°F.</div>
+    </div>
+
+    <button class="calc-btn" id="calcBtn">Calculate Line Set Sizes</button>
+  </div>
+
+  <!-- Results -->
+  <div class="card results" id="results">
+    <div id="warn-area"></div>
+
+    <div class="result-hero">
+      <div class="hero-label">Recommended Suction Line OD</div>
+      <div class="hero-val" id="res-suction-main">—</div>
+      <div class="hero-sub" id="res-suction-sub">—</div>
+    </div>
+
+    <div class="results-grid">
+      <div class="res-box">
+        <div class="rb-label">Liquid Line OD</div>
+        <div class="rb-val" id="res-liquid">—</div>
+        <div class="rb-unit">inches</div>
+      </div>
+      <div class="res-box">
+        <div class="rb-label">Suction Insulation</div>
+        <div class="rb-val" id="res-insul">—</div>
+        <div class="rb-unit">wall thickness</div>
+      </div>
+      <div class="res-box">
+        <div class="rb-label">Equivalent Length</div>
+        <div class="rb-val" id="res-eql">—</div>
+        <div class="rb-unit">ft total</div>
+      </div>
+      <div class="res-box">
+        <div class="rb-label">Est. Pressure Drop</div>
+        <div class="rb-val" id="res-pd">—</div>
+        <div class="rb-unit">psi (suction)</div>
+      </div>
+    </div>
+
+    <div class="section-title">Full Specification Summary</div>
+    <div class="table-wrap">
+      <table id="spec-table">
+        <thead>
+          <tr><th>Parameter</th><th class="num">Value</th></tr>
+        </thead>
+        <tbody id="spec-tbody"></tbody>
+      </table>
+    </div>
+
+    <button class="copy-btn" id="copyBtn">📋 Copy Results</button>
+
+    <div id="ad-mid" class="ad-slot"></div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+    <h2>How to Use This Refrigerant Line Set Sizing Calculator</h2>
+    <p>Enter your system's cooling capacity in tons, the total line set length from the outdoor condenser to the indoor air handler, and any significant vertical rise or drop. Select your refrigerant type and system configuration, then click <strong>Calculate</strong>. The tool instantly outputs the recommended suction line and liquid line outside diameters, insulation specification, and an estimated pressure drop.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Undersized refrigerant lines cause excessive velocity, noise, and oil return problems. Oversized lines reduce velocity too much, preventing proper oil return to the compressor — leading to premature compressor failure. Getting line sizing right is one of the most important installation decisions an HVAC technician makes.</p>
+    <p>Consider a 3-ton R-410A split system with a 75-foot line run: the wrong line diameter (say, using 5/8" suction instead of the correct 3/4") can increase suction pressure drop by 3–5 psi, effectively reducing system capacity by up to 5% and raising energy consumption. Over a cooling season in Phoenix, that translates to hundreds of dollars in wasted electricity.</p>
+    <p>Heat pump reversible systems have even stricter requirements because the refrigerant flow direction reverses seasonally. Mini-splits from manufacturers like Mitsubishi or Daikin often specify proprietary line diameters that differ from standard ASHRAE tables — always cross-reference your equipment manual.</p>
+
+    <h2>How It's Calculated</h2>
+    <p>Line sizing follows ASHRAE Handbook of Fundamentals guidelines and equipment manufacturer sizing tables. The key parameters are:</p>
+    <ul>
+      <li><strong>System BTU/hr:</strong> 1 ton = 12,000 BTU/hr. Capacity drives refrigerant mass flow rate.</li>
+      <li><strong>Equivalent Length:</strong> Actual line length + (vertical rise × 1.5) accounts for fittings and elevation change. A rule of thumb adds 50% of rise as additional equivalent length.</li>
+      <li><strong>Refrigerant-specific sizing:</strong> R-410A operates at higher pressures than R-22, so line diameters are often one size smaller for the same capacity.</li>
+      <li><strong>Pressure drop target:</strong> The industry standard is ≤3 psi pressure drop on the suction line and ≤1–2 psi on the liquid line. The formula: ΔP ≈ (velocity² × friction factor × length) / (2 × pipe diameter × density).</li>
+      <li><strong>Insulation:</strong> ASHRAE 90.1 requires at least 3/4" wall thickness on suction lines in most climates; 1" is recommended for ambient temperatures above 90°F or lines in unconditioned spaces.</li>
+    </ul>
+
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Always use actual OD copper tubing:</strong> HVAC line sets are sized by outside diameter. "3/4 inch" pipe in plumbing has a different OD than HVAC 3/4" tubing.</li>
+      <li><strong>Don't ignore vertical rise:</strong> Every 10 ft of vertical lift adds approximately 4.3 psi back-pressure on R-410A systems. Add 50% of rise to your equivalent length calculation.</li>
+      <li><strong>Long line sets need upsizing:</strong> If your equivalent length exceeds 50 ft, consider upsizing the suction line by one size to keep pressure drop within limits.</li>
+      <li><strong>Never reduce line size at the condenser stub:</strong> Field reducers at the unit connection add turbulence and pressure drop. Match the unit's connection size or consult the manufacturer.</li>
+      <li><strong>Insulate both lines in hot climates:</strong> While the liquid line doesn't require insulation in mild climates, wrapping it in hot attic spaces prevents subcooling loss and protects system efficiency.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What's the difference between suction and liquid lines?</summary>
+      <p>The suction line carries low-pressure refrigerant vapor from the evaporator coil back to the compressor — it's the larger, insulated line. The liquid line carries high-pressure liquid refrigerant from the condenser to the expansion device — it's smaller and typically uninsulated. Getting the sizes reversed is a common and costly installation mistake.</p>
+    </details>
+    <details>
+      <summary>Can I use the same line set for R-410A and R-22?</summary>
+      <p>Physically yes — the copper tubing dimensions are the same. However, R-22 systems require mineral oil-compatible tubing that is completely dry and clean, while R-410A uses POE oil. Contamination between oil types causes compressor damage. Always use new, properly sized, nitrogen-flushed line sets when converting or replacing equipment.</p>
+    </details>
+    <details>
+      <summary>How does a longer line run affect system performance?</summary>
+      <p>Every foot of suction line adds pressure drop, which forces the compressor to work harder and reduces system efficiency (EER/SEER). Lines longer than 50 feet typically require upsizing the suction line by one diameter to maintain acceptable pressure drop. Many manufacturers also require refrigerant charge adjustments of approximately 0.6 oz per additional foot beyond the factory-rated length.</p>
+    </details>
+    <details>
+      <summary>Do mini-splits use the same line sizing tables?</summary>
+      <p>Not always. Mini-split manufacturers (Mitsubishi, Daikin, LG, etc.) publish proprietary line sizing requirements in their engineering data books, and these often differ from ASHRAE standard tables. Always consult the specific equipment manual. Using incorrect line sizes on mini-splits can void the warranty and affect the inverter compressor control logic.</p>
+    </details>
+  </div>
+
+  <!-- Related Tools -->
+  <div class="content-section">
+    <h2>Related Tools</h2>
+    <div class="related-grid">
+      <a class="related-card" href="/trench-shoring-excavation-safety-calculator/">⛏️ Trench Shoring & Excavation Safety Calculator</a>
+      <a class="related-card" href="/footing-foundation-size-calculator/">🏗️ Footing & Foundation Size Calculator</a>
+      <a class="related-card" href="/paver-patio-calculator/">🧱 Paver Patio Base & Sand Calculator</a>
+      <a class="related-card" href="/spray-foam-insulation-calculator/">🧴 Spray Foam Insulation Coverage Calculator</a>
+      <a class="related-card" href="/drop-ceiling-grid-calculator/">🪟 Dropped Ceiling Grid Material Calculator</a>
+      <a class="related-card" href="/sump-pump-sizing-calculator/">💧 Sump Pump Sizing Calculator</a>
+    </div>
+  </div>
+
+  <div id="ad-bottom" class="ad-slot"></div>
+</div>
+
+<footer>
+  <div>© <span id="yr"></span> toolwick.com</div>
+  <div style="margin-top:.4rem">
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// ── Sizing tables ──────────────────────────────────────────────────────────
+// Key: refrigerant → tons ranges → [suction OD (in), liquid OD (in)]
+// Based on ASHRAE & common industry tables (equivalent length ≤ 50 ft baseline)
+const SIZING = {
+  R410A: [
+    {maxTons:1.5,  suction:'3/8"', liquid:'1/4"'},
+    {maxTons:2.0,  suction:'1/2"', liquid:'1/4"'},
+    {maxTons:3.0,  suction:'3/4"', liquid:'3/8"'},
+    {maxTons:4.0,  suction:'7/8"', liquid:'3/8"'},
+    {maxTons:5.0,  suction:'1-1/8"', liquid:'1/2"'},
+    {maxTons:7.5,  suction:'1-3/8"', liquid:'5/8"'},
+    {maxTons:10.0, suction:'1-5/8"', liquid:'3/4"'},
+    {maxTons:15.0, suction:'2-1/8"', liquid:'7/8"'},
+    {maxTons:25.0, suction:'2-5/8"', liquid:'1-1/8"'},
+  ],
+  R22: [
+    {maxTons:1.5,  suction:'1/2"', liquid:'1/4"'},
+    {maxTons:2.0,  suction:'5/8"', liquid:'3/8"'},
+    {maxTons:3.0,  suction:'7/8"', liquid:'3/8"'},
+    {maxTons:4.0,  suction:'1-1/8"', liquid:'1/2"'},
+    {maxTons:5.0,  suction:'1-1/8"', liquid:'1/2"'},
+    {maxTons:7.5,  suction:'1-3/8"', liquid:'5/8"'},
+    {maxTons:10.0, suction:'1-5/8"', liquid:'3/4"'},
+    {maxTons:15.0, suction:'2-1/8"', liquid:'7/8"'},
+    {maxTons:25.0, suction:'2-5/8"', liquid:'1-1/8"'},
+  ],
+  R32: [
+    {maxTons:1.5,  suction:'3/8"', liquid:'1/4"'},
+    {maxTons:2.0,  suction:'1/2"', liquid:'1/4"'},
+    {maxTons:3.0,  suction:'5/8"', liquid:'3/8"'},
+    {maxTons:4.0,  suction:'3/4"', liquid:'3/8"'},
+    {maxTons:5.0,  suction:'7/8"', liquid:'1/2"'},
+    {maxTons:7.5,  suction:'1-1/8"', liquid:'5/8"'},
+    {maxTons:10.0, suction:'1-3/8"', liquid:'3/4"'},
+    {maxTons:15.0, suction:'1-5/8"', liquid:'7/8"'},
+    {maxTons:25.0, suction:'2-1/8"', liquid:'1-1/8"'},
+  ],
+  R454B: [
+    {maxTons:1.5,  suction:'3/8"', liquid:'1/4"'},
+    {maxTons:2.0,  suction:'1/2"', liquid:'1/4"'},
+    {maxTons:3.0,  suction:'5/8"', liquid:'3/8"'},
+    {maxTons:4.0,  suction:'3/4"', liquid:'3/8"'},
+    {maxTons:5.0,  suction:'7/8"', liquid:'1/2"'},
+    {maxTons:7.5,  suction:'1-1/8"', liquid:'5/8"'},
+    {maxTons:10.0, suction:'1-3/8"', liquid:'3/4"'},
+    {maxTons:15.0, suction:'1-5/8"', liquid:'7/8"'},
+    {maxTons:25.0, suction:'2-1/8"', liquid:'1-1/8"'},
+  ],
+  R407C: [
+    {maxTons:1.5,  suction:'1/2"', liquid:'1/4"'},
+    {maxTons:2.0,  suction:'5/8"', liquid:'3/8"'},
+    {maxTons:3.0,  suction:'7/8"', liquid:'3/8"'},
+    {maxTons:4.0,  suction:'1-1/8"', liquid:'1/2"'},
+    {maxTons:5.0,  suction:'1-1/8"', liquid:'1/2"'},
+    {maxTons:7.5,  suction:'1-3/8"', liquid:'5/8"'},
+    {maxTons:10.0, suction:'1-5/8"', liquid:'3/4"'},
+    {maxTons:15.0, suction:'2-1/8"', liquid:'7/8"'},
+    {maxTons:25.0, suction:'2-5/8"', liquid:'1-1/8"'},
+  ]
+};
+
+// Size index for upsizing (suction)
+const SUCTION_ORDER = ['3/8"','1/2"','5/8"','3/4"','7/8"','1-1/8"','1-3/8"','1-5/8"','2-1/8"','2-5/8"'];
+const LIQUID_ORDER  = ['1/4"','3/8"','1/2"','5/8"','3/4"','7/8"','1-1/8"'];
+
+function upsize(size, arr, steps) {
+  let idx = arr.indexOf(size);
+  if (idx === -1) return size;
+  idx = Math.min(idx + steps, arr.length - 1);
+  return arr[idx];
+}
+
+function getSizing(tons, refrigerant, equivLength) {
+  const table = SIZING[refrigerant] || SIZING['R410A'];
+  let row = table.find(r => tons <= r.maxTons);
+  if (!row) row = table[table.length - 1];
+
+  let suction = row.suction;
+  let liquid  = row.liquid;
+
+  // Upsize suction if equiv length > 50 ft
+  if (equivLength > 50 && equivLength <= 100) {
+    suction = upsize(suction, SUCTION_ORDER, 1);
+  } else if (equivLength > 100 && equivLength <= 175) {
+    suction = upsize(suction, SUCTION_ORDER, 2);
+  } else if (equivLength > 175) {
+    suction = upsize(suction, SUCTION_ORDER, 2);
+    liquid  = upsize(liquid,  LIQUID_ORDER,  1);
+  }
+
+  return {suction, liquid};
+}
+
+function getInsulation(suctionSize, ambientTemp) {
+  // ASHRAE 90.1 / standard practice
+  if (ambientTemp >= 90) return '1" wall';
+  return '3/4" wall';
+}
+
+// Pressure drop estimation (simplified, psi)
+// ΔP ≈ k × (BTU/hr / 1000) × equivLength / diameter_factor
+function estPressureDrop(tons, equivLength, suctionSize, refrigerant) {
+  const btu = tons * 12000;
+  // Diameter factor (larger = lower drop)
+  const dFactor = {
+    '3/8"':0.4,'1/2"':0.7,'5/8"':1.1,'3/4"':1.6,
+    '7/8"':2.2,'1-1/8"':3.5,'1-3/8"':5.0,'1-5/8"':7.0,
+    '2-1/8"':11.0,'2-5/8"':17.0
+  };
+  const df = dFactor[suctionSize] || 2.2;
+  // Refrigerant density factor
+  const rFactor = {R410A:1.0, R22:0.85, R32:0.95, R454B:0.97, R407C:0.88};
+  const rf = rFactor[refrigerant] || 1.0;
+  const dp = (btu / 12000) * (equivLength / 50) * 2.5 / df * rf;
+  return Math.max(0.1, dp);
+}
+
+function chargeAdj(tons, actualLength, baseLength) {
+  // Typical: 0.6 oz per extra foot on suction beyond base (25–35 ft factory typical)
+  const extra = Math.max(0, actualLength - baseLength);
+  return (extra * 0.6).toFixed(1);
+}
+
+// ── Validation ─────────────────────────────────────────────────────────────
+function validate() {
+  let ok = true;
+  const cap   = parseFloat(document.getElementById('capacity').value);
+  const len   = parseFloat(document.getElementById('lineLength').value);
+  const rise  = parseFloat(document.getElementById('vertRise').value);
+  const temp  = parseFloat(document.getElementById('ambientTemp').value);
+
+  const setErr = (id, errId, condition, msg) => {
+    const el  = document.getElementById(id);
+    const em  = document.getElementById(errId);
+    if (condition) { el.classList.add('error'); em.classList.add('show'); em.textContent = msg; ok = false; }
+    else            { el.classList.remove('error'); em.classList.remove('show'); }
+  };
+
+  setErr('capacity',   'err-capacity', isNaN(cap)  || cap < 0.5  || cap > 25,  'Enter a valid capacity (0.5–25 tons).');
+  setErr('lineLength', 'err-length',   isNaN(len)  || len < 1    || len > 500, 'Enter a valid length (1–500 ft).');
+  setErr('vertRise',   'err-rise',     isNaN(rise) || rise < 0   || rise > 200,'Enter 0 or a positive number (0–200 ft).');
+  setErr('ambientTemp','err-temp',     isNaN(temp) || temp < 50  || temp > 130,'Enter a temperature between 50°F and 130°F.');
+
+  return ok ? {cap, len, rise, temp} : null;
+}
+
+// ── Calculate ──────────────────────────────────────────────────────────────
+function calculate() {
+  const vals = validate();
+  if (!vals) return;
+
+  const {cap, len, rise, temp} = vals;
+  const refrigerant = document.getElementById('refrigerant').value;
+  const sysType     = document.getElementById('sysType').value;
+
+  // Equivalent length: actual + 1.5 × rise (fittings add ~50% of rise)
+  const equivLen = Math.round(len + rise * 1.5);
+
+  const {suction, liquid} = getSizing(cap, refrigerant, equivLen);
+  const insul  = getInsulation(suction, temp);
+  const pd     = estPressureDrop(cap, equivLen, suction, refrigerant).toFixed(2);
+  const adjOz  = chargeAdj(cap, len, 25);
+  const btu    = (cap * 12000).toLocaleString();
+
+  // Warnings
+  let warnings = [];
+  if (equivLen > 150) warnings.push('Very long line run (>150 ft equiv.). Verify manufacturer specs and add refrigerant charge per their guidelines.');
+  if (rise > 50)      warnings.push('Large vertical rise detected. Ensure oil traps are installed every 20–25 ft of vertical rise on suction line.');
+  if (parseFloat(pd) > 5) warnings.push('Estimated pressure drop is high (>5 psi). Consider upsizing the suction line further or reducing line length.');
+  if (sysType === 'minisplit') warnings.push('Mini-split systems often have manufacturer-specific line sizing requirements. Always verify with the equipment manual.');
+  if (refrigerant === 'R454B') warnings.push('R-454B is an A2L mildly flammable refrigerant. Follow local codes for installation, ventilation, and leak detection.');
+
+  requestAnimationFrame(() => {
+    // Update diagram
+    document.getElementById('diag-tons').textContent       = cap + ' tons';
+    document.getElementById('diag-suction').textContent    = 'Suction Line (gas) — ' + suction + ' OD';
+    document.getElementById('diag-suction-size').textContent = suction + ' OD';
+    document.getElementById('diag-liquid').textContent     = 'Liquid Line — ' + liquid + ' OD';
+    document.getElementById('diag-liquid-size').textContent = liquid + ' OD';
+    document.getElementById('diag-length').textContent     = 'Line Length: ' + len + ' ft  |  Equiv: ' + equivLen + ' ft';
+    document.getElementById('diag-insul').textContent      = 'Insulation: ' + insul + ' thickness (suction line)';
+
+    // Warnings
+    const warnHTML = warnings.map(w => `<div class="warn-box"><strong>⚠ Note:</strong>${w}</div>`).join('');
+    document.getElementById('warn-area').innerHTML = warnHTML;
+
+    // Hero
+    document.getElementById('res-suction-main').textContent = suction;
+    document.getElementById('res-suction-sub').textContent  = 'Suction Line OD · ' + refrigerant;
+
+    // Boxes
+    document.getElementById('res-liquid').textContent  = liquid;
+    document.getElementById('res-insul').textContent   = insul;
+    document.getElementById('res-eql').textContent     = equivLen.toLocaleString();
+    document.getElementById('res-pd').textContent      = pd;
+
+    // Spec table
+    const chargeNote = parseFloat(adjOz) > 0
+      ? `+${adjOz} oz approx. beyond 25 ft` : 'Use factory charge';
+
+    const rows = [
+      ['System Capacity',        cap + ' tons (' + btu + ' BTU/hr)'],
+      ['Refrigerant',            refrigerant],
+      ['System Type',            {split:'Split A/C',heatpump:'Heat Pump',minisplit:'Mini-Split'}[sysType]],
+      ['Actual Line Length',     len.toLocaleString() + ' ft'],
+      ['Vertical Rise/Drop',     rise.toLocaleString() + ' ft'],
+      ['Equivalent Length',      equivLen.toLocaleString() + ' ft'],
+      ['Suction Line OD',        suction],
+      ['Liquid Line OD',         liquid],
+      ['Suction Line Insulation',insul + ' (closed-cell foam)'],
+      ['Ambient Temp',           temp + '°F'],
+      ['Est. Suction Pressure Drop', pd + ' psi'],
+      ['Refrigerant Charge Adj.',chargeNote],
+      ['Min. Copper Grade',      'ACR Type L (cleaned & dehydrated)'],
+      ['Nitrogen Pressure Test', '250–300 psi for R-410A / 150 psi for R-22'],
+    ];
+
+    let tbody = '';
+    rows.forEach(([k,v]) => {
+      tbody += `<tr><td>${k}</td><td class="num">${v}</td></tr>`;
+    });
+    document.getElementById('spec-tbody').innerHTML = tbody;
+
+    const res = document.getElementById('results');
+    res.classList.add('visible');
+    res.scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
+}
+
+// ── Copy results ───────────────────────────────────────────────────────────
+document.getElementById('copyBtn').addEventListener('click', function() {
+  const rows = document.querySelectorAll('#spec-tbody tr');
+  let text = 'HVAC Refrigerant Line Set Sizing Results\n';
+  text += '=========================================\n';
+  rows.forEach(r => {
+    const cells = r.querySelectorAll('td');
+    if (cells.length === 2) text += cells[0].textContent.padEnd(30) + cells[1].textContent + '\n';
+  });
+  text += '\nGenerated by toolwick.com/hvac-refrigerant-line-set-size-calculator/';
+  navigator.clipboard.writeText(text).then(() => {
+    this.textContent = '✅ Copied!';
+    setTimeout(() => { this.textContent = '📋 Copy Results'; }, 2000);
+  });
+});
+
+// ── Event listeners ────────────────────────────────────────────────────────
+document.getElementById('calcBtn').addEventListener('click', () => {
+  requestAnimationFrame(() => { calculate(); });
+});
+
+['capacity','lineLength','vertRise','ambientTemp'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') { requestAnimationFrame(() => { calculate(); }); }
+  });
+});
+
+// Auto-calculate on load with defaults
+window.addEventListener('load', () => {
+  requestAnimationFrame(() => { calculate(); });
+});
+</script>
+</body>
+</html>
