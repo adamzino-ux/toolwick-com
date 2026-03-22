@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welding Rod & Wire Consumption Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate welding rod and wire consumption for any weld joint. Get accurate estimates of electrodes, filler wire, and material costs for your welding project.">
+<link rel="canonical" href="https://toolwick.com/welding-rod-wire-consumption-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Welding Rod & Wire Consumption Calculator",
+  "url": "https://toolwick.com/welding-rod-wire-consumption-calculator/",
+  "description": "Calculate welding rod and wire consumption for any weld joint. Get accurate estimates of electrodes, filler wire, and material costs.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0.75rem 1.5rem}
+.nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center}
+.nav-logo{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+.nav-logo span{color:#0077b6}
+main{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;font-weight:700;margin-bottom:0.5rem;line-height:1.3}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+svg.weld-diagram{width:100%;max-width:560px;height:auto}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:480px){.form-grid{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:4px;margin-bottom:0}
+label{font-size:0.85rem;font-weight:500;color:#444}
+input,select{width:100%;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font-size:0.95rem;color:#1a1a2e;background:#fff;min-height:44px;transition:border-color 0.2s,box-shadow 0.2s}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error,select.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:2px;display:none}
+.error-msg.show{display:block}
+.btn{background:#0077b6;color:#fff;border:none;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;min-height:44px;transition:background 0.2s;width:100%;margin-top:1rem}
+.btn:hover{background:#006299}
+.btn-sm{background:#0077b6;color:#fff;border:none;border-radius:4px;padding:6px 14px;font-size:0.8rem;cursor:pointer;min-height:36px;transition:background 0.2s}
+.btn-sm:hover{background:#006299}
+.results{opacity:0;transition:opacity 0.3s ease;margin-top:1.5rem;display:none}
+.results.visible{opacity:1;display:block}
+.result-hero{text-align:center;padding:1.25rem;background:#f0f7ff;border-radius:8px;margin-bottom:1.25rem;border:1px solid #cce3f5}
+.result-hero .big-num{font-size:2.4rem;font-weight:700;color:#0077b6;line-height:1.1}
+.result-hero .big-label{font-size:0.9rem;color:#555;margin-top:4px}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+@media(max-width:480px){.result-grid{grid-template-columns:1fr}}
+.result-box{background:#f8f9fa;border-radius:6px;padding:1rem;text-align:center;border:1px solid #e0e0e0}
+.result-box .val{font-size:1.4rem;font-weight:700;color:#0077b6}
+.result-box .lbl{font-size:0.78rem;color:#666;margin-top:2px}
+.result-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-bottom:1rem}
+.copy-btn{display:flex;align-items:center;gap:5px;background:#f8f9fa;border:1px solid #ddd;border-radius:4px;padding:6px 12px;font-size:0.82rem;cursor:pointer;color:#555;transition:background 0.2s}
+.copy-btn:hover{background:#e8e8e8}
+table{width:100%;border-collapse:collapse;font-size:0.88rem}
+th{background:#f0f0f0;padding:8px 10px;text-align:left;font-weight:600;color:#333;border-bottom:2px solid #ddd}
+th.num,td.num{text-align:right}
+td{padding:8px 10px;border-bottom:1px solid #eee;color:#1a1a2e}
+tr:nth-child(even) td{background:#fafafa}
+.table-scroll{overflow-x:auto}
+.section{margin-bottom:2rem}
+.section h2{font-size:1.15rem;font-weight:700;margin-bottom:0.75rem;color:#1a1a2e}
+.content-section{margin-top:2rem}
+.content-section h2{font-size:1.15rem;font-weight:700;margin-bottom:0.6rem;color:#1a1a2e;border-bottom:2px solid #e0e0e0;padding-bottom:0.4rem}
+.content-section p{font-size:0.92rem;color:#444;margin-bottom:0.75rem;line-height:1.7}
+.content-section ul{font-size:0.92rem;color:#444;padding-left:1.25rem;margin-bottom:0.75rem;line-height:1.8}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:0.6rem;background:#fafafa}
+summary{padding:10px 14px;font-weight:600;font-size:0.9rem;cursor:pointer;color:#1a1a2e}
+summary:hover{color:#0077b6}
+details p{padding:0 14px 12px;font-size:0.88rem;color:#555;line-height:1.65}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem}
+@media(max-width:480px){.related-grid{grid-template-columns:1fr}}
+.related-link{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:10px 14px;font-size:0.85rem;color:#0077b6;transition:background 0.2s}
+.related-link:hover{background:#e8f4fd;text-decoration:none}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:0.82rem;color:#888;max-width:640px;margin:0 auto}
+footer a{color:#0077b6;margin:0 8px}
+.tab-row{display:flex;gap:4px;margin-bottom:1.25rem}
+.tab-btn{flex:1;background:#f0f0f0;border:1px solid #ddd;border-radius:6px 6px 0 0;padding:9px 8px;font-size:0.82rem;font-weight:600;cursor:pointer;color:#555;min-height:40px;transition:background 0.2s,color 0.2s;border-bottom:none}
+.tab-btn.active{background:#0077b6;color:#fff;border-color:#0077b6}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.formula-box{background:#f0f7ff;border:1px solid #cce3f5;border-radius:6px;padding:12px 16px;font-family:monospace;font-size:0.85rem;color:#1a1a2e;margin:0.5rem 0 1rem}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">tool<span>wick</span>.com</a>
+  </div>
+</nav>
+
+<main>
+  <h1>Welding Rod & Wire Consumption Calculator</h1>
+  <p class="subtitle">Estimate electrode or filler wire usage, number of passes, and material cost for any weld joint.</p>
+
+  <div class="card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg class="weld-diagram" viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background plates -->
+        <rect x="30" y="90" width="220" height="40" fill="#e8f4fd" stroke="#0077b6" stroke-width="1.5"/>
+        <rect x="310" y="90" width="220" height="40" fill="#e8f4fd" stroke="#0077b6" stroke-width="1.5"/>
+        <!-- Bevel lines -->
+        <line x1="250" y1="90" x2="280" y2="130" stroke="#0077b6" stroke-width="1.5"/>
+        <line x1="310" y1="90" x2="280" y2="130" stroke="#0077b6" stroke-width="1.5"/>
+        <!-- Root gap -->
+        <line x1="275" y1="128" x2="285" y2="128" stroke="#e74c3c" stroke-width="2"/>
+        <!-- Weld fill area -->
+        <polygon points="250,90 310,90 280,130" fill="rgba(0,119,182,0.12)" stroke="#0077b6" stroke-width="1" stroke-dasharray="4,3"/>
+        <!-- Thickness arrows -->
+        <line x1="20" y1="90" x2="20" y2="130" stroke="#888" stroke-width="1.2" marker-start="url(#arr)" marker-end="url(#arr)"/>
+        <text x="13" y="115" font-size="10" fill="#1a1a2e" text-anchor="middle" id="svg-thickness">T</text>
+        <!-- Weld length arrow -->
+        <line x1="30" y1="145" x2="530" y2="145" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="30" y1="140" x2="30" y2="150" stroke="#888" stroke-width="1.5"/>
+        <line x1="530" y1="140" x2="530" y2="150" stroke="#888" stroke-width="1.5"/>
+        <text x="280" y="160" font-size="10" fill="#1a1a2e" text-anchor="middle" id="svg-length">Weld Length</text>
+        <!-- Bevel angle label -->
+        <path d="M 280 130 L 295 108" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="305" y="107" font-size="10" fill="#1a1a2e" id="svg-angle">60°</text>
+        <!-- Root gap label -->
+        <text x="280" y="82" font-size="10" fill="#e74c3c" text-anchor="middle" id="svg-root">Root Gap</text>
+        <!-- Pass layers -->
+        <ellipse cx="268" cy="105" rx="8" ry="5" fill="rgba(0,119,182,0.3)" stroke="#0077b6" stroke-width="1"/>
+        <ellipse cx="292" cy="105" rx="8" ry="5" fill="rgba(0,119,182,0.3)" stroke="#0077b6" stroke-width="1"/>
+        <ellipse cx="280" cy="118" rx="10" ry="5" fill="rgba(0,119,182,0.45)" stroke="#0077b6" stroke-width="1"/>
+        <!-- Labels -->
+        <text x="140" y="115" font-size="11" fill="#1a1a2e" text-anchor="middle" font-weight="600">Base Metal</text>
+        <text x="420" y="115" font-size="11" fill="#1a1a2e" text-anchor="middle" font-weight="600">Base Metal</text>
+        <text x="280" y="185" font-size="10" fill="#0077b6" text-anchor="middle" font-weight="600" id="svg-joint">V-Groove Butt Joint</text>
+        <!-- Arrowhead marker -->
+        <defs>
+          <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#888"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('groove')">Groove Weld</button>
+      <button class="tab-btn" onclick="switchTab('fillet')">Fillet Weld</button>
+      <button class="tab-btn" onclick="switchTab('wire')">MIG/FCAW Wire</button>
+    </div>
+
+    <!-- GROOVE WELD TAB -->
+    <div class="tab-content active" id="tab-groove">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="g-weldLen">Weld Length (inches)</label>
+          <input type="number" id="g-weldLen" value="120" min="0.1" step="0.1" placeholder="e.g. 120">
+          <span class="error-msg" id="g-weldLen-err">Enter a positive length.</span>
+        </div>
+        <div class="form-group">
+          <label for="g-plateThk">Plate Thickness (inches)</label>
+          <input type="number" id="g-plateThk" value="0.5" min="0.0625" step="0.0625" placeholder="e.g. 0.5">
+          <span class="error-msg" id="g-plateThk-err">Enter thickness ≥ 0.0625".</span>
+        </div>
+        <div class="form-group">
+          <label for="g-bevelAngle">Bevel Angle (° each side)</label>
+          <input type="number" id="g-bevelAngle" value="30" min="10" max="45" step="1" placeholder="30">
+          <span class="error-msg" id="g-bevelAngle-err">Angle must be 10–45°.</span>
+        </div>
+        <div class="form-group">
+          <label for="g-rootGap">Root Gap (inches)</label>
+          <input type="number" id="g-rootGap" value="0.0625" min="0" step="0.0625" placeholder="0.0625">
+          <span class="error-msg" id="g-rootGap-err">Enter 0 or positive value.</span>
+        </div>
+        <div class="form-group">
+          <label for="g-rodDia">Electrode Diameter (inches)</label>
+          <select id="g-rodDia">
+            <option value="0.09375">3/32" (2.4 mm)</option>
+            <option value="0.125" selected>1/8" (3.2 mm)</option>
+            <option value="0.15625">5/32" (4.0 mm)</option>
+            <option value="0.1875">3/16" (4.8 mm)</option>
+            <option value="0.25">1/4" (6.4 mm)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="g-process">Process / Electrode Type</label>
+          <select id="g-process">
+            <option value="SMAW_6010">SMAW – E6010/E6011</option>
+            <option value="SMAW_7018" selected>SMAW – E7018</option>
+            <option value="SMAW_6013">SMAW – E6013</option>
+            <option value="GTAW">GTAW (TIG) – ER70S</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="g-cost">Cost per Pound ($)</label>
+          <input type="number" id="g-cost" value="3.50" min="0" step="0.01" placeholder="3.50">
+          <span class="error-msg" id="g-cost-err">Enter a positive cost.</span>
+        </div>
+        <div class="form-group">
+          <label for="g-depo">Deposition Efficiency (%)</label>
+          <input type="number" id="g-depo" value="65" min="20" max="99" step="1" placeholder="65">
+          <span class="error-msg" id="g-depo-err">Enter 20–99%.</span>
+        </div>
+      </div>
+      <button class="btn" onclick="calcGroove()">Calculate Groove Weld</button>
+    </div>
+
+    <!-- FILLET WELD TAB -->
+    <div class="tab-content" id="tab-fillet">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="f-weldLen">Weld Length (inches)</label>
+          <input type="number" id="f-weldLen" value="120" min="0.1" step="0.1" placeholder="120">
+          <span class="error-msg" id="f-weldLen-err">Enter a positive length.</span>
+        </div>
+        <div class="form-group">
+          <label for="f-legSize">Fillet Leg Size (inches)</label>
+          <input type="number" id="f-legSize" value="0.25" min="0.0625" step="0.0625" placeholder="0.25">
+          <span class="error-msg" id="f-legSize-err">Enter leg ≥ 0.0625".</span>
+        </div>
+        <div class="form-group">
+          <label for="f-passes">Number of Passes</label>
+          <input type="number" id="f-passes" value="1" min="1" max="20" step="1" placeholder="1">
+          <span class="error-msg" id="f-passes-err">Enter 1–20 passes.</span>
+        </div>
+        <div class="form-group">
+          <label for="f-process">Process</label>
+          <select id="f-process">
+            <option value="SMAW_6010">SMAW – E6010/E6011</option>
+            <option value="SMAW_7018" selected>SMAW – E7018</option>
+            <option value="SMAW_6013">SMAW – E6013</option>
+            <option value="GTAW">GTAW (TIG) – ER70S</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="f-rodDia">Electrode Diameter (inches)</label>
+          <select id="f-rodDia">
+            <option value="0.09375">3/32" (2.4 mm)</option>
+            <option value="0.125" selected>1/8" (3.2 mm)</option>
+            <option value="0.15625">5/32" (4.0 mm)</option>
+            <option value="0.1875">3/16" (4.8 mm)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="f-cost">Cost per Pound ($)</label>
+          <input type="number" id="f-cost" value="3.50" min="0" step="0.01" placeholder="3.50">
+          <span class="error-msg" id="f-cost-err">Enter a positive cost.</span>
+        </div>
+        <div class="form-group">
+          <label for="f-depo">Deposition Efficiency (%)</label>
+          <input type="number" id="f-depo" value="65" min="20" max="99" step="1" placeholder="65">
+          <span class="error-msg" id="f-depo-err">Enter 20–99%.</span>
+        </div>
+      </div>
+      <button class="btn" onclick="calcFillet()">Calculate Fillet Weld</button>
+    </div>
+
+    <!-- MIG/FCAW WIRE TAB -->
+    <div class="tab-content" id="tab-wire">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="w-weldLen">Weld Length (inches)</label>
+          <input type="number" id="w-weldLen" value="120" min="0.1" step="0.1" placeholder="120">
+          <span class="error-msg" id="w-weldLen-err">Enter a positive length.</span>
+        </div>
+        <div class="form-group">
+          <label for="w-weldType">Joint Type</label>
+          <select id="w-weldType">
+            <option value="fillet">Fillet</option>
+            <option value="butt">Butt (V-groove)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="w-size">Leg / Throat Size (inches)</label>
+          <input type="number" id="w-size" value="0.25" min="0.0625" step="0.0625" placeholder="0.25">
+          <span class="error-msg" id="w-size-err">Enter positive size.</span>
+        </div>
+        <div class="form-group">
+          <label for="w-wireDia">Wire Diameter</label>
+          <select id="w-wireDia">
+            <option value="0.023">0.023" (0.6 mm)</option>
+            <option value="0.030">0.030" (0.8 mm)</option>
+            <option value="0.035" selected>0.035" (0.9 mm)</option>
+            <option value="0.045">0.045" (1.2 mm)</option>
+            <option value="0.052">0.052" (1.4 mm)</option>
+            <option value="0.0625">1/16" (1.6 mm)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="w-process">Process</label>
+          <select id="w-process">
+            <option value="MIG">MIG (GMAW) – ER70S-6</option>
+            <option value="FCAW_S">FCAW Self-Shielded</option>
+            <option value="FCAW_G">FCAW Gas-Shielded</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="w-cost">Wire Cost per Pound ($)</label>
+          <input type="number" id="w-cost" value="2.20" min="0" step="0.01" placeholder="2.20">
+          <span class="error-msg" id="w-cost-err">Enter a positive cost.</span>
+        </div>
+        <div class="form-group">
+          <label for="w-depo">Deposition Efficiency (%)</label>
+          <input type="number" id="w-depo" value="93" min="30" max="99" step="1" placeholder="93">
+          <span class="error-msg" id="w-depo-err">Enter 30–99%.</span>
+        </div>
+        <div class="form-group">
+          <label for="w-plateThk">Plate Thickness (inches) — butt only</label>
+          <input type="number" id="w-plateThk" value="0.5" min="0.0625" step="0.0625" placeholder="0.5">
+          <span class="error-msg" id="w-plateThk-err">Enter thickness ≥ 0.0625".</span>
+        </div>
+      </div>
+      <button class="btn" onclick="calcWire()">Calculate Wire Consumption</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results" id="results">
+      <div class="result-hero">
+        <div class="big-num" id="res-main">—</div>
+        <div class="big-label" id="res-main-lbl">Filler Metal Required (lbs)</div>
+      </div>
+      <div class="result-grid" id="res-grid"></div>
+      <div class="result-actions">
+        <button class="copy-btn" onclick="copyResults()" id="copyBtn">📋 Copy Results</button>
+      </div>
+      <div class="table-scroll">
+        <table id="res-table">
+          <thead id="res-thead"></thead>
+          <tbody id="res-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- CONTENT SECTION -->
+  <div class="content-section">
+    <div class="section">
+      <h2>How to Use This Welding Rod & Wire Consumption Calculator</h2>
+      <p>Select your weld type tab — <strong>Groove Weld</strong> (butt joints with bevel), <strong>Fillet Weld</strong> (lap/T-joints), or <strong>MIG/FCAW Wire</strong>. Enter the weld length, joint dimensions, electrode or wire diameter, and cost per pound. Hit Calculate and you'll instantly see total filler metal weight, number of electrodes or wire spool usage, estimated cost, and a full breakdown by pass.</p>
+    </div>
+
+    <div class="section">
+      <h2>Why This Matters</h2>
+      <p>Underestimating filler metal is one of the most common — and costly — mistakes on a fabrication job. A structural steel project with 500 feet of 5/16" fillet welds using E7018 at $3.50/lb can consume 40–60 lbs of electrodes. That's $140–210 in rod alone, before you factor in stub loss and deposition efficiency. MIG wire jobs scale even faster: a production shop running 0.045" ER70S-6 wire at 200 IPM can burn through a 33-lb spool in a single shift.</p>
+      <p>This calculator helps fabricators, ironworkers, welding supervisors, and estimators build accurate material take-offs. Whether you're quoting a pipeline repair, a structural column base plate, or a custom staircase railing, knowing your filler consumption upfront keeps your bids competitive and your shop profitable. It's also useful for tracking waste — if actual consumption is consistently 30% over calculated, your deposition efficiency setting (or welder technique) needs attention.</p>
+    </div>
+
+    <div class="section">
+      <h2>How It's Calculated</h2>
+      <p>All calculations follow the AWS D1.1 structural welding standard methodology. The core steps are:</p>
+      <p><strong>1. Weld Cross-Sectional Area</strong></p>
+      <div class="formula-box">
+        V-Groove Area = (tan(bevel°) × T²) + (root_gap × T)  [in²]<br>
+        Fillet Area = 0.5 × leg² [in²]
+      </div>
+      <p><strong>2. Volume of Weld Metal</strong></p>
+      <div class="formula-box">
+        Volume (in³) = Cross-Section Area × Weld Length
+      </div>
+      <p><strong>3. Weight of Weld Metal (steel density = 0.2836 lb/in³)</strong></p>
+      <div class="formula-box">
+        Weld Metal Weight (lbs) = Volume × 0.2836
+      </div>
+      <p><strong>4. Filler Metal Required (accounting for deposition efficiency)</strong></p>
+      <div class="formula-box">
+        Filler Metal (lbs) = Weld Metal Weight ÷ (Deposition Efficiency / 100)
+      </div>
+      <p><strong>5. Number of Electrodes</strong> — derived from electrode length (14") and diameter-specific weight per rod. SMAW stub loss is assumed at 2" per rod (≈85% usable length).</p>
+    </div>
+
+    <div class="section">
+      <h2>Tips & Common Mistakes</h2>
+      <ul>
+        <li><strong>Always apply a waste factor.</strong> Even experienced welders run 5–15% over calculated consumption due to restarts, arc strikes, and defect repairs. Add 10% for structural work.</li>
+        <li><strong>Deposition efficiency varies widely.</strong> SMAW (stick) is typically 60–70%, MIG is 85–95%, FCAW gas-shielded is 80–90%. Using 100% will cause serious underestimates.</li>
+        <li><strong>Bevel angle matters exponentially.</strong> Changing from 30° to 45° per side nearly doubles the weld volume on thick plate. Always measure your actual prep angle.</li>
+        <li><strong>Root gap adds up fast.</strong> A 1/8" root gap over 10 feet of weld adds almost 0.5 in³ of extra weld volume — that's roughly 0.14 lbs of filler you didn't budget for.</li>
+        <li><strong>Match rod diameter to plate thickness.</strong> Running 3/16" rod on 1/4" plate causes burnthrough. Running 1/8" rod on 1" plate means many more passes and longer cycle time.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Frequently Asked Questions</h2>
+      <details>
+        <summary>What is deposition efficiency in welding?</summary>
+        <p>Deposition efficiency is the percentage of the electrode or wire that actually becomes deposited weld metal, versus what is lost as spatter, slag, or stub. SMAW typically runs 60–70%, while MIG (GMAW) runs 85–95%. Higher efficiency means less filler material consumed per pound of weld deposited.</p>
+      </details>
+      <details>
+        <summary>How many E7018 rods do I need per pound of weld metal?</summary>
+        <p>A 14" E7018 electrode in 1/8" diameter weighs approximately 0.093 lbs and deposits roughly 0.065 lbs of weld metal (70% efficiency). That means you'll need about 15 rods to deposit 1 lb of weld metal. Larger diameter rods (3/16") deposit more per rod — roughly 0.20 lbs each.</p>
+      </details>
+      <details>
+        <summary>Can I use this for stainless steel or aluminum?</summary>
+        <p>The cross-sectional area and volume formulas are valid for any metal. However, the density factor changes: stainless steel is ≈0.289 lb/in³ (vs 0.2836 for mild steel) and aluminum is ≈0.098 lb/in³. For critical stainless or aluminum jobs, adjust your mental calculation by roughly +2% or -65% respectively from this tool's output.</p>
+      </details>
+      <details>
+        <summary>How accurate are these calculations?</summary>
+        <p>Calculated values are theoretical minimums based on perfect weld geometry. Real-world consumption runs 5–20% higher depending on welder skill, joint fit-up quality, and process parameters. Use this as a baseline for estimating, then add a 10–15% buffer for bids and purchase orders.</p>
+      </details>
+    </div>
+
+    <div class="section">
+      <h2>Related Tools</h2>
+      <div class="related-grid">
+        <a class="related-link" href="/shed-foundation-floor-joist-calculator/">Shed Foundation & Floor Joist Calculator</a>
+        <a class="related-link" href="/hvac-refrigerant-line-set-size-calculator/">HVAC Refrigerant Line Set Size Calculator</a>
+        <a class="related-link" href="/trench-shoring-excavation-safety-calculator/">Trench Shoring & Excavation Safety Calculator</a>
+        <a class="related-link" href="/footing-foundation-size-calculator/">Footing & Foundation Size Calculator</a>
+        <a class="related-link" href="/paver-patio-calculator/">Paver Patio Base & Sand Calculator</a>
+        <a class="related-link" href="/spray-foam-insulation-calculator/">Spray Foam Insulation Coverage Calculator</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</main>
+
+<footer>
+  <div>
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <div style="margin-top:0.4rem">© 2025 toolwick.com</div>
+</footer>
+
+<script>
+// ── Tab switching ──────────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    const tabs = ['groove','fillet','wire'];
+    b.classList.toggle('active', tabs[i] === tab);
+  });
+  document.querySelectorAll('.tab-content').forEach(el => {
+    el.classList.toggle('active', el.id === 'tab-' + tab);
+  });
+  hideResults();
+}
+
+function hideResults() {
+  const r = document.getElementById('results');
+  r.classList.remove('visible');
+  r.style.display = 'none';
+}
+
+// ── Enter key triggers calculate ──────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const active = document.querySelector('.tab-content.active');
+  if (!active) return;
+  if (active.id === 'tab-groove') calcGroove();
+  else if (active.id === 'tab-fillet') calcFillet();
+  else calcWire();
+});
+
+// ── Utility ───────────────────────────────────────────────────────
+const steel_density = 0.2836; // lb/in³
+
+function fmt(n, dec = 2) {
+  if (isNaN(n)) return '—';
+  return n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+}
+function fmtI(n) { return Math.ceil(n).toLocaleString('en-US'); }
+
+function clearErr(id) {
+  const el = document.getElementById(id + '-err');
+  const inp = document.getElementById(id);
+  if (el) el.classList.remove('show');
+  if (inp) inp.classList.remove('error');
+}
+function showErr(id, msg) {
+  const el = document.getElementById(id + '-err');
+  const inp = document.getElementById(id);
+  if (el) { el.textContent = msg; el.classList.add('show'); }
+  if (inp) inp.classList.add('error');
+}
+function getVal(id) {
+  clearErr(id);
+  return parseFloat(document.getElementById(id).value);
+}
+
+// ── Process lookup tables ─────────────────────────────────────────
+// Deposition rate factors (lbs per rod for SMAW, just efficiencies otherwise)
+const rodWeightPerFoot = { // lbs/foot of electrode per dia
+  0.09375: 0.0475,
+  0.125: 0.0849,
+  0.15625: 0.1326,
+  0.1875: 0.1908,
+  0.25: 0.3392
+};
+
+// Stub length 2 inches; electrode length 14 inches → usable = 12 inches
+const ROD_LEN = 14; // inches
+const STUB_LEN = 2; // inches
+const USABLE_LEN = ROD_LEN - STUB_LEN; // 12 inches
+
+function rodWeightUsable(diaIn) {
+  const wpl = rodWeightPerFoot[diaIn] || 0.0849;
+  return wpl * (USABLE_LEN / 12);
+}
+
+// Wire spool size options (common)
+const SPOOL_LBS = [2, 11, 33, 44];
+
+function calcPassCount(area_in2, rodDia) {
+  // approx area covered per pass based on rod/wire dia
+  const passArea = Math.PI * Math.pow(rodDia / 2, 2) * 1.5;
+  return Math.max(1, Math.ceil(area_in2 / passArea));
+}
+
+// ── UPDATE SVG labels ─────────────────────────────────────────────
+function updateSVG(thk, len, angle, root, joint) {
+  const te = document.getElementById('svg-thickness');
+  const le = document.getElementById('svg-length');
+  const ae = document.getElementById('svg-angle');
+  const re = document.getElementById('svg-root');
+  const je = document.getElementById('svg-joint');
+  if (te) te.textContent = thk ? thk + '"' : 'T';
+  if (le) le.textContent = len ? len + '"' : 'Weld Length';
+  if (ae) ae.textContent = angle ? (angle * 2) + '°' : '60°';
+  if (re) re.textContent = root ? 'Gap ' + root + '"' : 'Root Gap';
+  if (je) je.textContent = joint || 'V-Groove Butt Joint';
+}
+
+// ── Show Results ──────────────────────────────────────────────────
+let lastResultText = '';
+
+function showResults(mainVal, mainLbl, grid, tableHead, tableRows) {
+  requestAnimationFrame(() => {
+    document.getElementById('res-main').textContent = mainVal;
+    document.getElementById('res-main-lbl').textContent = mainLbl;
+    document.getElementById('res-grid').innerHTML = grid;
+
+    const thead = document.getElementById('res-thead');
+    const tbody = document.getElementById('res-tbody');
+    thead.innerHTML = tableHead;
+    tbody.innerHTML = tableRows;
+
+    lastResultText = buildCopyText(mainVal, mainLbl, tableHead, tableRows);
+
+    const r = document.getElementById('results');
+    r.style.display = 'block';
+    requestAnimationFrame(() => r.classList.add('visible'));
+  });
+}
+
+function buildCopyText(main, lbl, thead, tbody) {
+  // Strip HTML
+  const strip = s => s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  return lbl + ': ' + main + '\n\n' + strip(thead) + '\n' + strip(tbody);
+}
+
+function copyResults() {
+  const btn = document.getElementById('copyBtn');
+  navigator.clipboard.writeText(lastResultText).then(() => {
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy Results'; }, 2000);
+  }).catch(() => {
+    btn.textContent = '❌ Failed';
+    setTimeout(() => { btn.textContent = '📋 Copy Results'; }, 2000);
+  });
+}
+
+function resultBox(val, lbl) {
+  return `<div class="result-box"><div class="val">${val}</div><div class="lbl">${lbl}</div></div>`;
+}
+
+// ── GROOVE WELD ───────────────────────────────────────────────────
+function calcGroove() {
+  const weldLen   = getVal('g-weldLen');
+  const plateThk  = getVal('g-plateThk');
+  const bevelAng  = getVal('g-bevelAngle');
+  const rootGap   = getVal('g-rootGap');
+  const rodDia    = parseFloat(document.getElementById('g-rodDia').value);
+  const costPerLb = getVal('g-cost');
+  const depoEff   = getVal('g-depo');
+  const process   = document.getElementById('g-process').value;
+
+  let valid = true;
+  if (isNaN(weldLen) || weldLen <= 0) { showErr('g-weldLen', 'Enter a positive length.'); valid = false; }
+  if (isNaN(plateThk) || plateThk < 0.0625) { showErr('g-plateThk', 'Enter thickness ≥ 0.0625".'); valid = false; }
+  if (isNaN(bevelAng) || bevelAng < 10 || bevelAng > 45) { showErr('g-bevelAngle', 'Angle must be 10–45°.'); valid = false; }
+  if (isNaN(rootGap) || rootGap < 0) { showErr('g-rootGap', 'Enter 0 or positive.'); valid = false; }
+  if (isNaN(costPerLb) || costPerLb < 0) { showErr('g-cost', 'Enter a positive cost.'); valid = false; }
+  if (isNaN(depoEff) || depoEff < 20 || depoEff > 99) { showErr('g-depo', 'Enter 20–99%.'); valid = false; }
+  if (!valid) return;
+
+  updateSVG(plateThk, weldLen, bevelAng, rootGap, 'V-Groove Butt Joint');
+
+  const bevelRad = bevelAng * Math.PI / 180;
+  // Area = triangle + root gap rectangle
+  const bevelArea = Math.tan(bevelRad) * plateThk * plateThk; // both sides combined
+  const rootArea  = rootGap * plateThk;
+  const crossArea = bevelArea + rootArea; // in²
+
+  const volume    = crossArea * weldLen; // in³
+  const weldMetal = volume * steel_density; // lbs
+  const fillerReq = weldMetal / (depoEff / 100); // lbs
+
+  const passes    = calcPassCount(crossArea, rodDia);
+  const cost      = fillerReq * costPerLb;
+
+  // Electrode count
+  const rodWt     = rodWeightUsable(rodDia);
+  const rodCount  = Math.ceil(fillerReq / (rodWt * (depoEff / 100)));
+
+  // Efficiency
+  const stubs     = rodCount * STUB_LEN;
+
+  const grid = resultBox(fmt(fillerReq) + ' lbs', 'Filler Metal Required') +
+               resultBox('$' + fmt(cost), 'Estimated Material Cost') +
+               resultBox(fmtI(rodCount), 'Electrodes Needed') +
+               resultBox(fmtI(passes), 'Estimated Passes');
+
+  const thead = `<tr><th>Parameter</th><th class="num">Value</th></tr>`;
+  const rows = [
+    ['Weld Length', weldLen + '"'],
+    ['Plate Thickness', plateThk + '"'],
+    ['Bevel Angle (each side)', bevelAng + '°'],
+    ['Root Gap', rootGap + '"'],
+    ['Weld Cross-Section Area', fmt(crossArea, 4) + ' in²'],
+    ['Weld Volume', fmt(volume, 3) + ' in³'],
+    ['Weld Metal Weight', fmt(weldMetal, 3) + ' lbs'],
+    ['Deposition Efficiency', depoEff + '%'],
+    ['Filler Metal Required', fmt(fillerReq, 3) + ' lbs'],
+    ['Electrode Diameter', rodDia + '"'],
+    ['Usable Weight per Rod', fmt(rodWt, 4) + ' lbs'],
+    ['Electrodes Needed', fmtI(rodCount)],
+    ['Stub Loss Estimate', fmt(stubs / 12, 2) + ' ft'],
+    ['Estimated Passes', fmtI(passes)],
+    ['Cost per Pound', '$' + fmt(costPerLb)],
+    ['Total Material Cost', '$' + fmt(cost)],
+  ];
+  const tbody = rows.map(r => `<tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`).join('');
+
+  showResults(fmt(fillerReq) + ' lbs', 'Filler Metal Required (Groove Weld)', grid, thead, tbody);
+}
+
+// ── FILLET WELD ───────────────────────────────────────────────────
+function calcFillet() {
+  const weldLen   = getVal('f-weldLen');
+  const legSize   = getVal('f-legSize');
+  const passes    = getVal('f-passes');
+  const rodDia    = parseFloat(document.getElementById('f-rodDia').value);
+  const costPerLb = getVal('f-cost');
+  const depoEff   = getVal('f-depo');
+
+  let valid = true;
+  if (isNaN(weldLen) || weldLen <= 0) { showErr('f-weldLen', 'Enter a positive length.'); valid = false; }
+  if (isNaN(legSize) || legSize < 0.0625) { showErr('f-legSize', 'Enter leg ≥ 0.0625".'); valid = false; }
+  if (isNaN(passes) || passes < 1 || passes > 20) { showErr('f-passes', 'Enter 1–20.'); valid = false; }
+  if (isNaN(costPerLb) || costPerLb < 0) { showErr('f-cost', 'Enter a positive cost.'); valid = false; }
+  if (isNaN(depoEff) || depoEff < 20 || depoEff > 99) { showErr('f-depo', 'Enter 20–99%.'); valid = false; }
+  if (!valid) return;
+
+  updateSVG(legSize, weldLen, null, null, 'Fillet Weld (T-Joint)');
+
+  const crossArea = 0.5 * legSize * legSize; // in²
+  const throat    = legSize * 0.707; // effective throat
+  const volume    = crossArea * weldLen * passes;
+  const weldMetal = volume * steel_density;
+  const fillerReq = weldMetal / (depoEff / 100);
+  const cost      = fillerReq * costPerLb;
+  const rodWt     = rodWeightUsable(rodDia);
+  const rodCount  = Math.ceil(fillerReq / (rodWt * (depoEff / 100)));
+  const lenPerRod = weldLen / rodCount;
+
+  const grid = resultBox(fmt(fillerReq) + ' lbs', 'Filler Metal Required') +
+               resultBox('$' + fmt(cost), 'Estimated Material Cost') +
+               resultBox(fmtI(rodCount), 'Electrodes Needed') +
+               resultBox(fmt(throat, 3) + '"', 'Effective Throat');
+
+  const thead = `<tr><th>Parameter</th><th class="num">Value</th></tr>`;
+  const rows = [
+    ['Weld Length', weldLen + '"'],
+    ['Fillet Leg Size', legSize + '"'],
+    ['Effective Throat', fmt(throat, 4) + '"'],
+    ['Number of Passes', passes],
+    ['Cross-Section Area', fmt(crossArea, 4) + ' in²'],
+    ['Total Weld Volume', fmt(volume, 3) + ' in³'],
+    ['Weld Metal Weight', fmt(weldMetal, 3) + ' lbs'],
+    ['Deposition Efficiency', depoEff + '%'],
+    ['Filler Metal Required', fmt(fillerReq, 3) + ' lbs'],
+    ['Electrode Diameter', rodDia + '"'],
+    ['Electrodes Needed', fmtI(rodCount)],
+    ['Avg. Length per Rod', fmt(lenPerRod, 1) + '"'],
+    ['Cost per Pound', '$' + fmt(costPerLb)],
+    ['Total Material Cost', '$' + fmt(cost)],
+  ];
+  const tbody = rows.map(r => `<tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`).join('');
+
+  showResults(fmt(fillerReq) + ' lbs', 'Filler Metal Required (Fillet Weld)', grid, thead, tbody);
+}
+
+// ── MIG/FCAW WIRE ─────────────────────────────────────────────────
+function calcWire() {
+  const weldLen   = getVal('w-weldLen');
+  const size      = getVal('w-size');
+  const wireDia   = parseFloat(document.getElementById('w-wireDia').value);
+  const costPerLb = getVal('w-cost');
+  const depoEff   = getVal('w-depo');
+  const weldType  = document.getElementById('w-weldType').value;
+  const process   = document.getElementById('w-process').value;
+  const plateThk  = getVal('w-plateThk');
+
+  let valid = true;
+  if (isNaN(weldLen) || weldLen <= 0) { showErr('w-weldLen', 'Enter a positive length.'); valid = false; }
+  if (isNaN(size) || size <= 0) { showErr('w-size', 'Enter positive size.'); valid = false; }
+  if (isNaN(costPerLb) || costPerLb < 0) { showErr('w-cost', 'Enter a positive cost.'); valid = false; }
+  if (isNaN(depoEff) || depoEff < 30 || depoEff > 99) { showErr('w-depo', 'Enter 30–99%.'); valid = false; }
+  if (!valid) return;
+
+  let crossArea;
+  let jointLabel;
+  if (weldType === 'fillet') {
+    crossArea = 0.5 * size * size;
+    jointLabel = 'Fillet Weld (MIG/FCAW)';
+    updateSVG(size, weldLen, null, null, jointLabel);
+  } else {
+    // V-groove butt, assume 30° bevel each side as default
+    const bevelRad = 30 * Math.PI / 180;
+    const thk = isNaN(plateThk) || plateThk < 0.0625 ? size : plateThk;
+    crossArea = Math.tan(bevelRad) * thk * thk + 0.0625 * thk;
+    jointLabel = 'Butt V-Groove (MIG/FCAW)';
+    updateSVG(thk, weldLen, 30, 0.0625, jointLabel);
+  }
+
+  const volume    = crossArea * weldLen;
+  const weldMetal = volume * steel_density;
+  const wireReq   = weldMetal / (depoEff / 100);
+  const cost      = wireReq * costPerLb;
+
+  // Wire length calculation
+  const wireArea  = Math.PI * Math.pow(wireDia / 2, 2); // in²
+  const wireDensity = steel_density; // same for mild steel wire
+  const wireLen   = wireReq / (wireArea * wireDensity * 12); // in feet
+
+  // Spool usage
+  const spoolRows = SPOOL_LBS.map(spool => {
+    const spools = Math.ceil(wireReq / spool);
+    return `<tr><td>${spool}-lb Spool</td><td class="num">${fmt(spools, 0)}</td><td class="num">$${fmt(spools * spool * costPerLb)}</td></tr>`;
+  }).join('');
+
+  // Wire burn time estimate (approx 150 IPM deposition speed)
+  const WIRE_SPEED_IPM = 150;
+  const burnTimeMins = (wireLen * 12) / WIRE_SPEED_IPM; // minutes
+
+  const grid = resultBox(fmt(wireReq) + ' lbs', 'Wire Required') +
+               resultBox('$' + fmt(cost), 'Estimated Wire Cost') +
+               resultBox(fmt(wireLen, 1) + ' ft', 'Wire Length Needed') +
+               resultBox(fmtI(burnTimeMins) + ' min', 'Est. Arc Time (@150 IPM)');
+
+  const thead = `<tr><th>Parameter</th><th class="num">Value</th></tr>`;
+  const rows = [
+    ['Weld Length', weldLen + '"'],
+    ['Joint Type', weldType === 'fillet' ? 'Fillet' : 'Butt V-Groove'],
+    ['Leg / Throat Size', size + '"'],
+    ['Wire Diameter', wireDia + '"'],
+    ['Process', process],
+    ['Cross-Section Area', fmt(crossArea, 4) + ' in²'],
+    ['Weld Volume', fmt(volume, 3) + ' in³'],
+    ['Deposited Metal', fmt(weldMetal, 3) + ' lbs'],
+    ['Deposition Efficiency', depoEff + '%'],
+    ['Wire Required', fmt(wireReq, 3) + ' lbs'],
+    ['Wire Length', fmt(wireLen, 1) + ' ft'],
+    ['Est. Arc Time', fmtI(burnTimeMins) + ' min'],
+    ['Cost per Pound', '$' + fmt(costPerLb)],
+    ['Total Wire Cost', '$' + fmt(cost)],
+  ];
+  const mainRows = rows.map(r => `<tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`).join('');
+
+  const spoolSection = `
+    <tr><td colspan="2" style="padding-top:12px;font-weight:600;color:#333">Spool Options</td></tr>
+    <tr><th>Spool Size</th><th class="num">Spools Needed</th><th class="num">Spool Cost</th></tr>
+    ${spoolRows}
+  `;
+
+  const fullTbody = mainRows + spoolSection;
+  const theadHtml = `<tr><th>Parameter</th><th class="num">Value</th></tr>`;
+
+  showResults(fmt(wireReq) + ' lbs', 'Wire Required (MIG/FCAW)', grid, theadHtml, fullTbody);
+}
+</script>
+</body>
+</html>
