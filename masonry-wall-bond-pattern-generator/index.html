@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masonry Wall Bond Pattern Generator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Generate brick bond patterns instantly. Calculate brick quantities, courses, and visualize running, Flemish, English, and stack bond layouts for any wall size.">
+<link rel="canonical" href="https://toolwick.com/masonry-wall-bond-pattern-generator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Masonry Wall Bond Pattern Generator",
+  "url": "https://toolwick.com/masonry-wall-bond-pattern-generator/",
+  "description": "Generate brick bond patterns and calculate brick quantities for masonry walls. Supports running, Flemish, English, stack bond, and more.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline;color:#006299}
+nav{border-bottom:1px solid #e0e0e0;padding:12px 20px;background:#fff}
+nav .nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;gap:12px}
+nav .site-name{font-weight:700;font-size:1rem;color:#1a1a2e}
+nav .site-name:hover{text-decoration:none;color:#0077b6}
+.container{max-width:640px;margin:0 auto;padding:24px 20px 40px}
+h1{font-size:1.6rem;font-weight:800;color:#1a1a2e;margin-bottom:6px}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:24px}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 1px 6px rgba(0,0,0,0.06);margin-bottom:2rem}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:6px}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;transition:border-color 0.2s,box-shadow 0.2s;min-height:44px}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error,select.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:4px;display:none}
+.error-msg.show{display:block}
+.form-group{margin-bottom:1.2rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+button.btn-primary{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background 0.2s}
+button.btn-primary:hover{background:#006299}
+button.btn-secondary{background:#f0f0f0;color:#1a1a2e;border:1px solid #ddd;padding:8px 16px;border-radius:6px;font-size:0.85rem;font-weight:500;cursor:pointer;min-height:36px;transition:background 0.2s}
+button.btn-secondary:hover{background:#e0e0e0}
+.results{opacity:0;transition:opacity 0.3s ease;pointer-events:none}
+.results.show{opacity:1;pointer-events:all}
+.result-hero{background:#f0f7ff;border:1px solid #b3d9f0;border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;text-align:center}
+.result-hero .big-num{font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1}
+.result-hero .big-label{font-size:0.9rem;color:#555;margin-top:4px}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.result-card{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;text-align:center}
+.result-card .num{font-size:1.6rem;font-weight:700;color:#0077b6}
+.result-card .lbl{font-size:0.8rem;color:#666;margin-top:2px}
+table{width:100%;border-collapse:collapse;font-size:0.88rem}
+th{background:#f0f0f0;padding:8px 12px;text-align:left;font-weight:600;border-bottom:2px solid #ddd}
+th.num-col,td.num-col{text-align:right}
+td{padding:8px 12px;border-bottom:1px solid #f0f0f0}
+tr:nth-child(even) td{background:#fafafa}
+.table-wrap{overflow-x:auto;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:1.5rem}
+.section-title{font-size:1rem;font-weight:700;color:#1a1a2e;margin-bottom:0.75rem}
+.copy-row{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-bottom:0.75rem}
+.ad-slot{min-height:0;margin:0}
+/* SVG diagram */
+.diagram-wrap{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1rem;margin-bottom:1.5rem;overflow:hidden}
+.diagram-wrap svg{width:100%;height:auto;display:block}
+/* Bond pattern preview */
+.pattern-preview{margin-bottom:1.5rem}
+.pattern-canvas{overflow-x:auto;background:#f5f0e8;border:1px solid #ddd;border-radius:6px;padding:8px}
+.pattern-svg-wrap svg{display:block}
+/* Tabs */
+.tabs{display:flex;gap:4px;margin-bottom:1rem;flex-wrap:wrap}
+.tab-btn{padding:8px 14px;border:1px solid #ddd;border-radius:6px;font-size:0.85rem;font-weight:500;cursor:pointer;background:#f8f9fa;color:#444;min-height:36px;transition:all 0.15s}
+.tab-btn.active{background:#0077b6;color:#fff;border-color:#0077b6}
+/* Content */
+.content-section{margin-bottom:2rem}
+.content-section h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin-bottom:0.6rem;padding-bottom:6px;border-bottom:2px solid #f0f0f0}
+.content-section p{color:#444;font-size:0.93rem;margin-bottom:0.7rem}
+.content-section ul{color:#444;font-size:0.93rem;padding-left:1.4rem;margin-bottom:0.7rem}
+.content-section ul li{margin-bottom:0.4rem}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:0.5rem;overflow:hidden}
+summary{padding:12px 16px;cursor:pointer;font-weight:600;font-size:0.9rem;background:#f8f9fa;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::after{content:'▾';font-size:0.9rem;color:#0077b6;transition:transform 0.2s}
+details[open] summary::after{transform:rotate(180deg)}
+details p{padding:12px 16px;font-size:0.88rem;color:#444;line-height:1.6;background:#fff}
+.related-tools{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1.5rem;margin-bottom:2rem}
+.related-tools h2{font-size:1rem;font-weight:700;margin-bottom:0.75rem}
+.related-tools ul{list-style:none;padding:0}
+.related-tools ul li{padding:6px 0;border-bottom:1px solid #eee}
+.related-tools ul li:last-child{border-bottom:none}
+footer{border-top:1px solid #e0e0e0;padding:20px;text-align:center;font-size:0.82rem;color:#888}
+footer a{color:#888;margin:0 8px}
+footer a:hover{color:#0077b6}
+.formula-box{background:#f0f7ff;border-left:3px solid #0077b6;padding:10px 14px;border-radius:0 6px 6px 0;font-family:monospace;font-size:0.88rem;color:#1a1a2e;margin:0.75rem 0}
+/* Slider */
+.slider-wrap{display:flex;align-items:center;gap:10px}
+.slider-wrap input[type=range]{flex:1;padding:0;min-height:20px;border:none;box-shadow:none}
+.slider-val{font-size:0.88rem;font-weight:600;color:#0077b6;min-width:50px;text-align:right}
+@media(max-width:640px){
+  .form-row{grid-template-columns:1fr}
+  .result-grid{grid-template-columns:1fr 1fr}
+  h1{font-size:1.35rem}
+  .result-hero .big-num{font-size:2.2rem}
+}
+@media(max-width:400px){
+  .result-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="site-name">🧱 toolwick.com</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Masonry Wall Bond Pattern Generator</h1>
+  <p class="subtitle">Visualize brick bond patterns, calculate quantities, and plan your masonry wall layout.</p>
+
+  <!-- Diagram -->
+  <div class="diagram-wrap">
+    <svg id="diagramSvg" viewBox="0 0 580 170" xmlns="http://www.w3.org/2000/svg" aria-label="Wall dimensions diagram">
+      <!-- Background -->
+      <rect width="580" height="170" fill="#f8f9fa"/>
+      <!-- Wall outline -->
+      <rect x="30" y="30" width="360" height="120" fill="#e8ddd0" stroke="#0077b6" stroke-width="2" rx="2"/>
+      <!-- Width arrow -->
+      <line x1="30" y1="165" x2="390" y2="165" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <text x="210" y="160" text-anchor="middle" fill="#0077b6" font-size="12" font-weight="600" id="dimWidth">Width: 10 ft</text>
+      <!-- Height arrow -->
+      <line x1="15" y1="30" x2="15" y2="150" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <text x="12" y="95" text-anchor="middle" fill="#0077b6" font-size="12" font-weight="600" transform="rotate(-90,12,95)" id="dimHeight">Height: 4 ft</text>
+      <!-- Sample bricks inside -->
+      <g opacity="0.55">
+        <rect x="32" y="32" width="86" height="22" fill="#c4956a" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="120" y="32" width="86" height="22" fill="#c4956a" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="208" y="32" width="86" height="22" fill="#c4956a" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="296" y="32" width="92" height="22" fill="#c4956a" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="32" y="56" width="43" height="22" fill="#b8845e" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="77" y="56" width="86" height="22" fill="#b8845e" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="165" y="56" width="86" height="22" fill="#b8845e" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="253" y="56" width="86" height="22" fill="#b8845e" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="341" y="56" width="47" height="22" fill="#b8845e" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="32" y="80" width="86" height="22" fill="#c4956a" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="120" y="80" width="86" height="22" fill="#c4956a" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="208" y="80" width="86" height="22" fill="#c4956a" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="296" y="80" width="92" height="22" fill="#c4956a" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="32" y="104" width="43" height="22" fill="#b8845e" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="77" y="104" width="86" height="22" fill="#b8845e" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="165" y="104" width="86" height="22" fill="#b8845e" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="253" y="104" width="86" height="22" fill="#b8845e" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="341" y="104" width="47" height="22" fill="#b8845e" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="32" y="128" width="86" height="20" fill="#c4956a" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="120" y="128" width="86" height="20" fill="#c4956a" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="208" y="128" width="86" height="20" fill="#c4956a" stroke="#a07040" stroke-width="0.8"/>
+        <rect x="296" y="128" width="92" height="20" fill="#c4956a" stroke="#a07040" stroke-width="0.8"/>
+      </g>
+      <!-- Labels -->
+      <text x="420" y="50" fill="#1a1a2e" font-size="11">Bond Pattern</text>
+      <text x="420" y="65" fill="#0077b6" font-size="12" font-weight="700" id="dimPattern">Running Bond</text>
+      <text x="420" y="90" fill="#1a1a2e" font-size="11">Total Bricks</text>
+      <text x="420" y="105" fill="#0077b6" font-size="12" font-weight="700" id="dimBricks">—</text>
+      <text x="420" y="125" fill="#1a1a2e" font-size="11">Courses</text>
+      <text x="420" y="140" fill="#0077b6" font-size="12" font-weight="700" id="dimCourses">—</text>
+      <!-- Arrow markers -->
+      <defs>
+        <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#0077b6"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="card">
+    <!-- Wall Dimensions -->
+    <div class="section-title">Wall Dimensions</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="wallWidth">Wall Width</label>
+        <input type="number" id="wallWidth" value="10" min="0.5" max="1000" step="0.5" placeholder="e.g. 10">
+        <div class="error-msg" id="errWidth">Enter a valid width (> 0)</div>
+      </div>
+      <div class="form-group">
+        <label for="wallHeight">Wall Height</label>
+        <input type="number" id="wallHeight" value="4" min="0.5" max="500" step="0.5" placeholder="e.g. 4">
+        <div class="error-msg" id="errHeight">Enter a valid height (> 0)</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="unitSel">Unit</label>
+      <select id="unitSel">
+        <option value="ft">Feet (ft)</option>
+        <option value="m">Meters (m)</option>
+        <option value="in">Inches (in)</option>
+      </select>
+    </div>
+
+    <div class="section-title" style="margin-top:1rem">Brick Size</div>
+    <div class="form-group">
+      <label for="brickPreset">Brick Preset</label>
+      <select id="brickPreset" onchange="applyPreset()">
+        <option value="standard">Standard US Brick (8 × 2.25 × 3.75 in)</option>
+        <option value="modular">Modular Brick (7.625 × 2.25 × 3.625 in)</option>
+        <option value="queen">Queen Size (9.625 × 2.75 × 2.75 in)</option>
+        <option value="king">King Size (9.625 × 2.625 × 2.625 in)</option>
+        <option value="economy">Economy / Jumbo (11.625 × 3.625 × 3.625 in)</option>
+        <option value="custom">Custom</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="brickL">Brick Length (in)</label>
+        <input type="number" id="brickL" value="8" min="1" max="24" step="0.125">
+        <div class="error-msg" id="errBrickL">Enter valid brick length</div>
+      </div>
+      <div class="form-group">
+        <label for="brickH">Brick Height (in)</label>
+        <input type="number" id="brickH" value="2.25" min="0.5" max="12" step="0.125">
+        <div class="error-msg" id="errBrickH">Enter valid brick height</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="mortarJoint">Mortar Joint Thickness (in)</label>
+      <div class="slider-wrap">
+        <input type="range" id="mortarSlider" min="0.25" max="1.0" step="0.0625" value="0.375" oninput="syncMortar(this.value)">
+        <span class="slider-val" id="mortarDisplay">3/8 in</span>
+      </div>
+      <input type="number" id="mortarJoint" value="0.375" min="0.125" max="1.5" step="0.0625" style="margin-top:6px">
+    </div>
+
+    <div class="section-title" style="margin-top:1rem">Bond Pattern</div>
+    <div class="form-group">
+      <label for="bondPattern">Select Bond Pattern</label>
+      <select id="bondPattern">
+        <option value="running">Running Bond (Half Overlap)</option>
+        <option value="third">Third Running Bond (1/3 Overlap)</option>
+        <option value="stack">Stack Bond (No Offset)</option>
+        <option value="english">English Bond</option>
+        <option value="flemish">Flemish Bond</option>
+        <option value="header">All-Header Bond</option>
+        <option value="soldier">Soldier Course Bond</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="wastePct">Waste/Breakage Allowance (%)</label>
+      <div class="slider-wrap">
+        <input type="range" id="wasteSlider" min="0" max="20" step="1" value="5" oninput="syncWaste(this.value)">
+        <span class="slider-val" id="wasteDisplay">5%</span>
+      </div>
+      <input type="number" id="wastePct" value="5" min="0" max="50" step="1" style="margin-top:6px">
+    </div>
+
+    <button class="btn-primary" id="calcBtn">Generate Bond Pattern</button>
+  </div>
+
+  <!-- Results -->
+  <div class="results" id="resultsSection">
+    <div class="copy-row">
+      <button class="btn-secondary" id="copyBtn">📋 Copy Summary</button>
+    </div>
+
+    <div class="result-hero">
+      <div class="big-num" id="heroNum">0</div>
+      <div class="big-label" id="heroLabel">Total Bricks Needed (incl. waste)</div>
+    </div>
+
+    <div class="result-grid" id="resultGrid"></div>
+
+    <div class="section-title">Material Breakdown</div>
+    <div class="table-wrap">
+      <table id="breakdownTable">
+        <thead><tr><th>Item</th><th class="num-col">Value</th><th class="num-col">Unit</th></tr></thead>
+        <tbody id="breakdownBody"></tbody>
+      </table>
+    </div>
+
+    <div class="section-title">Bond Pattern Preview</div>
+    <div class="tabs" id="previewTabs">
+      <button class="tab-btn active" onclick="showTab('visual')">Visual Preview</button>
+      <button class="tab-btn" onclick="showTab('legend')">Pattern Legend</button>
+    </div>
+    <div id="tabVisual" class="pattern-preview">
+      <div class="pattern-canvas" id="patternCanvas"></div>
+    </div>
+    <div id="tabLegend" style="display:none">
+      <div id="legendContent" style="font-size:0.88rem;color:#444;line-height:1.8;padding:12px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px"></div>
+    </div>
+
+    <div class="section-title" style="margin-top:1.5rem">Course-by-Course Breakdown</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Course #</th><th>Type</th><th class="num-col">Bricks per Course</th><th class="num-col">Cumulative Bricks</th></tr></thead>
+        <tbody id="courseBody"></tbody>
+      </table>
+    </div>
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <button class="btn-secondary" id="showAllCourses" style="display:none" onclick="toggleAllCourses()">Show All Courses</button>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content -->
+  <div class="content-section">
+    <h2>How to Use This Brick Bond Pattern Calculator</h2>
+    <p>Enter your wall width and height, select your unit (feet, meters, or inches), choose a brick size preset or enter custom dimensions, set the mortar joint thickness with the slider, and pick your desired bond pattern. Click <strong>Generate Bond Pattern</strong> to instantly see the total brick count, course breakdown, and a live visual preview of the pattern.</p>
+    <p>Use the waste allowance slider to add a buffer for cuts and breakage — 5–10% is standard for most projects.</p>
+  </div>
+
+  <div class="content-section">
+    <h2>Why This Matters</h2>
+    <p>Choosing the right bond pattern isn't just aesthetics — it directly affects your wall's structural strength, material cost, and labor time. A <strong>running bond</strong> (the most common) staggers vertical joints by 50%, distributing loads efficiently and using the fewest cuts. An <strong>English bond</strong> alternates stretcher and header courses, making it the strongest pattern for loadbearing walls — historically used in Victorian-era construction where a 9-inch cavity wall was the norm.</p>
+    <p><strong>Flemish bond</strong> alternates headers and stretchers in the same course, creating a decorative diamond pattern popular in colonial American architecture and upscale residential facades. <strong>Stack bond</strong> aligns all vertical joints and is purely decorative — it requires rebar or wire reinforcement to compensate for its structural weakness.</p>
+    <p>Getting your brick count wrong is costly. Under-ordering means delays waiting for a matching batch; over-ordering wastes money. A typical 100 sq ft wall in running bond with standard bricks requires approximately 675–700 bricks. This tool removes the guesswork entirely.</p>
+  </div>
+
+  <div class="content-section">
+    <h2>How It's Calculated</h2>
+    <p>All dimensions are converted to inches internally. The wall area is divided by the face area of a single brick (including mortar joints on one length and one height side):</p>
+    <div class="formula-box">Face Area per Brick = (Brick Length + Mortar) × (Brick Height + Mortar)</div>
+    <div class="formula-box">Bricks per Course = Wall Width ÷ (Brick Length + Mortar Joint)</div>
+    <div class="formula-box">Total Courses = Wall Height ÷ (Brick Height + Mortar Joint)</div>
+    <div class="formula-box">Net Bricks = Bricks per Course × Total Courses</div>
+    <div class="formula-box">Total (with waste) = Net Bricks × (1 + Waste% ÷ 100)</div>
+    <p>For English and Flemish bonds, header courses use bricks oriented perpendicular (shorter face visible), which changes the per-course brick count. The calculator adjusts automatically for each bond type's repeating unit.</p>
+  </div>
+
+  <div class="content-section">
+    <h2>Tips &amp; Common Mistakes</h2>
+    <ul>
+      <li><strong>Always add at least 5% waste</strong> — even pros break bricks during cutting. For complex patterns like Flemish bond, use 8–10%.</li>
+      <li><strong>Don't forget openings</strong> — doors and windows reduce your brick area. Calculate the full wall first, then subtract opening areas, then add waste.</li>
+      <li><strong>Mortar joint size matters more than you think</strong> — going from 3/8" to 1/2" joints reduces the total brick count by roughly 5–8% but increases mortar usage significantly.</li>
+      <li><strong>Header courses in English bond</strong> use the same number of bricks per course as stretcher courses, but each header brick spans the full wall thickness — plan your structural depth accordingly.</li>
+      <li><strong>Running bond requires no special cuts</strong> on a straight wall — start each even course with a half brick. Stack bond requires full bricks throughout but needs joint reinforcement every 16 inches vertically.</li>
+    </ul>
+  </div>
+
+  <div class="content-section">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is the most common brick bond pattern?</summary>
+      <p>Running bond (also called stretcher bond) is by far the most common pattern in modern construction. It offsets each course by half a brick length, providing excellent load distribution and requiring minimal cutting. It's used in the vast majority of residential brick veneer and garden wall projects.</p>
+    </details>
+    <details>
+      <summary>How many bricks do I need per square foot?</summary>
+      <p>With standard US bricks (8×2.25 in face) and a 3/8" mortar joint, you'll need approximately 6.75 bricks per square foot of wall face area. This varies by brick size and mortar joint thickness. The calculator accounts for all these variables automatically.</p>
+    </details>
+    <details>
+      <summary>Is Flemish bond stronger than running bond?</summary>
+      <p>English bond is generally considered stronger than Flemish bond for thick walls because its header courses create a more effective bond across the full wall width. However, for single-wythe walls (one brick thick), running bond and Flemish bond provide similar structural performance. Flemish bond is primarily chosen for its decorative appearance.</p>
+    </details>
+    <details>
+      <summary>Can I use this calculator for concrete blocks (CMU)?</summary>
+      <p>Yes — just select "Custom" brick size and enter your CMU dimensions. Standard 8"×8"×16" CMU blocks with 3/8" joints are commonly used. The bond patterns apply equally to concrete masonry units, though the "English bond" and "Flemish bond" options are less common with CMU.</p>
+    </details>
+  </div>
+
+  <div class="related-tools">
+    <h2>Related Tools</h2>
+    <ul>
+      <li><a href="/pex-radiant-floor-heating-layout-calculator/">PEX Radiant Floor Heating Layout Calculator</a></li>
+      <li><a href="/welding-rod-wire-consumption-calculator/">Welding Rod &amp; Wire Consumption Calculator</a></li>
+      <li><a href="/shed-foundation-floor-joist-calculator/">Shed Foundation &amp; Floor Joist Calculator</a></li>
+      <li><a href="/hvac-refrigerant-line-set-size-calculator/">HVAC Refrigerant Line Set Size Calculator</a></li>
+      <li><a href="/trench-shoring-excavation-safety-calculator/">Trench Shoring &amp; Excavation Safety Calculator</a></li>
+      <li><a href="/footing-foundation-size-calculator/">Footing &amp; Foundation Size Calculator</a></li>
+    </ul>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+
+  <footer>
+    <p>© <span id="yr"></span> toolwick.com &nbsp;|&nbsp;
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+    </p>
+  </footer>
+</div>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+const PRESETS = {
+  standard: {l:8, h:2.25},
+  modular:  {l:7.625, h:2.25},
+  queen:    {l:9.625, h:2.75},
+  king:     {l:9.625, h:2.625},
+  economy:  {l:11.625, h:3.625},
+  custom:   null
+};
+
+function applyPreset() {
+  const v = document.getElementById('brickPreset').value;
+  if (v !== 'custom' && PRESETS[v]) {
+    document.getElementById('brickL').value = PRESETS[v].l;
+    document.getElementById('brickH').value = PRESETS[v].h;
+  }
+}
+
+function syncMortar(val) {
+  document.getElementById('mortarJoint').value = val;
+  const frac = parseFloat(val);
+  const fracs = {0.25:'1/4 in',0.3125:'5/16 in',0.375:'3/8 in',0.4375:'7/16 in',0.5:'1/2 in',0.5625:'9/16 in',0.625:'5/8 in',0.75:'3/4 in',0.875:'7/8 in',1.0:'1 in'};
+  document.getElementById('mortarDisplay').textContent = fracs[frac] || frac.toFixed(3)+' in';
+}
+function syncWaste(val) {
+  document.getElementById('wastePct').value = val;
+  document.getElementById('wasteDisplay').textContent = val + '%';
+}
+
+// Sync sliders when inputs change
+document.getElementById('mortarJoint').addEventListener('input', e => {
+  document.getElementById('mortarSlider').value = e.target.value;
+  syncMortar(e.target.value);
+});
+document.getElementById('wastePct').addEventListener('input', e => {
+  document.getElementById('wasteSlider').value = e.target.value;
+  syncWaste(e.target.value);
+});
+document.getElementById('brickL').addEventListener('input', () => document.getElementById('brickPreset').value = 'custom');
+document.getElementById('brickH').addEventListener('input', () => document.getElementById('brickPreset').value = 'custom');
+
+// Enter key
+['wallWidth','wallHeight','brickL','brickH','mortarJoint','wastePct'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
+});
+
+function fmt(n, d=0) {
+  if (isNaN(n) || !isFinite(n)) return '—';
+  return Number(n.toFixed(d)).toLocaleString('en-US');
+}
+
+function toInches(val, unit) {
+  if (unit === 'ft') return val * 12;
+  if (unit === 'm') return val * 39.3701;
+  return val; // inches
+}
+
+let allCoursesData = [];
+let showingAll = false;
+let lastSummary = '';
+
+function showTab(tab) {
+  document.getElementById('tabVisual').style.display = tab === 'visual' ? '' : 'none';
+  document.getElementById('tabLegend').style.display = tab === 'legend' ? '' : 'none';
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', (i===0 && tab==='visual') || (i===1 && tab==='legend'));
+  });
+}
+
+function toggleAllCourses() {
+  showingAll = !showingAll;
+  renderCourses(allCoursesData, showingAll);
+  document.getElementById('showAllCourses').textContent = showingAll ? 'Show Less' : 'Show All Courses';
+}
+
+function renderCourses(courses, all) {
+  const limit = all ? courses.length : Math.min(10, courses.length);
+  let html = '';
+  let cum = 0;
+  for (let i = 0; i < limit; i++) {
+    const c = courses[i];
+    cum += c.count;
+    html += `<tr><td>${c.num}</td><td>${c.type}</td><td class="num-col">${fmt(c.count)}</td><td class="num-col">${fmt(cum)}</td></tr>`;
+  }
+  document.getElementById('courseBody').innerHTML = html;
+}
+
+function getBondDescription(pattern) {
+  const desc = {
+    running: '<strong>Running Bond:</strong> Each course offset by ½ brick. Strongest single-wythe pattern. Vertical joints never align between adjacent courses.',
+    third:   '<strong>Third Running Bond:</strong> Each course offset by ⅓ brick length. Creates a distinctive diagonal visual rhythm. Common in large-format blocks.',
+    stack:   '<strong>Stack Bond:</strong> All vertical joints aligned. Purely decorative — requires horizontal joint reinforcement every 16\" vertically. Not structural.',
+    english: '<strong>English Bond:</strong> Alternates full stretcher courses and full header courses. One of the strongest bonds for loadbearing walls. Headers tie wythes together.',
+    flemish: '<strong>Flemish Bond:</strong> Each course alternates headers and stretchers. Decorative and structural. Produces a diamond-like pattern with alternating colors possible.',
+    header:  '<strong>All-Header Bond:</strong> Every brick is a header (short face exposed). Creates a unique textural effect. Used for curved walls and decorative features.',
+    soldier: '<strong>Soldier Course Bond:</strong> Bricks stand vertically on their end. Typically used as accent courses above windows and doors, not for full wall construction.'
+  };
+  return desc[pattern] || '';
+}
+
+function getCourseType(pattern, courseIndex) {
+  if (pattern === 'english') return (courseIndex % 2 === 0) ? 'Stretcher' : 'Header';
+  if (pattern === 'flemish') return (courseIndex % 2 === 0) ? 'Flemish-A' : 'Flemish-B';
+  if (pattern === 'header') return 'Header';
+  if (pattern === 'soldier') return 'Soldier';
+  return 'Stretcher';
+}
+
+function bricksPerCourse(pattern, wallWidthIn, brickLIn, brickHIn, mortarIn) {
+  const stretcherUnit = brickLIn + mortarIn;
+  const headerUnit = brickHIn + mortarIn; // header = depth exposed = brick height used as width
+  if (pattern === 'header') {
+    return wallWidthIn / headerUnit;
+  }
+  if (pattern === 'soldier') {
+    return wallWidthIn / (brickHIn + mortarIn);
+  }
+  if (pattern === 'english') {
+    // stretcher course: normal; header course: bricks laid perpendicular
+    return wallWidthIn / stretcherUnit; // same count either way (header or stretcher for width)
+  }
+  if (pattern === 'flemish') {
+    // alternating: ~half headers, half stretchers; approximate avg
+    return wallWidthIn / stretcherUnit;
+  }
+  return wallWidthIn / stretcherUnit;
+}
+
+function courseHeight(pattern, brickLIn, brickHIn, mortarIn) {
+  if (pattern === 'soldier') return brickLIn + mortarIn; // standing on end
+  return brickHIn + mortarIn;
+}
+
+function buildPatternSVG(pattern, brickLIn, brickHIn, mortarIn) {
+  const SCALE = 3.2;
+  const bW = brickLIn * SCALE;
+  const bH = brickHIn * SCALE;
+  const m  = mortarIn * SCALE;
+  const headerW = brickHIn * SCALE;
+
+  const numCols = 7;
+  const numRows = 6;
+  const canvasW = numCols * (bW + m) + m;
+  const canvasH = numRows * (bH + m) + m;
+
+  let bricks = [];
+
+  for (let row = 0; row < numRows; row++) {
+    const y = m + row * (bH + m);
+    let offsets = [];
+
+    if (pattern === 'running') {
+      const off = (row % 2 === 1) ? (bW + m) / 2 : 0;
+      for (let c = -1; c <= numCols + 1; c++) offsets.push(off + c * (bW + m));
+    } else if (pattern === 'third') {
+      const third = (bW + m) / 3;
+      const off = (row % 3) * third;
+      for (let c = -1; c <= numCols + 1; c++) offsets.push(off + c * (bW + m));
+    } else if (pattern === 'stack') {
+      for (let c = 0; c < numCols + 1; c++) offsets.push(m/2 + c * (bW + m));
+    } else if (pattern === 'english') {
+      if (row % 2 === 0) {
+        for (let c = -1; c <= numCols + 1; c++) offsets.push(c * (bW + m));
+        offsets.forEach(x => bricks.push({x, y, w: bW, h: bH, fill: '#c4956a'}));
+      } else {
+        for (let c = -1; c <= numCols * 3; c++) offsets.push(c * (headerW + m));
+        offsets.forEach(x => bricks.push({x, y, w: headerW, h: bH, fill: '#a07040'}));
+      }
+      continue;
+    } else if (pattern === 'flemish') {
+      let x = 0;
+      for (let c = 0; c < numCols * 2; c++) {
+        const isHeader = (c + row) % 2 === 1;
+        const w = isHeader ? headerW : bW;
+        const fill = isHeader ? '#a07040' : '#c4956a';
+        bricks.push({x: x - bW, y, w, h: bH, fill});
+        x += w + m;
+      }
+      continue;
+    } else if (pattern === 'header') {
+      for (let c = -1; c <= numCols * 2; c++) offsets.push(c * (headerW + m));
+      offsets.forEach(x => bricks.push({x, y, w: headerW, h: bH, fill: '#a07040'}));
+      continue;
+    } else if (pattern === 'soldier') {
+      const soldierH = bW;
+      const soldierW = bH;
+      const sy = m + row * (soldierH + m);
+      for (let c = 0; c < numCols + 2; c++) {
+        bricks.push({x: c * (soldierW + m), y: sy, w: soldierW, h: soldierH, fill: '#b8845e'});
+      }
+      continue;
+    }
+    offsets.forEach(x => bricks.push({x, y, w: bW, h: bH, fill: row%2===0?'#c4956a':'#b8845e'}));
+  }
+
+  const svgH = pattern === 'soldier' ? numRows * (bW * SCALE + m) + m : canvasH;
+  let svgStr = `<svg viewBox="0 0 ${canvasW} ${svgH}" xmlns="http://www.w3.org/2000/svg" style="min-width:${canvasW}px;max-width:100%">`;
+  svgStr += `<rect width="${canvasW}" height="${svgH}" fill="#f5f0e8"/>`;
+  for (const b of bricks) {
+    if (b.x + b.w < 0 || b.x > canvasW) continue;
+    const cx = Math.max(0, b.x);
+    const cw = Math.min(b.w, canvasW - cx) - Math.max(0, -b.x);
+    if (cw <= 0) continue;
+    svgStr += `<rect x="${cx.toFixed(1)}" y="${b.y.toFixed(1)}" width="${cw.toFixed(1)}" height="${b.h.toFixed(1)}" fill="${b.fill}" stroke="#7a5030" stroke-width="0.5" rx="0.5"/>`;
+  }
+  svgStr += '</svg>';
+  return svgStr;
+}
+
+function calculate() {
+  // Clear errors
+  ['errWidth','errHeight','errBrickL','errBrickH'].forEach(id => {
+    document.getElementById(id).classList.remove('show');
+  });
+  ['wallWidth','wallHeight','brickL','brickH'].forEach(id => {
+    document.getElementById(id).classList.remove('error');
+  });
+
+  const wallWidthRaw = parseFloat(document.getElementById('wallWidth').value);
+  const wallHeightRaw = parseFloat(document.getElementById('wallHeight').value);
+  const unit = document.getElementById('unitSel').value;
+  const brickL = parseFloat(document.getElementById('brickL').value);
+  const brickH = parseFloat(document.getElementById('brickH').value);
+  const mortar = parseFloat(document.getElementById('mortarJoint').value);
+  const waste = parseFloat(document.getElementById('wastePct').value) || 0;
+  const pattern = document.getElementById('bondPattern').value;
+
+  let valid = true;
+  if (isNaN(wallWidthRaw) || wallWidthRaw <= 0) {
+    document.getElementById('errWidth').classList.add('show');
+    document.getElementById('wallWidth').classList.add('error');
+    valid = false;
+  }
+  if (isNaN(wallHeightRaw) || wallHeightRaw <= 0) {
+    document.getElementById('errHeight').classList.add('show');
+    document.getElementById('wallHeight').classList.add('error');
+    valid = false;
+  }
+  if (isNaN(brickL) || brickL <= 0) {
+    document.getElementById('errBrickL').classList.add('show');
+    document.getElementById('brickL').classList.add('error');
+    valid = false;
+  }
+  if (isNaN(brickH) || brickH <= 0) {
+    document.getElementById('errBrickH').classList.add('show');
+    document.getElementById('brickH').classList.add('error');
+    valid = false;
+  }
+  if (!valid) return;
+
+  const wallWidthIn = toInches(wallWidthRaw, unit);
+  const wallHeightIn = toInches(wallHeightRaw, unit);
+  const wallAreaSqFt = (wallWidthIn * wallHeightIn) / 144;
+  const wallAreaSqM = wallAreaSqFt * 0.092903;
+
+  const cH = courseHeight(pattern, brickL, brickH, mortar);
+  const numCoursesRaw = wallHeightIn / cH;
+  const numCourses = Math.ceil(numCoursesRaw);
+
+  const bpc = bricksPerCourse(pattern, wallWidthIn, brickL, brickH, mortar);
+  const bricksPerCourseVal = Math.ceil(bpc);
+
+  // For Flemish bond, each course alternates, so per course is same quantity but different arrangement
+  let totalNetBricks;
+  if (pattern === 'english') {
+    // stretcher + header alternate — same count per course
+    totalNetBricks = Math.ceil(bricksPerCourseVal * numCourses);
+  } else {
+    totalNetBricks = Math.ceil(bricksPerCourseVal * numCourses);
+  }
+
+  const totalWithWaste = Math.ceil(totalNetBricks * (1 + waste / 100));
+  const bricksPerSqFt = totalNetBricks / wallAreaSqFt;
+  const mortarVol = (wallWidthIn * wallHeightIn * mortar * 0.3) / 1728; // rough cubic ft
+  const mortarBags = Math.ceil(mortarVol / 0.6); // ~0.6 cu ft per 60lb bag
+
+  // Update diagram
+  document.getElementById('dimWidth').textContent = `Width: ${wallWidthRaw} ${unit}`;
+  document.getElementById('dimHeight').textContent = `Height: ${wallHeightRaw} ${unit}`;
+  document.getElementById('dimPattern').textContent = document.getElementById('bondPattern').options[document.getElementById('bondPattern').selectedIndex].text.split(' (')[0];
+  document.getElementById('dimBricks').textContent = fmt(totalWithWaste);
+  document.getElementById('dimCourses').textContent = fmt(numCourses);
+
+  // Build courses data
+  allCoursesData = [];
+  let cumCourses = numCourses;
+  for (let i = 1; i <= cumCourses; i++) {
+    allCoursesData.push({
+      num: i,
+      type: getCourseType(pattern, i - 1),
+      count: bricksPerCourseVal
+    });
+  }
+
+  // Summary for copy
+  const patternName = document.getElementById('bondPattern').options[document.getElementById('bondPattern').selectedIndex].text;
+  lastSummary = `Masonry Wall Bond Pattern Summary\n` +
+    `Wall: ${wallWidthRaw} × ${wallHeightRaw} ${unit}\n` +
+    `Pattern: ${patternName}\n` +
+    `Total Bricks (net): ${fmt(totalNetBricks)}\n` +
+    `Total Bricks (with ${waste}% waste): ${fmt(totalWithWaste)}\n` +
+    `Courses: ${fmt(numCourses)}\n` +
+    `Bricks per Course: ${fmt(bricksPerCourseVal)}\n` +
+    `Wall Area: ${fmt(wallAreaSqFt,2)} sq ft\n` +
+    `Estimated Mortar Bags (60 lb): ${mortarBags}`;
+
+  requestAnimationFrame(() => {
+    // Hero
+    document.getElementById('heroNum').textContent = fmt(totalWithWaste);
+
+    // Grid
+    document.getElementById('resultGrid').innerHTML = `
+      <div class="result-card"><div class="num">${fmt(totalNetBricks)}</div><div class="lbl">Net Bricks (no waste)</div></div>
+      <div class="result-card"><div class="num">${fmt(numCourses)}</div><div class="lbl">Total Courses</div></div>
+      <div class="result-card"><div class="num">${fmt(bricksPerCourseVal)}</div><div class="lbl">Bricks per Course</div></div>
+      <div class="result-card"><div class="num">${fmt(wallAreaSqFt,1)}</div><div class="lbl">Wall Area (sq ft)</div></div>
+    `;
+
+    // Breakdown table
+    document.getElementById('breakdownBody').innerHTML = `
+      <tr><td>Wall Width</td><td class="num-col">${fmt(wallWidthRaw,3)}</td><td class="num-col">${unit}</td></tr>
+      <tr><td>Wall Height</td><td class="num-col">${fmt(wallHeightRaw,3)}</td><td class="num-col">${unit}</td></tr>
+      <tr><td>Wall Area</td><td class="num-col">${fmt(wallAreaSqFt,2)}</td><td class="num-col">sq ft</td></tr>
+      <tr><td>Wall Area</td><td class="num-col">${fmt(wallAreaSqM,2)}</td><td class="num-col">m²</td></tr>
+      <tr><td>Brick Face Size</td><td class="num-col">${brickL} × ${brickH}</td><td class="num-col">inches</td></tr>
+      <tr><td>Mortar Joint</td><td class="num-col">${mortar}</td><td class="num-col">inches</td></tr>
+      <tr><td>Bond Pattern</td><td class="num-col" colspan="2">${patternName}</td></tr>
+      <tr><td>Bricks per Course</td><td class="num-col">${fmt(bricksPerCourseVal)}</td><td class="num-col">bricks</td></tr>
+      <tr><td>Total Courses</td><td class="num-col">${fmt(numCourses)}</td><td class="num-col">courses</td></tr>
+      <tr><td>Net Bricks Needed</td><td class="num-col">${fmt(totalNetBricks)}</td><td class="num-col">bricks</td></tr>
+      <tr><td>Waste Allowance</td><td class="num-col">${waste}</td><td class="num-col">%</td></tr>
+      <tr><td><strong>Total Bricks (with waste)</strong></td><td class="num-col"><strong>${fmt(totalWithWaste)}</strong></td><td class="num-col">bricks</td></tr>
+      <tr><td>Bricks per Sq Ft</td><td class="num-col">${fmt(bricksPerSqFt,2)}</td><td class="num-col">bricks/sq ft</td></tr>
+      <tr><td>Est. Mortar (60 lb bags)</td><td class="num-col">${mortarBags}</td><td class="num-col">bags</td></tr>
+    `;
+
+    // Pattern SVG
+    document.getElementById('patternCanvas').innerHTML = buildPatternSVG(pattern, brickL, brickH, mortar);
+
+    // Legend
+    document.getElementById('legendContent').innerHTML = getBondDescription(pattern);
+
+    // Courses
+    showingAll = false;
+    renderCourses(allCoursesData, false);
+    const btn = document.getElementById('showAllCourses');
+    if (allCoursesData.length > 10) {
+      btn.style.display = 'inline-block';
+      btn.textContent = 'Show All Courses';
+    } else {
+      btn.style.display = 'none';
+    }
+
+    // Show results
+    document.getElementById('resultsSection').classList.add('show');
+    document.getElementById('resultsSection').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+}
+
+document.getElementById('calcBtn').addEventListener('click', () => {
+  requestAnimationFrame(() => { calculate(); });
+});
+
+document.getElementById('copyBtn').addEventListener('click', () => {
+  if (!lastSummary) return;
+  navigator.clipboard.writeText(lastSummary).then(() => {
+    const btn = document.getElementById('copyBtn');
+    const orig = btn.textContent;
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => { btn.textContent = orig; }, 2000);
+  }).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = lastSummary;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy Summary'; }, 2000);
+  });
+});
+
+// Auto-calculate on load with defaults
+window.addEventListener('DOMContentLoaded', () => {
+  syncMortar(document.getElementById('mortarSlider').value);
+  syncWaste(document.getElementById('wasteSlider').value);
+  calculate();
+});
+</script>
+</body>
+</html>
