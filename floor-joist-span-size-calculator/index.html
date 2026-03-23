@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Floor Joist Span & Size Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate floor joist span, size, and spacing for any room. Free floor joist span calculator with lumber grade, load, and deflection tables. Get results instantly.">
+<link rel="canonical" href="https://toolwick.com/floor-joist-span-size-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Floor Joist Span & Size Calculator",
+  "url": "https://toolwick.com/floor-joist-span-size-calculator/",
+  "description": "Calculate floor joist span, size, and spacing for any room. Free online tool with lumber grade, load, and deflection data.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f4f6f9;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0 1.5rem}
+.nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;height:52px}
+.nav-brand{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+.nav-brand span{color:#0077b6}
+main{max-width:640px;margin:0 auto;padding:1.5rem 1rem 3rem}
+h1{font-size:1.55rem;font-weight:700;color:#1a1a2e;margin-bottom:.4rem}
+.subtitle{color:#555;font-size:.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 1px 6px rgba(0,0,0,.06);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;overflow:hidden}
+.diagram-wrap svg{display:block;width:100%;height:auto}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.form-group{margin-bottom:1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;transition:border-color .2s,box-shadow .2s;min-height:44px}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,.15)}
+input.error,select.error{border-color:#e74c3c}
+.error-msg{font-size:.8rem;color:#e74c3c;margin-top:.3rem;display:none}
+.error-msg.show{display:block}
+.slider-row{margin-bottom:1rem}
+.slider-row label{display:flex;justify-content:space-between;align-items:center}
+.slider-val{font-weight:600;color:#0077b6}
+input[type=range]{padding:4px 0;height:36px;cursor:pointer;accent-color:#0077b6}
+.btn{background:#0077b6;color:#fff;border:none;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background .2s}
+.btn:hover{background:#006299}
+.btn-sm{padding:6px 14px;font-size:.8rem;font-weight:500;width:auto;min-height:36px;border-radius:4px}
+.results{opacity:0;transition:opacity .3s ease;pointer-events:none}
+.results.visible{opacity:1;pointer-events:auto}
+.result-hero{text-align:center;padding:1.2rem;background:#f0f8ff;border-radius:8px;margin-bottom:1.2rem;border:1px solid #cce5ff}
+.result-hero .big-num{font-size:2.4rem;font-weight:700;color:#0077b6;line-height:1.1}
+.result-hero .big-label{font-size:.9rem;color:#555;margin-top:.2rem}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
+@media(max-width:420px){.result-grid{grid-template-columns:1fr}}
+.result-card{background:#f8f9fa;border-radius:6px;padding:.8rem 1rem;border:1px solid #e8e8e8}
+.result-card .rc-label{font-size:.78rem;color:#666;font-weight:500}
+.result-card .rc-val{font-size:1.15rem;font-weight:700;color:#1a1a2e}
+.status-badge{display:inline-block;padding:.25rem .7rem;border-radius:20px;font-size:.8rem;font-weight:600;margin-bottom:.8rem}
+.status-ok{background:#d4edda;color:#155724}
+.status-warn{background:#fff3cd;color:#856404}
+.status-fail{background:#f8d7da;color:#721c24}
+.table-wrap{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{background:#f0f0f0;padding:.55rem .75rem;text-align:left;font-weight:600;border-bottom:2px solid #ddd}
+td{padding:.5rem .75rem;border-bottom:1px solid #eee}
+tr:nth-child(even) td{background:#fafafa}
+td.num,th.num{text-align:right}
+.copy-row{display:flex;justify-content:flex-end;margin-bottom:.5rem}
+.copy-btn{background:#f0f0f0;color:#444;border:1px solid #ddd;border-radius:4px;padding:6px 14px;font-size:.8rem;cursor:pointer;transition:background .2s;min-height:36px}
+.copy-btn:hover{background:#e0e0e0}
+.section{margin-bottom:2rem}
+.section h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin-bottom:.75rem;padding-bottom:.4rem;border-bottom:2px solid #e0e0e0}
+.content-section{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:1.5rem 2rem;margin-bottom:2rem}
+.content-section h2{font-size:1.1rem;font-weight:700;color:#1a1a2e;margin:1.4rem 0 .6rem;padding-bottom:.35rem;border-bottom:2px solid #f0f0f0}
+.content-section h2:first-child{margin-top:0}
+.content-section p{color:#444;font-size:.93rem;margin-bottom:.7rem;line-height:1.65}
+.content-section ul{padding-left:1.2rem;color:#444;font-size:.93rem}
+.content-section ul li{margin-bottom:.4rem}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:.6rem;overflow:hidden}
+summary{padding:.75rem 1rem;font-weight:600;font-size:.9rem;cursor:pointer;background:#f8f9fa;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::after{content:'▼';font-size:.7rem;color:#777;transition:transform .2s}
+details[open] summary::after{transform:rotate(180deg)}
+details p{padding:.75rem 1rem;font-size:.88rem;color:#444;line-height:1.6;border-top:1px solid #eee}
+.related-tools{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1.5rem}
+.related-tools h2{font-size:1.05rem;font-weight:700;margin-bottom:1rem;color:#1a1a2e}
+.related-links{display:flex;flex-direction:column;gap:.5rem}
+.related-links a{padding:.6rem .9rem;background:#fff;border:1px solid #ddd;border-radius:6px;font-size:.9rem;color:#0077b6;transition:border-color .2s,box-shadow .2s}
+.related-links a:hover{border-color:#0077b6;box-shadow:0 0 0 2px rgba(0,119,182,.1);text-decoration:none}
+.ad-slot{min-height:0;margin:0}
+footer{background:#fff;border-top:1px solid #e0e0e0;padding:1.2rem 1rem;text-align:center;font-size:.83rem;color:#777}
+footer a{color:#0077b6;margin:0 .5rem}
+.tabs{display:flex;gap:.5rem;margin-bottom:1rem}
+.tab{padding:8px 16px;border:1px solid #ddd;border-radius:6px 6px 0 0;background:#f8f9fa;cursor:pointer;font-size:.88rem;font-weight:500;color:#555;border-bottom:none;min-height:36px}
+.tab.active{background:#fff;color:#0077b6;border-color:#0077b6;font-weight:600}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.info-box{background:#e8f4fd;border:1px solid #b3d9f5;border-radius:6px;padding:.75rem 1rem;font-size:.85rem;color:#0077b6;margin-bottom:1rem}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">tool<span>wick</span>.com</a>
+  </div>
+</nav>
+
+<main>
+  <h1>Floor Joist Span & Size Calculator</h1>
+  <p class="subtitle">Find the right joist size, spacing, and max allowable span for any floor system.</p>
+
+  <div class="card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg id="joist-svg" viewBox="0 0 560 180" xmlns="http://www.w3.org/2000/svg" aria-label="Floor joist span diagram">
+        <!-- Floor deck -->
+        <rect x="40" y="30" width="480" height="14" fill="#f0f4f8" stroke="#aaa" stroke-width="1.2"/>
+        <text x="280" y="22" text-anchor="middle" font-size="11" fill="#555" font-family="sans-serif">Subfloor / Decking</text>
+        <!-- Joist outlines -->
+        <rect x="40" y="44" width="480" height="58" fill="none"/>
+        <!-- Individual joists -->
+        <g id="svg-joists">
+          <rect x="40" y="44" width="20" height="58" fill="#cce5ff" stroke="#0077b6" stroke-width="1.5" rx="2"/>
+          <rect x="120" y="44" width="20" height="58" fill="#cce5ff" stroke="#0077b6" stroke-width="1.5" rx="2"/>
+          <rect x="200" y="44" width="20" height="58" fill="#cce5ff" stroke="#0077b6" stroke-width="1.5" rx="2"/>
+          <rect x="280" y="44" width="20" height="58" fill="#cce5ff" stroke="#0077b6" stroke-width="1.5" rx="2"/>
+          <rect x="360" y="44" width="20" height="58" fill="#cce5ff" stroke="#0077b6" stroke-width="1.5" rx="2"/>
+          <rect x="440" y="44" width="20" height="58" fill="#cce5ff" stroke="#0077b6" stroke-width="1.5" rx="2"/>
+          <rect x="500" y="44" width="20" height="58" fill="#cce5ff" stroke="#0077b6" stroke-width="1.5" rx="2"/>
+        </g>
+        <!-- Beam / support lines -->
+        <rect x="30" y="100" width="14" height="50" fill="#888" stroke="#555" stroke-width="1" rx="2"/>
+        <rect x="516" y="100" width="14" height="50" fill="#888" stroke="#555" stroke-width="1" rx="2"/>
+        <rect x="30" y="102" width="500" height="8" fill="#bbb" stroke="#999" stroke-width="1"/>
+        <text x="37" y="162" font-size="10" fill="#555" font-family="sans-serif">Beam/Wall</text>
+        <text x="490" y="162" font-size="10" fill="#555" font-family="sans-serif">Beam/Wall</text>
+        <!-- Span arrow -->
+        <line x1="50" y1="125" x2="510" y2="125" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)" stroke-dasharray="4,3"/>
+        <text id="svg-span-label" x="280" y="140" text-anchor="middle" font-size="12" fill="#0077b6" font-weight="bold" font-family="sans-serif">Span</text>
+        <!-- Joist depth arrow -->
+        <line x1="10" y1="44" x2="10" y2="102" stroke="#e74c3c" stroke-width="1.5" marker-start="url(#arr-r)" marker-end="url(#arr-r)"/>
+        <text id="svg-depth-label" x="6" y="78" font-size="10" fill="#e74c3c" font-weight="bold" font-family="sans-serif" transform="rotate(-90,6,78)">Depth</text>
+        <!-- Spacing arrow -->
+        <line x1="60" y1="155" x2="120" y2="155" stroke="#27ae60" stroke-width="1.5" marker-start="url(#arr-g)" marker-end="url(#arr-g)"/>
+        <text id="svg-spacing-label" x="90" y="170" text-anchor="middle" font-size="10" fill="#27ae60" font-weight="bold" font-family="sans-serif">Spacing</text>
+        <!-- Arrow markers -->
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#0077b6"/>
+          </marker>
+          <marker id="arr-r" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#e74c3c"/>
+          </marker>
+          <marker id="arr-g" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#27ae60"/>
+          </marker>
+        </defs>
+        <!-- Width label -->
+        <text id="svg-width-label" x="280" y="12" text-anchor="middle" font-size="10" fill="#555" font-family="sans-serif">Width</text>
+      </svg>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('find-size')">Find Joist Size</div>
+      <div class="tab" onclick="switchTab('check-span')">Check a Span</div>
+    </div>
+
+    <!-- Tab: Find Size -->
+    <div class="tab-panel active" id="panel-find-size">
+      <div class="info-box">Enter your span and load conditions — the calculator will recommend the correct joist size and spacing.</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="span-ft">Span Length (feet)</label>
+          <input type="number" id="span-ft" min="1" max="30" step="0.5" placeholder="e.g. 14" value="">
+          <div class="error-msg" id="err-span">Enter a span between 1 and 30 ft.</div>
+        </div>
+        <div class="form-group">
+          <label for="live-load">Live Load (psf)</label>
+          <select id="live-load">
+            <option value="30">30 psf — Bedroom</option>
+            <option value="40" selected>40 psf — Living/General</option>
+            <option value="60">60 psf — Storage/Heavy</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dead-load">Dead Load (psf)</label>
+          <select id="dead-load">
+            <option value="10" selected>10 psf — Standard</option>
+            <option value="15">15 psf — Tile/Heavy Floor</option>
+            <option value="20">20 psf — Concrete Board</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="lumber-species">Lumber Species</label>
+          <select id="lumber-species">
+            <option value="SYP">Southern Yellow Pine (SYP)</option>
+            <option value="DF" selected>Douglas Fir-Larch (DF)</option>
+            <option value="HF">Hem-Fir</option>
+            <option value="SPF">Spruce-Pine-Fir (SPF)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="lumber-grade">Lumber Grade</label>
+          <select id="lumber-grade">
+            <option value="SS">Select Structural (SS)</option>
+            <option value="No1" selected>#1</option>
+            <option value="No2">#2</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="deflect-limit">Deflection Limit</label>
+          <select id="deflect-limit">
+            <option value="360" selected>L/360 — Standard</option>
+            <option value="480">L/480 — Tile Floors</option>
+            <option value="240">L/240 — Minimum</option>
+          </select>
+        </div>
+      </div>
+      <div class="slider-row">
+        <label for="joist-spacing">
+          <span>Joist Spacing (o.c.)</span>
+          <span class="slider-val" id="spacing-display">16 in</span>
+        </label>
+        <input type="range" id="joist-spacing" min="12" max="24" step="4" value="16" oninput="document.getElementById('spacing-display').textContent=this.value+' in'">
+      </div>
+      <button class="btn" onclick="requestAnimationFrame(calculateFindSize)">Calculate Joist Size</button>
+    </div>
+
+    <!-- Tab: Check Span -->
+    <div class="tab-panel" id="panel-check-span">
+      <div class="info-box">Already have a joist size? Enter it to see the maximum allowable span and whether your design passes.</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="chk-width">Joist Width (in)</label>
+          <select id="chk-width">
+            <option value="2">2"</option>
+            <option value="3">3"</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="chk-depth">Joist Depth (in)</label>
+          <select id="chk-depth">
+            <option value="6">6"</option>
+            <option value="8" selected>8"</option>
+            <option value="10">10"</option>
+            <option value="12">12"</option>
+            <option value="14">14"</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="chk-span">Actual Span (ft)</label>
+          <input type="number" id="chk-span" min="1" max="30" step="0.5" placeholder="e.g. 12" value="">
+          <div class="error-msg" id="err-chk-span">Enter a span between 1 and 30 ft.</div>
+        </div>
+        <div class="form-group">
+          <label for="chk-spacing">Spacing (in o.c.)</label>
+          <select id="chk-spacing">
+            <option value="12">12"</option>
+            <option value="16" selected>16"</option>
+            <option value="19.2">19.2"</option>
+            <option value="24">24"</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="chk-ll">Live Load (psf)</label>
+          <select id="chk-ll">
+            <option value="30">30 psf</option>
+            <option value="40" selected>40 psf</option>
+            <option value="60">60 psf</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="chk-dl">Dead Load (psf)</label>
+          <select id="chk-dl">
+            <option value="10" selected>10 psf</option>
+            <option value="15">15 psf</option>
+            <option value="20">20 psf</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="chk-species">Lumber Species</label>
+          <select id="chk-species">
+            <option value="SYP">Southern Yellow Pine</option>
+            <option value="DF" selected>Douglas Fir-Larch</option>
+            <option value="HF">Hem-Fir</option>
+            <option value="SPF">Spruce-Pine-Fir</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="chk-grade">Grade</label>
+          <select id="chk-grade">
+            <option value="SS">Select Structural</option>
+            <option value="No1" selected>#1</option>
+            <option value="No2">#2</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn" onclick="requestAnimationFrame(calculateCheckSpan)">Check This Span</button>
+    </div>
+
+    <!-- Results Area -->
+    <div class="results" id="results-area" style="margin-top:1.5rem">
+      <div class="copy-row">
+        <button class="copy-btn" onclick="copyResults()">Copy Results</button>
+      </div>
+      <div id="results-content"></div>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content Section -->
+  <div class="content-section">
+    <h2>How to Use This Floor Joist Span Calculator</h2>
+    <p>Choose either <strong>Find Joist Size</strong> (enter your span and load to get the recommended lumber size) or <strong>Check a Span</strong> (enter an existing joist to see if it passes). Set your live load, dead load, lumber species, grade, and spacing using the dropdowns. Click Calculate and the tool instantly outputs the recommended size, maximum allowable span, required moment of inertia, and a full comparison table.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Undersized floor joists are one of the most common framing mistakes in residential construction, and they're also one of the most expensive to fix after the fact. A 14-foot living room span with 40 psf live load and 16" joist spacing needs at least 2×10 lumber in Douglas Fir #1 — using 2×8 in the same scenario creates 40% more deflection than code allows, resulting in bouncy, squeaky floors and potential structural failure over time.</p>
+    <p>This matters most when: adding a second story above an existing space, converting a garage to living space, specifying material for a new build, or evaluating an older home during a purchase inspection. A structural engineer charges $300–$800 for a framing review — this tool helps you understand your options before that conversation, or verify a contractor's material list.</p>
+    <p>The IRC (International Residential Code) Table R802.4.1 and NDS (National Design Specification) are the governing standards. Deflection limits of L/360 are required for most floors; tile and stone floors require L/480.</p>
+
+    <h2>How It's Calculated</h2>
+    <p>The calculator uses the <strong>beam bending formula</strong> for a uniformly distributed load on a simply supported span:</p>
+    <p><strong>Max Deflection: Δ = (5 × w × L⁴) / (384 × E × I)</strong></p>
+    <p>Where: <em>w</em> = total load per unit length (lb/in), <em>L</em> = span in inches, <em>E</em> = modulus of elasticity (psi), <em>I</em> = moment of inertia (in⁴). The required <em>I</em> is solved by rearranging: <strong>I_req = (5 × w × L⁴) / (384 × E × Δ_allow)</strong>, where Δ_allow = L / deflection_limit. Bending stress is also checked: <strong>M = w × L² / 8</strong> and <strong>fb = M × c / I ≤ Fb</strong> (adjusted allowable bending stress). The controlling condition — deflection or bending — determines the required joist size.</p>
+
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Don't forget dead load:</strong> Most DIYers only think about live load. A tile floor adds 15+ psf — use the "Tile/Heavy Floor" dead load setting.</li>
+      <li><strong>Cantilevers need separate calculation:</strong> This tool assumes a simple span (two bearing points). Cantilevered joists require a different approach and should be engineered.</li>
+      <li><strong>Notching and drilling reduce capacity:</strong> Code limits notches to 1/6 of joist depth and holes to 1/3. Always account for utility runs before sizing.</li>
+      <li><strong>Doubling joists under walls:</strong> Any load-bearing wall running parallel to joists requires doubled or tripled joists below it — not included in this span calculation.</li>
+      <li><strong>Wet service matters:</strong> If lumber will be exposed to moisture above 19% MC (crawl spaces, decks), apply a 0.85 wet service factor — size up one dimension.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What size floor joist do I need for a 16-foot span?</summary>
+      <p>For a 16-foot span at 40 psf live load, 10 psf dead load, 16" spacing with Douglas Fir-Larch #1, you typically need <strong>2×12 lumber</strong> to meet L/360 deflection limits. At 12" spacing, 2×10 may work. Always verify with your local building department as codes vary.</p>
+    </details>
+    <details>
+      <summary>What's the difference between L/360 and L/480?</summary>
+      <p>These are deflection ratios — the maximum allowed mid-span sag as a fraction of the span length. L/360 allows a maximum of the span divided by 360 inches of deflection (about 0.53" on a 16-ft span). L/480 is stricter (0.4" on 16 ft) and is required under tile or stone flooring to prevent grout cracking. For carpet or vinyl, L/360 is usually acceptable.</p>
+    </details>
+    <details>
+      <summary>Can I use engineered lumber (LVL, I-joists) instead?</summary>
+      <p>Yes, and often it's the better choice for long spans over 16 feet. LVL and wood I-joists have higher E and Fb values, allowing greater spans with less depth. However, this calculator is based on dimensional sawn lumber — consult the manufacturer's span tables or a structural engineer for engineered lumber sizing.</p>
+    </details>
+    <details>
+      <summary>How many floor joists do I need for my room?</summary>
+      <p>Divide the room width (in inches) by the joist spacing and add 1. For a 12-foot-wide room at 16" spacing: (144 ÷ 16) + 1 = 10 joists. Check out our <a href="/shed-foundation-floor-joist-calculator/">Shed Foundation & Floor Joist Calculator</a> for a full material count including rim boards and bridging.</p>
+    </details>
+  </div>
+
+  <div class="related-tools">
+    <h2>Related Tools</h2>
+    <div class="related-links">
+      <a href="/soffit-fascia-material-calculator/">Soffit & Fascia Material Calculator</a>
+      <a href="/masonry-wall-bond-pattern-generator/">Masonry Wall Bond Pattern Generator</a>
+      <a href="/pex-radiant-floor-heating-layout-calculator/">PEX Radiant Floor Heating Layout Calculator</a>
+      <a href="/welding-rod-wire-consumption-calculator/">Welding Rod & Wire Consumption Calculator</a>
+      <a href="/shed-foundation-floor-joist-calculator/">Shed Foundation & Floor Joist Calculator</a>
+      <a href="/hvac-refrigerant-line-set-size-calculator/">HVAC Refrigerant Line Set Size Calculator</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</main>
+
+<footer>
+  <a href="/about/">About</a>
+  <a href="/privacy/">Privacy</a>
+  <a href="/contact/">Contact</a>
+  <span>© <span id="yr"></span> toolwick.com</span>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// ---- LUMBER DATA ----
+// E (Modulus of Elasticity, psi) and Fb (Allowable Bending Stress, psi)
+// Values approximate based on NDS Supplement for 2" & 3" thick lumber
+const LUMBER = {
+  SYP: {
+    SS:  { E: 1800000, Fb: 2850 },
+    No1: { E: 1700000, Fb: 2000 },
+    No2: { E: 1600000, Fb: 1500 }
+  },
+  DF: {
+    SS:  { E: 1900000, Fb: 1500 },
+    No1: { E: 1700000, Fb: 1000 },
+    No2: { E: 1600000, Fb: 900 }
+  },
+  HF: {
+    SS:  { E: 1600000, Fb: 1400 },
+    No1: { E: 1500000, Fb: 975 },
+    No2: { E: 1300000, Fb: 850 }
+  },
+  SPF: {
+    SS:  { E: 1500000, Fb: 1250 },
+    No1: { E: 1400000, Fb: 875 },
+    No2: { E: 1200000, Fb: 775 }
+  }
+};
+
+// Standard joist sizes [width, depth] in inches (nominal → actual)
+const JOIST_SIZES = [
+  { nom: '2×6',  w: 1.5,  d: 5.5  },
+  { nom: '2×8',  w: 1.5,  d: 7.25 },
+  { nom: '2×10', w: 1.5,  d: 9.25 },
+  { nom: '2×12', w: 1.5,  d: 11.25},
+  { nom: '2×14', w: 1.5,  d: 13.25},
+  { nom: '3×8',  w: 2.5,  d: 7.25 },
+  { nom: '3×10', w: 2.5,  d: 9.25 },
+  { nom: '3×12', w: 2.5,  d: 11.25},
+];
+
+function computeI(w, d) { return (w * Math.pow(d, 3)) / 12; }
+function computeS(w, d) { return (w * Math.pow(d, 2)) / 6; }
+
+function maxAllowableSpan(w, d, spacingIn, ll, dl, E, Fb, deflLimit) {
+  const I = computeI(w, d);
+  const S = computeS(w, d);
+  const wLoad = (ll + dl) * (spacingIn / 12) / 12; // lb/in
+  // Deflection-controlled span: L^4 = (384 * E * I * L) / (5 * w * deflLimit)
+  // Rearranged: L^3 = (384 * E * I) / (5 * wLoad * deflLimit)
+  // But w depends on spacing (per linear inch), deflLimit is ratio so Δ_allow = L/deflLimit
+  // Δ = 5wL^4 / (384EI) ≤ L/deflLimit → L^3 ≤ (384EI) / (5 * wLoad * deflLimit)
+  const L3_defl = (384 * E * I) / (5 * wLoad * deflLimit);
+  const L_defl = Math.cbrt(L3_defl); // inches
+
+  // Bending-controlled span: M = wL²/8 ≤ Fb * S → L² ≤ 8*Fb*S/w → L = sqrt(8*Fb*S/w)
+  const L_bend = Math.sqrt((8 * Fb * S) / wLoad); // inches
+
+  // Shear check (simplified): Vmax = wL/2 ≤ Fv * w * d * 2/3
+  // Fv approx for common species: ~135-175 psi; using 140 as conservative
+  const Fv = 140;
+  const L_shear = (Fv * w * d * (2/3) * 2) / wLoad; // inches
+
+  const Lmax = Math.min(L_defl, L_bend, L_shear);
+  return { Lmax, L_defl, L_bend, L_shear, I, S, wLoad };
+}
+
+function fmt(n, dec=2) {
+  if(isNaN(n)) return '—';
+  return Number(n.toFixed(dec)).toLocaleString();
+}
+
+function fmtFt(inches) {
+  const ft = Math.floor(inches / 12);
+  const rin = Math.round(inches % 12);
+  return `${ft}'-${rin}"`;
+}
+
+// ---- TAB SWITCHING ----
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    t.classList.toggle('active', ['find-size','check-span'][i] === id);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.getElementById('results-area').classList.remove('visible');
+}
+
+// ---- UPDATE SVG ----
+function updateSVG(spanFt, spacingIn, nomSize) {
+  const spanLabel = document.getElementById('svg-span-label');
+  const depthLabel = document.getElementById('svg-depth-label');
+  const spacingLabel = document.getElementById('svg-spacing-label');
+  if(spanFt) spanLabel.textContent = spanFt + "'-0\" Span";
+  if(nomSize) depthLabel.textContent = nomSize;
+  if(spacingIn) spacingLabel.textContent = spacingIn + '" o.c.';
+}
+
+// ---- FIND SIZE ----
+function calculateFindSize() {
+  clearErrors();
+  const spanFt = parseFloat(document.getElementById('span-ft').value);
+  const ll = parseFloat(document.getElementById('live-load').value);
+  const dl = parseFloat(document.getElementById('dead-load').value);
+  const species = document.getElementById('lumber-species').value;
+  const grade = document.getElementById('lumber-grade').value;
+  const deflLimit = parseFloat(document.getElementById('deflect-limit').value);
+  const spacingIn = parseFloat(document.getElementById('joist-spacing').value);
+
+  let valid = true;
+  if(isNaN(spanFt) || spanFt < 1 || spanFt > 30) {
+    showError('err-span', 'span-ft'); valid = false;
+  }
+  if(!valid) return;
+
+  const spanIn = spanFt * 12;
+  const { E, Fb } = LUMBER[species][grade];
+
+  // Find minimum joist size
+  let recommended = null;
+  const tableRows = [];
+
+  for(const sz of JOIST_SIZES) {
+    const res = maxAllowableSpan(sz.w, sz.d, spacingIn, ll, dl, E, Fb, deflLimit);
+    const maxFt = res.Lmax / 12;
+    const passes = res.Lmax >= spanIn;
+    if(!recommended && passes) recommended = { sz, res, maxFt };
+    tableRows.push({ sz, res, maxFt, passes });
+  }
+
+  const wLoad = JOIST_SIZES[0] ? (ll+dl)*(spacingIn/12)/12 : 0;
+  const wLoadEx = (ll+dl)*(spacingIn/12)/12;
+  const I_req = (5 * wLoadEx * Math.pow(spanIn,4)) / (384 * E * (spanIn/deflLimit));
+
+  let html = '';
+  if(recommended) {
+    const rec = recommended;
+    const utilDefl = (spanIn / rec.res.L_defl * 100).toFixed(0);
+    const utilBend = (spanIn / rec.res.L_bend * 100).toFixed(0);
+    const status = Math.max(utilDefl, utilBend) < 85 ? 'status-ok' : Math.max(utilDefl, utilBend) < 100 ? 'status-warn' : 'status-fail';
+    html += `<div class="result-hero">
+      <div class="big-num">${rec.sz.nom}</div>
+      <div class="big-label">Recommended Minimum Joist Size @ ${spacingIn}" o.c.</div>
+    </div>`;
+    html += `<span class="status-badge ${status}">✓ Passes — Max allowable span: ${fmtFt(rec.res.Lmax)}</span>`;
+    html += `<div class="result-grid">
+      <div class="result-card"><div class="rc-label">Your Span</div><div class="rc-val">${spanFt}'-0"</div></div>
+      <div class="result-card"><div class="rc-label">Max Span (${rec.sz.nom})</div><div class="rc-val">${fmtFt(rec.res.Lmax)}</div></div>
+      <div class="result-card"><div class="rc-label">Moment of Inertia</div><div class="rc-val">${fmt(rec.res.I)} in⁴</div></div>
+      <div class="result-card"><div class="rc-label">Required I (min)</div><div class="rc-val">${fmt(I_req)} in⁴</div></div>
+      <div class="result-card"><div class="rc-label">Total Load</div><div class="rc-val">${ll+dl} psf</div></div>
+      <div class="result-card"><div class="rc-label">Deflection Limit</div><div class="rc-val">L/${deflLimit}</div></div>
+    </div>`;
+    updateSVG(spanFt, spacingIn, rec.sz.nom);
+  } else {
+    html += `<div class="result-hero" style="background:#fff3cd;border-color:#ffc107;">
+      <div class="big-num" style="color:#856404;font-size:1.5rem;">No Standard Size</div>
+      <div class="big-label">No standard 2× or 3× lumber meets this span. Consider engineered lumber or adding a mid-span beam.</div>
+    </div>`;
+  }
+
+  html += `<h3 style="font-size:.95rem;font-weight:700;margin:1rem 0 .5rem;">All Joist Sizes @ ${spacingIn}" Spacing</h3>`;
+  html += `<div class="table-wrap"><table><thead><tr>
+    <th>Size</th><th class="num">Max Span</th><th class="num">I (in⁴)</th><th class="num">Defl Util%</th><th class="num">Bend Util%</th><th>Pass?</th>
+  </tr></thead><tbody>`;
+  for(const r of tableRows) {
+    const ud = Math.min(999, (spanIn/r.res.L_defl*100)).toFixed(0);
+    const ub = Math.min(999, (spanIn/r.res.L_bend*100)).toFixed(0);
+    const rowStyle = r.sz.nom === (recommended?.sz.nom) ? 'background:#e8f4fd;font-weight:600;' : '';
+    html += `<tr style="${rowStyle}">
+      <td>${r.sz.nom}</td>
+      <td class="num">${fmtFt(r.res.Lmax)}</td>
+      <td class="num">${fmt(r.res.I)}</td>
+      <td class="num">${ud}%</td>
+      <td class="num">${ub}%</td>
+      <td>${r.passes ? '<span style="color:#155724;font-weight:600;">✓</span>' : '<span style="color:#721c24;">✗</span>'}</td>
+    </tr>`;
+  }
+  html += `</tbody></table></div>`;
+
+  const ra = document.getElementById('results-area');
+  document.getElementById('results-content').innerHTML = html;
+  ra.classList.add('visible');
+  ra.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  window._lastResults = html;
+}
+
+// ---- CHECK SPAN ----
+function calculateCheckSpan() {
+  clearErrors();
+  const nomW = parseFloat(document.getElementById('chk-width').value);
+  const nomD = parseFloat(document.getElementById('chk-depth').value);
+  const spanFt = parseFloat(document.getElementById('chk-span').value);
+  const spacingIn = parseFloat(document.getElementById('chk-spacing').value);
+  const ll = parseFloat(document.getElementById('chk-ll').value);
+  const dl = parseFloat(document.getElementById('chk-dl').value);
+  const species = document.getElementById('chk-species').value;
+  const grade = document.getElementById('chk-grade').value;
+  const deflLimit = 360;
+
+  let valid = true;
+  if(isNaN(spanFt) || spanFt < 1 || spanFt > 30) {
+    showError('err-chk-span', 'chk-span'); valid = false;
+  }
+  if(!valid) return;
+
+  const spanIn = spanFt * 12;
+  const { E, Fb } = LUMBER[species][grade];
+
+  // Actual dimensions
+  const wAct = nomW === 2 ? 1.5 : 2.5;
+  const dAct = nomD - (nomD >= 8 ? 0.75 : 0.5);
+  const nomLabel = `${nomW}×${nomD}`;
+
+  const res = maxAllowableSpan(wAct, dAct, spacingIn, ll, dl, E, Fb, deflLimit);
+  const passes = res.Lmax >= spanIn;
+  const utilDefl = (spanIn / res.L_defl * 100).toFixed(1);
+  const utilBend = (spanIn / res.L_bend * 100).toFixed(1);
+  const maxUtil = Math.max(parseFloat(utilDefl), parseFloat(utilBend));
+
+  const statusClass = passes ? (maxUtil < 85 ? 'status-ok' : 'status-warn') : 'status-fail';
+  const statusMsg = passes ? (maxUtil < 85 ? '✓ Passes with margin' : '⚠ Passes — marginal') : '✗ Does NOT Pass';
+
+  // Actual deflection at given span
+  const wL = (ll+dl)*(spacingIn/12)/12;
+  const actualDefl = (5 * wL * Math.pow(spanIn, 4)) / (384 * E * res.I);
+  const allowDefl = spanIn / deflLimit;
+  const actualBendStress = ((wL * Math.pow(spanIn,2) / 8) * (dAct/2)) / res.I;
+
+  let html = `<div class="result-hero" style="${passes ? '' : 'background:#fff3cd;border-color:#ffc107;'}">
+    <div class="big-num" style="color:${passes?'#0077b6':'#856404'}">${nomLabel}</div>
+    <div class="big-label">${passes ? 'This joist PASSES for your span' : 'This joist may be undersized'}</div>
+  </div>`;
+  html += `<span class="status-badge ${statusClass}">${statusMsg}</span>`;
+  html += `<div class="result-grid">
+    <div class="result-card"><div class="rc-label">Your Span</div><div class="rc-val">${spanFt}'-0"</div></div>
+    <div class="result-card"><div class="rc-label">Max Allowable Span</div><div class="rc-val">${fmtFt(res.Lmax)}</div></div>
+    <div class="result-card"><div class="rc-label">Actual Deflection</div><div class="rc-val">${fmt(actualDefl, 3)}"</div></div>
+    <div class="result-card"><div class="rc-label">Allowed Deflection</div><div class="rc-val">${fmt(allowDefl, 3)}"</div></div>
+    <div class="result-card"><div class="rc-label">Bending Stress</div><div class="rc-val">${fmt(actualBendStress,0)} psi</div></div>
+    <div class="result-card"><div class="rc-label">Allowable Fb</div><div class="rc-val">${fmt(Fb,0)} psi</div></div>
+    <div class="result-card"><div class="rc-label">Defl. Utilization</div><div class="rc-val">${utilDefl}%</div></div>
+    <div class="result-card"><div class="rc-label">Bend Utilization</div><div class="rc-val">${utilBend}%</div></div>
+  </div>`;
+
+  // CSS bar
+  const barDefl = Math.min(100, parseFloat(utilDefl));
+  const barBend = Math.min(100, parseFloat(utilBend));
+  const barColorDefl = barDefl > 100 ? '#e74c3c' : barDefl > 85 ? '#f39c12' : '#27ae60';
+  const barColorBend = barBend > 100 ? '#e74c3c' : barBend > 85 ? '#f39c12' : '#27ae60';
+  html += `<div style="margin-bottom:1rem">
+    <div style="font-size:.82rem;color:#555;margin-bottom:.3rem;font-weight:500">Deflection Utilization (${utilDefl}%)</div>
+    <div style="background:#f0f0f0;border-radius:4px;height:14px;overflow:hidden">
+      <div style="background:${barColorDefl};height:100%;width:${barDefl}%;border-radius:4px;transition:width .5s"></div>
+    </div>
+    <div style="font-size:.82rem;color:#555;margin-bottom:.3rem;font-weight:500;margin-top:.6rem">Bending Utilization (${utilBend}%)</div>
+    <div style="background:#f0f0f0;border-radius:4px;height:14px;overflow:hidden">
+      <div style="background:${barColorBend};height:100%;width:${barBend}%;border-radius:4px;transition:width .5s"></div>
+    </div>
+  </div>`;
+
+  if(!passes) {
+    // Suggest next size
+    const allSizes = JOIST_SIZES;
+    let nextGood = null;
+    for(const sz of allSizes) {
+      if(sz.nom === nomLabel) continue;
+      const r2 = maxAllowableSpan(sz.w, sz.d, spacingIn, ll, dl, E, Fb, deflLimit);
+      if(r2.Lmax >= spanIn) { nextGood = sz; break; }
+    }
+    if(nextGood) {
+      html += `<div class="info-box" style="background:#fff3cd;border-color:#ffc107;color:#856404">⚠ Consider upgrading to <strong>${nextGood.nom}</strong> to safely carry this span.</div>`;
+    }
+  }
+
+  updateSVG(spanFt, spacingIn, nomLabel);
+
+  const ra = document.getElementById('results-area');
+  document.getElementById('results-content').innerHTML = html;
+  ra.classList.add('visible');
+  ra.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  window._lastResults = html;
+}
+
+// ---- COPY ----
+function copyResults() {
+  const el = document.getElementById('results-content');
+  const text = el ? el.innerText : '';
+  if(!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy Results', 2000);
+  }).catch(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Error';
+    setTimeout(() => btn.textContent = 'Copy Results', 2000);
+  });
+}
+
+// ---- ERRORS ----
+function showError(errId, inputId) {
+  document.getElementById(errId).classList.add('show');
+  const inp = document.getElementById(inputId);
+  if(inp) inp.classList.add('error');
+}
+function clearErrors() {
+  document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('input.error, select.error').forEach(e => e.classList.remove('error'));
+}
+
+// Enter key
+document.addEventListener('keydown', e => {
+  if(e.key === 'Enter') {
+    const activePanel = document.querySelector('.tab-panel.active');
+    if(activePanel && activePanel.id === 'panel-find-size') {
+      requestAnimationFrame(calculateFindSize);
+    } else if(activePanel && activePanel.id === 'panel-check-span') {
+      requestAnimationFrame(calculateCheckSpan);
+    }
+  }
+});
+</script>
+</body>
+</html>
