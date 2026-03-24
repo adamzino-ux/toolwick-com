@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Egress Window Size & Well Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate egress window minimum size, opening dimensions, and window well requirements to meet IRC building code. Free egress window size calculator.">
+<link rel="canonical" href="https://toolwick.com/egress-window-size-well-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Egress Window Size & Well Calculator",
+  "url": "https://toolwick.com/egress-window-size-well-calculator/",
+  "description": "Calculate egress window minimum size, net clear opening, and window well dimensions to meet IRC building code requirements.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0.75rem 1.5rem}
+nav .nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center}
+nav .site-name{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+.container{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;font-weight:700;color:#1a1a2e;margin-bottom:0.4rem}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+.diagram-wrap svg{max-width:100%;height:auto}
+.form-group{margin-bottom:1.25rem}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:0.35rem}
+input[type="number"],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;transition:border-color 0.2s,box-shadow 0.2s;min-height:44px}
+input[type="number"]:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:0.3rem;display:none}
+.error-msg.show{display:block}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.btn{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background 0.2s}
+.btn:hover{background:#006299}
+.btn-clear{background:#f8f9fa;color:#555;border:1px solid #ddd;margin-top:0.75rem;font-weight:500}
+.btn-clear:hover{background:#e9ecef}
+.results{opacity:0;transition:opacity 0.3s ease;margin-top:1.5rem}
+.results.show{opacity:1}
+.result-hero{text-align:center;padding:1.25rem;background:#f0f8ff;border-radius:8px;margin-bottom:1.25rem;border:1px solid #b3d9f0}
+.result-hero .big-label{font-size:0.85rem;color:#555;font-weight:500;margin-bottom:0.25rem}
+.result-hero .big-num{font-size:2.2rem;font-weight:800;color:#0077b6;line-height:1.1}
+.result-hero .big-sub{font-size:0.85rem;color:#555;margin-top:0.25rem}
+.status-badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:0.8rem;font-weight:700;margin-top:0.5rem}
+.badge-pass{background:#d4edda;color:#155724}
+.badge-fail{background:#f8d7da;color:#721c24}
+.badge-warn{background:#fff3cd;color:#856404}
+table{width:100%;border-collapse:collapse;font-size:0.9rem}
+th{background:#f0f0f0;padding:8px 12px;text-align:left;font-weight:600;font-size:0.82rem;color:#444;border-bottom:2px solid #e0e0e0}
+td{padding:8px 12px;border-bottom:1px solid #eee}
+tr:nth-child(even) td{background:#fafafa}
+td:last-child,th:last-child{text-align:right}
+.section-label{font-size:0.8rem;font-weight:700;color:#0077b6;text-transform:uppercase;letter-spacing:0.05em;margin:1rem 0 0.5rem}
+.copy-btn{background:transparent;border:1px solid #0077b6;color:#0077b6;padding:6px 14px;border-radius:4px;font-size:0.8rem;cursor:pointer;float:right;margin-top:-2px;transition:background 0.2s}
+.copy-btn:hover{background:#0077b6;color:#fff}
+.well-visual{background:#f8f9fa;border-radius:6px;padding:1rem;margin-top:1rem}
+.well-bar-wrap{margin-top:0.5rem}
+.bar-label{font-size:0.78rem;color:#555;margin-bottom:2px}
+.bar-track{background:#e0e0e0;border-radius:4px;height:18px;overflow:hidden;margin-bottom:0.5rem}
+.bar-fill{height:100%;border-radius:4px;transition:width 0.4s ease;background:#0077b6}
+.bar-fill.warn{background:#f0ad4e}
+.bar-fill.fail{background:#e74c3c}
+h2{font-size:1.2rem;font-weight:700;color:#1a1a2e;margin:2rem 0 0.6rem}
+h3{font-size:1rem;font-weight:600;color:#1a1a2e;margin:1.2rem 0 0.4rem}
+p{margin-bottom:0.85rem;color:#333}
+ul{margin-left:1.2rem;margin-bottom:0.85rem}
+ul li{margin-bottom:0.35rem;color:#333}
+details{border:1px solid #e0e0e0;border-radius:6px;padding:0.75rem 1rem;margin-bottom:0.6rem}
+summary{font-weight:600;cursor:pointer;color:#1a1a2e;font-size:0.95rem}
+details p{margin-top:0.5rem;margin-bottom:0;font-size:0.9rem}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-top:0.75rem}
+.related-link{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.6rem 0.85rem;font-size:0.85rem;color:#0077b6;display:block}
+.related-link:hover{background:#e8f4fb;text-decoration:none}
+.ad-slot{min-height:0;margin:0}
+footer{background:#f8f9fa;border-top:1px solid #e0e0e0;padding:1.25rem 1.5rem;margin-top:2rem}
+footer .foot-inner{max-width:640px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem}
+footer .foot-links{display:flex;gap:1.2rem;flex-wrap:wrap}
+footer .foot-links a{color:#555;font-size:0.85rem}
+footer .copyright{font-size:0.8rem;color:#888}
+.info-box{background:#f0f8ff;border:1px solid #b3d9f0;border-radius:6px;padding:0.85rem 1rem;font-size:0.85rem;color:#0077b6;margin-bottom:1.25rem}
+@media(max-width:640px){
+  .row-2{grid-template-columns:1fr}
+  .related-grid{grid-template-columns:1fr}
+  h1{font-size:1.35rem}
+  .result-hero .big-num{font-size:1.8rem}
+  .card{padding:1.25rem}
+  footer .foot-inner{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="site-name">🔧 toolwick.com</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Egress Window Size & Well Calculator</h1>
+  <p class="subtitle">Check if your window meets IRC egress requirements and size the window well correctly.</p>
+
+  <div class="card">
+    <!-- SVG DIAGRAM -->
+    <div class="diagram-wrap">
+      <svg id="egressDiagram" viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" aria-label="Egress window diagram showing opening dimensions and window well">
+        <!-- Foundation wall -->
+        <rect x="30" y="40" width="260" height="200" fill="#f5f5f5" stroke="#ccc" stroke-width="1.5"/>
+        <!-- Window opening -->
+        <rect id="d-window" x="80" y="60" width="160" height="140" fill="#e8f4fb" stroke="#0077b6" stroke-width="2.5"/>
+        <!-- Width arrow -->
+        <line x1="80" y1="215" x2="240" y2="215" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arrowL)" marker-end="url(#arrowR)"/>
+        <text id="d-width-label" x="160" y="230" text-anchor="middle" font-size="12" fill="#1a1a2e" font-weight="600">Width</text>
+        <!-- Height arrow -->
+        <line x1="260" y1="60" x2="260" y2="200" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arrowL)" marker-end="url(#arrowR)"/>
+        <text id="d-height-label" x="275" y="135" text-anchor="start" font-size="12" fill="#1a1a2e" font-weight="600">Height</text>
+        <!-- Sill height arrow -->
+        <line x1="55" y1="200" x2="55" y2="240" stroke="#888" stroke-width="1.5" marker-start="url(#arrowL)" marker-end="url(#arrowR)"/>
+        <text x="10" y="248" font-size="10" fill="#555">Sill ht.</text>
+        <!-- Floor line -->
+        <line x1="30" y1="240" x2="290" y2="240" stroke="#888" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="295" y="243" font-size="10" fill="#888">Floor</text>
+        <!-- Min area label -->
+        <text id="d-area-label" x="160" y="130" text-anchor="middle" font-size="11" fill="#0077b6" font-weight="700">Opening Area</text>
+        <!-- Window well (right side) -->
+        <rect x="340" y="80" width="180" height="160" fill="#f0f8ff" stroke="#0077b6" stroke-width="2" stroke-dasharray="6,3"/>
+        <!-- Well depth arrow -->
+        <line x1="530" y1="80" x2="530" y2="240" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arrowL)" marker-end="url(#arrowR)"/>
+        <text id="d-well-depth" x="535" y="165" text-anchor="start" font-size="11" fill="#1a1a2e" font-weight="600">Well</text>
+        <text id="d-well-depth2" x="535" y="178" text-anchor="start" font-size="11" fill="#1a1a2e" font-weight="600">Depth</text>
+        <!-- Well width label -->
+        <line x1="340" y1="255" x2="520" y2="255" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arrowL)" marker-end="url(#arrowR)"/>
+        <text id="d-well-width" x="430" y="268" text-anchor="middle" font-size="11" fill="#1a1a2e" font-weight="600">Well Width</text>
+        <!-- Window inside well -->
+        <rect x="365" y="100" width="130" height="120" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+        <text x="430" y="165" text-anchor="middle" font-size="10" fill="#0077b6">Window</text>
+        <!-- Labels -->
+        <text x="160" y="52" text-anchor="middle" font-size="11" fill="#555" font-style="italic">Net Clear Opening</text>
+        <text x="430" y="73" text-anchor="middle" font-size="11" fill="#555" font-style="italic">Window Well</text>
+        <!-- Arrow markers -->
+        <defs>
+          <marker id="arrowR" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#0077b6"/>
+          </marker>
+          <marker id="arrowL" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto-start-reverse">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#0077b6"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="info-box">📋 Based on IRC Section R310 — minimum egress opening requirements for sleeping rooms and basement habitable spaces.</div>
+
+    <!-- INPUTS -->
+    <div class="row-2">
+      <div class="form-group">
+        <label for="windowWidth">Window Opening Width (inches)</label>
+        <input type="number" id="windowWidth" min="0" step="0.25" placeholder="e.g. 24" aria-label="Window opening width in inches">
+        <div class="error-msg" id="err-width">Please enter a valid width greater than 0.</div>
+      </div>
+      <div class="form-group">
+        <label for="windowHeight">Window Opening Height (inches)</label>
+        <input type="number" id="windowHeight" min="0" step="0.25" placeholder="e.g. 24" aria-label="Window opening height in inches">
+        <div class="error-msg" id="err-height">Please enter a valid height greater than 0.</div>
+      </div>
+    </div>
+
+    <div class="row-2">
+      <div class="form-group">
+        <label for="sillHeight">Sill Height from Floor (inches)</label>
+        <input type="number" id="sillHeight" min="0" step="0.5" placeholder="e.g. 44" aria-label="Sill height from floor in inches">
+        <div class="error-msg" id="err-sill">Please enter a valid sill height ≥ 0.</div>
+      </div>
+      <div class="form-group">
+        <label for="roomType">Room / Location Type</label>
+        <select id="roomType">
+          <option value="sleeping">Sleeping Room (above grade)</option>
+          <option value="basement">Basement Sleeping Room</option>
+          <option value="basement-nonhabitable">Basement (non-habitable)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row-2">
+      <div class="form-group">
+        <label for="wellDepth">Window Well Depth (inches) <span style="font-weight:400;color:#888">(if applicable)</span></label>
+        <input type="number" id="wellDepth" min="0" step="0.5" placeholder="e.g. 36" aria-label="Window well depth in inches">
+        <div class="error-msg" id="err-well-depth">Enter 0 or a positive depth.</div>
+      </div>
+      <div class="form-group">
+        <label for="wellWidth">Window Well Width (inches)</label>
+        <input type="number" id="wellWidth" min="0" step="0.5" placeholder="e.g. 36" aria-label="Window well width in inches">
+        <div class="error-msg" id="err-well-width">Enter 0 or a positive width.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="wellProjection">Window Well Projection from Wall (inches)</label>
+      <input type="number" id="wellProjection" min="0" step="0.5" placeholder="e.g. 36" aria-label="Window well projection from wall in inches">
+      <div class="error-msg" id="err-well-proj">Enter 0 or a positive projection.</div>
+    </div>
+
+    <button class="btn" id="calcBtn">Calculate Egress Compliance</button>
+    <button class="btn btn-clear" id="clearBtn">Clear All</button>
+
+    <!-- RESULTS -->
+    <div class="results" id="results">
+      <!-- injected by JS -->
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- CONTENT SECTION -->
+  <section>
+    <h2>How to Use This Egress Window Size Calculator</h2>
+    <p>Enter your window's <strong>net clear opening</strong> dimensions — the actual usable opening when the window is fully open, not the rough frame size. Enter the sill height from the finished floor, select your room type, and optionally fill in window well dimensions. Hit <em>Calculate</em> to get an instant IRC compliance verdict with a detailed breakdown.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Egress window requirements exist for one reason: to save lives. In a fire or emergency, a window can be the only escape route — or the only way a firefighter can enter to rescue you. The IRC (International Residential Code) Section R310 sets strict minimums that every sleeping room must meet.</p>
+    <p>Basement bedrooms are among the most common code violations found during home inspections. A too-small window can cause a sale to fall through, trigger costly remediation, or worse — trap someone during an emergency. The typical non-compliant scenario is a window that passes on area (5.7 sq ft) but fails on minimum height (24") or minimum width (20"), since both individual dimensions must be met independently.</p>
+    <p>Window wells add another layer of complexity. If your well is deeper than 44 inches, IRC requires a permanently affixed ladder or steps. Neglecting this requirement is the #2 egress defect found by home inspectors. Getting the well width and projection right also ensures the window can fully open without obstruction — a window that opens into a well wall is just as useless in an emergency as one that's too small.</p>
+
+    <h2>How It's Calculated</h2>
+    <p>The IRC R310 minimums for sleeping rooms are:</p>
+    <ul>
+      <li><strong>Minimum net clear opening area:</strong> 5.7 sq ft</li>
+      <li><strong>Minimum net clear opening height:</strong> 24 inches</li>
+      <li><strong>Minimum net clear opening width:</strong> 20 inches</li>
+      <li><strong>Maximum sill height from floor:</strong> 44 inches</li>
+    </ul>
+    <p><strong>Net Clear Opening Area</strong> = Width (in) × Height (in) ÷ 144 (converts sq in to sq ft)</p>
+    <p>All three dimensional checks must pass simultaneously. A window that is 10" wide and 99" tall technically exceeds 5.7 sq ft but fails because it's under 20" wide.</p>
+    <p>For <strong>window wells</strong>: if depth exceeds 44 inches, a ladder or steps are required. The well must be wide enough that the window can fully open (typically projection ≥ window width and width ≥ 36 inches).</p>
+
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Measure the opening, not the frame.</strong> The net clear opening is the actual space you can climb through — always smaller than the rough opening or glass area.</li>
+      <li><strong>Casement windows open nearly 100%; double-hung opens ~50%.</strong> A double-hung window needs to be roughly twice as tall to achieve the same net clear opening as a casement of the same size.</li>
+      <li><strong>Don't forget the sill height.</strong> Even a perfectly sized window fails code if the sill is more than 44" from the floor — elderly or children may not be able to reach it.</li>
+      <li><strong>Window well ladder requirement is often missed.</strong> Any well deeper than 44" must have a permanently attached ladder with rungs no more than 18" apart and at least 12" wide.</li>
+      <li><strong>Local codes may be stricter.</strong> Some jurisdictions and fire marshals enforce higher standards. Always verify with your local building department before final inspection.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What counts as the "net clear opening"?</summary>
+      <p>The net clear opening is the actual unobstructed space available when the window is in its fully open position. For a casement window this is nearly the full frame size; for a single/double-hung window it's roughly half the frame height. Measure with the window open, not the frame dimensions.</p>
+    </details>
+    <details>
+      <summary>Do all basement windows need to meet egress requirements?</summary>
+      <p>Only if the basement is used as a sleeping room or habitable space. A storage basement with no beds doesn't technically require egress windows under IRC — but having them is strongly recommended for safety, and many local codes require emergency egress in all basements regardless of use.</p>
+    </details>
+    <details>
+      <summary>Can I use a window well cover and still be compliant?</summary>
+      <p>Yes, provided the cover can be easily opened from the inside without tools or special knowledge and can support a 750-pound load per IRC. Locking window well covers are not permitted for egress windows. Some covers have built-in hinges that allow them to swing open under body weight.</p>
+    </details>
+    <details>
+      <summary>Is 5.7 sq ft the only size requirement I need to meet?</summary>
+      <p>No — this is the most common misconception. You must independently meet the minimum area (5.7 sq ft), minimum clear height (24"), minimum clear width (20"), AND maximum sill height (44"). All four must pass simultaneously. Many windows pass on area but fail on one of the individual dimension limits.</p>
+    </details>
+  </section>
+
+  <section>
+    <h2>Related Tools</h2>
+    <div class="related-grid">
+      <a href="/wallpaper-coverage-roll-calculator/" class="related-link">🖼️ Wallpaper Coverage & Roll Calculator</a>
+      <a href="/scaffolding-material-rental-cost-estimator/" class="related-link">🏗️ Scaffolding Material & Rental Cost Estimator</a>
+      <a href="/blown-in-insulation-coverage-calculator/" class="related-link">🌡️ Blown-In Insulation Coverage Calculator</a>
+      <a href="/floor-joist-span-size-calculator/" class="related-link">📐 Floor Joist Span & Size Calculator</a>
+      <a href="/soffit-fascia-material-calculator/" class="related-link">🏠 Soffit & Fascia Material Calculator</a>
+      <a href="/generator-transfer-switch-load-calculator/" class="related-link">⚡ Generator Transfer Switch Load Calculator</a>
+    </div>
+  </section>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</div>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-links">
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+    </div>
+    <div class="copyright">© 2025 toolwick.com</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var MIN_AREA = 5.7;
+  var MIN_HEIGHT = 24;
+  var MIN_WIDTH = 20;
+  var MAX_SILL = 44;
+  var MIN_WELL_DEPTH_LADDER = 44;
+  var MIN_WELL_WIDTH = 36;
+  var MIN_WELL_PROJECTION = 36;
+
+  function fmt(n, dec) {
+    if (typeof dec === 'undefined') dec = 2;
+    return n.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+  }
+
+  function fmtIn(n) {
+    return fmt(n, 2) + '"';
+  }
+
+  function getVal(id) {
+    var v = parseFloat(document.getElementById(id).value);
+    return isNaN(v) ? null : v;
+  }
+
+  function setErr(id, show) {
+    var el = document.getElementById('err-' + id);
+    var inp = document.getElementById(id);
+    if (!el) return;
+    if (show) {
+      el.classList.add('show');
+      if (inp) inp.classList.add('error');
+    } else {
+      el.classList.remove('show');
+      if (inp) inp.classList.remove('error');
+    }
+  }
+
+  function clearErrs() {
+    ['width','height','sill','well-depth','well-width','well-proj'].forEach(function(id){
+      var el = document.getElementById('err-' + id);
+      if (el) el.classList.remove('show');
+    });
+    ['windowWidth','windowHeight','sillHeight','wellDepth','wellWidth','wellProjection'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) el.classList.remove('error');
+    });
+  }
+
+  function statusBadge(pass, label) {
+    var cls = pass === true ? 'badge-pass' : (pass === false ? 'badge-fail' : 'badge-warn');
+    return '<span class="status-badge ' + cls + '">' + label + '</span>';
+  }
+
+  function pct(val, max) {
+    return Math.min(100, (val / max) * 100);
+  }
+
+  function barFillClass(val, min) {
+    if (val >= min) return 'bar-fill';
+    if (val >= min * 0.9) return 'bar-fill warn';
+    return 'bar-fill fail';
+  }
+
+  function updateDiagram(w, h, wd, ww) {
+    var wLabel = document.getElementById('d-width-label');
+    var hLabel = document.getElementById('d-height-label');
+    var aLabel = document.getElementById('d-area-label');
+    var wellD  = document.getElementById('d-well-depth');
+    var wellD2 = document.getElementById('d-well-depth2');
+    var wellW  = document.getElementById('d-well-width');
+    if (wLabel && w) wLabel.textContent = w + '"';
+    if (hLabel && h) hLabel.textContent = h + '"';
+    if (aLabel && w && h) {
+      var area = (w * h / 144).toFixed(2);
+      aLabel.textContent = area + ' sq ft';
+    }
+    if (wellD && wd) { wellD.textContent = wd + '"'; wellD2.textContent = 'depth'; }
+    if (wellW && ww) wellW.textContent = ww + '" wide';
+  }
+
+  function calculate() {
+    clearErrs();
+    var w  = getVal('windowWidth');
+    var h  = getVal('windowHeight');
+    var s  = getVal('sillHeight');
+    var wd = getVal('wellDepth');
+    var ww = getVal('wellWidth');
+    var wp = getVal('wellProjection');
+    var roomType = document.getElementById('roomType').value;
+
+    var valid = true;
+    if (!w || w <= 0) { setErr('width', true); valid = false; }
+    if (!h || h <= 0) { setErr('height', true); valid = false; }
+    if (s === null || s < 0) { setErr('sill', true); valid = false; }
+    if (wd !== null && wd < 0) { setErr('well-depth', true); valid = false; }
+    if (ww !== null && ww < 0) { setErr('well-width', true); valid = false; }
+    if (wp !== null && wp < 0) { setErr('well-proj', true); valid = false; }
+
+    if (!valid) {
+      requestAnimationFrame(function(){
+        document.getElementById('results').classList.remove('show');
+        document.getElementById('results').innerHTML = '';
+      });
+      return;
+    }
+
+    var area = (w * h) / 144;
+    var areaPass   = area >= MIN_AREA;
+    var heightPass = h >= MIN_HEIGHT;
+    var widthPass  = w >= MIN_WIDTH;
+    var sillPass   = s <= MAX_SILL;
+
+    var overallPass = areaPass && heightPass && widthPass && sillPass;
+    var isBasement = roomType !== 'sleeping';
+
+    // Well checks
+    var wellChecks = null;
+    if (wd !== null || ww !== null || wp !== null) {
+      var wdV  = wd !== null ? wd : 0;
+      var wwV  = ww !== null ? ww : 0;
+      var wpV  = wp !== null ? wp : 0;
+      var needsLadder = wdV > MIN_WELL_DEPTH_LADDER;
+      var wellWidthPass = wwV >= MIN_WELL_WIDTH;
+      var wellProjPass  = wpV >= MIN_WELL_PROJECTION;
+      wellChecks = {
+        depth: wdV, width: wwV, proj: wpV,
+        needsLadder: needsLadder,
+        widthPass: wellWidthPass,
+        projPass: wellProjPass,
+        overallPass: wellWidthPass && wellProjPass
+      };
+      if (!wellChecks.overallPass) overallPass = false;
+    }
+
+    updateDiagram(w, h, wd, ww);
+
+    // Build result HTML
+    var overallLabel = overallPass ? '✅ COMPLIANT' : '❌ NON-COMPLIANT';
+    var overallBadge = overallPass ? '<span class="status-badge badge-pass">✅ MEETS IRC R310</span>' : '<span class="status-badge badge-fail">❌ FAILS IRC R310</span>';
+
+    var areaMax = Math.max(area, 8);
+    var hMax = Math.max(h, 30);
+    var wMax = Math.max(w, 26);
+    var sMax = Math.max(s, 50);
+
+    var html = '<div class="result-hero">';
+    html += '<div class="big-label">Net Clear Opening Area</div>';
+    html += '<div class="big-num">' + fmt(area, 2) + ' sq ft</div>';
+    html += '<div class="big-sub">Minimum required: 5.7 sq ft</div>';
+    html += overallBadge;
+    html += '</div>';
+
+    // Dimension compliance table
+    html += '<div style="display:flex;justify-content:space-between;align-items:center">';
+    html += '<div class="section-label">Opening Dimensions Check</div>';
+    html += '<button class="copy-btn" id="copyBtn">Copy Results</button>';
+    html += '</div>';
+    html += '<div style="overflow-x:auto"><table>';
+    html += '<thead><tr><th>Requirement</th><th>Your Value</th><th>IRC Minimum/Max</th><th>Status</th></tr></thead>';
+    html += '<tbody>';
+
+    var rows = [
+      ['Net Clear Area', fmt(area,2) + ' sq ft', '≥ 5.7 sq ft', areaPass],
+      ['Clear Height', fmtIn(h), '≥ 24"', heightPass],
+      ['Clear Width', fmtIn(w), '≥ 20"', widthPass],
+      ['Sill Height', fmtIn(s), '≤ 44"', sillPass],
+    ];
+    rows.forEach(function(r){
+      html += '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td><td>' + statusBadge(r[3], r[3] ? 'PASS' : 'FAIL') + '</td></tr>';
+    });
+    html += '</tbody></table></div>';
+
+    // Visual bars
+    html += '<div class="well-visual"><div class="bar-label">Area: ' + fmt(area,2) + ' sq ft (need 5.7)</div>';
+    html += '<div class="bar-track"><div class="' + barFillClass(area, MIN_AREA) + '" style="width:' + pct(area, areaMax * 1.1) + '%"></div></div>';
+    html += '<div class="bar-label">Height: ' + h + '" (need 24")</div>';
+    html += '<div class="bar-track"><div class="' + barFillClass(h, MIN_HEIGHT) + '" style="width:' + pct(h, hMax * 1.2) + '%"></div></div>';
+    html += '<div class="bar-label">Width: ' + w + '" (need 20")</div>';
+    html += '<div class="bar-track"><div class="' + barFillClass(w, MIN_WIDTH) + '" style="width:' + pct(w, wMax * 1.2) + '%"></div></div>';
+    html += '<div class="bar-label">Sill Height: ' + s + '" (max 44")</div>';
+    html += '<div class="bar-track"><div class="' + (sillPass ? 'bar-fill' : 'bar-fill fail') + '" style="width:' + pct(s, sMax * 1.1) + '%"></div></div>';
+    html += '</div>';
+
+    // What's needed to comply
+    if (!overallPass) {
+      html += '<div class="section-label" style="color:#c0392b">To Achieve Compliance</div>';
+      html += '<div style="overflow-x:auto"><table><thead><tr><th>Requirement</th><th>Current</th><th>Minimum Needed</th><th>Difference</th></tr></thead><tbody>';
+      if (!areaPass) {
+        var areaNeeded = MIN_AREA - area;
+        html += '<tr><td>Area</td><td>' + fmt(area,2) + ' sq ft</td><td>5.70 sq ft</td><td style="color:#e74c3c">+' + fmt(areaNeeded,2) + ' sq ft</td></tr>';
+      }
+      if (!heightPass) {
+        html += '<tr><td>Height</td><td>' + fmtIn(h) + '</td><td>24"</td><td style="color:#e74c3c">+' + fmt(MIN_HEIGHT-h,2) + '"</td></tr>';
+      }
+      if (!widthPass) {
+        html += '<tr><td>Width</td><td>' + fmtIn(w) + '</td><td>20"</td><td style="color:#e74c3c">+' + fmt(MIN_WIDTH-w,2) + '"</td></tr>';
+      }
+      if (!sillPass) {
+        html += '<tr><td>Sill Height</td><td>' + fmtIn(s) + '</td><td>≤ 44"</td><td style="color:#e74c3c">Lower by ' + fmt(s-MAX_SILL,2) + '"</td></tr>';
+      }
+      html += '</tbody></table></div>';
+    }
+
+    // Window well section
+    if (wellChecks) {
+      html += '<div class="section-label">Window Well Check</div>';
+      html += '<div style="overflow-x:auto"><table><thead><tr><th>Well Dimension</th><th>Your Value</th><th>IRC Minimum</th><th>Status</th></tr></thead><tbody>';
+      html += '<tr><td>Well Width</td><td>' + fmtIn(wellChecks.width) + '</td><td>≥ 36"</td><td>' + statusBadge(wellChecks.widthPass, wellChecks.widthPass ? 'PASS' : 'FAIL') + '</td></tr>';
+      html += '<tr><td>Well Projection</td><td>' + fmtIn(wellChecks.proj) + '</td><td>≥ 36"</td><td>' + statusBadge(wellChecks.projPass, wellChecks.projPass ? 'PASS' : 'FAIL') + '</td></tr>';
+      if (wellChecks.needsLadder) {
+        html += '<tr><td>Well Depth</td><td>' + fmtIn(wellChecks.depth) + '</td><td>Ladder required > 44"</td><td>' + statusBadge(null, '⚠️ LADDER REQ.') + '</td></tr>';
+      } else {
+        html += '<tr><td>Well Depth</td><td>' + fmtIn(wellChecks.depth) + '</td><td>No ladder ≤ 44"</td><td>' + statusBadge(true, 'PASS') + '</td></tr>';
+      }
+      html += '</tbody></table></div>';
+
+      if (wellChecks.needsLadder) {
+        html += '<div class="info-box" style="margin-top:0.75rem">⚠️ <strong>Ladder Required:</strong> Well depth exceeds 44". IRC requires a permanently affixed ladder or steps with rungs ≥ 12" wide, spaced ≤ 18" apart, and protruding ≤ 6" from the wall.</div>';
+      }
+    }
+
+    // Summary box
+    html += '<div style="background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;margin-top:1.25rem;font-size:0.88rem">';
+    html += '<strong>Summary:</strong> ' + (w + '" W × ' + h + '" H = ' + fmt(area,2) + ' sq ft opening') + (wellChecks ? ' | Well: ' + wellChecks.width + '" wide × ' + wellChecks.proj + '" projection × ' + wellChecks.depth + '" deep' : '') + '<br>';
+    html += '<span style="color:' + (overallPass ? '#155724' : '#721c24') + ';font-weight:700">' + overallLabel + ' — ' + (overallPass ? 'This window meets IRC R310 egress requirements.' : 'Modifications are required to meet IRC R310.') + '</span>';
+    html += '</div>';
+
+    // Copy text target
+    html += '<div id="copyTarget" style="display:none">Egress Window Check Results\n';
+    html += 'Opening: ' + w + '" W × ' + h + '" H = ' + fmt(area,2) + ' sq ft\n';
+    html += 'Area: ' + (areaPass ? 'PASS' : 'FAIL') + ' | Height: ' + (heightPass ? 'PASS' : 'FAIL') + ' | Width: ' + (widthPass ? 'PASS' : 'FAIL') + ' | Sill: ' + (sillPass ? 'PASS' : 'FAIL') + '\n';
+    if (wellChecks) html += 'Well: ' + wellChecks.width + '" W × ' + wellChecks.proj + '" proj × ' + wellChecks.depth + '" deep' + (wellChecks.needsLadder ? ' (LADDER REQUIRED)' : '') + '\n';
+    html += 'Overall: ' + overallLabel + '\nGenerated by toolwick.com/egress-window-size-well-calculator/</div>';
+
+    requestAnimationFrame(function(){
+      var res = document.getElementById('results');
+      res.innerHTML = html;
+      res.classList.add('show');
+
+      var copyBtn = document.getElementById('copyBtn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', function(){
+          var txt = document.getElementById('copyTarget');
+          if (txt) {
+            navigator.clipboard.writeText(txt.textContent.trim()).then(function(){
+              copyBtn.textContent = 'Copied!';
+              setTimeout(function(){ copyBtn.textContent = 'Copy Results'; }, 2000);
+            }).catch(function(){
+              copyBtn.textContent = 'Copy failed';
+            });
+          }
+        });
+      }
+    });
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', function(){
+    calculate();
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', function(){
+    ['windowWidth','windowHeight','sillHeight','wellDepth','wellWidth','wellProjection'].forEach(function(id){
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('roomType').value = 'sleeping';
+    clearErrs();
+    var res = document.getElementById('results');
+    res.classList.remove('show');
+    setTimeout(function(){ res.innerHTML = ''; }, 300);
+    // Reset diagram labels
+    var wLabel = document.getElementById('d-width-label');
+    var hLabel = document.getElementById('d-height-label');
+    var aLabel = document.getElementById('d-area-label');
+    var wellD  = document.getElementById('d-well-depth');
+    var wellD2 = document.getElementById('d-well-depth2');
+    var wellW  = document.getElementById('d-well-width');
+    if (wLabel) wLabel.textContent = 'Width';
+    if (hLabel) hLabel.textContent = 'Height';
+    if (aLabel) aLabel.textContent = 'Opening Area';
+    if (wellD)  wellD.textContent = 'Well';
+    if (wellD2) wellD2.textContent = 'Depth';
+    if (wellW)  wellW.textContent = 'Well Width';
+  });
+
+  ['windowWidth','windowHeight','sillHeight','wellDepth','wellWidth','wellProjection'].forEach(function(id){
+    document.getElementById(id).addEventListener('keydown', function(e){
+      if (e.key === 'Enter') calculate();
+    });
+  });
+})();
+</script>
+</body>
+</html>
