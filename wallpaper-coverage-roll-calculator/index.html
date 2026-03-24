@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wallpaper Coverage & Roll Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate how many wallpaper rolls you need for any room. Enter room dimensions, door/window cutouts, and roll specs to get an exact roll count with waste allowance.">
+<link rel="canonical" href="https://toolwick.com/wallpaper-coverage-roll-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Wallpaper Coverage & Roll Calculator",
+  "url": "https://toolwick.com/wallpaper-coverage-roll-calculator/",
+  "description": "Calculate how many wallpaper rolls you need for any room based on room dimensions, pattern repeat, and roll specifications.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #1a1a2e; font-size: 16px; line-height: 1.6; }
+a { color: #0077b6; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 0 1.5rem; }
+nav .nav-inner { max-width: 640px; margin: 0 auto; display: flex; align-items: center; height: 52px; }
+nav .site-name { font-weight: 700; font-size: 1.1rem; color: #1a1a2e; }
+nav .site-name span { color: #0077b6; }
+main { max-width: 640px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.4rem; line-height: 1.3; }
+.subtitle { color: #555; font-size: 0.95rem; margin-bottom: 1.5rem; }
+.card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+.diagram-wrap { margin-bottom: 1.5rem; overflow-x: auto; }
+svg.diagram { display: block; max-width: 100%; }
+.section-title { font-size: 1rem; font-weight: 700; color: #0077b6; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid #e8f4fb; }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.field { margin-bottom: 1rem; }
+label { display: block; font-size: 0.85rem; font-weight: 500; color: #444; margin-bottom: 0.35rem; }
+input, select { width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.95rem; color: #1a1a2e; background: #fff; transition: border-color 0.2s, box-shadow 0.2s; min-height: 44px; }
+input:focus, select:focus { outline: none; border-color: #0077b6; box-shadow: 0 0 0 3px rgba(0,119,182,0.15); }
+input.error { border-color: #e74c3c; }
+.error-msg { color: #e74c3c; font-size: 0.8rem; margin-top: 0.3rem; display: none; }
+.error-msg.show { display: block; }
+.hint { font-size: 0.78rem; color: #888; margin-top: 0.3rem; }
+.btn-primary { background: #0077b6; color: #fff; border: none; border-radius: 6px; padding: 13px 24px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; min-height: 48px; transition: background 0.2s; margin-top: 0.5rem; }
+.btn-primary:hover { background: #006299; }
+.btn-secondary { background: #f0f0f0; color: #1a1a2e; border: 1px solid #ddd; border-radius: 6px; padding: 8px 16px; font-size: 0.85rem; cursor: pointer; transition: background 0.2s; min-height: 36px; }
+.btn-secondary:hover { background: #e0e0e0; }
+.results { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+.results.visible { opacity: 1; pointer-events: all; }
+.result-hero { text-align: center; padding: 1.2rem; background: #e8f4fb; border-radius: 8px; margin-bottom: 1.25rem; }
+.result-hero .big-num { font-size: 3rem; font-weight: 800; color: #0077b6; line-height: 1; }
+.result-hero .big-label { font-size: 0.95rem; color: #555; margin-top: 0.3rem; }
+.result-hero .sub-note { font-size: 0.82rem; color: #888; margin-top: 0.2rem; }
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem; }
+.stat-box { background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 0.9rem; text-align: center; }
+.stat-box .sv { font-size: 1.35rem; font-weight: 700; color: #1a1a2e; }
+.stat-box .sl { font-size: 0.78rem; color: #666; margin-top: 0.15rem; }
+.tbl-wrap { overflow-x: auto; margin-bottom: 1rem; }
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+th { background: #f0f0f0; text-align: left; padding: 9px 12px; font-weight: 600; color: #444; border-bottom: 2px solid #ddd; }
+th.right, td.right { text-align: right; }
+td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; color: #1a1a2e; }
+tr:nth-child(even) td { background: #fafafa; }
+.copy-row { display: flex; justify-content: flex-end; margin-bottom: 0.5rem; }
+.waste-slider-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+.waste-slider-row label { min-width: 120px; margin-bottom: 0; font-size: 0.85rem; }
+.waste-slider-row input[type=range] { flex: 1; padding: 0; border: none; box-shadow: none; min-height: 0; background: transparent; }
+.waste-slider-row input[type=range]:focus { box-shadow: none; }
+.waste-val { min-width: 36px; font-weight: 700; color: #0077b6; font-size: 0.95rem; }
+.add-cutout-btn { background: none; border: 1px dashed #0077b6; color: #0077b6; border-radius: 6px; padding: 8px 14px; font-size: 0.85rem; cursor: pointer; margin-top: 0.25rem; width: 100%; min-height: 40px; }
+.add-cutout-btn:hover { background: #e8f4fb; }
+.cutout-item { background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 0.9rem; margin-bottom: 0.75rem; position: relative; }
+.cutout-item .remove-btn { position: absolute; top: 0.6rem; right: 0.7rem; background: none; border: none; color: #e74c3c; font-size: 1.1rem; cursor: pointer; line-height: 1; padding: 2px 6px; }
+.cutout-header { font-size: 0.82rem; font-weight: 600; color: #555; margin-bottom: 0.6rem; }
+.vis-bars { margin-bottom: 1rem; }
+.bar-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; font-size: 0.82rem; }
+.bar-label { min-width: 130px; color: #555; }
+.bar-track { flex: 1; background: #e0e0e0; border-radius: 4px; height: 18px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+.bar-val { min-width: 55px; text-align: right; font-weight: 600; color: #1a1a2e; }
+.unit-toggle { display: flex; gap: 0; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; margin-bottom: 1.25rem; }
+.unit-toggle button { flex: 1; padding: 8px; border: none; background: #f8f9fa; color: #555; font-size: 0.88rem; cursor: pointer; transition: background 0.2s, color 0.2s; min-height: 36px; }
+.unit-toggle button.active { background: #0077b6; color: #fff; font-weight: 600; }
+.ad-slot { min-height: 0; margin: 0; }
+section.content { margin-bottom: 2rem; }
+section.content h2 { font-size: 1.15rem; font-weight: 700; margin: 1.75rem 0 0.6rem; color: #1a1a2e; }
+section.content p { color: #444; font-size: 0.95rem; margin-bottom: 0.7rem; }
+section.content ul { padding-left: 1.4rem; color: #444; font-size: 0.95rem; margin-bottom: 0.7rem; }
+section.content ul li { margin-bottom: 0.35rem; }
+details { border: 1px solid #e0e0e0; border-radius: 6px; margin-bottom: 0.6rem; }
+summary { padding: 0.8rem 1rem; font-weight: 600; font-size: 0.92rem; cursor: pointer; list-style: none; color: #1a1a2e; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: '+ '; color: #0077b6; font-weight: 700; }
+details[open] summary::before { content: '− '; }
+details p { padding: 0 1rem 0.8rem; color: #555; font-size: 0.92rem; }
+.related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.75rem; }
+.related-link { display: block; background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 0.75rem 1rem; font-size: 0.88rem; color: #0077b6; transition: background 0.15s; }
+.related-link:hover { background: #e8f4fb; text-decoration: none; }
+footer { background: #fff; border-top: 1px solid #e0e0e0; padding: 1.2rem 1.5rem; text-align: center; font-size: 0.82rem; color: #888; }
+footer a { color: #0077b6; margin: 0 0.5rem; }
+@media (max-width: 500px) {
+  .row-2 { grid-template-columns: 1fr; }
+  .result-grid { grid-template-columns: 1fr 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  h1 { font-size: 1.35rem; }
+  .result-hero .big-num { font-size: 2.4rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="site-name">tool<span>wick</span>.com</a>
+  </div>
+</nav>
+
+<main>
+  <h1>Wallpaper Coverage &amp; Roll Calculator</h1>
+  <p class="subtitle">Calculate exactly how many wallpaper rolls you need — with pattern repeat, door &amp; window cutouts, and waste allowance.</p>
+
+  <!-- DIAGRAM -->
+  <div class="diagram-wrap">
+    <svg class="diagram" id="diagram" viewBox="0 0 580 200" xmlns="http://www.w3.org/2000/svg" aria-label="Room wall diagram showing wallpaper strips">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#0077b6"/>
+        </marker>
+        <marker id="arrl" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#0077b6"/>
+        </marker>
+      </defs>
+      <!-- Wall background -->
+      <rect x="40" y="30" width="380" height="140" fill="#f0f7ff" stroke="#0077b6" stroke-width="2" rx="2"/>
+      <!-- Strips -->
+      <rect x="40" y="30" width="48" height="140" fill="none" stroke="#0077b6" stroke-width="1" stroke-dasharray="3,3"/>
+      <rect x="88" y="30" width="48" height="140" fill="none" stroke="#0077b6" stroke-width="1" stroke-dasharray="3,3"/>
+      <rect x="136" y="30" width="48" height="140" fill="none" stroke="#0077b6" stroke-width="1" stroke-dasharray="3,3"/>
+      <rect x="184" y="30" width="48" height="140" fill="none" stroke="#0077b6" stroke-width="1" stroke-dasharray="3,3"/>
+      <rect x="232" y="30" width="48" height="140" fill="none" stroke="#0077b6" stroke-width="1" stroke-dasharray="3,3"/>
+      <rect x="280" y="30" width="48" height="140" fill="none" stroke="#0077b6" stroke-width="1" stroke-dasharray="3,3"/>
+      <rect x="328" y="30" width="48" height="140" fill="none" stroke="#0077b6" stroke-width="1" stroke-dasharray="3,3"/>
+      <rect x="376" y="30" width="44" height="140" fill="none" stroke="#0077b6" stroke-width="1" stroke-dasharray="3,3"/>
+      <!-- Door cutout -->
+      <rect x="200" y="110" width="50" height="60" fill="#e0e0e0" stroke="#888" stroke-width="1.5" rx="1"/>
+      <text x="225" y="148" text-anchor="middle" font-size="9" fill="#888">Door</text>
+      <!-- Window cutout -->
+      <rect x="290" y="50" width="55" height="45" fill="#cce6ff" stroke="#0077b6" stroke-width="1.5" rx="1"/>
+      <text x="317" y="77" text-anchor="middle" font-size="9" fill="#0077b6">Window</text>
+      <!-- Width arrow -->
+      <line x1="40" y1="182" x2="420" y2="182" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arrl)"/>
+      <text id="svg-width" x="230" y="196" text-anchor="middle" font-size="11" fill="#1a1a2e" font-weight="600">Wall Width</text>
+      <!-- Height arrow -->
+      <line x1="14" y1="30" x2="14" y2="170" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arrl)"/>
+      <text id="svg-height" x="12" y="105" text-anchor="middle" font-size="11" fill="#1a1a2e" font-weight="600" transform="rotate(-90,12,105)">Wall Height</text>
+      <!-- Strip label -->
+      <text x="64" y="22" text-anchor="middle" font-size="9.5" fill="#0077b6" font-weight="600">Strip</text>
+      <line x1="64" y1="24" x2="64" y2="30" stroke="#0077b6" stroke-width="1"/>
+      <!-- Roll label -->
+      <text x="460" y="60" font-size="10.5" fill="#1a1a2e" font-weight="600">1 Roll =</text>
+      <text id="svg-roll" x="460" y="75" font-size="10" fill="#555">Roll length</text>
+      <text x="460" y="90" font-size="10" fill="#555">÷ strip length</text>
+      <text x="460" y="105" font-size="10" fill="#555">= strips/roll</text>
+      <rect x="452" y="48" width="110" height="65" fill="none" stroke="#e0e0e0" stroke-width="1" rx="4"/>
+      <!-- strips count -->
+      <text x="460" y="130" font-size="10.5" fill="#1a1a2e" font-weight="600">Total strips</text>
+      <text id="svg-strips" x="460" y="145" font-size="10" fill="#0077b6">÷ strips/roll</text>
+      <text x="460" y="160" font-size="10" fill="#555">= rolls needed</text>
+    </svg>
+  </div>
+
+  <!-- TOOL CARD -->
+  <div class="card">
+    <!-- Unit toggle -->
+    <div class="unit-toggle" id="unitToggle">
+      <button class="active" data-unit="ft" onclick="setUnit('ft')">Feet &amp; Inches</button>
+      <button data-unit="m" onclick="setUnit('m')">Metres</button>
+    </div>
+
+    <div class="section-title">Room Dimensions</div>
+    <div class="row-2">
+      <div class="field">
+        <label for="roomW">Room Width <span id="unitLabelW">(ft)</span></label>
+        <input type="number" id="roomW" placeholder="e.g. 12" min="0" step="0.1">
+        <div class="error-msg" id="err-roomW">Please enter a valid room width.</div>
+      </div>
+      <div class="field">
+        <label for="roomL">Room Length <span id="unitLabelL">(ft)</span></label>
+        <input type="number" id="roomL" placeholder="e.g. 14" min="0" step="0.1">
+        <div class="error-msg" id="err-roomL">Please enter a valid room length.</div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="wallH">Wall Height <span id="unitLabelH">(ft)</span></label>
+      <input type="number" id="wallH" placeholder="e.g. 8" min="0" step="0.1">
+      <div class="error-msg" id="err-wallH">Please enter a valid wall height.</div>
+    </div>
+
+    <div class="section-title" style="margin-top:1.25rem;">Wallpaper Roll Specs</div>
+    <div class="row-2">
+      <div class="field">
+        <label for="rollW">Roll Width <span id="unitLabelRW">(in)</span></label>
+        <input type="number" id="rollW" placeholder="e.g. 20.5" min="0" step="0.1">
+        <div class="hint" id="hintRW">Standard US roll: 20.5–27 in</div>
+        <div class="error-msg" id="err-rollW">Please enter a valid roll width.</div>
+      </div>
+      <div class="field">
+        <label for="rollLen">Roll Length <span id="unitLabelRL">(ft)</span></label>
+        <input type="number" id="rollLen" placeholder="e.g. 33" min="0" step="0.1">
+        <div class="hint" id="hintRL">Standard US roll: 33 ft (US) or 10 m (EU)</div>
+        <div class="error-msg" id="err-rollLen">Please enter a valid roll length.</div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="patternRep">Pattern Repeat <span id="unitLabelPR">(in)</span> <span style="font-weight:400;color:#888;">(0 = no repeat)</span></label>
+      <input type="number" id="patternRep" placeholder="e.g. 0" min="0" step="0.1" value="0">
+      <div class="hint">Adds extra to each strip for pattern matching.</div>
+    </div>
+
+    <!-- Waste slider -->
+    <div class="waste-slider-row">
+      <label for="wasteSlider">Waste / Overage</label>
+      <input type="range" id="wasteSlider" min="5" max="30" step="1" value="10">
+      <span class="waste-val" id="wasteVal">10%</span>
+    </div>
+
+    <div class="section-title" style="margin-top:1.25rem;">Cutouts (Doors &amp; Windows)</div>
+    <div id="cutouts-container"></div>
+    <button class="add-cutout-btn" onclick="addCutout()">+ Add Door / Window Cutout</button>
+
+    <button class="btn-primary" style="margin-top:1.5rem;" onclick="calculate()">Calculate Rolls Needed</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="card results" id="results">
+    <div class="section-title">Results</div>
+    <div id="results-inner"></div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- CONTENT -->
+  <section class="content">
+    <h2>How to Use This Wallpaper Calculator</h2>
+    <p>Enter your room's width, length, and wall height. Then add your wallpaper roll's width and length — find these on the roll's label or product listing. Set the pattern repeat to match your chosen wallpaper (leave at 0 for plain or texture patterns). Add any doors or windows as cutouts to subtract that area. Hit "Calculate" to get your roll count instantly.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Buying too few rolls is a costly mistake — dye lots change between production runs, and even rolls with the same code can have subtle colour differences. If you run short mid-project, you may not be able to find an exact match. On the other hand, buying far too many wastes money. A typical 12×14 ft room with 8 ft ceilings needs about 8–10 single rolls, but that figure changes dramatically with a 24-inch pattern repeat (add 15–20% more) or a feature wall-only approach.</p>
+    <p>Interior designers routinely recommend ordering 10–15% extra for straight patterns and 15–20% for large pattern repeats. For rooms with many windows and doors — like a kitchen — cutouts can reduce your total by 1–2 rolls. Getting this math right before you order saves a trip to the store and guarantees a seamless installation.</p>
+
+    <h2>How It's Calculated</h2>
+    <p><strong>Step 1 — Perimeter area:</strong> <code>Total Wall Area = 2 × (Width + Length) × Height</code></p>
+    <p><strong>Step 2 — Cutout area:</strong> Subtract door and window areas. A standard door ≈ 20 sq ft; a window ≈ 9–15 sq ft.</p>
+    <p><strong>Step 3 — Strip length with pattern:</strong> Each strip needs <code>Height + Pattern Repeat</code> to allow matching.</p>
+    <p><strong>Step 4 — Strips per roll:</strong> <code>floor(Roll Length ÷ Strip Length)</code></p>
+    <p><strong>Step 5 — Total strips needed:</strong> <code>ceil(Net Wall Width ÷ Roll Width)</code> per wall, summed.</p>
+    <p><strong>Step 6 — Rolls needed:</strong> <code>ceil(Total Strips ÷ Strips per Roll)</code>, then apply waste factor and round up.</p>
+
+    <h2>Tips &amp; Common Mistakes</h2>
+    <ul>
+      <li><strong>Always round up.</strong> Wallpaper is sold in whole rolls — never buy half a roll's worth and expect to be fine.</li>
+      <li><strong>Match dye lots.</strong> Note the lot/batch number on every roll and buy them all at once. Even a slight colour shift is visible on a wall.</li>
+      <li><strong>Don't fully subtract doors.</strong> A door's strip still uses part of the roll above it. This calculator correctly counts partial strips rather than simply removing full strip areas.</li>
+      <li><strong>Textured and plain wallpapers</strong> often have a small "random match" repeat — enter 0 unless the label states otherwise.</li>
+      <li><strong>Feature walls only?</strong> Enter just that wall's width and length instead of the full room to get an accurate single-wall estimate.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>How many rolls does a standard bedroom need?</summary>
+      <p>A 12×12 ft bedroom with 8 ft ceilings typically needs 8–10 single rolls (American standard: 20.5 in × 33 ft). Add 10% for a plain pattern or 15–20% for a large pattern repeat. This calculator handles all of that automatically.</p>
+    </details>
+    <details>
+      <summary>What is a "single roll" vs a "double roll"?</summary>
+      <p>In the US, wallpaper is sold in double rolls (about 57–60 sq ft) but priced and listed per single roll (28–30 sq ft). Always confirm whether a listing is per single or double roll. Enter the actual length of the roll you're buying — if it's 66 ft, enter 66.</p>
+    </details>
+    <details>
+      <summary>Why does pattern repeat matter so much?</summary>
+      <p>With a 24-inch pattern repeat, every strip must be cut to start at the same point in the pattern. That means up to 24 inches of each strip is wasted at the bottom. On an 8 ft wall, this can reduce strips per roll from 4 to 3 — a 25% increase in rolls needed.</p>
+    </details>
+    <details>
+      <summary>Should I include the ceiling in my calculation?</summary>
+      <p>Standard wallpaper calculators — and this one — cover only the four walls. If you're papering the ceiling, measure it separately (width × length) and add that area. Run the calculation twice and add the roll counts together.</p>
+    </details>
+  </section>
+
+  <!-- RELATED TOOLS -->
+  <div class="card">
+    <div class="section-title">Related Tools</div>
+    <div class="related-grid">
+      <a href="/floor-joist-span-size-calculator/" class="related-link">Floor Joist Span &amp; Size Calculator</a>
+      <a href="/soffit-fascia-material-calculator/" class="related-link">Soffit &amp; Fascia Material Calculator</a>
+      <a href="/masonry-wall-bond-pattern-generator/" class="related-link">Masonry Wall Bond Pattern Generator</a>
+      <a href="/pex-radiant-floor-heating-layout-calculator/" class="related-link">PEX Radiant Floor Heating Layout Calculator</a>
+      <a href="/welding-rod-wire-consumption-calculator/" class="related-link">Welding Rod &amp; Wire Consumption Calculator</a>
+      <a href="/shed-foundation-floor-joist-calculator/" class="related-link">Shed Foundation &amp; Floor Joist Calculator</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</main>
+
+<footer>
+  <div>© <span id="yr"></span> toolwick.com &nbsp;|&nbsp;
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+let currentUnit = 'ft';
+let cutoutCount = 0;
+
+// Waste slider
+document.getElementById('wasteSlider').addEventListener('input', function() {
+  document.getElementById('wasteVal').textContent = this.value + '%';
+});
+
+function setUnit(u) {
+  currentUnit = u;
+  document.querySelectorAll('#unitToggle button').forEach(b => {
+    b.classList.toggle('active', b.dataset.unit === u);
+  });
+  if (u === 'ft') {
+    document.getElementById('unitLabelW').textContent = '(ft)';
+    document.getElementById('unitLabelL').textContent = '(ft)';
+    document.getElementById('unitLabelH').textContent = '(ft)';
+    document.getElementById('unitLabelRW').textContent = '(in)';
+    document.getElementById('unitLabelRL').textContent = '(ft)';
+    document.getElementById('unitLabelPR').textContent = '(in)';
+    document.getElementById('hintRW').textContent = 'Standard US roll: 20.5–27 in';
+    document.getElementById('hintRL').textContent = 'Standard US roll: 33 ft (US) or 10 m (EU)';
+    document.getElementById('rollW').placeholder = 'e.g. 20.5';
+    document.getElementById('rollLen').placeholder = 'e.g. 33';
+    document.getElementById('patternRep').placeholder = 'e.g. 0';
+  } else {
+    document.getElementById('unitLabelW').textContent = '(m)';
+    document.getElementById('unitLabelL').textContent = '(m)';
+    document.getElementById('unitLabelH').textContent = '(m)';
+    document.getElementById('unitLabelRW').textContent = '(cm)';
+    document.getElementById('unitLabelRL').textContent = '(m)';
+    document.getElementById('unitLabelPR').textContent = '(cm)';
+    document.getElementById('hintRW').textContent = 'Standard EU roll: 52–53 cm';
+    document.getElementById('hintRL').textContent = 'Standard EU roll: 10 m';
+    document.getElementById('rollW').placeholder = 'e.g. 52';
+    document.getElementById('rollLen').placeholder = 'e.g. 10';
+    document.getElementById('patternRep').placeholder = 'e.g. 0';
+  }
+}
+
+function addCutout() {
+  cutoutCount++;
+  const container = document.getElementById('cutouts-container');
+  const div = document.createElement('div');
+  div.className = 'cutout-item';
+  div.id = 'cutout-' + cutoutCount;
+  const id = cutoutCount;
+  const uW = currentUnit === 'ft' ? 'ft' : 'm';
+  const uH = currentUnit === 'ft' ? 'ft' : 'm';
+  div.innerHTML = `
+    <button class="remove-btn" onclick="removeCutout(${id})" title="Remove">×</button>
+    <div class="cutout-header">Cutout #${id}</div>
+    <div class="row-2">
+      <div class="field">
+        <label>Type</label>
+        <select id="ctype-${id}">
+          <option value="door">Door</option>
+          <option value="window">Window</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Count</label>
+        <input type="number" id="ccount-${id}" value="1" min="1" step="1" placeholder="1">
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Width (${uW})</label>
+        <input type="number" id="cw-${id}" placeholder="${currentUnit==='ft'?'e.g. 3':'e.g. 0.9'}" min="0" step="0.01">
+      </div>
+      <div class="field">
+        <label>Height (${uH})</label>
+        <input type="number" id="ch-${id}" placeholder="${currentUnit==='ft'?'e.g. 6.8':'e.g. 2.0'}" min="0" step="0.01">
+      </div>
+    </div>`;
+  container.appendChild(div);
+}
+
+function removeCutout(id) {
+  const el = document.getElementById('cutout-' + id);
+  if (el) el.remove();
+}
+
+function val(id) { return parseFloat(document.getElementById(id).value); }
+
+function setErr(id, show) {
+  const inp = document.getElementById(id);
+  const msg = document.getElementById('err-' + id);
+  if (inp) inp.classList.toggle('error', show);
+  if (msg) msg.classList.toggle('show', show);
+}
+
+function fmt(n, dec=2) {
+  if (isNaN(n)) return '—';
+  return n.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+}
+function fmtI(n) {
+  if (isNaN(n)) return '—';
+  return Math.ceil(n).toLocaleString('en-US');
+}
+
+function calculate() {
+  // Clear errors
+  ['roomW','roomL','wallH','rollW','rollLen'].forEach(id => setErr(id, false));
+
+  const roomW = val('roomW');
+  const roomL = val('roomL');
+  const wallH = val('wallH');
+  let rollW = val('rollW');
+  let rollLen = val('rollLen');
+  let patternRep = parseFloat(document.getElementById('patternRep').value) || 0;
+  const waste = parseInt(document.getElementById('wasteSlider').value) / 100;
+
+  let valid = true;
+  if (!roomW || roomW <= 0) { setErr('roomW', true); valid = false; }
+  if (!roomL || roomL <= 0) { setErr('roomL', true); valid = false; }
+  if (!wallH || wallH <= 0) { setErr('wallH', true); valid = false; }
+  if (!rollW || rollW <= 0) { setErr('rollW', true); valid = false; }
+  if (!rollLen || rollLen <= 0) { setErr('rollLen', true); valid = false; }
+  if (!valid) return;
+
+  // Convert everything to feet
+  let rW = roomW, rL = roomL, wH = wallH, rlW = rollW, rlLen = rollLen, pRep = patternRep;
+  if (currentUnit === 'm') {
+    rW = roomW * 3.28084;
+    rL = roomL * 3.28084;
+    wH = wallH * 3.28084;
+    rlW = rollW / 100 * 3.28084; // cm to ft
+    rlLen = rollLen * 3.28084;
+    pRep = patternRep / 100 * 3.28084; // cm to ft
+  } else {
+    rlW = rollW / 12; // in to ft
+    pRep = patternRep / 12; // in to ft
+  }
+
+  // Wall perimeter and area
+  const perimeter = 2 * (rW + rL);
+  const totalWallArea = perimeter * wH;
+
+  // Cutout areas
+  let cutoutArea = 0;
+  const cutoutItems = document.querySelectorAll('.cutout-item');
+  const cutoutRows = [];
+  cutoutItems.forEach(item => {
+    const id = item.id.replace('cutout-', '');
+    let cw = parseFloat(document.getElementById('cw-' + id)?.value) || 0;
+    let ch = parseFloat(document.getElementById('ch-' + id)?.value) || 0;
+    const ccount = parseInt(document.getElementById('ccount-' + id)?.value) || 1;
+    const ctype = document.getElementById('ctype-' + id)?.value || 'other';
+    if (currentUnit === 'm') { cw = cw * 3.28084; ch = ch * 3.28084; }
+    const area = cw * ch * ccount;
+    cutoutArea += area;
+    if (cw > 0 && ch > 0) {
+      const uD = currentUnit === 'ft' ? 'ft' : 'm';
+      const origW = parseFloat(document.getElementById('cw-' + id)?.value) || 0;
+      const origH = parseFloat(document.getElementById('ch-' + id)?.value) || 0;
+      cutoutRows.push({type: ctype, count: ccount, w: origW, h: origH, area: area});
+    }
+  });
+
+  // Net wall area
+  const netWallArea = Math.max(0, totalWallArea - cutoutArea);
+
+  // Strip length per drop = wall height + one pattern repeat
+  const stripLength = wH + pRep;
+
+  // Strips per roll
+  const stripsPerRoll = Math.floor(rlLen / stripLength);
+  if (stripsPerRoll < 1) {
+    requestAnimationFrame(() => {
+      document.getElementById('results-inner').innerHTML = `<p style="color:#e74c3c;font-weight:600;">⚠ The roll length is shorter than the strip length (wall height + pattern repeat). Please check your inputs.</p>`;
+      document.getElementById('results').classList.add('visible');
+    });
+    return;
+  }
+
+  // Sq ft per roll
+  const sqftPerRoll = rlW * rlLen;
+
+  // Wall by wall breakdown
+  const walls = [
+    { name: 'Wall 1 (Width)', width: rW },
+    { name: 'Wall 2 (Length)', width: rL },
+    { name: 'Wall 3 (Width)', width: rW },
+    { name: 'Wall 4 (Length)', width: rL },
+  ];
+
+  let totalStrips = 0;
+  const wallRows = walls.map(w => {
+    const strips = Math.ceil(w.width / rlW);
+    totalStrips += strips;
+    const rollsForWall = strips / stripsPerRoll;
+    return { ...w, strips, rollsForWall };
+  });
+
+  // Total rolls (base)
+  const baseRolls = Math.ceil(totalStrips / stripsPerRoll);
+
+  // With waste
+  const withWaste = Math.ceil(baseRolls * (1 + waste));
+
+  // Area coverage check
+  const rollsForArea = Math.ceil((netWallArea * (1 + waste)) / sqftPerRoll);
+
+  // Final = max of strip-based and area-based
+  const finalRolls = Math.max(withWaste, rollsForArea);
+
+  // Update SVG labels
+  const uLabel = currentUnit === 'ft' ? 'ft' : 'm';
+  document.getElementById('svg-width').textContent = `Width: ${fmt(roomW,1)} ${uLabel} (each side)`;
+  document.getElementById('svg-height').textContent = `Height: ${fmt(wallH,1)} ${uLabel}`;
+  document.getElementById('svg-roll').textContent = `Roll: ${fmt(rollLen,1)} ${uLabel} long`;
+  document.getElementById('svg-strips').textContent = `${stripsPerRoll} strips/roll`;
+
+  requestAnimationFrame(() => {
+    const uD = currentUnit === 'ft' ? 'ft' : 'm';
+    const uIn = currentUnit === 'ft' ? 'in' : 'cm';
+    const netLabel = currentUnit === 'ft' ? `${fmt(netWallArea)} sq ft` : `${fmt(netWallArea / 10.764)} m²`;
+    const totalLabel = currentUnit === 'ft' ? `${fmt(totalWallArea)} sq ft` : `${fmt(totalWallArea / 10.764)} m²`;
+
+    let wallTableHTML = '';
+    wallRows.forEach(w => {
+      wallTableHTML += `<tr>
+        <td>${w.name}</td>
+        <td class="right">${fmt(currentUnit==='ft'?w.width:w.width/3.28084,1)} ${uD}</td>
+        <td class="right">${w.strips}</td>
+        <td class="right">${fmt(w.rollsForWall,2)}</td>
+      </tr>`;
+    });
+
+    let cutoutTableHTML = '';
+    if (cutoutRows.length > 0) {
+      cutoutRows.forEach(c => {
+        cutoutTableHTML += `<tr><td>${c.type.charAt(0).toUpperCase()+c.type.slice(1)} ×${c.count}</td><td class="right">${fmt(c.w,1)} × ${fmt(c.h,1)} ${uD}</td><td class="right">${fmt(currentUnit==='ft'?c.area:c.area/10.764,1)} ${currentUnit==='ft'?'sq ft':'m²'}</td></tr>`;
+      });
+    }
+
+    const totalAreaDisp = currentUnit === 'ft' ? `${fmt(totalWallArea)} sq ft` : `${fmt(totalWallArea/10.764)} m²`;
+    const cutAreaDisp = currentUnit === 'ft' ? `${fmt(cutoutArea)} sq ft` : `${fmt(cutoutArea/10.764)} m²`;
+    const netAreaDisp = currentUnit === 'ft' ? `${fmt(netWallArea)} sq ft` : `${fmt(netWallArea/10.764)} m²`;
+    const sqftRollDisp = currentUnit === 'ft' ? `${fmt(sqftPerRoll)} sq ft` : `${fmt(sqftPerRoll/10.764)} m²`;
+
+    // Bar chart data
+    const maxArea = totalWallArea;
+    const netPct = Math.min(100, (netWallArea / maxArea) * 100);
+    const cutPct = Math.min(100, (cutoutArea / maxArea) * 100);
+    const coveredPct = Math.min(100, ((finalRolls * sqftPerRoll) / maxArea) * 100);
+
+    const html = `
+      <div class="result-hero">
+        <div class="big-num">${finalRolls}</div>
+        <div class="big-label">Rolls Needed (includes ${Math.round(waste*100)}% waste)</div>
+        <div class="sub-note">Base: ${baseRolls} rolls &nbsp;|&nbsp; ${stripsPerRoll} strips per roll &nbsp;|&nbsp; ${totalStrips} total strips</div>
+      </div>
+
+      <div class="result-grid">
+        <div class="stat-box"><div class="sv">${totalAreaDisp}</div><div class="sl">Total Wall Area</div></div>
+        <div class="stat-box"><div class="sv">${netAreaDisp}</div><div class="sl">Net Area (after cutouts)</div></div>
+        <div class="stat-box"><div class="sv">${stripsPerRoll}</div><div class="sl">Strips per Roll</div></div>
+        <div class="stat-box"><div class="sv">${sqftRollDisp}</div><div class="sl">Coverage per Roll</div></div>
+      </div>
+
+      <div class="copy-row">
+        <button class="btn-secondary" id="copyBtn" onclick="copyResults(${finalRolls}, '${netAreaDisp}', ${stripsPerRoll})">Copy Summary</button>
+      </div>
+
+      <div class="vis-bars">
+        <div class="bar-row">
+          <span class="bar-label">Total Wall Area</span>
+          <div class="bar-track"><div class="bar-fill" style="width:100%;background:#0077b6;"></div></div>
+          <span class="bar-val">${totalAreaDisp}</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Cutout Area</span>
+          <div class="bar-track"><div class="bar-fill" style="width:${cutPct.toFixed(1)}%;background:#e74c3c;"></div></div>
+          <span class="bar-val">${cutAreaDisp}</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Net Area to Cover</span>
+          <div class="bar-track"><div class="bar-fill" style="width:${netPct.toFixed(1)}%;background:#00b09b;"></div></div>
+          <span class="bar-val">${netAreaDisp}</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Rolls Coverage (w/ waste)</span>
+          <div class="bar-track"><div class="bar-fill" style="width:${Math.min(100,coveredPct).toFixed(1)}%;background:#f39c12;"></div></div>
+          <span class="bar-val">${finalRolls} rolls</span>
+        </div>
+      </div>
+
+      <div class="section-title">Wall Breakdown</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Wall</th><th class="right">Width</th><th class="right">Strips</th><th class="right">Rolls (raw)</th></tr></thead>
+          <tbody>${wallTableHTML}</tbody>
+          <tfoot><tr style="font-weight:700;"><td>Total</td><td class="right">—</td><td class="right">${totalStrips}</td><td class="right">${fmt(totalStrips/stripsPerRoll,2)}</td></tr></tfoot>
+        </table>
+      </div>
+
+      ${cutoutRows.length > 0 ? `
+      <div class="section-title" style="margin-top:1.25rem;">Cutout Summary</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Type</th><th class="right">Dimensions</th><th class="right">Area</th></tr></thead>
+          <tbody>${cutoutTableHTML}</tbody>
+        </table>
+      </div>` : ''}
+
+      <div class="section-title" style="margin-top:1.25rem;">Calculation Summary</div>
+      <div class="tbl-wrap">
+        <table>
+          <tbody>
+            <tr><td>Room perimeter</td><td class="right">${fmt(currentUnit==='ft'?2*(roomW+roomL):(2*(roomW+roomL)),2)} ${uD}</td></tr>
+            <tr><td>Strip length (height + repeat)</td><td class="right">${fmt(currentUnit==='ft'?stripLength:stripLength/3.28084,2)} ${uD}</td></tr>
+            <tr><td>Strips per roll</td><td class="right">${stripsPerRoll}</td></tr>
+            <tr><td>Total strips needed</td><td class="right">${totalStrips}</td></tr>
+            <tr><td>Base rolls (no waste)</td><td class="right">${baseRolls}</td></tr>
+            <tr><td>Waste allowance</td><td class="right">${Math.round(waste*100)}%</td></tr>
+            <tr><td style="font-weight:700;color:#0077b6;">Rolls to buy</td><td class="right" style="font-weight:700;color:#0077b6;">${finalRolls}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    `;
+
+    document.getElementById('results-inner').innerHTML = html;
+    document.getElementById('results').classList.add('visible');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+}
+
+function copyResults(rolls, area, strips) {
+  const text = `Wallpaper Roll Calculator — toolwick.com\nRolls needed: ${rolls}\nNet wall area: ${area}\nStrips per roll: ${strips}`;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    if (btn) { btn.textContent = 'Copied!'; setTimeout(() => { btn.textContent = 'Copy Summary'; }, 2000); }
+  }).catch(() => {});
+}
+
+// Enter key support
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { calculate(); }
+});
+</script>
+</body>
+</html>
