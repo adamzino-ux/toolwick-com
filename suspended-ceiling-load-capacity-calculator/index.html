@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suspended Ceiling Load Capacity Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate suspended ceiling load capacity instantly. Enter grid spacing, hanger type, and load requirements to verify your ceiling system is safe and code-compliant.">
+<link rel="canonical" href="https://toolwick.com/suspended-ceiling-load-capacity-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Suspended Ceiling Load Capacity Calculator",
+  "url": "https://toolwick.com/suspended-ceiling-load-capacity-calculator/",
+  "description": "Calculate suspended ceiling load capacity including dead loads, live loads, and hanger wire requirements for safe ceiling installations.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0.75rem 1.5rem}
+nav a{font-weight:600;font-size:1rem;color:#1a1a2e}
+.container{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;font-weight:700;margin-bottom:0.5rem;color:#1a1a2e;line-height:1.3}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
+.diagram-wrap{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1rem;margin-bottom:1.5rem;text-align:center}
+.diagram-wrap svg{max-width:100%;height:auto}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:520px){.form-grid{grid-template-columns:1fr}}
+.form-group{margin-bottom:1rem}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:0.35rem}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:0.95rem;color:#1a1a2e;background:#fff;min-height:44px;transition:border-color 0.2s,box-shadow 0.2s}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error,select.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:0.3rem;display:none}
+.error-msg.show{display:block}
+.range-wrap{display:flex;align-items:center;gap:0.75rem}
+.range-wrap input[type=range]{padding:0;min-height:auto;flex:1}
+.range-val{font-size:0.85rem;font-weight:600;color:#0077b6;min-width:50px;text-align:right}
+.btn{background:#0077b6;color:#fff;border:none;padding:13px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:48px;transition:background 0.2s}
+.btn:hover{background:#006299}
+.btn-sm{background:#0077b6;color:#fff;border:none;padding:6px 14px;border-radius:4px;font-size:0.8rem;cursor:pointer;transition:background 0.2s;min-height:32px}
+.btn-sm:hover{background:#006299}
+.results{opacity:0;transition:opacity 0.3s ease;pointer-events:none}
+.results.visible{opacity:1;pointer-events:all}
+.result-hero{text-align:center;padding:1.5rem;background:#f8f9fa;border-radius:8px;margin-bottom:1.5rem}
+.result-hero .status-badge{display:inline-block;padding:4px 14px;border-radius:20px;font-size:0.85rem;font-weight:700;margin-bottom:0.5rem}
+.badge-safe{background:#d4edda;color:#155724}
+.badge-warn{background:#fff3cd;color:#856404}
+.badge-fail{background:#f8d7da;color:#721c24}
+.result-hero .big-num{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.1}
+.result-hero .big-label{font-size:0.9rem;color:#555;margin-top:0.25rem}
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.5rem}
+@media(max-width:400px){.metrics-grid{grid-template-columns:1fr}}
+.metric-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.85rem;text-align:center}
+.metric-box .m-val{font-size:1.3rem;font-weight:700;color:#0077b6}
+.metric-box .m-label{font-size:0.75rem;color:#666;margin-top:0.15rem}
+.section-title{font-size:0.9rem;font-weight:700;color:#1a1a2e;margin-bottom:0.5rem;border-bottom:2px solid #0077b6;padding-bottom:0.3rem;display:inline-block}
+.table-wrap{overflow-x:auto;margin-bottom:1.5rem}
+table{width:100%;border-collapse:collapse;font-size:0.88rem}
+thead th{background:#f0f0f0;padding:8px 10px;text-align:left;font-weight:600;color:#1a1a2e}
+thead th.num{text-align:right}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+tbody td{padding:7px 10px;border-bottom:1px solid #eee;color:#333}
+tbody td.num{text-align:right;font-variant-numeric:tabular-nums}
+.warn-row td{color:#856404;font-weight:600}
+.fail-row td{color:#721c24;font-weight:600}
+.copy-row{display:flex;justify-content:flex-end;margin-bottom:0.5rem}
+.ad-slot{min-height:0;margin:0}
+.content-section{margin-bottom:2rem}
+.content-section h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin-bottom:0.6rem;margin-top:1.5rem}
+.content-section p{margin-bottom:0.75rem;color:#333;font-size:0.95rem}
+.content-section ul{margin:0.5rem 0 0.75rem 1.3rem;color:#333;font-size:0.95rem}
+.content-section ul li{margin-bottom:0.35rem}
+details{border:1px solid #e0e0e0;border-radius:6px;padding:0.75rem 1rem;margin-bottom:0.5rem}
+summary{font-weight:600;cursor:pointer;color:#0077b6;font-size:0.95rem}
+details p{margin-top:0.5rem;font-size:0.9rem;color:#444}
+.related-tools{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-top:0.75rem}
+@media(max-width:480px){.related-tools{grid-template-columns:1fr}}
+.related-tools a{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.6rem 0.85rem;font-size:0.85rem;color:#0077b6;display:block;transition:background 0.15s}
+.related-tools a:hover{background:#e8f4fd;text-decoration:none}
+footer{background:#f8f9fa;border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:0.85rem;color:#666}
+footer a{color:#0077b6;margin:0 0.5rem}
+.formula-box{background:#f0f7ff;border-left:4px solid #0077b6;padding:0.75rem 1rem;border-radius:0 6px 6px 0;font-family:monospace;font-size:0.88rem;color:#1a1a2e;margin:0.5rem 0 0.75rem}
+</style>
+</head>
+<body>
+
+<nav><a href="/">toolwick.com</a></nav>
+
+<div class="container">
+
+<h1>Suspended Ceiling Load Capacity Calculator</h1>
+<p class="subtitle">Verify your suspended ceiling system can safely support tile weight, lighting, HVAC, and other loads — with hanger wire sizing and grid spacing analysis.</p>
+
+<div class="card">
+
+  <!-- SVG DIAGRAM -->
+  <div class="diagram-wrap">
+    <svg id="ceilDiagram" viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Suspended ceiling cross-section diagram">
+      <!-- Structural deck -->
+      <rect x="10" y="15" width="540" height="18" fill="#e0e0e0" stroke="#aaa" stroke-width="1.5"/>
+      <text x="284" y="28" text-anchor="middle" font-size="11" fill="#555" font-family="sans-serif">Structural Deck / Joists</text>
+
+      <!-- Hanger wires -->
+      <line x1="100" y1="33" x2="100" y2="110" stroke="#0077b6" stroke-width="2" stroke-dasharray="5,3"/>
+      <line x1="280" y1="33" x2="280" y2="110" stroke="#0077b6" stroke-width="2" stroke-dasharray="5,3"/>
+      <line x1="460" y1="33" x2="460" y2="110" stroke="#0077b6" stroke-width="2" stroke-dasharray="5,3"/>
+
+      <!-- Hanger labels -->
+      <text id="d-wire1" x="60" y="76" font-size="10" fill="#0077b6" font-family="sans-serif">Hanger</text>
+      <text id="d-wire2" x="60" y="88" font-size="10" fill="#0077b6" font-family="sans-serif">Wire</text>
+
+      <!-- Main tee (horizontal) -->
+      <rect x="20" y="108" width="520" height="8" rx="2" fill="#1a1a2e" opacity="0.85"/>
+      <text x="284" y="132" text-anchor="middle" font-size="10" fill="#1a1a2e" font-family="sans-serif">Main Tee</text>
+
+      <!-- Cross tees -->
+      <rect x="95" y="138" width="8" height="4" rx="1" fill="#555"/>
+      <rect x="275" y="138" width="8" height="4" rx="1" fill="#555"/>
+      <rect x="455" y="138" width="8" height="4" rx="1" fill="#555"/>
+      <line x1="20" y1="140" x2="542" y2="140" stroke="#555" stroke-width="1.5"/>
+
+      <!-- Ceiling tiles -->
+      <rect x="21" y="142" width="173" height="50" fill="#f8f9fa" stroke="#bbb" stroke-width="1"/>
+      <rect x="196" y="142" width="172" height="50" fill="#f8f9fa" stroke="#bbb" stroke-width="1"/>
+      <rect x="370" y="142" width="171" height="50" fill="#f8f9fa" stroke="#bbb" stroke-width="1"/>
+
+      <!-- Tile labels -->
+      <text x="107" y="171" text-anchor="middle" font-size="10" fill="#555" font-family="sans-serif">Ceiling Tile</text>
+      <text id="d-tileW" x="107" y="183" text-anchor="middle" font-size="10" fill="#0077b6" font-family="sans-serif">2×2 ft</text>
+      <text x="282" y="171" text-anchor="middle" font-size="10" fill="#555" font-family="sans-serif">Ceiling Tile</text>
+      <text x="456" y="171" text-anchor="middle" font-size="10" fill="#555" font-family="sans-serif">Ceiling Tile</text>
+
+      <!-- Grid spacing dimension arrow (top) -->
+      <line x1="100" y1="50" x2="280" y2="50" stroke="#e74c3c" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arrR)"/>
+      <text id="d-spacing" x="190" y="44" text-anchor="middle" font-size="10" fill="#e74c3c" font-family="sans-serif">4 ft</text>
+
+      <!-- Hanger height dimension -->
+      <line x1="530" y1="33" x2="530" y2="112" stroke="#e74c3c" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="522" y1="33" x2="538" y2="33" stroke="#e74c3c" stroke-width="1"/>
+      <line x1="522" y1="112" x2="538" y2="112" stroke="#e74c3c" stroke-width="1"/>
+      <text id="d-height" x="544" y="76" text-anchor="start" font-size="10" fill="#e74c3c" font-family="sans-serif">HH</text>
+
+      <!-- Load arrow down on middle tile -->
+      <text x="282" y="185" text-anchor="middle" font-size="9" fill="#0077b6" font-family="sans-serif">▼ Load</text>
+      <text id="d-load" x="282" y="196" text-anchor="middle" font-size="9" fill="#0077b6" font-family="sans-serif">PSF</text>
+
+      <!-- Arrowhead markers -->
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#e74c3c"/>
+        </marker>
+        <marker id="arrR" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse">
+          <path d="M0,0 L0,6 L8,3 z" fill="#e74c3c"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- INPUTS -->
+  <div class="form-grid">
+    <div class="form-group">
+      <label for="roomLen">Room Length (ft)</label>
+      <input type="number" id="roomLen" min="1" max="500" step="0.5" value="20" placeholder="e.g. 20">
+      <div class="error-msg" id="roomLen-err">Enter a valid length (1–500 ft)</div>
+    </div>
+    <div class="form-group">
+      <label for="roomWid">Room Width (ft)</label>
+      <input type="number" id="roomWid" min="1" max="500" step="0.5" value="15" placeholder="e.g. 15">
+      <div class="error-msg" id="roomWid-err">Enter a valid width (1–500 ft)</div>
+    </div>
+  </div>
+
+  <div class="form-grid">
+    <div class="form-group">
+      <label for="tileSize">Tile / Grid Size</label>
+      <select id="tileSize">
+        <option value="2x2">2 × 2 ft (standard)</option>
+        <option value="2x4" selected>2 × 4 ft (standard)</option>
+        <option value="1x1">1 × 1 ft</option>
+        <option value="custom">Custom</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="hangerType">Hanger Wire Gauge</label>
+      <select id="hangerType">
+        <option value="12">12-gauge wire (160 lb)</option>
+        <option value="10" selected>10-gauge wire (200 lb)</option>
+        <option value="9">9-gauge wire (240 lb)</option>
+        <option value="8">8-gauge wire (320 lb)</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="customSizeRow" class="form-grid" style="display:none">
+    <div class="form-group">
+      <label for="customL">Custom Tile Length (ft)</label>
+      <input type="number" id="customL" min="0.5" max="8" step="0.25" value="2">
+      <div class="error-msg" id="customL-err">Enter 0.5–8 ft</div>
+    </div>
+    <div class="form-group">
+      <label for="customW">Custom Tile Width (ft)</label>
+      <input type="number" id="customW" min="0.5" max="8" step="0.25" value="4">
+      <div class="error-msg" id="customW-err">Enter 0.5–8 ft</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="mainTeeSpacing">Main Tee Spacing (ft)</label>
+    <div class="range-wrap">
+      <input type="range" id="mainTeeSpacing" min="2" max="6" step="0.5" value="4">
+      <span class="range-val" id="mainTeeSpacingVal">4 ft</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="hangerSpacing">Hanger Wire Spacing Along Main Tee (ft)</label>
+    <div class="range-wrap">
+      <input type="range" id="hangerSpacing" min="2" max="6" step="0.5" value="4">
+      <span class="range-val" id="hangerSpacingVal">4 ft</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="hangerHeight">Hanger Wire Height / Drop (in)</label>
+    <input type="number" id="hangerHeight" min="2" max="60" step="0.5" value="12" placeholder="e.g. 12">
+    <div class="error-msg" id="hangerHeight-err">Enter 2–60 inches</div>
+  </div>
+
+  <p style="font-size:0.85rem;font-weight:600;color:#444;margin:0.5rem 0 0.25rem">Loads (psf = pounds per square foot)</p>
+
+  <div class="form-grid">
+    <div class="form-group">
+      <label for="tileWeight">Ceiling Tile Weight (psf)</label>
+      <input type="number" id="tileWeight" min="0.1" max="20" step="0.1" value="1.5" placeholder="e.g. 1.5">
+      <div class="error-msg" id="tileWeight-err">Enter 0.1–20 psf</div>
+    </div>
+    <div class="form-group">
+      <label for="gridWeight">Grid System Weight (psf)</label>
+      <input type="number" id="gridWeight" min="0.1" max="10" step="0.1" value="0.5" placeholder="e.g. 0.5">
+      <div class="error-msg" id="gridWeight-err">Enter 0.1–10 psf</div>
+    </div>
+  </div>
+
+  <div class="form-grid">
+    <div class="form-group">
+      <label for="lightingLoad">Lighting & Fixtures (psf)</label>
+      <input type="number" id="lightingLoad" min="0" max="20" step="0.1" value="0.5" placeholder="e.g. 0.5">
+      <div class="error-msg" id="lightingLoad-err">Enter 0–20 psf</div>
+    </div>
+    <div class="form-group">
+      <label for="hvacLoad">HVAC / Ductwork (psf)</label>
+      <input type="number" id="hvacLoad" min="0" max="20" step="0.1" value="0.3" placeholder="e.g. 0.3">
+      <div class="error-msg" id="hvacLoad-err">Enter 0–20 psf</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="miscLoad">Miscellaneous Additional Load (psf)</label>
+    <input type="number" id="miscLoad" min="0" max="30" step="0.1" value="0" placeholder="e.g. 0">
+    <div class="error-msg" id="miscLoad-err">Enter 0–30 psf</div>
+  </div>
+
+  <button class="btn" id="calcBtn">Calculate Load Capacity</button>
+</div>
+
+<!-- RESULTS -->
+<div class="card results" id="resultsCard">
+  <div id="resultsInner"></div>
+</div>
+
+<div class="ad-slot" id="ad-mid"></div>
+
+<!-- CONTENT SECTION -->
+<div class="content-section">
+
+  <h2>How to Use This Suspended Ceiling Load Capacity Calculator</h2>
+  <p>Enter your room dimensions, tile/grid size, hanger wire gauge and spacing, and all applicable loads in pounds per square foot (psf). Hit <strong>Calculate Load Capacity</strong> to instantly see total load, per-hanger wire tension, safety factor, and whether your ceiling system is within safe limits. The diagram updates to reflect your inputs.</p>
+
+  <h2>Why This Matters</h2>
+  <p>A suspended (drop) ceiling looks simple — tiles resting in a grid hung from wires. But get the load math wrong and you risk a catastrophic collapse that injures people and destroys property. Commercial codes like ASTM C635 and ASTM C636 set strict limits on hanger wire tension, grid member capacity, and connection strength for exactly this reason.</p>
+  <p>Real-world example: A 20 × 15 ft office ceiling with 2 × 4 ft tiles, T-bar grid, LED troffer fixtures, and light HVAC grilles typically lands around 2.5–3.0 psf total dead load. With 10-gauge wire on 4 ft × 4 ft spacing, each wire carries roughly 40–48 lbs — well under the 200 lb rated capacity. But add a projector mount (5 lb point load), a heavy sprinkler branch, and denser acoustic tiles, and you can push wires past 60% of their rated load, triggering code review.</p>
+  <p>Architects, contractors, and facility managers use calculators like this to right-size hanger wire gauge, decide on 4 ft vs. 5 ft spacing, and document compliance before inspection.</p>
+
+  <h2>How It's Calculated</h2>
+  <p>The core calculation follows standard structural engineering methodology:</p>
+  <div class="formula-box">
+    Total Load (psf) = Tile Weight + Grid Weight + Lighting + HVAC + Misc<br>
+    Tributary Area per Hanger = Main Tee Spacing × Hanger Wire Spacing<br>
+    Wire Tension (lbs) = Total Load (psf) × Tributary Area (ft²)<br>
+    Safety Factor = Wire Rated Capacity ÷ Wire Tension<br>
+    Total Hangers Needed = Room Area ÷ Tributary Area per Hanger<br>
+    Utilization % = (Wire Tension ÷ Wire Rated Capacity) × 100
+  </div>
+  <p>A safety factor of ≥2.0 is the general industry target (50% utilization or less). Values between 1.5–2.0 warrant caution and engineering review. Below 1.5 (over 67% utilization) is considered a failure condition under most commercial building codes.</p>
+
+  <h2>Tips & Common Mistakes</h2>
+  <ul>
+    <li><strong>Don't forget the grid weight.</strong> The T-bar grid itself typically adds 0.4–0.6 psf — many DIYers ignore it entirely.</li>
+    <li><strong>Heavier tiles than you think.</strong> Mineral fiber tiles run 0.8–1.2 psf; fiberglass tiles 0.5–0.9 psf; but specialty acoustic or drywall tiles can reach 3–4 psf. Always check the manufacturer's data sheet.</li>
+    <li><strong>Point loads need separate analysis.</strong> This calculator handles distributed loads. Projectors, speakers, or heavy fixtures should be evaluated as point loads with dedicated hanger supports — not spread across the grid.</li>
+    <li><strong>Wire angle matters in seismic zones.</strong> In seismic design categories C–F, diagonal splay wires (45°) are required. This calculator assumes vertical wires; consult a structural engineer in seismic zones.</li>
+    <li><strong>Inspect existing wires.</strong> Hanger wires lose capacity if kinked, corroded, or installed at angles greater than 15° from vertical. Replace damaged wires before adding loads.</li>
+  </ul>
+
+  <h2>Frequently Asked Questions</h2>
+  <details>
+    <summary>What is a safe load limit for a standard suspended ceiling?</summary>
+    <p>Most residential and light commercial suspended ceiling systems using 10-gauge hanger wire on 4 × 4 ft spacing have a practical safe load of around 12–15 psf total dead load. Standard systems (ASTM C635 intermediate duty) are rated to support the ceiling plus up to 2.5 lbs/ft² of additional loads. Always verify with the grid manufacturer's specs for your specific system.</p>
+  </details>
+  <details>
+    <summary>Can I hang a projector or TV from a suspended ceiling grid?</summary>
+    <p>Not directly from the T-bar grid — it's not designed for point loads. You need to install independent hanger rods or threaded rod anchors attached directly to the structural deck, then route them through the ceiling plane. Typical projector mounts weigh 20–80 lbs and require at least two dedicated anchor points.</p>
+  </details>
+  <details>
+    <summary>What gauge hanger wire should I use?</summary>
+    <p>12-gauge wire (160 lb capacity) is the minimum for most residential applications with light loads. 10-gauge (200 lb) is the commercial standard and the most common choice. Use 9-gauge (240 lb) or 8-gauge (320 lb) when you have heavier tiles, dense lighting, or larger tributary areas. The wire gauge must be matched to the grid manufacturer's approved components.</p>
+  </details>
+  <details>
+    <summary>How far apart should hanger wires be spaced?</summary>
+    <p>ASTM C636 requires hanger wires within 8 inches of each end of every main tee and at maximum 4 ft intervals along main tees. Many engineers specify 4 × 4 ft spacing as a default. Wider spacing (up to 5 or 6 ft) is possible with heavier-gauge wire and verified by load calculation, but 4 ft is the safest default for mixed-use commercial spaces.</p>
+  </details>
+
+  <h2>Related Tools</h2>
+  <div class="related-tools">
+    <a href="/hardwood-floor-board-count-waste-calculator/">Hardwood Floor Board Count &amp; Waste Calculator</a>
+    <a href="/header-beam-size-calculator/">Header Beam Size Calculator</a>
+    <a href="/bathroom-tile-layout-planner/">Bathroom Tile Layout Planner</a>
+    <a href="/crawl-space-vapor-barrier-calculator/">Crawl Space Vapor Barrier Calculator</a>
+    <a href="/wallpaper-coverage-roll-calculator/">Wallpaper Coverage &amp; Roll Calculator</a>
+    <a href="/scaffolding-material-rental-cost-estimator/">Scaffolding Material &amp; Rental Cost Estimator</a>
+  </div>
+</div>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+</div><!-- /container -->
+
+<footer>
+  <a href="/about/">About</a>
+  <a href="/privacy/">Privacy</a>
+  <a href="/contact/">Contact</a>
+  <br style="margin:0.4rem 0">
+  <span>© 2025 toolwick.com</span>
+</footer>
+
+<script>
+// Slider labels
+const mainTeeSlider = document.getElementById('mainTeeSpacing');
+const hangerSlider = document.getElementById('hangerSpacing');
+mainTeeSlider.addEventListener('input', () => {
+  document.getElementById('mainTeeSpacingVal').textContent = mainTeeSlider.value + ' ft';
+});
+hangerSlider.addEventListener('input', () => {
+  document.getElementById('hangerSpacingVal').textContent = hangerSlider.value + ' ft';
+});
+
+// Custom tile size toggle
+document.getElementById('tileSize').addEventListener('change', function() {
+  document.getElementById('customSizeRow').style.display = this.value === 'custom' ? 'grid' : 'none';
+});
+
+// Enter key
+document.querySelectorAll('input').forEach(inp => {
+  inp.addEventListener('keydown', e => { if(e.key === 'Enter') calculate(); });
+});
+
+document.getElementById('calcBtn').addEventListener('click', () => {
+  requestAnimationFrame(() => { calculate(); });
+});
+
+function fmt(n, dec=2) {
+  if(isNaN(n)) return '—';
+  return n.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+}
+function fmtI(n) {
+  if(isNaN(n)) return '—';
+  return Math.round(n).toLocaleString('en-US');
+}
+
+function clearErrors() {
+  document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('input,select').forEach(e => e.classList.remove('error'));
+}
+
+function showError(id, msgId) {
+  const el = document.getElementById(id);
+  const msg = document.getElementById(msgId);
+  if(el) { el.classList.add('error'); }
+  if(msg) { msg.classList.add('show'); }
+}
+
+function getVal(id, min, max) {
+  const v = parseFloat(document.getElementById(id).value);
+  return (isNaN(v) || v < min || v > max) ? null : v;
+}
+
+function calculate() {
+  clearErrors();
+  let valid = true;
+
+  const roomLen = getVal('roomLen', 1, 500);
+  if(roomLen === null) { showError('roomLen','roomLen-err'); valid = false; }
+
+  const roomWid = getVal('roomWid', 1, 500);
+  if(roomWid === null) { showError('roomWid','roomWid-err'); valid = false; }
+
+  const hangerHeight = getVal('hangerHeight', 2, 60);
+  if(hangerHeight === null) { showError('hangerHeight','hangerHeight-err'); valid = false; }
+
+  const tileWeight = getVal('tileWeight', 0.1, 20);
+  if(tileWeight === null) { showError('tileWeight','tileWeight-err'); valid = false; }
+
+  const gridWeight = getVal('gridWeight', 0.1, 10);
+  if(gridWeight === null) { showError('gridWeight','gridWeight-err'); valid = false; }
+
+  const lightingLoad = getVal('lightingLoad', 0, 20);
+  if(lightingLoad === null) { showError('lightingLoad','lightingLoad-err'); valid = false; }
+
+  const hvacLoad = getVal('hvacLoad', 0, 20);
+  if(hvacLoad === null) { showError('hvacLoad','hvacLoad-err'); valid = false; }
+
+  const miscLoad = getVal('miscLoad', 0, 30);
+  if(miscLoad === null) { showError('miscLoad','miscLoad-err'); valid = false; }
+
+  // Tile size
+  const tileSel = document.getElementById('tileSize').value;
+  let tileL, tileW;
+  if(tileSel === '2x2') { tileL=2; tileW=2; }
+  else if(tileSel === '2x4') { tileL=2; tileW=4; }
+  else if(tileSel === '1x1') { tileL=1; tileW=1; }
+  else {
+    tileL = getVal('customL', 0.5, 8);
+    tileW = getVal('customW', 0.5, 8);
+    if(tileL === null) { showError('customL','customL-err'); valid = false; }
+    if(tileW === null) { showError('customW','customW-err'); valid = false; }
+  }
+
+  if(!valid) return;
+
+  const hangerTypeVal = document.getElementById('hangerType').value;
+  const gaugeCapacity = {'12':160,'10':200,'9':240,'8':320};
+  const wireCapacity = gaugeCapacity[hangerTypeVal];
+  const gaugeLabel = {'12':'12-ga (160 lb)','10':'10-ga (200 lb)','9':'9-ga (240 lb)','8':'8-ga (320 lb)'};
+
+  const mainTeeSpacing = parseFloat(mainTeeSlider.value);
+  const hangerSpacing = parseFloat(hangerSlider.value);
+
+  // Calculations
+  const totalLoadPsf = tileWeight + gridWeight + lightingLoad + hvacLoad + miscLoad;
+  const roomArea = roomLen * roomWid;
+  const tributaryArea = mainTeeSpacing * hangerSpacing;
+  const wireTension = totalLoadPsf * tributaryArea;
+  const safetyFactor = wireCapacity / wireTension;
+  const utilization = (wireTension / wireCapacity) * 100;
+
+  const totalHangers = Math.ceil(roomArea / tributaryArea);
+  const totalLoad = totalLoadPsf * roomArea;
+
+  // Tile counts
+  const tilesLen = Math.ceil(roomLen / tileL);
+  const tilesWid = Math.ceil(roomWid / tileW);
+  const totalTiles = tilesLen * tilesWid;
+
+  // Main tees
+  const mainTeeCount = Math.ceil(roomWid / mainTeeSpacing);
+  const mainTeeLength = roomLen;
+
+  // Status
+  let status, badgeClass, statusMsg;
+  if(safetyFactor >= 2.0) {
+    status = 'SAFE'; badgeClass = 'badge-safe';
+    statusMsg = 'System is within safe load limits. Safety factor ≥ 2.0.';
+  } else if(safetyFactor >= 1.5) {
+    status = 'CAUTION'; badgeClass = 'badge-warn';
+    statusMsg = 'Safety factor between 1.5–2.0. Engineering review recommended.';
+  } else {
+    status = 'OVERLOADED'; badgeClass = 'badge-fail';
+    statusMsg = 'Safety factor below 1.5. Reduce load or increase wire gauge/add hangers!';
+  }
+
+  // Wire length
+  const wireDropFt = hangerHeight / 12;
+  const totalWireLength = totalHangers * (wireDropFt + 2); // +2 for wraps
+
+  // Load breakdown rows
+  const loadItems = [
+    {name:'Ceiling Tile Weight', psf:tileWeight},
+    {name:'Grid System Weight', psf:gridWeight},
+    {name:'Lighting & Fixtures', psf:lightingLoad},
+    {name:'HVAC / Ductwork', psf:hvacLoad},
+    {name:'Miscellaneous', psf:miscLoad},
+  ];
+
+  let loadTableRows = '';
+  loadItems.forEach(item => {
+    const lbs = item.psf * roomArea;
+    loadTableRows += `<tr>
+      <td>${item.name}</td>
+      <td class="num">${fmt(item.psf,2)}</td>
+      <td class="num">${fmt(lbs,1)}</td>
+    </tr>`;
+  });
+
+  const totalLbs = totalLoadPsf * roomArea;
+
+  // Utilization bar
+  const barPct = Math.min(utilization, 100);
+  const barColor = utilization <= 50 ? '#27ae60' : utilization <= 67 ? '#f39c12' : '#e74c3c';
+
+  const barWidth = Math.round(barPct);
+
+  // Build full result HTML
+  const html = `
+    <div class="result-hero">
+      <div class="status-badge ${badgeClass}">${status}</div>
+      <div class="big-num">${fmt(safetyFactor,2)}×</div>
+      <div class="big-label">Safety Factor (target ≥ 2.0)</div>
+      <p style="font-size:0.85rem;color:#555;margin-top:0.5rem">${statusMsg}</p>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-box">
+        <div class="m-val">${fmt(totalLoadPsf,2)} psf</div>
+        <div class="m-label">Total Distributed Load</div>
+      </div>
+      <div class="metric-box">
+        <div class="m-val">${fmt(wireTension,1)} lbs</div>
+        <div class="m-label">Tension per Hanger Wire</div>
+      </div>
+      <div class="metric-box">
+        <div class="m-val">${wireCapacity} lbs</div>
+        <div class="m-label">Wire Rated Capacity</div>
+      </div>
+      <div class="metric-box">
+        <div class="m-val">${fmt(utilization,1)}%</div>
+        <div class="m-label">Wire Utilization</div>
+      </div>
+      <div class="metric-box">
+        <div class="m-val">${fmtI(totalHangers)}</div>
+        <div class="m-label">Hanger Wires Required</div>
+      </div>
+      <div class="metric-box">
+        <div class="m-val">${fmt(tributaryArea,1)} ft²</div>
+        <div class="m-label">Tributary Area/Hanger</div>
+      </div>
+    </div>
+
+    <!-- Utilization bar -->
+    <div style="margin-bottom:1.5rem">
+      <span class="section-title">Wire Utilization</span>
+      <div style="background:#e0e0e0;border-radius:6px;height:22px;margin-top:0.5rem;overflow:hidden">
+        <div style="width:${barWidth}%;background:${barColor};height:100%;border-radius:6px;transition:width 0.4s;display:flex;align-items:center;justify-content:flex-end;padding-right:6px">
+          <span style="color:#fff;font-size:0.75rem;font-weight:700;white-space:nowrap">${fmt(utilization,1)}%</span>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:#888;margin-top:3px">
+        <span>0%</span><span>Safe ≤50%</span><span>Caution ≤67%</span><span>100%</span>
+      </div>
+    </div>
+
+    <!-- Load Breakdown -->
+    <span class="section-title">Load Breakdown</span>
+    <div class="copy-row">
+      <button class="btn-sm" id="copyBtn">Copy Summary</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Load Component</th><th class="num">Load (psf)</th><th class="num">Total (lbs)</th></tr></thead>
+        <tbody>
+          ${loadTableRows}
+          <tr style="font-weight:700;background:#f0f0f0">
+            <td>TOTAL</td>
+            <td class="num">${fmt(totalLoadPsf,2)}</td>
+            <td class="num">${fmt(totalLbs,1)}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- System Summary -->
+    <span class="section-title">System Summary</span>
+    <div class="table-wrap" style="margin-top:0.5rem">
+      <table>
+        <thead><tr><th>Parameter</th><th class="num">Value</th></tr></thead>
+        <tbody>
+          <tr><td>Room Area</td><td class="num">${fmt(roomArea,1)} ft²</td></tr>
+          <tr><td>Tile Size</td><td class="num">${tileSel === 'custom' ? fmt(tileL,2)+'×'+fmt(tileW,2)+' ft' : tileSel.replace('x',' × ')+' ft'}</td></tr>
+          <tr><td>Total Tiles Needed</td><td class="num">${fmtI(totalTiles)}</td></tr>
+          <tr><td>Main Tee Spacing</td><td class="num">${fmt(mainTeeSpacing,1)} ft</td></tr>
+          <tr><td>Hanger Spacing</td><td class="num">${fmt(hangerSpacing,1)} ft</td></tr>
+          <tr><td>Hanger Wire Drop</td><td class="num">${fmt(hangerHeight,1)} in</td></tr>
+          <tr><td>Wire Gauge / Capacity</td><td class="num">${gaugeLabel[hangerTypeVal]}</td></tr>
+          <tr><td>Number of Main Tees</td><td class="num">${fmtI(mainTeeCount)}</td></tr>
+          <tr><td>Total Hanger Wires</td><td class="num">${fmtI(totalHangers)}</td></tr>
+          <tr><td>Total Wire Length (est.)</td><td class="num">${fmt(totalWireLength,0)} ft</td></tr>
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  requestAnimationFrame(() => {
+    document.getElementById('resultsInner').innerHTML = html;
+    const card = document.getElementById('resultsCard');
+    card.classList.add('visible');
+    card.scrollIntoView({behavior:'smooth', block:'start'});
+
+    // Update SVG diagram
+    const tileSizeLabel = tileSel === 'custom' ? `${tileL}×${tileW}ft` : (tileSel.replace('x','×')+' ft');
+    document.getElementById('d-tileW').textContent = tileSizeLabel;
+    document.getElementById('d-spacing').textContent = fmt(mainTeeSpacing,1)+' ft';
+    document.getElementById('d-height').textContent = fmt(hangerHeight,0)+'"';
+    document.getElementById('d-load').textContent = fmt(totalLoadPsf,2)+' psf';
+
+    // Copy button
+    document.getElementById('copyBtn').addEventListener('click', function() {
+      const summary = `Suspended Ceiling Load Summary\n`+
+        `Room: ${roomLen}×${roomWid} ft (${fmt(roomArea,1)} ft²)\n`+
+        `Total Load: ${fmt(totalLoadPsf,2)} psf / ${fmt(totalLbs,1)} lbs\n`+
+        `Wire Tension: ${fmt(wireTension,1)} lbs / ${wireCapacity} lb capacity\n`+
+        `Safety Factor: ${fmt(safetyFactor,2)}× — ${status}\n`+
+        `Utilization: ${fmt(utilization,1)}%\n`+
+        `Hangers Required: ${fmtI(totalHangers)}\n`+
+        `Tile Count: ${fmtI(totalTiles)}`;
+      navigator.clipboard.writeText(summary).then(() => {
+        this.textContent = 'Copied!';
+        setTimeout(() => { this.textContent = 'Copy Summary'; }, 2000);
+      }).catch(() => {
+        this.textContent = 'Copy failed';
+        setTimeout(() => { this.textContent = 'Copy Summary'; }, 2000);
+      });
+    });
+  });
+}
+</script>
+</body>
+</html>
