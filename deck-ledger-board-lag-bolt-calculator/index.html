@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deck Ledger Board Lag Bolt Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate exact lag bolt spacing for deck ledger boards. Enter deck dimensions and get IRC-compliant bolt patterns, quantities, and placement tables instantly.">
+<link rel="canonical" href="https://toolwick.com/deck-ledger-board-lag-bolt-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Deck Ledger Board Lag Bolt Calculator",
+  "url": "https://toolwick.com/deck-ledger-board-lag-bolt-calculator/",
+  "description": "Calculate lag bolt spacing and quantity for deck ledger boards per IRC code requirements.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0.75rem 1.5rem;position:sticky;top:0;z-index:100}
+.nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center}
+.nav-brand{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+.nav-brand:hover{text-decoration:none;color:#0077b6}
+main{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;font-weight:700;margin-bottom:0.5rem;line-height:1.3}
+.tagline{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+svg.ledger-diagram{width:100%;max-width:560px;height:auto}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:520px){.form-grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:0.3rem;margin-bottom:1rem}
+label{font-size:0.85rem;font-weight:500;color:#444}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;transition:border-color 0.2s,box-shadow 0.2s;min-height:44px;background:#fff}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error,select.error{border-color:#e74c3c}
+.error-msg{font-size:0.8rem;color:#e74c3c;margin-top:2px;display:none}
+.error-msg.show{display:block}
+.btn-primary{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background 0.2s;margin-top:0.5rem}
+.btn-primary:hover{background:#006299}
+.results{opacity:0;transition:opacity 0.3s ease;pointer-events:none}
+.results.visible{opacity:1;pointer-events:auto}
+.result-hero{text-align:center;background:#f0f8ff;border:1px solid #b8d9f0;border-radius:8px;padding:1.5rem;margin-bottom:1.5rem}
+.result-hero-label{font-size:0.85rem;color:#555;margin-bottom:0.25rem}
+.result-hero-number{font-size:3rem;font-weight:800;color:#0077b6;line-height:1}
+.result-hero-sub{font-size:0.9rem;color:#555;margin-top:0.4rem}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+@media(max-width:480px){.result-grid{grid-template-columns:1fr}}
+.result-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;text-align:center}
+.result-box-label{font-size:0.78rem;color:#555;margin-bottom:0.2rem}
+.result-box-value{font-size:1.4rem;font-weight:700;color:#1a1a2e}
+.result-box-unit{font-size:0.8rem;color:#777}
+.section-title{font-size:1rem;font-weight:600;margin-bottom:0.75rem;color:#1a1a2e}
+.table-wrap{overflow-x:auto;margin-bottom:1.5rem}
+table{width:100%;border-collapse:collapse;font-size:0.9rem;min-width:320px}
+th{background:#f0f0f0;padding:8px 12px;text-align:left;font-weight:600;font-size:0.82rem;color:#444;border-bottom:2px solid #ddd}
+th.num,td.num{text-align:right}
+td{padding:8px 12px;border-bottom:1px solid #eee;color:#1a1a2e}
+tr:nth-child(even) td{background:#fafafa}
+.compliance{display:flex;align-items:center;gap:0.5rem;font-size:0.9rem;padding:0.75rem 1rem;border-radius:6px;margin-bottom:1rem}
+.compliance.pass{background:#e8f5e9;border:1px solid #a5d6a7;color:#2e7d32}
+.compliance.fail{background:#fdecea;border:1px solid #f5a5a0;color:#c62828}
+.compliance-icon{font-size:1.2rem}
+.btn-copy{background:#f0f0f0;border:1px solid #ddd;color:#444;padding:6px 14px;border-radius:5px;font-size:0.82rem;cursor:pointer;transition:background 0.2s;min-height:36px}
+.btn-copy:hover{background:#e0e0e0}
+.copy-row{display:flex;justify-content:flex-end;margin-bottom:0.5rem}
+.warning-box{background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:0.75rem 1rem;font-size:0.85rem;color:#7a5c00;margin-bottom:1rem}
+.ad-slot{min-height:0;margin:0}
+.content-section{margin-top:2rem}
+.content-section h2{font-size:1.2rem;font-weight:700;margin:2rem 0 0.75rem;color:#1a1a2e;border-bottom:2px solid #e0e0e0;padding-bottom:0.4rem}
+.content-section p{margin-bottom:0.9rem;color:#333;font-size:0.95rem}
+.content-section ul{margin:0.5rem 0 0.9rem 1.4rem}
+.content-section ul li{margin-bottom:0.4rem;font-size:0.95rem;color:#333}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:0.75rem;background:#fafafa}
+summary{padding:0.75rem 1rem;cursor:pointer;font-weight:600;font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::after{content:'▼';font-size:0.75rem;color:#888;transition:transform 0.2s}
+details[open] summary::after{transform:rotate(180deg)}
+details p{padding:0 1rem 0.75rem;font-size:0.9rem;color:#333;line-height:1.6}
+.related-tools{background:#f8f9fa;border-radius:8px;padding:1.5rem;margin-top:2rem}
+.related-tools h2{font-size:1.1rem;font-weight:700;margin-bottom:1rem;color:#1a1a2e;border:none;padding:0}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem}
+@media(max-width:440px){.related-grid{grid-template-columns:1fr}}
+.related-link{background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:0.6rem 0.8rem;font-size:0.85rem;color:#0077b6;display:block;transition:border-color 0.2s,background 0.2s}
+.related-link:hover{border-color:#0077b6;background:#f0f8ff;text-decoration:none}
+footer{background:#f8f9fa;border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:0.85rem;color:#555;margin-top:3rem}
+footer a{color:#0077b6;margin:0 0.5rem}
+.bar-visual{margin-bottom:1.5rem}
+.bar-row{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;font-size:0.82rem}
+.bar-label{width:80px;text-align:right;color:#555;flex-shrink:0}
+.bar-track{flex:1;background:#e9ecef;border-radius:3px;height:18px;overflow:hidden}
+.bar-fill{height:100%;background:#0077b6;border-radius:3px;transition:width 0.4s ease}
+.bar-val{width:60px;font-weight:600;color:#1a1a2e;flex-shrink:0}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">⚒ Toolwick</a>
+  </div>
+</nav>
+<main>
+  <h1>Deck Ledger Board Lag Bolt Calculator</h1>
+  <p class="tagline">Get IRC-compliant lag bolt spacing, quantity, and placement for any deck ledger board — instantly.</p>
+
+  <div class="card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg class="ledger-diagram" viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Deck ledger board lag bolt spacing diagram">
+        <!-- House wall -->
+        <rect x="10" y="30" width="50" height="170" fill="#e8eaed" stroke="#aaa" stroke-width="1.5"/>
+        <text x="35" y="22" text-anchor="middle" font-size="11" fill="#1a1a2e" font-weight="600">House Wall</text>
+        <!-- Ledger board -->
+        <rect x="60" y="80" width="420" height="40" fill="#d4a96a" stroke="#0077b6" stroke-width="2"/>
+        <text x="270" y="104" text-anchor="middle" font-size="12" fill="#1a1a2e" font-weight="700">LEDGER BOARD</text>
+        <!-- End margin arrows -->
+        <line x1="60" y1="145" x2="105" y2="145" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arr2)"/>
+        <text x="82" y="158" text-anchor="middle" font-size="10" fill="#0077b6" id="svg-endmargin">2–5″</text>
+        <!-- Last end margin right -->
+        <line x1="435" y1="145" x2="480" y2="145" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arr2)"/>
+        <text x="457" y="158" text-anchor="middle" font-size="10" fill="#0077b6" id="svg-endmargin2">2–5″</text>
+        <!-- Bolt spacing arrow -->
+        <line x1="105" y1="155" x2="230" y2="155" stroke="#e07000" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrorange)" marker-start="url(#arrorange2)"/>
+        <text x="167" y="168" text-anchor="middle" font-size="10" fill="#e07000" id="svg-spacing">spacing</text>
+        <!-- Bolt markers -->
+        <g id="svg-bolts">
+          <circle cx="105" cy="100" r="6" fill="#0077b6" opacity="0.9"/>
+          <circle cx="230" cy="100" r="6" fill="#0077b6" opacity="0.9"/>
+          <circle cx="355" cy="100" r="6" fill="#0077b6" opacity="0.9"/>
+          <circle cx="435" cy="100" r="6" fill="#0077b6" opacity="0.9"/>
+          <!-- Row labels -->
+          <text x="105" y="78" text-anchor="middle" font-size="9" fill="#0077b6">B1</text>
+          <text x="230" y="78" text-anchor="middle" font-size="9" fill="#0077b6">B2</text>
+          <text x="355" y="78" text-anchor="middle" font-size="9" fill="#0077b6">B3</text>
+          <text x="435" y="78" text-anchor="middle" font-size="9" fill="#0077b6">B4</text>
+        </g>
+        <!-- Ledger length dimension -->
+        <line x1="60" y1="185" x2="480" y2="185" stroke="#1a1a2e" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="60" y1="178" x2="60" y2="192" stroke="#1a1a2e" stroke-width="1.5"/>
+        <line x1="480" y1="178" x2="480" y2="192" stroke="#1a1a2e" stroke-width="1.5"/>
+        <text x="270" y="202" text-anchor="middle" font-size="11" fill="#1a1a2e" font-weight="600" id="svg-length">Ledger Length</text>
+        <!-- Row offset -->
+        <line x1="505" y1="80" x2="505" y2="120" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arr2)"/>
+        <text x="520" y="104" text-anchor="middle" font-size="9" fill="#0077b6" id="svg-rowoffset">row</text>
+        <!-- Defs -->
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#0077b6"/></marker>
+          <marker id="arr2" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto"><path d="M8,0 L8,6 L0,3 z" fill="#0077b6"/></marker>
+          <marker id="arrorange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#e07000"/></marker>
+          <marker id="arrorange2" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto"><path d="M8,0 L8,6 L0,3 z" fill="#e07000"/></marker>
+        </defs>
+      </svg>
+    </div>
+
+    <!-- Inputs -->
+    <div class="form-grid">
+      <div class="field">
+        <label for="ledgerLength">Ledger Board Length (ft)</label>
+        <input type="number" id="ledgerLength" placeholder="e.g. 16" min="1" max="200" step="0.25">
+        <span class="error-msg" id="err-length">Enter a valid length (1–200 ft)</span>
+      </div>
+      <div class="field">
+        <label for="deckDepth">Deck Depth / Tributary Width (ft)</label>
+        <input type="number" id="deckDepth" placeholder="e.g. 12" min="1" max="30" step="0.25">
+        <span class="error-msg" id="err-depth">Enter a valid depth (1–30 ft)</span>
+      </div>
+      <div class="field">
+        <label for="boltSize">Lag Bolt Diameter</label>
+        <select id="boltSize">
+          <option value="0.5">½″ (most common)</option>
+          <option value="0.625">⅝″</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="joistSpacing">Joist Spacing (in)</label>
+        <select id="joistSpacing">
+          <option value="12">12″ o.c.</option>
+          <option value="16" selected>16″ o.c.</option>
+          <option value="24">24″ o.c.</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="boltRows">Number of Bolt Rows</label>
+        <select id="boltRows">
+          <option value="1">1 row (single)</option>
+          <option value="2" selected>2 rows (staggered)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="lumber">Ledger Lumber Size</label>
+        <select id="lumber">
+          <option value="2x8">2×8</option>
+          <option value="2x10" selected>2×10</option>
+          <option value="2x12">2×12</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn-primary" id="calcBtn">Calculate Lag Bolt Spacing</button>
+  </div>
+
+  <!-- Results -->
+  <div class="results card" id="results">
+    <div id="results-inner"></div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content -->
+  <div class="content-section">
+    <h2>How to Use This Deck Ledger Bolt Spacing Calculator</h2>
+    <p>Enter your ledger board length, deck tributary width, bolt diameter, joist spacing, number of bolt rows, and lumber size. Click "Calculate" and you'll instantly see the required number of lag bolts, recommended spacing, a row-by-row placement table, and IRC code compliance status.</p>
+    <p>The results section also includes a visual bar comparison and a copy-to-clipboard summary you can paste into your permit application or construction notes.</p>
+
+    <h2>Why This Matters</h2>
+    <p>The ledger board is the single most critical connection on your deck — it's where the entire structure transfers load to your house. The International Residential Code (IRC Table R507.9.1.3(1)) mandates specific lag bolt patterns based on deck width and joist spacing. Getting this wrong is one of the leading causes of deck collapses, which injure tens of thousands of people each year in the United States.</p>
+    <p>For example, a 14-foot wide deck with joists at 16″ o.c. requires ½″ lag bolts every 16 inches or less. Miss that requirement and your deck could be carrying a 40+ psf live load across an under-bolted connection. Whether you're pulling a permit, hiring a contractor, or building it yourself, knowing the correct bolt spacing is non-negotiable. This tool takes the guesswork out by applying the IRC lookup table logic directly.</p>
+
+    <h2>How It's Calculated</h2>
+    <p>The calculator uses the IRC R507.9.1.3 methodology. First it determines the <strong>required bolt spacing</strong> based on tributary width (deck depth ÷ 2) and joist spacing using the code table. Then it divides your ledger length by that spacing and rounds up to find the minimum bolt count. End margin (typically 2–5 inches) is subtracted from each end before spacing out the bolts evenly.</p>
+    <p><strong>Formula:</strong></p>
+    <ul>
+      <li>Tributary Width = Deck Depth / 2</li>
+      <li>Max Spacing = IRC Table lookup (tributary width × joist spacing → max bolt spacing in inches)</li>
+      <li>Usable Length = Ledger Length − (2 × End Margin)</li>
+      <li>Min Bolts = ⌈Usable Length / Max Spacing⌉ + 1 (per row)</li>
+      <li>Actual Spacing = Usable Length / (Bolts − 1)</li>
+      <li>Total Bolts = Min Bolts × Rows</li>
+    </ul>
+
+    <h2>Tips &amp; Common Mistakes</h2>
+    <ul>
+      <li><strong>Don't skip the end margin:</strong> IRC requires bolts to be placed at least 2″ and no more than 5″ from each end of the ledger. Ignoring this voids code compliance.</li>
+      <li><strong>Stagger two rows:</strong> When using two rows, offset each row vertically and stagger bolts horizontally by half the spacing to maximize bearing strength across the board thickness.</li>
+      <li><strong>Use the right length bolt:</strong> Lag screws must penetrate the house rim joist or band joist at least 1½″ (min) — typically 3″–4″ total bolt length covers the ledger + sheathing + penetration.</li>
+      <li><strong>Pre-drill always:</strong> Split ledger boards from over-torqued lags are common. Use a pilot hole 75% of the lag shank diameter.</li>
+      <li><strong>Check for blocking:</strong> Bolts must land in solid wood — rim joist or blocking — not in void space or insulation. Map your framing before drilling.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What size lag bolts do I need for a deck ledger?</summary>
+      <p>The IRC requires a minimum ½″ diameter lag screw or through-bolt for deck ledger connections. For heavier decks (wide tributary width or heavy loads), ⅝″ diameter provides more shear strength. Most residential decks use ½″ × 3½″ or ½″ × 4″ hex head lag screws.</p>
+    </details>
+    <details>
+      <summary>Can I use structural screws instead of lag bolts?</summary>
+      <p>Yes — ICC-approved structural screws (like LedgerLOK or SDWH by Simpson) are an accepted alternative to traditional lag bolts in many jurisdictions. They often require less spacing but check your local code and the manufacturer's ICC evaluation report for exact spacing tables.</p>
+    </details>
+    <details>
+      <summary>How far apart should lag bolts be on a ledger board?</summary>
+      <p>Per IRC Table R507.9.1.3, spacing ranges from roughly 14″ to 30″ depending on deck tributary width and joist spacing. A 12-foot wide deck with 16″ joist spacing typically requires bolts no more than 18″ apart. This calculator computes the exact required spacing for your inputs.</p>
+    </details>
+    <details>
+      <summary>Do I need a permit to build a deck with a ledger?</summary>
+      <p>In virtually every U.S. jurisdiction, yes. Any deck attached to the house via a ledger board requires a building permit and structural inspection. Skipping the permit can result in fines, forced removal, and homeowner's insurance complications if a collapse occurs.</p>
+    </details>
+  </div>
+
+  <div class="related-tools">
+    <h2>Related Construction Calculators</h2>
+    <div class="related-grid">
+      <a href="/pocket-door-rough-opening-cavity-calculator/" class="related-link">🚪 Pocket Door Rough Opening Calculator</a>
+      <a href="/cinder-block-wall-calculator/" class="related-link">🧱 Cinder Block Wall Calculator</a>
+      <a href="/garage-slab-thickness-reinforcement-calculator/" class="related-link">🏗️ Garage Concrete Slab Calculator</a>
+      <a href="/drywall-screw-spacing-quantity-calculator/" class="related-link">🔩 Drywall Screw Spacing Calculator</a>
+      <a href="/suspended-ceiling-load-capacity-calculator/" class="related-link">📐 Suspended Ceiling Load Calculator</a>
+      <a href="/hardwood-floor-board-count-waste-calculator/" class="related-link">🪵 Hardwood Floor Board Calculator</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</main>
+
+<footer>
+  <div>
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <div style="margin-top:0.5rem">© <span id="yr"></span> toolwick.com — Free construction calculators</div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// IRC Table R507.9.1.3(1) — max lag bolt spacing (inches) by tributary width (ft) and joist spacing (in)
+// Keys: tributary width bands, values: {joistSpacing: maxBoltSpacing}
+// Tributary width = deckDepth / 2
+const IRC_TABLE = [
+  { maxTrib: 6,  spacings: { 12: 30, 16: 23, 24: 16 } },
+  { maxTrib: 8,  spacings: { 12: 23, 16: 18, 24: 12 } },
+  { maxTrib: 10, spacings: { 12: 18, 16: 14, 24: 10 } },
+  { maxTrib: 12, spacings: { 12: 15, 16: 12, 24: 8  } },
+  { maxTrib: 14, spacings: { 12: 13, 16: 10, 24: 7  } },
+  { maxTrib: 16, spacings: { 12: 11, 16: 9,  24: 6  } },
+  { maxTrib: 18, spacings: { 12: 10, 16: 8,  24: 5  } },
+];
+
+const LUMBER_ROW_OFFSETS = { '2x8': [1.75, 5.25], '2x10': [1.75, 7.25], '2x12': [1.75, 9.25] };
+
+function getIRCSpacing(tributaryFt, joistIn) {
+  for (let row of IRC_TABLE) {
+    if (tributaryFt <= row.maxTrib) return row.spacings[joistIn] || null;
+  }
+  return null; // over max table range
+}
+
+function fmt(n, dec=2) {
+  return n.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+}
+function fmtIn(inches) {
+  const ft = Math.floor(inches / 12);
+  const inRem = (inches % 12).toFixed(2).replace(/\.00$/, '').replace(/(\.\d)0$/, '$1');
+  if (ft === 0) return inRem + '″';
+  return ft + '\' ' + inRem + '″';
+}
+
+function validate() {
+  let ok = true;
+  const ll = parseFloat(document.getElementById('ledgerLength').value);
+  const dd = parseFloat(document.getElementById('deckDepth').value);
+  document.getElementById('err-length').classList.remove('show');
+  document.getElementById('err-depth').classList.remove('show');
+  document.getElementById('ledgerLength').classList.remove('error');
+  document.getElementById('deckDepth').classList.remove('error');
+  if (!ll || ll < 1 || ll > 200) {
+    document.getElementById('err-length').classList.add('show');
+    document.getElementById('ledgerLength').classList.add('error');
+    ok = false;
+  }
+  if (!dd || dd < 1 || dd > 30) {
+    document.getElementById('err-depth').classList.add('show');
+    document.getElementById('deckDepth').classList.add('error');
+    ok = false;
+  }
+  return ok;
+}
+
+function calculate() {
+  if (!validate()) return;
+
+  const ledgerFt = parseFloat(document.getElementById('ledgerLength').value);
+  const deckDepthFt = parseFloat(document.getElementById('deckDepth').value);
+  const boltDia = parseFloat(document.getElementById('boltSize').value);
+  const joistSp = parseInt(document.getElementById('joistSpacing').value);
+  const rows = parseInt(document.getElementById('boltRows').value);
+  const lumber = document.getElementById('lumber').value;
+
+  const ledgerIn = ledgerFt * 12;
+  const tribFt = deckDepthFt / 2;
+
+  // IRC max spacing lookup
+  let maxSpacingIn = getIRCSpacing(tribFt, joistSp);
+  let outOfTable = false;
+  if (!maxSpacingIn) {
+    maxSpacingIn = 5; // very conservative fallback
+    outOfTable = true;
+  }
+
+  // End margins: 3 inches (compliant: 2-5")
+  const endMarginIn = 3;
+  const usableLengthIn = ledgerIn - (2 * endMarginIn);
+
+  // Min bolts per row
+  let boltsPerRow = Math.ceil(usableLengthIn / maxSpacingIn) + 1;
+  if (boltsPerRow < 2) boltsPerRow = 2;
+
+  // Actual spacing
+  const actualSpacingIn = usableLengthIn / (boltsPerRow - 1);
+  const totalBolts = boltsPerRow * rows;
+
+  // Bolt positions
+  const positions = [];
+  for (let i = 0; i < boltsPerRow; i++) {
+    const posIn = endMarginIn + (i * actualSpacingIn);
+    positions.push(posIn);
+  }
+
+  // Row offsets from top of ledger
+  const rowOffsets = rows === 1
+    ? [(LUMBER_ROW_OFFSETS[lumber][0] + LUMBER_ROW_OFFSETS[lumber][1]) / 2]
+    : LUMBER_ROW_OFFSETS[lumber];
+
+  // Compliance check
+  const isCompliant = actualSpacingIn <= maxSpacingIn && !outOfTable;
+
+  // Stagger for row 2: offset by half spacing
+  const staggerIn = rows === 2 ? actualSpacingIn / 2 : 0;
+
+  // Build results HTML
+  let boltTableRows = '';
+  let boltNum = 1;
+  for (let r = 0; r < rows; r++) {
+    const rowPositions = positions.map((p, i) => {
+      if (r === 1) {
+        // staggered: shift by half spacing, may go out of range
+        const sp = p + staggerIn;
+        return sp;
+      }
+      return p;
+    });
+    for (let i = 0; i < rowPositions.length; i++) {
+      const posIn = rowPositions[i];
+      if (posIn > ledgerIn + 0.01) continue; // skip out-of-range staggered bolts
+      boltTableRows += `<tr>
+        <td class="num">B${boltNum++}</td>
+        <td>Row ${r + 1}${rows > 1 ? (r === 0 ? ' (top)' : ' (bottom)') : ''}</td>
+        <td class="num">${fmt(posIn / 12, 3)} ft</td>
+        <td class="num">${fmtIn(posIn)}</td>
+        <td class="num">${fmt(rowOffsets[r], 2)}″ from top</td>
+      </tr>`;
+    }
+  }
+
+  // Recalculate actual total after stagger filter
+  const staggeredExtra = rows === 2 ? positions.filter(p => (p + staggerIn) <= ledgerIn + 0.01).length : 0;
+  const actualTotal = rows === 1 ? boltsPerRow : boltsPerRow + staggeredExtra;
+
+  // Bar chart data (normalized to max)
+  const spacingBar = Math.min((actualSpacingIn / 30) * 100, 100);
+  const maxBar = Math.min((maxSpacingIn / 30) * 100, 100);
+
+  // Bolt length recommendation
+  let boltLenRec = boltDia === 0.5 ? '3½″' : '4″';
+  const boltLenNote = `½″ pilot hole, ${boltLenRec} long lag bolt penetrating rim joist ≥ 1½″`;
+
+  // Build full HTML
+  const complianceHTML = isCompliant
+    ? `<div class="compliance pass"><span class="compliance-icon">✅</span><strong>IRC Compliant</strong> — Bolt spacing of ${fmt(actualSpacingIn,1)}″ is within the ${maxSpacingIn}″ maximum for this deck configuration.</div>`
+    : `<div class="compliance fail"><span class="compliance-icon">⚠️</span><strong>Spacing Exceeds IRC Limit</strong> — Required max spacing is ${maxSpacingIn}″. Add more bolts to comply.</div>`;
+
+  const warningHTML = outOfTable ? `<div class="warning-box">⚠️ Your deck tributary width (${fmt(tribFt,1)} ft) exceeds the IRC table range. Consult a structural engineer for this configuration.</div>` : '';
+
+  const html = `
+    ${warningHTML}
+    ${complianceHTML}
+    <div class="result-hero">
+      <div class="result-hero-label">Total Lag Bolts Required</div>
+      <div class="result-hero-number" id="res-total">${actualTotal}</div>
+      <div class="result-hero-sub">${rows} row${rows>1?'s':''} × ~${boltsPerRow} bolt${boltsPerRow>1?'s':''} per row — ${boltDia === 0.5 ? '½″' : '⅝″'} diameter</div>
+    </div>
+    <div class="result-grid">
+      <div class="result-box">
+        <div class="result-box-label">Actual Bolt Spacing</div>
+        <div class="result-box-value">${fmt(actualSpacingIn,1)}<span class="result-box-unit">″</span></div>
+        <div style="font-size:0.78rem;color:#777;margin-top:2px">(max allowed: ${maxSpacingIn}″)</div>
+      </div>
+      <div class="result-box">
+        <div class="result-box-label">IRC Max Spacing</div>
+        <div class="result-box-value">${maxSpacingIn}<span class="result-box-unit">″</span></div>
+        <div style="font-size:0.78rem;color:#777;margin-top:2px">Tributary: ${fmt(tribFt,1)} ft</div>
+      </div>
+      <div class="result-box">
+        <div class="result-box-label">Bolts Per Row</div>
+        <div class="result-box-value">${boltsPerRow}</div>
+        <div style="font-size:0.78rem;color:#777;margin-top:2px">${rows} row${rows>1?'s':''} total</div>
+      </div>
+      <div class="result-box">
+        <div class="result-box-label">End Margin</div>
+        <div class="result-box-value">${endMarginIn}<span class="result-box-unit">″</span></div>
+        <div style="font-size:0.78rem;color:#777;margin-top:2px">each end (IRC: 2–5″)</div>
+      </div>
+    </div>
+
+    <div class="bar-visual">
+      <div class="section-title">Spacing vs. IRC Limit</div>
+      <div class="bar-row">
+        <div class="bar-label">Actual</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${spacingBar}%;background:${isCompliant?'#0077b6':'#e74c3c'}"></div></div>
+        <div class="bar-val">${fmt(actualSpacingIn,1)}″</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Max IRC</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${maxBar}%;background:#2ecc71"></div></div>
+        <div class="bar-val">${maxSpacingIn}″</div>
+      </div>
+    </div>
+
+    <div class="section-title">Bolt Placement Table</div>
+    <div class="copy-row">
+      <button class="btn-copy" id="copyBtn">📋 Copy Summary</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="num">#</th>
+            <th>Row</th>
+            <th class="num">Position (ft)</th>
+            <th class="num">Position (in)</th>
+            <th class="num">Vertical Offset</th>
+          </tr>
+        </thead>
+        <tbody>${boltTableRows}</tbody>
+      </table>
+    </div>
+
+    <div class="warning-box" style="background:#e3f2fd;border-color:#90caf9;color:#1a3a5c;">
+      <strong>📏 Recommended Bolt:</strong> ${boltLenNote}.
+    </div>
+
+    <div style="background:#f8f9fa;border-radius:6px;padding:1rem;font-size:0.85rem;color:#444;margin-top:0.5rem">
+      <strong>Summary:</strong> ${ledgerFt} ft ledger · ${deckDepthFt} ft deck depth · ${boltDia === 0.5 ? '½″' : '⅝″'} lag bolts · ${rows} row${rows>1?'s':''} · ${joistSp}″ o.c. joists · <strong>${actualTotal} total bolts at ${fmt(actualSpacingIn,1)}″ spacing</strong>
+    </div>
+  `;
+
+  requestAnimationFrame(() => {
+    document.getElementById('results-inner').innerHTML = html;
+    document.getElementById('results').classList.add('visible');
+
+    // Update SVG diagram
+    updateDiagram(ledgerFt, actualSpacingIn, endMarginIn, boltsPerRow, rows);
+
+    // Copy button
+    document.getElementById('copyBtn').addEventListener('click', function() {
+      const txt = `Deck Ledger Lag Bolt Summary\nLedger: ${ledgerFt} ft | Depth: ${deckDepthFt} ft | Joist: ${joistSp}″ o.c.\nBolt: ${boltDia===0.5?'½″':'⅝″'} diameter | ${rows} row${rows>1?'s':''}\nTotal Bolts: ${actualTotal} | Spacing: ${fmt(actualSpacingIn,1)}″ | IRC Max: ${maxSpacingIn}″\nEnd Margin: ${endMarginIn}″ each end\nCompliance: ${isCompliant?'PASS':'FAIL'}\nRecommended: ${boltLenNote}`;
+      navigator.clipboard.writeText(txt).then(() => {
+        this.textContent = '✅ Copied!';
+        setTimeout(() => { this.textContent = '📋 Copy Summary'; }, 2000);
+      }).catch(() => {
+        this.textContent = 'Copy failed';
+        setTimeout(() => { this.textContent = '📋 Copy Summary'; }, 2000);
+      });
+    });
+
+    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+}
+
+function updateDiagram(ledgerFt, spacingIn, marginIn, boltsPerRow, rows) {
+  // Update text labels
+  document.getElementById('svg-length').textContent = ledgerFt + ' ft ledger';
+  document.getElementById('svg-spacing').textContent = (spacingIn).toFixed(1) + '″ spacing';
+  document.getElementById('svg-endmargin').textContent = marginIn + '″';
+  document.getElementById('svg-endmargin2').textContent = marginIn + '″';
+  document.getElementById('svg-rowoffset').textContent = rows > 1 ? '2 rows' : '1 row';
+
+  // Rebuild bolt circles
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const group = document.getElementById('svg-bolts');
+  group.innerHTML = '';
+
+  const svgW = 420; // usable width in SVG coords (from 60 to 480)
+  const ledgerPxStart = 60;
+  const ledgerPxEnd = 480;
+  const ledgerPxLen = ledgerPxEnd - ledgerPxStart;
+
+  // Map bolt positions to SVG coords
+  const ledgerInTotal = ledgerFt * 12;
+  const rowYs = rows === 1 ? [100] : [91, 109];
+
+  for (let r = 0; r < rows; r++) {
+    const stagger = (rows === 2 && r === 1) ? spacingIn / 2 : 0;
+    for (let i = 0; i < boltsPerRow; i++) {
+      const posIn = marginIn + stagger + i * spacingIn;
+      if (posIn > ledgerInTotal + 0.5) continue;
+      const px = ledgerPxStart + (posIn / ledgerInTotal) * ledgerPxLen;
+      const cy = rowYs[r];
+      const c = document.createElementNS(svgNS, 'circle');
+      c.setAttribute('cx', px.toFixed(1));
+      c.setAttribute('cy', cy);
+      c.setAttribute('r', '5');
+      c.setAttribute('fill', '#0077b6');
+      c.setAttribute('opacity', '0.9');
+      group.appendChild(c);
+
+      if (r === 0 && i < 5) {
+        const t = document.createElementNS(svgNS, 'text');
+        t.setAttribute('x', px.toFixed(1));
+        t.setAttribute('y', (cy - 14).toString());
+        t.setAttribute('text-anchor', 'middle');
+        t.setAttribute('font-size', '8');
+        t.setAttribute('fill', '#0077b6');
+        t.textContent = 'B' + (i + 1);
+        group.appendChild(t);
+      }
+    }
+  }
+}
+
+document.getElementById('calcBtn').addEventListener('click', function() {
+  calculate();
+});
+
+document.querySelectorAll('input, select').forEach(el => {
+  el.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') calculate();
+  });
+});
+</script>
+</body>
+</html>
