@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soil Bearing Capacity Load Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate allowable soil bearing capacity and foundation load distribution. Free soil bearing capacity calculator for engineers, contractors, and builders.">
+<link rel="canonical" href="https://toolwick.com/soil-bearing-capacity-load-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Soil Bearing Capacity Load Calculator",
+  "url": "https://toolwick.com/soil-bearing-capacity-load-calculator/",
+  "description": "Calculate allowable soil bearing capacity and foundation load distribution for construction projects.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f4f8;color:#1a1a2e;min-height:100vh;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0 1.5rem}
+.nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;height:52px}
+.nav-brand{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+.nav-brand span{color:#0077b6}
+main{max-width:640px;margin:0 auto;padding:1.5rem 1rem 3rem}
+h1{font-size:1.55rem;font-weight:800;color:#1a1a2e;margin-bottom:0.4rem;line-height:1.3}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
+/* SVG Diagram */
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+.diagram-wrap svg{max-width:100%;height:auto}
+/* Form */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:480px){.form-row{grid-template-columns:1fr}}
+.form-group{margin-bottom:1rem}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:5px}
+label .unit{font-weight:400;color:#888;font-size:0.8rem}
+input[type="number"],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:0.95rem;color:#1a1a2e;background:#fff;transition:border-color 0.2s,box-shadow 0.2s;-webkit-appearance:none;min-height:44px}
+input[type="number"]:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:4px;display:none}
+.error-msg.show{display:block}
+input[type="range"]{width:100%;accent-color:#0077b6;cursor:pointer}
+.slider-row{display:flex;align-items:center;gap:10px;margin-top:4px}
+.slider-row input[type="range"]{flex:1}
+.slider-val{font-size:0.85rem;color:#0077b6;font-weight:600;min-width:50px;text-align:right}
+.btn{background:#0077b6;color:#fff;border:none;padding:13px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;transition:background 0.2s;min-height:48px}
+.btn:hover{background:#006299}
+.btn-secondary{background:#fff;color:#0077b6;border:1px solid #0077b6;padding:7px 14px;font-size:0.82rem;font-weight:600;border-radius:5px;cursor:pointer;transition:all 0.2s;min-height:36px}
+.btn-secondary:hover{background:#0077b6;color:#fff}
+/* Results */
+#results-section{opacity:0;transition:opacity 0.3s ease;pointer-events:none}
+#results-section.visible{opacity:1;pointer-events:all}
+.result-hero{text-align:center;padding:1.2rem;background:#f0f8ff;border-radius:8px;border:1px solid #b3d9f0;margin-bottom:1.2rem}
+.result-hero .label{font-size:0.85rem;color:#555;font-weight:500}
+.result-hero .big{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.2}
+.result-hero .unit{font-size:1rem;color:#0077b6;font-weight:500}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.2rem}
+@media(max-width:480px){.results-grid{grid-template-columns:1fr}}
+.result-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.9rem 1rem}
+.result-box .r-label{font-size:0.78rem;color:#666;font-weight:500;margin-bottom:2px}
+.result-box .r-val{font-size:1.1rem;font-weight:700;color:#1a1a2e}
+.result-box .r-val.ok{color:#27ae60}
+.result-box .r-val.warn{color:#e67e22}
+.result-box .r-val.fail{color:#e74c3c}
+.status-bar{padding:10px 14px;border-radius:6px;font-weight:600;font-size:0.95rem;margin-bottom:1.2rem;text-align:center}
+.status-bar.ok{background:#eafaf1;color:#27ae60;border:1px solid #a9dfbf}
+.status-bar.fail{background:#fdedec;color:#e74c3c;border:1px solid #f5c6cb}
+.status-bar.warn{background:#fef9e7;color:#d4ac0d;border:1px solid #f9e79f}
+/* Table */
+.table-title{font-size:0.9rem;font-weight:600;color:#444;margin-bottom:0.5rem}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:0.85rem}
+th{background:#f0f0f0;padding:8px 10px;text-align:left;font-weight:600;color:#555;border-bottom:2px solid #ddd}
+th:last-child,td:last-child{text-align:right}
+td{padding:7px 10px;border-bottom:1px solid #eee;color:#1a1a2e}
+tr:nth-child(even) td{background:#fafafa}
+tr:last-child td{border-bottom:none}
+.copy-row{display:flex;justify-content:flex-end;margin-top:0.8rem}
+/* Progress bar visual */
+.bar-wrap{margin:1rem 0}
+.bar-label{font-size:0.82rem;color:#555;margin-bottom:4px;display:flex;justify-content:space-between}
+.bar-track{height:14px;background:#e0e0e0;border-radius:7px;overflow:hidden}
+.bar-fill{height:100%;border-radius:7px;transition:width 0.5s ease}
+.bar-fill.ok{background:#27ae60}
+.bar-fill.warn{background:#e67e22}
+.bar-fill.fail{background:#e74c3c}
+/* Content */
+.content-section{margin-bottom:2rem}
+.content-section h2{font-size:1.1rem;font-weight:700;color:#1a1a2e;margin-bottom:0.6rem;padding-bottom:0.3rem;border-bottom:2px solid #e0e0e0}
+.content-section p{font-size:0.92rem;color:#333;margin-bottom:0.7rem}
+.content-section ul{padding-left:1.4rem;margin-bottom:0.7rem}
+.content-section ul li{font-size:0.92rem;color:#333;margin-bottom:0.4rem}
+details{margin-bottom:0.6rem;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden}
+summary{padding:10px 14px;font-size:0.92rem;font-weight:600;cursor:pointer;background:#f8f9fa;color:#1a1a2e}
+summary:hover{background:#f0f0f0}
+details[open] summary{border-bottom:1px solid #e0e0e0}
+details p{padding:10px 14px;font-size:0.9rem;color:#333}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem}
+@media(max-width:480px){.related-grid{grid-template-columns:1fr}}
+.related-link{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:10px 13px;font-size:0.85rem;font-weight:500;color:#0077b6;transition:all 0.2s}
+.related-link:hover{background:#e8f4fb;border-color:#0077b6;text-decoration:none}
+.ad-slot{min-height:0;margin:0}
+footer{background:#fff;border-top:1px solid #e0e0e0;text-align:center;padding:1.2rem 1rem;font-size:0.83rem;color:#888}
+footer a{color:#0077b6;margin:0 8px}
+.soil-type-hint{font-size:0.78rem;color:#888;margin-top:3px}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">tool<span>wick</span>.com</a>
+  </div>
+</nav>
+<main>
+  <h1>Soil Bearing Capacity Load Calculator</h1>
+  <p class="subtitle">Calculate allowable foundation load, required footing size, and safety margin based on soil type and structural load.</p>
+
+  <div class="card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg id="diagram" viewBox="0 0 580 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:260px">
+        <!-- Sky / above ground -->
+        <rect x="0" y="0" width="580" height="260" fill="#f8f9fa"/>
+        <!-- Ground surface line -->
+        <line x1="30" y1="80" x2="550" y2="80" stroke="#1a1a2e" stroke-width="2"/>
+        <!-- Soil fill below ground -->
+        <rect x="30" y="80" width="520" height="160" fill="#d4a96a" opacity="0.18" rx="2"/>
+        <!-- Hatch for soil -->
+        <g stroke="#c8a060" stroke-width="0.8" opacity="0.5">
+          <line x1="60" y1="90" x2="30" y2="120"/><line x1="90" y1="90" x2="30" y2="150"/><line x1="120" y1="90" x2="30" y2="180"/>
+          <line x1="150" y1="90" x2="60" y2="180"/><line x1="180" y1="90" x2="90" y2="180"/><line x1="210" y1="90" x2="120" y2="180"/>
+          <line x1="240" y1="90" x2="150" y2="180"/><line x1="270" y1="90" x2="180" y2="180"/><line x1="300" y1="90" x2="210" y2="180"/>
+          <line x1="330" y1="90" x2="240" y2="180"/><line x1="360" y1="90" x2="270" y2="180"/><line x1="390" y1="90" x2="300" y2="180"/>
+          <line x1="420" y1="90" x2="330" y2="180"/><line x1="450" y1="90" x2="360" y2="180"/><line x1="480" y1="90" x2="390" y2="180"/>
+          <line x1="510" y1="90" x2="420" y2="180"/><line x1="540" y1="90" x2="450" y2="180"/><line x1="550" y1="110" x2="480" y2="180"/>
+          <line x1="550" y1="140" x2="510" y2="180"/><line x1="550" y1="170" x2="540" y2="180"/>
+        </g>
+        <!-- Foundation footing (trapezoid look) -->
+        <rect id="svg-footing" x="200" y="100" width="180" height="40" fill="#0077b6" rx="2" opacity="0.85"/>
+        <!-- Column above -->
+        <rect id="svg-column" x="260" y="20" width="60" height="60" fill="#1a1a2e" rx="2"/>
+        <!-- Load arrow down -->
+        <line x1="290" y1="5" x2="290" y2="18" stroke="#e74c3c" stroke-width="2.5" marker-end="url(#arr-red)"/>
+        <defs>
+          <marker id="arr-red" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#e74c3c"/>
+          </marker>
+          <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#0077b6"/>
+          </marker>
+          <marker id="arr-gray" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#888"/>
+          </marker>
+          <marker id="arr-gray-l" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#888"/>
+          </marker>
+        </defs>
+        <!-- Load label -->
+        <text id="svg-load" x="305" y="13" font-family="-apple-system,sans-serif" font-size="11" fill="#e74c3c" font-weight="700">P (Load)</text>
+        <!-- Footing width dimension -->
+        <line x1="200" y1="152" x2="200" y2="162" stroke="#888" stroke-width="1.2"/>
+        <line x1="380" y1="152" x2="380" y2="162" stroke="#888" stroke-width="1.2"/>
+        <line x1="200" y1="157" x2="380" y2="157" stroke="#888" stroke-width="1.2" marker-start="url(#arr-gray-l)" marker-end="url(#arr-gray)"/>
+        <text id="svg-width" x="280" y="172" font-family="-apple-system,sans-serif" font-size="10.5" fill="#555" text-anchor="middle" font-weight="600">B × L (Footing Area)</text>
+        <!-- Depth dimension -->
+        <line x1="75" y1="80" x2="65" y2="80" stroke="#888" stroke-width="1.2"/>
+        <line x1="75" y1="140" x2="65" y2="140" stroke="#888" stroke-width="1.2"/>
+        <line x1="70" y1="80" x2="70" y2="140" stroke="#888" stroke-width="1.2" marker-start="url(#arr-gray-l)" marker-end="url(#arr-gray)"/>
+        <text id="svg-depth" x="55" y="113" font-family="-apple-system,sans-serif" font-size="10" fill="#555" text-anchor="middle" font-weight="600" transform="rotate(-90,55,113)">Depth (D)</text>
+        <!-- Pressure arrows upward from soil -->
+        <line x1="220" y1="148" x2="220" y2="138" stroke="#27ae60" stroke-width="1.8" marker-end="url(#arr-green)"/>
+        <line x1="250" y1="148" x2="250" y2="138" stroke="#27ae60" stroke-width="1.8" marker-end="url(#arr-green)"/>
+        <line x1="290" y1="148" x2="290" y2="138" stroke="#27ae60" stroke-width="1.8" marker-end="url(#arr-green)"/>
+        <line x1="330" y1="148" x2="330" y2="138" stroke="#27ae60" stroke-width="1.8" marker-end="url(#arr-green)"/>
+        <line x1="360" y1="148" x2="360" y2="138" stroke="#27ae60" stroke-width="1.8" marker-end="url(#arr-green)"/>
+        <defs>
+          <marker id="arr-green" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+            <path d="M0,7 L3.5,0 L7,7 Z" fill="#27ae60"/>
+          </marker>
+        </defs>
+        <text x="290" y="220" font-family="-apple-system,sans-serif" font-size="10" fill="#27ae60" text-anchor="middle" font-weight="600">q = P / A (Soil Pressure)</text>
+        <!-- Labels -->
+        <text x="290" y="125" font-family="-apple-system,sans-serif" font-size="10" fill="#fff" text-anchor="middle" font-weight="700">Footing</text>
+        <text x="290" y="57" font-family="-apple-system,sans-serif" font-size="10" fill="#fff" text-anchor="middle" font-weight="700">Column</text>
+        <text x="480" y="76" font-family="-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">Ground Level</text>
+        <text x="480" y="230" font-family="-apple-system,sans-serif" font-size="10" fill="#888" text-anchor="middle">Soil (Bearing Layer)</text>
+        <!-- Safety Factor note -->
+        <text x="290" y="248" font-family="-apple-system,sans-serif" font-size="9.5" fill="#0077b6" text-anchor="middle">Allowable Bearing = Ultimate Capacity ÷ Safety Factor</text>
+      </svg>
+    </div>
+
+    <!-- Inputs -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="soilType">Soil Type</label>
+        <select id="soilType" onchange="onSoilTypeChange()">
+          <option value="custom">Custom / Known Value</option>
+          <option value="soft_clay">Soft Clay</option>
+          <option value="medium_clay">Medium Clay</option>
+          <option value="stiff_clay">Stiff Clay</option>
+          <option value="loose_sand">Loose Sand</option>
+          <option value="medium_sand">Medium Dense Sand</option>
+          <option value="dense_sand">Dense Sand</option>
+          <option value="gravel">Gravel / Sandy Gravel</option>
+          <option value="rock_soft">Soft Rock</option>
+          <option value="rock_hard">Hard Rock</option>
+        </select>
+        <div class="soil-type-hint" id="soilHint">Enter a known bearing capacity below, or select a soil type to auto-fill.</div>
+      </div>
+      <div class="form-group">
+        <label for="ultimateBearing">Ultimate Bearing Capacity <span class="unit">(ksf or kPa)</span></label>
+        <input type="number" id="ultimateBearing" placeholder="e.g. 4.0" min="0.01" step="0.01">
+        <div class="error-msg" id="err-bearing">Please enter a valid bearing capacity > 0.</div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="units">Units</label>
+        <select id="units" onchange="onUnitsChange()">
+          <option value="imperial">Imperial (kips, ft, ksf)</option>
+          <option value="metric">Metric (kN, m, kPa)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="safetyFactor">Factor of Safety</label>
+        <div class="slider-row">
+          <input type="range" id="sfSlider" min="1.5" max="4" step="0.25" value="3" oninput="syncSF('slider')">
+          <span class="slider-val" id="sfDisplay">3.0</span>
+        </div>
+        <input type="number" id="safetyFactor" value="3" min="1" max="10" step="0.25" oninput="syncSF('input')" style="margin-top:6px">
+        <div class="error-msg" id="err-sf">Safety factor must be ≥ 1.0.</div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="totalLoad" id="loadLabel">Total Structural Load <span class="unit">(kips)</span></label>
+        <input type="number" id="totalLoad" placeholder="e.g. 120" min="0" step="0.1">
+        <div class="error-msg" id="err-load">Please enter a valid load > 0.</div>
+      </div>
+      <div class="form-group">
+        <label for="footingShape">Footing Shape</label>
+        <select id="footingShape" onchange="onShapeChange()">
+          <option value="square">Square</option>
+          <option value="rectangular">Rectangular</option>
+          <option value="circular">Circular</option>
+          <option value="strip">Strip / Wall</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="dim-inputs">
+      <div class="form-row">
+        <div class="form-group" id="dimA-wrap">
+          <label for="dimA" id="dimA-label">Footing Width (B) <span class="unit" id="dimA-unit">(ft)</span></label>
+          <input type="number" id="dimA" placeholder="e.g. 6" min="0.01" step="0.01">
+          <div class="error-msg" id="err-dimA">Must be > 0.</div>
+        </div>
+        <div class="form-group" id="dimB-wrap">
+          <label for="dimB" id="dimB-label">Footing Length (L) <span class="unit" id="dimB-unit">(ft)</span></label>
+          <input type="number" id="dimB" placeholder="e.g. 6" min="0.01" step="0.01">
+          <div class="error-msg" id="err-dimB">Must be > 0.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="embedDepth" id="depthLabel">Embedment Depth (D) <span class="unit" id="depthUnit">(ft)</span></label>
+        <input type="number" id="embedDepth" placeholder="e.g. 3" min="0" step="0.1" value="3">
+      </div>
+      <div class="form-group">
+        <label for="soilWeight" id="weightLabel">Soil Unit Weight <span class="unit" id="weightUnit">(pcf)</span></label>
+        <input type="number" id="soilWeight" placeholder="e.g. 110" min="0" step="1" value="110">
+      </div>
+    </div>
+
+    <button class="btn" onclick="calculate()">Calculate Bearing Capacity</button>
+  </div>
+
+  <!-- Results -->
+  <div id="results-section" class="card">
+    <div id="results-inner"></div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content Section -->
+  <div class="content-section card">
+    <h2>How to Use This Soil Bearing Capacity Calculator</h2>
+    <p>Select your soil type (or enter a known ultimate bearing capacity), choose your unit system, set the factor of safety, and enter your total structural load and footing dimensions. Click <strong>Calculate</strong> to instantly see the allowable bearing capacity, actual soil pressure, required footing area, and a pass/fail status for your design.</p>
+    <p>You can also enter known footing dimensions to check whether an existing design is adequate, or leave dimensions blank to find the minimum required footing size automatically.</p>
+  </div>
+
+  <div class="content-section card">
+    <h2>Why This Matters</h2>
+    <p>Soil bearing capacity is the most fundamental parameter in foundation design. Get it wrong, and you risk differential settlement, structural cracking, or catastrophic foundation failure — even if the structure above is perfectly designed.</p>
+    <p>Consider a two-story house with a 120-kip column load on medium dense sand (ultimate capacity ~4.5 ksf). With a 3.0 factor of safety, the allowable capacity is only 1.5 ksf. A 6×6 ft footing (36 sq ft) produces just 3.3 ksf of pressure — far exceeding what's safe. You'd need at least a 9×9 ft footing. This kind of error is shockingly common on residential projects where soil testing is skipped.</p>
+    <p>Engineers use this calculation on every foundation design. Contractors reference it when verifying shop drawings. Home inspectors flag it when existing footings are undersized. Getting the numbers right before you pour is always cheaper than underpinning later.</p>
+  </div>
+
+  <div class="content-section card">
+    <h2>How It's Calculated</h2>
+    <p>The core formula chain is:</p>
+    <ul>
+      <li><strong>Allowable Bearing Capacity:</strong> q<sub>allow</sub> = q<sub>ultimate</sub> ÷ FS</li>
+      <li><strong>Footing Area Required:</strong> A<sub>required</sub> = P ÷ q<sub>allow</sub></li>
+      <li><strong>Actual Soil Pressure:</strong> q<sub>actual</sub> = P ÷ A<sub>provided</sub></li>
+      <li><strong>Overburden Pressure:</strong> q<sub>overburden</sub> = γ × D (soil unit weight × depth)</li>
+      <li><strong>Net Allowable:</strong> q<sub>net</sub> = q<sub>allow</sub> − q<sub>overburden</sub></li>
+    </ul>
+    <p>Where P = total structural load, FS = factor of safety (typically 2.5–3.0 for most soils), γ = soil unit weight, and D = embedment depth. The net allowable capacity accounts for the weight of soil already present at the foundation depth.</p>
+    <p>Typical ultimate bearing capacities range from ~0.5 ksf for soft clay to over 100 ksf for hard rock. Always verify with a geotechnical report for critical structures.</p>
+  </div>
+
+  <div class="content-section card">
+    <h2>Tips &amp; Common Mistakes</h2>
+    <ul>
+      <li><strong>Always get a soil test for commercial projects.</strong> Published soil type values are rough estimates. Cone penetration tests (CPT) or Standard Penetration Tests (SPT) provide site-specific data.</li>
+      <li><strong>Don't confuse ultimate and allowable capacity.</strong> If your geotech report says "allowable bearing = 2 ksf," that's already factored — don't divide by safety factor again.</li>
+      <li><strong>Include the footing self-weight.</strong> A 6×6×2 ft concrete footing weighs about 10.8 kips. Add this to your column load for accurate pressure calculations.</li>
+      <li><strong>Depth matters.</strong> Deeper footings benefit from overburden confining pressure, especially in sand. Going from 2 ft to 4 ft depth can meaningfully increase allowable capacity.</li>
+      <li><strong>Eccentric loads reduce effective area.</strong> If your load isn't centered on the footing, use the effective footing dimensions (B' = B − 2e) instead of the full dimensions.</li>
+    </ul>
+  </div>
+
+  <div class="content-section card">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What safety factor should I use for soil bearing capacity?</summary>
+      <p>For most residential and commercial buildings, a factor of safety of 2.5 to 3.0 is standard. Use 3.0 or higher when soil data is uncertain, loads are variable, or the structure is critical (hospitals, schools). For temporary structures with well-defined loads, 2.0 may be acceptable.</p>
+    </details>
+    <details>
+      <summary>What's the difference between gross and net bearing capacity?</summary>
+      <p>Gross bearing capacity is the total pressure the soil can support, including the weight of the overburden soil above the footing. Net bearing capacity subtracts that overburden, representing only the additional load the footing can safely apply. For shallow footings, the difference is small; for deep footings, it becomes significant.</p>
+    </details>
+    <details>
+      <summary>Can I use this calculator for retaining wall footings?</summary>
+      <p>Yes, with care. For retaining walls, you also need to check sliding and overturning stability, not just bearing capacity. Enter the total vertical reaction (dead load + wall weight + soil weight on heel) as your structural load, and use a strip footing shape matching your wall length.</p>
+    </details>
+    <details>
+      <summary>What if my calculated required area is larger than practical?</summary>
+      <p>If the required footing is too large, consider: (1) going deeper to access better soil, (2) a mat/raft foundation that spreads load over the entire building footprint, (3) pile foundations to transfer load to deeper competent strata, or (4) ground improvement techniques like compaction grouting.</p>
+    </details>
+  </div>
+
+  <div class="content-section card">
+    <h2>Related Tools</h2>
+    <div class="related-grid">
+      <a href="/ceiling-texture-spray-compressor-calculator/" class="related-link">🔧 Ceiling Texture Hopper Gun Air Compressor Calculator</a>
+      <a href="/ceiling-drywall-hanger-spacing-load-calculator/" class="related-link">📐 Ceiling Drywall Hanger Spacing &amp; Load Calculator</a>
+      <a href="/deck-ledger-board-lag-bolt-calculator/" class="related-link">🪛 Deck Ledger Board Lag Bolt Calculator</a>
+      <a href="/pocket-door-rough-opening-cavity-calculator/" class="related-link">🚪 Pocket Door Rough Opening &amp; Cavity Calculator</a>
+      <a href="/cinder-block-wall-calculator/" class="related-link">🧱 Cinder Block Wall Calculator</a>
+      <a href="/garage-slab-thickness-reinforcement-calculator/" class="related-link">🏗️ Garage Concrete Slab Thickness &amp; Reinforcement Calculator</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</main>
+<footer>
+  <a href="/about/">About</a>
+  <a href="/privacy/">Privacy</a>
+  <a href="/contact/">Contact</a>
+  <br><br>
+  © <span id="yr"></span> toolwick.com — Free Construction &amp; Engineering Calculators
+</footer>
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Soil type defaults (ultimate bearing capacity in ksf and kPa)
+const SOIL_PRESETS = {
+  soft_clay:   { ksf: 0.5,   kPa: 24,   hint: 'Soft Clay: Ultimate ~0.5 ksf / 24 kPa. Very compressible; prone to settlement.' },
+  medium_clay: { ksf: 1.5,   kPa: 72,   hint: 'Medium Clay: Ultimate ~1.5 ksf / 72 kPa. Moderate bearing capacity.' },
+  stiff_clay:  { ksf: 3.0,   kPa: 144,  hint: 'Stiff Clay: Ultimate ~3.0 ksf / 144 kPa. Suitable for most light structures.' },
+  loose_sand:  { ksf: 2.0,   kPa: 96,   hint: 'Loose Sand: Ultimate ~2.0 ksf / 96 kPa. Susceptible to liquefaction.' },
+  medium_sand: { ksf: 4.5,   kPa: 215,  hint: 'Medium Dense Sand: Ultimate ~4.5 ksf / 215 kPa. Common residential bearing layer.' },
+  dense_sand:  { ksf: 8.0,   kPa: 383,  hint: 'Dense Sand: Ultimate ~8.0 ksf / 383 kPa. Excellent bearing stratum.' },
+  gravel:      { ksf: 12.0,  kPa: 575,  hint: 'Gravel/Sandy Gravel: Ultimate ~12.0 ksf / 575 kPa. Very good bearing capacity.' },
+  rock_soft:   { ksf: 25.0,  kPa: 1200, hint: 'Soft Rock (shale/sandstone): Ultimate ~25 ksf / 1,200 kPa.' },
+  rock_hard:   { ksf: 100.0, kPa: 4800, hint: 'Hard Rock (granite/basalt): Ultimate ~100 ksf / 4,800 kPa.' },
+  custom:      { ksf: null,  kPa: null,  hint: 'Enter a known bearing capacity below, or select a soil type to auto-fill.' }
+};
+
+function onSoilTypeChange() {
+  const type = document.getElementById('soilType').value;
+  const preset = SOIL_PRESETS[type];
+  const units = document.getElementById('units').value;
+  document.getElementById('soilHint').textContent = preset.hint;
+  if (type !== 'custom' && preset) {
+    const val = units === 'imperial' ? preset.ksf : preset.kPa;
+    document.getElementById('ultimateBearing').value = val;
+  }
+}
+
+function onUnitsChange() {
+  const units = document.getElementById('units').value;
+  const isImp = units === 'imperial';
+  // Labels
+  document.getElementById('loadLabel').innerHTML = `Total Structural Load <span class="unit">(${isImp ? 'kips' : 'kN'})</span>`;
+  document.getElementById('dimA-unit').textContent = `(${isImp ? 'ft' : 'm'})`;
+  document.getElementById('dimB-unit').textContent = `(${isImp ? 'ft' : 'm'})`;
+  document.getElementById('depthUnit').textContent = `(${isImp ? 'ft' : 'm'})`;
+  document.getElementById('weightUnit').textContent = `(${isImp ? 'pcf' : 'kN/m³'})`;
+  document.getElementById('soilWeight').value = isImp ? 110 : 17.3;
+  // Re-fill bearing if preset selected
+  const type = document.getElementById('soilType').value;
+  if (type !== 'custom') {
+    const preset = SOIL_PRESETS[type];
+    document.getElementById('ultimateBearing').value = isImp ? preset.ksf : preset.kPa;
+  }
+  const dimBLabel = document.getElementById('dimB-label');
+  // keep label correct
+  onShapeChange();
+}
+
+function onShapeChange() {
+  const shape = document.getElementById('footingShape').value;
+  const units = document.getElementById('units').value;
+  const isImp = units === 'imperial';
+  const uStr = isImp ? 'ft' : 'm';
+  const dimALabel = document.getElementById('dimA-label');
+  const dimBLabel = document.getElementById('dimB-label');
+  const dimBWrap = document.getElementById('dimB-wrap');
+  const dimAUnit = document.getElementById('dimA-unit');
+  const dimBUnit = document.getElementById('dimB-unit');
+  dimAUnit.textContent = `(${uStr})`;
+  dimBUnit.textContent = `(${uStr})`;
+  if (shape === 'square') {
+    dimALabel.childNodes[0].textContent = 'Side Length (B) ';
+    dimBWrap.style.display = 'none';
+  } else if (shape === 'rectangular') {
+    dimALabel.childNodes[0].textContent = 'Width (B) ';
+    dimBWrap.style.display = '';
+    dimBLabel.childNodes[0].textContent = 'Length (L) ';
+  } else if (shape === 'circular') {
+    dimALabel.childNodes[0].textContent = 'Diameter (d) ';
+    dimBWrap.style.display = 'none';
+  } else if (shape === 'strip') {
+    dimALabel.childNodes[0].textContent = 'Width (B) ';
+    dimBWrap.style.display = '';
+    dimBLabel.childNodes[0].textContent = 'Length (L) ';
+  }
+}
+
+function syncSF(from) {
+  const slider = document.getElementById('sfSlider');
+  const input = document.getElementById('safetyFactor');
+  if (from === 'slider') {
+    input.value = slider.value;
+  } else {
+    let v = parseFloat(input.value);
+    if (!isNaN(v)) {
+      v = Math.max(1.5, Math.min(4, v));
+      slider.value = v;
+    }
+  }
+  document.getElementById('sfDisplay').textContent = parseFloat(from === 'slider' ? slider.value : input.value).toFixed(2);
+}
+
+function fmt(n, dec=2) {
+  if (isNaN(n) || n === null) return '—';
+  return n.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+}
+
+function clearErrors() {
+  ['err-bearing','err-sf','err-load','err-dimA','err-dimB'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.classList.remove('show'); }
+  });
+  ['ultimateBearing','safetyFactor','totalLoad','dimA','dimB'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('error');
+  });
+}
+
+function showError(inputId, msgId) {
+  const inp = document.getElementById(inputId);
+  const msg = document.getElementById(msgId);
+  if (inp) inp.classList.add('error');
+  if (msg) msg.classList.add('show');
+}
+
+function calculate() {
+  clearErrors();
+  const units = document.getElementById('units').value;
+  const isImp = units === 'imperial';
+  const shape = document.getElementById('footingShape').value;
+
+  const qu = parseFloat(document.getElementById('ultimateBearing').value);
+  const fs = parseFloat(document.getElementById('safetyFactor').value);
+  const P  = parseFloat(document.getElementById('totalLoad').value);
+  const dA = parseFloat(document.getElementById('dimA').value);
+  const dB = parseFloat(document.getElementById('dimB').value);
+  const D  = parseFloat(document.getElementById('embedDepth').value) || 0;
+  const gamma = parseFloat(document.getElementById('soilWeight').value) || 0;
+
+  let valid = true;
+  if (!qu || qu <= 0) { showError('ultimateBearing','err-bearing'); valid = false; }
+  if (!fs || fs < 1)  { showError('safetyFactor','err-sf'); valid = false; }
+  if (!P || P <= 0)   { showError('totalLoad','err-load'); valid = false; }
+  if (!dA || dA <= 0) { showError('dimA','err-dimA'); valid = false; }
+  if ((shape === 'rectangular' || shape === 'strip') && (!dB || dB <= 0)) {
+    showError('dimB','err-dimB'); valid = false;
+  }
+  if (!valid) return;
+
+  // Compute area
+  let A_provided;
+  if (shape === 'square') A_provided = dA * dA;
+  else if (shape === 'rectangular' || shape === 'strip') A_provided = dA * dB;
+  else if (shape === 'circular') A_provided = Math.PI * (dA/2) * (dA/2);
+
+  // Overburden
+  // Imperial: gamma in pcf, D in ft → overburden in psf → /1000 for ksf
+  // Metric: gamma in kN/m³, D in m → kPa
+  let q_overburden;
+  if (isImp) {
+    q_overburden = (gamma * D) / 1000; // ksf
+  } else {
+    q_overburden = gamma * D; // kPa
+  }
+
+  const q_allow = qu / fs;
+  const q_net_allow = Math.max(0, q_allow - q_overburden);
+  const q_actual = P / A_provided;
+  const A_required = P / q_allow; // gross allowable
+
+  // Safety check
+  const utilization = (q_actual / q_allow) * 100;
+  let status = 'ok';
+  let statusMsg = '';
+  if (q_actual > q_allow) {
+    status = 'fail';
+    statusMsg = `⚠️ OVERSTRESSED — Actual pressure exceeds allowable by ${fmt((q_actual - q_allow) / q_allow * 100,1)}%. Increase footing size.`;
+  } else if (utilization > 85) {
+    status = 'warn';
+    statusMsg = `⚡ Near capacity — ${fmt(utilization,1)}% utilized. Consider a slightly larger footing for margin.`;
+  } else {
+    statusMsg = `✅ ADEQUATE — Footing is safe at ${fmt(utilization,1)}% of allowable bearing capacity.`;
+  }
+
+  // Units strings
+  const pUnit = isImp ? 'ksf' : 'kPa';
+  const aUnit = isImp ? 'ft²' : 'm²';
+  const lUnit = isImp ? 'ft' : 'm';
+  const loadUnit = isImp ? 'kips' : 'kN';
+  const gammaUnit = isImp ? 'pcf' : 'kN/m³';
+
+  // FS scenarios for table
+  const fsValues = [1.5, 2.0, 2.5, 3.0, 3.5, 4.0];
+
+  let tableRows = '';
+  fsValues.forEach(f => {
+    const qa = qu / f;
+    const Ar = P / qa;
+    const minSide = Math.sqrt(Ar);
+    const act = P / A_provided;
+    const pass = act <= qa ? '<span style="color:#27ae60">✓ Pass</span>' : '<span style="color:#e74c3c">✗ Fail</span>';
+    tableRows += `<tr>
+      <td>${f.toFixed(1)}</td>
+      <td style="text-align:right">${fmt(qa)}</td>
+      <td style="text-align:right">${fmt(Ar)}</td>
+      <td style="text-align:right">${fmt(minSide)} × ${fmt(minSide)}</td>
+      <td style="text-align:right">${pass}</td>
+    </tr>`;
+  });
+
+  const barPct = Math.min(100, utilization);
+  const barClass = status;
+
+  let areaDisplay = '';
+  if (shape === 'square') areaDisplay = `${fmt(dA)} × ${fmt(dA)} ${lUnit}`;
+  else if (shape === 'rectangular' || shape === 'strip') areaDisplay = `${fmt(dA)} × ${fmt(dB)} ${lUnit}`;
+  else areaDisplay = `Ø ${fmt(dA)} ${lUnit}`;
+
+  // Required square side
+  const reqSide = Math.sqrt(A_required);
+
+  const html = `
+    <div class="result-hero">
+      <div class="label">Allowable Bearing Capacity</div>
+      <div class="big">${fmt(q_allow)}</div>
+      <div class="unit">${pUnit} (gross)</div>
+    </div>
+
+    <div class="status-bar ${status}">${statusMsg}</div>
+
+    <div class="bar-wrap">
+      <div class="bar-label"><span>Utilization</span><span>${fmt(utilization,1)}%</span></div>
+      <div class="bar-track"><div class="bar-fill ${barClass}" style="width:${barPct}%"></div></div>
+    </div>
+
+    <div class="results-grid">
+      <div class="result-box">
+        <div class="r-label">Ultimate Bearing Capacity</div>
+        <div class="r-val">${fmt(qu)} ${pUnit}</div>
+      </div>
+      <div class="result-box">
+        <div class="r-label">Factor of Safety</div>
+        <div class="r-val">${fmt(fs,2)}</div>
+      </div>
+      <div class="result-box">
+        <div class="r-label">Overburden Pressure (γ·D)</div>
+        <div class="r-val">${fmt(q_overburden)} ${pUnit}</div>
+      </div>
+      <div class="result-box">
+        <div class="r-label">Net Allowable Capacity</div>
+        <div class="r-val">${fmt(q_net_allow)} ${pUnit}</div>
+      </div>
+      <div class="result-box">
+        <div class="r-label">Structural Load (P)</div>
+        <div class="r-val">${fmt(P)} ${loadUnit}</div>
+      </div>
+      <div class="result-box">
+        <div class="r-label">Footing Provided</div>
+        <div class="r-val">${areaDisplay}</div>
+      </div>
+      <div class="result-box">
+        <div class="r-label">Area Provided</div>
+        <div class="r-val">${fmt(A_provided)} ${aUnit}</div>
+      </div>
+      <div class="result-box">
+        <div class="r-label">Area Required (min)</div>
+        <div class="r-val">${fmt(A_required)} ${aUnit}</div>
+      </div>
+      <div class="result-box">
+        <div class="r-label">Actual Soil Pressure</div>
+        <div class="r-val ${status}">${fmt(q_actual)} ${pUnit}</div>
+      </div>
+      <div class="result-box">
+        <div class="r-label">Min Square Side Required</div>
+        <div class="r-val">${fmt(reqSide)} ${lUnit}</div>
+      </div>
+    </div>
+
+    <div class="table-title">Safety Factor Sensitivity Analysis</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>FS</th>
+            <th>q<sub>allow</sub> (${pUnit})</th>
+            <th>A<sub>req</sub> (${aUnit})</th>
+            <th>Min Square (${lUnit})</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>${tableRows}</tbody>
+      </table>
+    </div>
+    <div class="copy-row">
+      <button class="btn-secondary" onclick="copyResults()">Copy Results</button>
+    </div>
+  `;
+
+  requestAnimationFrame(() => {
+    document.getElementById('results-inner').innerHTML = html;
+    const rs = document.getElementById('results-section');
+    rs.classList.add('visible');
+    rs.scrollIntoView({behavior:'smooth', block:'start'});
+
+    // Update SVG
+    const svgLoad = document.getElementById('svg-load');
+    const svgWidth = document.getElementById('svg-width');
+    const svgDepth = document.getElementById('svg-depth');
+    if (svgLoad) svgLoad.textContent = `P = ${fmt(P,1)} ${loadUnit}`;
+    if (svgWidth) {
+      if (shape === 'circular') svgWidth.textContent = `Ø ${fmt(dA,2)} ${lUnit} (A = ${fmt(A_provided,2)} ${aUnit})`;
+      else if (shape === 'square') svgWidth.textContent = `B = ${fmt(dA,2)} ${lUnit} (A = ${fmt(A_provided,2)} ${aUnit})`;
+      else svgWidth.textContent = `${fmt(dA,2)} × ${fmt(shape==='rectangular'||shape==='strip'?dB:dA,2)} ${lUnit}`;
+    }
+    if (svgDepth) svgDepth.textContent = `D = ${fmt(D,2)} ${lUnit}`;
+  });
+}
+
+function copyResults() {
+  const units = document.getElementById('units').value;
+  const isImp = units === 'imperial';
+  const qu = parseFloat(document.getElementById('ultimateBearing').value);
+  const fs = parseFloat(document.getElementById('safetyFactor').value);
+  const P  = parseFloat(document.getElementById('totalLoad').value);
+  const dA = parseFloat(document.getElementById('dimA').value);
+  const shape = document.getElementById('footingShape').value;
+  const dB = parseFloat(document.getElementById('dimB').value) || dA;
+  const D  = parseFloat(document.getElementById('embedDepth').value) || 0;
+  const gamma = parseFloat(document.getElementById('soilWeight').value) || 0;
+  const pUnit = isImp ? 'ksf' : 'kPa';
+  const loadUnit = isImp ? 'kips' : 'kN';
+  const q_allow = qu / fs;
+  let A_provided;
+  if (shape === 'square') A_provided = dA * dA;
+  else if (shape === 'circular') A_provided = Math.PI * (dA/2) * (dA/2);
+  else A_provided = dA * dB;
+  const q_actual = P / A_provided;
+  const status = q_actual <= q_allow ? 'ADEQUATE' : 'OVERSTRESSED';
+  const text = `Soil Bearing Capacity Results\n============================\nUltimate Capacity: ${fmt(qu)} ${pUnit}\nFactor of Safety: ${fs}\nAllowable Capacity: ${fmt(q_allow)} ${pUnit}\nStructural Load: ${fmt(P)} ${loadUnit}\nArea Provided: ${fmt(A_provided)} ${isImp?'ft²':'m²'}\nActual Pressure: ${fmt(q_actual)} ${pUnit}\nStatus: ${status}\nCalculated at toolwick.com`;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-row .btn-secondary');
+    if (btn) { btn.textContent = 'Copied!'; setTimeout(() => { btn.textContent = 'Copy Results'; }, 2000); }
+  }).catch(() => {
+    alert('Copy failed. Please copy manually.');
+  });
+}
+
+// Enter key support
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); calculate(); }
+});
+
+// Init
+onShapeChange();
+</script>
+</body>
+</html>
