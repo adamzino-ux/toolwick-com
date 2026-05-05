@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Struct Wood Shear Wall Nailing Pattern Calculator — Free Online Tool | toolwick.com</title>
+<meta name="description" content="Calculate shear wall nailing schedules, panel layouts, and nail spacing for wood-frame construction. Free shear wall nailing schedule calculator for engineers and builders.">
+<link rel="canonical" href="https://toolwick.com/shear-wall-nailing-pattern-calculator/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Struct Wood Shear Wall Nailing Pattern Calculator",
+  "url": "https://toolwick.com/shear-wall-nailing-pattern-calculator/",
+  "description": "Calculate shear wall nailing schedules, panel edge/field nail spacing, and unit shear capacity for wood-frame construction.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #e0e0e0;padding:12px 1.5rem;font-size:0.9rem}
+nav a{font-weight:600;color:#1a1a2e}
+.container{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.5rem;font-weight:700;margin-bottom:0.4rem;color:#1a1a2e}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+svg.diagram{width:100%;max-width:560px;height:auto}
+.form-group{margin-bottom:1.2rem}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:4px}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;outline:none;transition:box-shadow 0.2s,border-color 0.2s;background:#fff;color:#1a1a2e;min-height:44px}
+input:focus,select:focus{border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error,select.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:4px;display:none}
+.error-msg.show{display:block}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+button.calc-btn{width:100%;background:#0077b6;color:#fff;border:none;padding:14px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;transition:background 0.2s;min-height:44px;margin-top:0.5rem}
+button.calc-btn:hover{background:#006299}
+button.calc-btn:active{background:#005580}
+.results{opacity:0;transition:opacity 0.3s ease;margin-top:1.5rem}
+.results.show{opacity:1}
+.key-result{text-align:center;padding:1.2rem;background:#f0f7fc;border-radius:8px;margin-bottom:1.2rem}
+.key-result .label{font-size:0.85rem;color:#555;margin-bottom:4px}
+.key-result .value{font-size:2.4rem;font-weight:700;color:#0077b6;line-height:1.1}
+.key-result .unit{font-size:1rem;color:#0077b6;font-weight:500}
+.key-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem}
+.key-card{background:#f8f9fa;border-radius:8px;padding:1rem;text-align:center}
+.key-card .kc-label{font-size:0.78rem;color:#666;margin-bottom:4px}
+.key-card .kc-value{font-size:1.3rem;font-weight:700;color:#0077b6}
+.key-card .kc-unit{font-size:0.8rem;color:#555}
+table{width:100%;border-collapse:collapse;font-size:0.9rem}
+th{background:#f0f0f0;padding:9px 12px;text-align:left;font-weight:600;border-bottom:2px solid #ddd;font-size:0.82rem}
+th.num,td.num{text-align:right}
+td{padding:8px 12px;border-bottom:1px solid #eee}
+tr:nth-child(even) td{background:#fafafa}
+.tbl-wrap{overflow-x:auto;border-radius:6px;border:1px solid #e0e0e0}
+.copy-btn{background:none;border:1px solid #0077b6;color:#0077b6;padding:6px 14px;border-radius:5px;font-size:0.82rem;cursor:pointer;transition:background 0.2s,color 0.2s;min-height:36px;float:right}
+.copy-btn:hover{background:#0077b6;color:#fff}
+.result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;flex-wrap:wrap;gap:8px}
+.result-header h3{font-size:1rem;font-weight:600}
+.note-box{background:#fff8e1;border-left:4px solid #f59e0b;padding:10px 14px;border-radius:0 6px 6px 0;font-size:0.85rem;color:#6b4f00;margin-top:1rem}
+.ad-slot{min-height:0;margin:0}
+section.content{margin-bottom:2rem}
+section.content h2{font-size:1.15rem;font-weight:700;margin:1.5rem 0 0.5rem;color:#1a1a2e}
+section.content p,section.content li{font-size:0.95rem;color:#333;margin-bottom:0.5rem}
+section.content ul{padding-left:1.2rem}
+details{margin-bottom:0.8rem;border:1px solid #e0e0e0;border-radius:6px}
+summary{padding:10px 14px;font-weight:600;cursor:pointer;font-size:0.92rem;list-style:revert}
+summary:hover{background:#f8f9fa}
+details[open] summary{border-bottom:1px solid #e0e0e0}
+details p{padding:10px 14px;font-size:0.9rem;color:#333}
+.related-tools{background:#f8f9fa;border-radius:8px;padding:1.5rem;margin-bottom:2rem}
+.related-tools h2{font-size:1.1rem;font-weight:700;margin-bottom:1rem}
+.related-tools ul{list-style:none;padding:0}
+.related-tools li{margin-bottom:0.5rem;padding-bottom:0.5rem;border-bottom:1px solid #e8e8e8}
+.related-tools li:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.related-tools a{font-size:0.92rem;font-weight:500}
+footer{border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:0.85rem;color:#666}
+footer a{color:#0077b6;margin:0 8px}
+.tag{display:inline-block;background:#e8f4fd;color:#0077b6;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:600;margin-left:8px}
+@media(max-width:640px){
+  .row-2{grid-template-columns:1fr}
+  .key-grid{grid-template-columns:1fr 1fr}
+  h1{font-size:1.25rem}
+  .card{padding:1.2rem}
+  .key-result .value{font-size:1.8rem}
+}
+</style>
+</head>
+<body>
+<nav><a href="/">toolwick.com</a></nav>
+<div class="container">
+<h1>Shear Wall Nailing Pattern Calculator</h1>
+<p class="subtitle">Generate a complete nailing schedule — edge spacing, field spacing, and unit shear capacity for wood-framed shear walls.</p>
+
+<div class="card">
+  <!-- SVG Diagram -->
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" id="shearDiagram" aria-label="Shear wall nailing diagram">
+      <!-- Panel outline -->
+      <rect x="80" y="30" width="180" height="200" fill="#f0f7fc" stroke="#0077b6" stroke-width="2"/>
+      <!-- Framing studs (vertical) -->
+      <rect x="80" y="30" width="12" height="200" fill="#d6eaf8" stroke="#0077b6" stroke-width="1"/>
+      <rect x="242" y="30" width="18" height="200" fill="#d6eaf8" stroke="#0077b6" stroke-width="1"/>
+      <!-- Mid stud -->
+      <rect x="161" y="30" width="8" height="200" fill="#d6eaf8" stroke="#aed6f1" stroke-width="1" stroke-dasharray="4,3"/>
+      <!-- Top/bottom plates -->
+      <rect x="80" y="30" width="180" height="12" fill="#d6eaf8" stroke="#0077b6" stroke-width="1"/>
+      <rect x="80" y="218" width="180" height="12" fill="#d6eaf8" stroke="#0077b6" stroke-width="1"/>
+      <!-- Panel label -->
+      <text x="170" y="130" text-anchor="middle" font-size="11" fill="#0077b6" font-weight="bold">PANEL</text>
+      <!-- Edge nails - left stud -->
+      <circle cx="86" cy="52" r="4" fill="#e74c3c"/>
+      <circle id="en1" cx="86" cy="76" r="4" fill="#e74c3c"/>
+      <circle id="en2" cx="86" cy="100" r="4" fill="#e74c3c"/>
+      <circle id="en3" cx="86" cy="124" r="4" fill="#e74c3c"/>
+      <circle id="en4" cx="86" cy="148" r="4" fill="#e74c3c"/>
+      <circle id="en5" cx="86" cy="172" r="4" fill="#e74c3c"/>
+      <circle cx="86" cy="215" r="4" fill="#e74c3c"/>
+      <!-- Edge nails - right stud -->
+      <circle cx="251" cy="52" r="4" fill="#e74c3c"/>
+      <circle cx="251" cy="76" r="4" fill="#e74c3c"/>
+      <circle cx="251" cy="100" r="4" fill="#e74c3c"/>
+      <circle cx="251" cy="124" r="4" fill="#e74c3c"/>
+      <circle cx="251" cy="148" r="4" fill="#e74c3c"/>
+      <circle cx="251" cy="172" r="4" fill="#e74c3c"/>
+      <circle cx="251" cy="215" r="4" fill="#e74c3c"/>
+      <!-- Field nails - mid stud -->
+      <circle cx="165" cy="66" r="3.5" fill="#2ecc71"/>
+      <circle cx="165" cy="116" r="3.5" fill="#2ecc71"/>
+      <circle cx="165" cy="166" r="3.5" fill="#2ecc71"/>
+      <!-- Top nails horizontal -->
+      <circle cx="120" cy="36" r="4" fill="#e74c3c"/>
+      <circle cx="155" cy="36" r="4" fill="#e74c3c"/>
+      <circle cx="195" cy="36" r="4" fill="#e74c3c"/>
+      <circle cx="228" cy="36" r="4" fill="#e74c3c"/>
+      <!-- Bottom nails horizontal -->
+      <circle cx="120" cy="224" r="4" fill="#e74c3c"/>
+      <circle cx="155" cy="224" r="4" fill="#e74c3c"/>
+      <circle cx="195" cy="224" r="4" fill="#e74c3c"/>
+      <circle cx="228" cy="224" r="4" fill="#e74c3c"/>
+
+      <!-- Edge spacing arrow -->
+      <defs>
+        <marker id="arr" markerWidth="7" markerHeight="7" refX="4" refY="3.5" orient="auto">
+          <polygon points="0 0, 7 3.5, 0 7" fill="#1a1a2e"/>
+        </marker>
+        <marker id="arr2" markerWidth="7" markerHeight="7" refX="3" refY="3.5" orient="auto-start-reverse">
+          <polygon points="7 0, 0 3.5, 7 7" fill="#1a1a2e"/>
+        </marker>
+      </defs>
+      <line x1="52" y1="76" x2="52" y2="100" stroke="#1a1a2e" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arr2)"/>
+      <text id="diagEdgeSpacing" x="48" y="92" text-anchor="end" font-size="10" fill="#1a1a2e">3"</text>
+      <text x="48" y="102" text-anchor="end" font-size="9" fill="#555">edge</text>
+
+      <!-- Field spacing arrow -->
+      <line x1="165" y1="116" x2="165" y2="166" stroke="#1a1a2e" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#arr)" marker-start="url(#arr2)"/>
+      <text id="diagFieldSpacing" x="190" y="143" text-anchor="start" font-size="10" fill="#1a1a2e">12"</text>
+      <text x="190" y="153" text-anchor="start" font-size="9" fill="#555">field</text>
+
+      <!-- Shear force arrow -->
+      <line x1="290" y1="130" x2="320" y2="130" stroke="#e74c3c" stroke-width="2.5" marker-end="url(#arr)"/>
+      <text x="325" y="126" font-size="10" fill="#e74c3c" font-weight="bold">V</text>
+      <text x="325" y="139" font-size="9" fill="#e74c3c">(shear)</text>
+
+      <!-- Wall dimensions -->
+      <line x1="80" y1="252" x2="260" y2="252" stroke="#555" stroke-width="1" marker-end="url(#arr)" marker-start="url(#arr2)"/>
+      <text id="diagWidth" x="170" y="248" text-anchor="middle" font-size="10" fill="#555">W</text>
+      <line x1="40" y1="30" x2="40" y2="230" stroke="#555" stroke-width="1" marker-end="url(#arr)" marker-start="url(#arr2)"/>
+      <text id="diagHeight" x="35" y="135" text-anchor="middle" font-size="10" fill="#555" transform="rotate(-90,35,135)">H</text>
+
+      <!-- Legend -->
+      <circle cx="370" cy="50" r="5" fill="#e74c3c"/>
+      <text x="380" y="54" font-size="10" fill="#1a1a2e">Edge nails</text>
+      <circle cx="370" cy="70" r="4" fill="#2ecc71"/>
+      <text x="380" y="74" font-size="10" fill="#1a1a2e">Field nails</text>
+      <rect x="363" y="85" width="14" height="10" fill="#d6eaf8" stroke="#0077b6" stroke-width="1"/>
+      <text x="380" y="94" font-size="10" fill="#1a1a2e">Framing</text>
+    </svg>
+  </div>
+
+  <!-- Inputs -->
+  <div class="row-2">
+    <div class="form-group">
+      <label for="wallHeight">Wall Height (ft)</label>
+      <input type="number" id="wallHeight" value="8" min="1" max="20" step="0.5" placeholder="e.g. 8">
+      <span class="error-msg" id="errHeight">Enter a valid height (1–20 ft)</span>
+    </div>
+    <div class="form-group">
+      <label for="wallWidth">Wall Width (ft)</label>
+      <input type="number" id="wallWidth" value="4" min="1" max="40" step="0.5" placeholder="e.g. 4">
+      <span class="error-msg" id="errWidth">Enter a valid width (1–40 ft)</span>
+    </div>
+  </div>
+  <div class="row-2">
+    <div class="form-group">
+      <label for="panelThickness">Sheathing Thickness</label>
+      <select id="panelThickness">
+        <option value="0.375">3/8" OSB/Plywood</option>
+        <option value="0.4375">7/16" OSB</option>
+        <option value="0.5" selected>15/32" (1/2") OSB/Plywood</option>
+        <option value="0.5625">19/32" (5/8") Plywood</option>
+        <option value="0.625">23/32" (3/4") Plywood</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="nailSize">Nail Size</label>
+      <select id="nailSize">
+        <option value="8d">8d Common (0.131" × 2-1/2")</option>
+        <option value="10d" selected>10d Common (0.148" × 3")</option>
+        <option value="8dS">8d Short (0.131" × 2-3/8")</option>
+      </select>
+    </div>
+  </div>
+  <div class="row-2">
+    <div class="form-group">
+      <label for="studSpacing">Stud Spacing (in)</label>
+      <select id="studSpacing">
+        <option value="12">12" o.c.</option>
+        <option value="16" selected>16" o.c.</option>
+        <option value="24">24" o.c.</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="edgeSpacing">Desired Edge Nail Spacing (in)</label>
+      <select id="edgeSpacing">
+        <option value="2">2"</option>
+        <option value="3">3"</option>
+        <option value="4" selected>4"</option>
+        <option value="6">6"</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="seismicZone">Load Case / Application</label>
+    <select id="seismicZone">
+      <option value="wind">Wind (typical residential)</option>
+      <option value="seismic_low">Seismic — Low (SDC A/B)</option>
+      <option value="seismic_high" selected>Seismic — High (SDC C/D/E)</option>
+    </select>
+  </div>
+  <button class="calc-btn" id="calcBtn">Calculate Nailing Schedule</button>
+
+  <!-- Results -->
+  <div class="results" id="results"></div>
+</div>
+
+<div class="ad-slot" id="ad-mid"></div>
+
+<!-- Content Section -->
+<section class="content">
+  <h2>How to Use This Shear Wall Nailing Schedule Calculator</h2>
+  <p>Enter your wall height, width, sheathing thickness, nail size, and stud spacing. Choose your desired edge nail spacing (the tighter the spacing, the higher the shear capacity). The calculator returns a complete nailing schedule including unit shear capacity, total nail count, and panel layout — everything you need for your permit drawings or field crew.</p>
+
+  <h2>Why This Matters</h2>
+  <p>Shear walls are the backbone of lateral resistance in wood-frame construction. Without properly nailed sheathing, a house can rack or collapse under wind or seismic loads — even if the framing itself is perfectly built. The nailing pattern is what transfers the shear force from the diaphragm (floor/roof) down into the foundation.</p>
+  <p>In practice, a standard 4×8 panel of 15/32" OSB nailed at 6" on edges and 12" in the field resists about 260 plf of unit shear — fine for low-wind areas. Tighten the edge nailing to 2" and you can push that to over 700 plf, which is what you need in high-seismic zones like the Pacific Northwest or California. Inspectors and building officials specifically check: nail size, edge spacing, field spacing, blocking, and panel orientation. Missing any of these can result in a failed inspection and costly rework.</p>
+  <p>This tool is built for structural engineers, framers, contractors, and DIY home builders who want to quickly verify or generate a nailing schedule without manually cross-referencing IBC Table 2306.3 or AWC SDPWS tables.</p>
+
+  <h2>How It's Calculated</h2>
+  <p>Unit shear capacity (v, in plf) is determined from the AWC Special Design Provisions for Wind and Seismic (SDPWS) Table 4.3A/4.3B, using nail size and edge nail spacing as primary inputs. The general relationship is:</p>
+  <p><strong>v = f(nail size, edge spacing, panel thickness, stud spacing)</strong></p>
+  <p>Total shear demand per panel = Applied unit shear × Wall width. Edge nails per panel = 2 × (wall height ÷ edge spacing + 1) for vertical edges, plus (wall width ÷ edge spacing + 1) × 2 for top/bottom plates. Field nails = (number of interior studs) × (wall height ÷ field spacing + 1). The aspect ratio (H/W) is checked against the code maximum of 3.5:1 (or 2:1 for high seismic).</p>
+
+  <h2>Tips &amp; Common Mistakes</h2>
+  <ul>
+    <li><strong>Blocking at panel edges:</strong> All panel edges must be supported by framing or blocking — unblocked edges significantly reduce capacity and are a common inspection failure.</li>
+    <li><strong>Nail penetration:</strong> 10d commons need 1-1/2" penetration into the framing member. If you're using engineered lumber (LVL, LSL), verify nail-to-member species adjustment factors.</li>
+    <li><strong>Don't mix nail sizes:</strong> If the schedule calls for 10d, don't substitute 8d in the field — it changes the capacity by up to 20%.</li>
+    <li><strong>Aspect ratio check:</strong> A 9-ft tall × 2-ft wide panel (4.5:1) exceeds code limits. The calculator will flag this.</li>
+    <li><strong>Seismic vs. wind:</strong> Seismic design often uses lower allowable capacities with higher demand, so the same panel can be adequate for wind but insufficient for seismic — always specify your load case.</li>
+  </ul>
+
+  <h2>Frequently Asked Questions</h2>
+  <details>
+    <summary>What is the difference between edge nailing and field nailing?</summary>
+    <p>Edge nailing refers to nails placed along the perimeter of the sheathing panel — at the top/bottom plates and vertical stud edges. Field nailing refers to nails in the interior of the panel along intermediate studs. Edge spacing is typically tighter (2"–6") and controls shear capacity; field spacing is typically 12" o.c.</p>
+  </details>
+  <details>
+    <summary>Does panel orientation (horizontal vs. vertical) matter?</summary>
+    <p>Yes. Vertical (strong axis parallel to studs) is the standard and assumed by most code tables. Horizontal orientation is allowed but requires blocking at horizontal panel joints and has different tabulated values in SDPWS. This calculator assumes vertical panel orientation.</p>
+  </details>
+  <details>
+    <summary>Can I use staples instead of nails?</summary>
+    <p>Staples are permitted by IBC and AWC SDPWS for shear wall sheathing, but with different capacity tables (Table 4.3C). This calculator covers common and box nails only. Always confirm staple gauge and crown width with your engineer if substituting.</p>
+  </details>
+  <details>
+    <summary>What is unit shear capacity and how does it relate to design shear?</summary>
+    <p>Unit shear capacity (plf = pounds per linear foot) is the allowable shear a wall segment can resist per foot of width, as determined by the nailing schedule. Your design shear (from lateral analysis) is divided by the wall width to get the demand in plf, which must be ≤ the tabulated capacity.</p>
+  </details>
+</section>
+
+<div class="related-tools">
+  <h2>Related Tools</h2>
+  <ul>
+    <li><a href="/soil-bearing-capacity-load-calculator/">Soil Bearing Capacity Load Calculator</a></li>
+    <li><a href="/ceiling-texture-spray-compressor-calculator/">Ceiling Texture Hopper Gun Air Compressor Calculator</a></li>
+    <li><a href="/ceiling-drywall-hanger-spacing-load-calculator/">Ceiling Drywall Hanger Spacing &amp; Load Calculator</a></li>
+    <li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li>
+    <li><a href="/pocket-door-rough-opening-cavity-calculator/">Pocket Door Rough Opening &amp; Cavity Calculator</a></li>
+    <li><a href="/cinder-block-wall-calculator/">Cinder Block Wall Calculator</a></li>
+  </ul>
+</div>
+
+<div class="ad-slot" id="ad-bottom"></div>
+</div>
+<footer>
+  <a href="/about/">About</a>
+  <a href="/privacy/">Privacy</a>
+  <a href="/contact/">Contact</a>
+  <span style="display:block;margin-top:8px">© <span id="yr"></span> toolwick.com</span>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// Shear capacity table: [nail][thickness][studSpacing][edgeSpacing] -> plf (ASD, blocked, SDPWS-based approximation)
+// Keys: nailSize -> panelThick -> studSpacing -> edgeSpacing
+const capacityTable = {
+  '8d': {
+    '0.375': {
+      '16': { '2': 530, '3': 400, '4': 310, '6': 230 },
+      '24': { '2': 440, '3': 320, '4': 250, '6': 185 }
+    },
+    '0.5': {
+      '16': { '2': 640, '3': 490, '4': 380, '6': 280 },
+      '24': { '2': 530, '3': 400, '4': 310, '6': 230 }
+    },
+    '0.5625': {
+      '16': { '2': 700, '3': 535, '4': 415, '6': 310 },
+      '24': { '2': 580, '3': 440, '4': 340, '6': 255 }
+    },
+    '0.625': {
+      '16': { '2': 740, '3': 570, '4': 440, '6': 330 },
+      '24': { '2': 620, '3': 470, '4': 365, '6': 275 }
+    },
+    '0.4375': {
+      '16': { '2': 580, '3': 440, '4': 340, '6': 255 },
+      '24': { '2': 480, '3': 365, '4': 280, '6': 210 }
+    }
+  },
+  '8dS': {
+    '0.375': {
+      '16': { '2': 480, '3': 360, '4': 280, '6': 210 },
+      '24': { '2': 400, '3': 300, '4': 230, '6': 175 }
+    },
+    '0.5': {
+      '16': { '2': 580, '3': 440, '4': 340, '6': 255 },
+      '24': { '2': 480, '3': 365, '4': 280, '6': 210 }
+    },
+    '0.5625': {
+      '16': { '2': 630, '3': 480, '4': 370, '6': 280 },
+      '24': { '2': 530, '3': 395, '4': 310, '6': 230 }
+    },
+    '0.625': {
+      '16': { '2': 670, '3': 510, '4': 395, '6': 300 },
+      '24': { '2': 560, '3': 420, '4': 330, '6': 250 }
+    },
+    '0.4375': {
+      '16': { '2': 530, '3': 400, '4': 310, '6': 230 },
+      '24': { '2': 440, '3': 330, '4': 255, '6': 190 }
+    }
+  },
+  '10d': {
+    '0.375': {
+      '16': { '2': 640, '3': 490, '4': 380, '6': 280 },
+      '24': { '2': 535, '3': 405, '4': 315, '6': 235 }
+    },
+    '0.5': {
+      '16': { '2': 770, '3': 590, '4': 460, '6': 340 },
+      '24': { '2': 640, '3': 490, '4': 380, '6': 285 }
+    },
+    '0.5625': {
+      '16': { '2': 850, '3': 650, '4': 505, '6': 375 },
+      '24': { '2': 710, '3': 540, '4': 420, '6': 315 }
+    },
+    '0.625': {
+      '16': { '2': 900, '3': 690, '4': 535, '6': 400 },
+      '24': { '2': 750, '3': 575, '4': 445, '6': 335 }
+    },
+    '0.4375': {
+      '16': { '2': 700, '3': 535, '4': 415, '6': 310 },
+      '24': { '2': 585, '3': 445, '4': 345, '6': 260 }
+    }
+  }
+};
+
+const fieldSpacingDefault = 12; // standard field nailing
+
+function fmt(n, dec=0) {
+  return n.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+}
+
+function clearErrors() {
+  document.querySelectorAll('.error-msg').forEach(e=>{e.classList.remove('show')});
+  document.querySelectorAll('input,select').forEach(e=>{e.classList.remove('error')});
+}
+
+function showErr(id, inputId) {
+  document.getElementById(id).classList.add('show');
+  document.getElementById(inputId).classList.add('error');
+}
+
+function calculate() {
+  clearErrors();
+  let valid = true;
+  const H = parseFloat(document.getElementById('wallHeight').value);
+  const W = parseFloat(document.getElementById('wallWidth').value);
+  if (!H || H<1||H>20){showErr('errHeight','wallHeight');valid=false;}
+  if (!W || W<1||W>40){showErr('errWidth','wallWidth');valid=false;}
+  if (!valid) return;
+
+  const thick = document.getElementById('panelThickness').value;
+  const nail  = document.getElementById('nailSize').value;
+  const stud  = document.getElementById('studSpacing').value;
+  const edgeSp= document.getElementById('edgeSpacing').value;
+  const loadCase = document.getElementById('seismicZone').value;
+
+  // Determine stud key (cap at 24 for table lookup)
+  const studKey = stud === '12' ? '16' : stud; // 12" uses 16" values (conservative)
+  const studAdj = stud === '12' ? 1.1 : 1.0; // slight increase for 12" studs
+
+  let unitShear = 0;
+  try {
+    unitShear = capacityTable[nail][thick][studKey][edgeSp] * studAdj;
+  } catch(e) {
+    unitShear = 280;
+  }
+
+  // Seismic reduction: high seismic typically uses 0.8 factor or lower allowable
+  let seismicFactor = 1.0;
+  if (loadCase === 'seismic_high') seismicFactor = 0.80;
+  else if (loadCase === 'seismic_low') seismicFactor = 0.90;
+  const adjUnitShear = unitShear * seismicFactor;
+
+  // Aspect ratio
+  const aspectRatio = H / W;
+  const maxAspect = (loadCase === 'seismic_high') ? 2.0 : 3.5;
+  const aspectOK = aspectRatio <= maxAspect;
+
+  // Nail counts
+  const edgeSpNum = parseFloat(edgeSp);
+  const panelH = H * 12; // inches
+  const panelW = W * 12;
+  const fieldSp = fieldSpacingDefault;
+
+  // Edge nails: left + right vertical edges + top + bottom plates
+  const vertEdgeNailsPerSide = Math.ceil(panelH / edgeSpNum) + 1;
+  const horizEdgeNailsPerSide = Math.ceil(panelW / edgeSpNum) + 1;
+  const totalEdgeNails = (vertEdgeNailsPerSide * 2) + (horizEdgeNailsPerSide * 2) - 4; // subtract corners counted twice
+
+  // Interior studs for field nailing
+  const studSpNum = parseFloat(stud);
+  const numInteriorStuds = Math.max(0, Math.floor((panelW - 1.5) / studSpNum) - 1);
+  const fieldNailsPerStud = Math.ceil(panelH / fieldSp) + 1;
+  const totalFieldNails = numInteriorStuds * fieldNailsPerStud;
+  const totalNails = totalEdgeNails + totalFieldNails;
+
+  // Panels needed (each panel = 4x8 = 48" x 96")
+  const panelsWide = Math.ceil(panelW / 48);
+  const panelsTall = Math.ceil(panelH / 96);
+  const totalPanels = panelsWide * panelsTall;
+
+  // Total wall shear capacity
+  const totalCapacity = adjUnitShear * W;
+
+  // Nail labels for diagram
+  const edgeLabel = edgeSp + '"';
+  const fieldLabel = fieldSp + '"';
+
+  requestAnimationFrame(() => {
+    // Update SVG labels
+    document.getElementById('diagEdgeSpacing').textContent = edgeLabel;
+    document.getElementById('diagFieldSpacing').textContent = fieldLabel;
+    document.getElementById('diagWidth').textContent = W + ' ft';
+    document.getElementById('diagHeight').textContent = H + ' ft';
+
+    // Thickness display
+    const thickMap = {'0.375':'3/8"','0.4375':'7/16"','0.5':'15/32"','0.5625':'19/32"','0.625':'23/32"'};
+    const nailMap = {'8d':'8d Common','10d':'10d Common','8dS':'8d Short'};
+    const thickStr = thickMap[thick] || thick+'"';
+    const nailStr  = nailMap[nail]  || nail;
+    const loadMap  = {'wind':'Wind','seismic_low':'Seismic (Low)','seismic_high':'Seismic (High)'};
+    const loadStr  = loadMap[loadCase];
+
+    const aspectColor = aspectOK ? '#27ae60' : '#e74c3c';
+    const aspectNote  = aspectOK
+      ? `<span style="color:#27ae60">✓ OK (max ${maxAspect}:1)</span>`
+      : `<span style="color:#e74c3c">✗ EXCEEDS max ${maxAspect}:1 — add more wall segments</span>`;
+
+    // Summary rows
+    const summaryRows = [
+      ['Wall Height', fmt(H,1) + ' ft'],
+      ['Wall Width',  fmt(W,1) + ' ft'],
+      ['Aspect Ratio (H/W)', fmt(aspectRatio,2) + ':1  ' + aspectNote],
+      ['Sheathing Thickness', thickStr],
+      ['Nail Size', nailStr],
+      ['Stud Spacing', stud + '" o.c.'],
+      ['Load Case', loadStr],
+      ['Seismic Reduction Factor', seismicFactor === 1.0 ? 'None (1.0)' : seismicFactor.toFixed(2)],
+    ];
+
+    const scheduleRows = [
+      ['Edge Nail Spacing (Panel Perimeter)', edgeSp + '" o.c.'],
+      ['Field Nail Spacing (Interior Studs)',  fieldSp + '" o.c.'],
+      ['Unit Shear Capacity (ASD, unadj.)',   fmt(unitShear) + ' plf'],
+      ['Adjusted Unit Shear Capacity',         fmt(adjUnitShear) + ' plf'],
+      ['Total Wall Shear Capacity',            fmt(totalCapacity) + ' lb'],
+      ['Total Edge Nails',                     fmt(totalEdgeNails)],
+      ['Total Field Nails',                    fmt(totalFieldNails)],
+      ['Total Nails (all)',                     fmt(totalNails)],
+      ['Panels Required (4×8)',               totalPanels + ' panels'],
+    ];
+
+    function buildRows(rows) {
+      return rows.map(r=>`<tr><td>${r[0]}</td><td style="text-align:right;font-weight:500">${r[1]}</td></tr>`).join('');
+    }
+
+    // Build a nailing schedule text for copy
+    const copyText =
+`SHEAR WALL NAILING SCHEDULE
+Wall: ${W} ft wide × ${H} ft tall
+Sheathing: ${thickStr} OSB/Plywood (blocked)
+Nail: ${nailStr}
+Studs: ${stud}" o.c.
+Load Case: ${loadStr}
+---
+Edge Nail Spacing: ${edgeSp}" o.c.
+Field Nail Spacing: ${fieldSp}" o.c.
+Adjusted Unit Shear: ${fmt(adjUnitShear)} plf
+Total Wall Shear Capacity: ${fmt(totalCapacity)} lb
+Total Nails: ${fmt(totalNails)} (${fmt(totalEdgeNails)} edge + ${fmt(totalFieldNails)} field)
+Aspect Ratio: ${fmt(aspectRatio,2)}:1 (${aspectOK?'OK':'EXCEEDS LIMIT'})
+Panels: ${totalPanels} panels (4×8)
+---
+NOTES: All panel edges must be blocked. Verify with AHJ and licensed engineer.`;
+
+    const html = `
+      <div class="key-result">
+        <div class="label">Adjusted Unit Shear Capacity (ASD)</div>
+        <div class="value">${fmt(adjUnitShear)}<span class="unit"> plf</span></div>
+      </div>
+      <div class="key-grid">
+        <div class="key-card">
+          <div class="kc-label">Edge Spacing</div>
+          <div class="kc-value">${edgeSp}"</div>
+          <div class="kc-unit">o.c. perimeter</div>
+        </div>
+        <div class="key-card">
+          <div class="kc-label">Field Spacing</div>
+          <div class="kc-value">${fieldSp}"</div>
+          <div class="kc-unit">o.c. interior</div>
+        </div>
+        <div class="key-card">
+          <div class="kc-label">Total Nails</div>
+          <div class="kc-value">${fmt(totalNails)}</div>
+          <div class="kc-unit">nails total</div>
+        </div>
+        <div class="key-card">
+          <div class="kc-label">Wall Shear Capacity</div>
+          <div class="kc-value">${fmt(totalCapacity)}</div>
+          <div class="kc-unit">lb total</div>
+        </div>
+      </div>
+
+      <div class="result-header">
+        <h3>Wall Parameters</h3>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Parameter</th><th class="num">Value</th></tr></thead>
+          <tbody>${buildRows(summaryRows)}</tbody>
+        </table>
+      </div>
+
+      <div class="result-header" style="margin-top:1.2rem">
+        <h3>Nailing Schedule</h3>
+        <button class="copy-btn" id="copyBtn">Copy Schedule</button>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Item</th><th class="num">Specification</th></tr></thead>
+          <tbody>${buildRows(scheduleRows)}</tbody>
+        </table>
+      </div>
+      ${!aspectOK ? '<div class="note-box">⚠️ <strong>Aspect Ratio Exceeded:</strong> This wall segment is too narrow for its height under the selected load case. Consider adding more wall length or using a hold-down device with force-transfer-around-openings (FTAO) method.</div>' : ''}
+      <div class="note-box" style="margin-top:0.8rem">📋 <strong>Note:</strong> Values are based on AWC SDPWS Table 4.3A (ASD). All panel edges must be blocked. Results are for estimation only — confirm with a licensed structural engineer and your local AHJ.</div>
+    `;
+
+    const container = document.getElementById('results');
+    container.innerHTML = html;
+    container.classList.add('show');
+
+    document.getElementById('copyBtn').addEventListener('click', function(){
+      navigator.clipboard.writeText(copyText).then(()=>{
+        this.textContent = 'Copied!';
+        setTimeout(()=>{ this.textContent = 'Copy Schedule'; }, 2000);
+      }).catch(()=>{
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = copyText;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        this.textContent = 'Copied!';
+        setTimeout(()=>{ this.textContent = 'Copy Schedule'; }, 2000);
+      });
+    });
+  });
+}
+
+document.getElementById('calcBtn').addEventListener('click', () => {
+  requestAnimationFrame(() => { calculate(); });
+});
+
+document.querySelectorAll('input,select').forEach(el => {
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      requestAnimationFrame(() => { calculate(); });
+    }
+  });
+});
+
+// Auto-calculate on load
+window.addEventListener('load', () => {
+  requestAnimationFrame(() => { calculate(); });
+});
+</script>
+</body>
+</html>
