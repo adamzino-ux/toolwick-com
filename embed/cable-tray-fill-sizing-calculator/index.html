@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Cable Tray Fill &amp; Sizing Calculator | Toolwick</title>
+<meta name="description" content="Free cable tray fill calculator for ladder, solid-bottom, and single-conductor trays. Estimate area/diameter fill limits and find the right tray size fast.">
+<link rel="canonical" href="https://toolwick.com/cable-tray-fill-sizing-calculator/">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #e0e0e0;padding:12px 1.5rem;display:flex;align-items:center}
+nav a{font-weight:700;font-size:1.05rem;color:#1a1a2e}
+.container{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;font-weight:800;margin-bottom:.4rem;color:#1a1a2e}
+.subtitle{color:#555;font-size:.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+.diagram-wrap svg{max-width:100%;height:auto}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:4px;margin-top:1rem}
+label:first-of-type{margin-top:0}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff;transition:box-shadow .2s,border-color .2s;min-height:44px}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,.15)}
+input.error,select.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:.8rem;margin-top:4px;display:none}
+.error-msg.show{display:block}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.btn{display:block;width:100%;background:#0077b6;color:#fff;border:none;padding:13px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:1.5rem;min-height:44px;transition:background .2s}
+.btn:hover{background:#006299}
+.btn-sm{display:inline-block;background:#f0f0f0;color:#444;border:none;padding:6px 14px;border-radius:5px;font-size:.8rem;font-weight:500;cursor:pointer;min-height:36px;transition:background .2s;margin-left:8px}
+.btn-sm:hover{background:#ddd}
+.results{display:none;animation:fadeIn .3s ease}
+.results.show{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.result-hero{background:#f0f8ff;border:1px solid #b3d9ef;border-radius:8px;padding:1.2rem 1.5rem;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.result-big{font-size:2.4rem;font-weight:800;color:#0077b6}
+.result-label{font-size:.9rem;color:#555;margin-top:2px}
+.fill-bar-wrap{background:#e0e0e0;border-radius:20px;height:18px;overflow:hidden;margin:.8rem 0}
+.fill-bar{height:100%;border-radius:20px;transition:width .5s ease}
+.fill-ok{background:#27ae60}
+.fill-warn{background:#f39c12}
+.fill-over{background:#e74c3c}
+.status-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.82rem;font-weight:700}
+.badge-ok{background:#d4efdf;color:#1e8449}
+.badge-warn{background:#fdebd0;color:#d68910}
+.badge-over{background:#fadbd8;color:#c0392b}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{background:#f0f0f0;text-align:left;padding:8px 10px;font-weight:600;font-size:.82rem;color:#444;border-bottom:2px solid #ddd}
+td{padding:7px 10px;border-bottom:1px solid #eee}
+tr:nth-child(even) td{background:#fafafa}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.section{margin-bottom:2rem}
+.section h2{font-size:1.15rem;font-weight:700;margin-bottom:.8rem;color:#1a1a2e;padding-bottom:.4rem;border-bottom:2px solid #f0f0f0}
+.content-section h2{font-size:1.1rem;font-weight:700;margin:1.5rem 0 .5rem;color:#1a1a2e}
+.content-section p{color:#333;font-size:.95rem;margin-bottom:.7rem}
+.content-section ul{color:#333;font-size:.95rem;padding-left:1.2rem;margin-bottom:.7rem}
+.content-section ul li{margin-bottom:.3rem}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:.6rem;background:#fafafa}
+details summary{padding:.8rem 1rem;font-weight:600;font-size:.92rem;cursor:pointer;color:#1a1a2e}
+details[open] summary{border-bottom:1px solid #e0e0e0}
+details p{padding:.8rem 1rem;font-size:.9rem;color:#333}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.related-link{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.7rem 1rem;font-size:.88rem;color:#0077b6;font-weight:500;transition:background .2s}
+.related-link:hover{background:#e8f4fb;text-decoration:none}
+footer{background:#f8f9fa;border-top:1px solid #e0e0e0;padding:1.2rem 1.5rem;text-align:center;font-size:.82rem;color:#666;margin-top:2rem}
+footer a{color:#555;margin:0 .5rem}
+footer a:hover{color:#0077b6}
+.ad-slot{min-height:0;margin:0}
+.cable-entry{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;margin-bottom:.8rem;position:relative}
+.cable-entry .remove-btn{position:absolute;top:.6rem;right:.7rem;background:none;border:none;color:#e74c3c;font-size:1.1rem;cursor:pointer;line-height:1;padding:0;min-height:0}
+.cable-entry .remove-btn:hover{color:#c0392b}
+.add-cable-btn{background:#f0f8ff;border:1px dashed #0077b6;color:#0077b6;border-radius:6px;padding:10px;width:100%;font-size:.9rem;cursor:pointer;margin-top:.5rem;min-height:44px;transition:background .2s}
+.add-cable-btn:hover{background:#e0f0fb}
+.tray-select-info{background:#f8f9fa;border-radius:6px;padding:.8rem 1rem;font-size:.85rem;color:#555;margin-top:.5rem}
+.note-box{padding:.8rem 1rem;border-radius:0 6px 6px 0;margin-top:1rem;font-size:.89rem}
+.disclaimer-box{background:#fff8e1;border-left:4px solid #f39c12;color:#6d4c00;padding:.8rem 1rem;border-radius:0 6px 6px 0;font-size:.85rem;margin-bottom:1.5rem}
+@media(max-width:640px){
+  .row2{grid-template-columns:1fr}
+  .related-grid{grid-template-columns:1fr}
+  .result-big{font-size:1.9rem}
+  h1{font-size:1.3rem}
+  .card{padding:1.2rem}
+  table{font-size:.82rem}
+  .result-hero{flex-direction:column;align-items:flex-start}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/cable-tray-fill-sizing-calculator/">
+<meta property="og:title" content="Cable Tray Fill &amp; Sizing Calculator">
+<meta property="og:description" content="Free cable tray fill calculator for ladder, solid-bottom, and single-conductor trays. Estimate area/diameter fill limits and find the right tray size fast.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+
+<nav>
+  <a href="/">⚡ toolwick.com</a>
+</nav>
+
+<div class="container">
+  <h1>Cable Tray Fill & Sizing Calculator</h1>
+  <p class="subtitle">Use this cable tray fill calculator to estimate fill utilization and find a workable tray size for ladder, solid-bottom, and single-conductor cable trays.</p>
+
+  <div class="card">
+    <div class="disclaimer-box">
+      <strong>Engineering estimate, not a code citation tool.</strong> This calculator blends an area-based method (for multiconductor cables smaller than 4/0 AWG) with a sum-of-diameters method (for cables 4/0 AWG and larger, and all single-conductor cables). It approximates NEC Article 392 concepts but does not reproduce the exact bracketed values in the current NEC Table 392.22(A). Always verify against your locally adopted NEC edition, manufacturer cable spec sheets, and your AHJ or engineer of record before finalizing a design.
+    </div>
+
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg id="trayDiagram" viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" style="max-width:540px;">
+        <rect x="40" y="80" width="480" height="80" fill="none" stroke="#0077b6" stroke-width="2.5" rx="2"/>
+        <rect x="40" y="80" width="12" height="80" fill="#e8f4fb" stroke="#0077b6" stroke-width="1.5"/>
+        <rect x="508" y="80" width="12" height="80" fill="#e8f4fb" stroke="#0077b6" stroke-width="1.5"/>
+        <rect x="40" y="148" width="480" height="12" fill="#e8f4fb" stroke="#0077b6" stroke-width="1.5"/>
+        <rect id="fillRect" x="52" y="110" width="456" height="38" fill="rgba(0,119,182,0.18)" stroke="#0077b6" stroke-width="1" stroke-dasharray="4,3" rx="2"/>
+        <line x1="40" y1="172" x2="520" y2="172" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="40" y1="168" x2="40" y2="176" stroke="#555" stroke-width="1.5"/>
+        <line x1="520" y1="168" x2="520" y2="176" stroke="#555" stroke-width="1.5"/>
+        <text id="widthLabel" x="280" y="186" text-anchor="middle" font-size="12" fill="#1a1a2e" font-family="sans-serif">Width: 24 in</text>
+        <line x1="22" y1="80" x2="22" y2="160" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="18" y1="80" x2="26" y2="80" stroke="#555" stroke-width="1.5"/>
+        <line x1="18" y1="160" x2="26" y2="160" stroke="#555" stroke-width="1.5"/>
+        <text id="depthLabel" x="14" y="124" text-anchor="middle" font-size="12" fill="#1a1a2e" font-family="sans-serif" transform="rotate(-90,14,124)">Depth: 4 in</text>
+        <text id="fillPctLabel" x="280" y="133" text-anchor="middle" font-size="12" fill="#0077b6" font-weight="bold" font-family="sans-serif">Cable Fill Area</text>
+        <text id="trayTypeLabel" x="280" y="68" text-anchor="middle" font-size="12" fill="#555" font-family="sans-serif">Ladder Tray — 24 in × 4 in</text>
+        <g id="rungs">
+          <line x1="120" y1="148" x2="120" y2="160" stroke="#0077b6" stroke-width="2"/>
+          <line x1="200" y1="148" x2="200" y2="160" stroke="#0077b6" stroke-width="2"/>
+          <line x1="280" y1="148" x2="280" y2="160" stroke="#0077b6" stroke-width="2"/>
+          <line x1="360" y1="148" x2="360" y2="160" stroke="#0077b6" stroke-width="2"/>
+          <line x1="440" y1="148" x2="440" y2="160" stroke="#0077b6" stroke-width="2"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Tray Configuration -->
+    <div class="section">
+      <div class="section"><span style="font-weight:700;font-size:1rem;">Tray Configuration</span></div>
+      <label for="trayType">Tray Type</label>
+      <select id="trayType">
+        <option value="ladder">Ladder Tray</option>
+        <option value="ventilated">Ventilated Trough</option>
+        <option value="solid">Solid Bottom Tray</option>
+        <option value="channel">Channel (Narrow, &lt;4 in)</option>
+      </select>
+      <div class="tray-select-info" id="trayTypeInfo"></div>
+
+      <div class="row2">
+        <div>
+          <label for="trayWidth">Tray Inside Width (inches)</label>
+          <input type="number" id="trayWidth" value="24" min="2" max="48" step="1" placeholder="e.g. 24">
+          <div class="error-msg" id="trayWidthErr">Enter a valid width (2–48 in).</div>
+        </div>
+        <div>
+          <label for="trayDepth">Tray Side Rail Depth (inches)</label>
+          <input type="number" id="trayDepth" value="4" min="1" max="12" step="0.5" placeholder="e.g. 4">
+          <div class="error-msg" id="trayDepthErr">Enter a valid depth (1–12 in).</div>
+        </div>
+      </div>
+
+      <label for="necRule">Fill Method</label>
+      <select id="necRule">
+        <option value="multi">Multiconductor cables — area (&lt;4/0 AWG) + diameter (≥4/0 AWG) combined</option>
+        <option value="single">Single-conductor cables — sum of diameters vs. width</option>
+        <option value="solidguideline">Solid-bottom tray — conservative 40% guideline</option>
+        <option value="custom">Custom area-fill limit (%)</option>
+      </select>
+
+      <div id="customFillWrap" style="display:none;margin-top:.5rem;">
+        <label for="customFill">Custom Max Area-Fill for cables &lt;4/0 AWG (%)</label>
+        <input type="number" id="customFill" value="40" min="1" max="100" step="1" placeholder="40">
+      </div>
+    </div>
+
+    <!-- Cable Entries -->
+    <div class="section">
+      <div style="font-weight:700;font-size:1rem;margin-bottom:.4rem;">Cables in Tray</div>
+      <p style="font-size:.82rem;color:#666;margin-bottom:.8rem;">OD/area values are representative figures for common 2-conductor MC cable and THHN/THWN-2 building wire. Actual outer diameters vary by manufacturer — verify against the cable's spec sheet for compliance-grade calculations.</p>
+      <div id="cableList"></div>
+      <button class="add-cable-btn" onclick="addCable()">+ Add Another Cable</button>
+    </div>
+
+    <button class="btn" id="calcBtn">Calculate Fill</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+  </div>
+
+  <!-- Results -->
+  <div class="results card" id="results">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem;">
+      <span style="font-weight:700;font-size:1.05rem;">Results</span>
+      <button class="btn-sm" id="copyBtn" onclick="copyResults()">Copy Results</button>
+    </div>
+
+    <div class="result-hero" id="heroBox">
+      <div>
+        <div class="result-big" id="fillPct">—</div>
+        <div class="result-label" id="fillPctLabelText">Combined Fill Utilization</div>
+      </div>
+      <div style="text-align:right">
+        <div id="statusBadge"></div>
+        <div style="font-size:.85rem;color:#555;margin-top:.4rem;" id="maxFillNote"></div>
+      </div>
+    </div>
+
+    <div class="fill-bar-wrap">
+      <div class="fill-bar" id="fillBar" style="width:0%"></div>
+    </div>
+
+    <div id="resultTable"></div>
+  </div>
+
+  <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<!-- Content Section -->
+  <div class="content-section">
+    <h2>How to Use This Cable Tray Fill Calculator</h2>
+    <p>Select your tray type and enter the inside width and depth (side rail height). Choose a fill method — the combined multiconductor method, the single-conductor sum-of-diameters method, the solid-bottom guideline, or a custom percentage. Then add each cable by selecting its size and entering the quantity for that run.</p>
+    <p>Click <strong>Calculate Fill</strong> to see the combined fill utilization and whether your tray has room to spare. The diagram above updates automatically to show your tray dimensions and an approximate fill level inside the cross-section.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Cable tray fill is one of the most overlooked compliance issues in commercial and industrial electrical installations. Overfilling a tray traps heat, which degrades insulation, reduces conductor ampacity, and can lead to nuisance trips or worse. Underfilling wastes costly tray and support structure.</p>
+    <p>NEC Article 392 governs cable tray sizing, and the rules split by cable size. Multiconductor cables smaller than 4/0 AWG generally use an area-based fill limit (commonly summarized as roughly 50% of the tray's cross-section for ladder and ventilated trough trays, per the bracketed values in NEC Table 392.22(A)). Multiconductor cables 4/0 AWG and larger — along with all single-conductor cables — instead use a sum-of-diameters check against the tray's inside width, since large cables effectively pack into a single layer. Mixing these two methods up, or applying a flat percentage to every cable size, is a common and costly design mistake.</p>
+    <p>This tool is useful for industrial facilities, data centers, commercial buildings, process plants, and any installation where multiple cable runs share a common support path. Engineers use it during early design to rough in tray sizes; electricians use it in the field when adding circuits to an existing tray run.</p>
+
+    <h2>How It's Calculated</h2>
+    <p>This calculator sorts your selected cables into three groups: multiconductor cables <strong>smaller than 4/0 AWG</strong> (area method), multiconductor cables <strong>4/0 AWG and larger</strong> (diameter method), and <strong>single-conductor</strong> cables (diameter method). It then computes two utilization fractions and adds them together:</p>
+    <p><strong>Large-cable fraction = (Σ outer diameters of 4/0 AWG+ and single-conductor cables) ÷ tray width</strong></p>
+    <p><strong>Small-cable fraction = (Σ cross-sectional areas of cables &lt;4/0 AWG) ÷ (tray width × tray depth × max fill %)</strong></p>
+    <p>Combined utilization = (large-cable fraction + small-cable fraction) × 100%. A result at or below 100% means both categories fit within their respective allowances; above 100% means the tray is overfilled. This fractional-utilization approach is an engineering approximation of the NEC's combined-fill principle for mixed cable sizes — it is not a literal transcription of the exact combination formula in the current code text, so treat it as a planning estimate rather than a final compliance determination.</p>
+    <p>If you select the pure single-conductor method, the tool instead sums every selected cable's outer diameter and compares that total directly to the tray's inside width, matching the intent of NEC 392.22(B).</p>
+
+    <h2>Worked Example</h2>
+    <p>You have a 24-inch wide, 4-inch deep ladder tray (cross-section = 24 × 4 = 96 in²) using the combined multiconductor method, which caps the small-cable portion at 50% area fill.</p>
+    <p>Cable run: 15 runs of 500 kcmil, 2-conductor MC cable (OD 1.93 in, a "≥4/0 AWG" cable) and 20 runs of #6 AWG, 2-conductor MC cable (area 0.454 in² each, a "&lt;4/0 AWG" cable).</p>
+    <ul>
+      <li>Large-cable diameter sum: 15 × 1.93 = 28.95 in</li>
+      <li>Small-cable area sum: 20 × 0.454 = 9.08 in²</li>
+      <li>Large-cable fraction: 28.95 ÷ 24 = 120.6%</li>
+      <li>Small-cable fraction: 9.08 ÷ (96 × 0.50) = 18.9%</li>
+      <li>Combined utilization: 120.6% + 18.9% = 139.5%</li>
+    </ul>
+    <p>This tray is significantly overfilled — in fact, the 500 kcmil cables alone need more width than the 24-inch tray provides, since fifteen ~2-inch-diameter cables can't lay side by side in 24 inches. Solving for the minimum width that brings combined utilization to 100% gives: 28.95 + 9.08 ÷ (4 × 0.50) = 33.5 inches, which rounds up to the next standard NEMA VE 1 width — a 36-inch wide tray. Enter these same values into the calculator above to see this exact result.</p>
+
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Know the 4/0 AWG threshold.</strong> Multiconductor cables 4/0 AWG and larger switch from an area-based rule to a sum-of-diameters rule — treating a large cable with the area method understates how much width it actually needs.</li>
+      <li><strong>Measure actual OD, not conductor size.</strong> Cable outer diameters vary significantly by manufacturer and jacket type. Always verify the spec sheet OD for your specific cable model.</li>
+      <li><strong>Don't apply area-fill rules to single conductors.</strong> Single-conductor fill is a sum-of-diameters check against tray width, not a percentage of cross-sectional area.</li>
+      <li><strong>Account for future capacity.</strong> Most engineers plan for 20–30% spare capacity so future circuit additions don't require re-pulling or upsizing the tray.</li>
+      <li><strong>Derating applies on top of fill.</strong> A compliant fill percentage doesn't automatically mean full ampacity — check NEC 310.15(B)(3)(a)-style derate factors for bundled or grouped cables.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is the NEC fill limit for a ladder cable tray?</summary>
+      <p>NEC 392.22(A) splits multiconductor cable fill by size: cables smaller than 4/0 AWG use an area-based limit (commonly summarized as roughly 50% of the tray cross-section for ladder and ventilated trough trays), while cables 4/0 AWG and larger use a sum-of-diameters check against the tray width instead. This tool applies both parts together as an engineering approximation, not the literal bracket values from the current code table.</p>
+    </details>
+    <details>
+      <summary>Is solid-bottom cable tray fill the same as ladder tray fill?</summary>
+      <p>Not in most engineering practice. Solid-bottom trays dissipate heat more slowly than ladder tray, so many designers apply a stricter fill guideline, often around 40%, even though this isn't always written as its own lettered subsection in every NEC edition. Always confirm the applicable limit with your local AHJ or engineer of record.</p>
+    </details>
+    <details>
+      <summary>Can I mix power and control cables in the same tray?</summary>
+      <p>Often yes, but the NEC requires segregation or a solid fixed barrier between certain circuit types and voltage classes in cable trays, and the exact section number has shifted across code cycles. Check the separation requirements in your currently adopted NEC edition and confirm with your local AHJ before combining circuit types in one tray.</p>
+    </details>
+    <details>
+      <summary>What tray size should I start with?</summary>
+      <p>A common starting point for medium commercial installations is a 12–24 inch wide, 4-inch deep ladder tray using standard NEMA VE 1 widths. For heavy industrial runs with large power feeders, 30–36 inch wide trays are common. Size up to keep combined fill utilization below about 80% for future flexibility.</p>
+    </details>
+    <details>
+      <summary>Does cable tray fill affect ampacity?</summary>
+      <p>Yes. When cables are grouped in a tray without maintained spacing, ampacity derate factors such as those in NEC 310.15(B)(3)(a) can apply. More cables packed into a smaller space generate more heat, which can require each cable to carry less current than its isolated, free-air rating.</p>
+    </details>
+    <details>
+      <summary>How is single-conductor cable tray fill different from multiconductor fill?</summary>
+      <p>Single-conductor cable fill under NEC 392.22(B) sums the outer diameters of every single-conductor cable and compares that total directly to the tray's inside width, effectively limiting cables to roughly one layer. Multiconductor fill instead blends an area-based method for smaller cables with a diameter-based method for cables 4/0 AWG and larger.</p>
+    </details>
+  </div>
+
+  <div class="section">
+    <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:.8rem;padding-bottom:.4rem;border-bottom:2px solid #f0f0f0;">Related Tools</h2>
+    <div class="related-grid">
+      <a class="related-link" href="/conduit-fill-calculator/">Conduit Fill Calculator</a>
+      <a class="related-link" href="/water-softener-sizing-calculator/">Water Softener Sizing Calculator</a>
+      <a class="related-link" href="/furnace-sizing-calculator/">Furnace Sizing Calculator</a>
+      <a class="related-link" href="/mini-split-sizing-calculator/">Mini Split Sizing Calculator</a>
+      <a class="related-link" href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing & Concrete Calculator</a>
+      <a class="related-link" href="/deck-railing-baluster-spacing-calculator/">Deck Railing & Baluster Spacing Calculator</a>
+    </div>
+  </div>
+
+  </div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/cable-tray-fill-sizing-calculator/">Toolwick</a></p>
+
+<script>
+// Cable data: cat = 'small' (area method, <4/0 AWG), 'large' (diameter method, >=4/0 AWG MC), 'single' (diameter method, any size), 'custom'
+const CABLE_DATA = [
+  {label:"#14 AWG (2c MC)",   od:0.46,  area:0.166, cat:'small', group:'Multiconductor MC — smaller than 4/0 AWG (area method)'},
+  {label:"#12 AWG (2c MC)",   od:0.51,  area:0.204, cat:'small', group:'Multiconductor MC — smaller than 4/0 AWG (area method)'},
+  {label:"#10 AWG (2c MC)",   od:0.57,  area:0.255, cat:'small', group:'Multiconductor MC — smaller than 4/0 AWG (area method)'},
+  {label:"#8 AWG (2c MC)",    od:0.67,  area:0.352, cat:'small', group:'Multiconductor MC — smaller than 4/0 AWG (area method)'},
+  {label:"#6 AWG (2c MC)",    od:0.76,  area:0.454, cat:'small', group:'Multiconductor MC — smaller than 4/0 AWG (area method)'},
+  {label:"#4 AWG (2c MC)",    od:0.88,  area:0.608, cat:'small', group:'Multiconductor MC — smaller than 4/0 AWG (area method)'},
+  {label:"#2 AWG (2c MC)",    od:1.02,  area:0.817, cat:'small', group:'Multiconductor MC — smaller than 4/0 AWG (area method)'},
+  {label:"#1 AWG (2c MC)",    od:1.10,  area:0.950, cat:'small', group:'Multiconductor MC — smaller than 4/0 AWG (area method)'},
+  {label:"1/0 AWG (2c MC)",   od:1.17,  area:1.075, cat:'small', group:'Multiconductor MC — smaller than 4/0 AWG (area method)'},
+  {label:"2/0 AWG (2c MC)",   od:1.25,  area:1.227, cat:'small', group:'Multiconductor MC — smaller than 4/0 AWG (area method)'},
+  {label:"3/0 AWG (2c MC)",   od:1.34,  area:1.410, cat:'small', group:'Multiconductor MC — smaller than 4/0 AWG (area method)'},
+  {label:"4/0 AWG (2c MC)",   od:1.43,  area:1.606, cat:'large', group:'Multiconductor MC — 4/0 AWG and larger (diameter method)'},
+  {label:"250 kcmil (2c MC)", od:1.55,  area:1.886, cat:'large', group:'Multiconductor MC — 4/0 AWG and larger (diameter method)'},
+  {label:"350 kcmil (2c MC)", od:1.72,  area:2.324, cat:'large', group:'Multiconductor MC — 4/0 AWG and larger (diameter method)'},
+  {label:"500 kcmil (2c MC)", od:1.93,  area:2.924, cat:'large', group:'Multiconductor MC — 4/0 AWG and larger (diameter method)'},
+  {label:"#14 AWG THHN/THWN-2 (1c)",  od:0.22, area:0.038, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"#12 AWG THHN/THWN-2 (1c)",  od:0.24, area:0.045, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"#10 AWG THHN/THWN-2 (1c)",  od:0.27, area:0.057, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"#8 AWG THHN/THWN-2 (1c)",   od:0.32, area:0.080, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"#6 AWG THHN/THWN-2 (1c)",   od:0.39, area:0.119, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"#4 AWG THHN/THWN-2 (1c)",   od:0.46, area:0.166, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"#2 AWG THHN/THWN-2 (1c)",   od:0.54, area:0.229, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"1/0 AWG THHN/THWN-2 (1c)",  od:0.64, area:0.322, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"2/0 AWG THHN/THWN-2 (1c)",  od:0.71, area:0.396, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"3/0 AWG THHN/THWN-2 (1c)",  od:0.79, area:0.491, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"4/0 AWG THHN/THWN-2 (1c)",  od:0.88, area:0.608, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"250 kcmil THHN/THWN-2 (1c)",od:0.97, area:0.740, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"350 kcmil THHN/THWN-2 (1c)",od:1.12, area:0.985, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"500 kcmil THHN/THWN-2 (1c)",od:1.30, area:1.327, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"750 kcmil THHN/THWN-2 (1c)",od:1.54, area:1.863, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"1000 kcmil THHN/THWN-2 (1c)",od:1.73,area:2.352, cat:'single', group:'Single-Conductor THHN/THWN-2* (diameter method)'},
+  {label:"#18 AWG (4c ctrl)", od:0.40,  area:0.126, cat:'small', group:'Control Cable (area method)'},
+  {label:"#16 AWG (4c ctrl)", od:0.43,  area:0.145, cat:'small', group:'Control Cable (area method)'},
+  {label:"#14 AWG (4c ctrl)", od:0.48,  area:0.181, cat:'small', group:'Control Cable (area method)'},
+  {label:"#12 AWG (4c ctrl)", od:0.55,  area:0.238, cat:'small', group:'Control Cable (area method)'},
+  {label:"Custom (enter OD & category)", od:null, area:null, cat:'custom', group:'Custom'}
+];
+
+let cableCount = 0;
+const STD_WIDTHS = [6,9,12,18,24,30,36,42,48];
+
+const trayTypeInfoText = {
+  ladder: "Ladder tray: cables smaller than 4/0 AWG typically use an area-based fill limit (roughly 50% of cross-section); cables 4/0 AWG and larger use a sum-of-diameters check against tray width instead.",
+  ventilated: "Ventilated trough: generally follows the same fill approach as ladder tray — area method below 4/0 AWG, diameter method at or above it.",
+  solid: "Solid bottom tray: heat dissipates more slowly than in ladder tray, so many engineers apply a stricter ~40% area-fill guideline for cables smaller than 4/0 AWG. This is common practice, not always a distinct lettered NEC subsection — select \"Solid-bottom tray\" below and verify with your AHJ.",
+  channel: "Channel tray (under 4 in wide): typically limited to roughly a single layer of cable. Verify manufacturer and code guidance for narrow trays before relying on area-based methods."
+};
+
+document.getElementById('trayType').addEventListener('change', function(){
+  document.getElementById('trayTypeInfo').textContent = trayTypeInfoText[this.value] || '';
+  updateDiagram();
+});
+
+document.getElementById('necRule').addEventListener('change', function(){
+  document.getElementById('customFillWrap').style.display = (this.value === 'custom') ? 'block' : 'none';
+});
+
+function cableOptionsHTML(selectedIdx) {
+  let html = '';
+  let currentGroup = null;
+  CABLE_DATA.forEach((c, i) => {
+    if (c.group !== currentGroup) {
+      if (currentGroup !== null) html += '</optgroup>';
+      html += `<optgroup label="${c.group}">`;
+      currentGroup = c.group;
+    }
+    html += `<option value="${i}"${i === selectedIdx ? ' selected' : ''}>${c.label}</option>`;
+  });
+  html += '</optgroup>';
+  return html;
+}
+
+function addCable(cableIdx, qty) {
+  cableIdx = cableIdx !== undefined ? cableIdx : 0;
+  qty = qty !== undefined ? qty : 1;
+  const id = cableCount++;
+  const div = document.createElement('div');
+  div.className = 'cable-entry';
+  div.id = `cable-${id}`;
+  div.innerHTML = `
+    <button class="remove-btn" onclick="removeCable('cable-${id}')" title="Remove cable">✕</button>
+    <div class="row2">
+      <div>
+        <label>Cable Type / Size</label>
+        <select id="ctype-${id}" onchange="toggleCustomOD(${id})">
+          ${cableOptionsHTML(cableIdx)}
+        </select>
+      </div>
+      <div>
+        <label>Quantity</label>
+        <input type="number" id="cqty-${id}" value="${qty}" min="1" max="500" step="1" placeholder="1">
+      </div>
+    </div>
+    <div id="customOD-${id}" style="display:none;margin-top:.5rem;">
+      <div class="row2">
+        <div>
+          <label>Custom Cable OD (inches)</label>
+          <input type="number" id="cod-${id}" value="0.50" min="0.1" max="8" step="0.01" placeholder="0.50">
+        </div>
+        <div>
+          <label>Cable Category</label>
+          <select id="ccat-${id}">
+            <option value="small">Multiconductor &lt;4/0 AWG (area method)</option>
+            <option value="large">Multiconductor ≥4/0 AWG (diameter method)</option>
+            <option value="single">Single-Conductor (diameter method)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('cableList').appendChild(div);
+  toggleCustomOD(id);
+}
+
+function toggleCustomOD(id) {
+  const sel = document.getElementById(`ctype-${id}`);
+  const customWrap = document.getElementById(`customOD-${id}`);
+  if (!sel || !customWrap) return;
+  const isCustom = CABLE_DATA[parseInt(sel.value)].cat === 'custom';
+  customWrap.style.display = isCustom ? 'block' : 'none';
+}
+
+function removeCable(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function fmt(n, d=2) {
+  if (isNaN(n)) return '—';
+  return n.toLocaleString('en-US', {minimumFractionDigits: d, maximumFractionDigits: d});
+}
+
+function clearErrors() {
+  ['trayWidth','trayDepth'].forEach(id => {
+    document.getElementById(id).classList.remove('error');
+    document.getElementById(id + 'Err').classList.remove('show');
+  });
+}
+
+function showError(id) {
+  document.getElementById(id).classList.add('error');
+  document.getElementById(id + 'Err').classList.add('show');
+}
+
+function nearestStandardWidth(w) {
+  return STD_WIDTHS.find(s => s >= w) || STD_WIDTHS[STD_WIDTHS.length-1];
+}
+
+function trayTypeInfoShort(t) {
+  return {ladder:'Ladder',ventilated:'Ventilated',solid:'Solid Bottom',channel:'Channel'}[t] || t;
+}
+
+function calculate() {
+  clearErrors();
+  let valid = true;
+
+  const width = parseFloat(document.getElementById('trayWidth').value);
+  const depth = parseFloat(document.getElementById('trayDepth').value);
+
+  if (isNaN(width) || width < 2 || width > 48) { showError('trayWidth'); valid = false; }
+  if (isNaN(depth) || depth < 1 || depth > 12) { showError('trayDepth'); valid = false; }
+
+  if (!valid) return;
+
+  const trayType = document.getElementById('trayType').value;
+  const necRule = document.getElementById('necRule').value;
+  const trayArea = width * depth;
+
+  const entries = document.querySelectorAll('.cable-entry');
+  if (entries.length === 0) {
+    alert('Please add at least one cable.');
+    return;
+  }
+
+  let cables = [];
+  let sumDiaLarge = 0, sumAreaSmall = 0, sumDiaAll = 0;
+  let hasSingleCat = false, hasSmallLargeCat = false;
+  let totalCableCount = 0;
+
+  entries.forEach(entry => {
+    const id = entry.id.replace('cable-', '');
+    const selEl = document.getElementById(`ctype-${id}`);
+    const qtyEl = document.getElementById(`cqty-${id}`);
+    if (!selEl || !qtyEl) return;
+
+    const idx = parseInt(selEl.value);
+    const qty = parseInt(qtyEl.value) || 1;
+    const cData = CABLE_DATA[idx];
+
+    let od, area, label, cat;
+    if (cData.cat === 'custom') {
+      const customOD = parseFloat(document.getElementById(`cod-${id}`)?.value) || 0.5;
+      cat = document.getElementById(`ccat-${id}`)?.value || 'small';
+      od = customOD;
+      area = Math.PI * Math.pow(od / 2, 2);
+      label = `Custom (OD ${od}", ${cat === 'large' ? '≥4/0 AWG' : cat === 'single' ? 'single-conductor' : '<4/0 AWG'})`;
+    } else {
+      od = cData.od;
+      area = cData.area;
+      label = cData.label;
+      cat = cData.cat;
+    }
+
+    const totalArea = area * qty;
+    const totalOD = od * qty;
+    totalCableCount += qty;
+    sumDiaAll += totalOD;
+
+    if (cat === 'large' || cat === 'single') { sumDiaLarge += totalOD; }
+    if (cat === 'single') hasSingleCat = true;
+    if (cat === 'small') { sumAreaSmall += totalArea; hasSmallLargeCat = true; }
+    if (cat === 'large') hasSmallLargeCat = true;
+
+    cables.push({ label, od, area, qty, totalArea, totalOD, cat });
+  });
+
+  const isDiameterMode = (necRule === 'single');
+  let maxFillPct = 50;
+  if (necRule === 'multi') maxFillPct = 50;
+  else if (necRule === 'solidguideline') maxFillPct = 40;
+  else if (necRule === 'custom') {
+    const v = parseFloat(document.getElementById('customFill').value);
+    maxFillPct = isNaN(v) ? 40 : Math.min(100, Math.max(1, v));
+  }
+
+  let metricValue, metricLabel, maxNote, largeFraction = 0, smallFraction = 0, recWidth = null;
+
+  if (isDiameterMode) {
+    metricValue = (sumDiaAll / width) * 100;
+    metricLabel = 'Sum-of-Diameters Utilization';
+    maxNote = `Sum of cable diameters vs. tray width (${width}")`;
+    if (metricValue > 100) recWidth = nearestStandardWidth(sumDiaAll);
+  } else {
+    largeFraction = width > 0 ? (sumDiaLarge / width) : 0;
+    const smallAreaLimit = trayArea * (maxFillPct / 100);
+    smallFraction = smallAreaLimit > 0 ? (sumAreaSmall / smallAreaLimit) : 0;
+    metricValue = (largeFraction + smallFraction) * 100;
+    metricLabel = 'Combined Fill Utilization';
+    maxNote = `Diameter check (≥4/0 AWG) + ${maxFillPct}% area check (<4/0 AWG), combined`;
+    if (metricValue > 100) {
+      const needed = sumDiaLarge + (sumAreaSmall / (depth * (maxFillPct / 100)));
+      recWidth = nearestStandardWidth(needed);
+    }
+  }
+
+  const compliant = metricValue <= 100;
+  const nearLimit = compliant && metricValue > 85;
+
+  let statusClass, statusText, barClass;
+  if (!compliant) { statusClass = 'badge-over'; statusText = '⚠ OVERFILLED'; barClass = 'fill-over'; }
+  else if (nearLimit) { statusClass = 'badge-warn'; statusText = '⚠ Near Limit'; barClass = 'fill-warn'; }
+  else { statusClass = 'badge-ok'; statusText = '✓ Within Estimate'; barClass = 'fill-ok'; }
+
+  // Build cable rows
+  let rows = '';
+  cables.forEach(c => {
+    const catLabel = c.cat === 'large' ? 'Diameter (≥4/0)' : c.cat === 'single' ? 'Diameter (1c)' : 'Area (<4/0)';
+    rows += `<tr>
+      <td>${c.label}</td>
+      <td>${catLabel}</td>
+      <td class="num">${c.od.toFixed(3)}</td>
+      <td class="num">${c.qty.toLocaleString()}</td>
+      <td class="num">${fmt(c.totalOD, 3)}</td>
+      <td class="num">${fmt(c.totalArea, 3)}</td>
+    </tr>`;
+  });
+
+  const necRuleText = document.getElementById('necRule').options[document.getElementById('necRule').selectedIndex].text;
+
+  let mismatchNote = '';
+  if (!isDiameterMode && hasSingleCat) {
+    mismatchNote = `<div class="note-box" style="background:#eaf2fa;border-left:4px solid #0077b6;color:#0a4b6e;">
+      <strong>Heads up:</strong> you've included single-conductor cable(s) while using a multiconductor fill method. Single-conductor cables are usually evaluated with the pure sum-of-diameters method — consider switching the Fill Method dropdown above.
+    </div>`;
+  } else if (isDiameterMode && hasSmallLargeCat) {
+    mismatchNote = `<div class="note-box" style="background:#eaf2fa;border-left:4px solid #0077b6;color:#0a4b6e;">
+      <strong>Note:</strong> multiconductor cables are included in this sum-of-diameters calculation. Confirm this matches how you intend to evaluate this tray — multiconductor cables smaller than 4/0 AWG are usually evaluated by area instead.
+    </div>`;
+  }
+
+  const summaryHTML = `
+    <div style="overflow-x:auto;margin-top:1rem;">
+      <table>
+        <thead>
+          <tr>
+            <th>Cable</th>
+            <th>Method</th>
+            <th class="num">OD (in)</th>
+            <th class="num">Qty</th>
+            <th class="num">Σ OD (in)</th>
+            <th class="num">Σ Area (in²)</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+        <tfoot>
+          <tr style="font-weight:700;background:#f0f0f0;">
+            <td colspan="2">TOTAL (${totalCableCount} cables)</td>
+            <td class="num">—</td>
+            <td class="num">${totalCableCount.toLocaleString()}</td>
+            <td class="num">${fmt(sumDiaAll, 3)}</td>
+            <td class="num">${fmt(sumAreaSmall + (isDiameterMode?0:0), 3)}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div style="overflow-x:auto;margin-top:1rem;">
+      <table>
+        <thead><tr><th colspan="2">Tray Summary — ${necRuleText}</th></tr></thead>
+        <tbody>
+          <tr><td>Tray Width × Depth</td><td class="num">${width}" × ${depth}"</td></tr>
+          <tr><td>Tray Cross-Section Area</td><td class="num">${fmt(trayArea, 2)} in²</td></tr>
+          ${isDiameterMode ? `
+          <tr><td>Sum of Cable Diameters</td><td class="num">${fmt(sumDiaAll, 3)} in</td></tr>
+          <tr><td>Tray Width (limit)</td><td class="num">${fmt(width, 3)} in</td></tr>
+          <tr><td>Spare Width</td><td class="num">${fmt(width - sumDiaAll,3)} in</td></tr>
+          ` : `
+          <tr><td>Large-Cable Diameter Sum (≥4/0 AWG)</td><td class="num">${fmt(sumDiaLarge, 3)} in</td></tr>
+          <tr><td>Large-Cable Fraction (÷ width)</td><td class="num">${fmt(largeFraction*100, 1)}%</td></tr>
+          <tr><td>Small-Cable Area Sum (&lt;4/0 AWG)</td><td class="num">${fmt(sumAreaSmall, 3)} in²</td></tr>
+          <tr><td>Small-Cable Fraction (÷ ${maxFillPct}% of area)</td><td class="num">${fmt(smallFraction*100, 1)}%</td></tr>
+          `}
+          <tr><td>${metricLabel}</td><td class="num"><strong>${fmt(metricValue, 1)}%</strong></td></tr>
+          ${recWidth ? `<tr style="background:#fff3cd;"><td><strong>Suggested Minimum Width</strong> (same depth, NEMA VE 1 size)</td><td class="num"><strong>${recWidth}"</strong></td></tr>` : ''}
+        </tbody>
+      </table>
+    </div>
+    ${!compliant ? `<div class="note-box" style="background:#fadbd8;border-left:4px solid #e74c3c;color:#922b21;">
+      <strong>Tray appears overfilled.</strong> Combined utilization is ${fmt(metricValue,1)}%, above the 100% estimate threshold.
+      ${recWidth ? ` Consider a <strong>${recWidth}-inch wide tray</strong> at the same ${depth}-inch depth, or reduce cable count. Re-verify against your NEC edition before finalizing.` : ''}
+    </div>` : ''}
+    ${compliant && nearLimit ? `<div class="note-box" style="background:#fef9e7;border-left:4px solid #f39c12;color:#7d6608;">
+      <strong>Nearing the estimate limit.</strong> You're at ${fmt(metricValue,1)}% of the 100% combined threshold. Consider leaving spare capacity for future additions.
+    </div>` : ''}
+    ${mismatchNote}
+  `;
+
+  window._copyText = `Cable Tray Fill Results\n`
+    + `Tray: ${width}" wide × ${depth}" deep (${trayTypeInfoShort(trayType)})\n`
+    + `Fill Method: ${necRuleText}\n`
+    + (isDiameterMode
+        ? `Sum of Diameters: ${fmt(sumDiaAll,3)} in / Width: ${width} in\n`
+        : `Large-cable diameter sum: ${fmt(sumDiaLarge,3)} in | Small-cable area sum: ${fmt(sumAreaSmall,3)} in²\n`)
+    + `${metricLabel}: ${fmt(metricValue,1)}% (Estimate threshold: 100%)\n`
+    + `Status: ${statusText}\n`
+    + (recWidth ? `Suggested Minimum Width: ${recWidth} in\n` : '')
+    + cables.map(c=>`  ${c.label} × ${c.qty} = ΣOD ${fmt(c.totalOD,3)} in / ΣArea ${fmt(c.totalArea,3)} in²`).join('\n');
+
+  requestAnimationFrame(() => {
+    document.getElementById('fillPct').textContent = fmt(metricValue, 1) + '%';
+    document.getElementById('fillPctLabelText').textContent = metricLabel;
+    document.getElementById('statusBadge').innerHTML = `<span class="status-badge ${statusClass}">${statusText}</span>`;
+    document.getElementById('maxFillNote').textContent = maxNote;
+
+    const bar = document.getElementById('fillBar');
+    bar.style.width = Math.min(100, metricValue) + '%';
+    bar.className = 'fill-bar ' + barClass;
+
+    document.getElementById('resultTable').innerHTML = summaryHTML;
+
+    const resEl = document.getElementById('results');
+    resEl.classList.add('show');
+    resEl.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+    updateDiagramFill(width, depth, metricValue, trayType);
+  });
+}
+
+function updateDiagram() {
+  const width = parseFloat(document.getElementById('trayWidth').value) || 24;
+  const depth = parseFloat(document.getElementById('trayDepth').value) || 4;
+  const trayType = document.getElementById('trayType').value;
+  document.getElementById('widthLabel').textContent = `Width: ${width} in`;
+  document.getElementById('depthLabel').textContent = `Depth: ${depth} in`;
+  document.getElementById('trayTypeLabel').textContent = `${trayTypeInfoShort(trayType)} Tray — ${width} in × ${depth} in`;
+
+  const rungs = document.getElementById('rungs');
+  rungs.style.display = (trayType === 'ladder' || trayType === 'ventilated') ? '' : 'none';
+}
+
+function updateDiagramFill(width, depth, metricValue, trayType) {
+  document.getElementById('widthLabel').textContent = `Width: ${width} in`;
+  document.getElementById('depthLabel').textContent = `Depth: ${depth} in`;
+  document.getElementById('trayTypeLabel').textContent = `${trayTypeInfoShort(trayType)} — ${width}" × ${depth}"`;
+
+  const fillFrac = Math.min(1, metricValue / 100);
+  const trayH = 68;
+  const fillH = Math.max(4, fillFrac * trayH);
+  const fillY = 148 - fillH;
+
+  const fillRect = document.getElementById('fillRect');
+  fillRect.setAttribute('y', fillY);
+  fillRect.setAttribute('height', fillH);
+
+  const color = metricValue > 100 ? 'rgba(231,76,60,0.25)' : metricValue > 85 ? 'rgba(243,156,18,0.2)' : 'rgba(0,119,182,0.18)';
+  fillRect.setAttribute('fill', color);
+
+  document.getElementById('fillPctLabel').textContent = `Fill: ${fmt(metricValue,1)}%`;
+}
+
+function copyResults() {
+  if (!window._copyText) return;
+  navigator.clipboard.writeText(window._copyText).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy Results'; }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = window._copyText;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy Results'; }, 2000);
+  });
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT')) {
+    requestAnimationFrame(() => { calculate(); });
+  }
+});
+
+document.getElementById('calcBtn').addEventListener('click', () => {
+  requestAnimationFrame(() => { calculate(); });
+});
+
+document.getElementById('trayWidth').addEventListener('input', updateDiagram);
+document.getElementById('trayDepth').addEventListener('input', updateDiagram);
+
+// Initialize
+addCable(0, 6);  // #14 AWG 2c MC x6
+addCable(4, 3);  // #6 AWG 2c MC x3
+document.getElementById('trayTypeInfo').textContent = trayTypeInfoText[document.getElementById('trayType').value];
+updateDiagram();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>

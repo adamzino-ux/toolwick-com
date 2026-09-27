@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Concrete Volume Calculator | Toolwick</title>
+<meta name="description" content="Free concrete calculator for slabs, footings, columns, tubes &amp; stairs. Get instant cubic yards, cubic feet, cubic meters &amp; bags needed in seconds.">
+<link rel="canonical" href="https://toolwick.com/concrete-volume-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Concrete Volume Calculator">
+<meta property="og:description" content="Free concrete calculator for slabs, footings, columns, tubes &amp; stairs. Get instant cubic yards, cubic feet, cubic meters &amp; bags needed in seconds.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #fff;
+  color: #1a1a2e;
+  font-size: 16px;
+  line-height: 1.6;
+}
+a { color: #0077b6; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav {
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 1.5rem;
+  height: 52px;
+  display: flex;
+  align-items: center;
+}
+.nav-brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #0077b6;
+  text-decoration: none;
+}
+.nav-brand:hover { text-decoration: none; opacity: 0.85; }
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.tagline {
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+.tool-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  margin-bottom: 2rem;
+}
+.shape-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+.tab-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 10px 8px;
+  background: #f8f9fa;
+  border: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #555;
+  border-right: 1px solid #ddd;
+  transition: background 0.15s, color 0.15s;
+  min-height: 44px;
+  text-align: center;
+}
+.tab-btn:last-child { border-right: none; }
+.tab-btn.active { background: #0077b6; color: #fff; }
+.tab-btn:hover:not(.active) { background: #e8f4fd; color: #0077b6; }
+.shape-panel { display: none; }
+.shape-panel.active { display: block; }
+.diagram-wrap { text-align: center; margin-bottom: 1.5rem; }
+.shape-diagram { display: none; max-width: 100%; height: auto; width: 320px; }
+.shape-diagram.active { display: inline-block; }
+.diagram-caption { font-size: 0.78rem; color: #666; margin-top: 0.4rem; }
+.form-group { margin-bottom: 1.25rem; }
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 6px;
+}
+label .unit-hint { font-weight: 400; color: #666; font-size: 0.8rem; }
+input[type="number"], select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #1a1a2e;
+  background: #fff;
+  outline: none;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  min-height: 44px;
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+input[type="number"]:focus, select:focus {
+  border-color: #0077b6;
+  box-shadow: 0 0 0 3px rgba(0,119,182,0.15);
+}
+input.error { border-color: #e74c3c; }
+.error-msg { color: #e74c3c; font-size: 0.8rem; margin-top: 4px; display: none; }
+.error-msg.visible { display: block; }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+.waste-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+}
+.waste-row label { margin-bottom: 0; font-size: 0.85rem; white-space: nowrap; }
+.waste-row input[type="range"] { flex: 1; height: 6px; accent-color: #0077b6; }
+.waste-row .waste-val { font-weight: 600; color: #0077b6; min-width: 38px; text-align: right; font-size: 0.9rem; }
+.count-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+.count-row label { margin-bottom: 0; white-space: nowrap; }
+.count-row input[type="number"] { width: 100px; }
+.checkbox-row { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.4rem; }
+.checkbox-row input[type="checkbox"] { width: auto; min-height: auto; margin-top: 4px; accent-color: #0077b6; }
+.checkbox-row label { margin-bottom: 0; cursor: pointer; }
+.helper-text { font-size: 0.8rem; color: #666; margin-bottom: 1.25rem; }
+.btn-calc {
+  width: 100%;
+  background: #0077b6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  min-height: 48px;
+}
+.btn-calc:hover { background: #006299; }
+.results-section {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  margin-top: 1.5rem;
+}
+.results-section.visible { display: block; opacity: 1; }
+.result-headline {
+  text-align: center;
+  background: #f0f8ff;
+  border: 1px solid #cce4f6;
+  border-radius: 8px;
+  padding: 1.25rem 1rem;
+  margin-bottom: 1.25rem;
+}
+.result-headline .big-num { font-size: 2.4rem; font-weight: 700; color: #0077b6; line-height: 1; }
+.result-headline .big-label { font-size: 0.95rem; color: #555; margin-top: 4px; }
+.result-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem; }
+.result-card { background: #f8f9fa; border-radius: 6px; padding: 0.85rem 0.75rem; text-align: center; border: 1px solid #e8e8e8; }
+.result-card .rc-val { font-size: 1.2rem; font-weight: 700; color: #1a1a2e; }
+.result-card .rc-label { font-size: 0.75rem; color: #666; margin-top: 2px; }
+.result-table-wrap { overflow-x: auto; margin-bottom: 1rem; }
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+thead tr { background: #f0f0f0; }
+th { padding: 9px 12px; font-weight: 600; color: #333; text-align: left; border-bottom: 2px solid #ddd; }
+th.num, td.num { text-align: right; }
+tbody tr:nth-child(even) { background: #fafafa; }
+tbody tr:nth-child(odd) { background: #fff; }
+td { padding: 8px 12px; border-bottom: 1px solid #eee; color: #333; }
+.btn-copy {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 7px 14px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #444;
+  transition: background 0.15s;
+  min-height: 36px;
+}
+.btn-copy:hover { background: #e0e0e0; }
+.copy-row { display: flex; justify-content: flex-end; margin-top: 0.5rem; }
+.ad-slot { min-height: 0; margin: 0; }
+.content-section h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 0.6rem;
+  margin-top: 2rem;
+}
+.content-section p { color: #333; margin-bottom: 0.75rem; font-size: 0.95rem; }
+.content-section ul { padding-left: 1.4rem; margin-bottom: 0.75rem; }
+.content-section ul li { color: #333; font-size: 0.95rem; margin-bottom: 0.4rem; }
+details { border: 1px solid #e0e0e0; border-radius: 6px; margin-bottom: 0.6rem; }
+summary {
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.93rem;
+  color: #0077b6;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+summary::after { content: '+'; font-size: 1.2rem; color: #0077b6; }
+details[open] summary::after { content: '−'; }
+details p { padding: 0 1rem 0.9rem; color: #444; font-size: 0.9rem; }
+.related-tools { margin-top: 2rem; }
+.related-tools h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem; color: #1a1a2e; }
+.related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.related-link {
+  display: block;
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #0077b6;
+  transition: background 0.15s;
+}
+.related-link:hover { background: #e8f4fd; text-decoration: none; }
+footer {
+  background: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #666;
+  margin-top: 2rem;
+}
+footer a { color: #0077b6; margin: 0 0.5rem; }
+.formula-box {
+  background: #f8f9fa;
+  border-left: 3px solid #0077b6;
+  padding: 0.75rem 1rem;
+  border-radius: 0 6px 6px 0;
+  font-family: monospace;
+  font-size: 0.87rem;
+  color: #1a1a2e;
+  margin: 0.75rem 0;
+}
+@media (max-width: 640px) {
+  h1 { font-size: 1.4rem; }
+  .tool-card { padding: 1.25rem; }
+  .row-2, .row-3 { grid-template-columns: 1fr; gap: 0; }
+  .result-grid { grid-template-columns: 1fr 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .tab-btn { font-size: 0.75rem; padding: 9px 5px; }
+  .result-headline .big-num { font-size: 1.9rem; }
+}
+</style>
+<meta property="og:url" content="https://toolwick.com/concrete-volume-calculator/">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">toolwick.com</a>
+</nav>
+
+<div class="container">
+
+  <h1>Concrete Volume Calculator</h1>
+  <p class="tagline">This free concrete calculator instantly figures out how much concrete you need — in cubic yards, cubic feet, and bags — for slabs, footings, columns, tubes, and stairs.</p>
+
+  <div class="tool-card">
+
+    <!-- Shape Tabs -->
+    <div class="shape-tabs" id="shapeTabs">
+      <button class="tab-btn active" data-shape="slab">Slab / Pad</button>
+      <button class="tab-btn" data-shape="footing">Footing</button>
+      <button class="tab-btn" data-shape="column">Column</button>
+      <button class="tab-btn" data-shape="tube">Tube / Pier</button>
+      <button class="tab-btn" data-shape="stairs">Stairs</button>
+    </div>
+
+    <!-- Diagram -->
+    <div class="diagram-wrap">
+      <svg class="shape-diagram active" id="diagram-box" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrowA" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#0077b6"/>
+          </marker>
+        </defs>
+        <polygon points="40,140 200,140 200,110 40,110" fill="#eaf4fb" stroke="#0077b6" stroke-width="2"/>
+        <polygon points="40,110 200,110 260,70 100,70" fill="#dcecf7" stroke="#0077b6" stroke-width="2"/>
+        <polygon points="200,140 200,110 260,70 260,100" fill="#cfe6f5" stroke="#0077b6" stroke-width="2"/>
+        <line x1="40" y1="140" x2="100" y2="100" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <line x1="40" y1="160" x2="200" y2="160" stroke="#0077b6" stroke-width="1.4" marker-start="url(#arrowA)" marker-end="url(#arrowA)"/>
+        <text id="svg-box-dim1" x="120" y="176" text-anchor="middle" font-size="11" fill="#1a1a2e">Length</text>
+        <line x1="212" y1="128" x2="272" y2="88" stroke="#0077b6" stroke-width="1.4" marker-start="url(#arrowA)" marker-end="url(#arrowA)"/>
+        <text id="svg-box-dim2" x="278" y="82" text-anchor="start" font-size="11" fill="#1a1a2e">Width</text>
+        <line x1="24" y1="110" x2="24" y2="140" stroke="#0077b6" stroke-width="1.4" marker-start="url(#arrowA)" marker-end="url(#arrowA)"/>
+        <text id="svg-box-dim3" x="4" y="128" text-anchor="start" font-size="11" fill="#1a1a2e">Thickness</text>
+      </svg>
+      <svg class="shape-diagram" id="diagram-tube" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrowB" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#0077b6"/>
+          </marker>
+        </defs>
+        <ellipse cx="150" cy="55" rx="70" ry="18" fill="#eaf4fb" stroke="#0077b6" stroke-width="2"/>
+        <line x1="80" y1="55" x2="80" y2="150" stroke="#0077b6" stroke-width="2"/>
+        <line x1="220" y1="55" x2="220" y2="150" stroke="#0077b6" stroke-width="2"/>
+        <path d="M80,150 A70,18 0 0 0 220,150" fill="none" stroke="#0077b6" stroke-width="2"/>
+        <line x1="80" y1="55" x2="220" y2="55" stroke="#0077b6" stroke-width="1.3" stroke-dasharray="4,3" marker-start="url(#arrowB)" marker-end="url(#arrowB)"/>
+        <text id="svg-tube-dim1" x="150" y="40" text-anchor="middle" font-size="11" fill="#1a1a2e">Diameter</text>
+        <line x1="245" y1="55" x2="245" y2="150" stroke="#0077b6" stroke-width="1.3" marker-start="url(#arrowB)" marker-end="url(#arrowB)"/>
+        <text id="svg-tube-dim2" x="252" y="105" text-anchor="start" font-size="11" fill="#1a1a2e">Depth</text>
+      </svg>
+      <svg class="shape-diagram" id="diagram-stairs" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrowC" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#0077b6"/>
+          </marker>
+        </defs>
+        <polyline points="40,160 40,130 90,130 90,100 140,100 140,70 190,70 190,40 240,40" fill="none" stroke="#0077b6" stroke-width="3"/>
+        <line x1="40" y1="180" x2="240" y2="180" stroke="#e0e0e0" stroke-width="1.5"/>
+        <line x1="115" y1="100" x2="115" y2="70" stroke="#0077b6" stroke-width="1.3" marker-start="url(#arrowC)" marker-end="url(#arrowC)"/>
+        <text id="svg-stairs-dim1" x="122" y="88" text-anchor="start" font-size="11" fill="#1a1a2e">Rise</text>
+        <line x1="90" y1="112" x2="140" y2="112" stroke="#0077b6" stroke-width="1.3" marker-start="url(#arrowC)" marker-end="url(#arrowC)"/>
+        <text id="svg-stairs-dim2" x="115" y="124" text-anchor="middle" font-size="11" fill="#1a1a2e">Run</text>
+        <text id="svg-stairs-dim3" x="140" y="196" text-anchor="middle" font-size="11" fill="#1a1a2e">Width</text>
+      </svg>
+      <div class="diagram-caption">Illustrative diagram (not to scale) — labels update after you calculate.</div>
+    </div>
+
+    <!-- Unit System -->
+    <div class="form-group">
+      <label for="unitSystem">Measurement System</label>
+      <select id="unitSystem">
+        <option value="imperial">Imperial (feet / inches)</option>
+        <option value="metric">Metric (meters / cm)</option>
+      </select>
+    </div>
+
+    <!-- ===== SLAB PANEL ===== -->
+    <div class="shape-panel active" id="panel-slab">
+      <div class="row-2">
+        <div class="form-group">
+          <label for="slab-length">Length <span class="unit-hint" id="slab-length-unit">(feet)</span></label>
+          <input type="number" id="slab-length" placeholder="e.g. 20" min="0" step="any">
+          <div class="error-msg" id="err-slab-length">Please enter a valid length.</div>
+        </div>
+        <div class="form-group">
+          <label for="slab-width">Width <span class="unit-hint" id="slab-width-unit">(feet)</span></label>
+          <input type="number" id="slab-width" placeholder="e.g. 12" min="0" step="any">
+          <div class="error-msg" id="err-slab-width">Please enter a valid width.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="slab-depth">Thickness / Depth <span class="unit-hint" id="slab-depth-unit">(inches)</span></label>
+        <input type="number" id="slab-depth" placeholder="e.g. 4" min="0" step="any">
+        <div class="error-msg" id="err-slab-depth">Please enter a valid thickness.</div>
+      </div>
+    </div>
+
+    <!-- ===== FOOTING PANEL ===== -->
+    <div class="shape-panel" id="panel-footing">
+      <div class="row-2">
+        <div class="form-group">
+          <label for="foot-length">Length <span class="unit-hint" id="foot-length-unit">(feet)</span></label>
+          <input type="number" id="foot-length" placeholder="e.g. 40" min="0" step="any">
+          <div class="error-msg" id="err-foot-length">Please enter a valid length.</div>
+        </div>
+        <div class="form-group">
+          <label for="foot-width">Width <span class="unit-hint" id="foot-width-unit">(inches)</span></label>
+          <input type="number" id="foot-width" placeholder="e.g. 12" min="0" step="any">
+          <div class="error-msg" id="err-foot-width">Please enter a valid width.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="foot-depth">Depth <span class="unit-hint" id="foot-depth-unit">(inches)</span></label>
+        <input type="number" id="foot-depth" placeholder="e.g. 8" min="0" step="any">
+        <div class="error-msg" id="err-foot-depth">Please enter a valid depth.</div>
+      </div>
+      <div class="count-row">
+        <label for="foot-count">Number of footings:</label>
+        <input type="number" id="foot-count" value="1" min="1" step="1">
+      </div>
+    </div>
+
+    <!-- ===== COLUMN PANEL ===== -->
+    <div class="shape-panel" id="panel-column">
+      <div class="row-2">
+        <div class="form-group">
+          <label for="col-width">Width <span class="unit-hint" id="col-width-unit">(inches)</span></label>
+          <input type="number" id="col-width" placeholder="e.g. 12" min="0" step="any">
+          <div class="error-msg" id="err-col-width">Please enter a valid width.</div>
+        </div>
+        <div class="form-group">
+          <label for="col-depth-dim">Depth <span class="unit-hint" id="col-depth-unit">(inches)</span></label>
+          <input type="number" id="col-depth-dim" placeholder="e.g. 12" min="0" step="any">
+          <div class="error-msg" id="err-col-depth-dim">Please enter a valid depth.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="col-height">Height <span class="unit-hint" id="col-height-unit">(feet)</span></label>
+        <input type="number" id="col-height" placeholder="e.g. 8" min="0" step="any">
+        <div class="error-msg" id="err-col-height">Please enter a valid height.</div>
+      </div>
+      <div class="count-row">
+        <label for="col-count">Number of columns:</label>
+        <input type="number" id="col-count" value="1" min="1" step="1">
+      </div>
+    </div>
+
+    <!-- ===== TUBE / PIER PANEL ===== -->
+    <div class="shape-panel" id="panel-tube">
+      <div class="row-2">
+        <div class="form-group">
+          <label for="tube-diameter">Diameter <span class="unit-hint" id="tube-diameter-unit">(inches)</span></label>
+          <input type="number" id="tube-diameter" placeholder="e.g. 10" min="0" step="any">
+          <div class="error-msg" id="err-tube-diameter">Please enter a valid diameter.</div>
+        </div>
+        <div class="form-group">
+          <label for="tube-depth">Depth / Height <span class="unit-hint" id="tube-depth-unit">(feet)</span></label>
+          <input type="number" id="tube-depth" placeholder="e.g. 4" min="0" step="any">
+          <div class="error-msg" id="err-tube-depth">Please enter a valid depth.</div>
+        </div>
+      </div>
+      <div class="count-row">
+        <label for="tube-count">Number of tubes:</label>
+        <input type="number" id="tube-count" value="1" min="1" step="1">
+      </div>
+    </div>
+
+    <!-- ===== STAIRS PANEL ===== -->
+    <div class="shape-panel" id="panel-stairs">
+      <div class="row-3">
+        <div class="form-group">
+          <label for="stair-rise">Rise <span class="unit-hint" id="stair-rise-unit">(inches)</span></label>
+          <input type="number" id="stair-rise" placeholder="e.g. 7.5" min="0" step="any">
+          <div class="error-msg" id="err-stair-rise">Enter a valid rise.</div>
+        </div>
+        <div class="form-group">
+          <label for="stair-run">Run <span class="unit-hint" id="stair-run-unit">(inches)</span></label>
+          <input type="number" id="stair-run" placeholder="e.g. 10" min="0" step="any">
+          <div class="error-msg" id="err-stair-run">Enter a valid run.</div>
+        </div>
+        <div class="form-group">
+          <label for="stair-width">Width <span class="unit-hint" id="stair-width-unit">(feet)</span></label>
+          <input type="number" id="stair-width" placeholder="e.g. 4" min="0" step="any">
+          <div class="error-msg" id="err-stair-width">Enter a valid width.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="stair-count">Number of steps</label>
+        <input type="number" id="stair-count" placeholder="e.g. 5" min="1" step="1">
+        <div class="error-msg" id="err-stair-count">Enter a valid step count.</div>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="stair-solid">
+        <label for="stair-solid">Solid pour to grade (monolithic stairs, no stringers/forms underneath)</label>
+      </div>
+      <div class="helper-text">Leave unchecked if the stairs sit on stringers or a supporting form and you only need the tread-wedge volume. Check this if you're pouring solid concrete stairs directly on grade or fill — it accounts for the full stepped block of concrete beneath each tread and will return a noticeably larger number.</div>
+    </div>
+
+    <!-- Waste Slider -->
+    <div class="waste-row">
+      <label for="wasteSlider">Waste Factor:</label>
+      <input type="range" id="wasteSlider" min="0" max="20" value="10" step="1">
+      <span class="waste-val" id="wasteVal">10%</span>
+    </div>
+
+    <!-- Bag Size -->
+    <div class="form-group">
+      <label for="bagSize">Bag size for estimating</label>
+      <select id="bagSize">
+        <option value="60">60 lb bag (~0.45 cu ft)</option>
+        <option value="80" selected>80 lb bag (~0.60 cu ft)</option>
+        <option value="40">40 lb bag (~0.30 cu ft)</option>
+      </select>
+    </div>
+
+    <button class="btn-calc" id="calcBtn">Calculate Concrete Volume</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+    <!-- Results -->
+    <div class="results-section" id="results">
+      <div class="result-headline">
+        <div class="big-num" id="res-cy">0.00</div>
+        <div class="big-label">Cubic Yards (with waste)</div>
+      </div>
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="rc-val" id="res-cf">0.00</div>
+          <div class="rc-label">Cubic Feet</div>
+        </div>
+        <div class="result-card">
+          <div class="rc-val" id="res-cm">0.00</div>
+          <div class="rc-label">Cubic Meters</div>
+        </div>
+        <div class="result-card">
+          <div class="rc-val" id="res-bags">0</div>
+          <div class="rc-label">Bags Needed</div>
+        </div>
+      </div>
+      <div class="result-table-wrap">
+        <table>
+          <thead>
+            <tr><th>Description</th><th class="num">Value</th></tr>
+          </thead>
+          <tbody id="resultTableBody"></tbody>
+        </table>
+      </div>
+      <div class="copy-row">
+        <button class="btn-copy" id="copyBtn">📋 Copy Results</button>
+      </div>
+    </div>
+
+  </div><!-- /tool-card -->
+
+  <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<!-- Content Section -->
+  <div class="content-section">
+
+    <h2>How to Use This Concrete Volume Calculator</h2>
+    <p>Select your project shape — slab, footing, column, tube/pier, or stairs — then enter your dimensions. Choose your measurement system (imperial or metric), adjust the waste factor slider to account for spillage and over-ordering, select your bag size, and click <strong>Calculate</strong>. The tool instantly returns cubic yards, cubic feet, cubic meters, and the number of pre-mixed bags you'll need, and the diagram above updates with your actual dimensions.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Concrete is unforgiving. Under-order and you end up with cold joints — a structural weak point where old concrete meets new. Over-order and you're paying $150+ per cubic yard for concrete you'll shovel into a dumpster. A typical 10×12 foot driveway pad at 4 inches thick needs about 1.5 cubic yards. That's around $225–$350 delivered. Ordering even half a yard too much on a large pour (say, a 40-foot foundation footing) can waste $75–$100.</p>
+    <p>Contractors and homeowners use this concrete calculator before calling ready-mix plants, estimating material costs for bids, pulling permits, and planning how many bags to buy for smaller DIY jobs. A 10×10 patio at 4 inches thick takes about 56 bags of 80 lb mix without any waste factored in — knowing that before you load up your car matters.</p>
+    <p>The waste factor is critical. Most professionals add 5–10% for residential pours and up to 15–20% for irregular shapes, sloped forms, or when mixing by hand where some inevitably gets stuck in the mixer drum.</p>
+
+    <h2>How It's Calculated</h2>
+    <p>All shapes convert dimensions to feet, compute volume in cubic feet, then convert to cubic yards (÷ 27) and cubic meters (× 0.0283168).</p>
+    <div class="formula-box">Slab: Volume (ft³) = Length × Width × (Thickness ÷ 12)</div>
+    <div class="formula-box">Footing: Volume (ft³) = Length × (Width ÷ 12) × (Depth ÷ 12) × Count</div>
+    <div class="formula-box">Column: Volume (ft³) = (W ÷ 12) × (D ÷ 12) × Height × Count</div>
+    <div class="formula-box">Tube/Pier: Volume (ft³) = π × (Diameter ÷ 24)² × Depth × Count</div>
+    <div class="formula-box">Stairs (stringer-supported, tread wedge only): Volume (ft³) = 0.5 × Steps × (Rise ÷ 12) × (Run ÷ 12) × Width</div>
+    <div class="formula-box">Stairs (solid, poured to grade): Volume (ft³) = (Rise ÷ 12) × (Run ÷ 12) × Width × [Steps × (Steps + 1) ÷ 2]</div>
+    <p>The stringer-supported formula only estimates the tread wedges that sit on top of an existing support structure, so it will understate material needed for a fully solid staircase. Choose "solid pour to grade" if there's nothing but compacted fill or ground beneath your steps — it fills the entire stepped void down to grade.</p>
+    <p>With waste: <strong>Final Volume = Raw Volume × (1 + Waste% ÷ 100)</strong>. Bags needed = Final cubic feet ÷ cubic feet per bag (0.30 for 40 lb, 0.45 for 60 lb, 0.60 for 80 lb), rounded up.</p>
+
+    <h2>Worked Example</h2>
+    <p>Say you're pouring a 10 ft × 10 ft slab at 4 inches thick, using 80 lb bags, with a 10% waste factor.</p>
+    <ul>
+      <li>Raw volume = 10 × 10 × (4 ÷ 12) = 33.33 cubic feet</li>
+      <li>With 10% waste = 33.33 × 1.10 = 36.67 cubic feet</li>
+      <li>Cubic yards = 36.67 ÷ 27 = 1.36 cubic yards</li>
+      <li>Cubic meters = 36.67 × 0.0283168 = 1.04 m³</li>
+      <li>Bags needed = 36.67 ÷ 0.60 = 61.1 → rounds up to 62 bags of 80 lb mix</li>
+    </ul>
+    <p>Without any waste factor, the same slab needs 33.33 ÷ 0.60 = 55.5 → 56 bags. That 6-bag gap is your cushion for an uneven subgrade, spillage, and forms that aren't perfectly plumb.</p>
+
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Always round up bags</strong> — you cannot pour half a bag later and expect it to bond properly to cured concrete.</li>
+      <li><strong>Don't skip the waste factor</strong> — even experienced masons add 5–10%. Ground that isn't perfectly level, forms that flex slightly, and spillage all eat into your estimate.</li>
+      <li><strong>Check your units carefully</strong> — mixing feet and inches is the #1 source of calculation errors. This tool handles the conversion for you.</li>
+      <li><strong>For large pours, order ready-mix</strong> — more than about 0.5 cubic yards (roughly 23 bags of 80 lb mix) is tedious and physically demanding to mix by hand. Ready-mix becomes cost-effective fast.</li>
+      <li><strong>Footings need to go below the frost line</strong> — this affects depth input. In cold climates, footings may need to be 36–48 inches deep, dramatically increasing volume.</li>
+      <li><strong>Pick the right stair formula</strong> — using the stringer-supported (tread-only) formula for a monolithic solid pour will leave you badly short on material.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <details>
+      <summary>How many bags of concrete do I need for a 10×10 slab?</summary>
+      <p>A 10×10 slab at 4 inches thick = 33.3 cubic feet = about 1.23 cubic yards without waste. Without any waste factor you'd need 56 bags of 80 lb concrete mix; with a 10% waste factor (recommended for most DIY pours) that rises to about 62 bags. At $6–$8 per bag, expect $370–$500 in material alone — at which point ready-mix delivery is often cheaper and easier.</p>
+    </details>
+
+    <details>
+      <summary>What is the standard thickness for a concrete driveway?</summary>
+      <p>Residential driveways should be at least 4 inches thick for passenger vehicles, and 5–6 inches for trucks, SUVs, or areas where heavy vehicles park. Thicker slabs dramatically increase load capacity. Use this calculator with different thickness values to compare the volume difference.</p>
+    </details>
+
+    <details>
+      <summary>How much does a cubic yard of concrete weigh?</summary>
+      <p>A cubic yard of concrete weighs approximately 4,050 pounds (about 2 tons). This matters when planning deliveries — ready-mix trucks typically carry 8–10 cubic yards, and your driveway or job site must be accessible for a vehicle of that weight.</p>
+    </details>
+
+    <details>
+      <summary>Can I use this for metric projects?</summary>
+      <p>Yes — select "Metric" in the measurement system dropdown, and the calculator accepts meters (for length/width/height) and centimeters (for thickness/depth). Results are still shown in cubic yards, cubic feet, and cubic meters so you can compare across systems.</p>
+    </details>
+
+    <details>
+      <summary>Why does the stairs calculator give two different volumes?</summary>
+      <p>Concrete stairs can be built two very different ways. If steps rest on stringers or a formed support structure, you only need to pour the tread wedges — a much smaller volume. If the stairs are poured as one solid monolithic block directly on grade or fill, you need concrete filling the entire stepped void down to the ground, which can be several times more material. Toggle the "solid pour to grade" checkbox to switch between the two formulas.</p>
+    </details>
+
+    <details>
+      <summary>How much does ready-mix concrete cost per cubic yard?</summary>
+      <p>Ready-mix concrete typically costs $150–$180 per cubic yard delivered in most U.S. markets, plus a short-load fee (often $60–$100) if you order less than a full truck (usually under 3–5 cubic yards). Bagged concrete mix is more expensive per cubic foot but has no minimum order, which is why it usually makes sense for volumes under about half a cubic yard.</p>
+    </details>
+
+    <div class="related-tools">
+      <h2>Related Tools</h2>
+      <div class="related-grid">
+        <a class="related-link" href="/garage-slab-thickness-reinforcement-calculator/">🚗 Garage Concrete Slab Thickness &amp; Reinforcement Calculator</a>
+        <a class="related-link" href="/excavation-earthwork-volume-calculator/">🚜 Excavation &amp; Earthwork Volume Calculator</a>
+        <a class="related-link" href="/recessed-lighting-layout-spacing-calculator/">💡 Ceiling Recessed Lighting Layout Calculator</a>
+        <a class="related-link" href="/knee-wall-stud-height-attic-storage-calculator/">📏 Knee Wall Stud Height &amp; Attic Storage Calculator</a>
+        🔨 Struct Wood Shear Wall Nailing Pattern Calculator
+        🏗️ Soil Bearing Capacity Load Calculator
+      </div>
+    </div>
+
+  </div><!-- /content-section -->
+
+  </div><!-- /container -->
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/concrete-volume-calculator/">Toolwick</a></p>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// ---- State ----
+let currentShape = 'slab';
+let unitSystem = 'imperial';
+
+// ---- Diagram helpers ----
+function diagramKind(shape) {
+  if (shape === 'tube') return 'tube';
+  if (shape === 'stairs') return 'stairs';
+  return 'box';
+}
+function setSvgText(id, txt) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = txt;
+}
+function resetDiagramLabels(shape) {
+  if (shape === 'slab') {
+    setSvgText('svg-box-dim1', 'Length'); setSvgText('svg-box-dim2', 'Width'); setSvgText('svg-box-dim3', 'Thickness');
+  } else if (shape === 'footing') {
+    setSvgText('svg-box-dim1', 'Length'); setSvgText('svg-box-dim2', 'Width'); setSvgText('svg-box-dim3', 'Depth');
+  } else if (shape === 'column') {
+    setSvgText('svg-box-dim1', 'Width'); setSvgText('svg-box-dim2', 'Depth'); setSvgText('svg-box-dim3', 'Height');
+  } else if (shape === 'tube') {
+    setSvgText('svg-tube-dim1', 'Diameter'); setSvgText('svg-tube-dim2', 'Depth');
+  } else if (shape === 'stairs') {
+    setSvgText('svg-stairs-dim1', 'Rise'); setSvgText('svg-stairs-dim2', 'Run'); setSvgText('svg-stairs-dim3', 'Width');
+  }
+}
+function switchDiagram(shape) {
+  document.querySelectorAll('.shape-diagram').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('diagram-' + diagramKind(shape));
+  if (el) el.classList.add('active');
+  resetDiagramLabels(shape);
+}
+
+// ---- Tab Switching ----
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.shape-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    currentShape = btn.dataset.shape;
+    document.getElementById('panel-' + currentShape).classList.add('active');
+    hideResults();
+    updateUnitLabels();
+    switchDiagram(currentShape);
+  });
+});
+
+// ---- Unit System ----
+document.getElementById('unitSystem').addEventListener('change', e => {
+  unitSystem = e.target.value;
+  updateUnitLabels();
+  hideResults();
+});
+
+function updateUnitLabels() {
+  const imp = unitSystem === 'imperial';
+  setLabel('slab-length-unit', imp ? '(feet)' : '(meters)');
+  setLabel('slab-width-unit', imp ? '(feet)' : '(meters)');
+  setLabel('slab-depth-unit', imp ? '(inches)' : '(cm)');
+  setLabel('foot-length-unit', imp ? '(feet)' : '(meters)');
+  setLabel('foot-width-unit', imp ? '(inches)' : '(cm)');
+  setLabel('foot-depth-unit', imp ? '(inches)' : '(cm)');
+  setLabel('col-width-unit', imp ? '(inches)' : '(cm)');
+  setLabel('col-depth-unit', imp ? '(inches)' : '(cm)');
+  setLabel('col-height-unit', imp ? '(feet)' : '(meters)');
+  setLabel('tube-diameter-unit', imp ? '(inches)' : '(cm)');
+  setLabel('tube-depth-unit', imp ? '(feet)' : '(meters)');
+  setLabel('stair-rise-unit', imp ? '(inches)' : '(cm)');
+  setLabel('stair-run-unit', imp ? '(inches)' : '(cm)');
+  setLabel('stair-width-unit', imp ? '(feet)' : '(meters)');
+}
+function setLabel(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+// ---- Waste Slider ----
+const wasteSlider = document.getElementById('wasteSlider');
+const wasteVal = document.getElementById('wasteVal');
+wasteSlider.addEventListener('input', () => { wasteVal.textContent = wasteSlider.value + '%'; });
+
+// ---- Enter Key ----
+document.querySelectorAll('input[type="number"]').forEach(inp => {
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
+});
+
+// ---- Calculate Button ----
+document.getElementById('calcBtn').addEventListener('click', calculate);
+
+// ---- Helpers ----
+function fmt(n, dec = 2) {
+  return Number(n).toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+}
+function fmtInt(n) { return Math.ceil(n).toLocaleString('en-US'); }
+function getVal(id) { return parseFloat(document.getElementById(id).value); }
+function showErr(id, show) {
+  const inp = document.getElementById(id.replace('err-', ''));
+  const err = document.getElementById(id);
+  if (inp) inp.classList.toggle('error', show);
+  if (err) err.classList.toggle('visible', show);
+}
+function clearErrs() {
+  document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('visible'));
+  document.querySelectorAll('input.error').forEach(e => e.classList.remove('error'));
+}
+
+// Convert to feet. dimType: 'small' = inches(imperial)/cm(metric), 'large' = feet(imperial)/meters(metric)
+function toFeet(val, dimType) {
+  if (unitSystem === 'imperial') {
+    if (dimType === 'small') return val / 12;
+    return val;
+  } else {
+    if (dimType === 'small') return val / 30.48;
+    return val * 3.28084;
+  }
+}
+
+function hideResults() {
+  const r = document.getElementById('results');
+  r.classList.remove('visible');
+  r.style.display = 'none';
+}
+
+function showResults(cy, cf, cm3, bags, tableRows) {
+  const r = document.getElementById('results');
+  document.getElementById('res-cy').textContent = fmt(cy);
+  document.getElementById('res-cf').textContent = fmt(cf);
+  document.getElementById('res-cm').textContent = fmt(cm3, 3);
+  document.getElementById('res-bags').textContent = fmtInt(bags);
+
+  let rowsHtml = '';
+  tableRows.forEach(row => { rowsHtml += `<tr><td>${row[0]}</td><td class="num">${row[1]}</td></tr>`; });
+  document.getElementById('resultTableBody').innerHTML = rowsHtml;
+
+  r.style.display = 'block';
+  requestAnimationFrame(() => r.classList.add('visible'));
+}
+
+function bagCuFt(bagSize) {
+  if (bagSize == 40) return 0.30;
+  if (bagSize == 60) return 0.45;
+  return 0.60;
+}
+
+// ---- MAIN CALCULATE ----
+function calculate() {
+  clearErrs();
+  const waste = parseFloat(wasteSlider.value) / 100;
+  const bagSize = parseInt(document.getElementById('bagSize').value);
+  const bagFt = bagCuFt(bagSize);
+  let volumeCF = 0;
+  let valid = true;
+  let tableRows = [];
+
+  if (currentShape === 'slab') {
+    const l = getVal('slab-length');
+    const w = getVal('slab-width');
+    const d = getVal('slab-depth');
+    if (!l || l <= 0) { showErr('err-slab-length', true); valid = false; }
+    if (!w || w <= 0) { showErr('err-slab-width', true); valid = false; }
+    if (!d || d <= 0) { showErr('err-slab-depth', true); valid = false; }
+    if (!valid) return;
+
+    const lFt = toFeet(l, 'large');
+    const wFt = toFeet(w, 'large');
+    const dFt = toFeet(d, 'small');
+    volumeCF = lFt * wFt * dFt;
+
+    const dimL = unitSystem === 'imperial' ? `${l} ft` : `${l} m`;
+    const dimW = unitSystem === 'imperial' ? `${w} ft` : `${w} m`;
+    const dimD = unitSystem === 'imperial' ? `${d} in` : `${d} cm`;
+    tableRows = [
+      ['Shape', 'Rectangular Slab'],
+      ['Length', dimL],
+      ['Width', dimW],
+      ['Thickness', dimD],
+      ['Raw Volume (ft³)', fmt(volumeCF)],
+    ];
+    setSvgText('svg-box-dim1', `Length: ${dimL}`);
+    setSvgText('svg-box-dim2', `Width: ${dimW}`);
+    setSvgText('svg-box-dim3', `Thickness: ${dimD}`);
+  }
+
+  else if (currentShape === 'footing') {
+    const l = getVal('foot-length');
+    const w = getVal('foot-width');
+    const d = getVal('foot-depth');
+    const cnt = parseInt(document.getElementById('foot-count').value) || 1;
+    if (!l || l <= 0) { showErr('err-foot-length', true); valid = false; }
+    if (!w || w <= 0) { showErr('err-foot-width', true); valid = false; }
+    if (!d || d <= 0) { showErr('err-foot-depth', true); valid = false; }
+    if (!valid) return;
+
+    const lFt = toFeet(l, 'large');
+    const wFt = toFeet(w, 'small');
+    const dFt = toFeet(d, 'small');
+    volumeCF = lFt * wFt * dFt * cnt;
+
+    const dimL = unitSystem === 'imperial' ? `${l} ft` : `${l} m`;
+    const dimW = unitSystem === 'imperial' ? `${w} in` : `${w} cm`;
+    const dimD = unitSystem === 'imperial' ? `${d} in` : `${d} cm`;
+    tableRows = [
+      ['Shape', 'Footing / Wall'],
+      ['Length', dimL],
+      ['Width', dimW],
+      ['Depth', dimD],
+      ['Count', cnt],
+      ['Raw Volume (ft³)', fmt(volumeCF)],
+    ];
+    setSvgText('svg-box-dim1', `Length: ${dimL}`);
+    setSvgText('svg-box-dim2', `Width: ${dimW}`);
+    setSvgText('svg-box-dim3', `Depth: ${dimD}`);
+  }
+
+  else if (currentShape === 'column') {
+    const cw = getVal('col-width');
+    const cd = getVal('col-depth-dim');
+    const ch = getVal('col-height');
+    const cnt = parseInt(document.getElementById('col-count').value) || 1;
+    if (!cw || cw <= 0) { showErr('err-col-width', true); valid = false; }
+    if (!cd || cd <= 0) { showErr('err-col-depth-dim', true); valid = false; }
+    if (!ch || ch <= 0) { showErr('err-col-height', true); valid = false; }
+    if (!valid) return;
+
+    const cwFt = toFeet(cw, 'small');
+    const cdFt = toFeet(cd, 'small');
+    const chFt = toFeet(ch, 'large');
+    volumeCF = cwFt * cdFt * chFt * cnt;
+
+    const dimW = unitSystem === 'imperial' ? `${cw} in` : `${cw} cm`;
+    const dimD = unitSystem === 'imperial' ? `${cd} in` : `${cd} cm`;
+    const dimH = unitSystem === 'imperial' ? `${ch} ft` : `${ch} m`;
+    tableRows = [
+      ['Shape', 'Rectangular Column'],
+      ['Width', dimW],
+      ['Depth', dimD],
+      ['Height', dimH],
+      ['Count', cnt],
+      ['Raw Volume (ft³)', fmt(volumeCF)],
+    ];
+    setSvgText('svg-box-dim1', `Width: ${dimW}`);
+    setSvgText('svg-box-dim2', `Depth: ${dimD}`);
+    setSvgText('svg-box-dim3', `Height: ${dimH}`);
+  }
+
+  else if (currentShape === 'tube') {
+    const dia = getVal('tube-diameter');
+    const dep = getVal('tube-depth');
+    const cnt = parseInt(document.getElementById('tube-count').value) || 1;
+    if (!dia || dia <= 0) { showErr('err-tube-diameter', true); valid = false; }
+    if (!dep || dep <= 0) { showErr('err-tube-depth', true); valid = false; }
+    if (!valid) return;
+
+    const rFt = toFeet(dia / 2, 'small');
+    const depFt = toFeet(dep, 'large');
+    volumeCF = Math.PI * rFt * rFt * depFt * cnt;
+
+    const dimDia = unitSystem === 'imperial' ? `${dia} in` : `${dia} cm`;
+    const dimDep = unitSystem === 'imperial' ? `${dep} ft` : `${dep} m`;
+    tableRows = [
+      ['Shape', 'Cylindrical Tube / Pier'],
+      ['Diameter', dimDia],
+      ['Depth / Height', dimDep],
+      ['Count', cnt],
+      ['Raw Volume (ft³)', fmt(volumeCF)],
+    ];
+    setSvgText('svg-tube-dim1', `Diameter: ${dimDia}`);
+    setSvgText('svg-tube-dim2', `Depth: ${dimDep}`);
+  }
+
+  else if (currentShape === 'stairs') {
+    const rise = getVal('stair-rise');
+    const run = getVal('stair-run');
+    const sw = getVal('stair-width');
+    const steps = parseInt(document.getElementById('stair-count').value);
+    const solid = document.getElementById('stair-solid').checked;
+    if (!rise || rise <= 0) { showErr('err-stair-rise', true); valid = false; }
+    if (!run || run <= 0) { showErr('err-stair-run', true); valid = false; }
+    if (!sw || sw <= 0) { showErr('err-stair-width', true); valid = false; }
+    if (!steps || steps < 1) { showErr('err-stair-count', true); valid = false; }
+    if (!valid) return;
+
+    const riseFt = toFeet(rise, 'small');
+    const runFt = toFeet(run, 'small');
+    const swFt = toFeet(sw, 'large');
+
+    if (solid) {
+      volumeCF = riseFt * runFt * swFt * (steps * (steps + 1) / 2);
+    } else {
+      volumeCF = 0.5 * steps * riseFt * runFt * swFt;
+    }
+
+    const dimR = unitSystem === 'imperial' ? `${rise} in` : `${rise} cm`;
+    const dimRun = unitSystem === 'imperial' ? `${run} in` : `${run} cm`;
+    const dimW = unitSystem === 'imperial' ? `${sw} ft` : `${sw} m`;
+    tableRows = [
+      ['Shape', 'Concrete Stairs'],
+      ['Calculation Method', solid ? 'Solid, poured to grade' : 'Tread wedge (stringer-supported)'],
+      ['Rise per step', dimR],
+      ['Run per step', dimRun],
+      ['Width', dimW],
+      ['Number of steps', steps],
+      ['Raw Volume (ft³)', fmt(volumeCF)],
+    ];
+    setSvgText('svg-stairs-dim1', `Rise: ${dimR}`);
+    setSvgText('svg-stairs-dim2', `Run: ${dimRun}`);
+    setSvgText('svg-stairs-dim3', `Width: ${dimW} × ${steps} steps`);
+  }
+
+  if (volumeCF <= 0) return;
+
+  const volumeCFWaste = volumeCF * (1 + waste);
+  const volumeCY = volumeCFWaste / 27;
+  const volumeCM3 = volumeCFWaste * 0.0283168;
+  const bagsNeeded = volumeCFWaste / bagFt;
+
+  tableRows.push(['Waste Factor', wasteSlider.value + '%']);
+  tableRows.push(['Volume with Waste (ft³)', fmt(volumeCFWaste)]);
+  tableRows.push(['Volume with Waste (cu yd)', fmt(volumeCY)]);
+  tableRows.push(['Volume with Waste (m³)', fmt(volumeCM3, 3)]);
+  tableRows.push([`Bags Needed (${bagSize} lb)`, fmtInt(bagsNeeded)]);
+  tableRows.push(['Bag Coverage', `${bagFt} ft³ per bag`]);
+
+  requestAnimationFrame(() => { showResults(volumeCY, volumeCFWaste, volumeCM3, bagsNeeded, tableRows); });
+}
+
+// ---- Copy Button ----
+document.getElementById('copyBtn').addEventListener('click', () => {
+  const rows = document.querySelectorAll('#resultTableBody tr');
+  let text = 'Concrete Volume Calculator Results\n';
+  text += '====================================\n';
+  rows.forEach(row => {
+    const cells = row.querySelectorAll('td');
+    text += `${cells[0].textContent}: ${cells[1].textContent}\n`;
+  });
+  text += `\nSource: https://toolwick.com/concrete-volume-calculator/`;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy Results', 2000);
+  }).catch(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '❌ Failed';
+    setTimeout(() => btn.textContent = '📋 Copy Results', 2000);
+  });
+});
+
+// Init
+updateUnitLabels();
+switchDiagram(currentShape);
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>

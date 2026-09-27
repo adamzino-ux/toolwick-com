@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free HVAC Ventilation CFM Room Air Changes Calculator | Toolwick</title>
+<meta name="description" content="Free CFM ventilation calculator for any room. Get required airflow, air changes per hour (ACH), and ASHRAE 62.1-style occupancy-based CFM estimates instantly.">
+<link rel="canonical" href="https://toolwick.com/hvac-ventilation-cfm-air-changes-calculator/">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #1a1a2e; font-size: 16px; line-height: 1.6; }
+a { color: #0077b6; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { border-bottom: 1px solid #e0e0e0; padding: 12px 1.5rem; }
+nav a { font-weight: 600; font-size: 1rem; color: #1a1a2e; }
+.container { max-width: 640px; margin: 0 auto; padding: 1.5rem; }
+h1 { font-size: 1.5rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.5rem; }
+.subtitle { color: #555; font-size: 0.95rem; margin-bottom: 1.5rem; }
+.card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 2rem; }
+.diagram-wrap { margin-bottom: 1.5rem; overflow: hidden; border-radius: 8px; border: 1px solid #e0e0e0; background: #f8f9fa; }
+svg.room-diagram { width: 100%; height: auto; display: block; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 520px) { .form-grid { grid-template-columns: 1fr; } }
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+.form-group.full { grid-column: 1 / -1; }
+label { font-size: 0.85rem; font-weight: 500; color: #444; }
+input, select { width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; color: #1a1a2e; background: #fff; min-height: 44px; transition: border-color 0.2s, box-shadow 0.2s; }
+input:focus, select:focus { outline: none; border-color: #0077b6; box-shadow: 0 0 0 3px rgba(0,119,182,0.15); }
+input.error { border-color: #e74c3c; }
+.error-msg { font-size: 0.78rem; color: #e74c3c; margin-top: 2px; display: none; }
+.error-msg.show { display: block; }
+.slider-row { display: flex; align-items: center; gap: 10px; }
+input[type="range"] { flex: 1; padding: 0; border: none; box-shadow: none; min-height: 32px; accent-color: #0077b6; }
+input[type="range"]:focus { box-shadow: none; }
+.slider-val { font-size: 0.9rem; font-weight: 600; color: #0077b6; min-width: 40px; text-align: right; }
+.btn { background: #0077b6; color: #fff; border: none; padding: 12px 24px; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; min-height: 44px; margin-top: 1rem; transition: background 0.2s; }
+.btn:hover { background: #006299; }
+.btn-secondary { background: #f0f0f0; color: #1a1a2e; border: 1px solid #ddd; padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; min-height: 36px; transition: background 0.2s; }
+.btn-secondary:hover { background: #e0e0e0; }
+.results { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+.results.visible { opacity: 1; pointer-events: auto; }
+.result-hero { background: #f0f7ff; border: 1px solid #b3d9f2; border-radius: 8px; padding: 1.5rem; text-align: center; margin-bottom: 1.5rem; }
+.result-hero .big-num { font-size: 3rem; font-weight: 700; color: #0077b6; line-height: 1; }
+.result-hero .big-label { font-size: 0.9rem; color: #555; margin-top: 4px; }
+.result-hero2 { background: #fff8ec; border: 1px solid #f0d9ae; border-radius: 8px; padding: 1.1rem; text-align: center; margin-bottom: 1.5rem; }
+.result-hero2 .mid-num { font-size: 1.9rem; font-weight: 700; color: #b8720a; line-height: 1; }
+.result-hero2 .mid-label { font-size: 0.85rem; color: #555; margin-top: 4px; }
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+@media (max-width: 480px) { .result-grid { grid-template-columns: 1fr; } }
+.stat-box { background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1rem; text-align: center; }
+.stat-box .stat-num { font-size: 1.5rem; font-weight: 700; color: #0077b6; }
+.stat-box .stat-label { font-size: 0.76rem; color: #666; margin-top: 2px; }
+.section-title { font-size: 1rem; font-weight: 600; color: #1a1a2e; margin-bottom: 0.75rem; }
+.note { font-size: 0.78rem; color: #666; margin: -0.5rem 0 1.5rem; }
+.table-wrap { overflow-x: auto; margin-bottom: 1.5rem; }
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+thead tr { background: #f0f0f0; }
+th { padding: 10px 12px; text-align: left; font-weight: 600; color: #444; font-size: 0.82rem; white-space: nowrap; }
+td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; }
+tr:nth-child(even) td { background: #fafafa; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.status-ok { color: #28a745; font-weight: 600; }
+.status-warn { color: #e67e22; font-weight: 600; }
+.status-bad { color: #e74c3c; font-weight: 600; }
+.copy-row { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+.bar-section { margin-bottom: 1.5rem; }
+.bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 0.82rem; }
+.bar-label { min-width: 110px; color: #444; }
+.bar-track { flex: 1; background: #e0e0e0; border-radius: 4px; height: 14px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; background: #0077b6; transition: width 0.4s ease; }
+.bar-fill.over { background: #e74c3c; }
+.bar-fill.warn { background: #e67e22; }
+.bar-val { min-width: 52px; text-align: right; font-weight: 600; color: #0077b6; font-size: 0.82rem; }
+.ad-slot { min-height: 0; margin: 0; }
+section.content h2 { font-size: 1.15rem; font-weight: 700; color: #1a1a2e; margin: 1.8rem 0 0.6rem; }
+section.content p { margin-bottom: 0.9rem; color: #333; font-size: 0.95rem; }
+section.content ul { padding-left: 1.4rem; margin-bottom: 0.9rem; }
+section.content ul li { margin-bottom: 0.4rem; font-size: 0.95rem; color: #333; }
+details { border: 1px solid #e0e0e0; border-radius: 6px; margin-bottom: 0.5rem; padding: 0; }
+summary { padding: 12px 16px; cursor: pointer; font-weight: 600; font-size: 0.92rem; list-style: none; user-select: none; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: '+ '; color: #0077b6; }
+details[open] summary::before { content: '− '; }
+details p { padding: 0 16px 12px; font-size: 0.9rem; color: #444; }
+.related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.75rem; }
+@media (max-width: 480px) { .related-grid { grid-template-columns: 1fr; } }
+.related-card { background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 0.75rem 1rem; font-size: 0.88rem; font-weight: 500; color: #0077b6; display: block; }
+.related-card:hover { background: #e8f4fb; text-decoration: none; }
+footer { background: #f8f9fa; border-top: 1px solid #e0e0e0; padding: 1.5rem; text-align: center; font-size: 0.82rem; color: #666; margin-top: 3rem; }
+footer a { color: #666; margin: 0 8px; }
+footer a:hover { color: #0077b6; }
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/hvac-ventilation-cfm-air-changes-calculator/">
+<meta property="og:title" content="HVAC Ventilation CFM Room Air Changes Calculator">
+<meta property="og:description" content="Free CFM ventilation calculator for any room. Get required airflow, air changes per hour (ACH), and ASHRAE 62.1-style occupancy-based CFM estimates instantly.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+
+<nav>
+  <div class="container" style="padding-top:0;padding-bottom:0;">
+    <a href="/">toolwick.com</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>HVAC Ventilation CFM &amp; Air Changes Calculator</h1>
+  <p class="subtitle">A free <strong>cfm ventilation calculator for room</strong> sizing — get required CFM airflow, air changes per hour (ACH), and an ASHRAE 62.1-style occupancy check for any space.</p>
+
+  <div class="card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg class="room-diagram" viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" aria-label="Room ventilation diagram">
+        <rect x="60" y="30" width="280" height="140" fill="#f0f7ff" stroke="#0077b6" stroke-width="2" rx="2"/>
+        <rect x="155" y="18" width="90" height="22" fill="#0077b6" rx="3"/>
+        <text x="200" y="33" text-anchor="middle" fill="#fff" font-size="11" font-family="sans-serif" font-weight="600">Supply Air</text>
+        <line x1="180" y1="40" x2="180" y2="60" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <polygon points="180,62 176,55 184,55" fill="#0077b6"/>
+        <line x1="220" y1="40" x2="220" y2="60" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <polygon points="220,62 216,55 224,55" fill="#0077b6"/>
+        <rect x="95" y="152" width="60" height="18" fill="#e0e0e0" stroke="#aaa" stroke-width="1.5" rx="2"/>
+        <text x="125" y="164" text-anchor="middle" fill="#555" font-size="10" font-family="sans-serif">Return</text>
+        <line x1="60" y1="185" x2="340" y2="185" stroke="#1a1a2e" stroke-width="1.2"/>
+        <polygon points="60,185 67,182 67,188" fill="#1a1a2e"/>
+        <polygon points="340,185 333,182 333,188" fill="#1a1a2e"/>
+        <text id="svg-width" x="200" y="198" text-anchor="middle" fill="#1a1a2e" font-size="11" font-family="sans-serif">Width (ft)</text>
+        <line x1="18" y1="30" x2="18" y2="170" stroke="#1a1a2e" stroke-width="1.2"/>
+        <polygon points="18,30 15,37 21,37" fill="#1a1a2e"/>
+        <polygon points="18,170 15,163 21,163" fill="#1a1a2e"/>
+        <text id="svg-height" x="14" y="108" text-anchor="middle" fill="#1a1a2e" font-size="11" font-family="sans-serif" transform="rotate(-90,14,108)">Height (ft)</text>
+        <text id="svg-length" x="200" y="10" text-anchor="middle" fill="#1a1a2e" font-size="11" font-family="sans-serif">Length (ft)</text>
+        <text id="svg-cfm" x="280" y="95" text-anchor="middle" fill="#0077b6" font-size="13" font-family="sans-serif" font-weight="700">CFM = ?</text>
+        <text id="svg-ach" x="280" y="115" text-anchor="middle" fill="#555" font-size="11" font-family="sans-serif">ACH = ?</text>
+        <text id="svg-vol" x="280" y="132" text-anchor="middle" fill="#888" font-size="10" font-family="sans-serif">Volume = ? ft³</text>
+        <text id="svg-room" x="145" y="80" text-anchor="middle" fill="#1a1a2e" font-size="10" font-family="sans-serif">Room</text>
+        <circle cx="145" cy="105" r="20" fill="none" stroke="#0077b6" stroke-width="1.2" stroke-dasharray="5,4" opacity="0.5"/>
+        <circle cx="145" cy="105" r="13" fill="none" stroke="#0077b6" stroke-width="1" stroke-dasharray="4,4" opacity="0.35"/>
+        <text x="375" y="58" fill="#444" font-size="10" font-family="sans-serif">CFM = (Vol × ACH)</text>
+        <text x="375" y="73" fill="#444" font-size="10" font-family="sans-serif">         ÷ 60</text>
+        <line x1="370" y1="50" x2="345" y2="80" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="375" y="110" fill="#444" font-size="10" font-family="sans-serif">ACH = (CFM × 60)</text>
+        <text x="375" y="125" fill="#444" font-size="10" font-family="sans-serif">          ÷ Volume</text>
+        <line x1="370" y1="104" x2="345" y2="115" stroke="#e0e0e0" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <!-- Inputs -->
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="roomLength">Room Length (ft)</label>
+        <input type="number" id="roomLength" placeholder="e.g. 15" min="1" max="500" step="0.5">
+        <span class="error-msg" id="err-length">Enter a valid length (1–500 ft)</span>
+      </div>
+      <div class="form-group">
+        <label for="roomWidth">Room Width (ft)</label>
+        <input type="number" id="roomWidth" placeholder="e.g. 12" min="1" max="500" step="0.5">
+        <span class="error-msg" id="err-width">Enter a valid width (1–500 ft)</span>
+      </div>
+      <div class="form-group">
+        <label for="roomHeight">Ceiling Height (ft)</label>
+        <input type="number" id="roomHeight" placeholder="e.g. 9" min="4" max="40" step="0.5">
+        <span class="error-msg" id="err-height">Enter a valid height (4–40 ft)</span>
+      </div>
+      <div class="form-group">
+        <label for="roomType">Room Type</label>
+        <select id="roomType">
+          <option value="bedroom">Bedroom</option>
+          <option value="living">Living Room / Family Room</option>
+          <option value="kitchen">Kitchen</option>
+          <option value="bathroom">Bathroom</option>
+          <option value="office">Office / Study</option>
+          <option value="conference">Conference Room</option>
+          <option value="gym">Gym / Exercise Room</option>
+          <option value="garage">Garage</option>
+          <option value="server">Server / IT Room</option>
+          <option value="custom">Custom ACH</option>
+        </select>
+      </div>
+      <div class="form-group full" id="customACHGroup" style="display:none;">
+        <label for="customACH">Custom ACH (Air Changes per Hour)</label>
+        <div class="slider-row">
+          <input type="range" id="achSlider" min="0.5" max="120" step="0.5" value="6">
+          <span class="slider-val" id="achSliderVal">6</span>
+        </div>
+        <input type="number" id="customACH" placeholder="e.g. 6" min="0.5" max="120" step="0.5" style="margin-top:8px;">
+        <span class="error-msg" id="err-ach">ACH must be between 0.5 and 120</span>
+      </div>
+      <div class="form-group">
+        <label for="occupants">Number of Occupants</label>
+        <input type="number" id="occupants" placeholder="e.g. 2" min="0" max="500" step="1" value="2">
+        <span class="error-msg" id="err-occ">Enter 0–500 occupants</span>
+      </div>
+      <div class="form-group">
+        <label for="calcMode">Calculate From</label>
+        <select id="calcMode">
+          <option value="ach">Known ACH → Find CFM</option>
+          <option value="cfm">Known CFM → Find ACH</option>
+        </select>
+      </div>
+      <div class="form-group full" id="knownCFMGroup" style="display:none;">
+        <label for="knownCFM">Known CFM (airflow)</label>
+        <input type="number" id="knownCFM" placeholder="e.g. 150" min="1" max="100000" step="1">
+        <span class="error-msg" id="err-cfm">Enter a valid CFM value (1–100,000)</span>
+      </div>
+    </div>
+
+    <button class="btn" id="calcBtn">Calculate CFM &amp; Air Changes</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+  </div>
+
+  <!-- Results -->
+  <div class="card results" id="results">
+    <div class="copy-row">
+      <button class="btn-secondary" id="copyBtn">📋 Copy Results</button>
+    </div>
+
+    <div class="result-hero">
+      <div class="big-num" id="res-cfm">—</div>
+      <div class="big-label">ACH-Based CFM (Cubic Feet per Minute)</div>
+    </div>
+
+    <div class="result-hero2">
+      <div class="mid-num" id="res-recommended">—</div>
+      <div class="mid-label">Recommended Design CFM (higher of ACH-based vs. Rp+Ra occupancy-based)</div>
+    </div>
+
+    <div class="result-grid">
+      <div class="stat-box">
+        <div class="stat-num" id="res-ach">—</div>
+        <div class="stat-label">Air Changes per Hour (ACH)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="res-vol">—</div>
+        <div class="stat-label">Room Volume (ft³)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="res-cfm-occ">—</div>
+        <div class="stat-label">ACH-Based CFM per Occupant</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="res-cycle">—</div>
+        <div class="stat-label">Minutes per Full Air Change</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="res-rpra">—</div>
+        <div class="stat-label">Rp+Ra Occupancy CFM (62.1-style)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="res-area">—</div>
+        <div class="stat-label">Floor Area (ft²)</div>
+      </div>
+    </div>
+
+    <div class="bar-section">
+      <div class="section-title">Your ACH vs. Common Rule-of-Thumb Ranges</div>
+      <div id="bar-container"></div>
+      <div class="note">Ranges below are common HVAC design/rule-of-thumb air-change rates used for equipment sizing — not universal code minimums. Actual code requirements vary by jurisdiction.</div>
+    </div>
+
+    <div class="section-title">Rule-of-Thumb ACH Reference Table</div>
+    <div class="table-wrap">
+      <table id="ref-table">
+        <thead>
+          <tr>
+            <th>Room / Space Type</th>
+            <th class="num">Min ACH</th>
+            <th class="num">Typical ACH</th>
+            <th class="num">Max ACH</th>
+            <th class="num">Your CFM</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="ref-tbody"></tbody>
+      </table>
+    </div>
+    <div class="note">These are commonly used design guideline figures, not a specific ASHRAE per-room mandate. ASHRAE 62.2 covers whole-dwelling mechanical ventilation as a separate, house-wide calculation.</div>
+
+    <div class="section-title">Occupancy-Based Sizing (ASHRAE 62.1-style Rp + Ra Estimate)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Input</th><th class="num">Value</th></tr></thead>
+        <tbody id="rpra-tbody"></tbody>
+      </table>
+    </div>
+    <div class="note">Rp (cfm/person) and Ra (cfm/ft²) are simplified representative values loosely based on ASHRAE 62.1 Table 6.2.2.1 categories, for illustration only — full code compliance requires consulting the current standard.</div>
+
+    <div class="section-title">CFM Sizing Scenarios</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th class="num">ACH</th>
+            <th class="num">CFM Required</th>
+            <th class="num">CFM / Occupant</th>
+          </tr>
+        </thead>
+        <tbody id="scenario-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<!-- Content -->
+  <section class="content">
+    <h2>How to Use This CFM Ventilation Calculator for Room Sizing</h2>
+    <p>Enter your room's length, width, and ceiling height in feet, then select a room type (or enter a custom ACH). Choose whether you want to calculate required CFM from a target ACH, or find out what ACH your existing system delivers, add occupant count, and hit <strong>Calculate</strong>. This <strong>cfm ventilation calculator for room</strong> planning returns CFM, ACH, room volume, an ASHRAE 62.1-style occupancy check, and a recommended design airflow.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Proper ventilation is one of the most overlooked aspects of home and building comfort — yet it directly affects air quality, humidity control, energy efficiency, and occupant health. Too little airflow and CO₂, moisture, and odors build up; too much airflow wastes energy conditioning air you just pushed back outside.</p>
+    <p>Consider a 15×12×9 ft bedroom (1,620 ft³). A common HVAC rule-of-thumb design rate for bedrooms is around 3 ACH, which works out to roughly 81 CFM. A bathroom of the same size sized at 10 ACH for moisture control needs about 270 CFM. A gym sized to 15 ACH needs 405 CFM. These aren't trivial differences — undersizing a bathroom exhaust fan can lead to persistent condensation and mold issues within a year or two.</p>
+    <p>HVAC contractors, architects, building inspectors, homeowners doing DIY work, and facility managers all use CFM and ACH calculations daily. This tool covers common residential and commercial scenarios, including offices, kitchens, and server rooms.</p>
+
+    <h2>How It's Calculated</h2>
+    <p>The core airflow formulas are straightforward:</p>
+    <ul>
+      <li><strong>Room Volume (ft³)</strong> = Length × Width × Height</li>
+      <li><strong>CFM from ACH:</strong> CFM = (Volume × ACH) ÷ 60</li>
+      <li><strong>ACH from CFM:</strong> ACH = (CFM × 60) ÷ Volume</li>
+      <li><strong>Minutes per Air Change:</strong> Volume ÷ CFM</li>
+    </ul>
+    <p>ACH tells you how many times a room's air volume is fully replaced each hour. This is a useful rule-of-thumb metric for sizing supply/exhaust airflow, but it isn't the only way ventilation is calculated. ASHRAE Standard 62.1 (commercial buildings) instead sizes minimum outdoor air using two components — a per-person rate (Rp, in cfm/person) and a per-area rate (Ra, in cfm/ft² of floor area):</p>
+    <ul>
+      <li><strong>Occupancy-based CFM (62.1-style):</strong> CFM = (Rp × Occupants) + (Ra × Floor Area)</li>
+    </ul>
+    <p>Typical illustrative values range from about 5 cfm/person + 0.06 cfm/ft² for offices and conference rooms, up to 20 cfm/person for exercise rooms. This is separate from ASHRAE 62.2, which sets a whole-dwelling continuous mechanical ventilation rate for entire homes (based on total floor area and bedroom count) — not a per-room figure. Because ACH-based and occupancy-based methods answer different questions, this calculator computes both and reports the larger of the two as a practical recommended design CFM, which is a common approach used by HVAC designers to satisfy both moisture/odor control and occupant fresh-air needs.</p>
+
+    <h2>Worked Example</h2>
+    <p>Say you have a 15 ft × 12 ft office with a 9 ft ceiling, occupied by 4 people, and you select "Office / Study" with the typical 6 ACH design rate:</p>
+    <ul>
+      <li>Volume = 15 × 12 × 9 = 1,620 ft³</li>
+      <li>ACH-based CFM = (1,620 × 6) ÷ 60 = 162 CFM</li>
+      <li>Floor area = 15 × 12 = 180 ft²</li>
+      <li>Occupancy-based CFM (Rp 5 + Ra 0.06) = (5 × 4) + (0.06 × 180) = 20 + 10.8 = 30.8 CFM</li>
+      <li>Recommended design CFM = max(162, 30.8) = <strong>162 CFM</strong></li>
+    </ul>
+    <p>In this example the ACH-based figure dominates because the room is small relative to occupancy — but in a large, lightly occupied conference room the occupancy-based number can sometimes be the larger of the two, which is exactly why the calculator checks both.</p>
+
+    <h2>Tips &amp; Common Mistakes</h2>
+    <ul>
+      <li><strong>Don't confuse supply CFM with exhaust CFM.</strong> For balanced ventilation, both should match. For bathrooms and kitchens, exhaust-only is common, but you need makeup air somewhere.</li>
+      <li><strong>Ceiling height changes everything.</strong> A 10-ft ceiling in the same footprint needs 25% more CFM than an 8-ft ceiling for the same ACH. Always measure actual ceiling height.</li>
+      <li><strong>Check both sizing methods.</strong> A room can pass an ACH-based check for moisture/odor control yet still fail an occupancy-based fresh-air check (or vice versa) — size equipment to the higher of the two figures.</li>
+      <li><strong>Duct losses matter.</strong> Real systems lose 20–30% of capacity to duct friction and leakage. Size your equipment 25–30% larger than the calculated minimum.</li>
+      <li><strong>Garages need real ventilation.</strong> Many building codes require attached/enclosed garages to be ventilated at roughly 4–6 ACH to dilute CO and exhaust fumes — verify your local code rather than relying on rule-of-thumb figures alone.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is a good ACH for a home?</summary>
+      <p>There's no single ASHRAE-mandated per-room ACH for houses — ASHRAE 62.2 specifies a whole-dwelling continuous mechanical ventilation rate based on total floor area and bedroom count, not a per-room number. For sizing individual room supply or exhaust airflow, HVAC professionals commonly use rule-of-thumb rates such as 2–4 ACH for bedrooms, 4–6 ACH for living rooms, and 8–15+ ACH for kitchens and bathrooms, which is what this calculator's reference table uses.</p>
+    </details>
+    <details>
+      <summary>What's the difference between CFM and ACH?</summary>
+      <p>CFM (Cubic Feet per Minute) is an absolute flow rate — how many cubic feet of air move through the system each minute. ACH (Air Changes per Hour) normalizes CFM to room volume, so you can compare ventilation adequacy across differently sized rooms. Use CFM for equipment sizing and ACH to judge whether a given airflow is adequate for a specific room.</p>
+    </details>
+    <details>
+      <summary>How many CFM do I need per person?</summary>
+      <p>ASHRAE 62.1 doesn't use one flat per-person number — it combines a per-person rate (Rp) with a per-area rate (Ra), so required airflow depends on both occupancy and floor area. Typical illustrative values are about 5 cfm/person plus 0.06 cfm per square foot for offices and conference rooms, rising to around 20 cfm/person for exercise spaces; this calculator estimates that combined Rp+Ra figure automatically based on your selected room type.</p>
+    </details>
+    <details>
+      <summary>Should I use the ACH-based CFM or the occupancy-based CFM?</summary>
+      <p>Use whichever is larger. ACH-based CFM is generally driven by moisture, odor, and heat load considerations, while occupancy-based (Rp+Ra) CFM is driven by fresh-air needs for the people in the room. This calculator computes both and displays a "Recommended Design CFM" equal to the higher of the two, which is standard practice among HVAC designers.</p>
+    </details>
+    <details>
+      <summary>Does the calculator account for duct losses?</summary>
+      <p>No — this tool gives you the theoretical airflow needed at the room level. In practice, duct systems lose 20–30% of capacity to friction, leaks, and fittings, so fans and HVAC units are typically oversized by at least 25% above the calculated CFM to ensure adequate delivered airflow at the grille.</p>
+    </details>
+    <details>
+      <summary>Are these ACH values official code requirements?</summary>
+      <p>No. The ACH ranges in this tool's reference table are widely used HVAC design rules of thumb for sizing supply and exhaust airflow, not universal building code mandates. Actual code-required ventilation rates vary by jurisdiction, occupancy type, and applicable mechanical code — always verify local requirements for code-compliance work.</p>
+    </details>
+  </section>
+
+  <section style="margin-top:2rem;">
+    <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:0.75rem;">Related Tools</h2>
+    <div class="related-grid">
+      <a class="related-card" href="/roof-attic-ventilation-calculator/">Roof Attic Ventilation Calculator</a>
+      <a class="related-card" href="/ceiling-texture-spray-compressor-calculator/">Ceiling Texture Hopper Gun Air Compressor Calculator</a>
+      <a class="related-card" href="/hvac-refrigerant-line-set-size-calculator/">HVAC Refrigerant Line Set Size Calculator</a>
+      <a class="related-card" href="/hvac-duct-size-calculator/">HVAC Duct Size Calculator</a>
+      <a class="related-card" href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a>
+      <a class="related-card" href="/deck-railing-baluster-spacing-calculator/">Deck Railing &amp; Baluster Spacing Calculator</a>
+    </div>
+  </section>
+
+  </div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/hvac-ventilation-cfm-air-changes-calculator/">Toolwick</a></p>
+
+<script>
+// Rule-of-thumb ACH ranges by room type (design guideline figures, not code mandates)
+const ACH_DATA = {
+  bedroom:    { min: 2,  typ: 3,  max: 4,  label: 'Bedroom' },
+  living:     { min: 4,  typ: 5,  max: 6,  label: 'Living Room' },
+  kitchen:    { min: 15, typ: 20, max: 25, label: 'Kitchen' },
+  bathroom:   { min: 8,  typ: 10, max: 12, label: 'Bathroom' },
+  office:     { min: 4,  typ: 6,  max: 8,  label: 'Office' },
+  conference: { min: 6,  typ: 8,  max: 10, label: 'Conference Room' },
+  gym:        { min: 8,  typ: 12, max: 15, label: 'Gym / Exercise Room' },
+  garage:     { min: 4,  typ: 6,  max: 8,  label: 'Garage' },
+  server:     { min: 20, typ: 30, max: 60, label: 'Server / IT Room' },
+  custom:     { min: null, typ: null, max: null, label: 'Custom' }
+};
+
+// Simplified illustrative Rp (cfm/person) + Ra (cfm/ft²) values, loosely modeled on ASHRAE 62.1 Table 6.2.2.1 categories
+const RPRA_DATA = {
+  bedroom:    { rp: 5,   ra: 0.06 },
+  living:     { rp: 5,   ra: 0.06 },
+  kitchen:    { rp: 7.5, ra: 0.12 },
+  bathroom:   { rp: 0,   ra: 0.06 },
+  office:     { rp: 5,   ra: 0.06 },
+  conference: { rp: 5,   ra: 0.06 },
+  gym:        { rp: 20,  ra: 0.06 },
+  garage:     { rp: 0,   ra: 0.15 },
+  server:     { rp: 0,   ra: 0.06 },
+  custom:     { rp: 5,   ra: 0.06 }
+};
+
+const ALL_ROOM_TYPES = Object.keys(ACH_DATA).filter(k => k !== 'custom').map(k => ({ key: k, ...ACH_DATA[k] }));
+
+function fmt(n, dec=1) {
+  if (n === null || isNaN(n)) return '—';
+  return Number(n.toFixed(dec)).toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+}
+function fmtI(n) {
+  if (n === null || isNaN(n)) return '—';
+  return Math.round(n).toLocaleString('en-US');
+}
+
+document.getElementById('roomType').addEventListener('change', function() {
+  const isCustom = this.value === 'custom';
+  document.getElementById('customACHGroup').style.display = isCustom ? 'block' : 'none';
+});
+document.getElementById('calcMode').addEventListener('change', function() {
+  const isKnown = this.value === 'cfm';
+  document.getElementById('knownCFMGroup').style.display = isKnown ? 'block' : 'none';
+});
+
+const achSlider = document.getElementById('achSlider');
+const customACH = document.getElementById('customACH');
+const achSliderVal = document.getElementById('achSliderVal');
+achSlider.addEventListener('input', function() {
+  achSliderVal.textContent = this.value;
+  customACH.value = this.value;
+});
+customACH.addEventListener('input', function() {
+  const v = parseFloat(this.value);
+  if (!isNaN(v) && v >= 0.5 && v <= 120) {
+    achSlider.value = v;
+    achSliderVal.textContent = v;
+  }
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') document.getElementById('calcBtn').click();
+});
+
+function clearErrors() {
+  ['err-length','err-width','err-height','err-ach','err-occ','err-cfm'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('show');
+  });
+  ['roomLength','roomWidth','roomHeight','customACH','occupants','knownCFM'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('error');
+  });
+}
+
+function showError(fieldId, msgId) {
+  document.getElementById(fieldId).classList.add('error');
+  document.getElementById(msgId).classList.add('show');
+}
+
+document.getElementById('calcBtn').addEventListener('click', () => {
+  requestAnimationFrame(() => { calculate(); });
+});
+
+function calculate() {
+  clearErrors();
+  let valid = true;
+
+  const length = parseFloat(document.getElementById('roomLength').value);
+  const width  = parseFloat(document.getElementById('roomWidth').value);
+  const height = parseFloat(document.getElementById('roomHeight').value);
+  const roomType = document.getElementById('roomType').value;
+  const calcMode = document.getElementById('calcMode').value;
+  const occupants = parseInt(document.getElementById('occupants').value) || 0;
+
+  if (isNaN(length) || length < 1 || length > 500) { showError('roomLength','err-length'); valid = false; }
+  if (isNaN(width) || width < 1 || width > 500) { showError('roomWidth','err-width'); valid = false; }
+  if (isNaN(height) || height < 4 || height > 40) { showError('roomHeight','err-height'); valid = false; }
+  if (occupants < 0 || occupants > 500) { showError('occupants','err-occ'); valid = false; }
+  if (!valid) return;
+
+  const volume = length * width * height;
+  const floorArea = length * width;
+  let cfm, ach;
+
+  if (calcMode === 'cfm') {
+    const knownCFM = parseFloat(document.getElementById('knownCFM').value);
+    if (isNaN(knownCFM) || knownCFM < 1 || knownCFM > 100000) {
+      showError('knownCFM','err-cfm'); return;
+    }
+    cfm = knownCFM;
+    ach = (cfm * 60) / volume;
+  } else {
+    let targetACH;
+    if (roomType === 'custom') {
+      targetACH = parseFloat(document.getElementById('customACH').value);
+      if (isNaN(targetACH) || targetACH < 0.5 || targetACH > 120) {
+        showError('customACH','err-ach'); return;
+      }
+    } else {
+      targetACH = ACH_DATA[roomType].typ;
+    }
+    ach = targetACH;
+    cfm = (volume * ach) / 60;
+  }
+
+  const cfmPerOcc = occupants > 0 ? cfm / occupants : null;
+  const minPerChange = volume / cfm;
+
+  const rpra = RPRA_DATA[roomType] || RPRA_DATA.custom;
+  const rpraCFM = (rpra.rp * occupants) + (rpra.ra * floorArea);
+  const recommendedCFM = Math.max(cfm, rpraCFM);
+
+  document.getElementById('svg-width').textContent = `Width: ${width} ft`;
+  document.getElementById('svg-height').textContent = `Height: ${height} ft`;
+  document.getElementById('svg-length').textContent = `Length: ${length} ft`;
+  document.getElementById('svg-cfm').textContent = `CFM = ${fmtI(cfm)}`;
+  document.getElementById('svg-ach').textContent = `ACH = ${fmt(ach,2)}`;
+  document.getElementById('svg-vol').textContent = `Volume = ${fmtI(volume)} ft³`;
+
+  const heroHTML = fmtI(cfm);
+  const recHTML = fmtI(recommendedCFM);
+  const achHTML  = fmt(ach, 2);
+  const volHTML  = fmtI(volume);
+  const cfmOccHTML = cfmPerOcc !== null ? fmt(cfmPerOcc, 1) : 'N/A';
+  const cycleHTML = fmt(minPerChange, 1);
+  const rpraHTML = fmtI(rpraCFM);
+  const areaHTML = fmtI(floorArea);
+
+  let tbodyRows = '';
+  ALL_ROOM_TYPES.forEach(rt => {
+    const rtCFMtyp = (volume * rt.typ) / 60;
+    let statusClass = '', statusLabel = '';
+    if (roomType === rt.key) {
+      if (cfm < (volume * rt.min) / 60) { statusClass = 'status-bad'; statusLabel = '⚠ Under'; }
+      else if (cfm > (volume * rt.max) / 60) { statusClass = 'status-warn'; statusLabel = '↑ Over'; }
+      else { statusClass = 'status-ok'; statusLabel = '✓ OK'; }
+    } else { statusLabel = '—'; }
+    const highlight = roomType === rt.key ? ' style="background:#f0f7ff;"' : '';
+    tbodyRows += `<tr${highlight}>
+      <td>${rt.label}</td>
+      <td class="num">${fmt(rt.min,1)}</td>
+      <td class="num">${fmt(rt.typ,1)}</td>
+      <td class="num">${fmt(rt.max,1)}</td>
+      <td class="num">${fmtI(rtCFMtyp)}</td>
+      <td class="${statusClass}">${roomType === rt.key ? statusLabel : '—'}</td>
+    </tr>`;
+  });
+
+  const rpraRows = `
+    <tr><td>Room Type</td><td class="num">${roomType === 'custom' ? 'Custom (generic estimate)' : ACH_DATA[roomType].label}</td></tr>
+    <tr><td>Per-Person Rate (Rp, cfm/person)</td><td class="num">${fmt(rpra.rp,2)}</td></tr>
+    <tr><td>Per-Area Rate (Ra, cfm/ft²)</td><td class="num">${fmt(rpra.ra,3)}</td></tr>
+    <tr><td>Occupants</td><td class="num">${occupants}</td></tr>
+    <tr><td>Floor Area (ft²)</td><td class="num">${fmtI(floorArea)}</td></tr>
+    <tr><td>Occupancy-Based CFM (Rp×People + Ra×Area)</td><td class="num">${fmtI(rpraCFM)}</td></tr>
+    <tr style="background:#f0f7ff;font-weight:600;"><td>ACH-Based CFM (for comparison)</td><td class="num">${fmtI(cfm)}</td></tr>
+    <tr style="background:#fff8ec;font-weight:600;"><td>Recommended Design CFM (higher of the two)</td><td class="num">${fmtI(recommendedCFM)}</td></tr>
+  `;
+
+  const scenarios = [
+    { label: 'Low (1 ACH)', achV: 1 },
+    { label: 'Moderate (2 ACH)', achV: 2 },
+    { label: 'Standard (4 ACH)', achV: 4 },
+    { label: 'Elevated (6 ACH)', achV: 6 },
+    { label: 'High (10 ACH)', achV: 10 },
+    { label: 'Intensive (15 ACH)', achV: 15 },
+    { label: 'Very High (20 ACH)', achV: 20 },
+    { label: 'Critical (30 ACH)', achV: 30 },
+    { label: `Your Selection (${fmt(ach,2)} ACH)`, achV: ach, highlight: true }
+  ];
+  let scenRows = '';
+  scenarios.forEach(s => {
+    const sCFM = (volume * s.achV) / 60;
+    const sCFMOcc = occupants > 0 ? sCFM / occupants : null;
+    const bg = s.highlight ? ' style="background:#f0f7ff;font-weight:600;"' : '';
+    scenRows += `<tr${bg}>
+      <td>${s.label}</td>
+      <td class="num">${fmt(s.achV,2)}</td>
+      <td class="num">${fmtI(sCFM)}</td>
+      <td class="num">${sCFMOcc !== null ? fmt(sCFMOcc,1) : '—'}</td>
+    </tr>`;
+  });
+
+  const maxACH = Math.max(ach * 1.4, 20);
+  const bars = [
+    { label: 'Your ACH', val: ach },
+    { label: 'Bedroom Typical', val: 3 },
+    { label: 'Living Rm Typical', val: 5 },
+    { label: 'Office Typical', val: 6 },
+    { label: 'Kitchen Typical', val: 20 },
+    { label: 'Bathroom Typical', val: 10 }
+  ];
+  let barsHTML = '';
+  bars.forEach(b => {
+    const pct = Math.min((b.val / maxACH) * 100, 100);
+    let cls = '';
+    if (b.label === 'Your ACH' && roomType !== 'custom') {
+      const d = ACH_DATA[roomType];
+      if (ach < d.min) cls = 'over';
+      else if (ach > d.max) cls = 'warn';
+    }
+    barsHTML += `<div class="bar-row">
+      <div class="bar-label">${b.label}</div>
+      <div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div>
+      <div class="bar-val">${fmt(b.val,2)}</div>
+    </div>`;
+  });
+
+  requestAnimationFrame(() => {
+    document.getElementById('res-cfm').textContent   = heroHTML;
+    document.getElementById('res-recommended').textContent = recHTML;
+    document.getElementById('res-ach').textContent   = achHTML;
+    document.getElementById('res-vol').textContent   = volHTML;
+    document.getElementById('res-cfm-occ').textContent = cfmOccHTML;
+    document.getElementById('res-cycle').textContent  = cycleHTML;
+    document.getElementById('res-rpra').textContent = rpraHTML;
+    document.getElementById('res-area').textContent = areaHTML;
+    document.getElementById('ref-tbody').innerHTML = tbodyRows;
+    document.getElementById('rpra-tbody').innerHTML = rpraRows;
+    document.getElementById('scenario-tbody').innerHTML = scenRows;
+    document.getElementById('bar-container').innerHTML = barsHTML;
+    document.getElementById('results').classList.add('visible');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+}
+
+document.getElementById('copyBtn').addEventListener('click', function() {
+  const cfm  = document.getElementById('res-cfm').textContent;
+  const rec  = document.getElementById('res-recommended').textContent;
+  const ach  = document.getElementById('res-ach').textContent;
+  const vol  = document.getElementById('res-vol').textContent;
+  const cyc  = document.getElementById('res-cycle').textContent;
+  const occ  = document.getElementById('res-cfm-occ').textContent;
+  const rpra = document.getElementById('res-rpra').textContent;
+  const area = document.getElementById('res-area').textContent;
+  const text = `HVAC Ventilation Results\n\nACH-Based CFM: ${cfm}\nRecommended Design CFM: ${rec}\nACH: ${ach}\nRoom Volume: ${vol} ft³\nFloor Area: ${area} ft²\nACH-Based CFM per Occupant: ${occ}\nOccupancy-Based CFM (Rp+Ra): ${rpra}\nMinutes per Air Change: ${cyc}\n\nCalculated at toolwick.com`;
+  navigator.clipboard.writeText(text).then(() => {
+    this.textContent = '✓ Copied!';
+    setTimeout(() => { this.textContent = '📋 Copy Results'; }, 2000);
+  }).catch(() => {
+    this.textContent = 'Copy failed';
+    setTimeout(() => { this.textContent = '📋 Copy Results'; }, 2000);
+  });
+});
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>

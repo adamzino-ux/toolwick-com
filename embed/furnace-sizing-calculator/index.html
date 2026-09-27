@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Furnace Sizing Calculator | Toolwick</title>
+<meta name="description" content="Free furnace size calculator. Enter square footage, climate zone, insulation and AFUE to find the right furnace BTU output for your home in seconds.">
+<link rel="canonical" href="https://toolwick.com/furnace-sizing-calculator/">
+<style>
+:root{--accent:#0077b6;--dark:#1a1a2e;--gray:#f8f9fa;}
+*{box-sizing:border-box;}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--dark);background:#fff;line-height:1.6;}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem;}
+nav{padding:1rem 1.5rem;border-bottom:1px solid #eee;}
+nav a{color:var(--accent);font-weight:700;text-decoration:none;font-size:1.1rem;}
+h1{font-size:1.6rem;margin:1.5rem 0 0.5rem;}
+h2{font-size:1.25rem;margin-top:2rem;color:var(--dark);}
+p{color:#333;}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 6px rgba(0,0,0,0.05);margin:1.5rem 0;}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:0.3rem;margin-top:1rem;}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;min-height:44px;}
+input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,119,182,0.15);}
+.error{color:#e74c3c;font-size:0.8rem;margin-top:0.3rem;display:none;}
+.error.show{display:block;}
+input.invalid{border-color:#e74c3c;}
+button.calc{width:100%;background:var(--accent);color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;margin-top:1.5rem;cursor:pointer;min-height:44px;}
+button.calc:hover{background:#006299;}
+.results{opacity:0;transition:opacity 0.3s ease;margin-top:1.5rem;}
+.results.show{opacity:1;}
+.bignum{font-size:2.2rem;font-weight:700;color:var(--accent);margin:0.3rem 0;}
+.sub{color:#555;font-size:0.95rem;}
+table{width:100%;border-collapse:collapse;margin-top:1rem;font-size:0.9rem;}
+th,td{padding:8px 10px;border-bottom:1px solid #eee;text-align:right;}
+th:first-child,td:first-child{text-align:left;}
+thead th{background:#f0f0f0;}
+tbody tr:nth-child(even){background:#fafafa;}
+.tablewrap{overflow-x:auto;}
+.copybtn{background:none;border:1px solid #ddd;color:var(--accent);padding:6px 12px;border-radius:6px;font-size:0.8rem;cursor:pointer;margin-top:1rem;min-height:36px;}
+.copybtn:hover{background:var(--gray);}
+.ad-slot{min-height:0;margin:0;}
+.diagram{background:var(--gray);border-radius:8px;padding:1rem;margin-bottom:1rem;}
+svg{width:100%;height:auto;display:block;}
+details{background:var(--gray);border-radius:6px;padding:0.8rem 1rem;margin-bottom:0.7rem;}
+summary{font-weight:600;cursor:pointer;}
+.related a{display:block;color:var(--accent);text-decoration:none;padding:0.4rem 0;border-bottom:1px solid #eee;}
+footer{border-top:1px solid #eee;padding:1.5rem;text-align:center;font-size:0.85rem;color:#666;margin-top:2rem;}
+footer a{color:var(--accent);text-decoration:none;margin:0 0.4rem;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+@media(max-width:480px){.grid2{grid-template-columns:1fr;}.bignum{font-size:1.8rem;}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/furnace-sizing-calculator/">
+<meta property="og:title" content="Furnace Sizing Calculator">
+<meta property="og:description" content="Free furnace size calculator. Enter square footage, climate zone, insulation and AFUE to find the right furnace BTU output for your home in seconds.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><a href="/">Toolwick</a></nav>
+<div class="wrap">
+
+<h1>Furnace Sizing Calculator</h1>
+<p>Use this free <strong>furnace size calculator</strong> to estimate the right furnace BTU output for your home based on square footage, climate zone, insulation quality, ceiling height, and furnace efficiency (AFUE).</p>
+
+<div class="card">
+  <div class="diagram">
+    <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="60,140 200,60 340,140" fill="none" stroke="#0077b6" stroke-width="3"/>
+      <rect x="60" y="140" width="280" height="60" fill="none" stroke="#0077b6" stroke-width="3"/>
+      <line x1="60" y1="210" x2="340" y2="210" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4"/>
+      <text id="svgSqft" x="200" y="180" text-anchor="middle" font-size="14" fill="#1a1a2e" font-weight="600">1,600 sq ft</text>
+      <line x1="45" y1="140" x2="45" y2="200" stroke="#e0e0e0" stroke-width="1"/>
+      <line x1="40" y1="140" x2="50" y2="140" stroke="#1a1a2e" stroke-width="1"/>
+      <line x1="40" y1="200" x2="50" y2="200" stroke="#1a1a2e" stroke-width="1"/>
+      <text id="svgHeight" x="20" y="172" text-anchor="middle" font-size="11" fill="#1a1a2e" transform="rotate(-90 20 172)">8 ft ceiling</text>
+      <rect x="170" y="192" width="60" height="20" fill="#1a1a2e"/>
+      <text x="200" y="206" text-anchor="middle" font-size="10" fill="#fff">FURNACE</text>
+      <line x1="200" y1="192" x2="200" y2="150" stroke="#0077b6" stroke-width="2" marker-end="url(#arrow)"/>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#0077b6"/>
+        </marker>
+      </defs>
+      <text id="svgBTU" x="200" y="40" text-anchor="middle" font-size="14" fill="#0077b6" font-weight="700">~64,000 BTU output</text>
+      <text id="svgZone" x="200" y="135" text-anchor="middle" font-size="11" fill="#444">Zone 3 · Average insulation</text>
+    </svg>
+  </div>
+
+  <label for="sqft">Home Square Footage</label>
+  <input type="number" id="sqft" value="1600" min="1" placeholder="e.g. 1600">
+  <div class="error" id="err-sqft">Please enter a square footage greater than 0.</div>
+
+  <div class="grid2">
+    <div>
+      <label for="zone">Climate Zone</label>
+      <select id="zone">
+        <option value="30">Zone 1 – Hot/Southern (30 BTU/sqft)</option>
+        <option value="35">Zone 2 – Moderate (35 BTU/sqft)</option>
+        <option value="40" selected>Zone 3 – Cold/Northern (40 BTU/sqft)</option>
+        <option value="50">Zone 4 – Very Cold (50 BTU/sqft)</option>
+      </select>
+    </div>
+    <div>
+      <label for="insulation">Insulation Quality</label>
+      <select id="insulation">
+        <option value="1.2">Poor (older, drafty)</option>
+        <option value="1.0" selected>Average</option>
+        <option value="0.9">Good</option>
+        <option value="0.8">Excellent (new/upgraded)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <label for="height">Ceiling Height (ft)</label>
+      <input type="number" id="height" value="8" min="1" step="0.5" placeholder="e.g. 8">
+      <div class="error" id="err-height">Enter a ceiling height greater than 0.</div>
+    </div>
+    <div>
+      <label for="afue">Furnace Efficiency – AFUE (%)</label>
+      <input type="number" id="afue" value="95" min="1" max="100" placeholder="e.g. 95">
+      <div class="error" id="err-afue">Enter an AFUE between 1 and 100.</div>
+    </div>
+  </div>
+
+  <button class="calc" id="calcBtn">Calculate Furnace Size</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+  <div class="results" id="results"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<h2>How to Use This Furnace Sizing Calculator</h2>
+<p>Enter your home's square footage, pick the climate zone closest to where you live, select your insulation quality, and confirm your ceiling height. Add your furnace's AFUE efficiency rating (found on the nameplate or spec sheet) and hit Calculate. The tool returns the recommended output BTU your home needs, the input BTU your furnace should be rated for, and a standard furnace size to shop for.</p>
+
+<h2>Why This Matters</h2>
+<p>Furnace sizing is one of the most common mistakes homeowners and even some contractors make. An oversized furnace short-cycles — turning on and off rapidly — which wastes energy, wears out components faster, and leaves rooms with uneven temperatures. An undersized furnace runs constantly during cold snaps and still can't keep up, spiking your utility bill and shortening the equipment's life. This matters most when replacing an aging furnace, building an addition, finishing a basement, or buying a home where you're unsure if the existing system fits the space. A 2,000 sq ft home in Minnesota (Zone 4) needs a dramatically different furnace than the same size home in Georgia (Zone 1) — sizing purely by square footage without accounting for climate, insulation, and ceiling height is how so many systems end up mismatched. Getting this number right before you call an HVAC contractor also helps you evaluate quotes and avoid being upsold on a bigger — and more expensive — unit than you actually need.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator starts with a baseline BTU-per-square-foot figure for your climate zone, then adjusts for insulation quality and ceiling height (taller ceilings mean more air volume to heat). That gives the required heating <em>output</em>. Because furnaces lose some energy as exhaust, the required <em>input</em> size is higher than the output — determined by dividing by your AFUE efficiency percentage.</p>
+<p><strong>Output BTU = Sq Ft × Climate Factor × Insulation Factor × (Ceiling Height ÷ 8)</strong><br>
+<strong>Input BTU (furnace rating) = Output BTU ÷ (AFUE ÷ 100)</strong></p>
+<p>The result is then matched to the nearest standard furnace size manufacturers actually produce, so you get a realistic number to shop with instead of an odd figure no furnace matches.</p>
+
+<h2>Worked Example</h2>
+<p>Take a 1,600 sq ft home in Zone 3 (40 BTU/sqft) with average insulation (factor 1.0), standard 8 ft ceilings, and a 95% AFUE furnace.</p>
+<p>Output BTU = 1,600 × 40 × 1.0 × (8÷8) = <strong>64,000 BTU</strong> output needed.<br>
+Input BTU = 64,000 ÷ 0.95 = <strong>67,368 BTU</strong> required furnace rating.<br>
+Rounded up to the nearest standard size, that homeowner should shop for a <strong>75,000 BTU furnace</strong>.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li>Don't size a furnace by square footage alone — climate zone and insulation quality swing the number by 30% or more.</li>
+<li>Vaulted or high ceilings add real heating volume; always adjust the ceiling height input rather than leaving it at the default.</li>
+<li>A lower AFUE means a bigger furnace input rating for the same output — check the AFUE sticker before assuming a "95% efficient" number applies to your unit.</li>
+<li>This calculator gives a solid estimate, but a licensed HVAC technician should run a full Manual J load calculation before installation, especially for additions or unusual layouts.</li>
+<li>When in doubt, round up to the next standard furnace size rather than down — undersized systems cost more in the long run.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What size furnace do I need for a 2,000 sq ft house?</summary><p>It depends on climate and insulation, but as a rough range, a 2,000 sq ft home typically needs a 60,000–100,000 BTU output furnace. Use this calculator with your actual climate zone and insulation quality for a precise number.</p></details>
+<details><summary>How many BTUs per square foot for a furnace?</summary><p>A common rule of thumb is 30–35 BTU/sqft in warm climates and 40–60 BTU/sqft in cold climates. Insulation quality and ceiling height adjust this baseline up or down.</p></details>
+<details><summary>Is it bad to oversize a furnace?</summary><p>Yes. An oversized furnace short-cycles, heating unevenly and wearing out parts faster, while also wasting energy. It's better to size correctly or round up only slightly than to buy a much larger unit "to be safe."</p></details>
+<details><summary>What does AFUE mean for furnace sizing?</summary><p>AFUE (Annual Fuel Utilization Efficiency) is the percentage of fuel converted into usable heat. A furnace with 95% AFUE needs a smaller input rating than an 80% AFUE furnace to deliver the same heat output to your home.</p></details>
+<details><summary>Should I get a professional load calculation instead?</summary><p>For final purchasing decisions, yes — a Manual J load calculation from an HVAC professional accounts for windows, orientation, and air leakage precisely. This calculator gives a reliable estimate to guide that conversation.</p></details>
+<details><summary>Does ceiling height really affect furnace size?</summary><p>Yes. Taller ceilings increase the volume of air that needs heating even if the floor area stays the same, so vaulted rooms or high ceilings require a proportionally larger furnace output.</p></details>
+
+<h2>Related Tools</h2>
+<div class="related">
+<a href="/mini-split-sizing-calculator/">Mini Split Sizing Calculator</a>
+<a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a>
+<a href="/deck-railing-baluster-spacing-calculator/">Deck Railing &amp; Baluster Spacing Calculator</a>
+<a href="/deck-footing-frost-depth-calculator/">Deck Footing Size &amp; Frost Depth Calculator</a>
+<a href="/roof-attic-ventilation-calculator/">Roof Attic Ventilation Calculator</a>
+<a href="/asphalt-shingle-calculator/">Asphalt Shingle Calculator</a>
+</div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/furnace-sizing-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+function fmt(n){return Math.round(n).toLocaleString('en-US');}
+const STD_SIZES=[40000,45000,60000,66000,75000,80000,90000,100000,110000,120000,125000,140000,150000,175000,200000,225000,250000];
+
+function validate(){
+  let ok=true;
+  const sqft=parseFloat(document.getElementById('sqft').value);
+  const height=parseFloat(document.getElementById('height').value);
+  const afue=parseFloat(document.getElementById('afue').value);
+  const sqftEl=document.getElementById('sqft');
+  const heightEl=document.getElementById('height');
+  const afueEl=document.getElementById('afue');
+  document.getElementById('err-sqft').classList.remove('show');
+  document.getElementById('err-height').classList.remove('show');
+  document.getElementById('err-afue').classList.remove('show');
+  sqftEl.classList.remove('invalid');heightEl.classList.remove('invalid');afueEl.classList.remove('invalid');
+
+  if(!sqft||sqft<=0||sqft>50000){document.getElementById('err-sqft').classList.add('show');sqftEl.classList.add('invalid');ok=false;}
+  if(!height||height<=0||height>30){document.getElementById('err-height').classList.add('show');heightEl.classList.add('invalid');ok=false;}
+  if(!afue||afue<=0||afue>100){document.getElementById('err-afue').classList.add('show');afueEl.classList.add('invalid');ok=false;}
+  return ok?{sqft,height,afue}:null;
+}
+
+function calculate(){
+  const vals=validate();
+  if(!vals){
+    requestAnimationFrame(()=>{document.getElementById('results').classList.remove('show');});
+    return;
+  }
+  const {sqft,height,afue}=vals;
+  const climate=parseFloat(document.getElementById('zone').value);
+  const insulation=parseFloat(document.getElementById('insulation').value);
+  const zoneText=document.getElementById('zone').selectedOptions[0].text.split(' (')[0];
+  const insulText=document.getElementById('insulation').selectedOptions[0].text;
+
+  const heightFactor=height/8;
+  const outputBTU=sqft*climate*insulation*heightFactor;
+  const inputBTU=outputBTU/(afue/100);
+
+  let recommended=STD_SIZES.find(s=>s>=inputBTU);
+  let recText = recommended ? fmt(recommended)+' BTU' : 'Custom sizing — consult an HVAC pro';
+
+  const html=`
+    <div class="sub">Recommended Furnace Input Size</div>
+    <div class="bignum">${recText}</div>
+    <div class="sub">Required heat output: <strong>${fmt(outputBTU)} BTU</strong> · Furnace rating needed: <strong>${fmt(inputBTU)} BTU</strong></div>
+    <button class="copybtn" id="copyBtn">Copy Results</button>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Factor</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Square Footage</td><td>${fmt(sqft)} sq ft</td></tr>
+        <tr><td>Climate Zone Factor</td><td>${climate} BTU/sqft</td></tr>
+        <tr><td>Insulation Adjustment</td><td>${insulation}×</td></tr>
+        <tr><td>Ceiling Height Adjustment</td><td>${heightFactor.toFixed(2)}× (${height} ft)</td></tr>
+        <tr><td>Required Output BTU</td><td>${fmt(outputBTU)}</td></tr>
+        <tr><td>Furnace AFUE</td><td>${afue}%</td></tr>
+        <tr><td>Required Input BTU</td><td>${fmt(inputBTU)}</td></tr>
+        <tr><td>Recommended Standard Size</td><td>${recText}</td></tr>
+      </tbody>
+    </table>
+    </div>
+  `;
+
+  requestAnimationFrame(()=>{
+    const res=document.getElementById('results');
+    res.innerHTML=html;
+    res.classList.add('show');
+    document.getElementById('svgSqft').textContent=fmt(sqft)+' sq ft';
+    document.getElementById('svgHeight').textContent=height+' ft ceiling';
+    document.getElementById('svgBTU').textContent='~'+fmt(outputBTU)+' BTU output';
+    document.getElementById('svgZone').textContent=zoneText+' · '+insulText;
+    const cb=document.getElementById('copyBtn');
+    cb.addEventListener('click',()=>{
+      const text=`Furnace Sizing Results:\nRecommended Furnace: ${recText}\nRequired Output: ${fmt(outputBTU)} BTU\nRequired Input: ${fmt(inputBTU)} BTU`;
+      navigator.clipboard.writeText(text).then(()=>{
+        cb.textContent='Copied!';
+        setTimeout(()=>{cb.textContent='Copy Results';},2000);
+      });
+    });
+  });
+}
+
+document.getElementById('calcBtn').addEventListener('click',()=>{requestAnimationFrame(calculate);});
+['sqft','height','afue'].forEach(id=>{
+  document.getElementById(id).addEventListener('keydown',e=>{
+    if(e.key==='Enter'){requestAnimationFrame(calculate);}
+  });
+});
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>

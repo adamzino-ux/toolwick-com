@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Tile &amp; Flooring Coverage Calculator | Toolwick</title>
+<meta name="description" content="Calculate exactly how many tiles you need for any room. Enter room and tile dimensions, get tile count, waste factor, and total cost estimate instantly.">
+<link rel="canonical" href="https://toolwick.com/tile-flooring-calculator/">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #e0e0e0;padding:12px 0}
+.nav-inner{max-width:640px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center}
+.nav-brand{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+.nav-brand:hover{text-decoration:none;color:#0077b6}
+main{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;font-weight:700;margin-bottom:0.4rem;color:#1a1a2e}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;text-align:center}
+.diagram-wrap svg{max-width:100%;height:auto}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.form-group{margin-bottom:1rem}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:5px}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;transition:border-color 0.2s,box-shadow 0.2s;min-height:44px}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:4px;display:none}
+.error-msg.show{display:block}
+.input-unit{display:flex;gap:8px}
+.input-unit input{flex:1}
+.input-unit select{width:100px;flex:0 0 100px}
+.btn{background:#0077b6;color:#fff;border:none;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background 0.2s}
+.btn:hover{background:#006299}
+.btn-secondary{background:#f0f0f0;color:#1a1a2e;font-size:0.85rem;padding:8px 14px;border-radius:6px;border:1px solid #ddd;cursor:pointer;min-height:36px;transition:background 0.2s;width:auto}
+.btn-secondary:hover{background:#e0e0e0}
+.waste-slider-wrap{margin-bottom:1rem}
+.waste-slider-wrap input[type=range]{padding:0;border:none;box-shadow:none;accent-color:#0077b6;cursor:pointer;width:100%;min-height:auto}
+.waste-slider-wrap input[type=range]:focus{box-shadow:none}
+.waste-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.waste-val{font-weight:700;color:#0077b6;font-size:1rem}
+.waste-ticks{display:flex;justify-content:space-between;margin-top:4px;font-size:0.72rem;color:#666;gap:4px}
+.waste-ticks span{white-space:nowrap}
+.waste-ticks span:nth-child(2){text-align:center}
+.waste-ticks span:last-child{text-align:right}
+@media(max-width:480px){.waste-ticks{font-size:0.62rem}}
+.results-section{opacity:0;transition:opacity 0.3s ease;pointer-events:none}
+.results-section.visible{opacity:1;pointer-events:auto}
+.key-numbers{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+@media(max-width:420px){.key-numbers{grid-template-columns:1fr}}
+.key-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1rem 1.2rem;text-align:center}
+.key-box .big{font-size:2rem;font-weight:700;color:#0077b6;line-height:1.1}
+.key-box .label{font-size:0.8rem;color:#666;margin-top:4px}
+.result-actions{display:flex;justify-content:flex-end;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:0.9rem}
+thead tr{background:#f0f0f0}
+th{padding:9px 12px;text-align:left;font-weight:600;font-size:0.85rem;color:#444;border-bottom:2px solid #ddd}
+th.num,td.num{text-align:right}
+tr:nth-child(even){background:#fafafa}
+tr:nth-child(odd){background:#fff}
+td{padding:9px 12px;border-bottom:1px solid #ececec;color:#1a1a2e}
+.table-scroll{overflow-x:auto;margin-bottom:1.5rem}
+.cost-row td{font-weight:600}
+.section{margin-bottom:2.5rem}
+h2{font-size:1.2rem;font-weight:700;color:#1a1a2e;margin-bottom:0.7rem}
+p{margin-bottom:0.9rem;color:#333}
+ul{padding-left:1.4rem;margin-bottom:0.9rem;color:#333}
+ul li{margin-bottom:0.4rem}
+ol{padding-left:1.4rem;margin-bottom:0.9rem;color:#333}
+ol li{margin-bottom:0.5rem}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:0.7rem;padding:0}
+summary{padding:12px 16px;font-weight:600;font-size:0.95rem;cursor:pointer;color:#1a1a2e;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::after{content:"＋";font-size:1.1rem;color:#0077b6}
+details[open] summary::after{content:"－"}
+details p{padding:0 16px 14px;margin:0;color:#555;font-size:0.9rem}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem}
+@media(max-width:480px){.related-grid{grid-template-columns:1fr}}
+.related-link{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:10px 14px;font-size:0.9rem;font-weight:500;color:#0077b6;display:block;transition:background 0.15s}
+.related-link:hover{background:#e8f4fb;text-decoration:none}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #e0e0e0;padding:1.2rem 0;margin-top:2rem}
+.footer-inner{max-width:640px;margin:0 auto;padding:0 1.5rem;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;font-size:0.85rem;color:#666}
+.footer-links{display:flex;gap:1rem}
+.footer-links a{color:#555}
+.tabs{display:flex;gap:0;border:1px solid #ddd;border-radius:6px;overflow:hidden;margin-bottom:1.2rem}
+.tab{flex:1;padding:9px 8px;background:#f8f9fa;border:none;cursor:pointer;font-size:0.85rem;font-weight:500;color:#555;transition:background 0.15s;min-height:40px}
+.tab.active{background:#0077b6;color:#fff}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.notice{background:#e8f4fb;border-left:3px solid #0077b6;border-radius:0 6px 6px 0;padding:10px 14px;font-size:0.88rem;color:#1a1a2e;margin-bottom:1rem}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/tile-flooring-calculator/">
+<meta property="og:title" content="Tile &amp; Flooring Coverage Calculator">
+<meta property="og:description" content="Calculate exactly how many tiles you need for any room. Enter room and tile dimensions, get tile count, waste factor, and total cost estimate instantly.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">🔧 toolwick.com</a>
+  </div>
+</nav>
+<main>
+  <h1>Tile & Flooring Coverage Calculator</h1>
+  <p class="subtitle">Use this tile calculator to find out how many tiles you need, how much waste to buy, how many boxes to order, and your total cost — for any room size.</p>
+
+  <div class="card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg id="roomDiagram" viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px">
+        <!-- Room outline -->
+        <rect x="60" y="30" width="300" height="160" fill="#f0f8ff" stroke="#0077b6" stroke-width="2.5"/>
+        <!-- Tile grid lines -->
+        <line x1="60" y1="30" x2="60" y2="190" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="120" y1="30" x2="120" y2="190" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="180" y1="30" x2="180" y2="190" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="240" y1="30" x2="240" y2="190" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="300" y1="30" x2="300" y2="190" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="60" y1="30" x2="360" y2="30" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="60" y1="83.3" x2="360" y2="83.3" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="60" y1="136.6" x2="360" y2="136.6" stroke="#e0e0e0" stroke-width="1"/>
+        <!-- Highlight one tile -->
+        <rect x="60" y="30" width="60" height="53.3" fill="rgba(0,119,182,0.18)" stroke="#0077b6" stroke-width="1.5"/>
+        <!-- Width arrow -->
+        <line x1="60" y1="205" x2="360" y2="205" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arrl)"/>
+        <!-- Height arrow -->
+        <line x1="380" y1="30" x2="380" y2="190" stroke="#0077b6" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arrl)"/>
+        <!-- Labels -->
+        <text id="lblWidth" x="210" y="218" text-anchor="middle" font-size="13" fill="#1a1a2e" font-family="sans-serif" font-weight="600">Room Width</text>
+        <text id="lblLength" x="420" y="114" text-anchor="middle" font-size="13" fill="#1a1a2e" font-family="sans-serif" font-weight="600" transform="rotate(90,420,114)">Room Length</text>
+        <!-- Tile label -->
+        <text x="90" y="61" text-anchor="middle" font-size="11" fill="#0077b6" font-family="sans-serif" font-weight="700">Tile</text>
+        <!-- Defs -->
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#0077b6"/>
+          </marker>
+          <marker id="arrl" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse">
+            <path d="M0,0 L0,6 L8,3 z" fill="#0077b6"/>
+          </marker>
+        </defs>
+        <!-- Room area label -->
+        <text id="lblArea" x="210" y="120" text-anchor="middle" font-size="14" fill="#1a1a2e" font-family="sans-serif" font-weight="700" opacity="0.6">Room Area</text>
+      </svg>
+    </div>
+
+    <!-- Tabs: Single Room / Multiple Rooms -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('single')">Single Room</button>
+      <button class="tab" onclick="switchTab('multi')">Multiple Rooms</button>
+    </div>
+
+    <!-- Single Room Tab -->
+    <div id="tab-single" class="tab-panel active">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="roomLen">Room Length</label>
+          <div class="input-unit">
+            <input type="number" id="roomLen" placeholder="e.g. 12" min="0" step="any">
+            <select id="unitLen">
+              <option value="ft">ft</option>
+              <option value="m">m</option>
+              <option value="in">in</option>
+            </select>
+          </div>
+          <div class="error-msg" id="errRoomLen">Please enter a valid length.</div>
+        </div>
+        <div class="form-group">
+          <label for="roomWid">Room Width</label>
+          <div class="input-unit">
+            <input type="number" id="roomWid" placeholder="e.g. 10" min="0" step="any">
+            <select id="unitWid">
+              <option value="ft">ft</option>
+              <option value="m">m</option>
+              <option value="in">in</option>
+            </select>
+          </div>
+          <div class="error-msg" id="errRoomWid">Please enter a valid width.</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="tileLen">Tile Length</label>
+          <div class="input-unit">
+            <input type="number" id="tileLen" placeholder="e.g. 12" min="0" step="any" value="12">
+            <select id="unitTileLen">
+              <option value="in">in</option>
+              <option value="ft">ft</option>
+              <option value="cm">cm</option>
+              <option value="mm">mm</option>
+            </select>
+          </div>
+          <div class="error-msg" id="errTileLen">Please enter a valid tile length.</div>
+        </div>
+        <div class="form-group">
+          <label for="tileWid">Tile Width</label>
+          <div class="input-unit">
+            <input type="number" id="tileWid" placeholder="e.g. 12" min="0" step="any" value="12">
+            <select id="unitTileWid">
+              <option value="in">in</option>
+              <option value="ft">ft</option>
+              <option value="cm">cm</option>
+              <option value="mm">mm</option>
+            </select>
+          </div>
+          <div class="error-msg" id="errTileWid">Please enter a valid tile width.</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="tilesPerBox">Tiles Per Box <span style="font-weight:400;color:#666">(optional)</span></label>
+          <input type="number" id="tilesPerBox" placeholder="e.g. 10" min="0" step="1">
+        </div>
+        <div class="form-group">
+          <label for="pricePerBox">Price Per Box ($) <span style="font-weight:400;color:#666">(optional)</span></label>
+          <input type="number" id="pricePerBox" placeholder="e.g. 35.00" min="0" step="any">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="groutGap">Grout Joint Width <span style="font-weight:400;color:#666">(optional)</span></label>
+        <div class="input-unit">
+          <input type="number" id="groutGap" placeholder="e.g. 0.125" min="0" step="any" value="0.125" style="flex:1">
+          <select id="unitGrout" style="width:100px;flex:0 0 100px">
+            <option value="in">in</option>
+            <option value="mm">mm</option>
+          </select>
+        </div>
+      </div>
+      <div class="waste-slider-wrap">
+        <div class="waste-label">
+          <label for="wasteSlider">Waste / Overage Factor</label>
+          <span class="waste-val" id="wasteDisplay">10%</span>
+        </div>
+        <input type="range" id="wasteSlider" min="0" max="30" step="1" value="10">
+        <div class="waste-ticks">
+          <span>0% exact</span>
+          <span>10% standard</span>
+          <span>30% complex</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Multi Room Tab -->
+    <div id="tab-multi" class="tab-panel">
+      <div class="notice">Add multiple rooms below. All rooms share the same tile size, grout joint, and price settings.</div>
+      <div id="multiRoomList"></div>
+      <button class="btn-secondary" onclick="addRoom()" style="margin-bottom:1rem;width:100%">＋ Add Room</button>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="mTileLen">Tile Length</label>
+          <div class="input-unit">
+            <input type="number" id="mTileLen" placeholder="12" min="0" step="any" value="12">
+            <select id="mUnitTileLen">
+              <option value="in">in</option><option value="ft">ft</option><option value="cm">cm</option><option value="mm">mm</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="mTileWid">Tile Width</label>
+          <div class="input-unit">
+            <input type="number" id="mTileWid" placeholder="12" min="0" step="any" value="12">
+            <select id="mUnitTileWid">
+              <option value="in">in</option><option value="ft">ft</option><option value="cm">cm</option><option value="mm">mm</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="mGroutGap">Grout Joint Width</label>
+          <div class="input-unit">
+            <input type="number" id="mGroutGap" placeholder="e.g. 0.125" min="0" step="any" value="0.125">
+            <select id="mUnitGrout" style="width:100px;flex:0 0 100px">
+              <option value="in">in</option>
+              <option value="mm">mm</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="mTilesPerBox">Tiles Per Box</label>
+          <input type="number" id="mTilesPerBox" placeholder="e.g. 10" min="0" step="1">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="mPricePerBox">Price Per Box ($)</label>
+        <input type="number" id="mPricePerBox" placeholder="e.g. 35.00" min="0" step="any">
+      </div>
+      <div class="waste-slider-wrap">
+        <div class="waste-label">
+          <label for="mWasteSlider">Waste Factor</label>
+          <span class="waste-val" id="mWasteDisplay">10%</span>
+        </div>
+        <input type="range" id="mWasteSlider" min="0" max="30" step="1" value="10">
+        <div class="waste-ticks">
+          <span>0% exact</span>
+          <span>10% standard</span>
+          <span>30% complex</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn" id="calcBtn">Calculate Tiles</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+  </div>
+
+  <!-- Results -->
+  <div class="card results-section" id="resultsSection">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem">
+      <h2 style="margin:0">Results</h2>
+      <button class="btn-secondary" id="copyBtn" onclick="copyResults()">Copy Results</button>
+    </div>
+    <div id="resultsInner"></div>
+  </div>
+
+  <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<!-- Content Sections -->
+  <div class="section">
+    <h2>How to Use This Tile Calculator</h2>
+    <p>Enter your room's length and width in your preferred unit (feet, meters, or inches), then enter the individual tile dimensions. Set a waste percentage using the slider — 10% is standard for straight-lay patterns, 15% for diagonal, and up to 30% for complex cuts or irregular rooms. Optionally add tiles-per-box, price-per-box, and grout joint width to get full cost estimates. Hit <strong>Calculate Tiles</strong> and this tile calculator instantly shows your complete breakdown.</p>
+    <p>Use the <strong>Multiple Rooms</strong> tab to sum up totals across a kitchen, bathrooms, and hallways in one shot. Both tabs use the exact same math, including grout joint width, so results stay consistent whichever way you enter a room.</p>
+  </div>
+
+  <div class="section">
+    <h2>Why This Matters</h2>
+    <p>Buying too few tiles means a costly second trip to the store — and there's no guarantee the same batch will match (tiles are manufactured in <em>dye lots</em>, and color variation between batches is real). Buy too many and you've wasted money on materials you'll store in a garage forever.</p>
+    <p>Take a 12 ft × 12 ft bathroom floor: 144 sq ft of floor space. With 12"×12" tiles, a standard 1/8" grout joint, and a 10% waste factor, this calculator says you need 156 tiles. At 10 tiles per box, that's 16 boxes — and at $35 a box, a $560 purchase. Switch that same room to a diagonal layout and bump waste to 15%: you now need 163 tiles, which still rounds up to 17 boxes — just one extra box, about $35 more. Small percentage changes can nudge you into an extra box, so it pays to check the math rather than guess. A kitchen with an island or L-shaped cuts should use 20%+ waste to account for the extra trimming around corners and obstacles.</p>
+  </div>
+
+  <div class="section">
+    <h2>How It's Calculated</h2>
+    <p>The calculation follows these steps:</p>
+    <ul>
+      <li><strong>Room Area</strong> = Length × Width (converted to sq ft or sq m consistently)</li>
+      <li><strong>Effective Tile Size</strong> = (Tile Length + Grout Joint) × (Tile Width + Grout Joint) — grout is added to each tile's footprint</li>
+      <li><strong>Base Tile Count</strong> = Room Area ÷ Effective Tile Area</li>
+      <li><strong>Tiles With Waste</strong> = Base Count × (1 + Waste% ÷ 100), rounded up to the next whole tile</li>
+      <li><strong>Boxes Needed</strong> = Tiles With Waste ÷ Tiles Per Box, rounded up to the next whole box</li>
+      <li><strong>Total Cost</strong> = Boxes Needed × Price Per Box</li>
+    </ul>
+    <p>All units are converted to inches internally before computing areas, so mixing feet, meters, and inches across fields is safe.</p>
+  </div>
+
+  <div class="section">
+    <h2>Worked Example</h2>
+    <p>Say you're tiling a 12 ft × 10 ft room with 12"×12" tiles, a 1/8" (0.125 in) grout joint, 10 tiles per box at $35 per box, and the standard 10% waste factor. Here's what the calculator does step by step:</p>
+    <ol>
+      <li><strong>Room area:</strong> 12 ft × 10 ft = 120 sq ft (17,280 sq in).</li>
+      <li><strong>Effective tile size:</strong> 12" + 0.125" = 12.125" per side, so each tile (with its grout allowance) covers 12.125 × 12.125 = 147.02 sq in.</li>
+      <li><strong>Base tile count:</strong> 17,280 ÷ 147.02 ≈ 117.5 tiles, rounded up to 118 tiles before waste.</li>
+      <li><strong>Add 10% waste:</strong> 117.5 × 1.10 ≈ 129.3, rounded up to <strong>130 tiles</strong> to buy.</li>
+      <li><strong>Boxes needed:</strong> 130 ÷ 10 tiles per box = 13 boxes exactly.</li>
+      <li><strong>Total cost:</strong> 13 boxes × $35 = <strong>$455</strong>.</li>
+    </ol>
+    <p>Plug those same numbers into the calculator above and you'll see this exact result — 130 tiles, 13 boxes, $455.</p>
+  </div>
+
+  <div class="section">
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Always round boxes UP</strong> — you can never buy half a box, and stopping mid-job because you're 3 tiles short is frustrating.</li>
+      <li><strong>Match dye lots</strong> — buy all tiles at once, and keep 5–10% extra in storage for future repairs.</li>
+      <li><strong>Measure twice</strong> — for L-shaped or irregular rooms, break the space into rectangles and calculate each separately using the Multi-Room tab.</li>
+      <li><strong>Account for obstacles</strong> — islands, columns, bathtubs, and fireplaces reduce your floor area. Subtract those footprints from the room area before calculating.</li>
+      <li><strong>Grout joint size matters</strong> — a 3/16" joint on 12"×24" tiles adds a few extra tiles across a large room. Always include it, and enter the same grout width in both tabs so your totals stay consistent.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>How much waste percentage should I use?</summary>
+      <p>Use 10% for standard straight-lay patterns in regular rectangular rooms. Go to 15% for diagonal or herringbone patterns, and 20–30% for complex rooms with many cuts, L-shapes, or curves. If you're a beginner tiler, add an extra 5% to account for mistakes during cutting.</p>
+    </details>
+    <details>
+      <summary>Should I include grout joint width in my calculation?</summary>
+      <p>Yes, and this calculator does it automatically in both the Single Room and Multiple Rooms tabs. A 1/8" grout joint on a 12"×12" tile increases the effective tile footprint slightly — across hundreds of tiles, this adds up. Ignoring grout can cause you to buy several extra tiles you don't actually need.</p>
+    </details>
+    <details>
+      <summary>What if my room is not a perfect rectangle?</summary>
+      <p>Break the room into rectangular sections and use the Multiple Rooms tab — one entry per rectangle. Add up all sections to get total tiles and cost. This works well for L-shaped rooms, rooms with closets, and open-plan spaces.</p>
+    </details>
+    <details>
+      <summary>Can I use this for wall tiles too?</summary>
+      <p>Absolutely. The same square-footage math applies. Enter your wall height as "length" and wall width as "width." For a backsplash, use the exact dimensions of the backsplash area. Just subtract any windows or outlets from the area if they're large enough to matter.</p>
+    </details>
+    <details>
+      <summary>Why do the Single Room and Multiple Rooms tabs give slightly different numbers for the same room?</summary>
+      <p>They shouldn't, as long as you enter the same grout joint width in both tabs. Both tabs factor grout spacing into the tile footprint identically, so a single room entered in either tab will produce the same tile count and box count.</p>
+    </details>
+    <details>
+      <summary>How many boxes of tile should I buy?</summary>
+      <p>Divide your total tiles needed (including waste) by the tiles per box, then always round up to the next whole box. You can't buy a fraction of a box, and it's better to have a couple of leftover tiles for future repairs than to run short mid-project.</p>
+    </details>
+  </div>
+
+  <div class="section">
+    <h2>Related Tools</h2>
+    <div class="related-grid">
+      <a href="/bathroom-tile-layout-planner/" class="related-link">🚿 Bathroom Tile Layout Planner</a>
+      <a href="/wallpaper-coverage-roll-calculator/" class="related-link">📐 Wallpaper Coverage & Roll Calculator</a>
+      <a href="/blown-in-insulation-coverage-calculator/" class="related-link">🏠 Blown-In Insulation Coverage Calculator</a>
+      <a href="/spray-foam-insulation-calculator/" class="related-link">🧊 Spray Foam Insulation Coverage Calculator</a>
+      <a href="/paint-coverage-calculator/" class="related-link">🎨 Paint Coverage Calculator</a>
+      <a href="/deck-footing-frost-depth-calculator/" class="related-link">🏚️ Deck Footing Size & Frost Depth Calculator</a>
+    </div>
+  </div>
+
+  </main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/tile-flooring-calculator/">Toolwick</a></p>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// ---- Tab switching ----
+let currentTab = 'single';
+function switchTab(name) {
+  currentTab = name;
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active', (i===0&&name==='single')||(i===1&&name==='multi')));
+  document.getElementById('tab-single').classList.toggle('active', name==='single');
+  document.getElementById('tab-multi').classList.toggle('active', name==='multi');
+  clearResults();
+}
+
+// ---- Waste sliders ----
+const wasteSlider = document.getElementById('wasteSlider');
+const wasteDisplay = document.getElementById('wasteDisplay');
+wasteSlider.addEventListener('input', () => { wasteDisplay.textContent = wasteSlider.value + '%'; });
+const mWasteSlider = document.getElementById('mWasteSlider');
+const mWasteDisplay = document.getElementById('mWasteDisplay');
+mWasteSlider.addEventListener('input', () => { mWasteDisplay.textContent = mWasteSlider.value + '%'; });
+
+// ---- Multi room management ----
+let roomCount = 0;
+function addRoom() {
+  roomCount++;
+  const id = roomCount;
+  const container = document.getElementById('multiRoomList');
+  const div = document.createElement('div');
+  div.id = 'mroom-' + id;
+  div.style.cssText = 'border:1px solid #e0e0e0;border-radius:6px;padding:1rem;margin-bottom:0.8rem;background:#fafafa;position:relative';
+  div.innerHTML = `<div style="font-size:0.85rem;font-weight:600;color:#444;margin-bottom:0.6rem">Room ${id} <button onclick="removeRoom(${id})" style="float:right;background:none;border:none;color:#e74c3c;cursor:pointer;font-size:1rem;padding:0;min-height:auto">✕</button></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.7rem">
+      <div><label style="font-size:0.8rem;font-weight:500;color:#444;display:block;margin-bottom:4px">Name</label><input type="text" placeholder="e.g. Kitchen" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:5px;font-size:0.9rem;min-height:38px"></div>
+      <div><label style="font-size:0.8rem;font-weight:500;color:#444;display:block;margin-bottom:4px">Length (ft)</label><input type="number" placeholder="12" min="0" step="any" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:5px;font-size:0.9rem;min-height:38px"></div>
+      <div><label style="font-size:0.8rem;font-weight:500;color:#444;display:block;margin-bottom:4px">Width (ft)</label><input type="number" placeholder="10" min="0" step="any" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:5px;font-size:0.9rem;min-height:38px"></div>
+    </div>`;
+  container.appendChild(div);
+}
+function removeRoom(id) {
+  const el = document.getElementById('mroom-' + id);
+  if (el) el.remove();
+}
+// seed with 2 rooms
+addRoom(); addRoom();
+
+// ---- Unit converters (all to inches) ----
+function toInches(val, unit) {
+  switch(unit) {
+    case 'ft': return val * 12;
+    case 'm':  return val * 39.3701;
+    case 'cm': return val * 0.393701;
+    case 'mm': return val * 0.0393701;
+    case 'in': return val;
+    default:   return val;
+  }
+}
+
+// ---- Number format ----
+function fmt(n, dec=0) {
+  if (isNaN(n)) return '—';
+  return n.toLocaleString('en-US', {minimumFractionDigits:dec, maximumFractionDigits:dec});
+}
+
+// ---- Validation ----
+function showError(id, msgId, show) {
+  const el = document.getElementById(id);
+  const msg = document.getElementById(msgId);
+  if (show) { el.classList.add('error'); msg.classList.add('show'); }
+  else { el.classList.remove('error'); msg.classList.remove('show'); }
+}
+
+// ---- Clear stale results (used on error or tab switch) ----
+function clearResults() {
+  const sec = document.getElementById('resultsSection');
+  sec.classList.remove('visible');
+  document.getElementById('resultsInner').innerHTML = '';
+  lastResultsText = '';
+}
+
+// ---- Core calculation ----
+function calcRoom(lenIn, widIn, tileLenIn, tileWidIn, groutIn, wastePct) {
+  const effectiveTileLenIn = tileLenIn + groutIn;
+  const effectiveTileWidIn = tileWidIn + groutIn;
+  const roomAreaSqIn = lenIn * widIn;
+  const tileAreaSqIn = effectiveTileLenIn * effectiveTileWidIn;
+  const roomAreaSqFt = roomAreaSqIn / 144;
+  const tileAreaSqFt = tileAreaSqIn / 144;
+  const baseTiles = roomAreaSqIn / tileAreaSqIn;
+  const tilesWithWaste = Math.ceil(baseTiles * (1 + wastePct / 100));
+  return { roomAreaSqFt, tileAreaSqFt, baseTiles, tilesWithWaste, tileLenIn, tileWidIn, groutIn };
+}
+
+// ---- Last results text for copy ----
+let lastResultsText = '';
+
+function calculate() {
+  if (currentTab === 'single') {
+    const rl = parseFloat(document.getElementById('roomLen').value);
+    const rw = parseFloat(document.getElementById('roomWid').value);
+    const tl = parseFloat(document.getElementById('tileLen').value);
+    const tw = parseFloat(document.getElementById('tileWid').value);
+
+    const rlBad = isNaN(rl)||rl<=0;
+    const rwBad = isNaN(rw)||rw<=0;
+    const tlBad = isNaN(tl)||tl<=0;
+    const twBad = isNaN(tw)||tw<=0;
+
+    showError('roomLen','errRoomLen', rlBad);
+    showError('roomWid','errRoomWid', rwBad);
+    showError('tileLen','errTileLen', tlBad);
+    showError('tileWid','errTileWid', twBad);
+
+    if (rlBad || rwBad || tlBad || twBad) {
+      clearResults();
+      return;
+    }
+
+    const lenIn = toInches(rl, document.getElementById('unitLen').value);
+    const widIn = toInches(rw, document.getElementById('unitWid').value);
+    const tileLenIn = toInches(tl, document.getElementById('unitTileLen').value);
+    const tileWidIn = toInches(tw, document.getElementById('unitTileWid').value);
+    const groutRaw = parseFloat(document.getElementById('groutGap').value)||0;
+    const groutIn = toInches(groutRaw, document.getElementById('unitGrout').value);
+    const wastePct = parseInt(wasteSlider.value);
+    const tilesPerBox = parseInt(document.getElementById('tilesPerBox').value)||0;
+    const pricePerBox = parseFloat(document.getElementById('pricePerBox').value)||0;
+
+    const r = calcRoom(lenIn, widIn, tileLenIn, tileWidIn, groutIn, wastePct);
+    const boxes = tilesPerBox > 0 ? Math.ceil(r.tilesWithWaste / tilesPerBox) : null;
+    const totalCost = (boxes !== null && pricePerBox > 0) ? boxes * pricePerBox : null;
+    const extraTiles = tilesPerBox > 0 ? (boxes * tilesPerBox - r.tilesWithWaste) : null;
+
+    // Update diagram
+    document.getElementById('lblWidth').textContent = rw + ' ' + document.getElementById('unitWid').value;
+    document.getElementById('lblLength').textContent = rl + ' ' + document.getElementById('unitLen').value;
+    document.getElementById('lblArea').textContent = fmt(r.roomAreaSqFt,1) + ' sq ft';
+
+    let html = buildSingleResults(r, boxes, extraTiles, totalCost, tilesPerBox, pricePerBox, wastePct);
+    lastResultsText = buildCopyText(r, boxes, extraTiles, totalCost, tilesPerBox, pricePerBox, wastePct);
+
+    requestAnimationFrame(() => {
+      document.getElementById('resultsInner').innerHTML = html;
+      const sec = document.getElementById('resultsSection');
+      sec.classList.add('visible');
+      sec.scrollIntoView({behavior:'smooth', block:'nearest'});
+    });
+
+  } else {
+    // Multi-room
+    const rooms = document.querySelectorAll('#multiRoomList > div');
+    if (rooms.length === 0) {
+      clearResults();
+      alert('Please add at least one room.'); return;
+    }
+    const tl = parseFloat(document.getElementById('mTileLen').value)||0;
+    const tw = parseFloat(document.getElementById('mTileWid').value)||0;
+    if (tl <= 0 || tw <= 0) {
+      clearResults();
+      alert('Please enter valid tile dimensions.'); return;
+    }
+
+    const tileLenIn = toInches(tl, document.getElementById('mUnitTileLen').value);
+    const tileWidIn = toInches(tw, document.getElementById('mUnitTileWid').value);
+    const groutRaw = parseFloat(document.getElementById('mGroutGap').value)||0;
+    const groutIn = toInches(groutRaw, document.getElementById('mUnitGrout').value);
+    const wastePct = parseInt(mWasteSlider.value);
+    const tilesPerBox = parseInt(document.getElementById('mTilesPerBox').value)||0;
+    const pricePerBox = parseFloat(document.getElementById('mPricePerBox').value)||0;
+
+    let roomData = [];
+    rooms.forEach(rd => {
+      const inputs = rd.querySelectorAll('input');
+      const name = inputs[0].value || ('Room ' + (roomData.length+1));
+      const len = parseFloat(inputs[1].value);
+      const wid = parseFloat(inputs[2].value);
+      if (!isNaN(len)&&len>0&&!isNaN(wid)&&wid>0) {
+        roomData.push({name, lenIn: toInches(len,'ft'), widIn: toInches(wid,'ft'), len, wid});
+      }
+    });
+    if (roomData.length === 0) {
+      clearResults();
+      alert('Please enter valid dimensions for at least one room.'); return;
+    }
+
+    let totalTiles = 0, totalArea = 0;
+    let rowsHtml = '';
+    roomData.forEach(rd => {
+      const r = calcRoom(rd.lenIn, rd.widIn, tileLenIn, tileWidIn, groutIn, wastePct);
+      totalTiles += r.tilesWithWaste;
+      totalArea += r.roomAreaSqFt;
+      const b = tilesPerBox > 0 ? Math.ceil(r.tilesWithWaste/tilesPerBox) : '—';
+      rowsHtml += `<tr><td>${rd.name}</td><td class="num">${rd.len}×${rd.wid} ft</td><td class="num">${fmt(r.roomAreaSqFt,1)}</td><td class="num">${fmt(r.baseTiles,1)}</td><td class="num">${fmt(r.tilesWithWaste)}</td><td class="num">${typeof b==='number'?fmt(b):b}</td></tr>`;
+    });
+    const totalBoxes = tilesPerBox > 0 ? Math.ceil(totalTiles/tilesPerBox) : null;
+    const totalCost = (totalBoxes!==null&&pricePerBox>0) ? totalBoxes*pricePerBox : null;
+
+    let html = `<div class="key-numbers">
+      <div class="key-box"><div class="big">${fmt(totalTiles)}</div><div class="label">Total Tiles (with ${wastePct}% waste)</div></div>
+      <div class="key-box"><div class="big">${fmt(totalArea,1)}</div><div class="label">Total Area (sq ft)</div></div>
+      ${totalBoxes!==null?`<div class="key-box"><div class="big">${fmt(totalBoxes)}</div><div class="label">Boxes to Buy</div></div>`:''}
+      ${totalCost!==null?`<div class="key-box"><div class="big">$${fmt(totalCost,2)}</div><div class="label">Estimated Cost</div></div>`:''}
+    </div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Room</th><th>Size</th><th class="num">Area (sqft)</th><th class="num">Base Tiles</th><th class="num">With Waste</th><th class="num">Boxes</th></tr></thead>
+      <tbody>${rowsHtml}
+      <tr style="font-weight:700;background:#f0f8ff"><td>TOTAL</td><td>—</td><td class="num">${fmt(totalArea,1)}</td><td class="num">—</td><td class="num">${fmt(totalTiles)}</td><td class="num">${totalBoxes!==null?fmt(totalBoxes):'—'}</td></tr>
+      </tbody></table></div>`;
+
+    lastResultsText = `Multi-room total: ${fmt(totalTiles)} tiles${totalBoxes!==null?', '+fmt(totalBoxes)+' boxes':''}${totalCost!==null?', $'+fmt(totalCost,2):''}`;
+
+    requestAnimationFrame(() => {
+      document.getElementById('resultsInner').innerHTML = html;
+      const sec = document.getElementById('resultsSection');
+      sec.classList.add('visible');
+      sec.scrollIntoView({behavior:'smooth', block:'nearest'});
+    });
+  }
+}
+
+function buildSingleResults(r, boxes, extraTiles, totalCost, tilesPerBox, pricePerBox, wastePct) {
+  const wasteCount = r.tilesWithWaste - Math.ceil(r.baseTiles);
+  let html = `<div class="key-numbers">
+    <div class="key-box"><div class="big">${fmt(r.tilesWithWaste)}</div><div class="label">Tiles Needed (incl. ${wastePct}% waste)</div></div>
+    <div class="key-box"><div class="big">${fmt(r.roomAreaSqFt,2)}</div><div class="label">Room Area (sq ft)</div></div>
+    ${boxes!==null?`<div class="key-box"><div class="big">${fmt(boxes)}</div><div class="label">Boxes to Buy</div></div>`:''}
+    ${totalCost!==null?`<div class="key-box"><div class="big">$${fmt(totalCost,2)}</div><div class="label">Estimated Cost</div></div>`:''}
+  </div>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Item</th><th class="num">Value</th></tr></thead>
+    <tbody>
+      <tr><td>Room Area</td><td class="num">${fmt(r.roomAreaSqFt,2)} sq ft</td></tr>
+      <tr><td>Tile Size (with grout)</td><td class="num">${fmt(r.tileLenIn+r.groutIn,3)}" × ${fmt(r.tileWidIn+r.groutIn,3)}"</td></tr>
+      <tr><td>Tile Area (with grout)</td><td class="num">${fmt(r.tileAreaSqFt,4)} sq ft</td></tr>
+      <tr><td>Base Tile Count (exact)</td><td class="num">${fmt(r.baseTiles,2)}</td></tr>
+      <tr><td>Base Tile Count (rounded up)</td><td class="num">${fmt(Math.ceil(r.baseTiles))}</td></tr>
+      <tr><td>Waste Tiles (${wastePct}%)</td><td class="num">${fmt(wasteCount)}</td></tr>
+      <tr style="font-weight:700;background:#e8f4fb"><td>Total Tiles to Buy</td><td class="num">${fmt(r.tilesWithWaste)}</td></tr>
+      ${tilesPerBox>0?`<tr><td>Tiles Per Box</td><td class="num">${fmt(tilesPerBox)}</td></tr>`:''}
+      ${boxes!==null?`<tr style="font-weight:700;background:#e8f4fb"><td>Boxes to Buy</td><td class="num">${fmt(boxes)}</td></tr>`:''}
+      ${extraTiles!==null?`<tr><td>Extra Tiles in Box Order</td><td class="num">${fmt(extraTiles)}</td></tr>`:''}
+      ${pricePerBox>0?`<tr><td>Price Per Box</td><td class="num">$${fmt(pricePerBox,2)}</td></tr>`:''}
+      ${totalCost!==null?`<tr class="cost-row" style="background:#e8f4fb"><td>Estimated Total Cost</td><td class="num">$${fmt(totalCost,2)}</td></tr>`:''}
+    </tbody>
+  </table></div>`;
+  return html;
+}
+
+function buildCopyText(r, boxes, extraTiles, totalCost, tilesPerBox, pricePerBox, wastePct) {
+  let lines = [
+    'Tile & Flooring Coverage Calculator — toolwick.com',
+    '---',
+    `Room Area: ${fmt(r.roomAreaSqFt,2)} sq ft`,
+    `Base Tile Count: ${fmt(Math.ceil(r.baseTiles))}`,
+    `Waste (${wastePct}%): ${fmt(r.tilesWithWaste - Math.ceil(r.baseTiles))} tiles`,
+    `Total Tiles to Buy: ${fmt(r.tilesWithWaste)}`
+  ];
+  if (boxes!==null) lines.push(`Boxes to Buy: ${fmt(boxes)}`);
+  if (totalCost!==null) lines.push(`Estimated Cost: $${fmt(totalCost,2)}`);
+  return lines.join('\n');
+}
+
+function copyResults() {
+  if (!lastResultsText) return;
+  navigator.clipboard.writeText(lastResultsText).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy Results'; }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = lastResultsText;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy Results'; }, 2000);
+  });
+}
+
+// ---- Event listeners ----
+document.getElementById('calcBtn').addEventListener('click', () => {
+  requestAnimationFrame(() => { calculate(); });
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    const active = document.activeElement;
+    if (active && (active.tagName === 'INPUT' || active.tagName === 'SELECT')) {
+      requestAnimationFrame(() => { calculate(); });
+    }
+  }
+});
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>

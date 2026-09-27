@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Free Electrical Load &amp; Circuit Breaker Calculator | Toolwick</title>
+<meta name="description" content="Free electrical load calculator: add appliance wattage per circuit, flag continuous loads, and get amp draw, breaker size, and NEC wire gauge instantly.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/electrical-load-calculator/">
+<style>
+:root{--dark:#1a1a2e;--blue:#0077b6;--gray:#f8f9fa;}
+*{box-sizing:border-box;}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--dark);background:#fff;}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem;}
+nav{padding:1rem 1.5rem;border-bottom:1px solid #eee;}
+nav a{color:var(--blue);text-decoration:none;font-weight:700;font-size:1.05rem;}
+h1{font-size:1.6rem;margin:1.5rem 0 .5rem;}
+h2{font-size:1.2rem;margin-top:2rem;color:var(--dark);}
+p{line-height:1.6;color:#333;}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 6px rgba(0,0,0,0.04);margin-top:1.5rem;}
+.diagram{width:100%;background:var(--gray);border-radius:8px;padding:1rem;margin-bottom:1.5rem;}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.3rem;margin-top:1rem;}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;min-height:44px;}
+input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,119,182,0.15);}
+input.err{border-color:#e74c3c;}
+.errmsg{color:#e74c3c;font-size:.8rem;margin-top:.3rem;display:none;}
+.itemcard{border:1px solid #e6e6e6;border-radius:6px;padding:.9rem 1rem 1rem;margin-top:1rem;background:#fafbfc;}
+.itemcard label{margin-top:.6rem;}
+.itemcard label:first-of-type{margin-top:0;}
+.itemrow2{display:grid;grid-template-columns:1fr 70px 1fr;gap:.6rem;align-items:end;}
+.contbox{display:flex;align-items:center;}
+.ccheck{display:flex;align-items:center;gap:.4rem;font-size:.8rem;font-weight:400;color:#444;margin:0;cursor:pointer;}
+.ccheck input{width:18px;height:18px;min-height:auto;width:18px;flex:none;}
+.rmbtn{margin-top:.8rem;background:none;border:1px solid #ddd;color:#c0392b;border-radius:6px;padding:8px 16px;min-height:40px;font-size:.85rem;cursor:pointer;}
+.addbtn{margin-top:1rem;background:var(--gray);border:1px dashed #ccc;color:var(--blue);padding:10px 16px;border-radius:6px;cursor:pointer;font-weight:500;width:100%;min-height:44px;}
+.pfnote{font-size:.8rem;color:#666;margin-top:.6rem;}
+button.calc{margin-top:1.5rem;background:var(--blue);color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;}
+button.calc:hover{background:#006299;}
+#results{opacity:0;transition:opacity .3s ease;margin-top:1.5rem;}
+#results.show{opacity:1;}
+.bignum{font-size:2.4rem;font-weight:800;color:var(--blue);margin:.2rem 0;}
+.sub{color:#555;font-size:.95rem;}
+table{width:100%;border-collapse:collapse;margin-top:1rem;font-size:.88rem;}
+th,td{padding:8px 10px;border-bottom:1px solid #eee;text-align:right;}
+th:first-child,td:first-child{text-align:left;}
+thead th{background:#f0f0f0;}
+tbody tr:nth-child(even){background:#fafafa;}
+tbody tr:nth-child(odd){background:#fff;}
+.tablewrap{overflow-x:auto;}
+.copybtn{margin-top:1rem;background:none;border:1px solid #ddd;color:var(--blue);padding:8px 14px;border-radius:6px;font-size:.85rem;cursor:pointer;}
+.warn{background:#fff8e1;border:1px solid #ffe082;color:#7a5c00;padding:10px 14px;border-radius:6px;margin-top:1rem;font-size:.9rem;}
+.note{background:var(--gray);border:1px solid #eee;padding:10px 14px;border-radius:6px;margin-top:1rem;font-size:.85rem;color:#555;}
+.ad-slot{min-height:0;margin:0;}
+details{border:1px solid #e0e0e0;border-radius:6px;padding:.8rem 1rem;margin-bottom:.6rem;}
+summary{font-weight:600;cursor:pointer;}
+.related a{display:block;color:var(--blue);text-decoration:none;padding:.4rem 0;border-bottom:1px solid #f0f0f0;}
+footer{text-align:center;padding:2rem 1.5rem;color:#666;font-size:.85rem;}
+footer a{color:#666;margin:0 .4rem;}
+@media (max-width:640px){
+  .itemrow2{grid-template-columns:1fr 70px;}
+  .contbox{grid-column:1/-1;margin-top:.5rem;}
+  .card{padding:1.25rem;}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/electrical-load-calculator/">
+<meta property="og:title" content="Electrical Load &amp; Circuit Breaker Calculator">
+<meta property="og:description" content="Free electrical load calculator: add appliance wattage per circuit, flag continuous loads, and get amp draw, breaker size, and NEC wire gauge instantly.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><a href="/">Toolwick</a></nav>
+<div class="wrap">
+<h1>Electrical Load & Circuit Breaker Calculator</h1>
+<p>Use this free <strong>electrical load calculator</strong> to add up the wattage of your appliances or circuits, flag any continuous loads individually, and get the total amp draw, a recommended circuit breaker size, and a matching copper wire gauge — all in one step.</p>
+
+<div class="card">
+<div class="diagram">
+<svg viewBox="0 0 400 200" width="100%" style="max-width:100%;height:auto;">
+  <rect x="20" y="30" width="80" height="140" fill="none" stroke="#0077b6" stroke-width="2"/>
+  <text x="60" y="20" text-anchor="middle" font-size="11" fill="#1a1a2e">Panel</text>
+  <rect x="35" y="55" width="50" height="20" fill="#0077b6"/>
+  <text x="60" y="69" text-anchor="middle" font-size="10" fill="#fff" id="svgBreaker">20A</text>
+  <text x="60" y="95" text-anchor="middle" font-size="10" fill="#1a1a2e" id="svgVolts">120V</text>
+  <line x1="100" y1="65" x2="230" y2="65" stroke="#1a1a2e" stroke-width="2"/>
+  <text x="165" y="55" text-anchor="middle" font-size="10" fill="#1a1a2e" id="svgWire">12 AWG Cu</text>
+  <line x1="20" y1="185" x2="380" y2="185" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4 3"/>
+  <rect x="235" y="45" width="60" height="40" fill="none" stroke="#0077b6" stroke-width="2"/>
+  <text x="265" y="68" text-anchor="middle" font-size="10" fill="#1a1a2e">Load</text>
+  <text x="265" y="100" text-anchor="middle" font-size="11" fill="#0077b6" font-weight="700" id="svgAmps">Amps: 0.0A</text>
+  <line x1="20" y1="170" x2="20" y2="180" stroke="#e0e0e0"/>
+  <line x1="380" y1="170" x2="380" y2="180" stroke="#e0e0e0"/>
+</svg>
+</div>
+
+<label>Voltage</label>
+<select id="voltage">
+  <option value="120">120V (standard outlet)</option>
+  <option value="208">208V (commercial 3-phase)</option>
+  <option value="240">240V (dryer/range/EV/large appliance)</option>
+</select>
+
+<div id="items"></div>
+<button type="button" class="addbtn" id="addRow">+ Add Appliance / Circuit</button>
+<p class="pfnote">Each item has its own "continuous" checkbox — check it for loads that run 3+ hours straight (water heater, EV charger, space heater). Calculations assume unity power factor; for motors, welders, or EV chargers use the equipment's nameplate Full Load Amps if listed, instead of watts.</p>
+
+<label>Main Panel / Subpanel Rating (optional, amps)</label>
+<input type="text" id="panelAmps" placeholder="e.g. 200">
+
+<button type="button" class="calc" id="calcBtn">Calculate Load</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div class="errmsg" id="mainErr"></div>
+
+<div id="results"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<h2>How to Use This Electrical Load Calculator</h2>
+<p>Add a row for every appliance or circuit you want to power — name it, enter its wattage (found on the nameplate), and set the quantity. Check the "continuous" box for any item that runs 3+ hours straight, pick your voltage, then hit Calculate. You'll get total watts, base amps, required amps with the NEC continuous-load factor applied where flagged, a recommended breaker size, and a suggested copper wire gauge.</p>
+
+<h2>Why This Matters</h2>
+<p>Undersized breakers trip constantly; oversized ones can let wires overheat before tripping — both are real problems for homeowners, electricians, and RV or workshop owners. If you're adding a subpanel, wiring a garage workshop with a compressor, or sizing shore power for a camper, you need to know your true amp draw before pulling permits or buying breakers. For example, a kitchen circuit with a 1,500W microwave, 1,200W toaster oven, and 700W coffee maker running together (none continuous) pulls 3,400W ÷ 120V = 28.3A, requiring a 30A breaker with 10 AWG wire — already too much for a standard 20A kitchen circuit and using most of that 30A breaker's capacity by itself. Getting this number right before you shop for parts saves a return trip to the hardware store and, more importantly, keeps your wiring safe and code-compliant.</p>
+
+<h2>How It's Calculated</h2>
+<p>The core formula is <strong>Amps = Watts ÷ Volts</strong>, calculated per item and then summed. If an item is flagged continuous, the National Electrical Code (NEC 210.20) requires sizing that portion of the load at 125% of its current, since continuous loads generate sustained heat — non-continuous items are left at 100%. The calculator adds every item's required current together, rounds up to the next standard breaker size (15, 20, 25, 30A, etc. per NEC 240.6), and matches it to a copper THHN wire gauge based on NEC Table 310.16 ampacity ratings, respecting the NEC 240.4(D) rule that caps 14/12/10 AWG conductors at 15/20/30A regardless of table ampacity. This tool assumes a power factor of 1 (purely resistive load); for motors, compressors, or chargers with a nameplate FLA rating, use that FLA figure as the "watts equivalent ÷ volts" input instead for a truer number.</p>
+
+<h2>Worked Example</h2>
+<p>Say you're wiring a laundry circuit at 120V with a 1,500W space heater (continuous) and a 900W iron (non-continuous):</p>
+<ul>
+<li>Total connected load: 1,500W + 900W = 2,400W</li>
+<li>Base amps: 2,400W ÷ 120V = 20.0A</li>
+<li>Required watts: (1,500W × 1.25) + (900W × 1.0) = 1,875W + 900W = 2,775W</li>
+<li>Required amps: 2,775W ÷ 120V = 23.1A</li>
+<li>Recommended breaker: 25A (next standard size at or above 23.1A)</li>
+<li>Recommended wire: 10 AWG copper</li>
+</ul>
+
+<h2>Tips & Common Mistakes</h2>
+<ul>
+<li>Always use nameplate wattage or, better, nameplate Full Load Amps (FLA) for motors — motor starting current can spike far above running current, and watts alone assume unity power factor.</li>
+<li>Flag each item's continuous status individually rather than assuming a whole panel is continuous — mixing a fridge (non-continuous cycling) with an EV charger (continuous) in the same total needs per-item accuracy.</li>
+<li>Never load a breaker past 80% of its rating for continuous loads — that's exactly what the 125% factor accounts for.</li>
+<li>Match wire gauge to the breaker, not just the load — an oversized breaker on undersized wire is a fire hazard even if the load never gets that high.</li>
+<li>240V appliances (dryers, ranges, EV chargers) split the load across two hot legs — always double-check the nameplate voltage before calculating.</li>
+<li>This tool gives general guidance only — always verify final breaker and wire selection against your local electrical code or with a licensed electrician, especially for loads above 400A or whole-house service sizing.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How do I calculate electrical load for a room or panel?</summary><p>List every appliance that could run at once with its wattage and quantity, flag any that run 3+ hours continuously, then divide the total by voltage to get amps. This calculator rounds that figure up to the nearest standard breaker size automatically.</p></details>
+<details><summary>What size breaker do I need for 1,500 watts?</summary><p>At 120V, 1,500W draws 12.5A, which fits a 15A breaker if it's non-continuous. If that same load runs continuously for 3+ hours, the NEC 125% factor pushes it to 15.6A, requiring a 20A breaker instead.</p></details>
+<details><summary>What wire gauge do I need for a 20A breaker?</summary><p>Standard practice is 12 AWG copper wire for a 20A circuit, and 14 AWG copper for a 15A circuit, per the NEC 240.4(D) small-conductor rule. Always confirm with your local code since some jurisdictions add derating requirements.</p></details>
+<details><summary>Why does continuous load matter?</summary><p>NEC 210.20 requires continuous loads (running 3+ hours, like a water heater or EV charger) to be sized at 125% of the actual current draw so the breaker and wire don't overheat under sustained use. This tool lets you flag each appliance individually so mixed continuous and non-continuous loads calculate correctly.</p></details>
+<details><summary>Can I use this for a subpanel or whole-house load calculation?</summary><p>Yes for subpanels — list every circuit you plan to feed and enter your panel's amp rating to see utilization percentage. Whole-house service sizing also involves NEC demand factors that reduce the total, so have an electrician verify final numbers.</p></details>
+<details><summary>Does this calculator work for motors, welders, or EV chargers?</summary><p>It gives a good estimate assuming unity power factor, but motor-driven equipment can draw more real current than nameplate watts suggest. Whenever possible, use the equipment's nameplate Full Load Amps (FLA) rating instead of watts for the most accurate breaker size.</p></details>
+
+<h2>Related Tools</h2>
+<div class="related">
+Soil Bearing Capacity Load Calculator
+<a href="/ceiling-drywall-hanger-spacing-load-calculator/">Ceiling Drywall Hanger Spacing & Load Calculator</a>
+<a href="/suspended-ceiling-load-capacity-calculator/">Suspended Ceiling Load Capacity Calculator</a>
+<a href="/generator-transfer-switch-load-calculator/">Generator Transfer Switch Load Calculator</a>
+<a href="/btu-heating-cooling-load-calculator/">BTU Heating & Cooling Load Calculator</a>
+<a href="/recessed-lighting-layout-spacing-calculator/">Ceiling Recessed Lighting Layout Calculator</a>
+</div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/electrical-load-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+let rowId=0;
+function addRow(name,watts,qty,cont){
+  rowId++;
+  const id=rowId;
+  const html=`<div class="itemcard" data-id="${id}">
+    <label>Appliance / Circuit Name</label>
+    <input type="text" class="iname" value="${name||''}" placeholder="e.g. Microwave">
+    <div class="itemrow2">
+      <div><label>Watts</label><input type="text" class="iwatts" value="${watts||''}" placeholder="1200"></div>
+      <div><label>Qty</label><input type="text" class="iqty" value="${qty||1}"></div>
+      <div class="contbox"><label class="ccheck"><input type="checkbox" class="icont" ${cont?'checked':''}> Continuous (3+ hrs)</label></div>
+    </div>
+    <button type="button" class="rmbtn" onclick="removeRow(${id})">Remove item</button>
+  </div>`;
+  document.getElementById('items').insertAdjacentHTML('beforeend',html);
+}
+function removeRow(id){
+  const el=document.querySelector(`.itemcard[data-id="${id}"]`);
+  if(el && document.querySelectorAll('.itemcard').length>1) el.remove();
+}
+document.getElementById('addRow').addEventListener('click',()=>addRow());
+addRow('Refrigerator',700,1,false);
+addRow('Microwave',1200,1,false);
+addRow('Dishwasher',1500,1,false);
+
+const breakerSizes=[15,20,25,30,35,40,45,50,60,70,80,90,100,110,125,150,175,200,225,250,300,350,400];
+const wireMap={15:'14 AWG Cu',20:'12 AWG Cu',25:'10 AWG Cu',30:'10 AWG Cu',35:'8 AWG Cu',40:'8 AWG Cu',45:'6 AWG Cu',50:'6 AWG Cu',60:'4 AWG Cu',70:'4 AWG Cu',80:'3 AWG Cu',90:'2 AWG Cu',100:'1 AWG Cu',110:'1 AWG Cu',125:'1/0 AWG Cu',150:'2/0 AWG Cu',175:'3/0 AWG Cu',200:'4/0 AWG Cu',225:'300 kcmil Cu',250:'350 kcmil Cu',300:'400 kcmil Cu',350:'500 kcmil Cu',400:'600 kcmil Cu'};
+
+function fmt(n,d=1){
+  return Number(n).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
+}
+function showErr(msg){
+  const e=document.getElementById('mainErr');
+  e.textContent=msg; e.style.display='block';
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('results').innerHTML='';
+}
+function clearErr(){
+  document.getElementById('mainErr').style.display='none';
+}
+
+function calculate(){
+  clearErr();
+  const cards=document.querySelectorAll('.itemcard');
+  let items=[]; let bad=false;
+  cards.forEach(r=>{
+    const nameEl=r.querySelector('.iname');
+    const wattsEl=r.querySelector('.iwatts');
+    const qtyEl=r.querySelector('.iqty');
+    const contEl=r.querySelector('.icont');
+    nameEl.classList.remove('err'); wattsEl.classList.remove('err'); qtyEl.classList.remove('err');
+    const name=nameEl.value.trim()||'Item';
+    const watts=parseFloat(wattsEl.value);
+    const qty=parseFloat(qtyEl.value);
+    if(wattsEl.value.trim()===''&&qtyEl.value.trim()===''&&nameEl.value.trim()===''){return;}
+    if(isNaN(watts)||watts<0){wattsEl.classList.add('err');bad=true;return;}
+    if(isNaN(qty)||qty<1){qtyEl.classList.add('err');bad=true;return;}
+    const cont=contEl.checked;
+    const baseWatts=watts*qty;
+    const reqWatts=cont?baseWatts*1.25:baseWatts;
+    items.push({name,watts,qty,cont,baseWatts,reqWatts});
+  });
+  if(bad){showErr('Please fix the highlighted fields — watts must be 0 or more, quantity must be at least 1.');return;}
+  if(items.length===0){showErr('Add at least one appliance with a wattage greater than zero.');return;}
+
+  const totalBaseWatts=items.reduce((s,i)=>s+i.baseWatts,0);
+  const totalReqWatts=items.reduce((s,i)=>s+i.reqWatts,0);
+  if(totalBaseWatts<=0){showErr('Add at least one appliance with a wattage greater than zero.');return;}
+
+  const voltage=parseFloat(document.getElementById('voltage').value);
+  const panelInput=document.getElementById('panelAmps');
+  panelInput.classList.remove('err');
+  let panelAmps=null;
+  if(panelInput.value.trim()!==''){
+    panelAmps=parseFloat(panelInput.value);
+    if(isNaN(panelAmps)||panelAmps<=0){panelInput.classList.add('err');showErr('Panel rating must be a positive number, or leave it blank.');return;}
+  }
+
+  const baseAmps=totalBaseWatts/voltage;
+  const requiredAmps=totalReqWatts/voltage;
+
+  if(requiredAmps>400){
+    showErr('Required load exceeds this calculator\'s 400A range. Whole-service calculations this large use NEC demand-factor methods — please consult a licensed electrician.');
+    return;
+  }
+
+  let breaker=breakerSizes.find(b=>b>=requiredAmps);
+  if(!breaker) breaker=400;
+  const wire=wireMap[breaker];
+  const hasCont=items.some(i=>i.cont);
+
+  let utilPct=null, utilWarn='';
+  if(panelAmps){
+    utilPct=(requiredAmps/panelAmps)*100;
+    if(utilPct>100) utilWarn='<div class="warn">⚠ Required load exceeds your panel/subpanel rating. Consider a larger panel or splitting circuits.</div>';
+    else if(utilPct>80) utilWarn='<div class="warn">⚠ This load uses more than 80% of the panel rating — leave headroom for future circuits.</div>';
+  }
+
+  let rowsHtml='';
+  items.forEach(it=>{
+    rowsHtml+=`<tr><td>${it.name}</td><td>${fmt(it.watts,0)}</td><td>${fmt(it.qty,0)}</td><td>${it.cont?'Yes':'No'}</td><td>${fmt(it.baseWatts,0)}</td></tr>`;
+  });
+
+  const resultText=`Electrical Load Summary\nTotal Connected Load: ${fmt(totalBaseWatts,0)} W\nVoltage: ${voltage}V\nBase Amps: ${fmt(baseAmps,2)} A\nRequired Amps (with continuous factor): ${fmt(requiredAmps,2)} A\nRecommended Breaker: ${breaker}A\nRecommended Wire: ${wire}`+(panelAmps?`\nPanel Utilization: ${fmt(utilPct,1)}%`:'');
+
+  const html=`
+    <div class="bignum">${breaker}A</div>
+    <div class="sub">Recommended breaker size at ${voltage}V${hasCont?' (includes 125% factor on continuous items)':''}</div>
+    <div class="tablewrap">
+    <table>
+      <tr><th>Total Connected Load</th><td>${fmt(totalBaseWatts,0)} W</td></tr>
+      <tr><th>Base Amps (W ÷ V)</th><td>${fmt(baseAmps,2)} A</td></tr>
+      <tr><th>Required Amps</th><td>${fmt(requiredAmps,2)} A</td></tr>
+      <tr><th>Recommended Wire Gauge</th><td>${wire}</td></tr>
+      ${panelAmps?`<tr><th>Panel Utilization</th><td>${fmt(utilPct,1)}%</td></tr>`:''}
+    </table>
+    </div>
+    ${utilWarn}
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Appliance</th><th>Watts</th><th>Qty</th><th>Cont.</th><th>Subtotal (W)</th></tr></thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+    </div>
+    <div class="note">Assumes unity power factor (resistive loads). Wire pairing follows NEC Table 310.16 (75°C copper) with the 240.4(D) exception for 14/12/10 AWG conductors. Verify final sizing with a licensed electrician.</div>
+    <button type="button" class="copybtn" id="copyBtn">Copy Results</button>
+  `;
+
+  requestAnimationFrame(()=>{
+    const res=document.getElementById('results');
+    res.innerHTML=html;
+    res.classList.add('show');
+    document.getElementById('svgBreaker').textContent=breaker+'A';
+    document.getElementById('svgVolts').textContent=voltage+'V';
+    document.getElementById('svgWire').textContent=wire;
+    document.getElementById('svgAmps').textContent='Amps: '+fmt(requiredAmps,1)+'A';
+    document.getElementById('copyBtn').addEventListener('click',function(){
+      navigator.clipboard.writeText(resultText).then(()=>{
+        this.textContent='Copied!';
+        setTimeout(()=>{this.textContent='Copy Results';},2000);
+      });
+    });
+  });
+}
+
+document.getElementById('calcBtn').addEventListener('click',()=>{requestAnimationFrame(calculate);});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter' && (e.target.tagName==='INPUT'||e.target.tagName==='SELECT')){
+    e.preventDefault();
+    requestAnimationFrame(calculate);
+  }
+});
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>

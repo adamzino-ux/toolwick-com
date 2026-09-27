@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Free Asphalt Shingle Calculator | Toolwick</title>
+<meta name="description" content="Free asphalt shingle calculator estimates roof squares, bundles, ridge cap, underlayment rolls, nails, and total cost from your roof dimensions and pitch.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/asphalt-shingle-calculator/">
+<style>
+:root{--accent:#0077b6;--dark:#1a1a2e;--gray:#f8f9fa;}
+*{box-sizing:border-box;}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--dark);background:#fff;line-height:1.6;}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem;}
+nav{padding:1rem 1.5rem;border-bottom:1px solid #eee;}
+nav a{color:var(--accent);text-decoration:none;font-weight:700;font-size:1.1rem;}
+h1{font-size:1.6rem;margin:1.5rem 0 0.5rem;}
+h2{font-size:1.25rem;margin-top:2rem;color:var(--dark);}
+p{color:#333;}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 6px rgba(0,0,0,0.04);margin-top:1.5rem;}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:0.3rem;margin-top:1rem;}
+label:first-child{margin-top:0;}
+input[type=number],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;min-height:44px;}
+input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,119,182,0.15);}
+input.error{border-color:#e74c3c;}
+.err-msg{color:#e74c3c;font-size:0.8rem;margin-top:0.3rem;display:none;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+button#calcBtn{margin-top:1.5rem;width:100%;background:var(--accent);color:#fff;border:none;padding:14px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;min-height:44px;}
+button#calcBtn:hover{background:#006299;}
+#results{opacity:0;transition:opacity 0.3s ease;margin-top:2rem;}
+#results.show{opacity:1;}
+.key-number{font-size:2.2rem;font-weight:700;color:var(--accent);margin:0.2rem 0;}
+.key-label{font-size:0.9rem;color:#555;}
+.table-wrap{overflow-x:auto;margin-top:1rem;}
+table{width:100%;border-collapse:collapse;font-size:0.92rem;}
+th,td{padding:10px 12px;border-bottom:1px solid #eee;text-align:right;}
+th:first-child,td:first-child{text-align:left;}
+thead th{background:#f0f0f0;}
+tbody tr:nth-child(even){background:#fafafa;}
+tbody tr:nth-child(odd){background:#fff;}
+.copy-btn{background:#f0f0f0;border:1px solid #ddd;padding:8px 14px;border-radius:6px;font-size:0.85rem;cursor:pointer;margin-top:1rem;min-height:44px;}
+.copy-btn:hover{background:#e6e6e6;}
+.ad-slot{min-height:0;margin:0;}
+.svg-wrap{background:var(--gray);border-radius:8px;padding:1rem;margin-top:1rem;}
+svg{width:100%;height:auto;display:block;}
+details{background:var(--gray);border-radius:6px;padding:0.8rem 1rem;margin-top:0.7rem;}
+summary{font-weight:600;cursor:pointer;}
+.note{font-size:0.85rem;color:#666;margin-top:0.5rem;}
+.related a{display:inline-block;margin:0.3rem 0.6rem 0.3rem 0;color:var(--accent);text-decoration:none;}
+.related a:hover{text-decoration:underline;}
+footer{border-top:1px solid #eee;padding:1.5rem;text-align:center;font-size:0.85rem;color:#666;margin-top:2rem;}
+footer a{color:#666;margin:0 0.4rem;}
+@media(max-width:480px){.grid2{grid-template-columns:1fr;}.key-number{font-size:1.8rem;}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/asphalt-shingle-calculator/">
+<meta property="og:title" content="Asphalt Shingle Calculator">
+<meta property="og:description" content="Free asphalt shingle calculator estimates roof squares, bundles, ridge cap, underlayment rolls, nails, and total cost from your roof dimensions and pitch.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><a href="/">Toolwick</a></nav>
+<div class="wrap">
+<h1>Asphalt Shingle Calculator</h1>
+<p>Use this asphalt shingle calculator to figure out exactly how many bundles of shingles, ridge cap bundles, underlayment rolls, and nails you need for your roof — plus an estimated material cost — based on your roof's dimensions and pitch.</p>
+
+<div class="card">
+  <div class="svg-wrap">
+    <svg viewBox="0 0 400 200" id="roofSvg">
+      <line x1="30" y1="160" x2="370" y2="160" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4"/>
+      <polyline id="roofLine" points="30,160 200,60 370,160" fill="none" stroke="#0077b6" stroke-width="3"/>
+      <line id="vLine" x1="200" y1="60" x2="200" y2="160" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4"/>
+      <text x="200" y="14" text-anchor="middle" fill="#1a1a2e" font-size="12" font-weight="600" id="areaLabel">Roof Area: — sq ft</text>
+      <text x="200" y="50" text-anchor="middle" fill="#1a1a2e" font-size="12" font-weight="600" id="pitchLabel">6/12 pitch</text>
+      <text x="205" y="110" fill="#1a1a2e" font-size="11" id="riseLabel">Rise: 15 ft</text>
+      <text x="200" y="180" text-anchor="middle" fill="#1a1a2e" font-size="12" id="spanLabel">Span (Width): 30 ft</text>
+      <text x="95" y="115" fill="#1a1a2e" font-size="10" id="slopeLabel1">Slope</text>
+      <text x="290" y="115" fill="#1a1a2e" font-size="10" id="slopeLabel2">Slope</text>
+    </svg>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <label for="len">Building Length (ft)</label>
+      <input type="number" id="len" value="40" min="1">
+      <div class="err-msg" id="err-len">Enter a length greater than 0.</div>
+    </div>
+    <div>
+      <label for="wid">Building Width (ft)</label>
+      <input type="number" id="wid" value="30" min="1">
+      <div class="err-msg" id="err-wid">Enter a width greater than 0.</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <label for="pitch">Roof Pitch (rise per 12")</label>
+      <select id="pitch">
+        <option value="0">Flat (0/12)</option>
+        <option value="2">2/12</option>
+        <option value="3">3/12</option>
+        <option value="4">4/12</option>
+        <option value="5">5/12</option>
+        <option value="6" selected>6/12</option>
+        <option value="7">7/12</option>
+        <option value="8">8/12</option>
+        <option value="9">9/12</option>
+        <option value="10">10/12</option>
+        <option value="12">12/12</option>
+      </select>
+    </div>
+    <div>
+      <label for="waste">Waste Factor</label>
+      <select id="waste">
+        <option value="5">5% (simple gable)</option>
+        <option value="10" selected>10% (average roof)</option>
+        <option value="15">15% (hips/valleys)</option>
+        <option value="20">20% (complex roof)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <label for="ridge">Ridge Length (ft) — optional</label>
+      <input type="number" id="ridge" value="40" min="0">
+    </div>
+    <div>
+      <label for="bps">Bundles per Square</label>
+      <select id="bps">
+        <option value="3" selected>3 (standard 3-tab/architectural)</option>
+        <option value="4">4 (heavier/architectural)</option>
+        <option value="5">5 (premium/designer)</option>
+      </select>
+    </div>
+  </div>
+
+  <label for="price">Price per Bundle ($) — optional</label>
+  <input type="number" id="price" value="38" min="0">
+
+  <button id="calcBtn">Calculate Shingles Needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+  <div id="results"></div>
+  <button class="copy-btn" id="copyBtn" style="display:none;">Copy Results</button>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<h2>How to Use This Asphalt Shingle Calculator</h2>
+<p>Enter your building's length and width (the footprint, not the sloped roof surface), choose your roof pitch and a waste percentage that fits your roof's complexity, then click Calculate. The tool converts your footprint into actual roof surface area, then tells you how many bundles, ridge caps, underlayment rolls, and nails to buy — plus an estimated total cost if you enter a price per bundle.</p>
+
+<h2>Why This Matters</h2>
+<p>Ordering the wrong amount of shingles is one of the most common (and expensive) mistakes in a roofing project. Order too little and you'll pay rush shipping fees or get stuck with a mismatched dye lot from a different production run. Order too much and you're out hundreds of dollars in unused material sitting in your garage. Homeowners planning a DIY reroof, contractors quoting jobs, and insurance adjusters estimating claim costs all need a fast, reliable way to convert roof dimensions into a shopping list. A typical 1,500 sq ft ranch home with a simple gable roof might need 20-24 squares of shingles — that's 60-72 bundles at roughly $35-45 each, meaning a $200 estimating error is easy to make without doing the math properly. This calculator removes the guesswork.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator first finds the pitch multiplier, which converts flat footprint area into actual sloped roof area:</p>
+<p><strong>Pitch Multiplier = √(144 + rise²) ÷ 12</strong></p>
+<p>Then roof area, squares, and materials are found as follows:</p>
+<p><strong>Roof Area (sq ft) = Length × Width × Pitch Multiplier</strong><br>
+<strong>Squares = Roof Area ÷ 100</strong><br>
+<strong>Squares with Waste = Squares × (1 + Waste % ÷ 100)</strong><br>
+<strong>Bundles Needed = Squares with Waste × Bundles per Square (rounded up)</strong><br>
+<strong>Ridge Cap Bundles = Ridge Length ÷ 25 (rounded up)</strong><br>
+<strong>Underlayment Rolls = Squares with Waste ÷ 4 (rounded up, standard 15lb felt)</strong><br>
+<strong>Roofing Nails (lbs) ≈ Squares with Waste × 1 lb</strong></p>
+<p class="note">Note on ridge cap: coverage per bundle varies by manufacturer, typically 20-33 linear ft per bundle. This calculator uses a conservative 25 ft/bundle default so you're less likely to under-order — always confirm against your chosen product's packaging.</p>
+<p class="note">Note on nails: the 1 lb/square rule of thumb assumes roughly 320 nails per square with a standard 4-nail-per-shingle pattern. If your local code requires a 6-nail high-wind installation, increase this estimate by about 25-30%.</p>
+
+<h2>Worked Example</h2>
+<p>Say you have a house that's 40 ft long and 30 ft wide, with a 6/12 pitch and a 10% waste factor, plus 40 ft of ridge line.</p>
+<p>Pitch multiplier = √(144 + 36) ÷ 12 = √180 ÷ 12 ≈ 1.118<br>
+Roof area = 40 × 30 × 1.118 ≈ 1,342 sq ft<br>
+Squares = 1,342 ÷ 100 ≈ 13.4 squares<br>
+Squares with waste = 13.4 × 1.10 ≈ 14.8 squares<br>
+Bundles needed (3 per square) = 14.8 × 3 ≈ 45 bundles (rounded up)<br>
+Ridge cap = 40 ÷ 25 ≈ 2 bundles (rounded up)<br>
+Underlayment = 14.8 ÷ 4 ≈ 4 rolls<br>
+Nails ≈ 14.8 lbs<br>
+At $38/bundle, total cost = (45 shingle bundles + 2 ridge cap bundles) × $38 = 47 × $38 = $1,786</p>
+
+<h2>Tips & Common Mistakes</h2>
+<p>• Always measure the building footprint at the eaves, not at ground level, since overhangs change the true roof size.<br>
+• Use a higher waste factor (15-20%) for roofs with hips, valleys, dormers, or lots of cuts — flat rectangular roofs can safely use 5-10%.<br>
+• Buy all your shingle bundles from the same production lot when possible to avoid visible color variation.<br>
+• Round up to the nearest full bundle and buy a few extra — leftover shingles are useful for future repairs.<br>
+• Double-check your pitch by measuring rise over a 12-inch run on the actual roof, not just guessing from the ground.<br>
+• Verify ridge cap coverage and nail pattern requirements against your specific shingle brand and local building code before finalizing an order.</p>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many bundles of shingles are in a square?</summary><p>Most standard 3-tab and architectural shingles come 3 bundles per square (100 sq ft of coverage). Some heavier designer or premium shingles use 4 or even 5 bundles per square, so always check the manufacturer's packaging — this calculator lets you choose 3, 4, or 5.</p></details>
+<details><summary>How do I measure my roof pitch?</summary><p>Place a level horizontally against the roof and measure 12 inches out from the wall or fascia, then measure the vertical distance down to the roof surface at that 12-inch mark. That vertical measurement in inches is your "rise" — for example, a 6-inch rise gives you a 6/12 pitch.</p></details>
+<details><summary>Do I need to buy extra shingles for waste?</summary><p>Yes. Cutting shingles around edges, valleys, chimneys, and vents always creates waste, so a 10-15% buffer above the exact square footage is standard practice in the roofing industry.</p></details>
+<details><summary>How many squares does an average house need?</summary><p>A typical single-story home between 1,200 and 2,000 sq ft of footprint usually needs somewhere between 15 and 25 squares of shingles, depending on roof pitch and complexity.</p></details>
+<details><summary>What's the difference between a square and a bundle?</summary><p>A "square" is a roofing measurement equal to 100 square feet of roof surface. A "bundle" is the packaged unit shingles are sold in — it takes multiple bundles (usually 3) to cover one full square.</p></details>
+<details><summary>Should I include the ridge cap in my shingle bundle count?</summary><p>No, ridge cap shingles are typically purchased and calculated separately since they cover the ridge line rather than the roof field — this calculator lists them as a separate line item using a 25 linear ft per bundle estimate.</p></details>
+
+<h2>Related Tools</h2>
+<div class="related">
+<a href="/recessed-lighting-layout-spacing-calculator/">Ceiling Recessed Lighting Layout Calculator</a>
+<a href="/knee-wall-stud-height-attic-storage-calculator/">Knee Wall Stud Height & Attic Storage Calculator</a>
+Struct Wood Shear Wall Nailing Pattern Calculator
+Soil Bearing Capacity Load Calculator
+<a href="/ceiling-texture-spray-compressor-calculator/">Ceiling Texture Hopper Gun Air Compressor Calculator</a>
+<a href="/ceiling-drywall-hanger-spacing-load-calculator/">Ceiling Drywall Hanger Spacing & Load Calculator</a>
+</div>
+
+</div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/asphalt-shingle-calculator/">Toolwick</a></p>
+
+<script>
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function setErr(id,show){
+  var inp=document.getElementById(id);
+  var msg=document.getElementById('err-'+id);
+  if(inp){inp.classList.toggle('error',show);}
+  if(msg){msg.style.display=show?'block':'none';}
+}
+function validate(){
+  var len=parseFloat(document.getElementById('len').value);
+  var wid=parseFloat(document.getElementById('wid').value);
+  var lenErr=isNaN(len)||len<=0;
+  var widErr=isNaN(wid)||wid<=0;
+  setErr('len',lenErr);
+  setErr('wid',widErr);
+  return !(lenErr||widErr);
+}
+function calculate(){
+  if(!validate())return;
+  var len=parseFloat(document.getElementById('len').value);
+  var wid=parseFloat(document.getElementById('wid').value);
+  var rise=parseFloat(document.getElementById('pitch').value);
+  var waste=parseFloat(document.getElementById('waste').value);
+  var ridge=parseFloat(document.getElementById('ridge').value)||0;
+  var bps=parseFloat(document.getElementById('bps').value);
+  var price=parseFloat(document.getElementById('price').value)||0;
+
+  var pitchMult=Math.sqrt(144+rise*rise)/12;
+  var roofArea=len*wid*pitchMult;
+  var squares=roofArea/100;
+  var squaresWaste=squares*(1+waste/100);
+  var bundles=Math.ceil(squaresWaste*bps);
+  var ridgeBundles=ridge>0?Math.ceil(ridge/25):0;
+  var feltRolls=Math.ceil(squaresWaste/4);
+  var nailsLbs=squaresWaste*1.0;
+  var totalCost=price>0?(bundles+ridgeBundles)*price:null;
+
+  var halfWid=wid/2;
+  var riseFt=rise*halfWid/12;
+  var slopeLen=Math.sqrt(halfWid*halfWid+riseFt*riseFt);
+
+  requestAnimationFrame(()=>{
+    var scale=Math.min(12,Math.max(2,170/(halfWid||1)));
+    var peakYraw=160-riseFt*scale;
+    var peakY=Math.min(140,Math.max(30,peakYraw));
+
+    document.getElementById('roofLine').setAttribute('points','30,160 200,'+peakY+' 370,160');
+    document.getElementById('vLine').setAttribute('y1',peakY);
+    document.getElementById('pitchLabel').setAttribute('y',Math.max(peakY-12,18));
+    document.getElementById('pitchLabel').textContent=rise+'/12 pitch';
+    var riseY=(peakY+160)/2;
+    document.getElementById('riseLabel').setAttribute('y',riseY);
+    document.getElementById('riseLabel').textContent='Rise: '+fmt(riseFt,1)+' ft';
+    document.getElementById('spanLabel').textContent='Span (Width): '+fmt(wid,0)+' ft';
+    document.getElementById('areaLabel').textContent='Roof Area: '+fmt(roofArea,0)+' sq ft';
+    var slopeY=(peakY+160)/2+8;
+    document.getElementById('slopeLabel1').setAttribute('y',slopeY);
+    document.getElementById('slopeLabel2').setAttribute('y',slopeY);
+    document.getElementById('slopeLabel1').textContent='Slope: '+fmt(slopeLen,1)+' ft';
+    document.getElementById('slopeLabel2').textContent='Slope: '+fmt(slopeLen,1)+' ft';
+
+    var rows='';
+    rows+='<tr><td>Roof Area</td><td>'+fmt(roofArea,0)+' sq ft</td></tr>';
+    rows+='<tr><td>Pitch Multiplier</td><td>'+fmt(pitchMult,3)+'</td></tr>';
+    rows+='<tr><td>Squares (before waste)</td><td>'+fmt(squares,1)+'</td></tr>';
+    rows+='<tr><td>Waste Factor</td><td>'+waste+'%</td></tr>';
+    rows+='<tr><td>Squares (with waste)</td><td>'+fmt(squaresWaste,1)+'</td></tr>';
+    rows+='<tr><td>Bundles Needed</td><td>'+fmt(bundles,0)+'</td></tr>';
+    rows+='<tr><td>Ridge Cap Bundles</td><td>'+(ridge>0?fmt(ridgeBundles,0):'—')+'</td></tr>';
+    rows+='<tr><td>Underlayment Rolls (4 sq/roll)</td><td>'+fmt(feltRolls,0)+'</td></tr>';
+    rows+='<tr><td>Roofing Nails (approx)</td><td>'+fmt(nailsLbs,1)+' lbs</td></tr>';
+    if(totalCost!==null){
+      rows+='<tr><td>Estimated Material Cost</td><td>$'+fmt(totalCost,2)+'</td></tr>';
+    }
+
+    var html='';
+    html+='<div class="key-label">Bundles of Shingles Needed</div>';
+    html+='<div class="key-number">'+fmt(bundles,0)+' bundles</div>';
+    html+='<div class="key-label">('+fmt(squaresWaste,1)+' squares including waste)</div>';
+    html+='<div class="table-wrap"><table><thead><tr><th>Item</th><th>Amount</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+
+    var resultsEl=document.getElementById('results');
+    resultsEl.innerHTML=html;
+    resultsEl.classList.add('show');
+    document.getElementById('copyBtn').style.display='inline-block';
+
+    window._copyText='Asphalt Shingle Calculator Results\\n'+
+      'Roof Area: '+fmt(roofArea,0)+' sq ft\\n'+
+      'Squares (with waste): '+fmt(squaresWaste,1)+'\\n'+
+      'Bundles Needed: '+fmt(bundles,0)+'\\n'+
+      'Ridge Cap Bundles: '+(ridge>0?fmt(ridgeBundles,0):'—')+'\\n'+
+      'Underlayment Rolls: '+fmt(feltRolls,0)+'\\n'+
+      'Roofing Nails: '+fmt(nailsLbs,1)+' lbs'+
+      (totalCost!==null?('\\nEstimated Cost: $'+fmt(totalCost,2)):'');
+  });
+}
+document.getElementById('calcBtn').addEventListener('click',calculate);
+document.querySelectorAll('.wrap input, .wrap select').forEach(function(el){
+  el.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){calculate();}
+  });
+});
+document.getElementById('copyBtn').addEventListener('click',function(){
+  var btn=this;
+  navigator.clipboard.writeText(window._copyText||'').then(function(){
+    btn.textContent='Copied!';
+    setTimeout(function(){btn.textContent='Copy Results';},2000);
+  });
+});
+calculate();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>

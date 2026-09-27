@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Deck Material &amp; Cost Estimator | Toolwick</title>
+<meta name="description" content="Calculate deck materials and costs instantly. Enter dimensions, choose decking type, and get a full lumber list with price estimates. Free deck material…">
+<link rel="canonical" href="https://toolwick.com/deck-material-cost-estimator/">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #1a1a2e; font-size: 16px; line-height: 1.6; }
+a { color: #0077b6; text-decoration: none; }
+a:hover { text-decoration: underline; }
+nav { border-bottom: 1px solid #e0e0e0; padding: 0.75rem 1.5rem; }
+nav .nav-inner { max-width: 640px; margin: 0 auto; display: flex; align-items: center; }
+nav .site-name { font-weight: 700; font-size: 1.1rem; color: #1a1a2e; }
+nav .site-name:hover { text-decoration: none; color: #0077b6; }
+.container { max-width: 640px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
+h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.4rem; color: #1a1a2e; }
+.subtitle { color: #555; font-size: 0.95rem; margin-bottom: 1.5rem; }
+.card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+/* SVG Diagram */
+.diagram-wrap { margin-bottom: 1.5rem; text-align: center; }
+.diagram-wrap svg { max-width: 100%; height: auto; }
+/* Form */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+@media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+.form-group { margin-bottom: 1rem; }
+label { display: block; font-size: 0.85rem; font-weight: 500; color: #444; margin-bottom: 0.35rem; }
+input[type="number"], select { width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: inherit; color: #1a1a2e; background: #fff; transition: box-shadow 0.2s, border-color 0.2s; min-height: 44px; appearance: none; -webkit-appearance: none; }
+input[type="number"]:focus, select:focus { outline: none; border-color: #0077b6; box-shadow: 0 0 0 3px rgba(0,119,182,0.15); }
+input.error { border-color: #e74c3c; }
+.error-msg { color: #e74c3c; font-size: 0.8rem; margin-top: 0.25rem; }
+.range-row { display: flex; align-items: center; gap: 0.75rem; }
+input[type="range"] { flex: 1; min-height: 44px; accent-color: #0077b6; cursor: pointer; }
+.range-val { font-weight: 600; color: #0077b6; min-width: 2.5rem; text-align: right; font-size: 0.95rem; }
+.section-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #666; margin: 1.25rem 0 0.75rem; border-top: 1px solid #f0f0f0; padding-top: 1rem; }
+.btn { background: #0077b6; color: #fff; border: none; padding: 12px 24px; font-size: 1rem; font-weight: 600; border-radius: 6px; cursor: pointer; width: 100%; min-height: 48px; transition: background 0.2s; font-family: inherit; }
+.btn:hover { background: #006299; }
+.btn-secondary { background: #f0f0f0; color: #1a1a2e; font-size: 0.85rem; padding: 8px 16px; min-height: 36px; width: auto; border-radius: 6px; border: none; cursor: pointer; font-family: inherit; font-weight: 500; transition: background 0.2s; }
+.btn-secondary:hover { background: #e0e0e0; }
+/* Results */
+.results-section { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+.results-section.visible { opacity: 1; pointer-events: all; }
+.result-hero { text-align: center; padding: 1.25rem; background: #f0f7ff; border-radius: 8px; margin-bottom: 1.25rem; }
+.result-hero .big-num { font-size: 2.4rem; font-weight: 800; color: #0077b6; line-height: 1.1; }
+.result-hero .big-label { font-size: 0.9rem; color: #555; margin-top: 0.2rem; }
+.summary-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem; }
+@media (max-width: 420px) { .summary-grid { grid-template-columns: 1fr 1fr; } }
+.summary-item { background: #f8f9fa; border-radius: 6px; padding: 0.85rem 1rem; text-align: center; }
+.summary-item .s-val { font-size: 1.2rem; font-weight: 700; color: #1a1a2e; }
+.summary-item .s-lbl { font-size: 0.75rem; color: #666; margin-top: 0.1rem; }
+.results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+.results-header h3 { font-size: 1rem; font-weight: 700; }
+.copy-btn { background: #f0f0f0; color: #555; border: none; padding: 6px 14px; font-size: 0.8rem; border-radius: 4px; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+.copy-btn:hover { background: #e0e0e0; }
+.table-wrap { overflow-x: auto; border-radius: 6px; border: 1px solid #e0e0e0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th { background: #f0f0f0; padding: 10px 12px; text-align: left; font-size: 0.82rem; font-weight: 600; color: #444; border-bottom: 2px solid #ddd; white-space: nowrap; }
+th:last-child, td:last-child { text-align: right; }
+td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; color: #1a1a2e; }
+tr:nth-child(even) td { background: #fafafa; }
+tr:last-child td { border-bottom: none; }
+.td-num { text-align: right; font-variant-numeric: tabular-nums; }
+.total-row td { font-weight: 700; background: #f0f7ff !important; border-top: 2px solid #cce0f0; }
+.show-more-wrap { text-align: center; margin-top: 0.75rem; }
+/* Cost bar visual */
+.bar-section { margin-top: 1rem; }
+.bar-label-row { display: flex; justify-content: space-between; font-size: 0.82rem; color: #555; margin-bottom: 0.2rem; }
+.bar-track { background: #f0f0f0; border-radius: 4px; height: 14px; overflow: hidden; margin-bottom: 0.55rem; }
+.bar-fill { height: 100%; background: #0077b6; border-radius: 4px; transition: width 0.4s ease; }
+.bar-fill.green { background: #2ecc71; }
+.bar-fill.orange { background: #e67e22; }
+/* Content sections */
+.content-section { margin-top: 2.5rem; }
+.content-section h2 { font-size: 1.2rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.6rem; border-bottom: 2px solid #e0e0e0; padding-bottom: 0.4rem; }
+.content-section p { color: #333; margin-bottom: 0.9rem; font-size: 0.95rem; }
+.content-section ul, .content-section ol { padding-left: 1.4rem; margin-bottom: 0.9rem; }
+.content-section li { color: #333; font-size: 0.95rem; margin-bottom: 0.4rem; }
+details { border: 1px solid #e0e0e0; border-radius: 6px; margin-bottom: 0.5rem; overflow: hidden; }
+summary { padding: 0.75rem 1rem; font-weight: 600; cursor: pointer; font-size: 0.93rem; background: #f8f9fa; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+summary::after { content: '+'; font-size: 1.1rem; color: #0077b6; font-weight: 700; }
+details[open] summary::after { content: '−'; }
+details p { padding: 0.75rem 1rem; font-size: 0.9rem; color: #333; background: #fff; }
+.related-tools { background: #f8f9fa; border-radius: 8px; padding: 1.25rem 1.5rem; margin-top: 2rem; }
+.related-tools h2 { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; border: none; padding: 0; }
+.related-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+@media (max-width: 400px) { .related-list { grid-template-columns: 1fr; } }
+.related-list a { font-size: 0.88rem; color: #0077b6; padding: 0.35rem 0; }
+.ad-slot { min-height: 0; margin: 0; }
+footer { border-top: 1px solid #e0e0e0; padding: 1.25rem 1.5rem; margin-top: 2rem; text-align: center; }
+footer .footer-inner { max-width: 640px; margin: 0 auto; }
+footer p { font-size: 0.83rem; color: #666; margin-bottom: 0.35rem; }
+footer a { color: #0077b6; font-size: 0.83rem; margin: 0 0.5rem; }
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/deck-material-cost-estimator/">
+<meta property="og:title" content="Deck Material &amp; Cost Estimator">
+<meta property="og:description" content="Calculate deck materials and costs instantly. Enter dimensions, choose decking type, and get a full lumber list with price estimates. Free deck material…">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="site-name">🔧 toolwick.com</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Deck Material & Cost Estimator</h1>
+  <p class="subtitle">Calculate lumber, fasteners, and total costs for your deck project in seconds.</p>
+
+  <div class="card">
+    <!-- SVG DIAGRAM -->
+    <div class="diagram-wrap">
+      <svg id="deckDiagram" viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Deck layout diagram showing length, width, joist spacing and post layout">
+        <!-- Ground shadow -->
+        <rect x="60" y="155" width="440" height="6" rx="3" fill="#e0e0e0"/>
+        <!-- Deck surface -->
+        <rect x="60" y="55" width="440" height="100" rx="4" fill="#f8f9fa" stroke="#0077b6" stroke-width="2"/>
+        <!-- Decking boards (5 boards) -->
+        <line x1="60" y1="75" x2="500" y2="75" stroke="#0077b6" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+        <line x1="60" y1="95" x2="500" y2="95" stroke="#0077b6" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+        <line x1="60" y1="115" x2="500" y2="115" stroke="#0077b6" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+        <line x1="60" y1="135" x2="500" y2="135" stroke="#0077b6" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+        <!-- Joists (vertical lines) -->
+        <line x1="120" y1="55" x2="120" y2="155" stroke="#1a1a2e" stroke-width="1.5" opacity="0.3"/>
+        <line x1="180" y1="55" x2="180" y2="155" stroke="#1a1a2e" stroke-width="1.5" opacity="0.3"/>
+        <line x1="240" y1="55" x2="240" y2="155" stroke="#1a1a2e" stroke-width="1.5" opacity="0.3"/>
+        <line x1="300" y1="55" x2="300" y2="155" stroke="#1a1a2e" stroke-width="1.5" opacity="0.3"/>
+        <line x1="360" y1="55" x2="360" y2="155" stroke="#1a1a2e" stroke-width="1.5" opacity="0.3"/>
+        <line x1="420" y1="55" x2="420" y2="155" stroke="#1a1a2e" stroke-width="1.5" opacity="0.3"/>
+        <!-- Posts -->
+        <rect x="68" y="155" width="12" height="28" rx="2" fill="#0077b6"/>
+        <rect x="228" y="155" width="12" height="28" rx="2" fill="#0077b6"/>
+        <rect x="488" y="155" width="12" height="28" rx="2" fill="#0077b6"/>
+        <!-- Length arrow -->
+        <line x1="60" y1="28" x2="500" y2="28" stroke="#e67e22" stroke-width="1.5"/>
+        <polygon points="60,24 60,32 48,28" fill="#e67e22"/>
+        <polygon points="500,24 500,32 512,28" fill="#e67e22"/>
+        <text id="svgLength" x="280" y="22" text-anchor="middle" fill="#e67e22" font-size="13" font-weight="700" font-family="-apple-system,sans-serif">LENGTH: 20 ft</text>
+        <!-- Width arrow -->
+        <line x1="28" y1="55" x2="28" y2="155" stroke="#0077b6" stroke-width="1.5"/>
+        <polygon points="24,55 32,55 28,43" fill="#0077b6"/>
+        <polygon points="24,155 32,155 28,167" fill="#0077b6"/>
+        <text id="svgWidth" x="22" y="110" text-anchor="middle" fill="#0077b6" font-size="13" font-weight="700" font-family="-apple-system,sans-serif" transform="rotate(-90,22,110)">WIDTH: 12 ft</text>
+        <!-- Joist spacing label -->
+        <text x="150" y="174" text-anchor="middle" fill="#888" font-size="10" font-family="-apple-system,sans-serif">Joists</text>
+        <!-- Beam label -->
+        <text x="280" y="148" text-anchor="middle" fill="#888" font-size="10" font-family="-apple-system,sans-serif">Beam</text>
+        <!-- Post label -->
+        <text x="74" y="194" text-anchor="middle" fill="#1a1a2e" font-size="10" font-family="-apple-system,sans-serif">Post</text>
+        <!-- Area label -->
+        <text id="svgArea" x="280" y="110" text-anchor="middle" fill="#1a1a2e" font-size="14" font-weight="700" font-family="-apple-system,sans-serif">Area: 240 sq ft</text>
+      </svg>
+    </div>
+
+    <!-- INPUTS -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="deckLength">Deck Length (ft)</label>
+        <input type="number" id="deckLength" min="4" max="200" value="20" placeholder="e.g. 20">
+        <div class="error-msg" id="errLength"></div>
+      </div>
+      <div class="form-group">
+        <label for="deckWidth">Deck Width (ft)</label>
+        <input type="number" id="deckWidth" min="4" max="200" value="12" placeholder="e.g. 12">
+        <div class="error-msg" id="errWidth"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="deckingType">Decking Board Material</label>
+      <select id="deckingType">
+        <option value="pressure_treated">Pressure-Treated Pine (budget)</option>
+        <option value="cedar" selected>Cedar (mid-range)</option>
+        <option value="redwood">Redwood (premium)</option>
+        <option value="composite">Composite Decking (low-maintenance)</option>
+        <option value="ipe">Ipe Hardwood (luxury)</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="boardWidth">Board Width</label>
+        <select id="boardWidth">
+          <option value="3.5">2×4 (3.5" face)</option>
+          <option value="5.5" selected>2×6 (5.5" face)</option>
+          <option value="3.25">5/4×4 composite (3.25")</option>
+          <option value="5.25">5/4×6 composite (5.25")</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="boardLength">Board Length (ft)</label>
+        <select id="boardLength">
+          <option value="8">8 ft</option>
+          <option value="10">10 ft</option>
+          <option value="12" selected>12 ft</option>
+          <option value="16">16 ft</option>
+          <option value="20">20 ft</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-title">Framing</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="joistSpacing">Joist Spacing</label>
+        <select id="joistSpacing">
+          <option value="12">12" on center</option>
+          <option value="16" selected>16" on center</option>
+          <option value="24">24" on center</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="postSpacing">Post Spacing (ft)</label>
+        <select id="postSpacing">
+          <option value="6">6 ft</option>
+          <option value="8" selected>8 ft</option>
+          <option value="10">10 ft</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-title">Pricing &amp; Options</div>
+    <div class="form-group">
+      <label>Waste Factor: <span id="wasteDisplay">10%</span></label>
+      <div class="range-row">
+        <input type="range" id="wasteFactor" min="5" max="25" value="10" step="5">
+        <span class="range-val" id="wasteVal">10%</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="laborCost">Include Labor Cost ($/sq ft, 0 = materials only)</label>
+      <input type="number" id="laborCost" min="0" max="200" value="0" placeholder="e.g. 8">
+    </div>
+
+    <div class="form-group">
+      <label for="regionMultiplier">Region Cost Multiplier</label>
+      <select id="regionMultiplier">
+        <option value="0.85">Low-cost region (−15%)</option>
+        <option value="1.0" selected>Average region</option>
+        <option value="1.2">High-cost metro (+20%)</option>
+        <option value="1.4">Very high-cost (NY/CA/HI, +40%)</option>
+      </select>
+    </div>
+
+    <button class="btn" id="calcBtn" onclick="calculate()">Calculate Materials & Cost</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-section card" id="resultsSection">
+    <div class="result-hero">
+      <div class="big-num" id="totalCostDisplay">$0</div>
+      <div class="big-label">Estimated Total Project Cost</div>
+    </div>
+
+    <div class="summary-grid" id="summaryGrid"></div>
+
+    <div class="bar-section" id="costBars"></div>
+
+    <div class="results-header" style="margin-top:1.25rem;">
+      <h3>Material Breakdown</h3>
+      <button class="copy-btn" id="copyBtn" onclick="copyResults()">Copy Results</button>
+    </div>
+    <div class="table-wrap">
+      <table id="materialTable">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Unit</th>
+            <th>Unit Cost</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="materialBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<!-- CONTENT SECTIONS -->
+  <div class="content-section">
+    <h2>How to Use This Deck Material Calculator</h2>
+    <p>Enter your deck's length and width in feet, select your preferred decking material and board size, then choose joist spacing and post spacing for framing. Adjust the waste factor slider to account for cuts, and optionally enter a labor rate per square foot. Click <strong>Calculate</strong> to see a full material list with quantities and estimated costs.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Building a deck is one of the most popular home improvement projects — and one of the most frequently over-budget. A 16×20 ft pressure-treated deck might cost $4,000 in materials alone, while the same footprint in composite can run $8,000–$12,000. Without an accurate estimate, homeowners routinely buy 15–25% too much lumber or make costly mid-project trips to the hardware store.</p>
+    <p>This calculator helps homeowners, contractors, and DIYers plan accurately before setting foot in a lumber yard. Whether you're quoting a client, applying for a permit, or just figuring out if the project fits your budget, knowing your material list in advance saves real money. Even a 10-board miscalculation on 2×6 cedar (at $4.50/linear foot) adds $400+ to your bill.</p>
+    <p>The cost multiplier feature is especially useful — lumber and labor prices in San Francisco or Honolulu can be 40–50% higher than rural Midwest markets for identical projects.</p>
+
+    <h2>How It's Calculated</h2>
+    <p><strong>Decking boards:</strong> The number of boards = (Deck Width ÷ Board Face Width) × (Deck Length ÷ Board Length), with a waste factor applied. Face width accounts for a ¼" gap between boards.</p>
+    <p><strong>Formula:</strong></p>
+    <ul>
+      <li>Rows of boards = Deck Width (in) ÷ (Board face width + 0.25" gap)</li>
+      <li>Boards per row = Deck Length ÷ Board length (rounded up)</li>
+      <li>Total boards = Rows × Boards per row × (1 + waste%)</li>
+    </ul>
+    <p><strong>Joists:</strong> Count = (Deck Length ÷ Joist spacing in ft) + 1. Each joist length = deck width + 0.5 ft for overhangs.</p>
+    <p><strong>Beams & Posts:</strong> Posts spaced at selected interval along both deck length and width perimeter. Beam count based on post rows.</p>
+    <p><strong>Cost:</strong> Material unit prices × quantities × regional multiplier. Labor = deck area × labor $/sq ft.</p>
+
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Always add at least 10% waste</strong> for a rectangular deck; go 15% for L-shaped or diagonal patterns where cuts waste more material.</li>
+      <li><strong>Don't skip the gap</strong> — a ¼" gap between boards is standard for drainage and expansion. Forgetting this means you'll run short on boards.</li>
+      <li><strong>Match board length to deck dimension</strong> — if your deck is 20 ft long, use 20 ft boards for runs parallel to length to avoid mid-span butt joints.</li>
+      <li><strong>Composite costs more upfront but less long-term</strong> — no sealing, staining, or replacing warped boards. Over 20 years, composite often wins on total cost.</li>
+      <li><strong>Get three quotes before buying</strong> — lumber prices fluctuate 20–30% seasonally. This calculator uses average national prices; your local yard may vary significantly.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>How accurate are the cost estimates?</summary>
+      <p>The prices used are national averages as of 2024 and will vary by region, supplier, and market conditions. Use the regional multiplier to adjust, and always get current quotes from local lumber yards. This tool is best used for budgeting and planning, not as a final purchase order.</p>
+    </details>
+    <details>
+      <summary>Does this include concrete for footings?</summary>
+      <p>The calculator includes an estimate for concrete tube forms and bags based on post count, but does not calculate footing depth or soil conditions. Most decks require 3–4 bags of 60 lb concrete per post; frost-line depth in your region determines how deep footings must go — check local building codes.</p>
+    </details>
+    <details>
+      <summary>What's the difference between 2×6 and 5/4×6 decking?</summary>
+      <p>True 2×6 boards are 1.5" thick (nominal 2") and are stronger, better for spans, and more resistant to warping. 5/4×6 boards are 1" thick, lighter, and often used for composite decking profiles. For pressure-treated framing, always use actual 2× dimensional lumber. For the surface deck boards, both work — 5/4×6 is the most common choice.</p>
+    </details>
+    <details>
+      <summary>Should I hire a contractor or DIY?</summary>
+      <p>A typical 200–300 sq ft deck takes an experienced DIYer 2–3 weekends. Labor costs typically run $8–$20 per sq ft, so a 240 sq ft deck could save $1,900–$4,800 in labor. However, DIY requires permitting knowledge, tool access, and physical capability. Many municipalities require licensed contractors for decks over certain heights or square footages.</p>
+    </details>
+  </div>
+
+  <div class="related-tools">
+    <h2>Related Tools</h2>
+    <div class="related-list">
+      <a href="/drywall-calculator/">Drywall Calculator</a>
+      <a href="/paint-coverage-calculator/">Paint Coverage Calculator</a>
+      <a href="/lumber-board-foot-calculator/">Lumber & Board Foot Calculator</a>
+      <a href="/gravel-driveway-calculator/">Gravel Driveway Calculator</a>
+      <a href="/tile-flooring-calculator/">Tile & Flooring Coverage Calculator</a>
+      <a href="/electrical-load-calculator/">Electrical Load & Circuit Breaker Calculator</a>
+    </div>
+  </div>
+
+  </div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/deck-material-cost-estimator/">Toolwick</a></p>
+
+<script>
+// Unit prices ($/unit) — national averages 2024
+const PRICES = {
+  pressure_treated: { board: 1.20 }, // per linear foot of 2x6
+  cedar:            { board: 2.80 },
+  redwood:          { board: 3.80 },
+  composite:        { board: 4.20 },
+  ipe:              { board: 6.50 }
+};
+const FRAMING_PRICE_LF = 0.95;  // $/lf for 2x8 PT joist
+const BEAM_PRICE_LF    = 1.80;  // $/lf for doubled 2x10 beam
+const POST_PRICE_EA    = 12.0;  // $/each 4x4 8ft post
+const HARDWARE_COEFF   = 0.12;  // 12% of framing cost for hardware
+const FASTENER_PER100  = 4.50;  // per 100 sq ft
+const CONCRETE_PER_POST= 8.00;  // per post (bags)
+
+let lastResultText = '';
+
+// Waste slider
+document.getElementById('wasteFactor').addEventListener('input', function() {
+  const v = this.value + '%';
+  document.getElementById('wasteDisplay').textContent = v;
+  document.getElementById('wasteVal').textContent = v;
+});
+
+// Enter key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { calculate(); }
+});
+
+function fmt(n, dec) {
+  dec = dec === undefined ? 0 : dec;
+  return Number(n).toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+}
+function fmtDollar(n) {
+  return '$' + fmt(n, 2);
+}
+function clearErrors() {
+  ['errLength','errWidth'].forEach(id => { document.getElementById(id).textContent = ''; });
+  ['deckLength','deckWidth'].forEach(id => { document.getElementById(id).classList.remove('error'); });
+}
+
+function calculate() {
+  clearErrors();
+  const length    = parseFloat(document.getElementById('deckLength').value);
+  const width     = parseFloat(document.getElementById('deckWidth').value);
+  const matType   = document.getElementById('deckingType').value;
+  const bWidth    = parseFloat(document.getElementById('boardWidth').value); // face inches
+  const bLength   = parseFloat(document.getElementById('boardLength').value); // ft
+  const jSpacing  = parseFloat(document.getElementById('joistSpacing').value); // inches
+  const pSpacing  = parseFloat(document.getElementById('postSpacing').value); // ft
+  const waste     = parseFloat(document.getElementById('wasteFactor').value) / 100;
+  const labor     = parseFloat(document.getElementById('laborCost').value) || 0;
+  const region    = parseFloat(document.getElementById('regionMultiplier').value);
+
+  let valid = true;
+  if (isNaN(length) || length < 4 || length > 200) {
+    document.getElementById('errLength').textContent = 'Enter a length between 4 and 200 ft.';
+    document.getElementById('deckLength').classList.add('error');
+    valid = false;
+  }
+  if (isNaN(width) || width < 4 || width > 200) {
+    document.getElementById('errWidth').textContent = 'Enter a width between 4 and 200 ft.';
+    document.getElementById('deckWidth').classList.add('error');
+    valid = false;
+  }
+  if (!valid) return;
+
+  const area = length * width;
+
+  // Decking boards
+  const gapIn = 0.25; // 1/4" gap
+  const boardFaceWithGap = bWidth + gapIn; // inches
+  const rowsRaw = (width * 12) / boardFaceWithGap;
+  const rowsCount = Math.ceil(rowsRaw * (1 + waste));
+  const boardsPerRow = Math.ceil(length / bLength);
+  const totalBoards = rowsCount * boardsPerRow;
+  const boardLinFt = totalBoards * bLength;
+  const boardUnitCost = PRICES[matType].board * bLength * region;
+  const boardCost = totalBoards * boardUnitCost;
+
+  // Joists (spanning deck width direction)
+  const joistSpacingFt = jSpacing / 12;
+  const joistCount = Math.ceil(length / joistSpacingFt) + 1;
+  const joistLenFt = width + 0.5; // slight overhang
+  const joistLinFt = joistCount * joistLenFt;
+  const joistCost = joistLinFt * FRAMING_PRICE_LF * region;
+
+  // Rim joists / perimeter
+  const rimLinFt = 2 * (length + width) + 2; // slight extra
+  const rimCost = rimLinFt * FRAMING_PRICE_LF * region;
+
+  // Beams
+  const beamRows = Math.ceil(width / (pSpacing * 1.5)) + 1;
+  const beamLinFt = beamRows * length;
+  const beamCost = beamLinFt * BEAM_PRICE_LF * region;
+
+  // Posts
+  const postsAcross = Math.ceil(length / pSpacing) + 1;
+  const postsAlong  = Math.ceil(width / pSpacing) + 1;
+  const postCount   = Math.max(postsAcross * Math.ceil(beamRows), 4);
+  const postCost    = postCount * POST_PRICE_EA * region;
+
+  // Hardware & fasteners
+  const framingCost = joistCost + rimCost + beamCost + postCost;
+  const hardwareCost = framingCost * HARDWARE_COEFF * region;
+  const fastenerCost = (area / 100) * FASTENER_PER100 * region;
+
+  // Concrete for footings
+  const concreteCost = postCount * CONCRETE_PER_POST * region;
+
+  // Labor
+  const laborTotal = area * labor;
+
+  const materialTotal = boardCost + joistCost + rimCost + beamCost + postCost + hardwareCost + fastenerCost + concreteCost;
+  const grandTotal = materialTotal + laborTotal;
+
+  // Compute cost per sq ft
+  const costPerSqFt = grandTotal / area;
+
+  // Build result
+  const matLabel = {'pressure_treated':'Pressure-Treated Pine','cedar':'Cedar','redwood':'Redwood','composite':'Composite','ipe':'Ipe Hardwood'}[matType];
+
+  const items = [
+    { item: `${matLabel} Deck Boards`, qty: totalBoards, unit: `${bLength}-ft boards`, unitCost: boardUnitCost, total: boardCost },
+    { item: '2×8 Joists (PT)', qty: joistCount, unit: `${joistLenFt.toFixed(1)}-ft ea`, unitCost: joistLenFt * FRAMING_PRICE_LF * region, total: joistCost },
+    { item: 'Rim Joists (PT)', qty: 1, unit: `${fmt(rimLinFt,1)} lin ft`, unitCost: rimCost, total: rimCost },
+    { item: 'Doubled 2×10 Beams', qty: beamRows, unit: `${fmt(length,0)}-ft span`, unitCost: length * BEAM_PRICE_LF * region, total: beamCost },
+    { item: '4×4 Posts (8 ft)', qty: postCount, unit: 'posts', unitCost: POST_PRICE_EA * region, total: postCost },
+    { item: 'Joist Hangers & Hardware', qty: 1, unit: 'lot', unitCost: hardwareCost, total: hardwareCost },
+    { item: 'Screws & Fasteners', qty: 1, unit: 'lot', unitCost: fastenerCost, total: fastenerCost },
+    { item: 'Concrete (footing bags)', qty: postCount, unit: 'posts', unitCost: CONCRETE_PER_POST * region, total: concreteCost },
+  ];
+
+  if (laborTotal > 0) {
+    items.push({ item: 'Labor', qty: fmt(area, 0), unit: 'sq ft', unitCost: labor, total: laborTotal });
+  }
+
+  let tableHTML = '';
+  items.forEach(row => {
+    tableHTML += `<tr>
+      <td>${row.item}</td>
+      <td class="td-num">${typeof row.qty === 'number' ? fmt(row.qty, 0) : row.qty}</td>
+      <td>${row.unit}</td>
+      <td class="td-num">${fmtDollar(row.unitCost)}</td>
+      <td class="td-num">${fmtDollar(row.total)}</td>
+    </tr>`;
+  });
+  tableHTML += `<tr class="total-row">
+    <td colspan="4">TOTAL ESTIMATED COST</td>
+    <td class="td-num">${fmtDollar(grandTotal)}</td>
+  </tr>`;
+
+  // Summary
+  const summaryHTML = `
+    <div class="summary-item"><div class="s-val">${fmt(area,0)}</div><div class="s-lbl">Sq Ft</div></div>
+    <div class="summary-item"><div class="s-val">${fmt(totalBoards,0)}</div><div class="s-lbl">Deck Boards</div></div>
+    <div class="summary-item"><div class="s-val">${fmt(joistCount,0)}</div><div class="s-lbl">Joists</div></div>
+    <div class="summary-item"><div class="s-val">${fmt(postCount,0)}</div><div class="s-lbl">Posts</div></div>
+    <div class="summary-item"><div class="s-val">${fmtDollar(costPerSqFt)}</div><div class="s-lbl">Per Sq Ft</div></div>
+    <div class="summary-item"><div class="s-val">${fmt(waste*100,0)}%</div><div class="s-lbl">Waste Factor</div></div>`;
+
+  // Cost bars
+  const pct = (v) => Math.round((v / grandTotal) * 100);
+  const barsHTML = `
+    <div style="font-size:0.85rem;font-weight:600;color:#444;margin-bottom:0.5rem;">Cost Breakdown by Category</div>
+    <div class="bar-label-row"><span>Decking Boards</span><span>${fmtDollar(boardCost)} (${pct(boardCost)}%)</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:${pct(boardCost)}%"></div></div>
+    <div class="bar-label-row"><span>Framing (Joists/Beams/Posts)</span><span>${fmtDollar(joistCost+rimCost+beamCost+postCost)} (${pct(joistCost+rimCost+beamCost+postCost)}%)</span></div>
+    <div class="bar-track"><div class="bar-fill orange" style="width:${pct(joistCost+rimCost+beamCost+postCost)}%"></div></div>
+    ${laborTotal > 0 ? `<div class="bar-label-row"><span>Labor</span><span>${fmtDollar(laborTotal)} (${pct(laborTotal)}%)</span></div><div class="bar-track"><div class="bar-fill green" style="width:${pct(laborTotal)}%"></div></div>` : ''}
+    <div class="bar-label-row"><span>Hardware, Fasteners & Concrete</span><span>${fmtDollar(hardwareCost+fastenerCost+concreteCost)} (${pct(hardwareCost+fastenerCost+concreteCost)}%)</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:${pct(hardwareCost+fastenerCost+concreteCost)}%;background:#9b59b6;"></div></div>
+  `;
+
+  // Build plain text for copy
+  lastResultText = `DECK MATERIAL ESTIMATE\n`;
+  lastResultText += `Dimensions: ${length} ft × ${width} ft = ${fmt(area,0)} sq ft\n`;
+  lastResultText += `Material: ${matLabel}\n\n`;
+  items.forEach(r => {
+    lastResultText += `${r.item}: ${typeof r.qty==='number'?fmt(r.qty,0):r.qty} ${r.unit} @ ${fmtDollar(r.unitCost)} = ${fmtDollar(r.total)}\n`;
+  });
+  lastResultText += `\nTOTAL: ${fmtDollar(grandTotal)}\nCost per sq ft: ${fmtDollar(costPerSqFt)}`;
+
+  requestAnimationFrame(() => {
+    document.getElementById('totalCostDisplay').textContent = fmtDollar(grandTotal);
+    document.getElementById('summaryGrid').innerHTML = summaryHTML;
+    document.getElementById('materialBody').innerHTML = tableHTML;
+    document.getElementById('costBars').innerHTML = barsHTML;
+
+    // Update SVG
+    document.getElementById('svgLength').textContent = `LENGTH: ${length} ft`;
+    document.getElementById('svgWidth').textContent = `WIDTH: ${width} ft`;
+    document.getElementById('svgArea').textContent = `Area: ${fmt(area,0)} sq ft`;
+
+    const sec = document.getElementById('resultsSection');
+    sec.classList.add('visible');
+    sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+}
+
+function copyResults() {
+  if (!lastResultText) return;
+  navigator.clipboard.writeText(lastResultText).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy Results'; }, 2000);
+  }).catch(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copy failed';
+    setTimeout(() => { btn.textContent = 'Copy Results'; }, 2000);
+  });
+}
+
+// Auto-calculate on load
+window.addEventListener('load', () => { calculate(); });
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
