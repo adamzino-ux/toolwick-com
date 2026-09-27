@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Free Deck Footing Size &amp; Frost Depth Calculator | Toolwick</title>
+<meta name="description" content="Free deck footing size calculator. Enter post spacing, joist span, soil type and frost depth to get the right footing diameter and dig depth for your deck.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/deck-footing-frost-depth-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Deck Footing Size & Frost Depth Calculator", "url": "https://toolwick.com/deck-footing-frost-depth-calculator/", "description": "Free deck footing size calculator. Enter post spacing, joist span, soil type and frost depth to get the right footing diameter and dig depth for your deck.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Deck Footing Size & Frost Depth Calculator", "item": "https://toolwick.com/deck-footing-frost-depth-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How deep should deck footings be below frost line?", "acceptedAnswer": {"@type": "Answer", "text": "Footings should be dug so the bottom sits below your local frost depth, with a common minimum of 12\" even in frost-free areas. In cold climates that can mean 36\"–60\" deep, so always check your local building code before digging."}}, {"@type": "Question", "name": "What size footing do I need for a deck post?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on the tributary load and soil bearing capacity, but most residential decks with 8 ft post spacing and average soil use 12\"–16\" diameter footings. Heavier loads (hot tubs, second-story decks) or weaker soil can push that up to 20\"–24\" or beyond, at which point an engineered design is safer than a standard tube."}}, {"@type": "Question", "name": "Can I use sonotubes instead of poured footings?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, cardboard concrete tubes (sonotubes) are the standard way to form round footings and are sized the same way — by diameter and depth calculated from load and soil capacity."}}, {"@type": "Question", "name": "Do I need bigger footings for a covered or two-story deck?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, roofs and upper stories add significant dead and live load per post, so you should increase the dead/live load inputs in this calculator to reflect the added structure before sizing footings."}}, {"@type": "Question", "name": "What soil bearing capacity should I assume if I don't know my soil type?", "acceptedAnswer": {"@type": "Answer", "text": "2,000 psf is a common conservative default for typical sandy loam soils, but a geotechnical report or your local building department can give you an exact number for your lot."}}, {"@type": "Question", "name": "Is this calculator a substitute for a building permit review?", "acceptedAnswer": {"@type": "Answer", "text": "No — this tool gives you solid planning estimates, but your local building department has the final, code-required frost depth and footing size for your specific address and structure."}}]}]}</script>
+<style>
+:root{--accent:#0077b6;--dark:#1a1a2e;--gray:#f8f9fa;}
+*{box-sizing:border-box;}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--dark);background:#fff;}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem;}
+nav{padding:1rem 0;}
+nav a{font-weight:700;font-size:1.1rem;color:var(--dark);text-decoration:none;}
+h1{font-size:1.6rem;margin:0.5rem 0 1rem;}
+h2{font-size:1.2rem;margin-top:2rem;color:var(--dark);}
+p{line-height:1.6;}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 1px 4px rgba(0,0,0,0.05);margin-bottom:2rem;}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin:1rem 0 0.35rem;}
+label:first-child{margin-top:0;}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;min-height:44px;font-family:inherit;}
+input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,119,182,0.15);}
+input.error{border-color:#e74c3c;}
+.err-msg{color:#e74c3c;font-size:0.8rem;margin-top:0.25rem;display:none;}
+button.calc-btn{margin-top:1.5rem;width:100%;background:var(--accent);color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;min-height:44px;}
+button.calc-btn:hover{background:#006299;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem;}
+#results{opacity:0;transition:opacity 0.3s ease;}
+#results.show{opacity:1;}
+.result-hero{background:var(--gray);border-radius:8px;padding:1.5rem;text-align:center;margin:1.5rem 0;}
+.result-hero .big{font-size:2.2rem;font-weight:800;color:var(--accent);}
+.result-hero .sub{font-size:0.9rem;color:#555;margin-top:0.25rem;}
+.warn-box{background:#fdecea;color:#c0392b;padding:1rem;border-radius:6px;margin-top:1rem;font-size:0.88rem;line-height:1.5;}
+table{width:100%;border-collapse:collapse;font-size:0.9rem;margin-top:1rem;}
+th,td{padding:8px 10px;border-bottom:1px solid #eee;text-align:right;}
+th:first-child,td:first-child{text-align:left;}
+th{background:#f0f0f0;}
+tr:nth-child(even){background:#fafafa;}
+.tblwrap{overflow-x:auto;}
+.copy-btn{background:none;border:1px solid #ddd;color:var(--accent);padding:6px 14px;border-radius:6px;font-size:0.8rem;cursor:pointer;margin-top:1rem;}
+.copy-btn:hover{background:#f0f0f0;}
+.svg-wrap{background:var(--gray);border-radius:8px;padding:1rem;margin-bottom:1.5rem;}
+.ad-slot{min-height:0;margin:0;}
+details{border:1px solid #eee;border-radius:6px;padding:0.75rem 1rem;margin-bottom:0.6rem;}
+summary{font-weight:600;cursor:pointer;}
+.related a{display:block;color:var(--accent);text-decoration:none;padding:8px 0;border-bottom:1px solid #eee;}
+footer{text-align:center;font-size:0.85rem;color:#777;padding:2rem 0;}
+footer a{color:#777;margin:0 6px;}
+.note{font-size:0.8rem;color:#777;margin-top:0.5rem;}
+@media(max-width:480px){.grid2{grid-template-columns:1fr;}.result-hero .big{font-size:1.7rem;}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/deck-footing-frost-depth-calculator/">
+<meta property="og:title" content="Deck Footing Size &amp; Frost Depth Calculator">
+<meta property="og:description" content="Free deck footing size calculator. Enter post spacing, joist span, soil type and frost depth to get the right footing diameter and dig depth for your deck.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#999;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Toolwick</a></nav>
+<h1>Deck Footing Size &amp; Frost Depth Calculator</h1>
+<p>Use this <strong>deck footing size calculator</strong> to figure out how wide and how deep your concrete footings need to be, based on post spacing, joist span, soil bearing capacity, and the frost depth in your area.</p>
+
+<div class="card">
+  <div class="svg-wrap">
+    <svg viewBox="0 0 400 260" width="100%" style="max-width:400px;display:block;margin:0 auto;">
+      <line x1="20" y1="90" x2="380" y2="90" stroke="#1a1a2e" stroke-width="2"/>
+      <text x="25" y="82" font-size="10" fill="#1a1a2e">Grade</text>
+      <line x1="20" y1="140" x2="380" y2="140" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="5,4"/>
+      <text x="25" y="135" font-size="10" fill="#0077b6" id="frostLbl">Frost line: 36"</text>
+      <rect x="160" y="90" width="80" height="60" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+      <path d="M140 150 L260 150 L235 225 L165 225 Z" fill="#f0f0f0" stroke="#0077b6" stroke-width="2"/>
+      <line x1="160" y1="65" x2="240" y2="65" stroke="#1a1a2e" stroke-width="1"/>
+      <line x1="160" y1="60" x2="160" y2="70" stroke="#1a1a2e" stroke-width="1"/>
+      <line x1="240" y1="60" x2="240" y2="70" stroke="#1a1a2e" stroke-width="1"/>
+      <text x="165" y="58" font-size="10" fill="#1a1a2e" id="postLbl">Post</text>
+      <line x1="70" y1="90" x2="70" y2="225" stroke="#1a1a2e" stroke-width="1"/>
+      <line x1="65" y1="90" x2="75" y2="90" stroke="#1a1a2e" stroke-width="1"/>
+      <line x1="65" y1="225" x2="75" y2="225" stroke="#1a1a2e" stroke-width="1"/>
+      <text x="10" y="160" font-size="10" fill="#1a1a2e" id="depthLbl" transform="rotate(-90 30 160)">Depth: 42"</text>
+      <line x1="140" y1="235" x2="260" y2="235" stroke="#1a1a2e" stroke-width="1"/>
+      <line x1="140" y1="230" x2="140" y2="240" stroke="#1a1a2e" stroke-width="1"/>
+      <line x1="260" y1="230" x2="260" y2="240" stroke="#1a1a2e" stroke-width="1"/>
+      <text x="155" y="250" font-size="10" fill="#1a1a2e" id="widthLbl">Width: 16"</text>
+    </svg>
+  </div>
+
+  <label for="postSpacing">Post Spacing (ft)</label>
+  <input type="number" id="postSpacing" value="8" min="1" step="0.5">
+  <div class="err-msg" id="err-postSpacing">Enter a spacing greater than 0.</div>
+
+  <label for="joistSpan">Joist Span (ft) — ledger to beam</label>
+  <input type="number" id="joistSpan" value="12" min="1" step="0.5">
+  <div class="err-msg" id="err-joistSpan">Enter a span greater than 0.</div>
+  <div class="note">Assumes a standard ledger-to-beam deck where this beam carries half the joist span. For freestanding decks with two beams, or interior posts carrying two adjoining spans, the load per footing is different — consult a structural engineer or framing plan for those layouts.</div>
+
+  <div class="grid2">
+    <div>
+      <label for="deadLoad">Dead Load (psf)</label>
+      <input type="number" id="deadLoad" value="10" min="0" step="1">
+    </div>
+    <div>
+      <label for="liveLoad">Live Load (psf)</label>
+      <input type="number" id="liveLoad" value="40" min="0" step="1">
+    </div>
+  </div>
+
+  <label for="soilType">Soil Bearing Capacity</label>
+  <select id="soilType">
+    <option value="1500">Soft clay / poor soil — 1,500 psf</option>
+    <option value="2000" selected>Sandy soil — 2,000 psf</option>
+    <option value="3000">Sand & gravel mix — 3,000 psf</option>
+    <option value="4000">Compact gravel / hardpan — 4,000 psf</option>
+    <option value="custom">Custom (enter value)</option>
+  </select>
+  <input type="number" id="soilCustom" placeholder="Custom bearing capacity (psf)" style="margin-top:0.6rem;display:none;">
+  <div class="err-msg" id="err-soilCustom">Enter a bearing capacity greater than 0.</div>
+
+  <label for="footingShape">Footing Shape</label>
+  <select id="footingShape">
+    <option value="round">Round</option>
+    <option value="square">Square</option>
+  </select>
+
+  <label for="frostRegion">Region (typical frost depth)</label>
+  <select id="frostRegion">
+    <option value="60">Northern Maine / N. Minnesota — 60"</option>
+    <option value="48" selected>New England / Upstate NY — 48"</option>
+    <option value="42">Wisconsin / Michigan — 42"</option>
+    <option value="36">Great Lakes / Mid-Atlantic — 36"</option>
+    <option value="30">Iowa / Nebraska / Kansas — 30"</option>
+    <option value="24">Missouri / Mid-South — 24"</option>
+    <option value="18">Virginia / Kentucky — 18"</option>
+    <option value="12">Carolinas / Tennessee / Texas panhandle — 12"</option>
+    <option value="6">Deep South (GA, AL, MS) — 6"</option>
+    <option value="0">Florida / South Texas / South CA — 0"</option>
+    <option value="custom">Custom (enter inches)</option>
+  </select>
+  <input type="number" id="frostCustom" placeholder="Custom frost depth (inches)" style="margin-top:0.6rem;display:none;">
+  <div class="err-msg" id="err-frostCustom">Enter a frost depth of 0 or greater.</div>
+  <div class="note">Frost depths are approximate. Always confirm the required frost depth with your local building department.</div>
+
+  <button class="calc-btn" id="calcBtn">Calculate Footing Size</button>
+
+  <div id="results"></div>
+  <button class="copy-btn" id="copyBtn" style="display:none;">Copy Results</button>
+</div>
+
+<div class="ad-slot" id="ad-mid"></div>
+
+<h2>How to Use This Deck Footing Size Calculator</h2>
+<p>Enter your post spacing and joist span to establish the tributary (load) area each footing supports, then choose your soil bearing capacity and footing shape. Pick your region for a typical frost depth, or enter a custom value from your local code. Click Calculate to get the recommended footing diameter (or width) and the minimum dig depth.</p>
+
+<h2>Why This Matters</h2>
+<p>Undersized or too-shallow footings are one of the most common (and dangerous) deck-building mistakes. If a footing is too small for the load and soil type, it can settle unevenly and cause the deck to sag or lean over a few seasons. If it's not dug below the frost line, seasonal freeze-thaw cycles heave the concrete up and down, cracking posts, popping fasteners, and eventually pulling the ledger away from the house. Building inspectors in cold-climate states like Minnesota, Wisconsin, and Maine routinely reject permits where footings sit above the required 42"–60" frost depth. Even in the South, a minimum 12" embedment is standard to reach stable soil. Whether you're building a 10x12 ground-level platform or a two-story deck with a hot tub, getting footing size and depth right up front saves you from tearing out concrete later.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator works in three steps:</p>
+<p><strong>1. Tributary area</strong> — the floor area each footing carries: Tributary Area = Post Spacing × (Joist Span ÷ 2). This formula assumes a simple ledger-to-beam deck where a single beam carries half the joist span; it does not directly apply to freestanding decks with two beams or interior posts that pick up two adjoining spans, which carry roughly double the load shown here.</p>
+<p><strong>2. Total load</strong> — Load (lbs) = Tributary Area × (Dead Load + Live Load)</p>
+<p><strong>3. Footing area</strong> — Footing Area (sq ft) = Load ÷ Soil Bearing Capacity, then converted to a round diameter (Diameter = √(4 × Area ÷ π)) or a square side (Side = √Area), rounded up to the next standard footing size (8", 10", 12", 14", 16", 18", 20", 24", 30", 36").</p>
+<p>The minimum footing depth is simply the greater of your local frost depth or 12 inches, since code minimums typically require at least 12" of embedment regardless of frost conditions. If the calculated footing size exceeds 36" — common with hot tubs, second stories, or very soft soil — the tool flags it as an oversized load requiring an engineered footing design rather than a standard sonotube.</p>
+
+<h2>Worked Example</h2>
+<p>Say you're building a deck with posts spaced 8 ft apart, a 12 ft joist span, standard residential loads (10 psf dead + 40 psf live = 50 psf), sandy soil rated at 2,000 psf, round footings, and you're in a region with a 36" frost depth.</p>
+<p>Tributary area = 8 × (12 ÷ 2) = 48 sq ft. Total load = 48 × 50 = 2,400 lbs. Footing area needed = 2,400 ÷ 2,000 = 1.2 sq ft. Diameter = √(4 × 1.2 ÷ π) × 12 ≈ 14.8", which is just over the standard 14" tube, so it rounds up to the next standard size of 16". Minimum dig depth = max(36", 12") = 36".</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li>Always dig to the full frost depth required by your municipality — "close enough" heaving over a few winters is a real problem, not a myth.</li>
+<li>Corner and beam-splice posts often carry more load than mid-span posts; consider sizing those footings up.</li>
+<li>Don't guess soil bearing capacity — soft, wet, or fill soil can be half the strength of compacted gravel, which doubles your required footing size.</li>
+<li>This calculator's tributary-area formula fits a standard ledger-to-single-beam deck; freestanding decks with two beams or interior posts carrying two spans need separate load calculations — don't force those layouts into this same number.</li>
+<li>Bell-shaped footings (wider at the base) can reduce concrete volume compared to a straight cylinder while keeping the same bearing area.</li>
+<li>When in doubt, round up to the next standard footing tube size — it's cheap insurance against a failed inspection. If the tool flags your load as oversized, get an engineer's sign-off rather than guessing.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How deep should deck footings be below frost line?</summary><p>Footings should be dug so the bottom sits below your local frost depth, with a common minimum of 12" even in frost-free areas. In cold climates that can mean 36"–60" deep, so always check your local building code before digging.</p></details>
+<details><summary>What size footing do I need for a deck post?</summary><p>It depends on the tributary load and soil bearing capacity, but most residential decks with 8 ft post spacing and average soil use 12"–16" diameter footings. Heavier loads (hot tubs, second-story decks) or weaker soil can push that up to 20"–24" or beyond, at which point an engineered design is safer than a standard tube.</p></details>
+<details><summary>Can I use sonotubes instead of poured footings?</summary><p>Yes, cardboard concrete tubes (sonotubes) are the standard way to form round footings and are sized the same way — by diameter and depth calculated from load and soil capacity.</p></details>
+<details><summary>Do I need bigger footings for a covered or two-story deck?</summary><p>Yes, roofs and upper stories add significant dead and live load per post, so you should increase the dead/live load inputs in this calculator to reflect the added structure before sizing footings.</p></details>
+<details><summary>What soil bearing capacity should I assume if I don't know my soil type?</summary><p>2,000 psf is a common conservative default for typical sandy loam soils, but a geotechnical report or your local building department can give you an exact number for your lot.</p></details>
+<details><summary>Is this calculator a substitute for a building permit review?</summary><p>No — this tool gives you solid planning estimates, but your local building department has the final, code-required frost depth and footing size for your specific address and structure.</p></details>
+
+<h2>Related Tools</h2>
+<div class="related">
+<a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a>
+<a href="/footing-foundation-size-calculator/">Footing & Foundation Size Calculator</a>
+<a href="/deck-material-cost-estimator/">Deck Material & Cost Estimator</a>
+<a href="/roof-attic-ventilation-calculator/">Roof Attic Ventilation Calculator</a>
+<a href="/asphalt-shingle-calculator/">Asphalt Shingle Calculator</a>
+<a href="/recessed-lighting-layout-spacing-calculator/">Ceiling Recessed Lighting Layout Calculator</a>
+</div>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<a href="/about/">About</a> | <a href="/privacy/">Privacy</a> | <a href="/contact/">Contact</a>
+<p>© 2024 toolwick.com</p>
+</footer>
+</div>
+
+<script>
+function fmt(n,d=1){return Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});}
+
+document.getElementById('soilType').addEventListener('change',function(){
+  document.getElementById('soilCustom').style.display = this.value==='custom'?'block':'none';
+});
+document.getElementById('frostRegion').addEventListener('change',function(){
+  document.getElementById('frostCustom').style.display = this.value==='custom'?'block':'none';
+});
+
+const stdSizes=[8,10,12,14,16,18,20,24,30,36];
+
+function clearErr(id){
+  document.getElementById(id).classList.remove('error');
+  document.getElementById('err-'+id).style.display='none';
+}
+function showErr(id,msg){
+  document.getElementById(id).classList.add('error');
+  const e=document.getElementById('err-'+id);
+  e.textContent=msg;
+  e.style.display='block';
+}
+
+function calculate(){
+  let valid=true;
+  const postSpacing=parseFloat(document.getElementById('postSpacing').value);
+  const joistSpan=parseFloat(document.getElementById('joistSpan').value);
+  clearErr('postSpacing'); clearErr('joistSpan'); clearErr('soilCustom'); clearErr('frostCustom');
+
+  if(!(postSpacing>0)){showErr('postSpacing','Enter a spacing greater than 0.');valid=false;}
+  if(!(joistSpan>0)){showErr('joistSpan','Enter a span greater than 0.');valid=false;}
+
+  const deadLoad=parseFloat(document.getElementById('deadLoad').value)||0;
+  const liveLoad=parseFloat(document.getElementById('liveLoad').value)||0;
+
+  let soilSel=document.getElementById('soilType').value;
+  let bearing;
+  if(soilSel==='custom'){
+    bearing = parseFloat(document.getElementById('soilCustom').value);
+    if(!(bearing>0)){
+      showErr('soilCustom','Enter a bearing capacity greater than 0.');
+      valid=false;
+    }
+  } else {
+    bearing = parseFloat(soilSel);
+  }
+
+  let frostSel=document.getElementById('frostRegion').value;
+  let frost;
+  if(frostSel==='custom'){
+    frost = parseFloat(document.getElementById('frostCustom').value);
+    if(isNaN(frost) || frost<0){
+      showErr('frostCustom','Enter a frost depth of 0 or greater.');
+      valid=false;
+    }
+  } else {
+    frost = parseFloat(frostSel);
+  }
+
+  if(!valid) return;
+
+  const shape=document.getElementById('footingShape').value;
+
+  const tribArea = postSpacing * (joistSpan/2);
+  const totalLoad = tribArea * (deadLoad+liveLoad);
+  const areaNeeded = totalLoad / bearing;
+
+  let sizeInches, label;
+  if(shape==='round'){
+    sizeInches = Math.sqrt(4*areaNeeded/Math.PI) * 12;
+    label='Diameter';
+  } else {
+    sizeInches = Math.sqrt(areaNeeded) * 12;
+    label='Side length';
+  }
+
+  const maxStd = stdSizes[stdSizes.length-1];
+  let recommended, oversized=false;
+  if(sizeInches <= maxStd){
+    recommended = stdSizes.find(s=>s>=sizeInches);
+  } else {
+    recommended = Math.ceil(sizeInches);
+    oversized = true;
+  }
+
+  const minDepth = Math.max(frost,12);
+
+  const rows = [
+    ['Post spacing', fmt(postSpacing,1)+' ft'],
+    ['Joist span', fmt(joistSpan,1)+' ft'],
+    ['Tributary area per footing', fmt(tribArea,1)+' sq ft'],
+    ['Total load per footing', fmt(totalLoad,0)+' lbs'],
+    ['Soil bearing capacity', fmt(bearing,0)+' psf'],
+    ['Required footing area', fmt(areaNeeded,2)+' sq ft'],
+    ['Calculated '+label.toLowerCase(), fmt(sizeInches,1)+' in'],
+    ['Frost depth (region)', fmt(frost,0)+' in'],
+    ['Minimum footing dig depth', fmt(minDepth,0)+' in']
+  ];
+
+  let tableHtml = '<div class="tblwrap"><table><thead><tr><th>Item</th><th>Value</th></tr></thead><tbody>';
+  rows.forEach(r=>{tableHtml+=`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`;});
+  tableHtml += '</tbody></table></div>';
+
+  const shapeLabel = shape==='round' ? 'diameter' : 'square side';
+  const heroHtml = `<div class="result-hero"><div class="big">${recommended}" ${shapeLabel}</div><div class="sub">Dig to ${fmt(minDepth,0)}" minimum depth</div></div>`;
+
+  let warnHtml='';
+  let warnText='';
+  if(oversized){
+    warnHtml = `<div class="warn-box">⚠️ This load requires a footing larger than standard ${maxStd}" sonotubes. Do not assume a ${recommended}" footing is safe off this estimate alone — have a structural engineer size a custom footing (or consider adding posts to reduce the tributary area per footing).</div>`;
+    warnText = '\nWARNING: Load exceeds standard footing sizes — consult a structural engineer for a custom footing design.';
+  }
+
+  const resultText = `Deck Footing Results\nRecommended footing: ${recommended}" ${shapeLabel}\nMinimum dig depth: ${fmt(minDepth,0)}"\nTotal load per footing: ${fmt(totalLoad,0)} lbs\nRequired footing area: ${fmt(areaNeeded,2)} sq ft${warnText}`;
+
+  requestAnimationFrame(()=>{
+    const res=document.getElementById('results');
+    res.innerHTML = heroHtml + warnHtml + tableHtml;
+    res.classList.add('show');
+    document.getElementById('copyBtn').style.display='inline-block';
+    document.getElementById('copyBtn').dataset.text=resultText;
+
+    document.getElementById('frostLbl').textContent = 'Frost line: '+fmt(frost,0)+'"';
+    document.getElementById('depthLbl').textContent = 'Depth: '+fmt(minDepth,0)+'"';
+    document.getElementById('widthLbl').textContent = shapeLabel.charAt(0).toUpperCase()+shapeLabel.slice(1)+': '+recommended+'"';
+    document.getElementById('postLbl').textContent = 'Post';
+
+    const frostRatio = Math.min(frost/60,1);
+    const frostY = 90 + frostRatio*40;
+    document.getElementById('frostLbl').setAttribute('y', frostY-5);
+  });
+}
+
+document.getElementById('calcBtn').addEventListener('click', calculate);
+['postSpacing','joistSpan','deadLoad','liveLoad','soilCustom','frostCustom'].forEach(id=>{
+  document.getElementById(id).addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); calculate(); } });
+});
+
+document.getElementById('copyBtn').addEventListener('click', function(){
+  navigator.clipboard.writeText(this.dataset.text).then(()=>{
+    const orig=this.textContent;
+    this.textContent='Copied!';
+    setTimeout(()=>{this.textContent=orig;},2000);
+  });
+});
+
+calculate();
+</script>
+</body>
+</html>
