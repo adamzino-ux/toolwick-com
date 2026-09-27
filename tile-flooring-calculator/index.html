@@ -43,8 +43,11 @@ input.error{border-color:#e74c3c}
 .waste-slider-wrap input[type=range]:focus{box-shadow:none}
 .waste-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
 .waste-val{font-weight:700;color:#0077b6;font-size:1rem}
-.waste-ticks{position:relative;height:16px;margin-top:4px;font-size:0.72rem;color:#888}
-.waste-ticks span{position:absolute;white-space:nowrap}
+.waste-ticks{display:flex;justify-content:space-between;margin-top:4px;font-size:0.72rem;color:#888;gap:4px}
+.waste-ticks span{white-space:nowrap}
+.waste-ticks span:nth-child(2){text-align:center}
+.waste-ticks span:last-child{text-align:right}
+@media(max-width:480px){.waste-ticks{font-size:0.62rem}}
 .results-section{opacity:0;transition:opacity 0.3s ease;pointer-events:none}
 .results-section.visible{opacity:1;pointer-events:auto}
 .key-numbers{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
@@ -241,10 +244,9 @@ footer{border-top:1px solid #e0e0e0;padding:1.2rem 0;margin-top:2rem}
         </div>
         <input type="range" id="wasteSlider" min="0" max="30" step="1" value="10">
         <div class="waste-ticks">
-          <span style="left:0%">0% exact</span>
-          <span style="left:33.33%;transform:translateX(-50%)">10% standard</span>
-          <span style="left:50%;transform:translateX(-50%)">15% diagonal</span>
-          <span style="left:100%;transform:translateX(-100%)">30% complex</span>
+          <span>0% exact</span>
+          <span>10% standard</span>
+          <span>30% complex</span>
         </div>
       </div>
     </div>
@@ -301,10 +303,9 @@ footer{border-top:1px solid #e0e0e0;padding:1.2rem 0;margin-top:2rem}
         </div>
         <input type="range" id="mWasteSlider" min="0" max="30" step="1" value="10">
         <div class="waste-ticks">
-          <span style="left:0%">0% exact</span>
-          <span style="left:33.33%;transform:translateX(-50%)">10% standard</span>
-          <span style="left:50%;transform:translateX(-50%)">15% diagonal</span>
-          <span style="left:100%;transform:translateX(-100%)">30% complex</span>
+          <span>0% exact</span>
+          <span>10% standard</span>
+          <span>30% complex</span>
         </div>
       </div>
     </div>
@@ -411,7 +412,7 @@ footer{border-top:1px solid #e0e0e0;padding:1.2rem 0;margin-top:2rem}
       <a href="/blown-in-insulation-coverage-calculator/" class="related-link">🏠 Blown-In Insulation Coverage Calculator</a>
       <a href="/spray-foam-insulation-calculator/" class="related-link">🧊 Spray Foam Insulation Coverage Calculator</a>
       <a href="/paint-coverage-calculator/" class="related-link">🎨 Paint Coverage Calculator</a>
-      <a href="/asphalt-shingle-calculator/" class="related-link">🏚️ Asphalt Shingle Calculator</a>
+      <a href="/deck-footing-frost-depth-calculator/" class="related-link">🏚️ Deck Footing Size & Frost Depth Calculator</a>
     </div>
   </div>
 
@@ -439,6 +440,7 @@ function switchTab(name) {
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active', (i===0&&name==='single')||(i===1&&name==='multi')));
   document.getElementById('tab-single').classList.toggle('active', name==='single');
   document.getElementById('tab-multi').classList.toggle('active', name==='multi');
+  clearResults();
 }
 
 // ---- Waste sliders ----
@@ -499,6 +501,14 @@ function showError(id, msgId, show) {
   else { el.classList.remove('error'); msg.classList.remove('show'); }
 }
 
+// ---- Clear stale results (used on error or tab switch) ----
+function clearResults() {
+  const sec = document.getElementById('resultsSection');
+  sec.classList.remove('visible');
+  document.getElementById('resultsInner').innerHTML = '';
+  lastResultsText = '';
+}
+
 // ---- Core calculation ----
 function calcRoom(lenIn, widIn, tileLenIn, tileWidIn, groutIn, wastePct) {
   const effectiveTileLenIn = tileLenIn + groutIn;
@@ -516,24 +526,26 @@ function calcRoom(lenIn, widIn, tileLenIn, tileWidIn, groutIn, wastePct) {
 let lastResultsText = '';
 
 function calculate() {
-  let hasError = false;
-
   if (currentTab === 'single') {
     const rl = parseFloat(document.getElementById('roomLen').value);
     const rw = parseFloat(document.getElementById('roomWid').value);
     const tl = parseFloat(document.getElementById('tileLen').value);
     const tw = parseFloat(document.getElementById('tileWid').value);
 
-    showError('roomLen','errRoomLen', isNaN(rl)||rl<=0);
-    showError('roomWid','errRoomWid', isNaN(rw)||rw<=0);
-    showError('tileLen','errTileLen', isNaN(tl)||tl<=0);
-    showError('tileWid','errTileWid', isNaN(tw)||tw<=0);
+    const rlBad = isNaN(rl)||rl<=0;
+    const rwBad = isNaN(rw)||rw<=0;
+    const tlBad = isNaN(tl)||tl<=0;
+    const twBad = isNaN(tw)||tw<=0;
 
-    if (isNaN(rl)||rl<=0||isNaN(rw)||rw<=0||isNaN(tl)||tl<=0||isNaN(tw)||tw<=0) {
-      hasError = true;
+    showError('roomLen','errRoomLen', rlBad);
+    showError('roomWid','errRoomWid', rwBad);
+    showError('tileLen','errTileLen', tlBad);
+    showError('tileWid','errTileWid', twBad);
+
+    if (rlBad || rwBad || tlBad || twBad) {
+      clearResults();
+      return;
     }
-
-    if (hasError) return;
 
     const lenIn = toInches(rl, document.getElementById('unitLen').value);
     const widIn = toInches(rw, document.getElementById('unitWid').value);
@@ -569,11 +581,15 @@ function calculate() {
     // Multi-room
     const rooms = document.querySelectorAll('#multiRoomList > div');
     if (rooms.length === 0) {
+      clearResults();
       alert('Please add at least one room.'); return;
     }
     const tl = parseFloat(document.getElementById('mTileLen').value)||0;
     const tw = parseFloat(document.getElementById('mTileWid').value)||0;
-    if (tl <= 0 || tw <= 0) { alert('Please enter valid tile dimensions.'); return; }
+    if (tl <= 0 || tw <= 0) {
+      clearResults();
+      alert('Please enter valid tile dimensions.'); return;
+    }
 
     const tileLenIn = toInches(tl, document.getElementById('mUnitTileLen').value);
     const tileWidIn = toInches(tw, document.getElementById('mUnitTileWid').value);
@@ -593,7 +609,10 @@ function calculate() {
         roomData.push({name, lenIn: toInches(len,'ft'), widIn: toInches(wid,'ft'), len, wid});
       }
     });
-    if (roomData.length === 0) { alert('Please enter valid dimensions for at least one room.'); return; }
+    if (roomData.length === 0) {
+      clearResults();
+      alert('Please enter valid dimensions for at least one room.'); return;
+    }
 
     let totalTiles = 0, totalArea = 0;
     let rowsHtml = '';
@@ -619,13 +638,14 @@ function calculate() {
       <tr style="font-weight:700;background:#f0f8ff"><td>TOTAL</td><td>—</td><td class="num">${fmt(totalArea,1)}</td><td class="num">—</td><td class="num">${fmt(totalTiles)}</td><td class="num">${totalBoxes!==null?fmt(totalBoxes):'—'}</td></tr>
       </tbody></table></div>`;
 
+    lastResultsText = `Multi-room total: ${fmt(totalTiles)} tiles${totalBoxes!==null?', '+fmt(totalBoxes)+' boxes':''}${totalCost!==null?', $'+fmt(totalCost,2):''}`;
+
     requestAnimationFrame(() => {
       document.getElementById('resultsInner').innerHTML = html;
       const sec = document.getElementById('resultsSection');
       sec.classList.add('visible');
       sec.scrollIntoView({behavior:'smooth', block:'nearest'});
     });
-    lastResultsText = `Multi-room total: ${fmt(totalTiles)} tiles${totalBoxes?', '+fmt(totalBoxes)+' boxes':''}${totalCost?', $'+fmt(totalCost,2):''}`;
   }
 }
 
