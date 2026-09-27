@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Deck Railing &amp; Baluster Spacing Calculator | Toolwick</title>
+<meta name="description" content="Free deck railing spacing calculator. Enter your opening width and baluster size to get code-compliant gap spacing, baluster count, and on-center spacing instantly.">
+<link rel="canonical" href="https://toolwick.com/deck-railing-baluster-spacing-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Deck Railing & Baluster Spacing Calculator", "url": "https://toolwick.com/deck-railing-baluster-spacing-calculator/", "description": "Free deck railing spacing calculator. Enter your opening width and baluster size to get code-compliant gap spacing, baluster count, and on-center spacing instantly.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Deck Railing & Baluster Spacing Calculator", "item": "https://toolwick.com/deck-railing-baluster-spacing-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the maximum gap allowed between deck balusters?", "acceptedAnswer": {"@type": "Answer", "text": "Most U.S. jurisdictions following the IRC require gaps small enough that a 4-inch sphere cannot pass through the railing. Always confirm the exact number with your local building department, since some areas require tighter spacing."}}, {"@type": "Question", "name": "How do I measure the opening width for baluster spacing?", "acceptedAnswer": {"@type": "Answer", "text": "Measure the clear horizontal distance between the inside faces of your two end posts (not post center to post center). This is the actual space your balusters and gaps need to fill."}}, {"@type": "Question", "name": "Should baluster spacing be measured on-center or as a gap?", "acceptedAnswer": {"@type": "Answer", "text": "Building code measures the gap (open space) between balusters, but installers usually mark layout using on-center spacing since it's easier to measure with a tape from centerline to centerline of each baluster."}}, {"@type": "Question", "name": "Can I use this calculator for stair railings?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — stair guard baluster spacing follows the same 4-inch sphere rule horizontally, though some codes allow a slightly larger triangular opening at the stair nosing. Enter your stair section span the same way as a level railing."}}, {"@type": "Question", "name": "What baluster width should I use for round balusters?", "acceptedAnswer": {"@type": "Answer", "text": "Enter the diameter of the round baluster as the \"baluster width\" — the calculator treats it the same as a square baluster's face width for spacing purposes."}}, {"@type": "Question", "name": "Why does the calculator round up the number of balusters?", "acceptedAnswer": {"@type": "Answer", "text": "Rounding up guarantees the resulting gap never exceeds your maximum allowed spacing. Rounding down would produce a gap larger than code allows, which could fail inspection."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem}
+nav{padding:1rem 0}
+nav a{color:#0077b6;text-decoration:none;font-weight:700;font-size:1.1rem}
+h1{font-size:1.7rem;margin:0.5rem 0 1rem}
+h2{font-size:1.25rem;margin-top:2rem;color:#1a1a2e}
+p{color:#333}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-bottom:2rem}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:0.3rem;margin-top:1rem}
+input{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;min-height:44px}
+input:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:0.3rem;display:none}
+input.error{border-color:#e74c3c}
+button.calc-btn{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:1.5rem;width:100%;min-height:44px}
+button.calc-btn:hover{background:#006299}
+.results{margin-top:1.5rem;opacity:0;transition:opacity 0.3s ease}
+.results.show{opacity:1}
+.key-result{background:#f8f9fa;border-radius:8px;padding:1.2rem;text-align:center;margin-bottom:1rem}
+.key-result .num{font-size:2.2rem;font-weight:800;color:#0077b6}
+.key-result .lbl{font-size:0.9rem;color:#444}
+.status{font-weight:700;padding:0.5rem 0.8rem;border-radius:6px;display:inline-block;margin-top:0.5rem;font-size:0.9rem}
+.status.pass{background:#e6f7ec;color:#1a7d3c}
+.status.fail{background:#fdeaea;color:#c0392b}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;margin-top:0.5rem;font-size:0.92rem}
+th,td{padding:0.6rem 0.8rem;border-bottom:1px solid #eee;text-align:left}
+th{background:#f0f0f0}
+td.num,th.num{text-align:right}
+tr:nth-child(even) td{background:#fafafa}
+tr:nth-child(odd) td{background:#fff}
+.copy-btn{background:none;border:1px solid #0077b6;color:#0077b6;padding:6px 14px;border-radius:6px;font-size:0.8rem;cursor:pointer;margin-top:0.8rem;min-height:36px}
+.copy-btn:hover{background:#f0f8fc}
+.diagram{background:#f8f9fa;border-radius:8px;padding:1rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.ad-slot{min-height:0;margin:0}
+details{border:1px solid #e0e0e0;border-radius:6px;padding:0.8rem 1rem;margin-bottom:0.8rem}
+summary{font-weight:600;cursor:pointer}
+details p{margin:0.6rem 0 0}
+.related-list{list-style:none;padding:0;margin:0}
+.related-list li{margin-bottom:0.6rem}
+.related-list a{color:#0077b6;text-decoration:none}
+.related-list a:hover{text-decoration:underline}
+footer{border-top:1px solid #eee;padding:1.5rem 0;margin-top:2rem;font-size:0.85rem;color:#666}
+footer a{color:#0077b6;text-decoration:none;margin-right:1rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media (max-width:480px){.grid2{grid-template-columns:1fr}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/deck-railing-baluster-spacing-calculator/">
+<meta property="og:title" content="Deck Railing &amp; Baluster Spacing Calculator">
+<meta property="og:description" content="Free deck railing spacing calculator. Enter your opening width and baluster size to get code-compliant gap spacing, baluster count, and on-center spacing instantly.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#999;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Toolwick</a></nav>
+
+<h1>Deck Railing & Baluster Spacing Calculator</h1>
+<p>Use this <strong>deck railing spacing calculator</strong> to figure out exactly how many balusters you need and what gap spacing keeps your deck rail code-compliant — no guesswork, no gaps over 4 inches.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+  <!-- top rail -->
+  <line x1="40" y1="60" x2="560" y2="60" stroke="#0077b6" stroke-width="4"/>
+  <!-- posts -->
+  <rect x="30" y="55" width="20" height="130" fill="#1a1a2e"/>
+  <rect x="550" y="55" width="20" height="130" fill="#1a1a2e"/>
+  <!-- balusters -->
+  <g id="balusterGroup" stroke="#0077b6" stroke-width="6"></g>
+  <!-- span dimension -->
+  <line x1="50" y1="30" x2="550" y2="30" stroke="#e0e0e0" stroke-width="1"/>
+  <line x1="50" y1="24" x2="50" y2="36" stroke="#e0e0e0" stroke-width="1"/>
+  <line x1="550" y1="24" x2="550" y2="36" stroke="#e0e0e0" stroke-width="1"/>
+  <text id="svgSpan" x="300" y="20" text-anchor="middle" font-size="14" fill="#1a1a2e">Opening: 72 in</text>
+  <!-- gap/baluster labels -->
+  <text id="svgBaluster" x="300" y="205" text-anchor="middle" font-size="13" fill="#1a1a2e">Baluster width: 1.5 in</text>
+  <text id="svgGap" x="300" y="150" text-anchor="middle" font-size="13" fill="#0077b6">Gap: 3.75 in</text>
+  <text id="svgOC" x="300" y="195" text-anchor="middle" font-size="12" fill="#1a1a2e">On-center: 5.25 in</text>
+</svg>
+</div>
+
+<div class="card">
+<label for="span">Opening width / span between posts (inches)</label>
+<input type="number" id="span" value="72" step="0.125" inputmode="decimal">
+<div class="error-msg" id="err-span">Please enter a span greater than 0.</div>
+
+<div class="grid2">
+<div>
+<label for="baluster">Baluster width (inches)</label>
+<input type="number" id="baluster" value="1.5" step="0.0625" inputmode="decimal">
+<div class="error-msg" id="err-baluster">Enter a baluster width greater than 0.</div>
+</div>
+<div>
+<label for="maxgap">Max allowed gap (inches)</label>
+<input type="number" id="maxgap" value="4" step="0.125" inputmode="decimal">
+<div class="error-msg" id="err-maxgap">Enter a max gap greater than 0.</div>
+</div>
+</div>
+
+<label for="sections">Number of equal sections (post-to-post runs)</label>
+<input type="number" id="sections" value="1" step="1" min="1" inputmode="numeric">
+<div class="error-msg" id="err-sections">Enter at least 1 section.</div>
+
+<button class="calc-btn" id="calcBtn">Calculate Spacing</button>
+
+<div class="results" id="results"></div>
+</div>
+
+<div class="ad-slot" id="ad-mid"></div>
+
+<h2>How to Use This Deck Railing Spacing Calculator</h2>
+<p>Enter the clear opening width between your posts (the horizontal span where balusters will go), the width of the baluster you plan to use, and the maximum gap your local code allows — typically 4 inches so a 4-inch sphere can't pass through. Add the number of equal post-to-post sections if you're calculating a full railing run. Click <strong>Calculate Spacing</strong> to get the exact number of balusters, the actual gap between them, and the on-center spacing to mark on your rail.</p>
+
+<h2>Why This Matters</h2>
+<p>Building code (IRC R312.1.3 in most U.S. jurisdictions) requires that guardrail openings not allow a 4-inch sphere to pass through, which protects small children from slipping through or getting stuck. Contractors and DIYers building a deck railing need to know exactly how many balusters to buy and where to mark them so the finished gaps are equal and under 4 inches — uneven spacing looks unprofessional and can fail inspection. This calculator is useful whether you're framing a 6-foot section between two 4x4 posts, a curved deck with several shorter runs, or a full 40-foot railing with a dozen sections. Instead of eyeballing spacing or doing the math by hand for every section, plug in your numbers once and get a precise baluster count and marking spacing that passes inspection the first time and looks evenly spaced from every angle.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator finds the smallest number of balusters that keeps the gap between them at or under your maximum allowed gap. The formula:</p>
+<p><strong>n = ceil( (Span − MaxGap) / (BalusterWidth + MaxGap) )</strong></p>
+<p>Where <em>n</em> is the number of balusters per section. Once <em>n</em> is found, the actual gap is recalculated so every gap is equal:</p>
+<p><strong>Actual Gap = (Span − n × BalusterWidth) / (n + 1)</strong></p>
+<p>On-center spacing (baluster centerline to centerline, useful for marking your rail with a tape measure) is simply <strong>Actual Gap + Baluster Width</strong>. This method guarantees the fewest balusters possible while staying compliant, and it distributes the leftover space evenly across every gap instead of leaving one odd gap at the end.</p>
+
+<h2>Worked Example</h2>
+<p>Say you have a 72-inch opening between two posts, you're using 1.5-inch square balusters, and your code max gap is 4 inches.</p>
+<p>n = ceil( (72 − 4) / (1.5 + 4) ) = ceil( 68 / 5.5 ) = ceil(12.36) = <strong>13 balusters</strong></p>
+<p>Actual Gap = (72 − 13 × 1.5) / (13 + 1) = (72 − 19.5) / 14 = 52.5 / 14 = <strong>3.75 inches</strong></p>
+<p>On-center spacing = 3.75 + 1.5 = <strong>5.25 inches</strong>. That's exactly what the calculator returns by default — 13 balusters, a 3.75-inch gap (under the 4-inch max), and 5.25 inches on-center for marking your layout.</p>
+
+<h2>Tips & Common Mistakes</h2>
+<ul>
+<li>Measure the actual clear opening between the inside faces of your posts, not the total post-to-post centerline distance — this is the single most common input mistake.</li>
+<li>Always round your final gap down from the code max, not up — 3.75" passes a 4" sphere test comfortably, 4.01" does not.</li>
+<li>Account for the rail cap or bottom rail thickness separately; this tool calculates baluster spacing only, not vertical rail heights.</li>
+<li>If sections aren't identical lengths, run the calculator separately for each unique span rather than using the "sections" multiplier, which assumes equal spans.</li>
+<li>Mark baluster centerlines with a story pole or spacing jig instead of measuring each gap individually — it's faster and eliminates cumulative measuring error.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What is the maximum gap allowed between deck balusters?</summary><p>Most U.S. jurisdictions following the IRC require gaps small enough that a 4-inch sphere cannot pass through the railing. Always confirm the exact number with your local building department, since some areas require tighter spacing.</p></details>
+<details><summary>How do I measure the opening width for baluster spacing?</summary><p>Measure the clear horizontal distance between the inside faces of your two end posts (not post center to post center). This is the actual space your balusters and gaps need to fill.</p></details>
+<details><summary>Should baluster spacing be measured on-center or as a gap?</summary><p>Building code measures the gap (open space) between balusters, but installers usually mark layout using on-center spacing since it's easier to measure with a tape from centerline to centerline of each baluster.</p></details>
+<details><summary>Can I use this calculator for stair railings?</summary><p>Yes — stair guard baluster spacing follows the same 4-inch sphere rule horizontally, though some codes allow a slightly larger triangular opening at the stair nosing. Enter your stair section span the same way as a level railing.</p></details>
+<details><summary>What baluster width should I use for round balusters?</summary><p>Enter the diameter of the round baluster as the "baluster width" — the calculator treats it the same as a square baluster's face width for spacing purposes.</p></details>
+<details><summary>Why does the calculator round up the number of balusters?</summary><p>Rounding up guarantees the resulting gap never exceeds your maximum allowed spacing. Rounding down would produce a gap larger than code allows, which could fail inspection.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="related-list">
+<li><a href="/deck-footing-frost-depth-calculator/">Deck Footing Size & Frost Depth Calculator</a></li>
+<li><a href="/ceiling-drywall-hanger-spacing-load-calculator/">Ceiling Drywall Hanger Spacing & Load Calculator</a></li>
+<li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li>
+<li><a href="/drywall-screw-spacing-quantity-calculator/">Drywall Screw Spacing & Quantity Calculator</a></li>
+<li><a href="/roof-truss-span-spacing-calculator/">Truss Span & Spacing Calculator</a></li>
+<li><a href="/rebar-spacing-weight-calculator/">Rebar Spacing & Weight Calculator</a></li>
+</ul>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/contact/">Contact</a>
+<p>© 2024 toolwick.com</p>
+</footer>
+</div>
+
+<script>
+function fmt(n,d){
+  d=d===undefined?2:d;
+  return Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+}
+function clearErrors(){
+  ['span','baluster','maxgap','sections'].forEach(id=>{
+    document.getElementById(id).classList.remove('error');
+    document.getElementById('err-'+id).style.display='none';
+  });
+}
+function showError(id,msg){
+  document.getElementById(id).classList.add('error');
+  var e=document.getElementById('err-'+id);
+  if(msg) e.textContent=msg;
+  e.style.display='block';
+}
+function updateSVG(span,baluster,gap,oc,count){
+  var group=document.getElementById('balusterGroup');
+  var drawCount=Math.min(count,10);
+  var startX=60, endX=540;
+  var totalW=endX-startX;
+  var spacing = drawCount>0 ? totalW/(drawCount+1) : totalW;
+  var html='';
+  for(var i=1;i<=drawCount;i++){
+    var x = startX + spacing*i;
+    html+='<line x1="'+x.toFixed(1)+'" y1="60" x2="'+x.toFixed(1)+'" y2="180"></line>';
+  }
+  group.innerHTML=html;
+  document.getElementById('svgSpan').textContent='Opening: '+fmt(span,2)+' in';
+  document.getElementById('svgBaluster').textContent='Baluster width: '+fmt(baluster,3)+' in';
+  document.getElementById('svgGap').textContent='Gap: '+fmt(gap,2)+' in';
+  document.getElementById('svgOC').textContent='On-center: '+fmt(oc,2)+' in';
+}
+function calculate(){
+  clearErrors();
+  var span=parseFloat(document.getElementById('span').value);
+  var baluster=parseFloat(document.getElementById('baluster').value);
+  var maxgap=parseFloat(document.getElementById('maxgap').value);
+  var sections=parseInt(document.getElementById('sections').value);
+
+  var valid=true;
+  if(isNaN(span)||span<=0){showError('span');valid=false;}
+  if(isNaN(baluster)||baluster<=0){showError('baluster');valid=false;}
+  if(isNaN(maxgap)||maxgap<=0){showError('maxgap');valid=false;}
+  if(isNaN(sections)||sections<1){showError('sections');valid=false;}
+  if(!isNaN(span)&&!isNaN(baluster)&&baluster>=span){showError('baluster','Baluster width must be smaller than the span.');valid=false;}
+  if(!valid) return;
+
+  var n = Math.ceil((span - maxgap)/(baluster + maxgap));
+  if(n<0) n=0;
+  var actualGap = (span - n*baluster)/(n+1);
+  // safety loop in case of float edge cases
+  var guard=0;
+  while(actualGap>maxgap+0.0001 && guard<1000){
+    n++;
+    actualGap=(span-n*baluster)/(n+1);
+    guard++;
+  }
+  var onCenter = actualGap + baluster;
+  var totalBalusters = n*sections;
+  var passes = actualGap<=maxgap+0.0001;
+
+  requestAnimationFrame(()=>{
+    var html = '';
+    html += '<div class="key-result"><div class="num">'+totalBalusters.toLocaleString()+'</div><div class="lbl">Total Balusters Needed ('+sections+' section'+(sections>1?'s':'')+')</div></div>';
+    html += '<div style="text-align:center"><span class="status '+(passes?'pass':'fail')+'">'+(passes?'✓ Meets 4\" sphere rule':'✗ Gap exceeds max allowed')+'</span></div>';
+    html += '<div class="table-wrap"><table><tr><th>Metric</th><th class="num">Value</th></tr>';
+    html += '<tr><td>Balusters per section</td><td class="num">'+n.toLocaleString()+'</td></tr>';
+    html += '<tr><td>Actual gap between balusters</td><td class="num">'+fmt(actualGap,3)+' in</td></tr>';
+    html += '<tr><td>On-center spacing</td><td class="num">'+fmt(onCenter,3)+' in</td></tr>';
+    html += '<tr><td>Baluster width used</td><td class="num">'+fmt(baluster,3)+' in</td></tr>';
+    html += '<tr><td>Opening span (per section)</td><td class="num">'+fmt(span,2)+' in</td></tr>';
+    html += '<tr><td>Max allowed gap</td><td class="num">'+fmt(maxgap,2)+' in</td></tr>';
+    html += '<tr><td>Total balusters (all sections)</td><td class="num">'+totalBalusters.toLocaleString()+'</td></tr>';
+    html += '</table></div>';
+    html += '<button class="copy-btn" id="copyBtn">Copy Results</button>';
+
+    var results=document.getElementById('results');
+    results.innerHTML=html;
+    results.classList.add('show');
+
+    updateSVG(span,baluster,actualGap,onCenter,n);
+
+    document.getElementById('copyBtn').addEventListener('click',function(){
+      var text='Deck Railing Spacing Results\\n'+
+        'Balusters per section: '+n+'\\n'+
+        'Actual gap: '+fmt(actualGap,3)+' in\\n'+
+        'On-center spacing: '+fmt(onCenter,3)+' in\\n'+
+        'Total balusters ('+sections+' sections): '+totalBalusters+'\\n'+
+        'Code status: '+(passes?'Passes 4in sphere rule':'Exceeds max gap');
+      navigator.clipboard.writeText(text).then(function(){
+        var btn=document.getElementById('copyBtn');
+        var orig=btn.textContent;
+        btn.textContent='Copied!';
+        setTimeout(function(){btn.textContent=orig;},2000);
+      });
+    });
+  });
+}
+document.getElementById('calcBtn').addEventListener('click',calculate);
+['span','baluster','maxgap','sections'].forEach(function(id){
+  document.getElementById(id).addEventListener('keydown',function(e){
+    if(e.key==='Enter') calculate();
+  });
+});
+calculate();
+</script>
+</body>
+</html>
