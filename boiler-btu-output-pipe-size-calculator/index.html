@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Boiler BTU Output &amp; Pipe Size Calculator | Toolwick</title>
+<meta name="description" content="Free boiler pipe sizing calculator: find BTU output, flow rate (GPM), and correct pipe diameter for hydronic heating systems, by zone and pipe material.">
+<link rel="canonical" href="https://toolwick.com/boiler-btu-output-pipe-size-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Boiler BTU Output & Pipe Size Calculator", "url": "https://toolwick.com/boiler-btu-output-pipe-size-calculator/", "description": "Free boiler pipe sizing calculator: find BTU output, flow rate (GPM), and correct pipe diameter for hydronic heating systems, by zone and pipe material.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Boiler BTU Output & Pipe Size Calculator", "item": "https://toolwick.com/boiler-btu-output-pipe-size-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is ΔT (delta-T) in a boiler system?", "acceptedAnswer": {"@type": "Answer", "text": "ΔT is the temperature difference between supply and return water. A typical residential hydronic system runs 20°F ΔT (e.g., 180°F supply / 160°F return). A higher ΔT means lower flow rate requirements and potentially smaller pipes, but may reduce comfort in radiant systems."}}, {"@type": "Question", "name": "Can I use this for radiant floor heating?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, but radiant floor systems typically operate at lower water temperatures (85–120°F supply) and use PEX tubing in smaller diameters (⅜\"–½\"). Enter your actual supply/return temps and select PEX as the pipe material for accurate results. Flow per circuit in radiant is usually 0.5–1.5 GPM per loop."}}, {"@type": "Question", "name": "What does \"gross boiler input\" mean vs. net output?", "acceptedAnswer": {"@type": "Answer", "text": "Net output is the usable heat delivered to your water (what heats your home). Gross input is the fuel energy consumed by the boiler. The difference is waste heat lost through flue gases and combustion inefficiency. A boiler rated at 100,000 BTU gross input at 85% efficiency delivers 85,000 BTU/hr net output."}}, {"@type": "Question", "name": "How do I find my home's heat loss?", "acceptedAnswer": {"@type": "Answer", "text": "A proper ACCA Manual J calculation is the industry standard — many HVAC contractors can provide one. For a rough estimate, multiply your heated square footage by 25–50 BTU/hr per sq ft depending on climate zone, insulation, and window area. Cold northern climates with older construction can reach 60+ BTU/hr per sq ft."}}, {"@type": "Question", "name": "Why does the safe velocity limit change with pipe material?", "acceptedAnswer": {"@type": "Answer", "text": "Copper is more susceptible to erosion-corrosion at high water speed, so 4 ft/s is a common conservative ceiling. PEX and steel tolerate higher velocities (around 6 ft/s) without the same wear risk, so this calculator flags each result against its own material's safe range instead of one fixed number."}}, {"@type": "Question", "name": "Does this replace a licensed plumber or mechanical engineer?", "acceptedAnswer": {"@type": "Answer", "text": "No. This calculator provides a planning-level estimate using standard hydronic formulas. Final pipe sizing should always be verified against your local plumbing and mechanical code and, where required, stamped or approved by a licensed professional."}}]}]}</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f4f6f9;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:underline}
+a:hover{color:#006299}
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0 1.5rem}
+nav .nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;height:48px}
+nav .site-name{font-weight:700;font-size:1.05rem;color:#1a1a2e;text-decoration:none}
+nav .site-name span{color:#0077b6}
+main{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.5rem;font-weight:700;color:#1a1a2e;margin-bottom:0.4rem}
+.subtitle{color:#555;font-size:0.92rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 1px 4px rgba(0,0,0,0.06);margin-bottom:2rem}
+.diagram-wrap{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1rem;margin-bottom:1.5rem;text-align:center}
+.diagram-wrap svg{max-width:100%;height:auto}
+.section-label{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#0077b6;margin-bottom:1rem;padding-bottom:0.4rem;border-bottom:2px solid #e8f4fb}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:520px){.form-grid{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:0.35rem}
+label{font-size:0.85rem;font-weight:500;color:#444}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:0.95rem;color:#1a1a2e;background:#fff;transition:border-color .2s,box-shadow .2s;min-height:44px}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px;border-color:#0077b6}
+input.error{border-color:#e74c3c}
+.error-msg{font-size:0.8rem;color:#e74c3c;margin-top:2px;display:none}
+.error-msg.show{display:block}
+.hint{font-size:0.78rem;color:#666;margin-top:2px}
+.btn-row{margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap}
+button.primary{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:0.95rem;font-weight:600;cursor:pointer;transition:background .2s;min-height:44px}
+button.primary:hover{background:#006299}
+button.secondary{background:#f0f0f0;color:#333;border:1px solid #ddd;padding:12px 24px;border-radius:6px;font-size:0.95rem;font-weight:600;cursor:pointer;transition:background .2s;min-height:44px}
+button.secondary:hover{background:#e0e0e0}
+.results-section{opacity:0;transition:opacity .3s ease;pointer-events:none}
+.results-section.visible{opacity:1;pointer-events:all}
+.key-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+@media(max-width:520px){.key-metrics{grid-template-columns:1fr 1fr}}
+.metric-box{background:#f0f8ff;border:1px solid #c8e6f5;border-radius:8px;padding:1rem;text-align:center}
+.metric-box .val{font-size:1.5rem;font-weight:700;color:#0077b6;display:block;line-height:1.2}
+.metric-box .unit{font-size:0.72rem;color:#555;display:block;margin-top:2px}
+.metric-box .lbl{font-size:0.78rem;color:#444;margin-top:4px}
+.pipe-result{background:#e8f8f0;border:1px solid #a8dfc0;border-radius:8px;padding:1rem 1.25rem;margin-bottom:1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.pipe-result .pipe-size{font-size:2rem;font-weight:700;color:#0a7a4b;min-width:80px}
+.pipe-result .pipe-info{flex:1}
+.pipe-result .pipe-info .pipe-label{font-size:0.8rem;color:#555;margin-bottom:2px}
+.pipe-result .pipe-info .pipe-desc{font-size:0.9rem;color:#1a1a2e;font-weight:500}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:0.88rem}
+th{background:#f0f0f0;padding:9px 12px;text-align:left;font-weight:600;color:#333;border-bottom:2px solid #ddd}
+th.num,td.num{text-align:right}
+td{padding:8px 12px;border-bottom:1px solid #f0f0f0;color:#1a1a2e}
+tr:nth-child(even) td{background:#fafafa}
+.copy-btn{background:#fff;border:1px solid #0077b6;color:#0077b6;padding:6px 14px;border-radius:5px;font-size:0.8rem;cursor:pointer;transition:background .2s,color .2s;min-height:36px}
+.copy-btn:hover{background:#0077b6;color:#fff}
+.bar-wrap{margin-top:0.5rem}
+.bar-row{display:flex;align-items:center;gap:0.5rem;margin-bottom:6px;font-size:0.82rem}
+.bar-label{width:70px;text-align:right;color:#555;flex-shrink:0}
+.bar-track{flex:1;background:#e8e8e8;border-radius:4px;height:14px;overflow:hidden}
+.bar-fill{height:100%;background:#0077b6;border-radius:4px;transition:width .4s ease}
+.bar-val{width:60px;color:#1a1a2e;font-weight:600;flex-shrink:0}
+.note-box{background:#fffbea;border:1px solid #f5d76e;border-radius:6px;padding:0.85rem 1rem;font-size:0.83rem;color:#5a4a00;margin-top:1rem}
+.disclaimer{background:#f8f9fa;border-left:3px solid #0077b6;border-radius:0 6px 6px 0;padding:0.75rem 1rem;font-size:0.8rem;color:#444;margin-top:1rem}
+.content-section{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;margin-bottom:2rem}
+.content-section h2{font-size:1.1rem;font-weight:700;color:#1a1a2e;margin-bottom:0.75rem;margin-top:1.5rem}
+.content-section h2:first-child{margin-top:0}
+.content-section p{color:#444;font-size:0.93rem;margin-bottom:0.75rem}
+.content-section ul{padding-left:1.25rem;color:#444;font-size:0.93rem}
+.content-section ul li{margin-bottom:0.4rem}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:0.75rem;overflow:hidden}
+summary{padding:0.75rem 1rem;cursor:pointer;font-weight:600;font-size:0.9rem;background:#f8f9fa;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'▾';color:#0077b6;transition:transform .2s}
+details[open] summary::after{transform:rotate(-180deg)}
+details p{padding:0.75rem 1rem;font-size:0.88rem;color:#444;border-top:1px solid #e0e0e0}
+.related-tools{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1.5rem;margin-bottom:2rem}
+.related-tools h2{font-size:1rem;font-weight:700;margin-bottom:1rem;color:#1a1a2e}
+.related-tools ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0.5rem}
+@media(max-width:480px){.related-tools ul{grid-template-columns:1fr}}
+.related-tools ul li a{font-size:0.88rem;color:#0077b6;display:block;padding:6px 10px;background:#fff;border:1px solid #dde;border-radius:5px;transition:background .15s;text-decoration:underline}
+.related-tools ul li a:hover{background:#e8f4fb}
+.ad-slot{min-height:0;margin:0}
+footer{background:#fff;border-top:1px solid #e0e0e0;padding:1rem 1.5rem;text-align:center;font-size:0.82rem;color:#666}
+footer a{color:#0077b6;margin:0 0.5rem;text-decoration:underline}
+.formula-box{background:#f8f9fa;border-left:3px solid #0077b6;padding:0.75rem 1rem;font-family:monospace;font-size:0.88rem;color:#1a1a2e;border-radius:0 4px 4px 0;margin:0.75rem 0}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/boiler-btu-output-pipe-size-calculator/">
+<meta property="og:title" content="Boiler BTU Output &amp; Pipe Size Calculator">
+<meta property="og:description" content="Free boiler pipe sizing calculator: find BTU output, flow rate (GPM), and correct pipe diameter for hydronic heating systems, by zone and pipe material.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="site-name">tool<span>wick</span>.com</a>
+  </div>
+</nav>
+
+<main>
+  <h1>Boiler BTU Output & Pipe Size Calculator</h1>
+  <p class="subtitle">A boiler pipe sizing calculator that finds required BTU output, flow rate, and correct pipe diameter for hydronic heating systems.</p>
+
+  <!-- SVG Diagram -->
+  <div class="diagram-wrap">
+    <svg id="boilerDiagram" viewBox="0 0 580 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:220px" role="img" aria-label="Diagram of boiler, supply and return pipes, and heating zone">
+      <rect x="30" y="60" width="100" height="100" rx="8" fill="#e8f4fb" stroke="#0077b6" stroke-width="2.5"/>
+      <text x="80" y="108" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#0077b6" font-weight="700">BOILER</text>
+      <text id="svgBtu" x="80" y="124" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a2e">BTU/hr</text>
+      <text x="80" y="90" text-anchor="middle" font-family="sans-serif" font-size="16">🔥</text>
+      <line x1="130" y1="85" x2="240" y2="85" stroke="#0077b6" stroke-width="5" stroke-linecap="round"/>
+      <line x1="130" y1="135" x2="240" y2="135" stroke="#e57c00" stroke-width="5" stroke-linecap="round"/>
+      <text x="185" y="76" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#0077b6" font-weight="600">SUPPLY</text>
+      <text id="svgSupplyTemp" x="185" y="70" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#555"></text>
+      <text x="185" y="150" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#e57c00" font-weight="600">RETURN</text>
+      <rect x="240" y="60" width="90" height="100" rx="6" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="1.5"/>
+      <text x="285" y="112" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a2e" font-weight="600">ZONE</text>
+      <text id="svgZone" x="285" y="126" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#555">Radiators</text>
+      <line x1="155" y1="94" x2="155" y2="126" stroke="#1a1a2e" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="152" y1="94" x2="158" y2="94" stroke="#1a1a2e" stroke-width="1"/>
+      <line x1="152" y1="126" x2="158" y2="126" stroke="#1a1a2e" stroke-width="1"/>
+      <text id="svgPipeSize" x="162" y="113" font-family="sans-serif" font-size="10" fill="#1a1a2e">Ø ?</text>
+      <polygon points="218,82 228,85 218,88" fill="#0077b6"/>
+      <text id="svgFlow" x="200" y="100" font-family="sans-serif" font-size="9" fill="#555"></text>
+      <rect x="360" y="60" width="90" height="100" rx="6" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <text x="405" y="108" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#aaa">ZONE 2</text>
+      <text x="405" y="123" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#bbb">(Optional)</text>
+      <line x1="330" y1="85" x2="360" y2="85" stroke="#0077b6" stroke-width="5" stroke-linecap="round" opacity="0.35"/>
+      <line x1="330" y1="135" x2="360" y2="135" stroke="#e57c00" stroke-width="5" stroke-linecap="round" opacity="0.35"/>
+      <text x="490" y="80" font-family="sans-serif" font-size="11" fill="#1a1a2e" font-weight="600">ΔT =</text>
+      <text id="svgDt" x="530" y="80" font-family="sans-serif" font-size="11" fill="#0077b6" font-weight="700">20°F</text>
+      <text x="490" y="100" font-family="sans-serif" font-size="10" fill="#555">Temp Drop</text>
+      <text x="490" y="130" font-family="sans-serif" font-size="11" fill="#1a1a2e" font-weight="600">Eff =</text>
+      <text id="svgEff" x="530" y="130" font-family="sans-serif" font-size="11" fill="#0077b6" font-weight="700">85%</text>
+      <text x="30" y="210" font-family="sans-serif" font-size="9" fill="#999">Supply hot (blue) → Zone → Return cool (orange) → Boiler</text>
+    </svg>
+  </div>
+
+  <!-- TOOL CARD -->
+  <div class="card">
+    <div class="section-label">System Inputs</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="heatLoss">Heat Loss / BTU Required <span style="color:#e74c3c">*</span></label>
+        <input type="number" id="heatLoss" placeholder="e.g. 60000" min="1000" max="5000000">
+        <span class="hint">Total BTU/hr for the space(s) served</span>
+        <span class="error-msg" id="err-heatLoss">Please enter a valid heat loss (1,000–5,000,000 BTU/hr)</span>
+      </div>
+      <div class="form-group">
+        <label for="efficiency">Boiler Efficiency (%)</label>
+        <input type="number" id="efficiency" placeholder="85" min="50" max="99" value="85">
+        <span class="hint">Typical: 80–95% (condensing ~95%)</span>
+        <span class="error-msg" id="err-eff">Enter a value between 50–99%</span>
+      </div>
+      <div class="form-group">
+        <label for="supplyTemp">Supply Water Temp (°F)</label>
+        <input type="number" id="supplyTemp" placeholder="180" min="100" max="250" value="180">
+        <span class="hint">Typical: 140–200°F</span>
+        <span class="error-msg" id="err-supply">Enter a value between 100–250°F</span>
+      </div>
+      <div class="form-group">
+        <label for="returnTemp">Return Water Temp (°F)</label>
+        <input type="number" id="returnTemp" placeholder="160" min="80" max="240" value="160">
+        <span class="hint">Must be 80–240°F and below supply temp</span>
+        <span class="error-msg" id="err-return">Must be 80–240°F and less than supply temp</span>
+      </div>
+      <div class="form-group">
+        <label for="numZones">Number of Zones</label>
+        <select id="numZones">
+          <option value="1">1 Zone</option>
+          <option value="2">2 Zones</option>
+          <option value="3">3 Zones</option>
+          <option value="4">4 Zones</option>
+          <option value="5">5 Zones</option>
+          <option value="6">6 Zones</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="pipeType">Pipe Material</label>
+        <select id="pipeType">
+          <option value="copper">Copper (Type L)</option>
+          <option value="pex">PEX Tubing</option>
+          <option value="steel">Black Steel</option>
+          <option value="cpvc">CPVC</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:1.5rem">Velocity Preference</div>
+    <div class="form-group">
+      <label for="maxVelocity">Max Pipe Velocity (ft/s): <span id="velDisplay" style="color:#0077b6;font-weight:700">4.0</span></label>
+      <input type="range" id="maxVelocity" min="1" max="8" step="0.5" value="4" style="padding:4px 0;border:none;background:none;box-shadow:none;min-height:32px">
+      <span class="hint" id="velHint">Recommended max: 4 ft/s for copper. Raise this for materials rated for higher velocity (PEX ~6 ft/s).</span>
+    </div>
+
+    <div class="btn-row">
+      <button class="primary" id="calcBtn">Calculate</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+      <button class="secondary" id="resetBtn">Reset</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-section" id="resultsSection" aria-live="polite" aria-atomic="true">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem">
+        <div class="section-label" style="margin-bottom:0">Results</div>
+        <button class="copy-btn" id="copyBtn">📋 Copy Results</button>
+      </div>
+
+      <div class="key-metrics" id="keyMetrics"></div>
+
+      <div id="pipeResultBox"></div>
+
+      <div class="section-label">Pipe Size by Zone</div>
+      <div class="tbl-wrap">
+        <table id="zoneTable">
+          <thead>
+            <tr>
+              <th>Zone</th>
+              <th class="num">BTU/hr</th>
+              <th class="num">Flow (GPM)</th>
+              <th class="num">Pipe Ø (in)</th>
+              <th>Recommended Size</th>
+              <th>Velocity (ft/s)</th>
+            </tr>
+          </thead>
+          <tbody id="zoneTbody"></tbody>
+        </table>
+      </div>
+
+      <div style="margin-top:1.5rem" class="section-label">Pipe Size Comparison Chart</div>
+      <div class="bar-wrap" id="pipeChart"></div>
+
+      <div class="note-box" id="noteBox"></div>
+      <div class="disclaimer">This tool uses standard hydronic sizing formulas (the "500 rule" for water heat transfer, consistent with ASHRAE hydronics guidance). It is a planning estimate only — not an engineering, permit, or inspection approval. Always verify final pipe sizing against your local plumbing/mechanical code (e.g., IPC, UPC, or local amendments) and consult a licensed mechanical contractor before installation.</div>
+    </div>
+  </div>
+
+  <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+
+  <!-- CONTENT SECTION -->
+  <div class="content-section">
+    <h2>How to Use This Boiler Pipe Sizing Calculator</h2>
+    <p>Enter your system's total heat loss in BTU/hr (from a Manual J or heat loss calculation), set your supply and return water temperatures, boiler efficiency, number of zones, and pipe material. Adjust the maximum velocity slider to match your preferences. Click <strong>Calculate</strong> to instantly see required boiler BTU output, system flow rate in GPM, and the recommended pipe diameter for each zone and the main header.</p>
+
+    <h2>Why This Matters</h2>
+    <p>Undersized pipes restrict flow and create noise — that telltale banging and gurgling in older hydronic systems is often the result of pipes too small for the flow rate. Oversized pipes waste money on materials and can cause sluggish flow that reduces heat transfer efficiency. Getting the pipe size right is just as important as selecting the right boiler.</p>
+    <p>Consider a 2,400 sq ft home with a heat loss of 60,000 BTU/hr split across three zones. With a 20°F ΔT (180°F supply, 160°F return) and a 4 ft/s velocity limit, the system needs about 6 GPM total — roughly 2 GPM per zone. Running those numbers through this calculator's formulas gives a ½" copper branch for each zone and a ¾" main trunk line carrying all 6 GPM at just under 4 ft/s. Using ½" pipe for the entire main instead would push velocity to roughly 8.2 ft/s — well past safe limits — causing erosion, noise, and pump cavitation. This calculator does that math instantly so you can specify pipe sizes with confidence before purchasing materials.</p>
+    <p>Condensing boilers operating at lower return temps (below 130°F) can achieve 95%+ efficiency. This calculator accounts for boiler efficiency so the gross BTU input rating you need to purchase is clearly shown alongside the net output.</p>
+
+    <h2>How It's Calculated</h2>
+    <p>The core formula for hydronic pipe sizing combines the heat transfer equation with fluid flow:</p>
+    <div class="formula-box">Flow (GPM) = BTU/hr ÷ (500 × ΔT)</div>
+    <div class="formula-box">Pipe Area (in²) = (Flow ÷ 449 ÷ Max Velocity) × 144</div>
+    <div class="formula-box">Pipe Diameter (in) = 2 × √(Area ÷ π)</div>
+    <p>Where <strong>500</strong> is a constant for water (8.33 lb/gal × 60 min/hr × 1 BTU/lb·°F specific heat), and <strong>449</strong> converts GPM to ft³/s. The boiler gross input = net BTU output ÷ (efficiency ÷ 100). The ideal diameter is then rounded up to the nearest standard nominal pipe size available for your selected material, and actual velocity is recalculated for that real pipe ID. Recommended maximum velocities vary by material — roughly 4 ft/s for copper, 6 ft/s for PEX and black steel, and 5 ft/s for CPVC — and the results table colors any zone that exceeds its material's safe range.</p>
+
+    <h2>Worked Example</h2>
+    <p>Inputs: 60,000 BTU/hr heat loss, 85% efficiency, 180°F supply, 160°F return (ΔT = 20°F), 3 zones, copper pipe, 4 ft/s max velocity.</p>
+    <p><strong>Step 1 — Gross input:</strong> 60,000 ÷ 0.85 = 70,588 BTU/hr, rounded up to a 71,000 BTU/hr boiler rating.</p>
+    <p><strong>Step 2 — Total flow:</strong> 60,000 ÷ (500 × 20) = 6.00 GPM.</p>
+    <p><strong>Step 3 — Per-zone flow:</strong> 6.00 ÷ 3 = 2.00 GPM per zone.</p>
+    <p><strong>Step 4 — Zone pipe:</strong> ideal diameter ≈ 0.45", rounds up to ½" copper (0.545" ID), giving an actual velocity of about 2.75 ft/s — safely under the 4 ft/s copper limit.</p>
+    <p><strong>Step 5 — Main header pipe:</strong> ideal diameter ≈ 0.78", rounds up to ¾" copper (0.785" ID), giving an actual velocity of about 3.98 ft/s — just under the 4 ft/s limit.</p>
+
+    <h2>Tips & Common Mistakes</h2>
+    <ul>
+      <li><strong>Don't skip the heat loss calculation.</strong> Guessing BTU requirements leads to either an oversized boiler (short-cycling, wear, waste) or one too small to heat the space on design day.</li>
+      <li><strong>Match velocity limits to your pipe material.</strong> Copper should generally stay under 4 ft/s to avoid erosion corrosion; PEX and steel tolerate higher flow, up to roughly 6 ft/s.</li>
+      <li><strong>Size your main header larger.</strong> The trunk/main line carries all zone flow simultaneously. Always size it for total system GPM, not per-zone GPM.</li>
+      <li><strong>Account for ΔT accurately.</strong> A wider temperature drop (40°F vs 20°F) means lower flow rate and smaller pipes — but also slower response time and less comfortable radiant heat distribution.</li>
+      <li><strong>Leave 10–20% capacity headroom.</strong> When purchasing a boiler, choose one rated 10–15% above your calculated output to handle exceptional cold snaps or future additions.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is ΔT (delta-T) in a boiler system?</summary>
+      <p>ΔT is the temperature difference between supply and return water. A typical residential hydronic system runs 20°F ΔT (e.g., 180°F supply / 160°F return). A higher ΔT means lower flow rate requirements and potentially smaller pipes, but may reduce comfort in radiant systems.</p>
+    </details>
+    <details>
+      <summary>Can I use this for radiant floor heating?</summary>
+      <p>Yes, but radiant floor systems typically operate at lower water temperatures (85–120°F supply) and use PEX tubing in smaller diameters (⅜"–½"). Enter your actual supply/return temps and select PEX as the pipe material for accurate results. Flow per circuit in radiant is usually 0.5–1.5 GPM per loop.</p>
+    </details>
+    <details>
+      <summary>What does "gross boiler input" mean vs. net output?</summary>
+      <p>Net output is the usable heat delivered to your water (what heats your home). Gross input is the fuel energy consumed by the boiler. The difference is waste heat lost through flue gases and combustion inefficiency. A boiler rated at 100,000 BTU gross input at 85% efficiency delivers 85,000 BTU/hr net output.</p>
+    </details>
+    <details>
+      <summary>How do I find my home's heat loss?</summary>
+      <p>A proper ACCA Manual J calculation is the industry standard — many HVAC contractors can provide one. For a rough estimate, multiply your heated square footage by 25–50 BTU/hr per sq ft depending on climate zone, insulation, and window area. Cold northern climates with older construction can reach 60+ BTU/hr per sq ft.</p>
+    </details>
+    <details>
+      <summary>Why does the safe velocity limit change with pipe material?</summary>
+      <p>Copper is more susceptible to erosion-corrosion at high water speed, so 4 ft/s is a common conservative ceiling. PEX and steel tolerate higher velocities (around 6 ft/s) without the same wear risk, so this calculator flags each result against its own material's safe range instead of one fixed number.</p>
+    </details>
+    <details>
+      <summary>Does this replace a licensed plumber or mechanical engineer?</summary>
+      <p>No. This calculator provides a planning-level estimate using standard hydronic formulas. Final pipe sizing should always be verified against your local plumbing and mechanical code and, where required, stamped or approved by a licensed professional.</p>
+    </details>
+  </div>
+
+  <div class="related-tools">
+    <h2>Related Tools</h2>
+    <ul>
+      <li><a href="/pipe-sizing-flow-rate-calculator/">Pipe Sizing & Flow Rate Calculator</a></li>
+      <li><a href="/btu-heating-cooling-load-calculator/">BTU Heating & Cooling Load Calculator</a></li>
+      <li><a href="/water-softener-sizing-calculator/">Water Softener Sizing Calculator</a></li>
+      <li><a href="/furnace-sizing-calculator/">Furnace Sizing Calculator</a></li>
+      <li><a href="/mini-split-sizing-calculator/">Mini Split Sizing Calculator</a></li>
+      <li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing & Concrete Calculator</a></li>
+    </ul>
+  </div>
+
+  <nav class="cluster-nav" aria-label="More Plumbing &amp; HVAC Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Plumbing &amp; HVAC Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/btu-heating-cooling-load-calculator/">BTU Heating &amp; Cooling Load Calculator</a></li><li><a href="/pipe-sizing-flow-rate-calculator/">Pipe Sizing &amp; Flow Rate Calculator</a></li><li><a href="/furnace-sizing-calculator/">Furnace Sizing Calculator</a></li><li><a href="/hvac-duct-size-calculator/">HVAC Duct Size Calculator</a></li><li><a href="/hvac-refrigerant-line-set-size-calculator/">HVAC Refrigerant Line Set Size Calculator</a></li><li><a href="/hvac-ventilation-cfm-air-changes-calculator/">HVAC Ventilation CFM Room Air Changes Calculator</a></li><li><a href="/mini-split-sizing-calculator/">Mini Split Sizing Calculator</a></li><li><a href="/pex-radiant-floor-heating-layout-calculator/">PEX Radiant Floor Heating Layout Calculator</a></li><li><a href="/hvac-plumbing-calculators/"><strong>All Plumbing &amp; HVAC calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+</main>
+
+<footer>
+  <div>
+    <a href="/about/">About</a>
+    <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a>
+    <a href="/contact/">Contact</a>
+  </div>
+  <div style="margin-top:0.4rem">© 2025 toolwick.com</div>
+</footer>
+
+<script>
+// Pipe size tables: nominal sizes with inner diameters (inches)
+const PIPE_SIZES = {
+  copper: [
+    {nominal:'3/8"', id:0.430},
+    {nominal:'1/2"', id:0.545},
+    {nominal:'3/4"', id:0.785},
+    {nominal:'1"',   id:1.025},
+    {nominal:'1-1/4"', id:1.265},
+    {nominal:'1-1/2"', id:1.505},
+    {nominal:'2"',   id:1.985},
+    {nominal:'2-1/2"', id:2.465},
+    {nominal:'3"',   id:2.945}
+  ],
+  pex: [
+    {nominal:'3/8"', id:0.350},
+    {nominal:'1/2"', id:0.475},
+    {nominal:'3/4"', id:0.671},
+    {nominal:'1"',   id:0.862},
+    {nominal:'1-1/4"', id:1.077},
+    {nominal:'1-1/2"', id:1.265},
+    {nominal:'2"',   id:1.650}
+  ],
+  steel: [
+    {nominal:'3/8"', id:0.493},
+    {nominal:'1/2"', id:0.622},
+    {nominal:'3/4"', id:0.824},
+    {nominal:'1"',   id:1.049},
+    {nominal:'1-1/4"', id:1.380},
+    {nominal:'1-1/2"', id:1.610},
+    {nominal:'2"',   id:2.067},
+    {nominal:'2-1/2"', id:2.469},
+    {nominal:'3"',   id:3.068}
+  ],
+  cpvc: [
+    {nominal:'1/2"', id:0.546},
+    {nominal:'3/4"', id:0.722},
+    {nominal:'1"',   id:0.936},
+    {nominal:'1-1/4"', id:1.164},
+    {nominal:'1-1/2"', id:1.364},
+    {nominal:'2"',   id:1.754}
+  ]
+};
+
+// Recommended max safe velocity (ft/s) per material — used for color-coding, independent of user slider
+const VELOCITY_LIMITS = { copper: 4, pex: 6, steel: 6, cpvc: 5 };
+
+function fmt(n,dec=0){
+  if(isNaN(n)||!isFinite(n)) return '—';
+  return n.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+}
+
+function calcFlow(btu, deltaT) {
+  // GPM = BTU/hr / (500 * ΔT)
+  return btu / (500 * deltaT);
+}
+
+function calcPipeSize(gpm, maxVel) {
+  const flowCFS = gpm / 449.0;
+  const areaFt2 = flowCFS / maxVel;
+  const areaIn2 = areaFt2 * 144;
+  const diamIn = 2 * Math.sqrt(areaIn2 / Math.PI);
+  return { idealDiam: diamIn, areaIn2 };
+}
+
+function findNominalPipe(idealDiam, pipeType) {
+  const sizes = PIPE_SIZES[pipeType];
+  for(let i=0;i<sizes.length;i++){
+    if(sizes[i].id >= idealDiam) return sizes[i];
+  }
+  return sizes[sizes.length-1];
+}
+
+function actualVelocity(gpm, pipeID) {
+  const areaFt2 = Math.PI * Math.pow(pipeID/24, 2);
+  return (gpm / 449) / areaFt2;
+}
+
+function velocityClass(vel, pipeType){
+  const limit = VELOCITY_LIMITS[pipeType];
+  if(vel > limit) return 'style="color:#e74c3c;font-weight:600"';
+  if(vel > limit*0.75) return 'style="color:#c47a00;font-weight:600"';
+  return '';
+}
+
+function clearErrors(){
+  ['err-heatLoss','err-eff','err-supply','err-return'].forEach(id=>{
+    document.getElementById(id).classList.remove('show');
+  });
+  ['heatLoss','efficiency','supplyTemp','returnTemp'].forEach(id=>{
+    document.getElementById(id).classList.remove('error');
+  });
+}
+
+function showError(fieldId, errId){
+  document.getElementById(fieldId).classList.add('error');
+  document.getElementById(errId).classList.add('show');
+}
+
+function hideResults(){
+  document.getElementById('resultsSection').classList.remove('visible');
+}
+
+function calculate(){
+  clearErrors();
+  const heatLoss = parseFloat(document.getElementById('heatLoss').value);
+  const efficiency = parseFloat(document.getElementById('efficiency').value);
+  const supplyTemp = parseFloat(document.getElementById('supplyTemp').value);
+  const returnTemp = parseFloat(document.getElementById('returnTemp').value);
+  const numZones = parseInt(document.getElementById('numZones').value)||1;
+  const pipeType = document.getElementById('pipeType').value;
+  const maxVel = parseFloat(document.getElementById('maxVelocity').value)||4;
+
+  let valid = true;
+  if(!heatLoss || isNaN(heatLoss) || heatLoss < 1000 || heatLoss > 5000000){
+    showError('heatLoss','err-heatLoss'); valid=false;
+  }
+  if(isNaN(efficiency) || efficiency < 50 || efficiency > 99){
+    showError('efficiency','err-eff'); valid=false;
+  }
+  if(isNaN(supplyTemp) || supplyTemp < 100 || supplyTemp > 250){
+    showError('supplyTemp','err-supply'); valid=false;
+  }
+  if(isNaN(returnTemp) || returnTemp < 80 || returnTemp > 240 || returnTemp >= supplyTemp){
+    showError('returnTemp','err-return'); valid=false;
+  }
+  if(!valid){ hideResults(); return; }
+
+  const deltaT = supplyTemp - returnTemp;
+  const grossInput = heatLoss / (efficiency/100);
+  const totalFlow = calcFlow(heatLoss, deltaT);
+  const zoneFlow = totalFlow / numZones;
+  const zoneBtu = heatLoss / numZones;
+
+  // Main header pipe (must carry all GPM)
+  const mainPipeCalc = calcPipeSize(totalFlow, maxVel);
+  const mainNominal = findNominalPipe(mainPipeCalc.idealDiam, pipeType);
+  const mainVel = actualVelocity(totalFlow, mainNominal.id);
+
+  // Zone pipes
+  const zoneCalc = calcPipeSize(zoneFlow, maxVel);
+  const zoneNominal = findNominalPipe(zoneCalc.idealDiam, pipeType);
+  const zoneActualVel = actualVelocity(zoneFlow, zoneNominal.id);
+
+  const limit = VELOCITY_LIMITS[pipeType];
+
+  // Build zones table
+  let zoneRows = '';
+  for(let z=1; z<=numZones; z++){
+    const vClass = velocityClass(zoneActualVel, pipeType);
+    zoneRows += `<tr>
+      <td>Zone ${z}</td>
+      <td class="num">${fmt(zoneBtu)}</td>
+      <td class="num">${fmt(zoneFlow,2)}</td>
+      <td class="num">${fmt(zoneCalc.idealDiam,3)}"</td>
+      <td><strong>${zoneNominal.nominal}</strong></td>
+      <td ${vClass}>${fmt(zoneActualVel,2)} ft/s</td>
+    </tr>`;
+  }
+  const mainVClass = velocityClass(mainVel, pipeType);
+  zoneRows += `<tr style="background:#f0f8ff">
+    <td><strong>Main Header</strong></td>
+    <td class="num">${fmt(heatLoss)}</td>
+    <td class="num">${fmt(totalFlow,2)}</td>
+    <td class="num">${fmt(mainPipeCalc.idealDiam,3)}"</td>
+    <td><strong>${mainNominal.nominal}</strong></td>
+    <td ${mainVClass}>${fmt(mainVel,2)} ft/s</td>
+  </tr>`;
+
+  const metricsHTML = `
+    <div class="metric-box">
+      <span class="val">${fmt(Math.ceil(grossInput/1000)*1000)}</span>
+      <span class="unit">BTU/hr gross input</span>
+      <div class="lbl">Boiler Input Rating</div>
+    </div>
+    <div class="metric-box">
+      <span class="val">${fmt(heatLoss)}</span>
+      <span class="unit">BTU/hr net output</span>
+      <div class="lbl">Heat Delivered</div>
+    </div>
+    <div class="metric-box">
+      <span class="val">${fmt(totalFlow,2)}</span>
+      <span class="unit">GPM total flow</span>
+      <div class="lbl">System Flow Rate</div>
+    </div>`;
+
+  const pipeTypeLabel = pipeType.charAt(0).toUpperCase()+pipeType.slice(1);
+  const pipeHTML = `<div class="pipe-result">
+    <div class="pipe-size">${mainNominal.nominal}</div>
+    <div class="pipe-info">
+      <div class="pipe-label">Recommended Main Header Pipe</div>
+      <div class="pipe-desc">${pipeTypeLabel} — carrying ${fmt(totalFlow,2)} GPM at ${fmt(mainVel,2)} ft/s actual velocity (ID: ${mainNominal.id}", safe limit ${limit} ft/s)</div>
+    </div>
+  </div>
+  <div class="pipe-result" style="background:#f8f0ff;border-color:#c8a8df">
+    <div class="pipe-size" style="color:#6a0dad">${zoneNominal.nominal}</div>
+    <div class="pipe-info">
+      <div class="pipe-label">Recommended Zone Branch Pipe</div>
+      <div class="pipe-desc">${pipeTypeLabel} — each zone carrying ${fmt(zoneFlow,2)} GPM at ${fmt(zoneActualVel,2)} ft/s (ID: ${zoneNominal.id}", safe limit ${limit} ft/s)</div>
+    </div>
+  </div>`;
+
+  // Bar chart for pipe sizes
+  const allSizes = PIPE_SIZES[pipeType];
+  const maxID = allSizes[allSizes.length-1].id;
+  let bars = '';
+  const highlights = [zoneNominal.nominal, mainNominal.nominal];
+  allSizes.forEach(s=>{
+    const pct = (s.id/maxID)*100;
+    const isHL = highlights.includes(s.nominal);
+    bars += `<div class="bar-row">
+      <span class="bar-label">${s.nominal}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${isHL?'#0077b6':'#bdd7ee'}"></div></div>
+      <span class="bar-val" style="${isHL?'color:#0077b6;font-weight:700':''}">${s.id}" ID</span>
+    </div>`;
+  });
+
+  // Notes (material-aware)
+  let notes = [];
+  if(mainVel > limit) notes.push(`⚠️ Main header velocity (${fmt(mainVel,2)} ft/s) exceeds the recommended ${limit} ft/s limit for ${pipeTypeLabel}. Consider a larger pipe or lowering the velocity setting.`);
+  if(zoneActualVel > limit) notes.push(`⚠️ Zone velocity (${fmt(zoneActualVel,2)} ft/s) exceeds the recommended ${limit} ft/s limit for ${pipeTypeLabel}.`);
+  if(deltaT < 15) notes.push('ℹ️ Low ΔT (' + deltaT + '°F) results in high flow rate and larger pipe requirements. Consider increasing temperature differential.');
+  if(deltaT > 40) notes.push('ℹ️ High ΔT (' + deltaT + '°F) may reduce comfort in radiant systems. Typical range is 20–40°F.');
+  if(efficiency >= 90) notes.push('✅ Condensing boiler efficiency ('+efficiency+'%). Ensure return temp stays below 130°F for maximum efficiency gains.');
+  if(notes.length===0) notes.push('✅ System parameters are within normal operating ranges for '+pipeTypeLabel+'.');
+  const noteHTML = notes.join('<br>');
+
+  window._copyText = `Boiler BTU Output & Pipe Size Calculator Results
+Heat Loss: ${fmt(heatLoss)} BTU/hr
+Gross Boiler Input: ${fmt(Math.ceil(grossInput/1000)*1000)} BTU/hr
+Net Output: ${fmt(heatLoss)} BTU/hr
+Efficiency: ${efficiency}%
+Supply Temp: ${supplyTemp}°F | Return Temp: ${returnTemp}°F | ΔT: ${deltaT}°F
+Total Flow: ${fmt(totalFlow,2)} GPM
+Pipe Material: ${pipeTypeLabel} (safe velocity limit ${limit} ft/s)
+Main Header Pipe: ${mainNominal.nominal} @ ${fmt(mainVel,2)} ft/s
+Zone Branch Pipe: ${zoneNominal.nominal} @ ${fmt(zoneActualVel,2)} ft/s
+Number of Zones: ${numZones} | Zone Flow: ${fmt(zoneFlow,2)} GPM each`;
+
+  // UPDATE SVG values
+  const svgVals = {
+    svgBtu: fmt(heatLoss)+' BTU/hr',
+    svgSupplyTemp: supplyTemp+'°F supply',
+    svgPipeSize: 'Ø '+mainNominal.nominal,
+    svgFlow: fmt(totalFlow,1)+' GPM',
+    svgDt: deltaT+'°F',
+    svgEff: efficiency+'%',
+    svgZone: numZones+' Zone'+(numZones>1?'s':'')
+  };
+
+  requestAnimationFrame(()=>{
+    document.getElementById('keyMetrics').innerHTML = metricsHTML;
+    document.getElementById('pipeResultBox').innerHTML = pipeHTML;
+    document.getElementById('zoneTbody').innerHTML = zoneRows;
+    document.getElementById('pipeChart').innerHTML = bars;
+    document.getElementById('noteBox').innerHTML = noteHTML;
+    for(const k in svgVals){ document.getElementById(k).textContent = svgVals[k]; }
+    const rs = document.getElementById('resultsSection');
+    rs.classList.add('visible');
+    rs.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+}
+
+// Velocity slider display
+document.getElementById('maxVelocity').addEventListener('input', function(){
+  document.getElementById('velDisplay').textContent = parseFloat(this.value).toFixed(1);
+});
+
+// Update velocity hint when pipe material changes
+document.getElementById('pipeType').addEventListener('change', function(){
+  const limit = VELOCITY_LIMITS[this.value];
+  const label = this.value.charAt(0).toUpperCase()+this.value.slice(1);
+  document.getElementById('velHint').textContent = `Recommended max: ${limit} ft/s for ${label}. Table below flags results above this material's safe limit.`;
+});
+
+// Enter key
+document.querySelectorAll('input').forEach(inp=>{
+  inp.addEventListener('keydown', e=>{if(e.key==='Enter') calculate();});
+});
+
+document.getElementById('calcBtn').addEventListener('click', ()=>{
+  requestAnimationFrame(()=>calculate());
+});
+
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  document.getElementById('heatLoss').value='';
+  document.getElementById('efficiency').value='85';
+  document.getElementById('supplyTemp').value='180';
+  document.getElementById('returnTemp').value='160';
+  document.getElementById('numZones').value='1';
+  document.getElementById('pipeType').value='copper';
+  document.getElementById('maxVelocity').value='4';
+  document.getElementById('velDisplay').textContent='4.0';
+  document.getElementById('velHint').textContent='Recommended max: 4 ft/s for copper. Raise this for materials rated for higher velocity (PEX ~6 ft/s).';
+  clearErrors();
+  hideResults();
+  document.getElementById('svgBtu').textContent='BTU/hr';
+  document.getElementById('svgPipeSize').textContent='Ø ?';
+  document.getElementById('svgFlow').textContent='';
+  document.getElementById('svgDt').textContent='20°F';
+  document.getElementById('svgEff').textContent='85%';
+  document.getElementById('svgZone').textContent='Radiators';
+  document.getElementById('svgSupplyTemp').textContent='';
+});
+
+document.getElementById('copyBtn').addEventListener('click', function(){
+  if(!window._copyText) return;
+  const btn = this;
+  navigator.clipboard.writeText(window._copyText).then(()=>{
+    btn.textContent='✅ Copied!';
+    setTimeout(()=>{btn.textContent='📋 Copy Results';},2000);
+  }).catch(()=>{
+    const ta = document.createElement('textarea');
+    ta.value=window._copyText;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent='✅ Copied!';
+    setTimeout(()=>{btn.textContent='📋 Copy Results';},2000);
+  });
+});
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
