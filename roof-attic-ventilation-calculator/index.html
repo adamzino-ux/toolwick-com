@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Free Roof Attic Ventilation Calculator | Toolwick</title>
+<meta name="description" content="Free attic ventilation calculator: find the required net free area (NFA), soffit intake, and ridge exhaust vent lengths for your attic in seconds.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/roof-attic-ventilation-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Roof Attic Ventilation Calculator", "url": "https://toolwick.com/roof-attic-ventilation-calculator/", "description": "Free attic ventilation calculator: find the required net free area (NFA), soffit intake, and ridge exhaust vent lengths for your attic in seconds.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Roof Attic Ventilation Calculator", "item": "https://toolwick.com/roof-attic-ventilation-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does NFA mean in attic ventilation?", "acceptedAnswer": {"@type": "Answer", "text": "NFA stands for Net Free Area — the actual open area (in square inches) through which air can pass, as opposed to a vent's overall physical size. Manufacturers test and print NFA on their product specs, and it's the number building codes and this calculator use."}}, {"@type": "Question", "name": "Should I use the 1/150 or 1/300 ratio?", "acceptedAnswer": {"@type": "Answer", "text": "Use 1/300 only if your attic has a vapor retarder on the warm-in-winter side of the ceiling and your ventilation is split roughly 50/50 between intake and exhaust; otherwise most codes default to the stricter 1/150 ratio."}}, {"@type": "Question", "name": "How much ridge vent do I need for my house?", "acceptedAnswer": {"@type": "Answer", "text": "Divide the required exhaust NFA (half your total NFA, typically) by your ridge vent's NFA-per-linear-foot rating. For a 1,200 sq ft attic at 1/300 with an 18 sq in/ft ridge vent, you'd need about 16 linear feet."}}, {"@type": "Question", "name": "Can I mix soffit vents and gable vents?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, but calculate the NFA of each vent type separately and add them together; just make sure your total intake still roughly balances your total exhaust to avoid pulling air the wrong direction."}}, {"@type": "Question", "name": "What happens if my attic is under-ventilated?", "acceptedAnswer": {"@type": "Answer", "text": "Under-ventilation traps heat and moisture, accelerating shingle aging, promoting mold and wood rot, and contributing to ice dams in cold climates — it can also void some shingle manufacturer warranties."}}, {"@type": "Question", "name": "Does this calculator account for cathedral or vaulted ceilings?", "acceptedAnswer": {"@type": "Answer", "text": "This tool calculates whole-attic NFA based on floor area; for individual vaulted rafter bays, size each bay's intake and exhaust vent separately since they don't share a common attic space."}}]}]}</script>
+<style>
+:root{--accent:#0077b6;--dark:#1a1a2e;--gray:#f8f9fa;}
+*{box-sizing:border-box;}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:var(--dark);line-height:1.6;}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem;}
+nav{padding:1rem 0;}
+nav a{color:var(--accent);text-decoration:none;font-weight:700;font-size:1.1rem;}
+h1{font-size:1.6rem;margin:0.5rem 0 1rem;}
+h2{font-size:1.25rem;margin-top:2rem;color:var(--dark);}
+p{margin:0.75rem 0;}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 6px rgba(0,0,0,0.04);margin:1.5rem 0;}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin:0.9rem 0 0.3rem;}
+input[type=number],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;min-height:44px;}
+input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,119,182,0.15);}
+input[type=range]{width:100%;height:44px;}
+.err{color:#e74c3c;font-size:0.8rem;margin-top:0.2rem;display:none;}
+.invalid{border-color:#e74c3c !important;}
+button.calc{background:var(--accent);color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:1.5rem;width:100%;min-height:44px;}
+button.calc:hover{background:#006299;}
+.results{opacity:0;transition:opacity 0.3s ease;margin-top:1.5rem;}
+.results.show{opacity:1;}
+.big{font-size:2rem;font-weight:700;color:var(--accent);margin:0.3rem 0;}
+.sub{font-size:0.9rem;color:#555;margin-bottom:1rem;}
+.tablewrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;margin-top:0.5rem;font-size:0.92rem;}
+th,td{padding:8px 10px;border-bottom:1px solid #eee;text-align:right;}
+th:first-child,td:first-child{text-align:left;}
+thead th{background:#f0f0f0;}
+tbody tr:nth-child(even){background:#fafafa;}
+.copybtn{background:none;border:1px solid var(--accent);color:var(--accent);padding:6px 14px;border-radius:6px;font-size:0.8rem;cursor:pointer;margin-top:0.8rem;min-height:36px;}
+.copybtn:hover{background:#f0f8fc;}
+.ad-slot{min-height:0;margin:0;}
+.section-gray{background:var(--gray);padding:1rem;border-radius:6px;}
+details{margin:0.7rem 0;border-bottom:1px solid #eee;padding-bottom:0.7rem;}
+summary{cursor:pointer;font-weight:600;}
+.related a{display:inline-block;margin:0.3rem 0.6rem 0.3rem 0;color:var(--accent);text-decoration:none;}
+.related a:hover{text-decoration:underline;}
+footer{border-top:1px solid #eee;padding:1.5rem 0;margin-top:2rem;font-size:0.85rem;color:#666;}
+footer a{color:var(--accent);text-decoration:none;margin-right:0.8rem;}
+svg{width:100%;height:auto;display:block;}
+@media (min-width:768px){.wrap{padding:2rem;}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/roof-attic-ventilation-calculator/">
+<meta property="og:title" content="Roof Attic Ventilation Calculator">
+<meta property="og:description" content="Free attic ventilation calculator: find the required net free area (NFA), soffit intake, and ridge exhaust vent lengths for your attic in seconds.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#999;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Toolwick</a></nav>
+<h1>Roof Attic Ventilation Calculator</h1>
+<p>Use this free <strong>attic ventilation calculator</strong> to find the required net free area (NFA) for your attic, based on standard 1/150 or 1/300 building code ratios, and see exactly how many linear feet of ridge and soffit vent you need to balance intake and exhaust airflow.</p>
+
+<div class="card">
+  <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Attic ventilation diagram">
+    <line x1="60" y1="260" x2="540" y2="260" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 4"/>
+    <polygon points="300,40 60,260 540,260" fill="none" stroke="#0077b6" stroke-width="3"/>
+    <line x1="300" y1="40" x2="300" y2="260" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3 3"/>
+    <rect x="270" y="30" width="60" height="14" fill="#0077b6"/>
+    <rect x="40" y="252" width="60" height="14" fill="#0077b6" transform="rotate(-27 40 252)"/>
+    <rect x="500" y="252" width="60" height="14" fill="#0077b6" transform="rotate(27 500 252)"/>
+    <path d="M120,240 L160,160 L200,90" stroke="#0077b6" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <path d="M480,240 L440,160 L400,90" stroke="#0077b6" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <defs>
+      <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+        <path d="M0,0 L8,4 L0,8 z" fill="#0077b6"/>
+      </marker>
+    </defs>
+    <text x="300" y="24" text-anchor="middle" font-size="13" fill="#1a1a2e" font-weight="600">Ridge Exhaust Vent</text>
+    <text x="300" y="72" text-anchor="middle" font-size="12" fill="#1a1a2e" id="svgExhaust">Exhaust NFA: —</text>
+    <text x="300" y="88" text-anchor="middle" font-size="12" fill="#1a1a2e" id="svgRidgeLen">Ridge vent length: —</text>
+    <text x="140" y="285" text-anchor="middle" font-size="12" fill="#1a1a2e" font-weight="600">Soffit Intake</text>
+    <text x="140" y="300" text-anchor="middle" font-size="11" fill="#1a1a2e" id="svgSoffitLen">—</text>
+    <text x="460" y="285" text-anchor="middle" font-size="12" fill="#1a1a2e" font-weight="600">Soffit Intake</text>
+    <text x="300" y="230" text-anchor="middle" font-size="12" fill="#1a1a2e" id="svgArea">Attic Floor Area: —</text>
+    <text x="300" y="247" text-anchor="middle" font-size="12" fill="#1a1a2e" id="svgIntake">Intake NFA: —</text>
+  </svg>
+
+  <label for="len">Attic Floor Length (ft)</label>
+  <input type="number" id="len" value="40" min="0" step="0.1">
+  <div class="err" id="lenErr">Please enter a length greater than 0.</div>
+
+  <label for="wid">Attic Floor Width (ft)</label>
+  <input type="number" id="wid" value="30" min="0" step="0.1">
+  <div class="err" id="widErr">Please enter a width greater than 0.</div>
+
+  <label for="ratio">Ventilation Ratio</label>
+  <select id="ratio">
+    <option value="150">1/150 (Standard minimum)</option>
+    <option value="300" selected>1/300 (Balanced intake/exhaust + vapor retarder)</option>
+  </select>
+
+  <label for="split">Intake / Exhaust Split: <span id="splitLabel">50% / 50%</span></label>
+  <input type="range" id="split" min="30" max="70" value="50" step="5">
+
+  <label for="ridgeNFA">Ridge / Exhaust Vent NFA (sq in per linear ft)</label>
+  <input type="number" id="ridgeNFA" value="18" min="0" step="0.1">
+  <div class="err" id="ridgeErr">Must be greater than 0.</div>
+
+  <label for="soffitNFA">Soffit / Intake Vent NFA (sq in per linear ft)</label>
+  <input type="number" id="soffitNFA" value="9" min="0" step="0.1">
+  <div class="err" id="soffitErr">Must be greater than 0.</div>
+
+  <button class="calc" id="calcBtn">Calculate Ventilation Needs</button>
+
+  <div class="results" id="results"></div>
+</div>
+
+<div class="ad-slot" id="ad-mid"></div>
+
+<h2>How to Use This Attic Ventilation Calculator</h2>
+<p>Enter your attic's floor length and width to get the total square footage, then choose the ventilation ratio required by your local code (1/150 or 1/300). Set your intake/exhaust split and enter the net free area (NFA) rating of the ridge and soffit vent products you're using — the calculator instantly returns total required NFA, plus the linear feet of ridge and soffit vent needed.</p>
+
+<h2>Why This Matters</h2>
+<p>Poor attic ventilation is one of the leading causes of premature roof failure, ice damming, mold growth, and sky-high summer cooling bills. Builders, roofers, and home inspectors use ratios like 1/150 (1 square foot of NFA per 150 square feet of attic floor) or 1/300 to size vents correctly during new construction, re-roofing, or attic remodels. A homeowner replacing shingles on a 1,200 sq ft attic needs roughly 576 sq inches of NFA split between soffit intake and ridge exhaust — get it wrong and moisture gets trapped, rotting sheathing and voiding shingle warranties. Roofing contractors quoting ridge vent length, home inspectors flagging inadequate ventilation, and DIYers adding gable or box vents all rely on this same math to avoid callbacks and code violations.</p>
+
+<h2>How It's Calculated</h2>
+<p>The core building-code formula is:</p>
+<p><strong>Required NFA (sq in) = Attic Floor Area (sq ft) × 144 ÷ Ratio</strong></p>
+<p>Where Ratio is 150 or 300 depending on whether your attic has a vapor retarder and a balanced 50/50 split between intake and exhaust (which allows the more generous 1/300 rule under most codes, including IRC and FHA/HUD standards). That total NFA is then divided according to your intake/exhaust split, and each half is converted into linear feet of vent by dividing by the vent's NFA-per-linear-foot rating printed on the product packaging.</p>
+
+<h2>Worked Example</h2>
+<p>An attic measuring 40 ft × 30 ft = 1,200 sq ft, using the 1/300 ratio:</p>
+<div class="section-gray">
+<p>Total NFA = 1,200 × 144 ÷ 300 = 576 sq in<br>
+Intake (50%) = 288 sq in → 288 ÷ 9 sq in/ft (soffit) = 32.0 linear ft of soffit vent<br>
+Exhaust (50%) = 288 sq in → 288 ÷ 18 sq in/ft (ridge) = 16.0 linear ft of ridge vent</p>
+</div>
+<p>This matches the calculator's default inputs above — try changing the ratio to 1/150 to see the required NFA double.</p>
+
+<h2>Tips & Common Mistakes</h2>
+<ul>
+<li>Always check your local building code — some jurisdictions require 1/150 regardless of vapor retarder, especially in cold climates prone to ice damming.</li>
+<li>Intake and exhaust should stay as close to 50/50 as possible; too much exhaust without enough intake can actually pull conditioned air from the house instead of outside air.</li>
+<li>Vent NFA ratings vary widely by manufacturer (ridge vents range roughly 12–20 sq in per linear foot) — always use the number printed on your specific product's spec sheet, not a generic estimate.</li>
+<li>Don't block soffit vents with insulation — install baffles (rafter vents) at the eaves so intake air can actually reach the attic space.</li>
+<li>Gable vents, power fans, and turbines complicate the intake/exhaust balance; if you're mixing vent types, calculate each type's NFA separately and sum them.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What does NFA mean in attic ventilation?</summary><p>NFA stands for Net Free Area — the actual open area (in square inches) through which air can pass, as opposed to a vent's overall physical size. Manufacturers test and print NFA on their product specs, and it's the number building codes and this calculator use.</p></details>
+<details><summary>Should I use the 1/150 or 1/300 ratio?</summary><p>Use 1/300 only if your attic has a vapor retarder on the warm-in-winter side of the ceiling and your ventilation is split roughly 50/50 between intake and exhaust; otherwise most codes default to the stricter 1/150 ratio.</p></details>
+<details><summary>How much ridge vent do I need for my house?</summary><p>Divide the required exhaust NFA (half your total NFA, typically) by your ridge vent's NFA-per-linear-foot rating. For a 1,200 sq ft attic at 1/300 with an 18 sq in/ft ridge vent, you'd need about 16 linear feet.</p></details>
+<details><summary>Can I mix soffit vents and gable vents?</summary><p>Yes, but calculate the NFA of each vent type separately and add them together; just make sure your total intake still roughly balances your total exhaust to avoid pulling air the wrong direction.</p></details>
+<details><summary>What happens if my attic is under-ventilated?</summary><p>Under-ventilation traps heat and moisture, accelerating shingle aging, promoting mold and wood rot, and contributing to ice dams in cold climates — it can also void some shingle manufacturer warranties.</p></details>
+<details><summary>Does this calculator account for cathedral or vaulted ceilings?</summary><p>This tool calculates whole-attic NFA based on floor area; for individual vaulted rafter bays, size each bay's intake and exhaust vent separately since they don't share a common attic space.</p></details>
+
+<h2>Related Tools</h2>
+<div class="related">
+<a href="/knee-wall-stud-height-attic-storage-calculator/">Knee Wall Stud Height & Attic Storage Calculator</a>
+<a href="/roof-pitch-rafter-calculator/">Roof Pitch & Rafter Length Calculator</a>
+<a href="/asphalt-shingle-calculator/">Asphalt Shingle Calculator</a>
+<a href="/recessed-lighting-layout-spacing-calculator/">Ceiling Recessed Lighting Layout Calculator</a>
+<a href="/shear-wall-nailing-pattern-calculator/">Struct Wood Shear Wall Nailing Pattern Calculator</a>
+<a href="/soil-bearing-capacity-load-calculator/">Soil Bearing Capacity Load Calculator</a>
+</div>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/contact/">Contact</a>
+<p>© 2024 Toolwick.com</p>
+</footer>
+</div>
+
+<script>
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});}
+
+const splitEl=document.getElementById('split');
+const splitLabel=document.getElementById('splitLabel');
+
+const errToInput={lenErr:'len',widErr:'wid',ridgeErr:'ridgeNFA',soffitErr:'soffitNFA'};
+
+function clearErr(errId){
+  const errEl=document.getElementById(errId);
+  if(errEl) errEl.style.display='none';
+  const inp=document.getElementById(errToInput[errId]);
+  if(inp) inp.classList.remove('invalid');
+}
+function showErr(errId){
+  const errEl=document.getElementById(errId);
+  if(errEl) errEl.style.display='block';
+  const inp=document.getElementById(errToInput[errId]);
+  if(inp) inp.classList.add('invalid');
+}
+
+function calculate(){
+  const len=parseFloat(document.getElementById('len').value);
+  const wid=parseFloat(document.getElementById('wid').value);
+  const ratio=parseFloat(document.getElementById('ratio').value);
+  const splitVal=parseInt(document.getElementById('split').value);
+  const ridgeNFA=parseFloat(document.getElementById('ridgeNFA').value);
+  const soffitNFA=parseFloat(document.getElementById('soffitNFA').value);
+
+  splitLabel.textContent=splitVal+'% / '+(100-splitVal)+'%';
+
+  let valid=true;
+  ['lenErr','widErr','ridgeErr','soffitErr'].forEach(clearErr);
+
+  if(!(len>0)){showErr('lenErr');valid=false;}
+  if(!(wid>0)){showErr('widErr');valid=false;}
+  if(!(ridgeNFA>0)){showErr('ridgeErr');valid=false;}
+  if(!(soffitNFA>0)){showErr('soffitErr');valid=false;}
+
+  if(!valid){
+    requestAnimationFrame(()=>{
+      document.getElementById('results').classList.remove('show');
+      document.getElementById('results').innerHTML='';
+    });
+    return;
+  }
+
+  const area=len*wid;
+  const totalNFAin=area*144/ratio;
+  const totalNFAft=totalNFAin/144;
+  const intakePct=splitVal/100;
+  const exhaustPct=1-intakePct;
+  const intakeNFA=totalNFAin*intakePct;
+  const exhaustNFA=totalNFAin*exhaustPct;
+  const ridgeLen=exhaustNFA/ridgeNFA;
+  const soffitLen=intakeNFA/soffitNFA;
+
+  const rows=[
+    ['Attic Floor Area', fmt(area,1)+' sq ft'],
+    ['Ventilation Ratio', '1/'+ratio],
+    ['Total Required NFA', fmt(totalNFAin,1)+' sq in ('+fmt(totalNFAft,2)+' sq ft)'],
+    ['Intake NFA Required ('+splitVal+'%)', fmt(intakeNFA,1)+' sq in'],
+    ['Exhaust NFA Required ('+(100-splitVal)+'%)', fmt(exhaustNFA,1)+' sq in'],
+    ['Soffit Vent Length Needed (total)', fmt(soffitLen,1)+' linear ft'],
+    ['Ridge Vent Length Needed (total)', fmt(ridgeLen,1)+' linear ft']
+  ];
+
+  let tableHtml='<div class="tablewrap"><table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody>';
+  rows.forEach(r=>{tableHtml+='<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>';});
+  tableHtml+='</tbody></table></div>';
+
+  const summaryText='Attic Ventilation Results\n'+
+    'Area: '+fmt(area,1)+' sq ft\n'+
+    'Ratio: 1/'+ratio+'\n'+
+    'Total NFA: '+fmt(totalNFAin,1)+' sq in\n'+
+    'Intake NFA: '+fmt(intakeNFA,1)+' sq in ('+fmt(soffitLen,1)+' ft of soffit vent)\n'+
+    'Exhaust NFA: '+fmt(exhaustNFA,1)+' sq in ('+fmt(ridgeLen,1)+' ft of ridge vent)';
+
+  const html='<div class="big">'+fmt(totalNFAin,1)+' sq in NFA</div>'+
+    '<div class="sub">Total net free area required for a '+fmt(area,1)+' sq ft attic at 1/'+ratio+'</div>'+
+    tableHtml+
+    '<button class="copybtn" id="copyBtn">Copy Results</button>';
+
+  requestAnimationFrame(()=>{
+    const resEl=document.getElementById('results');
+    resEl.innerHTML=html;
+    resEl.classList.add('show');
+
+    document.getElementById('svgArea').textContent='Attic Floor Area: '+fmt(area,1)+' sq ft';
+    document.getElementById('svgIntake').textContent='Intake NFA: '+fmt(intakeNFA,1)+' sq in';
+    document.getElementById('svgExhaust').textContent='Exhaust NFA: '+fmt(exhaustNFA,1)+' sq in';
+    document.getElementById('svgRidgeLen').textContent='Ridge vent length: '+fmt(ridgeLen,1)+' ft total';
+    document.getElementById('svgSoffitLen').textContent=fmt(soffitLen,1)+' ft total';
+
+    const copyBtn=document.getElementById('copyBtn');
+    copyBtn.addEventListener('click',()=>{
+      navigator.clipboard.writeText(summaryText).then(()=>{
+        const orig=copyBtn.textContent;
+        copyBtn.textContent='Copied!';
+        setTimeout(()=>{copyBtn.textContent=orig;},2000);
+      });
+    });
+  });
+}
+
+document.getElementById('calcBtn').addEventListener('click',()=>{
+  requestAnimationFrame(()=>{calculate();});
+});
+
+document.querySelectorAll('#len,#wid,#ridgeNFA,#soffitNFA').forEach(el=>{
+  el.addEventListener('keydown',(e)=>{
+    if(e.key==='Enter'){
+      e.preventDefault();
+      requestAnimationFrame(()=>{calculate();});
+    }
+  });
+});
+
+document.getElementById('ratio').addEventListener('change',()=>{
+  requestAnimationFrame(()=>{calculate();});
+});
+
+splitEl.addEventListener('input',()=>{
+  const v=parseInt(splitEl.value);
+  splitLabel.textContent=v+'% / '+(100-v)+'%';
+  requestAnimationFrame(()=>{calculate();});
+});
+
+calculate();
+</script>
+</body>
+</html>
