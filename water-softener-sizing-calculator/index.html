@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Free Water Softener Sizing Calculator | Toolwick</title>
+<meta name="description" content="Free water softener size calculator. Enter household size, water hardness, and iron content to get the right grain capacity for your softener in seconds.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/water-softener-sizing-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Water Softener Sizing Calculator", "url": "https://toolwick.com/water-softener-sizing-calculator/", "description": "Free water softener size calculator. Enter household size, water hardness, and iron content to get the right grain capacity for your softener in seconds.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Water Softener Sizing Calculator", "item": "https://toolwick.com/water-softener-sizing-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What size water softener do I need for a family of 4?", "acceptedAnswer": {"@type": "Answer", "text": "At a typical 3-day regeneration target, a family of 4 using 75 gallons/person/day with 15 gpg hardness needs about 24,000 grains. If you'd rather regenerate less often — say every 5 to 7 days — size up to 32,000 or 40,000 grains instead. Run your own numbers through the calculator above since hardness and regeneration schedule both change the answer."}}, {"@type": "Question", "name": "How do I convert water hardness from ppm to grains per gallon?", "acceptedAnswer": {"@type": "Answer", "text": "Divide the ppm (mg/L) value by 17.1 to get grains per gallon. For example, 250 ppm ÷ 17.1 = about 14.6 gpg. This calculator does the conversion automatically if you select the ppm option."}}, {"@type": "Question", "name": "Is it better to oversize a water softener?", "acceptedAnswer": {"@type": "Answer", "text": "A little extra capacity as a safety margin is fine, but significantly oversizing wastes money upfront and can cause resin to sit unused for long stretches between regenerations, which isn't ideal for water quality. Aim for a size that gives 3–7 days of reserve capacity, not 20."}}, {"@type": "Question", "name": "How does iron in my water affect softener sizing?", "acceptedAnswer": {"@type": "Answer", "text": "Iron adds extra load to the softening resin beyond what hardness alone accounts for. As a rule of thumb, each 1 ppm of iron adds roughly 4 grains of \"hardness equivalent\" per gallon, which this calculator factors in automatically."}}, {"@type": "Question", "name": "How often should a water softener regenerate?", "acceptedAnswer": {"@type": "Answer", "text": "Most systems are best set to regenerate every 3–7 days rather than daily or once every two weeks. Too-frequent regeneration wastes salt and water; too-infrequent regeneration risks running out of soft water capacity before the next cycle."}}, {"@type": "Question", "name": "Why does the salt-per-regeneration estimate change with the efficiency setting?", "acceptedAnswer": {"@type": "Answer", "text": "Resin capacity and salt dose trade off against each other — a lower salt dose per cubic foot of resin yields fewer grains of capacity per cubic foot but uses salt more efficiently per pound, while a higher dose packs more capacity per cubic foot at a lower grains-per-pound rate. This calculator models that trade-off instead of treating salt use as a flat number independent of tank size."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem}
+nav{padding:0.5rem 0 1rem}
+nav a{color:#0077b6;text-decoration:none;font-weight:700;font-size:1.1rem}
+h1{font-size:1.6rem;margin:0.5rem 0 1rem}
+h2{font-size:1.25rem;margin-top:2rem;color:#1a1a2e}
+p{color:#333}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.04);margin-bottom:2rem}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin:1rem 0 0.35rem}
+label:first-child{margin-top:0}
+input[type=number]{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem}
+input[type=number]:focus{outline:none;box-shadow:0 0 0 3px rgba(0,119,182,0.15);border-color:#0077b6}
+select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;background:#fff}
+.radiorow{display:flex;gap:1rem;margin-top:0.35rem}
+.radiorow label{display:flex;align-items:center;gap:0.4rem;font-weight:400;color:#333;margin:0}
+button#calcBtn{margin-top:1.5rem;width:100%;background:#0077b6;color:#fff;border:none;padding:14px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;min-height:44px}
+button#calcBtn:hover{background:#006299}
+.err{color:#e74c3c;font-size:0.82rem;margin-top:0.3rem;display:none}
+input.bad{border-color:#e74c3c}
+#results{opacity:0;transition:opacity 0.3s ease}
+#results.show{opacity:1}
+.big{font-size:2.2rem;font-weight:800;color:#0077b6;margin:0.2rem 0}
+.notice{background:#fff8e1;border:1px solid #f0d98a;border-radius:6px;padding:0.8rem 1rem;font-size:0.9rem;margin-top:1rem}
+.section-gray{background:#f8f9fa;border-radius:8px;padding:1rem 1.25rem;margin-top:1rem}
+table{border-collapse:collapse;width:100%;font-size:0.9rem;margin-top:0.75rem}
+th,td{padding:8px 10px;border-bottom:1px solid #eee;text-align:right}
+th:first-child,td:first-child{text-align:left}
+thead th{background:#f0f0f0}
+tbody tr:nth-child(even){background:#fafafa}
+tbody tr:nth-child(odd){background:#fff}
+.tablewrap{overflow-x:auto}
+.rowHi{background:#e8f4fb !important;font-weight:600}
+.copybtn{margin-top:0.75rem;background:none;border:1px solid #0077b6;color:#0077b6;padding:6px 14px;border-radius:6px;font-size:0.8rem;cursor:pointer;min-height:36px}
+.copybtn:hover{background:#0077b6;color:#fff}
+.ad-slot{min-height:0;margin:0}
+details{background:#f8f9fa;border-radius:6px;padding:0.8rem 1rem;margin-top:0.75rem}
+summary{cursor:pointer;font-weight:600}
+footer{border-top:1px solid #eee;margin-top:2rem;padding:1.5rem 0;font-size:0.85rem;color:#666}
+footer a{color:#0077b6;text-decoration:none;margin-right:1rem}
+ul{color:#333}
+.svgwrap{background:#f8f9fa;border-radius:8px;padding:1rem;margin-bottom:1rem}
+@media(min-width:640px){.radiorow{gap:1.5rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/water-softener-sizing-calculator/">
+<meta property="og:title" content="Water Softener Sizing Calculator">
+<meta property="og:description" content="Free water softener size calculator. Enter household size, water hardness, and iron content to get the right grain capacity for your softener in seconds.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#999;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Toolwick</a></nav>
+
+<h1>Water Softener Sizing Calculator</h1>
+<p>Use this <strong>water softener size calculator</strong> to find the right grain capacity for your household based on the number of people, your water's hardness, and iron content. Get an instant recommendation from standard softener sizes plus estimated salt usage per regeneration.</p>
+
+<div class="card">
+<div class="svgwrap">
+<svg viewBox="0 0 400 220" width="100%" style="max-height:220px">
+  <polygon points="20,90 50,60 80,90" fill="none" stroke="#0077b6" stroke-width="2"/>
+  <rect x="28" y="90" width="44" height="35" fill="none" stroke="#0077b6" stroke-width="2"/>
+  <text x="50" y="140" text-anchor="middle" font-size="10" fill="#1a1a2e">Household</text>
+  <line x1="80" y1="107" x2="160" y2="107" stroke="#0077b6" stroke-width="2" stroke-dasharray="4,3"/>
+  <text id="lblHardness" x="120" y="98" text-anchor="middle" font-size="10" fill="#1a1a2e">Hardness: -- gpg</text>
+  <rect x="160" y="60" width="70" height="110" rx="8" fill="none" stroke="#0077b6" stroke-width="2.5"/>
+  <line x1="160" y1="90" x2="230" y2="90" stroke="#e0e0e0" stroke-width="2"/>
+  <text x="195" y="40" text-anchor="middle" font-size="11" fill="#1a1a2e" font-weight="700">Softener Tank</text>
+  <text id="lblSize" x="195" y="130" text-anchor="middle" font-size="10" fill="#1a1a2e">-- grains</text>
+  <text id="lblRegen" x="195" y="185" text-anchor="middle" font-size="10" fill="#1a1a2e">Regen every -- days</text>
+  <line x1="230" y1="107" x2="310" y2="107" stroke="#0077b6" stroke-width="2" stroke-dasharray="4,3"/>
+  <text id="lblLoad" x="270" y="98" text-anchor="middle" font-size="10" fill="#1a1a2e">-- grains/day</text>
+  <line x1="310" y1="107" x2="310" y2="140" stroke="#0077b6" stroke-width="2"/>
+  <line x1="300" y1="140" x2="320" y2="140" stroke="#0077b6" stroke-width="2"/>
+  <text x="310" y="158" text-anchor="middle" font-size="10" fill="#1a1a2e">Soft Water</text>
+</svg>
+</div>
+
+<label for="people">Number of people in household</label>
+<input type="number" id="people" value="4" min="1" step="1">
+<div class="err" id="err-people">Please enter a whole number of people (1 or more, no decimals).</div>
+
+<label for="gpcd">Gallons of water used per person per day</label>
+<input type="number" id="gpcd" value="75" min="1" step="1">
+<div class="err" id="err-gpcd">Enter a value greater than 0 (average is 60–80 gal/day).</div>
+
+<label>Water hardness unit</label>
+<div class="radiorow">
+  <label><input type="radio" name="unit" value="gpg" checked> Grains per gallon (gpg)</label>
+  <label><input type="radio" name="unit" value="ppm"> ppm / mg per liter</label>
+</div>
+
+<label for="hardness">Water hardness value</label>
+<input type="number" id="hardness" value="15" min="0" step="0.1">
+<div class="err" id="err-hardness">Enter a hardness value of 0 or more.</div>
+
+<label for="iron">Iron content (ppm) — optional</label>
+<input type="number" id="iron" value="0" min="0" step="0.1">
+<div class="err" id="err-iron">Enter 0 or a positive number.</div>
+
+<label for="regen">Days between regenerations (target)</label>
+<input type="number" id="regen" value="3" min="1" max="14" step="1">
+<div class="err" id="err-regen">Choose a whole number of days between 1 and 14.</div>
+
+<label for="eff">Salt dose / efficiency setting</label>
+<select id="eff">
+  <option value="6,20000">High efficiency (6 lb salt/ft³ resin → ~20,000 grains/ft³)</option>
+  <option value="9,26000" selected>Standard (9 lb salt/ft³ resin → ~26,000 grains/ft³)</option>
+  <option value="15,30000">Max capacity (15 lb salt/ft³ resin → ~30,000 grains/ft³)</option>
+</select>
+
+<button id="calcBtn">Calculate Softener Size</button>
+
+<div id="results"></div>
+</div>
+
+<div class="ad-slot" id="ad-mid"></div>
+
+<h2>How to Use This Water Softener Size Calculator</h2>
+<p>Enter the number of people in your home, your average daily water use per person, and your water hardness (either in grains per gallon or ppm). Add iron content if your water test shows any, pick how many days you'd like between regenerations, and hit calculate. The tool returns a recommended softener size in grains along with a full breakdown table of standard sizes and estimated salt use.</p>
+
+<h2>Why This Matters</h2>
+<p>Buying the wrong size water softener is one of the most common — and expensive — mistakes homeowners make. A unit that's too small regenerates constantly, wasting salt and water, and can let hard water slip through during peak usage. One that's too large costs more upfront and regenerates so infrequently that resin can foul with sediment. A family of four with 15 gpg hardness needs a very different unit than a couple with 25 gpg water and high iron content. Plumbers and softener installers use grain-capacity math like this to quote the right equipment size before a sale, and knowing your own number means you won't get oversold on an 80,000-grain unit when a 40,000-grain system would do the job — or undersold on a unit that runs out of capacity by Thursday.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator follows the standard grain-capacity sizing method used in the plumbing and water treatment industry:</p>
+<div class="section-gray">
+<p><strong>1. Daily water usage</strong> = people × gallons per person per day</p>
+<p><strong>2. Effective hardness</strong> = hardness (gpg) + (iron ppm × 4), since iron adds extra load on resin</p>
+<p><strong>3. Daily grain load</strong> = daily water usage × effective hardness</p>
+<p><strong>4. Required capacity</strong> = daily grain load × target days between regenerations</p>
+<p><strong>5. Recommended size</strong> = the nearest standard grain-capacity unit at or above the required capacity (24,000 / 32,000 / 40,000 / 48,000 / 64,000 / 80,000 / 96,000 / 120,000 grains)</p>
+<p><strong>6. Salt per regeneration</strong> = (recommended grains ÷ grains-per-cubic-foot at your chosen salt dose) × lb salt per cubic foot. Higher salt doses pack more capacity into each cubic foot of resin but use salt less efficiently per pound — that trade-off is why the salt estimate changes with the setting you pick, not because salt use is a flat number independent of tank size.</p>
+</div>
+<p>If your hardness is measured in ppm (mg/L), it's converted to grains per gallon by dividing by 17.1 — the standard conversion factor, since 1 grain per gallon equals 17.1 mg/L.</p>
+
+<h2>Worked Example</h2>
+<p>A household of 4 people, using 75 gallons per person per day, with water tested at 15 gpg hardness and no iron, targeting regeneration every 3 days, using the standard 9 lb/ft³ salt dose:</p>
+<div class="section-gray">
+<p>Daily water usage = 4 × 75 = <strong>300 gallons/day</strong></p>
+<p>Effective hardness = 15 gpg (no iron adjustment)</p>
+<p>Daily grain load = 300 × 15 = <strong>4,500 grains/day</strong></p>
+<p>Required capacity = 4,500 × 3 = <strong>13,500 grains</strong></p>
+<p>Recommended standard size = <strong>24,000 grains</strong> (the smallest standard unit that covers 13,500 with margin)</p>
+<p>Resin volume needed ≈ 24,000 ÷ 26,000 grains/ft³ = <strong>0.92 ft³</strong>, so salt per regeneration ≈ 0.92 × 9 lb = <strong>~8.3 lbs</strong></p>
+<p>At 24,000 grains, this household could actually go about 5.3 days between regenerations before running out of capacity — more reserve than the 3-day target used to pick the size.</p>
+</div>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Always test your actual water, don't guess.</strong> Hardness varies a lot even within the same city — a cheap test strip or your utility's water quality report gives a much better number than a neighbor's estimate.</li>
+<li><strong>Don't forget iron.</strong> Even 1–2 ppm of iron adds meaningfully to the resin's workload and can shorten softener life if ignored during sizing.</li>
+<li><strong>Bigger isn't always better.</strong> Oversizing a unit means it regenerates rarely, which can let sediment and bacteria build up in unused resin.</li>
+<li><strong>Match reserve capacity to your lifestyle.</strong> Households with unpredictable high-use days (laundry marathons, guests) should size for 5–7 days of reserve, not the bare minimum.</li>
+<li><strong>Higher salt dose settings aren't automatically "better."</strong> They squeeze more grains into less resin, but use salt less efficiently per pound — pick the setting that matches your priority (lower salt bills vs. a smaller physical tank).</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What size water softener do I need for a family of 4?</summary><p>At a typical 3-day regeneration target, a family of 4 using 75 gallons/person/day with 15 gpg hardness needs about 24,000 grains. If you'd rather regenerate less often — say every 5 to 7 days — size up to 32,000 or 40,000 grains instead. Run your own numbers through the calculator above since hardness and regeneration schedule both change the answer.</p></details>
+<details><summary>How do I convert water hardness from ppm to grains per gallon?</summary><p>Divide the ppm (mg/L) value by 17.1 to get grains per gallon. For example, 250 ppm ÷ 17.1 = about 14.6 gpg. This calculator does the conversion automatically if you select the ppm option.</p></details>
+<details><summary>Is it better to oversize a water softener?</summary><p>A little extra capacity as a safety margin is fine, but significantly oversizing wastes money upfront and can cause resin to sit unused for long stretches between regenerations, which isn't ideal for water quality. Aim for a size that gives 3–7 days of reserve capacity, not 20.</p></details>
+<details><summary>How does iron in my water affect softener sizing?</summary><p>Iron adds extra load to the softening resin beyond what hardness alone accounts for. As a rule of thumb, each 1 ppm of iron adds roughly 4 grains of "hardness equivalent" per gallon, which this calculator factors in automatically.</p></details>
+<details><summary>How often should a water softener regenerate?</summary><p>Most systems are best set to regenerate every 3–7 days rather than daily or once every two weeks. Too-frequent regeneration wastes salt and water; too-infrequent regeneration risks running out of soft water capacity before the next cycle.</p></details>
+<details><summary>Why does the salt-per-regeneration estimate change with the efficiency setting?</summary><p>Resin capacity and salt dose trade off against each other — a lower salt dose per cubic foot of resin yields fewer grains of capacity per cubic foot but uses salt more efficiently per pound, while a higher dose packs more capacity per cubic foot at a lower grains-per-pound rate. This calculator models that trade-off instead of treating salt use as a flat number independent of tank size.</p></details>
+
+<h2>Related Tools</h2>
+<ul>
+<li><a href="/furnace-sizing-calculator/">Furnace Sizing Calculator</a></li>
+<li><a href="/mini-split-sizing-calculator/">Mini Split Sizing Calculator</a></li>
+<li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a></li>
+<li><a href="/deck-railing-baluster-spacing-calculator/">Deck Railing &amp; Baluster Spacing Calculator</a></li>
+<li><a href="/deck-footing-frost-depth-calculator/">Deck Footing Size &amp; Frost Depth Calculator</a></li>
+<li><a href="/roof-attic-ventilation-calculator/">Roof Attic Ventilation Calculator</a></li>
+</ul>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/contact/">Contact</a>
+<p>© 2024 toolwick.com</p>
+</footer>
+</div>
+
+<script>
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});}
+function setErr(id,show){document.getElementById('err-'+id).style.display=show?'block':'none';document.getElementById(id).classList.toggle('bad',show);}
+
+function calculate(){
+  const peopleRaw=document.getElementById('people').value;
+  const people=parseFloat(peopleRaw);
+  const gpcd=parseFloat(document.getElementById('gpcd').value);
+  const hardnessRaw=parseFloat(document.getElementById('hardness').value);
+  const iron=parseFloat(document.getElementById('iron').value);
+  const regenRaw=document.getElementById('regen').value;
+  const regen=parseFloat(regenRaw);
+  const unit=document.querySelector('input[name=unit]:checked').value;
+  const effParts=document.getElementById('eff').value.split(',');
+  const saltPerFt3=parseFloat(effParts[0]);
+  const capacityPerFt3=parseFloat(effParts[1]);
+
+  let valid=true;
+  const peopleValid = Number.isFinite(people) && people>=1 && Number.isInteger(people);
+  setErr('people', !peopleValid); if(!peopleValid) valid=false;
+  setErr('gpcd', !(gpcd>0)); if(!(gpcd>0)) valid=false;
+  setErr('hardness', !(Number.isFinite(hardnessRaw) && hardnessRaw>=0)); if(!(Number.isFinite(hardnessRaw) && hardnessRaw>=0)) valid=false;
+  setErr('iron', !(Number.isFinite(iron) && iron>=0)); if(!(Number.isFinite(iron) && iron>=0)) valid=false;
+  const regenValid = Number.isFinite(regen) && regen>=1 && regen<=14 && Number.isInteger(regen);
+  setErr('regen', !regenValid); if(!regenValid) valid=false;
+
+  if(!valid){
+    document.getElementById('results').classList.remove('show');
+    return;
+  }
+
+  const gpg = unit==='ppm' ? hardnessRaw/17.1 : hardnessRaw;
+  const effectiveHardness = gpg + (iron*4);
+  const dailyWater = people*gpcd;
+  const dailyGrainLoad = dailyWater*effectiveHardness;
+  const requiredCapacity = dailyGrainLoad*regen;
+  const noDemand = dailyGrainLoad<=0;
+
+  const standardSizes=[24000,32000,40000,48000,64000,80000,96000,120000];
+  let recommended = noDemand ? standardSizes[0] : standardSizes.find(s=>s>=requiredCapacity);
+  if(!recommended) recommended = Math.ceil(requiredCapacity/10000)*10000;
+
+  const reserveDays = noDemand ? Infinity : recommended/dailyGrainLoad;
+  const cubicFeet = recommended/capacityPerFt3;
+  const saltPerRegen = cubicFeet*saltPerFt3;
+
+  let rows='';
+  standardSizes.forEach(s=>{
+    const days = noDemand ? Infinity : s/dailyGrainLoad;
+    const cf = s/capacityPerFt3;
+    const salt = cf*saltPerFt3;
+    const hi = s===recommended ? ' class="rowHi"' : '';
+    const daysStr = noDemand ? '∞' : fmt(days,1)+' days';
+    rows += `<tr${hi}><td>${fmt(s)} grains</td><td>${daysStr}</td><td>${fmt(salt,1)} lbs</td></tr>`;
+  });
+
+  const noticeHTML = noDemand ? `<div class="notice">Your water shows no measurable hardness or iron load, so a softener isn't strictly necessary. The figures below assume the smallest standard tank size as a reference point only.</div>` : '';
+
+  const resultHTML = `
+    <p style="margin-top:1.5rem;color:#444;font-size:0.85rem;font-weight:500">RECOMMENDED SOFTENER SIZE</p>
+    <div class="big">${fmt(recommended)} grains</div>
+    ${noticeHTML}
+    <div class="section-gray">
+      <table>
+        <tbody>
+          <tr><td>Daily water usage</td><td>${fmt(dailyWater)} gal/day</td></tr>
+          <tr><td>Effective hardness used</td><td>${fmt(effectiveHardness,1)} gpg</td></tr>
+          <tr><td>Daily grain removal load</td><td>${fmt(dailyGrainLoad)} grains/day</td></tr>
+          <tr><td>Required capacity (${fmt(regen)}-day target)</td><td>${fmt(requiredCapacity)} grains</td></tr>
+          <tr><td>Reserve at recommended size</td><td>${noDemand?'Unlimited (no demand)':fmt(reserveDays,1)+' days'}</td></tr>
+          <tr><td>Resin volume needed (est.)</td><td>${fmt(cubicFeet,2)} ft³</td></tr>
+          <tr><td>Salt per regeneration (est.)</td><td>${fmt(saltPerRegen,1)} lbs</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:1.25rem;font-weight:600;font-size:0.95rem">Compare standard sizes</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Softener Size</th><th>Reserve Days</th><th>Salt/Regen</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <button class="copybtn" id="copyBtn">Copy Results</button>
+  `;
+
+  requestAnimationFrame(()=>{
+    const resEl = document.getElementById('results');
+    resEl.innerHTML = resultHTML;
+    resEl.classList.add('show');
+
+    document.getElementById('lblHardness').textContent = `Hardness: ${fmt(effectiveHardness,1)} gpg`;
+    document.getElementById('lblSize').textContent = `${fmt(recommended)} grains`;
+    document.getElementById('lblRegen').textContent = `Regen every ${fmt(regen)} days`;
+    document.getElementById('lblLoad').textContent = `${fmt(dailyGrainLoad)} grains/day`;
+
+    document.getElementById('copyBtn').addEventListener('click', function(){
+      const text = `Recommended Water Softener Size: ${fmt(recommended)} grains\nDaily water usage: ${fmt(dailyWater)} gal/day\nEffective hardness: ${fmt(effectiveHardness,1)} gpg\nDaily grain load: ${fmt(dailyGrainLoad)} grains/day\nRequired capacity: ${fmt(requiredCapacity)} grains\nReserve: ${noDemand?'Unlimited (no demand)':fmt(reserveDays,1)+' days'}\nResin volume: ${fmt(cubicFeet,2)} ft³\nSalt per regen: ${fmt(saltPerRegen,1)} lbs`;
+      navigator.clipboard.writeText(text).then(()=>{
+        const b=this; const orig=b.textContent; b.textContent='Copied!';
+        setTimeout(()=>{b.textContent=orig;},2000);
+      });
+    });
+  });
+}
+
+document.getElementById('calcBtn').addEventListener('click', ()=>{ requestAnimationFrame(calculate); });
+document.querySelectorAll('input').forEach(el=>{
+  el.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); requestAnimationFrame(calculate); } });
+});
+calculate();
+</script>
+</body>
+</html>
