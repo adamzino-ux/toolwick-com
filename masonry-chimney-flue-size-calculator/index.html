@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Masonry Chimney Flue Size Calculator | Toolwick</title>
+<meta name="description" content="Free chimney flue size calculator for masonry fireplaces, wood stoves & furnaces. Get the required flue area from opening size or BTU output instantly.">
+<link rel="canonical" href="https://toolwick.com/masonry-chimney-flue-size-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Masonry Chimney Flue Size Calculator", "url": "https://toolwick.com/masonry-chimney-flue-size-calculator/", "description": "Free chimney flue size calculator for masonry fireplaces, wood stoves & furnaces. Get the required flue area from opening size or BTU output instantly.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Masonry Chimney Flue Size Calculator", "item": "https://toolwick.com/masonry-chimney-flue-size-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the standard flue size rule for masonry fireplaces?", "acceptedAnswer": {"@type": "Answer", "text": "The most widely adopted standard is 1/10 of the firebox opening area for chimneys 15 feet or taller, and 1/8 of the opening area for chimneys shorter than 15 feet. These ratios come from NFPA 211 and are reflected in the International Residential Code (IRC). So a 36\" × 29\" opening (1,044 in²) needs at least 130.5 in² of flue area (1,044 ÷ 8) if the chimney is under 15 ft, or 104.4 in² (1,044 ÷ 10) if the chimney is 15 ft or taller."}}, {"@type": "Question", "name": "Can I use the same flue for two fireplaces or appliances?", "acceptedAnswer": {"@type": "Answer", "text": "In most cases, no. NFPA 211 and most building codes require each appliance to have its own dedicated flue. Combining two appliances in one flue can cause dangerous backdrafting and carbon monoxide buildup. There are limited exceptions for some gas appliances — consult your local code and a certified chimney professional."}}, {"@type": "Question", "name": "Does flue shape affect draft performance?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, significantly. Round flues have superior aerodynamics because airflow is uniform around the perimeter with no stagnant corners. At the same nominal area, a round liner typically provides better draft than a square liner of equivalent dimensions. Rectangular liners are the least efficient shape but are common in older masonry chimneys built before round liners became standard."}}, {"@type": "Question", "name": "What if my flue is oversized for my stove or insert?", "acceptedAnswer": {"@type": "Answer", "text": "An oversized flue causes gases to cool before reaching the top, condensing as creosote — a brown, tar-like substance that is highly flammable and a leading cause of chimney fires. If you're installing a stove into an existing large chimney, you must reline with a properly sized liner (usually flexible stainless steel) to match the appliance's collar size. Never operate an appliance in an oversized flue without relining."}}, {"@type": "Question", "name": "How is a furnace or boiler flue sized differently from a fireplace flue?", "acceptedAnswer": {"@type": "Answer", "text": "Furnaces and boilers are usually sized from rated BTU/h input rather than an opening area, since there's no firebox opening. This calculator applies a general 1,000–1,500 BTU/h per square inch estimate, but gas and oil appliances should ultimately be verified against the manufacturer's venting tables or NFPA 54 / IFGC requirements, since flue gas temperature and appliance category affect proper sizing."}}, {"@type": "Question", "name": "Why does chimney height change the required flue size?", "acceptedAnswer": {"@type": "Answer", "text": "Taller chimneys generate stronger natural draft because of the greater column of warm, rising air, which allows a proportionally smaller flue to move the same volume of combustion gases safely. Shorter chimneys have weaker draft, so codes require a larger flue area relative to the opening or heat output to compensate."}}]}]}</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:none}
+a:hover{text-decoration:underline}
+nav{border-bottom:1px solid #e0e0e0;padding:0.75rem 1.5rem}
+nav .nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center}
+nav .site-name{font-weight:700;font-size:1.1rem;color:#1a1a2e}
+main{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;font-weight:700;margin-bottom:0.4rem;line-height:1.3}
+.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
+.tool-card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;background:#f8f9fa;border-radius:6px;padding:1rem;text-align:center}
+.diagram-wrap svg{max-width:100%;height:auto}
+.form-group{margin-bottom:1.25rem}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:0.4rem}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;transition:box-shadow 0.2s,border-color 0.2s;min-height:44px}
+input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+input.error,select.error{border-color:#e74c3c}
+.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:0.3rem;display:none}
+.error-msg.show{display:block}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.hint{font-size:0.78rem;color:#888;margin-top:0.25rem}
+.info-note{font-size:0.8rem;color:#666;background:#f8f9fa;border-radius:6px;padding:0.6rem 0.8rem;margin-bottom:1rem}
+.btn{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;transition:background 0.2s;min-height:44px;width:100%}
+.btn:hover{background:#006299}
+.btn-secondary{background:#f0f0f0;color:#1a1a2e;border:1px solid #ddd}
+.btn-secondary:hover{background:#e0e0e0}
+.btn-row{display:flex;gap:0.75rem;margin-top:0.5rem}
+.btn-row .btn{flex:1}
+.results{opacity:0;transition:opacity 0.3s ease;margin-top:1.5rem}
+.results.show{opacity:1}
+.result-hero{text-align:center;background:#f0f7ff;border-radius:8px;padding:1.5rem;margin-bottom:1.25rem}
+.result-hero .label{font-size:0.85rem;color:#555;font-weight:500;text-transform:uppercase;letter-spacing:0.05em}
+.result-hero .big-num{font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1.1;margin:0.25rem 0}
+.result-hero .unit{font-size:1rem;color:#555}
+.result-hero .sub{font-size:0.9rem;color:#666;margin-top:0.5rem}
+.result-copy-row{display:flex;justify-content:flex-end;margin-bottom:0.5rem}
+.copy-btn{background:none;border:1px solid #ddd;border-radius:4px;padding:4px 12px;font-size:0.78rem;cursor:pointer;color:#555;transition:all 0.2s}
+.copy-btn:hover{background:#f0f0f0}
+table{width:100%;border-collapse:collapse;font-size:0.9rem}
+th{background:#f0f0f0;padding:8px 10px;text-align:left;font-weight:600;font-size:0.82rem;color:#555;text-transform:uppercase;letter-spacing:0.04em}
+td{padding:8px 10px;border-bottom:1px solid #f0f0f0}
+tr:nth-child(even) td{background:#fafafa}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.status-pass{color:#27ae60;font-weight:600}
+.status-warn{color:#e67e22;font-weight:600}
+.status-fail{color:#e74c3c;font-weight:600}
+.section{margin-bottom:2rem}
+.section h2{font-size:1.15rem;font-weight:700;margin-bottom:0.75rem;color:#1a1a2e}
+.section h3{font-size:0.95rem;font-weight:700;margin:1rem 0 0.5rem}
+.section p{color:#444;margin-bottom:0.75rem;font-size:0.95rem}
+.section ul{padding-left:1.25rem;color:#444;font-size:0.95rem}
+.section ul li{margin-bottom:0.4rem}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:0.6rem}
+details summary{padding:0.75rem 1rem;cursor:pointer;font-weight:600;font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details summary::after{content:"+";font-size:1.1rem;color:#0077b6}
+details[open] summary::after{content:"−"}
+details .faq-body{padding:0 1rem 0.75rem;color:#444;font-size:0.9rem;line-height:1.6}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem}
+.related-link{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.65rem 0.85rem;font-size:0.85rem;color:#0077b6;transition:background 0.2s}
+.related-link:hover{background:#e8f4fb;text-decoration:none}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #e0e0e0;padding:1.25rem 1.5rem;text-align:center;font-size:0.82rem;color:#888}
+footer a{color:#888;margin:0 0.5rem}
+footer a:hover{color:#0077b6}
+.alert{background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:0.75rem 1rem;font-size:0.88rem;color:#795548;margin-top:0.75rem}
+.disclaimer{background:#fdecea;border:1px solid #f5c6cb;border-radius:6px;padding:0.7rem 0.9rem;font-size:0.82rem;color:#7a2c2c;margin-top:0.5rem;display:none}
+.tbl-wrap{overflow-x:auto}
+@media(max-width:640px){
+  .row2{grid-template-columns:1fr}
+  .result-hero .big-num{font-size:2.2rem}
+  .related-grid{grid-template-columns:1fr}
+  main{padding:1rem}
+  .tool-card{padding:1.25rem}
+  h1{font-size:1.3rem}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/masonry-chimney-flue-size-calculator/">
+<meta property="og:title" content="Masonry Chimney Flue Size Calculator">
+<meta property="og:description" content="Free chimney flue size calculator for masonry fireplaces, wood stoves &amp; furnaces. Get the required flue area from opening size or BTU output instantly.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#999;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="site-name">⚒ toolwick.com</a>
+  </div>
+</nav>
+
+<main>
+  <h1>Masonry Chimney Flue Size Calculator</h1>
+  <p class="subtitle">This chimney flue size calculator determines the correct flue liner dimensions for a masonry fireplace, wood stove, or furnace based on firebox opening size, appliance heat output, and chimney height.</p>
+
+  <div class="tool-card">
+    <!-- SVG Diagram -->
+    <div class="diagram-wrap">
+      <svg id="chimney-svg" viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg" style="max-width:480px;width:100%">
+        <rect x="170" y="20" width="160" height="240" fill="#f8f9fa" stroke="#0077b6" stroke-width="2"/>
+        <rect id="svg-flue-rect" x="205" y="30" width="90" height="210" fill="#e8f4fb" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <rect x="155" y="260" width="190" height="50" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+        <text id="svg-opening-title" x="250" y="291" text-anchor="middle" font-size="12" fill="#1a1a2e" font-weight="600">Firebox Opening</text>
+        <line x1="145" y1="20" x2="145" y2="260" stroke="#e0e0e0" stroke-width="1"/>
+        <line x1="140" y1="20" x2="150" y2="20" stroke="#0077b6" stroke-width="1.5"/>
+        <line x1="140" y1="260" x2="150" y2="260" stroke="#0077b6" stroke-width="1.5"/>
+        <line x1="145" y1="20" x2="145" y2="260" stroke="#0077b6" stroke-width="1.5"/>
+        <text id="svg-height-label" x="138" y="148" text-anchor="middle" font-size="11" fill="#0077b6" font-weight="600" transform="rotate(-90,138,148)">Height</text>
+        <line x1="205" y1="15" x2="295" y2="15" stroke="#0077b6" stroke-width="1.5"/>
+        <line x1="205" y1="10" x2="205" y2="20" stroke="#0077b6" stroke-width="1.5"/>
+        <line x1="295" y1="10" x2="295" y2="20" stroke="#0077b6" stroke-width="1.5"/>
+        <text id="svg-flue-w-label" x="250" y="10" text-anchor="middle" font-size="11" fill="#0077b6" font-weight="600">Flue W</text>
+        <line x1="155" y1="318" x2="345" y2="318" stroke="#0077b6" stroke-width="1.5"/>
+        <line x1="155" y1="313" x2="155" y2="323" stroke="#0077b6" stroke-width="1.5"/>
+        <line x1="345" y1="313" x2="345" y2="323" stroke="#0077b6" stroke-width="1.5"/>
+        <text id="svg-open-w-label" x="250" y="315" text-anchor="middle" dy="0" font-size="10" fill="#0077b6" font-weight="500">Opening Width</text>
+        <text id="svg-flue-area-label" x="250" y="138" text-anchor="middle" font-size="11" fill="#0077b6" font-weight="700">Flue Area</text>
+        <text id="svg-flue-area-val" x="250" y="155" text-anchor="middle" font-size="11" fill="#1a1a2e">—</text>
+        <text x="345" y="148" text-anchor="start" font-size="10" fill="#888" font-style="italic">Liner</text>
+      </svg>
+    </div>
+
+    <div class="form-group">
+      <label for="applianceType">Appliance Type</label>
+      <select id="applianceType">
+        <option value="fireplace">Traditional Masonry Fireplace</option>
+        <option value="stove">Wood / Pellet Stove</option>
+        <option value="furnace">Furnace / Boiler (gas or oil)</option>
+      </select>
+    </div>
+
+    <p class="info-note" id="method-note">Sizing method: <strong>Area Fraction Rule</strong> — based on firebox opening dimensions (NFPA 211).</p>
+
+    <!-- Opening inputs -->
+    <div id="group-opening">
+      <p style="font-size:0.82rem;color:#888;margin-bottom:0.75rem;font-style:italic">Firebox Opening Dimensions (the visible front opening)</p>
+      <div class="row2">
+        <div class="form-group">
+          <label for="openWidth">Opening Width (in)</label>
+          <input type="number" id="openWidth" placeholder="e.g. 36" min="1" max="120" step="0.25">
+          <div class="error-msg" id="err-openWidth">Enter a valid width (1–120 in).</div>
+        </div>
+        <div class="form-group">
+          <label for="openHeight">Opening Height (in)</label>
+          <input type="number" id="openHeight" placeholder="e.g. 29" min="1" max="60" step="0.25">
+          <div class="error-msg" id="err-openHeight">Enter a valid height (1–60 in).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BTU input -->
+    <div id="group-btuh" style="display:none">
+      <div class="form-group">
+        <label for="btuh">Appliance Heat Output (BTU/h)</label>
+        <input type="number" id="btuh" placeholder="e.g. 60000" min="1000" max="5000000" step="1000">
+        <div class="hint" id="btuh-hint">Common stoves: 30,000–80,000 BTU/h.</div>
+        <div class="error-msg" id="err-btuh">Enter a valid BTU/h (1,000–5,000,000).</div>
+      </div>
+      <div class="disclaimer" id="furnace-disclaimer">⚠ Gas and oil appliances are typically sized using manufacturer venting tables (NFPA 54 / IFGC), which may differ from this general BTU/h estimate. Always confirm with the appliance manufacturer or a licensed HVAC professional before finalizing a masonry flue for a furnace or boiler.</div>
+    </div>
+
+    <div class="row2">
+      <div class="form-group">
+        <label for="chimneyHeight">Chimney Height (ft)</label>
+        <input type="number" id="chimneyHeight" placeholder="e.g. 15" min="5" max="200" step="0.5">
+        <div class="hint">Measured from firebox floor to top of flue.</div>
+        <div class="error-msg" id="err-chimneyHeight">Enter height between 5 and 200 ft.</div>
+      </div>
+      <div class="form-group">
+        <label for="flueShape">Preferred Flue Shape</label>
+        <select id="flueShape">
+          <option value="round">Round</option>
+          <option value="square">Square</option>
+          <option value="rectangular">Rectangular</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" id="calcBtn">Calculate Flue Size</button>
+      <button class="btn btn-secondary" id="resetBtn">Reset</button>
+    </div>
+
+    <!-- Results -->
+    <div class="results" id="results">
+      <div class="result-copy-row">
+        <button class="copy-btn" id="copyBtn">Copy Results</button>
+      </div>
+      <div class="result-hero" id="hero-area">
+        <div class="label">Minimum Flue Area Required</div>
+        <div class="big-num" id="hero-num">—</div>
+        <div class="unit">in²</div>
+        <div class="sub" id="hero-sub"></div>
+      </div>
+      <div class="tbl-wrap">
+        <table id="results-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th class="num">Value</th>
+            </tr>
+          </thead>
+          <tbody id="results-tbody"></tbody>
+        </table>
+      </div>
+      <div id="liner-options"></div>
+      <div class="alert" id="alerts" style="display:none"></div>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-mid"></div>
+
+  <!-- Content sections -->
+  <div class="section">
+    <h2>How to Use This Chimney Flue Size Calculator</h2>
+    <p>Select your appliance type first — a traditional masonry fireplace uses firebox opening dimensions, while a wood stove or furnace uses its rated BTU/h heat output. Enter your chimney height in feet and choose a preferred flue liner shape, then click <strong>Calculate Flue Size</strong> to see the minimum required flue cross-sectional area.</p>
+    <p>The results include the applied sizing rule, the minimum flue area in square inches, equivalent round and square dimensions, and a table of standard masonry flue liner sizes that satisfy the requirement.</p>
+  </div>
+
+  <div class="section">
+    <h2>Why This Matters</h2>
+    <p>Getting the flue size right is one of the most critical parts of building or renovating a masonry chimney. An undersized flue creates dangerous backdrafting — smoke and carbon monoxide spilling into your living space instead of exhausting outside. An oversized flue, conversely, allows gases to cool too quickly, causing creosote buildup at an accelerated rate, which is the leading cause of chimney fires.</p>
+    <p>For a 36" × 29" fireplace opening (1,044 in²) on a chimney shorter than 15 ft, you need at least 130.5 in² of flue area (1,044 ÷ 8) — roughly a 14" round liner or a 12"×12" to 13"×13" square tile. If that same chimney were 15 ft or taller, the requirement drops to 104.4 in² (1,044 ÷ 10), allowing a smaller 12" round liner or a 10"×12" tile. Many homeowners assume "bigger is better," but a flue that's oversized for a wood stove causes exactly the same creosote problem as one that's too small for a fireplace. NFPA 211 and the IRC specify the 1/10 rule for chimneys 15 ft and taller and the 1/8 rule for shorter chimneys — this calculator applies the correct rule automatically based on the height you enter.</p>
+  </div>
+
+  <div class="section">
+    <h2>How It's Calculated</h2>
+    <p><strong>Area Fraction Method (Fireplaces):</strong></p>
+    <p>The most widely used approach follows NFPA 211 guidelines:</p>
+    <ul>
+      <li><strong>Chimney ≥ 15 ft:</strong> Flue Area ≥ Opening Area ÷ 10</li>
+      <li><strong>Chimney &lt; 15 ft:</strong> Flue Area ≥ Opening Area ÷ 8</li>
+    </ul>
+    <p>Opening Area = Width × Height (both in inches), giving area in in².</p>
+    <p><strong>BTU/h Method (Stoves &amp; Furnaces):</strong><br>
+    A commonly cited rule of thumb for connected solid-fuel appliances is roughly 1 in² of flue area per 1,000–1,500 BTU/h of heat output, adjusted for chimney height. Taller chimneys draft better and can use the more generous ratio (1 in² per 1,500 BTU/h); shorter chimneys use the conservative ratio (1 in² per 1,000 BTU/h). Gas and oil furnaces should also be checked against manufacturer venting tables.</p>
+    <p><strong>Round Liner Diameter:</strong> d = 2 × √(Area ÷ π)</p>
+    <p><strong>Square Liner Side:</strong> s = √(Area)</p>
+  </div>
+
+  <div class="section">
+    <h2>Worked Example</h2>
+    <p>Let's size the flue for a traditional masonry fireplace with a 36" wide × 29" tall opening and a chimney that stands 12 ft tall, measured from the firebox floor to the top of the flue.</p>
+    <p><strong>Step 1 — Opening area:</strong><br>36 in × 29 in = 1,044 in²</p>
+    <p><strong>Step 2 — Apply the height-based fraction:</strong><br>Because the chimney is under 15 ft, the 1/8 rule applies (not 1/10):<br>1,044 in² ÷ 8 = 130.5 in² minimum flue area</p>
+    <p><strong>Step 3 — Match to a standard liner:</strong><br>A 14" diameter round liner provides 153.9 in² (about 18% larger than required) — a good fit. A 12"×12" square tile (144 in²) also satisfies the requirement with only about 10% excess area, making it a tighter, more efficient match if a square flue is preferred.</p>
+    <p><strong>Step 4 — Compare to a taller chimney:</strong><br>If this same fireplace instead had a 16 ft chimney, the 1/10 rule would apply: 1,044 ÷ 10 = 104.4 in² minimum — allowing a smaller 12" round liner (113.1 in²) or a 10"×12" tile (120 in²).</p>
+  </div>
+
+  <div class="section">
+    <h2>Tips &amp; Common Mistakes</h2>
+    <ul>
+      <li><strong>Measure the opening, not the firebox depth.</strong> The flue size is based on the visible front opening (width × height), not the interior volume or depth of the firebox.</li>
+      <li><strong>Short chimneys need bigger flues.</strong> Chimneys under 15 ft have less natural draft, so the 1/8 rule applies instead of the more lenient 1/10 rule — don't undersize a short chimney.</li>
+      <li><strong>Round liners outperform square ones.</strong> At equal area, a round liner provides better airflow because there are no corners where turbulence and creosote accumulate. Use round when possible.</li>
+      <li><strong>Account for offset flues.</strong> Every 45° offset reduces effective draft by roughly 5–10%. If your flue has significant bends, upsize one standard increment.</li>
+      <li><strong>Gas and oil appliances need manufacturer sizing tables.</strong> The BTU/h ratio used here is a general estimate rooted in solid-fuel appliance practice — always verify furnace and boiler venting against NFPA 54 / IFGC tables or the equipment manual.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>What is the standard flue size rule for masonry fireplaces?</summary>
+      <div class="faq-body">The most widely adopted standard is 1/10 of the firebox opening area for chimneys 15 feet or taller, and 1/8 of the opening area for chimneys shorter than 15 feet. These ratios come from NFPA 211 and are reflected in the International Residential Code (IRC). So a 36" × 29" opening (1,044 in²) needs at least 130.5 in² of flue area (1,044 ÷ 8) if the chimney is under 15 ft, or 104.4 in² (1,044 ÷ 10) if the chimney is 15 ft or taller.</div>
+    </details>
+    <details>
+      <summary>Can I use the same flue for two fireplaces or appliances?</summary>
+      <div class="faq-body">In most cases, no. NFPA 211 and most building codes require each appliance to have its own dedicated flue. Combining two appliances in one flue can cause dangerous backdrafting and carbon monoxide buildup. There are limited exceptions for some gas appliances — consult your local code and a certified chimney professional.</div>
+    </details>
+    <details>
+      <summary>Does flue shape affect draft performance?</summary>
+      <div class="faq-body">Yes, significantly. Round flues have superior aerodynamics because airflow is uniform around the perimeter with no stagnant corners. At the same nominal area, a round liner typically provides better draft than a square liner of equivalent dimensions. Rectangular liners are the least efficient shape but are common in older masonry chimneys built before round liners became standard.</div>
+    </details>
+    <details>
+      <summary>What if my flue is oversized for my stove or insert?</summary>
+      <div class="faq-body">An oversized flue causes gases to cool before reaching the top, condensing as creosote — a brown, tar-like substance that is highly flammable and a leading cause of chimney fires. If you're installing a stove into an existing large chimney, you must reline with a properly sized liner (usually flexible stainless steel) to match the appliance's collar size. Never operate an appliance in an oversized flue without relining.</div>
+    </details>
+    <details>
+      <summary>How is a furnace or boiler flue sized differently from a fireplace flue?</summary>
+      <div class="faq-body">Furnaces and boilers are usually sized from rated BTU/h input rather than an opening area, since there's no firebox opening. This calculator applies a general 1,000–1,500 BTU/h per square inch estimate, but gas and oil appliances should ultimately be verified against the manufacturer's venting tables or NFPA 54 / IFGC requirements, since flue gas temperature and appliance category affect proper sizing.</div>
+    </details>
+    <details>
+      <summary>Why does chimney height change the required flue size?</summary>
+      <div class="faq-body">Taller chimneys generate stronger natural draft because of the greater column of warm, rising air, which allows a proportionally smaller flue to move the same volume of combustion gases safely. Shorter chimneys have weaker draft, so codes require a larger flue area relative to the opening or heat output to compensate.</div>
+    </details>
+  </div>
+
+  <div class="section">
+    <h2>Related Tools</h2>
+    <div class="related-grid">
+      <a href="/masonry-wall-bond-pattern-generator/" class="related-link">Masonry Wall Bond Pattern Generator</a>
+      <a href="/furnace-sizing-calculator/" class="related-link">Furnace Sizing Calculator</a>
+      <a href="/mini-split-sizing-calculator/" class="related-link">Mini Split Sizing Calculator</a>
+      <a href="/fence-post-spacing-concrete-calculator/" class="related-link">Fence Post Spacing &amp; Concrete Calculator</a>
+      <a href="/deck-railing-baluster-spacing-calculator/" class="related-link">Deck Railing &amp; Baluster Spacing Calculator</a>
+      <a href="/deck-footing-frost-depth-calculator/" class="related-link">Deck Footing Size &amp; Frost Depth Calculator</a>
+    </div>
+  </div>
+
+  <div class="ad-slot" id="ad-bottom"></div>
+</main>
+
+<footer>
+  <a href="/about/">About</a>
+  <a href="/privacy/">Privacy</a>
+  <a href="/contact/">Contact</a>
+  <span>© <span id="yr"></span> toolwick.com</span>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+const ROUND_SIZES = [6,7,8,10,12,14,15,16,18,20];
+const TILE_SIZES = [
+  [8,8],[8,12],[8,13],[10,10],[10,12],[10,13],[12,12],[12,16],[13,13],[13,17],[16,16],[16,20],[20,20]
+];
+
+function numFmt(n, dec=1) {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  return Number(n).toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+}
+function intFmt(n) {
+  return Number(n).toLocaleString('en-US', {maximumFractionDigits: 0});
+}
+
+const applianceSel = document.getElementById('applianceType');
+const groupOpening = document.getElementById('group-opening');
+const groupBtuh = document.getElementById('group-btuh');
+const methodNote = document.getElementById('method-note');
+const btuhHint = document.getElementById('btuh-hint');
+const furnaceDisclaimer = document.getElementById('furnace-disclaimer');
+
+function getMethod(app) {
+  return app === 'fireplace' ? 'area-fraction' : 'btuh';
+}
+
+function syncUI() {
+  const app = applianceSel.value;
+  const method = getMethod(app);
+  if (method === 'area-fraction') {
+    groupOpening.style.display = 'block';
+    groupBtuh.style.display = 'none';
+    methodNote.innerHTML = 'Sizing method: <strong>Area Fraction Rule</strong> — based on firebox opening dimensions (NFPA 211).';
+  } else {
+    groupOpening.style.display = 'none';
+    groupBtuh.style.display = 'block';
+    methodNote.innerHTML = 'Sizing method: <strong>BTU/h Rule</strong> — based on appliance heat output.';
+    if (app === 'stove') {
+      btuhHint.textContent = 'Typical wood/pellet stoves: 30,000–80,000 BTU/h (check the appliance nameplate).';
+      furnaceDisclaimer.style.display = 'none';
+    } else {
+      btuhHint.textContent = 'Typical residential furnaces/boilers: 80,000–200,000 BTU/h (check the appliance nameplate).';
+      furnaceDisclaimer.style.display = 'block';
+    }
+  }
+}
+applianceSel.addEventListener('change', syncUI);
+
+function clearErrors() {
+  document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('input, select').forEach(e => e.classList.remove('error'));
+}
+
+function showError(fieldId, msgId) {
+  const f = document.getElementById(fieldId);
+  const m = document.getElementById(msgId);
+  if (f) f.classList.add('error');
+  if (m) m.classList.add('show');
+}
+
+function getRoundArea(d) { return Math.PI * (d/2) * (d/2); }
+function getTileArea(w, h) { return w * h; }
+
+function calculate() {
+  clearErrors();
+  const app = applianceSel.value;
+  const method = getMethod(app);
+  const shape = document.getElementById('flueShape').value;
+  const heightFt = parseFloat(document.getElementById('chimneyHeight').value);
+
+  let valid = true;
+  if (isNaN(heightFt) || heightFt < 5 || heightFt > 200) {
+    showError('chimneyHeight', 'err-chimneyHeight'); valid = false;
+  }
+
+  if (method === 'area-fraction') {
+    const ow = parseFloat(document.getElementById('openWidth').value);
+    const oh = parseFloat(document.getElementById('openHeight').value);
+    if (isNaN(ow) || ow < 1 || ow > 120) { showError('openWidth','err-openWidth'); valid = false; }
+    if (isNaN(oh) || oh < 1 || oh > 60) { showError('openHeight','err-openHeight'); valid = false; }
+    if (!valid) return;
+    const openArea = ow * oh;
+    const fraction = heightFt >= 15 ? 10 : 8;
+    const minFlueArea = openArea / fraction;
+    showResults({ app, method, openArea, fraction, minFlueArea, heightFt, shape, ow, oh });
+  } else {
+    const btuhVal = parseFloat(document.getElementById('btuh').value);
+    if (isNaN(btuhVal) || btuhVal < 1000 || btuhVal > 5000000) { showError('btuh','err-btuh'); valid = false; }
+    if (!valid) return;
+    const btuRatio = heightFt >= 15 ? 1500 : 1000;
+    const minFlueArea = btuhVal / btuRatio;
+    showResults({ app, method, btuhVal, btuRatio, minFlueArea, heightFt, shape });
+  }
+}
+
+function showResults(d) {
+  requestAnimationFrame(() => {
+    const {app, method, openArea, fraction, minFlueArea, heightFt, shape, ow, oh, btuhVal, btuRatio} = d;
+
+    const applianceLabel = app === 'fireplace' ? 'Masonry Fireplace' : (app === 'stove' ? 'Wood/Pellet Stove' : 'Furnace/Boiler');
+
+    document.getElementById('hero-num').textContent = numFmt(minFlueArea, 1);
+
+    let subTxt = '';
+    if (method === 'area-fraction') {
+      subTxt = `${applianceLabel}: ${numFmt(ow,1)}" × ${numFmt(oh,1)}" opening = ${numFmt(openArea,1)} in² ÷ ${fraction} (${heightFt >= 15 ? '≥15 ft rule' : '<15 ft rule'})`;
+    } else {
+      subTxt = `${applianceLabel}: ${intFmt(btuhVal)} BTU/h ÷ ${intFmt(btuRatio)} BTU/h per in² (${heightFt >= 15 ? '≥15 ft' : '<15 ft'})`;
+    }
+    document.getElementById('hero-sub').textContent = subTxt;
+
+    let rows = `<tr><td>Appliance Type</td><td class="num">${applianceLabel}</td></tr>`;
+    if (method === 'area-fraction') {
+      rows += `<tr><td>Opening Width</td><td class="num">${numFmt(ow,1)} in</td></tr>`;
+      rows += `<tr><td>Opening Height</td><td class="num">${numFmt(oh,1)} in</td></tr>`;
+      rows += `<tr><td>Opening Area</td><td class="num">${numFmt(openArea,1)} in²</td></tr>`;
+      rows += `<tr><td>Area Fraction Applied</td><td class="num">1/${fraction}</td></tr>`;
+    } else {
+      rows += `<tr><td>Appliance Output</td><td class="num">${intFmt(btuhVal)} BTU/h</td></tr>`;
+      rows += `<tr><td>BTU/in² Ratio Used</td><td class="num">${intFmt(btuRatio)} BTU/h per in²</td></tr>`;
+    }
+    rows += `<tr><td>Chimney Height</td><td class="num">${numFmt(heightFt,1)} ft</td></tr>`;
+    rows += `<tr><td><strong>Min. Flue Area Required</strong></td><td class="num"><strong>${numFmt(minFlueArea,1)} in²</strong></td></tr>`;
+
+    const eqRound = 2 * Math.sqrt(minFlueArea / Math.PI);
+    const eqSquare = Math.sqrt(minFlueArea);
+    rows += `<tr><td>Equivalent Round Diameter</td><td class="num">${numFmt(eqRound,2)} in</td></tr>`;
+    rows += `<tr><td>Equivalent Square Side</td><td class="num">${numFmt(eqSquare,2)} in</td></tr>`;
+
+    document.getElementById('results-tbody').innerHTML = rows;
+
+    let linerHTML = '<h3>Standard Liner Sizes That Meet Requirements</h3>';
+    linerHTML += '<div class="tbl-wrap"><table><thead><tr><th>Shape</th><th>Dimensions</th><th class="num">Area (in²)</th><th class="num">Excess</th><th>Status</th></tr></thead><tbody>';
+
+    let linerRows = [];
+
+    if (shape === 'round' || shape === 'rectangular') {
+      ROUND_SIZES.forEach(dia => {
+        const a = getRoundArea(dia);
+        if (a >= minFlueArea * 0.95) {
+          const excess = ((a - minFlueArea) / minFlueArea * 100);
+          const status = a < minFlueArea ? 'fail' : (excess > 50 ? 'warn' : 'pass');
+          const statusLabel = a < minFlueArea ? 'Undersized' : (excess > 50 ? 'Oversized' : 'Good');
+          linerRows.push({shape:'Round', dim: `${dia}" Ø`, area: a, excess, status, statusLabel, sortKey: a});
+        }
+      });
+    }
+    if (shape === 'square' || shape === 'rectangular') {
+      TILE_SIZES.forEach(([w, h]) => {
+        const a = getTileArea(w, h);
+        if (a >= minFlueArea * 0.95) {
+          const excess = ((a - minFlueArea) / minFlueArea * 100);
+          const status = a < minFlueArea ? 'fail' : (excess > 50 ? 'warn' : 'pass');
+          const statusLabel = a < minFlueArea ? 'Undersized' : (excess > 50 ? 'Oversized' : 'Good');
+          const lbl = w === h ? `${w}" × ${h}" (Square)` : `${w}" × ${h}" (Rect)`;
+          linerRows.push({shape: w===h ? 'Square Tile':'Rect Tile', dim: lbl, area: a, excess, status, statusLabel, sortKey: a});
+        }
+      });
+    }
+    if (shape === 'round') {
+      linerRows = linerRows.filter(r => r.shape === 'Round');
+    }
+
+    linerRows.sort((a,b) => a.sortKey - b.sortKey);
+    const visible = linerRows.slice(0, 12);
+    visible.forEach(r => {
+      linerHTML += `<tr>
+        <td>${r.shape}</td>
+        <td>${r.dim}</td>
+        <td class="num">${numFmt(r.area,1)}</td>
+        <td class="num">${r.excess >= 0 ? '+' : ''}${numFmt(r.excess,0)}%</td>
+        <td class="status-${r.status}">${r.statusLabel}</td>
+      </tr>`;
+    });
+    if (linerRows.length === 0) {
+      linerHTML += `<tr><td colspan="5" style="text-align:center;color:#888;padding:1rem">No standard liner sizes found — check inputs or choose a different shape.</td></tr>`;
+    }
+    linerHTML += '</tbody></table></div>';
+    document.getElementById('liner-options').innerHTML = linerHTML;
+
+    const alertEl = document.getElementById('alerts');
+    let alertMsg = '';
+    if (heightFt < 10) alertMsg += '⚠ Chimney height under 10 ft may require additional engineering review — natural draft will be very limited. ';
+    if (method === 'area-fraction' && minFlueArea > 200) alertMsg += '⚠ Very large flue area required. Consider splitting into two fireplaces with separate flues. ';
+    if (app === 'furnace') alertMsg += '⚠ Verify this BTU/h-based estimate against manufacturer venting tables before construction. ';
+    if (alertMsg) { alertEl.textContent = alertMsg; alertEl.style.display = 'block'; }
+    else alertEl.style.display = 'none';
+
+    if (method === 'area-fraction') {
+      document.getElementById('svg-opening-title').textContent = 'Firebox Opening';
+      document.getElementById('svg-open-w-label').textContent = `${numFmt(ow,0)}" × ${numFmt(oh,0)}" opening`;
+    } else {
+      document.getElementById('svg-opening-title').textContent = 'Appliance Flue Collar';
+      document.getElementById('svg-open-w-label').textContent = `${intFmt(btuhVal)} BTU/h`;
+    }
+    document.getElementById('svg-height-label').textContent = `${numFmt(heightFt,0)} ft`;
+    document.getElementById('svg-flue-area-val').textContent = `${numFmt(minFlueArea,1)} in²`;
+    document.getElementById('svg-flue-w-label').textContent = `${numFmt(eqRound,1)}" ∅`;
+
+    document.getElementById('results').classList.add('show');
+  });
+}
+
+document.getElementById('copyBtn').addEventListener('click', function() {
+  const heroNum = document.getElementById('hero-num').textContent;
+  const heroSub = document.getElementById('hero-sub').textContent;
+  const rows = document.querySelectorAll('#results-tbody tr');
+  let text = `Chimney Flue Size Calculator — toolwick.com\n`;
+  text += `Minimum Flue Area: ${heroNum} in²\n${heroSub}\n\n`;
+  rows.forEach(r => {
+    const cells = r.querySelectorAll('td');
+    if (cells.length >= 2) text += `${cells[0].textContent.trim()}: ${cells[1].textContent.trim()}\n`;
+  });
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy Results', 2000);
+  });
+});
+
+document.getElementById('resetBtn').addEventListener('click', function() {
+  document.querySelectorAll('input').forEach(i => i.value = '');
+  document.getElementById('applianceType').value = 'fireplace';
+  document.getElementById('flueShape').value = 'round';
+  clearErrors();
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('svg-opening-title').textContent = 'Firebox Opening';
+  document.getElementById('svg-open-w-label').textContent = 'Opening Width';
+  document.getElementById('svg-height-label').textContent = 'Height';
+  document.getElementById('svg-flue-area-val').textContent = '—';
+  document.getElementById('svg-flue-w-label').textContent = 'Flue W';
+  syncUI();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    const active = document.activeElement;
+    if (active && (active.tagName === 'INPUT' || active.tagName === 'SELECT')) {
+      requestAnimationFrame(() => calculate());
+    }
+  }
+});
+
+document.getElementById('calcBtn').addEventListener('click', function() {
+  requestAnimationFrame(() => calculate());
+});
+
+syncUI();
+</script>
+</body>
+</html>
