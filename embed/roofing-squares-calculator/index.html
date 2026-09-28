@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Roofing Squares Calculator | Toolwick</title>
+<meta name="description" content="Free roofing squares calculator. Enter roof dimensions and pitch to find squares needed, shingle bundles, nails and underlayment for your project.">
+<link rel="canonical" href="https://toolwick.com/roofing-squares-calculator/">
+<style>
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.5}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem}
+nav{padding:0.5rem 0 1rem}
+nav a{color:#0077b6;font-weight:700;font-size:1.1rem;text-decoration:none}
+h1{font-size:1.6rem;margin:0.5rem 0 1rem}
+h2{font-size:1.2rem;margin-top:2rem;color:#1a1a2e}
+p{color:#333}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 1px 4px rgba(0,0,0,0.06);margin-bottom:2rem}
+.diagram{width:100%;background:#f8f9fa;border-radius:8px;padding:0.5rem 0;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;height:auto}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media (max-width:480px){.grid{grid-template-columns:1fr}}
+label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:0.3rem}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;min-height:44px;font-family:inherit}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px}
+input.error{border-color:#e74c3c}
+.err-msg{color:#e74c3c;font-size:0.85rem;margin-top:0.25rem}
+button{background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;min-height:44px;width:100%}
+button:hover{background:#006299}
+.copybtn{background:none;color:#0077b6;border:1px solid #0077b6;padding:6px 14px;font-size:0.85rem;width:auto;min-height:36px;margin-top:0.5rem}
+.copybtn:hover{background:#f0f8fc;color:#0077b6}
+#results{margin-top:1.5rem;opacity:0;transition:opacity 0.3s ease}
+#results.show{opacity:1}
+.headline{font-size:2rem;font-weight:800;color:#0077b6;margin:0.2rem 0}
+.headline-sub{color:#444;font-size:0.9rem}
+table{width:100%;border-collapse:collapse;margin-top:1rem;font-size:0.95rem}
+thead th{background:#f0f0f0;text-align:left;padding:8px 10px;border-bottom:1px solid #ddd}
+td{padding:8px 10px;border-bottom:1px solid #eee}
+tbody tr:nth-child(even){background:#fafafa}
+tbody tr:nth-child(odd){background:#fff}
+td.num,th.num{text-align:right}
+.tablewrap{overflow-x:auto}
+.note{background:#f8f9fa;border-radius:6px;padding:0.8rem 1rem;font-size:0.85rem;color:#444;margin-top:1rem}
+details{background:#f8f9fa;border-radius:6px;padding:0.8rem 1rem;margin-bottom:0.7rem}
+summary{cursor:pointer;font-weight:600}
+.ad-slot{min-height:0;margin:0}
+footer{color:#666;font-size:0.85rem;text-align:center;padding:2rem 0 1rem}
+a{color:#0077b6}
+footer a, .content a{text-decoration:underline}
+.rel-list a{display:inline-block;margin:0 0.6rem 0.6rem 0}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/roofing-squares-calculator/">
+<meta property="og:title" content="Roofing Squares Calculator">
+<meta property="og:description" content="Free roofing squares calculator. Enter roof dimensions and pitch to find squares needed, shingle bundles, nails and underlayment for your project.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/">Toolwick</a></nav>
+<h1>Roofing Squares Calculator</h1>
+<p>Use this <strong>roofing squares calculator</strong> to convert your building's length, width, and roof pitch into the number of roofing squares, shingle bundles, nails, and underlayment rolls you'll need to order for your project.</p>
+
+<div class="card">
+  <div class="diagram">
+    <svg viewBox="0 0 320 190" role="img" aria-label="Roof cross-section diagram showing span, pitch and rise">
+      <line x1="10" y1="150" x2="310" y2="150" stroke="#e0e0e0" stroke-width="1"/>
+      <line x1="10" y1="150" x2="40" y2="150" stroke="#0077b6" stroke-width="3" stroke-dasharray="4 3"/>
+      <line x1="280" y1="150" x2="310" y2="150" stroke="#0077b6" stroke-width="3" stroke-dasharray="4 3"/>
+      <line x1="40" y1="150" x2="280" y2="150" stroke="#1a1a2e" stroke-width="2"/>
+      <line id="slopeLeft" x1="40" y1="150" x2="160" y2="50" stroke="#0077b6" stroke-width="3"/>
+      <line id="slopeRight" x1="280" y1="150" x2="160" y2="50" stroke="#0077b6" stroke-width="3"/>
+      <line x1="160" y1="150" x2="160" y2="50" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="160" y="45" text-anchor="middle" font-size="11" fill="#1a1a2e" font-weight="600">Ridge</text>
+      <text x="160" y="168" text-anchor="middle" font-size="11" fill="#1a1a2e" id="svgSpan">Span: 30 ft</text>
+      <text x="95" y="95" text-anchor="middle" font-size="11" fill="#1a1a2e" id="svgPitch" transform="rotate(-38 95 95)">6/12 pitch</text>
+      <text x="160" y="100" text-anchor="middle" font-size="11" fill="#1a1a2e" id="svgHeight">Rise: 8.0 ft</text>
+      <text x="25" y="165" text-anchor="middle" font-size="9" fill="#444" id="svgOverhangL">12"</text>
+      <text x="295" y="165" text-anchor="middle" font-size="9" fill="#444" id="svgOverhangR">12"</text>
+    </svg>
+  </div>
+
+  <div class="grid">
+    <div>
+      <label for="length">Building Length (ft)</label>
+      <input type="number" id="length" inputmode="decimal" min="1" step="0.1" value="40">
+      <div class="err-msg" id="err-length"></div>
+    </div>
+    <div>
+      <label for="width">Building Width (ft)</label>
+      <input type="number" id="width" inputmode="decimal" min="1" step="0.1" value="30">
+      <div class="err-msg" id="err-width"></div>
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <label for="pitch">Roof Pitch</label>
+      <select id="pitch">
+        <option value="2">2/12 (Low slope)</option>
+        <option value="3">3/12</option>
+        <option value="4">4/12</option>
+        <option value="5">5/12</option>
+        <option value="6" selected>6/12 (Common)</option>
+        <option value="7">7/12</option>
+        <option value="8">8/12</option>
+        <option value="9">9/12</option>
+        <option value="10">10/12</option>
+        <option value="12">12/12 (Steep)</option>
+        <option value="custom">Custom</option>
+      </select>
+    </div>
+    <div id="customRiseWrap" style="display:none">
+      <label for="customRise">Custom Rise (in per 12in run)</label>
+      <input type="number" id="customRise" min="0" max="24" step="0.5" value="6">
+    </div>
+  </div>
+  <div class="grid">
+    <div>
+      <label for="overhang">Eave Overhang (in per side)</label>
+      <input type="number" id="overhang" min="0" max="48" step="1" value="12">
+      <div class="err-msg" id="err-overhang"></div>
+    </div>
+    <div>
+      <label for="waste">Waste Factor (%)</label>
+      <input type="number" id="waste" min="0" max="50" step="1" value="10">
+      <div class="err-msg" id="err-waste"></div>
+    </div>
+  </div>
+  <button id="calcBtn">Calculate Roofing Squares</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+  <div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="content">
+<h2>How to Use This Roofing Squares Calculator</h2>
+<p>Enter the length and width of your building's footprint, choose (or type in) your roof pitch, add the eave overhang, and set a waste factor. Click "Calculate Roofing Squares" and the tool converts your inputs into total roof surface area, roofing squares (rounded up so you never come up short), shingle bundles, estimated nails, and underlayment rolls.</p>
+
+<h2>Why This Matters</h2>
+<p>Whether you're getting bids from roofers, budgeting a DIY re-roof, or double-checking a supplier's material list, knowing your actual roofing squares prevents both costly overordering and mid-job material runs. A "square" simply means 100 square feet of finished roof surface — the standard unit roofers use for pricing labor and shingles. A homeowner replacing a 1,500 sq ft ranch roof, a contractor quoting a steep 10/12 pitch cabin, or a flipper estimating rehab costs all need this number before they can price bundles, felt, drip edge, and nails. Pitch matters a lot: a 6/12 roof has about 12% more surface area than the flat footprint suggests, and a 12/12 roof has almost 41% more. Skipping that adjustment is the single most common reason material estimates come in short on steeper roofs.</p>
+
+<h2>How It's Calculated</h2>
+<p>The tool follows standard roofing industry practice (consistent with IRC R905.2 shingle installation guidance) using this sequence:</p>
+<p><strong>1.</strong> Add overhang to each dimension: adjusted length/width = footprint + 2 × overhang.<br>
+<strong>2.</strong> Footprint area = adjusted length × adjusted width.<br>
+<strong>3.</strong> Pitch multiplier = √(rise² + 12²) ÷ 12 — this converts flat footprint area into actual sloped roof area.<br>
+<strong>4.</strong> Roof area = footprint area × pitch multiplier.<br>
+<strong>5.</strong> Add waste: area with waste = roof area × (1 + waste% ÷ 100).<br>
+<strong>6.</strong> Squares = area with waste ÷ 100, rounded UP to the nearest half square (never rounded down — running short mid-job costs more than a few extra shingles).<br>
+<strong>7.</strong> Bundles = squares × 3 (standard 3 bundles per square for most architectural asphalt shingles), rounded up to a whole bundle.</p>
+
+<h2>Worked Example</h2>
+<p>A 40 ft × 30 ft house, 6/12 pitch, 12 in overhang, 10% waste:</p>
+<p>Adjusted dimensions: 42 ft × 32 ft = 1,344 sq ft footprint.<br>
+Pitch multiplier: √(6² + 12²) ÷ 12 = √180 ÷ 12 ≈ 1.118.<br>
+Roof area: 1,344 × 1.118 ≈ 1,502.6 sq ft.<br>
+With 10% waste: 1,502.6 × 1.10 ≈ 1,652.9 sq ft.<br>
+Squares: 1,652.9 ÷ 100 ≈ 16.53, rounded up to <strong>17 squares</strong>.<br>
+Bundles: 17 × 3 = <strong>51 bundles</strong>. That matches the tool's default output above.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li>Always round up to the nearest square or bundle — shingle color lots can vary batch to batch, so a mid-project top-up isn't guaranteed to match.</li>
+<li>Use 15% waste (not 10%) for hips, valleys, dormers, or complex cut-up roofs; simple gable roofs can often use 7-10%.</li>
+<li>Measure overhang from the actual fascia line, not the wall line — most eaves extend 12-18 inches past the wall.</li>
+<li>This calculator estimates material quantity only — it is not a substitute for a structural inspection, permit review, or a written roofer's quote.</li>
+<li>Steeper roofs (8/12 and above) need steep-slope fall protection and often extra labor cost — factor that into your budget separately from materials.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What is a roofing square?</summary><p>A roofing square equals 100 square feet of actual roof surface area. It's the standard unit roofers use to price shingles, underlayment, and labor, regardless of the roof's shape or pitch.</p></details>
+<details><summary>How do I measure my roof pitch?</summary><p>Pitch is expressed as inches of rise per 12 inches of horizontal run (e.g., 6/12). You can measure it with a level and tape measure along a rafter, or estimate it from an attic rafter angle.</p></details>
+<details><summary>Why is my roof area bigger than my house's floor plan?</summary><p>Because the roof slopes, its surface area is always larger than the flat footprint below it. The steeper the pitch, the bigger the multiplier — a 12/12 roof needs about 41% more shingles than the footprint alone would suggest.</p></details>
+<details><summary>How many bundles of shingles are in a square?</summary><p>Most standard three-tab and architectural asphalt shingles come 3 bundles per square, though some heavier or designer shingles use 4 or 5 bundles per square — always check your specific product's coverage rate.</p></details>
+<details><summary>How much waste factor should I add?</summary><p>10% is typical for a simple gable roof; complex roofs with hips, valleys, dormers, or many penetrations should use 15% or higher to cover extra cuts.</p></details>
+<details><summary>Does this calculator account for building codes?</summary><p>No — it estimates material quantities using standard roofing industry practice. Always confirm fastening patterns, underlayment type, and ventilation requirements against your local building code and manufacturer specs.</p></details>
+</div>
+
+<h2>Related Tools</h2>
+<div class="rel-list">
+<a href="/water-softener-sizing-calculator/">Water Softener Sizing Calculator</a>
+<a href="/furnace-sizing-calculator/">Furnace Sizing Calculator</a>
+<a href="/mini-split-sizing-calculator/">Mini Split Sizing Calculator</a>
+<a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing & Concrete Calculator</a>
+<a href="/deck-railing-baluster-spacing-calculator/">Deck Railing & Baluster Spacing Calculator</a>
+<a href="/deck-footing-frost-depth-calculator/">Deck Footing Size & Frost Depth Calculator</a>
+</div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/roofing-squares-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+const pitchSel=document.getElementById('pitch');
+const customWrap=document.getElementById('customRiseWrap');
+pitchSel.addEventListener('change',()=>{
+  customWrap.style.display = pitchSel.value==='custom' ? 'block':'none';
+});
+
+function fmt(n,d=1){return n.toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});}
+function fmt0(n){return Math.round(n).toLocaleString();}
+
+function clearErr(id){document.getElementById('err-'+id).textContent='';document.getElementById(id).classList.remove('error');}
+function setErr(id,msg){document.getElementById('err-'+id).textContent=msg;document.getElementById(id).classList.add('error');}
+
+function updateSVG(rise,width,overhangIn){
+  const pxWidth=240; // px between eaves (40 to 280)
+  const scaleFtToPx = pxWidth / (width);
+  const ridgeHeightFt = (width/2)*(rise/12);
+  const maxPx=95; // max rise pixels from base(150) to top(50 min)
+  let risePx = ridgeHeightFt*scaleFtToPx;
+  if(risePx>maxPx) risePx=maxPx;
+  const ridgeY = 150 - risePx;
+  document.getElementById('slopeLeft').setAttribute('y2',ridgeY.toFixed(1));
+  document.getElementById('slopeRight').setAttribute('y2',ridgeY.toFixed(1));
+  document.getElementById('svgSpan').textContent = 'Span: '+fmt(width,1)+' ft';
+  document.getElementById('svgHeight').textContent = 'Rise: '+fmt(ridgeHeightFt,1)+' ft';
+  document.getElementById('svgHeight').setAttribute('y', Math.max(ridgeY+15,65));
+  document.getElementById('svgPitch').textContent = rise+'/12 pitch';
+  document.getElementById('svgOverhangL').textContent = overhangIn+'"';
+  document.getElementById('svgOverhangR').textContent = overhangIn+'"';
+}
+
+function calculate(){
+  let valid=true;
+  const length=parseFloat(document.getElementById('length').value);
+  const width=parseFloat(document.getElementById('width').value);
+  const overhang=parseFloat(document.getElementById('overhang').value);
+  const waste=parseFloat(document.getElementById('waste').value);
+  let rise;
+  if(pitchSel.value==='custom'){
+    rise=parseFloat(document.getElementById('customRise').value);
+  } else {
+    rise=parseFloat(pitchSel.value);
+  }
+
+  ['length','width','overhang','waste'].forEach(clearErr);
+
+  if(isNaN(length)||length<=0){setErr('length','Enter a length greater than 0.');valid=false;}
+  if(isNaN(width)||width<=0){setErr('width','Enter a width greater than 0.');valid=false;}
+  if(isNaN(overhang)||overhang<0||overhang>48){setErr('overhang','Enter overhang between 0 and 48 inches.');valid=false;}
+  if(isNaN(waste)||waste<0||waste>50){setErr('waste','Enter a waste factor between 0 and 50%.');valid=false;}
+  if(isNaN(rise)||rise<0||rise>24){setErr('overhang','');valid=false;}
+
+  const resultsEl=document.getElementById('results');
+  if(!valid){
+    requestAnimationFrame(()=>{
+      resultsEl.classList.remove('show');
+      resultsEl.innerHTML='';
+    });
+    return;
+  }
+
+  const ohFt = overhang/12;
+  const adjLength = length + 2*ohFt;
+  const adjWidth = width + 2*ohFt;
+  const footprint = adjLength*adjWidth;
+  const multiplier = Math.sqrt(rise*rise+144)/12;
+  const roofArea = footprint*multiplier;
+  const areaWithWaste = roofArea*(1+waste/100);
+  const rawSquares = areaWithWaste/100;
+  const squares = Math.ceil(rawSquares*2)/2;
+  const bundles = Math.ceil(squares*3);
+  const nails = Math.ceil((squares*320)/10)*10;
+  const underlaymentRolls = Math.ceil(squares/10);
+  const angleDeg = Math.atan(rise/12)*180/Math.PI;
+
+  const tableRows = [
+    ['Adjusted footprint (incl. overhang)', fmt(adjLength,1)+' × '+fmt(adjWidth,1)+' ft = '+fmt0(footprint)+' sq ft'],
+    ['Pitch multiplier ('+rise+'/12, '+fmt(angleDeg,1)+'°)', fmt(multiplier,3)+'×'],
+    ['Roof surface area (sloped)', fmt0(roofArea)+' sq ft'],
+    ['Waste factor added ('+waste+'%)', fmt0(areaWithWaste)+' sq ft total'],
+    ['Roofing squares needed', fmt(squares,1)+' squares'],
+    ['Shingle bundles (3/square)', fmt0(bundles)+' bundles'],
+    ['Estimated roofing nails', fmt0(nails)+' nails'],
+    ['Underlayment rolls (~10 sq/roll)', fmt0(underlaymentRolls)+' rolls']
+  ];
+
+  let rowsHtml='';
+  tableRows.forEach((r,i)=>{
+    rowsHtml += '<tr><td>'+r[0]+'</td><td class="num">'+r[1]+'</td></tr>';
+  });
+
+  const summaryText = `Roofing Squares Calculator Results
+Adjusted footprint: ${fmt(adjLength,1)} x ${fmt(adjWidth,1)} ft = ${fmt0(footprint)} sq ft
+Pitch multiplier (${rise}/12): ${fmt(multiplier,3)}x
+Roof surface area: ${fmt0(roofArea)} sq ft
+With ${waste}% waste: ${fmt0(areaWithWaste)} sq ft
+Roofing squares needed: ${fmt(squares,1)}
+Shingle bundles: ${fmt0(bundles)}
+Estimated nails: ${fmt0(nails)}
+Underlayment rolls: ${fmt0(underlaymentRolls)}`;
+
+  const html = `
+    <div class="headline-sub">You need approximately</div>
+    <div class="headline">${fmt(squares,1)} squares</div>
+    <div class="headline-sub">≈ ${fmt0(bundles)} bundles of shingles</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Item</th><th class="num">Value</th></tr></thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+    </div>
+    <div class="note">Rounded up conservatively (safety margin) so you don't run short mid-job. Estimate follows standard roofing practice (IRC R905.2 guidance) — always confirm exact quantities and fastening patterns with your roofing supplier and local code office.</div>
+    <button class="copybtn" id="copyBtn" type="button">Copy Results</button>
+    <span id="copyMsg" style="font-size:0.85rem;color:#0077b6;margin-left:0.5rem"></span>
+  `;
+
+  requestAnimationFrame(()=>{
+    resultsEl.innerHTML = html;
+    resultsEl.classList.add('show');
+    updateSVG(rise, width, overhang);
+    document.getElementById('copyBtn').addEventListener('click',()=>{
+      navigator.clipboard.writeText(summaryText).then(()=>{
+        const m=document.getElementById('copyMsg');
+        m.textContent='Copied!';
+        setTimeout(()=>{m.textContent='';},2000);
+      });
+    });
+  });
+}
+
+document.getElementById('calcBtn').addEventListener('click',()=>{
+  requestAnimationFrame(calculate);
+});
+
+document.querySelectorAll('input').forEach(inp=>{
+  inp.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){
+      e.preventDefault();
+      requestAnimationFrame(calculate);
+    }
+  });
+});
+
+// initial render
+requestAnimationFrame(calculate);
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
