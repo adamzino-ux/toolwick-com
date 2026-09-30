@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Ridge Vent Length Calculator | Toolwick</title>
+<meta name="description" content="Free ridge vent length calculator: find how many feet of ridge vent your attic needs from floor area, vent NFA rating and the IRC 1/150 or 1/300 ratio.">
+<link rel="canonical" href="https://toolwick.com/ridge-vent-length-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.65;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 0}
+nav a{font-weight:700;font-size:1.1rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.85rem;line-height:1.25;margin:2rem 0 1rem}
+h2{font-size:1.3rem;margin:2.5rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.sv text{font-size:16px;fill:#1a1a2e;font-family:inherit}
+.sv .sm{font-size:13px}
+.sv .b{font-weight:700;fill:#0077b6}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+.field{margin-bottom:1.25rem}
+input[type=text],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6;margin:0}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.hint{font-size:.8rem;color:#666;margin:.35rem 0 0}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.invalid{border-color:#e74c3c!important}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.err:empty{display:none}
+.hide{display:none}
+button.primary{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+button.primary:hover{background:#006299}
+#res{margin-top:1.5rem}
+.res-inner{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.res-inner{animation:none}}
+.big-label{font-size:.85rem;color:#444;font-weight:500}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.15}
+.sub{color:#444;font-size:.95rem;margin:.5rem 0 1rem}
+.alert{padding:12px 16px;border-radius:6px;font-size:.92rem;margin:0 0 1rem;border:1px solid}
+.alert.ok{background:#eefaf3;border-color:#2e8b57;color:#14532d}
+.alert.warn{background:#fff4f2;border-color:#e74c3c;color:#7b1d12}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;font-weight:600}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(even) td{background:#fafafa}
+th.n,td.n{text-align:right;white-space:nowrap}
+.copy{background:#f8f9fa;border:1px solid #ddd;color:#1a1a2e;border-radius:6px;padding:8px 14px;min-height:44px;font-size:.85rem;cursor:pointer;font-family:inherit}
+.copy:hover{background:#eee}
+.note{font-size:.82rem;color:#666;margin-top:1rem}
+.ad-slot{min-height:0;margin:0}
+.box{background:#f8f9fa;border-radius:8px;padding:1.25rem 1.5rem;margin:1rem 0}
+ul{padding-left:1.25rem;margin:0 0 1rem}
+li{margin-bottom:.5rem}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:12px 0;min-height:44px}
+details p{margin:0 0 1rem;color:#333}
+.rel{list-style:none;padding:0}
+.rel li a{display:block;padding:10px 0;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+.formula{font-family:ui-monospace,Menlo,Consolas,monospace;background:#f8f9fa;padding:12px 16px;border-radius:6px;font-size:.88rem;overflow-x:auto;margin:0 0 1rem}
+@media (max-width:540px){.card{padding:1.25rem}.row{grid-template-columns:1fr}h1{font-size:1.55rem}.big{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/ridge-vent-length-calculator/">
+<meta property="og:title" content="Ridge Vent Length Calculator">
+<meta property="og:description" content="Free ridge vent length calculator: find how many feet of ridge vent your attic needs from floor area, vent NFA rating and the IRC 1/150 or 1/300 ratio.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<main>
+<h1>Ridge Vent Length Calculator</h1>
+<p>This ridge vent length calculator tells you how many feet of ridge vent your attic needs. Enter the attic floor area, the vent's net free area rating and the ventilation ratio, and get a length rounded up to the safe side, plus the matching soffit intake area.</p>
+
+<div class="card">
+<div class="diagram">
+<svg class="sv" viewBox="0 0 600 350" role="img" aria-label="Diagram of an attic cross-section with a ridge vent at the peak, soffit intake vents at the eaves, and a plan view of the ridge vent length">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<line x1="130" y1="172" x2="130" y2="240" stroke="#0077b6" stroke-width="2"/>
+<line x1="470" y1="172" x2="470" y2="240" stroke="#0077b6" stroke-width="2"/>
+<line x1="60" y1="240" x2="540" y2="240" stroke="#e0e0e0" stroke-width="2"/>
+<line x1="130" y1="182" x2="470" y2="182" stroke="#0077b6" stroke-width="2"/>
+<polyline points="100,190 300,70 500,190" fill="none" stroke="#0077b6" stroke-width="3" stroke-linejoin="round"/>
+<rect x="285" y="58" width="30" height="14" rx="2" fill="#0077b6"/>
+<rect x="104" y="192" width="22" height="5" fill="#0077b6"/>
+<rect x="474" y="192" width="22" height="5" fill="#0077b6"/>
+<line x1="125" y1="170" x2="280" y2="80" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+<line x1="475" y1="170" x2="320" y2="80" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+<text x="300" y="26" text-anchor="middle">Ridge vent (exhaust)</text>
+<text id="d-upper" class="b" x="300" y="45" text-anchor="middle">Upper NFA: —</text>
+<text x="300" y="130" text-anchor="middle">Attic floor area</text>
+<text id="d-area" class="b" x="300" y="152" text-anchor="middle">—</text>
+<text x="300" y="212" text-anchor="middle">Soffit intake (lower)</text>
+<text id="d-lower" class="b" x="300" y="232" text-anchor="middle">Min. intake: —</text>
+<text x="60" y="262" class="sm">Ridge line, plan view</text>
+<rect x="60" y="270" width="480" height="16" fill="#fff" stroke="#e0e0e0"/>
+<rect x="90" y="270" width="420" height="16" fill="#0077b6" fill-opacity=".25" stroke="#0077b6"/>
+<text x="75" y="303" class="sm" text-anchor="middle">gap</text>
+<text x="525" y="303" class="sm" text-anchor="middle">gap</text>
+<line x1="91" y1="300" x2="509" y2="300" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text id="d-len" class="b" x="300" y="330" text-anchor="middle">Ridge vent length: —</text>
+</svg>
+</div>
+
+<div class="field"><label for="mode">Enter attic floor as</label>
+<select id="mode"><option value="dims">Length × width (ft)</option><option value="area">Total area (sq ft)</option></select></div>
+
+<div id="g-dims" class="row">
+<div class="field"><label for="len">Attic length (ft)</label><input type="text" id="len" inputmode="decimal" value="50" aria-describedby="lenErr"><div class="err" id="lenErr"></div></div>
+<div class="field"><label for="wid">Attic width (ft)</label><input type="text" id="wid" inputmode="decimal" value="32" aria-describedby="widErr"><div class="err" id="widErr"></div></div>
+</div>
+<div id="g-area" class="field hide"><label for="area">Attic floor area (sq ft)</label><input type="text" id="area" inputmode="decimal" placeholder="e.g. 1,600" aria-describedby="areaErr"><div class="err" id="areaErr"></div></div>
+
+<div class="field"><label for="ratio">Ventilation ratio</label>
+<select id="ratio"><option value="150">1:150 — standard IRC ratio (safest)</option><option value="300">1:300 — balanced intake/exhaust or cold-climate vapor retarder</option></select>
+<p class="hint">Choose 1:300 only if your attic meets the code conditions for it. If unsure, use 1:150.</p></div>
+
+<div class="field"><label for="nfa">Ridge vent net free area (sq in per linear ft)</label><input type="text" id="nfa" inputmode="decimal" value="9" aria-describedby="nfaErr nfaHint"><div class="err" id="nfaErr"></div>
+<p class="hint" id="nfaHint">Use the manufacturer's total rating for the whole vent, not per side. Typical range is 9–20. When unsure, use the lower number.</p></div>
+
+<div class="field"><label for="share" id="shareLbl">Share of ventilation at the ridge: 50%</label>
+<input type="range" id="share" min="40" max="50" step="1" value="50" aria-describedby="shareHint">
+<div class="ticks" aria-hidden="true"><span>40%</span><span>45%</span><span>50%</span></div>
+<p class="hint" id="shareHint">Code allows 40–50% of the required area in the upper vents. The soffit supplies the rest.</p></div>
+
+<div class="row">
+<div class="field"><label for="setback">Unvented gap at each ridge end (in)</label><input type="text" id="setback" inputmode="decimal" value="6" aria-describedby="setbackErr"><div class="err" id="setbackErr"></div></div>
+<div class="field"><label for="ridge">Available ridge length (ft, optional)</label><input type="text" id="ridge" inputmode="decimal" value="50" aria-describedby="ridgeErr"><div class="err" id="ridgeErr"></div></div>
+</div>
+
+<div class="field"><label for="piece">Vent product format</label>
+<select id="piece"><option value="4">4 ft rigid sections</option><option value="10">10 ft sections</option><option value="20">20 ft roll (coil)</option></select></div>
+
+<button type="button" class="primary" id="calcBtn">Calculate Ridge Vent Length</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="res" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Ridge Vent Length Calculator</h2>
+<p>Enter your attic's floor area, either as length × width or as a single square-footage figure. Pick the ventilation ratio, type in the net free area (NFA) printed on your ridge vent's packaging, and set how much of the ventilation you want at the ridge. The calculator returns the ridge vent length to install, the number of vent pieces to buy, and the minimum soffit intake area that must balance it. If you enter your actual ridge length, it also checks whether the vent will fit.</p>
+
+<h2>Why This Matters</h2>
+<p>A poorly ventilated attic costs real money. In summer, an unvented attic can reach 130–150°F, which bakes shingles from below, shortens their life by years, and pushes heat into the rooms under it. In winter, warm moist air leaking from the living space condenses on cold roof sheathing, causing mold, rotted rafters, and ice dams at the eaves. Proper ventilation moves that air out before damage starts.</p>
+<p>Ridge vents are popular because they run along the whole peak and exhaust air evenly from both roof slopes, with no spinning parts. But they only work when sized correctly and paired with enough intake at the soffits. A typical 1,600 sq ft attic needs roughly 768 square inches of total net free area at 1:300. A 40 ft ridge vent rated at 9 sq in per foot delivers 360 square inches, so a short ridge can leave you well under the target. Homeowners replacing a roof, roofers writing a bid, and inspectors checking a job all hit this question. Overestimating wastes little. Underestimating leaves the attic hot and damp.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator follows the attic ventilation rule in the International Residential Code, section R806.2 (2021 edition). The required net free ventilating area is 1/150 of the vented attic floor area. That drops to 1/300 if either (1) a Class I or II vapor retarder is on the warm side of the ceiling in climate zones 6, 7 and 8, or (2) 40–50% of the required area is in upper vents at least 3 ft above the eave vents, with the rest at the eaves. Local codes vary, so confirm what your jurisdiction has adopted.</p>
+<div class="formula">Total NFA (sq in) = attic area (sq ft) ÷ ratio × 144<br>Ridge NFA (sq in) = total NFA × ridge share<br>Ridge length (ft) = ridge NFA ÷ vent NFA per ft<br>Soffit intake (sq in) = larger of (total − ridge NFA) or installed ridge NFA</div>
+<p>Rounding always goes to the safe side. Ridge length rounds up to the next half foot, vent pieces round up to whole units, and the soffit intake is never less than the exhaust you actually install, so the system stays balanced. The "length needed to fit" adds the unvented gap at each ridge end, because the slot is normally stopped short of the gable or hip ends.</p>
+
+<h2>Worked Example</h2>
+<p>Take a gable house with an attic 50 ft long by 32 ft wide, a 50 ft ridge, a vent rated at 9 sq in per linear foot, 6 in gaps at each end, and a 4 ft rigid product. The attic meets the balanced 1:300 conditions, and the ridge share is set to 50%.</p>
+<ul>
+<li>Attic area: 50 × 32 = 1,600 sq ft.</li>
+<li>Total NFA: 1,600 ÷ 300 = 5.333 sq ft × 144 = 768 sq in.</li>
+<li>Ridge share at 50%: 384 sq in.</li>
+<li>Exact length: 384 ÷ 9 = 42.67 ft, rounded up to <strong>43 ft</strong>.</li>
+<li>Pieces: 43 ÷ 4 = 10.75, so buy 11 sections (44 ft).</li>
+<li>Soffit intake: the larger of 384 and 43 × 9 = 387, so at least <strong>387 sq in</strong>.</li>
+<li>Fit check: the usable ridge is 50 − 1 = 49 ft, which gives 441 sq in, enough.</li>
+</ul>
+<p>Switch the ratio to 1:150 and the requirement doubles to about 85.5 ft. A 50 ft ridge can no longer do it alone, and you would need a higher-NFA vent or added exhaust.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use the right area.</strong> Use the attic floor (ceiling) area under the vented space, not the roof surface area. Separate attic sections each need their own calculation.</li>
+<li><strong>Check per-side vs total NFA.</strong> Some packaging lists NFA per side. Doubling a per-side rating by mistake halves your real vent length.</li>
+<li><strong>Do not skip the intake.</strong> A ridge vent with blocked or missing soffit vents pulls air from the living space or through the roof. Keep baffles clear of insulation.</li>
+<li><strong>Do not mix vent types.</strong> Combining ridge vents with gable-end fans or powered vents can short-circuit airflow. Use one exhaust system.</li>
+<li><strong>Stop the slot short of the ends.</strong> Follow the manufacturer's instructions on slot width and end gaps. They affect weather resistance and shingle support.</li>
+<li><strong>Round up, not down.</strong> If your number lands close to a whole or half foot, take the longer option.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How long should a ridge vent be?</summary><p>It depends on attic size and the vent's rating. A 1,600 sq ft attic at 1:300 with a 9 sq in/ft vent needs about 43 ft. Higher-NFA products need less length. Enter your numbers above for an exact figure.</p></details>
+<details><summary>How much net free area does a ridge vent provide per foot?</summary><p>Most ridge vents provide about 9 to 20 square inches of NFA per linear foot, depending on the product and slot width. Always use the manufacturer's published figure. If you cannot find it, assume 9 to stay conservative.</p></details>
+<details><summary>Do I need soffit vents if I have a ridge vent?</summary><p>Yes. A ridge vent only exhausts air, so replacement air must enter at the eaves. Code balances the two, with the lower intake supplying roughly half of the required area or more.</p></details>
+<details><summary>Can I use 1:300 instead of 1:150?</summary><p>Only if the code conditions are met, such as a balanced system with 40–50% at the upper vents, or a qualifying vapor retarder in climate zones 6–8. Otherwise use 1:150. Your local building department has the final say.</p></details>
+<details><summary>What if my roof has a short ridge, such as a hip roof?</summary><p>Add up the length of every ridge and hip run that can take vent. If the total is too short, use a higher-NFA ridge product and add supplemental exhaust such as low-profile box vents. Keep the intake balanced with the total exhaust.</p></details>
+<details><summary>Should a ridge vent run the entire length of the ridge?</summary><p>No. It stops a few inches short of each end, and you only need the length the calculation requires. If you install more, increase the soffit intake to match, since exhaust above 50% of the total can unbalance the system.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/roof-pitch-rafter-calculator/">Roof Pitch &amp; Rafter Length Calculator</a></li>
+<li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li>
+<li><a href="/cubic-yards-to-tons-calculator/">Cubic Yards to Tons Calculator</a></li>
+<li><a href="/roofing-squares-calculator/">Roofing Squares Calculator</a></li>
+<li><a href="/water-softener-sizing-calculator/">Water Softener Sizing Calculator</a></li>
+<li><a href="/furnace-sizing-calculator/">Furnace Sizing Calculator</a></li>
+</ul>
+<div class="box"><strong>Planning note:</strong> results follow the IRC R806.2 attic ventilation rule of thumb (2021 edition) and the vent maker's stated NFA. Codes and manufacturer instructions vary by location and product. This tool is an estimating aid and is not engineering, permit or inspection approval.</div>
+</section>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/ridge-vent-length-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var lastSummary='',hasResult=false;
+function num(id){var v=$(id).value.replace(/,/g,'').trim();return v===''?NaN:Number(v)}
+function fmt(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function ceilHalf(x){return Math.ceil(x*2-1e-9)/2}
+function clearErr(){
+  document.querySelectorAll('.invalid').forEach(function(e){e.classList.remove('invalid');e.removeAttribute('aria-invalid')});
+  document.querySelectorAll('.err').forEach(function(e){e.textContent=''});
+}
+function resetDiagram(){
+  $('d-upper').textContent='Upper NFA: —';$('d-area').textContent='—';
+  $('d-lower').textContent='Min. intake: —';$('d-len').textContent='Ridge vent length: —';
+}
+function calculate(){
+  clearErr();
+  var mode=$('mode').value,ok=true,first=null,area=0;
+  function bad(id,msg){ok=false;var e=$(id);e.classList.add('invalid');e.setAttribute('aria-invalid','true');$(id+'Err').textContent=msg;if(!first)first=e}
+  if(mode==='dims'){
+    var L=num('len'),W=num('wid');
+    if(!isFinite(L)||L<=0)bad('len','Enter a length greater than 0.');
+    else if(L>1000)bad('len','Length looks too large. Enter 1,000 ft or less.');
+    if(!isFinite(W)||W<=0)bad('wid','Enter a width greater than 0.');
+    else if(W>1000)bad('wid','Width looks too large. Enter 1,000 ft or less.');
+    if(ok)area=L*W;
+  }else{
+    area=num('area');
+    if(!isFinite(area)||area<=0)bad('area','Enter an attic floor area greater than 0 sq ft.');
+    else if(area>200000)bad('area','Area looks too large. Enter 200,000 sq ft or less.');
+  }
+  var nfa=num('nfa');
+  if(!isFinite(nfa)||nfa<=0)bad('nfa','Enter the vent NFA in sq in per ft (for example 9).');
+  else if(nfa<1||nfa>50)bad('nfa','NFA per foot is normally 9–20. Enter a value from 1 to 50.');
+  var sb=num('setback');
+  if(!isFinite(sb)||sb<0)bad('setback','Enter 0 or more inches.');
+  else if(sb>60)bad('setback','Gap looks too large. Enter 60 in or less.');
+  var hasRidge=$('ridge').value.trim()!=='',rl=num('ridge');
+  if(hasRidge&&(!isFinite(rl)||rl<=0))bad('ridge','Enter a ridge length above 0, or leave blank.');
+  else if(hasRidge&&rl>2000)bad('ridge','Ridge length looks too large. Enter 2,000 ft or less.');
+  if(!ok){hasResult=false;$('res').innerHTML='';resetDiagram();first.focus();return}
+
+  var den=+$('ratio').value,share=+$('share').value/100,piece=+$('piece').value;
+  var totalSf=area/den,totalIn=totalSf*144,upperIn=totalIn*share,lowerIn=totalIn-upperIn;
+  var exact=upperIn/nfa,rec=ceilHalf(exact);
+  var pieces=Math.ceil(rec/piece-1e-9),buy=pieces*piece;
+  var ridgeNFA=rec*nfa,intake=Math.ceil(Math.max(lowerIn,ridgeNFA)-1e-9);
+  var fitLen=rec+2*sb/12,gapFt=2*sb/12;
+  var pname=piece===20?'roll':'section';
+  var pieceTxt=pieces+' × '+piece+' ft '+pname+(pieces>1?'s':'')+' ('+fmt(buy)+' ft)';
+
+  var alertH='',fitTxt='Not checked (no ridge length entered)';
+  if(hasRidge){
+    var usable=rl-gapFt;
+    if(usable<=0){
+      fitTxt='Ridge too short for end gaps';
+      alertH='<div class="alert warn"><strong>Ridge too short.</strong> The end gaps use up the entire '+fmt(rl,1)+' ft ridge. Reduce the gap per the manufacturer or use other exhaust vents.</div>';
+    }else{
+      var prov=usable*nfa,pct=prov/upperIn*100;
+      if(prov+1e-9>=upperIn){
+        fitTxt='Fits: '+fmt(usable,1)+' ft usable, '+fmt(prov)+' sq in';
+        alertH='<div class="alert ok"><strong>Your ridge is long enough.</strong> '+fmt(usable,1)+' ft of usable ridge gives '+fmt(prov)+' sq in of exhaust against '+fmt(upperIn)+' needed. Install '+fmt(rec,1)+' ft. If you install more, raise the soffit intake to match.</div>';
+      }else{
+        var needNfa=Math.ceil(upperIn/usable*10-1e-9)/10,short=Math.ceil(upperIn-prov);
+        fitTxt='Short: '+fmt(usable,1)+' ft usable, '+fmt(pct,0)+'% of need';
+        alertH='<div class="alert warn"><strong>Your ridge is too short for this vent.</strong> '+fmt(usable,1)+' usable ft at '+fmt(nfa,1)+' sq in/ft gives '+fmt(prov)+' sq in, only '+fmt(pct,0)+'% of the '+fmt(upperIn)+' needed. Use a vent rated at least '+fmt(needNfa,1)+' sq in/ft, or add about '+fmt(short)+' sq in of supplemental exhaust and keep the intake balanced.</div>';
+      }
+    }
+  }
+
+  var rows=[
+    ['Attic floor area',fmt(area,1)+' sq ft'],
+    ['Ventilation ratio','1:'+den],
+    ['Total NFA required',fmt(totalIn)+' sq in ('+fmt(totalSf,2)+' sq ft)'],
+    ['Ridge (upper) share',fmt(share*100)+'%'],
+    ['Ridge NFA required',fmt(upperIn,1)+' sq in'],
+    ['Vent rating',fmt(nfa,1)+' sq in per ft'],
+    ['Exact length needed',fmt(exact,2)+' ft'],
+    ['Recommended length (rounded up)',fmt(rec,1)+' ft'],
+    ['Ridge length needed incl. end gaps',fmt(fitLen,1)+' ft'],
+    ['Vent pieces to buy',pieceTxt],
+    ['Minimum soffit intake',fmt(intake)+' sq in'],
+    ['Ridge fit check',fitTxt]
+  ];
+  var t='<div class="tw"><table><thead><tr><th>Item</th><th class="n">Value</th></tr></thead><tbody>';
+  rows.forEach(function(r){t+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>'});
+  t+='</tbody></table></div>';
+
+  var c='<h3>Compare vent ratings at your settings</h3><div class="tw"><table><thead><tr><th>Vent NFA (sq in/ft)</th><th class="n">1:300 (ft)</th><th class="n">1:150 (ft)</th></tr></thead><tbody>';
+  [9,12,15,18].forEach(function(n){
+    c+='<tr><td>'+n+'</td><td class="n">'+fmt(ceilHalf(area/300*144*share/n),1)+'</td><td class="n">'+fmt(ceilHalf(area/150*144*share/n),1)+'</td></tr>';
+  });
+  c+='</tbody></table></div>';
+
+  lastSummary='Ridge vent length: '+fmt(rec,1)+' ft (exact '+fmt(exact,2)+' ft)\nAttic area: '+fmt(area,1)+' sq ft, ratio 1:'+den+', ridge share '+fmt(share*100)+'%\nRidge NFA required: '+fmt(upperIn,1)+' sq in at '+fmt(nfa,1)+' sq in/ft\nPieces: '+pieceTxt+'\nMinimum soffit intake: '+fmt(intake)+' sq in\nBased on IRC R806.2 rule of thumb; local codes vary. Not permit approval.';
+
+  var html='<div class="res-inner"><div class="big-label">Recommended ridge vent length</div><div class="big">'+fmt(rec,1)+' ft</div>'+
+   '<p class="sub">Exact need is '+fmt(exact,2)+' ft at '+fmt(nfa,1)+' sq in/ft, rounded up to the next half foot. Buy '+pieceTxt+'.</p>'+
+   alertH+t+c+'<button type="button" class="copy" id="copyBtn">Copy results</button>'+
+   '<p class="note">Follows the IRC R806.2 (2021) attic ventilation rule of thumb. Local codes and manufacturer instructions vary. Verify with your building department. This is an estimate, not engineering, permit or inspection approval.</p></div>';
+
+  requestAnimationFrame(function(){
+    $('res').innerHTML=html;hasResult=true;
+    $('d-upper').textContent='Upper NFA: '+fmt(upperIn)+' sq in';
+    $('d-area').textContent=fmt(area)+' sq ft';
+    $('d-lower').textContent='Min. intake: '+fmt(intake)+' sq in';
+    $('d-len').textContent='Ridge vent length: '+fmt(rec,1)+' ft';
+  });
+}
+function run(){requestAnimationFrame(calculate)}
+$('calcBtn').addEventListener('click',run);
+['len','wid','area','nfa','setback','ridge','mode','ratio','share','piece'].forEach(function(id){
+  $(id).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();run()}});
+});
+$('mode').addEventListener('change',function(){
+  var d=this.value==='dims';
+  $('g-dims').classList.toggle('hide',!d);$('g-area').classList.toggle('hide',d);
+});
+$('share').addEventListener('input',function(){
+  $('shareLbl').textContent='Share of ventilation at the ridge: '+this.value+'%';
+  if(hasResult)run();
+});
+['ratio','piece'].forEach(function(id){$(id).addEventListener('change',function(){if(hasResult)run()})});
+$('res').addEventListener('click',function(e){
+  if(e.target.id!=='copyBtn')return;
+  var b=e.target;
+  function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastSummary).then(done,fallback)}else fallback();
+  function fallback(){var ta=document.createElement('textarea');ta.value=lastSummary;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(ta)}
+});
+$('yr').textContent=new Date().getFullYear();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
