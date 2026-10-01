@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Wheelchair Ramp Slope &amp; Length Calculator | Toolwick</title>
+<meta name="description" content="Free wheelchair ramp slope calculator: enter your rise to get ramp length, grade, angle, landings and footprint based on ADA 1:12 guidelines.">
+<link rel="canonical" href="https://toolwick.com/wheelchair-ramp-slope-length-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.75rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.75rem;margin:0 0 1.5rem}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram figcaption{font-size:.8rem;color:#666;margin-top:.25rem}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff;min-height:44px}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.err{border-color:#e74c3c}
+.hint{font-size:.8rem;color:#666;margin:.3rem 0 0}
+.msg{font-size:.85rem;color:#c0392b;margin:.3rem 0 0;min-height:0}
+.msg:empty{display:none}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;font-family:inherit}
+button:hover{background:#006299}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;font-size:.85rem;padding:8px 16px;width:auto;margin-top:1rem}
+.copy:hover{background:#f0f8fc}
+.hidden{display:none}
+.results{opacity:0;transition:opacity .3s ease;margin-top:1.5rem}
+.results.show{opacity:1}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+.kl{font-size:.85rem;color:#444;font-weight:500}
+.kn{font-size:2.3rem;font-weight:800;color:#0077b6;line-height:1.2;margin:.2rem 0}
+.ks{font-size:.9rem;color:#444}
+.st{padding:.75rem 1rem;border-radius:6px;border-left:4px solid;margin:0 0 1rem;font-size:.92rem}
+.st.ok{background:#e8f5e9;color:#1b5e20;border-color:#2e7d32}
+.st.warn{background:#fff4e0;color:#7a4100;border-color:#e08a00}
+.st.bad{background:#fdecea;color:#a1261b;border-color:#e74c3c}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;font-weight:600;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(even) td{background:#fafafa}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+th.n{text-align:right}
+.cmp{min-width:480px}
+.note{font-size:.82rem;color:#666}
+.ad-slot{min-height:0;margin:0}
+.content ul{padding-left:1.25rem;margin:0 0 1rem}
+.content li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border-left:4px solid #0077b6;padding:.75rem 1rem;border-radius:4px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;margin:0 0 1rem;overflow-x:auto}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:.7rem 0;min-height:44px}
+details p{margin:0 0 .9rem}
+.related{list-style:none;padding:0;margin:0 0 1rem;display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.related a{display:block;padding:.75rem 1rem;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.5rem 0 2.5rem;font-size:.88rem;color:#666}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:640px){.card{padding:1.25rem}.related{grid-template-columns:1fr}h1{font-size:1.5rem}.kn{font-size:2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/wheelchair-ramp-slope-length-calculator/">
+<meta property="og:title" content="Wheelchair Ramp Slope &amp; Length Calculator">
+<meta property="og:description" content="Free wheelchair ramp slope calculator: enter your rise to get ramp length, grade, angle, landings and footprint based on ADA 1:12 guidelines.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Wheelchair Ramp Slope & Length Calculator</h1>
+<p>Use this wheelchair ramp slope calculator to find how long a ramp must be for any rise, what grade and angle it creates, how many landings you need, and how much yard or hallway space the whole structure will take. It is built around the ADA 1:12 guideline.</p>
+
+<div class="card">
+<figure class="diagram">
+<svg id="dsvg" viewBox="0 0 400 225" role="img" aria-label="Wheelchair ramp side view showing rise, run and slope">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<polygon id="dl" points="270,132 345,132 345,175 270,175" fill="#eceff1"/>
+<polygon id="dw" points="30,175 270,175 270,132" fill="#e3f2fa"/>
+<line x1="10" y1="175" x2="390" y2="175" stroke="#1a1a2e" stroke-width="1.5"/>
+<line x1="30" y1="175" x2="30" y2="200" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>
+<line x1="270" y1="175" x2="270" y2="200" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>
+<line id="dg" x1="345" y1="132" x2="375" y2="132" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>
+<line x1="345" y1="175" x2="375" y2="175" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>
+<line id="dr" x1="30" y1="175" x2="270" y2="132" stroke="#0077b6" stroke-width="3.5" stroke-linecap="round"/>
+<line id="dt" x1="270" y1="132" x2="345" y2="132" stroke="#0077b6" stroke-width="3.5" stroke-linecap="round"/>
+<line x1="30" y1="195" x2="270" y2="195" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line id="da" x1="368" y1="132" x2="368" y2="175" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dinfo" x="30" y="22" font-size="14" font-weight="600" fill="#1a1a2e">Slope 1:12 · 8.33% grade</text>
+<text id="dlt" x="307" y="124" font-size="12" text-anchor="middle" fill="#1a1a2e">Landing</text>
+<text id="dnt" x="150" y="216" font-size="13" text-anchor="middle" fill="#1a1a2e">Run</text>
+<text id="drt" x="386" y="153" font-size="13" text-anchor="middle" fill="#1a1a2e" transform="rotate(-90 386 153)">Rise</text>
+</svg>
+<figcaption>Schematic side view, not to scale. Intermediate landings (every 30 in of rise) are not drawn.</figcaption>
+</figure>
+
+<div class="field">
+<label for="unit">Units</label>
+<select id="unit"><option value="in">Inches</option><option value="cm">Centimeters</option></select>
+</div>
+<div class="field">
+<label for="rise">Total rise (<span class="u">in</span>)</label>
+<input type="number" id="rise" inputmode="decimal" step="any" min="0" placeholder="e.g. 24" aria-describedby="riseHint riseErr">
+<p class="hint" id="riseHint">Vertical height from the ground to the top of the door threshold or landing.</p>
+<p class="msg" id="riseErr"></p>
+</div>
+<div class="field">
+<label for="slope">Slope</label>
+<select id="slope">
+<option value="20">1:20 (5.0%) — gentle, easiest for self-propelling</option>
+<option value="16">1:16 (6.25%) — comfortable for most users</option>
+<option value="12" selected>1:12 (8.33%) — ADA maximum</option>
+<option value="10">1:10 (10%) — existing-site exception only</option>
+<option value="8">1:8 (12.5%) — existing-site exception only</option>
+<option value="custom">Custom ratio…</option>
+</select>
+</div>
+<div class="field hidden" id="ratioWrap">
+<label for="ratio">Custom slope — 1 unit of rise per how many units of run?</label>
+<input type="number" id="ratio" inputmode="decimal" step="any" min="4" max="40" placeholder="e.g. 14" aria-describedby="ratioErr">
+<p class="msg" id="ratioErr"></p>
+</div>
+<div class="field">
+<label for="avail">Available horizontal space (<span class="u">in</span>) — optional</label>
+<input type="number" id="avail" inputmode="decimal" step="any" min="0" placeholder="e.g. 360" aria-describedby="availHint availErr">
+<p class="hint" id="availHint">Straight-line length you can use, including landings. Leave blank to skip the fit check.</p>
+<p class="msg" id="availErr"></p>
+</div>
+<button type="button" id="calcBtn">Calculate Ramp</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+<div class="results" id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section class="content">
+<h2>How to Use This Wheelchair Ramp Slope & Length Calculator</h2>
+<p>Choose inches or centimeters, then enter the total rise: the vertical distance from the ground to the top of the landing or door threshold. Pick a slope (1:12 is the ADA maximum) or type a custom ratio. If you know how much straight-line room you have, enter it and the tool tells you whether the ramp fits and what the gentlest workable slope would be. The results show ramp run, surface length, number of landings, total footprint, and a side-by-side comparison of common slopes.</p>
+
+<h2>Why This Matters</h2>
+<p>Ramp length surprises almost everyone. A single 7-inch front-door step needs about 7 feet of 1:12 ramp. A 30-inch deck needs 30 feet of ramp plus landings, which is longer than most side yards. Discovering that after buying lumber, or after a contractor quote arrives, is expensive and frustrating.</p>
+<p>People run these numbers in many situations: a parent coming home from the hospital, an aging relative who wants to stay in the house, a landlord answering an accommodation request, a small business fixing a one-step entrance, or a family adding a ramp for a mobility van. Each case has the same core problem: turn a vertical height into a horizontal distance, and then check whether that distance fits on the property.</p>
+<p>The slope matters for people as well as for code. A ramp that technically meets 1:12 can still be exhausting for someone propelling a manual chair alone, which is why many occupational therapists suggest 1:16 or 1:20 when space allows. Planning with real numbers lets you balance comfort, cost, and available space before you build.</p>
+
+<h2>How It's Calculated</h2>
+<p>The geometry is a right triangle. The rise is the vertical side, the run is the horizontal side, and the ramp surface is the hypotenuse.</p>
+<div class="formula">Run = Rise × Ratio (ratio = 12 for a 1:12 slope)<br>Surface length = √(Rise² + Run²)<br>Grade % = 100 ÷ Ratio<br>Angle = arctan(1 ÷ Ratio)<br>Sections = Rise ÷ 30 in, rounded up<br>Footprint = Run + 60 in × Sections</div>
+<p>The footprint adds a 60-inch landing at the top and a 60-inch landing between each pair of ramp runs. The calculator rounds lengths <em>up</em> to the next whole inch so you never end up short, and it flags any slope steeper than the 1:12 limit.</p>
+<p>The rules of thumb follow the 2010 ADA Standards for Accessible Design, section 405: maximum slope 1:12, maximum 30 inches of rise per run, level landings at least 60 inches long, 36 inches minimum clear width, handrails on both sides when the rise exceeds 6 inches, and edge protection. For one- and two-family homes, IRC R311.8 also uses 1:12 for the required egress ramp. Codes differ by jurisdiction and edition, and this tool is a planning aid. It is not an engineering, permit, or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>A porch floor sits 24 inches above the ground, and you want a 1:12 ramp.</p>
+<ul>
+<li><strong>Run:</strong> 24 in × 12 = 288 in, which is 24 ft 0 in.</li>
+<li><strong>Surface length:</strong> √(24² + 288²) = √83,520 ≈ 288.998, rounded up to 289 in (24 ft 1 in). This is the length of your stringers.</li>
+<li><strong>Grade and angle:</strong> 100 ÷ 12 = 8.33%, and arctan(1/12) ≈ 4.76°.</li>
+<li><strong>Sections:</strong> 24 ÷ 30 = 0.8, rounded up to 1 section, so no intermediate landing is needed.</li>
+<li><strong>Footprint:</strong> 288 in + 60 in top landing = 348 in, or 29 ft 0 in.</li>
+<li><strong>Handrails:</strong> the rise is over 6 in, so both sides need them.</li>
+</ul>
+<p>If the rise were 40 inches instead, the ramp would need 2 sections of 20 inches each, 480 inches (40 ft) of run, and 60 + 60 inches of landings, for a 50-foot footprint.</p>
+
+<h2>Tips & Common Mistakes</h2>
+<ul>
+<li><strong>Measure rise to the finished surface.</strong> Measure from the ground to the top of the threshold or deck board, not to the framing. Add any planned gravel, pavers, or concrete pad thickness at the bottom.</li>
+<li><strong>Do not forget landings.</strong> Many DIY plans include only the sloped run. A 60 by 60 inch top landing is needed so a wheelchair can turn and open the door.</li>
+<li><strong>Treat 1:12 as a maximum, not a target.</strong> If you have the room, 1:16 or 1:20 is noticeably easier to climb and safer to descend.</li>
+<li><strong>Short on space? Change the layout.</strong> L-shaped or switchback ramps need 60-inch turning landings but fit far more compactly than one straight run. Do not steepen the slope.</li>
+<li><strong>Check local rules before buying materials.</strong> Permits, frost-depth footings, guard heights, and surface requirements vary, and a private home may be held to different rules than a public building.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What is the maximum slope for a wheelchair ramp?</summary><p>The ADA maximum is 1:12, meaning 1 inch of rise for every 12 inches of run (8.33% grade). The IRC uses the same 1:12 limit for the required egress ramp at a home. Steeper slopes are allowed only in narrow existing-building exceptions.</p></details>
+<details><summary>How long should a wheelchair ramp be for a 24-inch rise?</summary><p>At 1:12 the ramp run is 24 feet, plus at least a 5-foot top landing, for about 29 feet total. At the gentler 1:20 slope the run grows to 40 feet.</p></details>
+<details><summary>Does a wheelchair ramp need landings?</summary><p>Yes. Under ADA rules, a level landing at least 60 inches long is needed at the top and bottom, and at every change of direction. Under ADA 405.6, no single run may rise more than 30 inches without a landing.</p></details>
+<details><summary>Is a 1:12 ramp too steep for a manual wheelchair?</summary><p>It meets the standard, but many people cannot climb it unassisted, especially on long runs. If the site allows, 1:16 to 1:20 is much easier, and a user or occupational therapist can advise on what works for them.</p></details>
+<details><summary>How wide does a wheelchair ramp need to be?</summary><p>The ADA requires at least 36 inches of clear width between handrails or curbs. Many builders choose 42 to 48 inches for easier turning and room for a helper walking alongside.</p></details>
+<details><summary>Do I need a permit to build a wheelchair ramp?</summary><p>Often yes, particularly for ramps attached to a house, those above a set height, or those serving a business. Requirements vary widely, so call your local building department before you begin.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="related">
+<li><a href="/ridge-vent-length-calculator/">Ridge Vent Length Calculator</a></li>
+<li><a href="/roof-pitch-rafter-calculator/">Roof Pitch & Rafter Length Calculator</a></li>
+<li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li>
+<li><a href="/cubic-yards-to-tons-calculator/">Cubic Yards to Tons Calculator</a></li>
+<li><a href="/roofing-squares-calculator/">Roofing Squares Calculator</a></li>
+<li><a href="/water-softener-sizing-calculator/">Water Softener Sizing Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/wheelchair-ramp-slope-length-calculator/">Toolwick</a></p>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var E=1e-6,calculated=false,summary='';
+function fmt(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function tr(n){return parseFloat(n.toFixed(2))}
+function ftin(i){i=Math.round(i);var f=Math.floor(i/12);return fmt(f)+' ft '+(i-f*12)+' in'}
+function cmUp(i){return fmt(Math.ceil(i*2.54-E))}
+function Lr(i){return fmt(i)+' in ('+ftin(i)+') / '+cmUp(i)+' cm'}
+function rl(r){return '1:'+fmt(tr(r),2)}
+function status(r,rise){
+ if(r>=12-E)return['ok','✓ Within the 1:12 maximum (ADA 2010 §405.2).'];
+ if(r>=10-E&&rise<=6+E)return['warn','⚠ Steeper than 1:12. Allowed only as an existing-site exception for a rise of 6 in or less (ADA 2010 §405.2). Not for new construction.'];
+ if(r>=8-E&&r<10-E&&rise<=3+E)return['warn','⚠ Steeper than 1:10. Allowed only as an existing-site exception for a rise of 3 in or less (ADA 2010 §405.2). Not for new construction.'];
+ return['bad','✕ Steeper than the allowed limit for this rise. Use 1:12 or gentler, or change the layout.']
+}
+var short={ok:'✓ Meets 1:12',warn:'⚠ Exception only',bad:'✕ Too steep'};
+function diag(ratio,riseTxt,runTxt){
+ var h=Math.max(30,Math.min(120,520/ratio)),cy=+(175-h).toFixed(1),mid=((cy+175)/2).toFixed(1);
+ function s(id,a,v){$(id).setAttribute(a,v)}
+ s('dw','points','30,175 270,175 270,'+cy);
+ s('dl','points','270,'+cy+' 345,'+cy+' 345,175 270,175');
+ s('dr','y2',cy);s('dt','y1',cy);s('dt','y2',cy);
+ s('dg','y1',cy);s('dg','y2',cy);
+ s('da','y1',cy);
+ s('dlt','y',cy-8);
+ s('drt','y',mid);s('drt','transform','rotate(-90 386 '+mid+')');
+ var pct=100/ratio,ang=Math.atan(1/ratio)*180/Math.PI;
+ $('dinfo').textContent='Slope '+rl(ratio)+' · '+fmt(pct,2)+'% · '+fmt(ang,1)+'°';
+ if(riseTxt!==null){$('drt').textContent='Rise '+riseTxt;$('dnt').textContent='Run '+runTxt;
+  $('dsvg').setAttribute('aria-label','Ramp side view: rise '+riseTxt+', run '+runTxt+', slope '+rl(ratio))}
+}
+function clearErr(){
+ ['rise','ratio','avail'].forEach(function(k){$(k).classList.remove('err');$(k).removeAttribute('aria-invalid');$(k+'Err').textContent=''})
+}
+function err(k,m){$(k).classList.add('err');$(k).setAttribute('aria-invalid','true');$(k+'Err').textContent=m}
+function clearResults(){var r=$('results');r.classList.remove('show');r.innerHTML='';summary=''}
+function curRatio(){var v=$('slope').value;return v==='custom'?parseFloat($('ratio').value):parseFloat(v)}
+function calc(){
+ clearErr();
+ var cm=$('unit').value==='cm',k=cm?1/2.54:1,ok=true,u=cm?'cm':'in';
+ var rs=$('rise').value.trim(),rv=parseFloat(rs),rise=rv*k;
+ if(rs===''||!isFinite(rv)){err('rise','Enter the total rise as a number.');ok=false}
+ else if(rv<=0){err('rise','Rise must be greater than zero.');ok=false}
+ else if(rise<0.25){err('rise','That rise is under 0.25 in ('+fmt(0.25*2.54,2)+' cm). A ramp is not needed; check your units.');ok=false}
+ else if(rise>300){err('rise','Rise over 300 in (25 ft) looks like a unit mistake. Check your units, or consult a designer for ramps this tall.');ok=false}
+ var ratio=curRatio();
+ if($('slope').value==='custom'&&(!isFinite(ratio)||$('ratio').value.trim()===''||ratio<4||ratio>40)){err('ratio','Enter a ratio between 4 and 40 (for 1:12, enter 12).');ok=false}
+ var as=$('avail').value.trim(),av=null;
+ if(as!==''){var a=parseFloat(as);if(!isFinite(a)||a<=0){err('avail','Enter available space as a number greater than zero, or leave it blank.');ok=false}else av=a*k}
+ if(!ok){clearResults();return}
+ var run=Math.ceil(rise*ratio-E),surf=Math.ceil(Math.sqrt(rise*rise+Math.pow(rise*ratio,2))-E);
+ var n=Math.max(1,Math.ceil(rise/30-E)),per=rise/n,foot=run+60*n,inter=n-1;
+ var pct=100/ratio,ang=Math.atan(1/ratio)*180/Math.PI;
+ var st=status(ratio,rise),hand=rise>6+E;
+ var riseTxt=fmt(tr(rv),2)+' '+u;
+ var runTxt=cm?cmUp(run)+' cm':fmt(run)+' in ('+ftin(run)+')';
+ var fit='',fitTxt='';
+ if(av!==null){
+  var spare=av-foot;
+  if(spare>=-E){fit='<div class="st ok">✓ Fits your space: needs '+Lr(foot)+', you have '+fmt(Math.floor(av+E))+' in. Spare: '+fmt(Math.floor(spare+E))+' in.</div>';fitTxt='Fit: yes, needs '+fmt(foot)+' in of '+fmt(Math.floor(av+E))+' in available.'}
+  else{
+   var rm=av-60*n,short_=Math.ceil(-spare-E),msg='✕ Does not fit: needs '+Lr(foot)+', you have '+fmt(Math.floor(av+E))+' in (short by '+fmt(short_)+' in). ';
+   if(rm>0){var fr=Math.floor(rm/rise*10+E)/10;msg+='The flattest straight ramp that fits has a ratio of 1:'+fmt(fr,1)+' ('+fmt(100/fr,2)+'%).';
+    if(fr<12)msg+=' That is steeper than 1:12, so consider an L-shaped or switchback layout, a longer route, or a platform lift instead.'}
+   else msg+='After landings there is no room left for any ramp run. Consider a switchback layout or a lift.';
+   fit='<div class="st bad">'+msg+'</div>';fitTxt='Fit: no, short by '+fmt(short_)+' in.'}
+ }
+ var rows=[['Total rise',fmt(tr(rise),2)+' in / '+fmt(rise*2.54,1)+' cm'],
+ ['Slope ratio',rl(ratio)],['Grade',fmt(pct,2)+'%'],['Angle',fmt(ang,2)+'°'],
+ ['Ramp run (horizontal, ramp only)',Lr(run)],['Ramp surface length (stringer / cut length)',Lr(surf)],
+ ['Ramp sections (max 30 in rise each)',fmt(n)],['Rise per section',fmt(per,2)+' in'],
+ ['Intermediate landings (60 in long each)',fmt(inter)],['Top landing (60 × 60 in minimum)','60 in'],
+ ['Total footprint length',Lr(foot)],
+ ['Handrails',hand?'Both sides required (rise over 6 in)':'Not required by ADA at 6 in or less; recommended'],
+ ['Edge protection','Curb or rail on open sides (ADA 405.9)']];
+ var t1='<div class="tw"><table><thead><tr><th>Item</th><th class="n">Result</th></tr></thead><tbody>';
+ rows.forEach(function(r){t1+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>'});
+ t1+='</tbody></table></div>';
+ var t2='<h3>Compare common slopes for this rise</h3><div class="tw"><table class="cmp"><thead><tr><th>Slope</th><th class="n">Grade</th><th class="n">Run (in)</th><th class="n">Footprint (in)</th><th>Status</th></tr></thead><tbody>';
+ [20,16,12,10,8].forEach(function(r){var s=status(r,rise),ru=Math.ceil(rise*r-E);
+  t2+='<tr><td>1:'+r+'</td><td class="n">'+fmt(100/r,2)+'%</td><td class="n">'+fmt(ru)+'</td><td class="n">'+fmt(ru+60*n)+'</td><td>'+short[s[0]]+'</td></tr>'});
+ t2+='</tbody></table></div>';
+ var html='<div class="key"><div class="kl">Ramp run (horizontal length of the sloped part)</div><div class="kn">'+ftin(run)+'</div><div class="ks">'+fmt(run)+' in · '+fmt(Math.ceil(run*2.54-E)/100,2)+' m · total footprint with landings '+ftin(foot)+'</div></div>'
+ +'<div class="st '+st[0]+'">'+st[1]+'</div>'+fit+t1+t2
+ +'<p class="note">Lengths are rounded up to the next whole inch. Based on ADA 2010 Standards §405 and IRC R311.8 rules of thumb; local codes and editions vary. This is a planning estimate, not engineering, permit or inspection approval.</p>'
+ +'<button type="button" class="copy" id="copyBtn">Copy results</button>';
+ summary='Wheelchair ramp: rise '+fmt(tr(rise),2)+' in, slope '+rl(ratio)+' ('+fmt(pct,2)+'%, '+fmt(ang,2)+'°). Run '+fmt(run)+' in ('+ftin(run)+'), surface length '+fmt(surf)+' in, '+n+' section(s), '+inter+' intermediate landing(s), total footprint '+fmt(foot)+' in ('+ftin(foot)+'). '+(fitTxt?fitTxt+' ':'')+'Planning estimate only; check local codes.';
+ var r=$('results');
+ r.classList.remove('show');
+ r.innerHTML=html;
+ diag(ratio,riseTxt,runTxt);
+ calculated=true;
+ requestAnimationFrame(function(){r.classList.add('show')});
+}
+function go(){requestAnimationFrame(calc)}
+$('calcBtn').addEventListener('click',go);
+['rise','ratio','avail'].forEach(function(id){$(id).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();go()}})});
+$('slope').addEventListener('change',function(){
+ var c=$('slope').value==='custom';
+ $('ratioWrap').classList.toggle('hidden',!c);
+ var r=curRatio();
+ if(isFinite(r)&&r>=4&&r<=40)diag(r,null,null);
+ if(calculated)go();
+});
+$('ratio').addEventListener('input',function(){var r=parseFloat($('ratio').value);if(isFinite(r)&&r>=4&&r<=40)diag(r,null,null)});
+$('unit').addEventListener('change',function(){
+ var u=$('unit').value;
+ Array.prototype.forEach.call(document.querySelectorAll('.u'),function(s){s.textContent=u});
+ $('rise').placeholder=u==='cm'?'e.g. 61':'e.g. 24';
+ $('avail').placeholder=u==='cm'?'e.g. 915':'e.g. 360';
+ clearErr();clearResults();calculated=false;
+});
+$('results').addEventListener('click',function(e){
+ if(e.target.id!=='copyBtn')return;
+ var b=e.target;
+ function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(summary).then(done,function(){fb()})}else fb();
+ function fb(){var t=document.createElement('textarea');t.value=summary;t.setAttribute('aria-hidden','true');document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(t)}
+});
+$('yr').textContent=new Date().getFullYear();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
