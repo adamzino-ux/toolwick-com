@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Drip Edge &amp; Roof Trim Calculator | Toolwick</title>
+<meta name="description" content="Free drip edge calculator: enter roof size, pitch, overhang and waste to get linear feet, pieces of drip edge, nails and cost for eaves and rakes.">
+<link rel="canonical" href="https://toolwick.com/drip-edge-roof-trim-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Drip Edge & Roof Trim Calculator", "url": "https://toolwick.com/drip-edge-roof-trim-calculator/", "description": "Free drip edge calculator: enter roof size, pitch, overhang and waste to get linear feet, pieces of drip edge, nails and cost for eaves and rakes.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Drip Edge & Roof Trim Calculator", "item": "https://toolwick.com/drip-edge-roof-trim-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much drip edge do I need for my roof?", "acceptedAnswer": {"@type": "Answer", "text": "Add the length of all eaves and all rake edges, then divide by the usable piece length and round up. A simple 40 × 28 ft gable roof with 12 inch overhangs needs about 151 linear feet, or 18 ten-foot pieces with 10% waste."}}, {"@type": "Question", "name": "Is drip edge required by building code?", "acceptedAnswer": {"@type": "Answer", "text": "The IRC has required drip edge at the eaves and rakes of shingle roofs since the 2012 edition (R905.2.8.5), but local adoption differs. Check with your building department, and note that many shingle warranties also call for it."}}, {"@type": "Question", "name": "Does drip edge go over or under the underlayment?", "acceptedAnswer": {"@type": "Answer", "text": "Common practice is to put drip edge directly on the deck at eaves, with underlayment over it, and over the underlayment at rakes. Water then flows over the metal at the eave and cannot get beneath it at the rake. Follow your manufacturer's installation instructions."}}, {"@type": "Question", "name": "Do I need drip edge on a hip roof?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, along all four eaves. A hip roof has no rake edges, so the calculator returns zero rake length for it. Hips and ridges are covered by cap shingles or ridge vent, not drip edge."}}, {"@type": "Question", "name": "How much should drip edge pieces overlap?", "acceptedAnswer": {"@type": "Answer", "text": "Overlap adjoining pieces by at least 2 inches. The calculator deducts a 2 inch lap from every piece, so a 10 ft piece covers 9.83 ft of roof edge."}}, {"@type": "Question", "name": "Should I round up or down when ordering?", "acceptedAnswer": {"@type": "Answer", "text": "Always round up. A short piece is hard to fix on installation day, while a spare piece is cheap and handy for repairs."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:1rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.dg-box{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+.dg{width:100%;height:auto;display:block}
+.dg text{font-size:13px;fill:#1a1a2e}
+.cap{font-size:.85rem;color:#666;margin:.5rem 0 0;text-align:center}
+.f{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font:inherit;font-size:1rem;min-height:44px;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,input[type=range]:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;min-height:0;margin-top:.3rem}
+.hint{font-size:.85rem;color:#666;margin-top:.3rem}
+input[type=range]{padding:0;border:0;height:44px;accent-color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+@media(min-width:640px){.row{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-weight:600;min-height:44px;width:100%;cursor:pointer}
+button:hover{background:#006299}
+button.cp{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;padding:8px 16px;font-size:.9rem;font-weight:500;margin-top:1rem}
+button.cp:hover{background:#eef6fb}
+#results{margin-top:1.5rem}
+.res-inner{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.big small{font-size:1.1rem;font-weight:600;color:#1a1a2e}
+.sub{color:#444;margin:.4rem 0 1.25rem}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e5e5e5}
+tr:nth-child(odd) td{background:#fafafa}tr:nth-child(even) td{background:#fff}
+th.n,td.n{text-align:right}
+tr.tot td{font-weight:700}
+h3{font-size:1rem;margin:1.25rem 0 .5rem}
+.note{background:#f8f9fa;border-left:4px solid #0077b6;padding:.85rem 1rem;font-size:.88rem;color:#444;border-radius:0 6px 6px 0}
+.content{margin-top:2.5rem}
+.content ul{padding-left:1.2rem}.content li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;margin:0 0 1rem;overflow-x:auto}
+details{border-bottom:1px solid #e0e0e0;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.5rem 0 0}
+.rel{list-style:none;padding:0}.rel li{margin:0}.rel a{display:block;padding:10px 0;min-height:44px;border-bottom:1px solid #eee}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.5rem}.big{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/drip-edge-roof-trim-calculator/">
+<meta property="og:title" content="Drip Edge &amp; Roof Trim Calculator">
+<meta property="og:description" content="Free drip edge calculator: enter roof size, pitch, overhang and waste to get linear feet, pieces of drip edge, nails and cost for eaves and rakes.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Drip Edge & Roof Trim Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This free drip edge calculator works out how many pieces of drip edge your roof needs for its eaves and rakes, using roof size, pitch, overhang, lap length and a waste allowance. It also estimates nails and material cost.</p>
+
+<section class="card" aria-labelledby="tt">
+<h2 id="tt" style="margin-top:0">Calculate Your Drip Edge</h2>
+<div class="dg-box">
+<svg class="dg" viewBox="0 0 400 230" role="img" id="svg" aria-label="Roof diagram showing span, rise, overhang and drip edge locations">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0077b6"/></marker></defs>
+<g id="dg"></g>
+</svg>
+<p class="cap" id="dcap"></p>
+</div>
+
+<div class="f"><label for="type">Roof style</label>
+<select id="type"><option value="gable">Gable (2 slopes, 2 eaves, 4 rake edges)</option><option value="hip">Hip (4 eaves, no rakes)</option><option value="shed">Shed / single slope (low eave + 2 rakes)</option></select></div>
+
+<div class="row">
+<div class="f"><label for="len">Building length (ft)</label><input id="len" type="number" inputmode="decimal" min="0" step="any" value="40" aria-describedby="e-len"><div class="err" id="e-len"></div><div class="hint">Wall length parallel to the ridge</div></div>
+<div class="f"><label for="wid">Building width / span (ft)</label><input id="wid" type="number" inputmode="decimal" min="0" step="any" value="28" aria-describedby="e-wid"><div class="err" id="e-wid"></div><div class="hint">Eave wall to eave wall</div></div>
+</div>
+<div class="row">
+<div class="f"><label for="pitch">Roof pitch (rise per 12 in run)</label><input id="pitch" type="number" inputmode="decimal" min="0" step="any" value="6" aria-describedby="e-pitch"><div class="err" id="e-pitch"></div><div class="hint">6 means a 6/12 pitch</div></div>
+<div class="f"><label for="piece">Drip edge piece length</label><select id="piece"><option value="8">8 ft</option><option value="10" selected>10 ft (standard)</option><option value="12">12 ft</option></select><div class="hint">2 in lap per joint is deducted</div></div>
+</div>
+<div class="row">
+<div class="f"><label for="eoh">Eave overhang (in)</label><input id="eoh" type="number" inputmode="decimal" min="0" step="any" value="12" aria-describedby="e-eoh"><div class="err" id="e-eoh"></div></div>
+<div class="f"><label for="roh">Rake overhang (in)</label><input id="roh" type="number" inputmode="decimal" min="0" step="any" value="12" aria-describedby="e-roh"><div class="err" id="e-roh"></div></div>
+</div>
+<div class="row">
+<div class="f"><label for="xe">Extra eave length, dormers/porches (ft)</label><input id="xe" type="number" inputmode="decimal" min="0" step="any" placeholder="0" aria-describedby="e-xe"><div class="err" id="e-xe"></div></div>
+<div class="f"><label for="xr">Extra rake length, dormers/porches (ft)</label><input id="xr" type="number" inputmode="decimal" min="0" step="any" placeholder="0" aria-describedby="e-xr"><div class="err" id="e-xr"></div></div>
+</div>
+<div class="f"><label for="waste">Waste allowance: <output id="wout" for="waste">10%</output></label>
+<input id="waste" type="range" min="0" max="25" step="1" value="10"><div class="ticks"><span>0%</span><span>25%</span></div></div>
+<div class="row">
+<div class="f"><label for="nail">Nail spacing</label><select id="nail"><option value="12">12 in (code maximum)</option><option value="10" selected>10 in (recommended)</option><option value="8">8 in (high wind areas)</option></select></div>
+<div class="f"><label for="price">Price per piece, optional ($)</label><input id="price" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 9.50" aria-describedby="e-price"><div class="err" id="e-price"></div></div>
+</div>
+<button id="go" type="button">Calculate Drip Edge</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</section>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/drip-edge-roof-trim-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Drip Edge &amp;amp; Roof Trim Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/drip-edge-roof-trim-calculator/&quot;&gt;Drip Edge &amp;amp; Roof Trim Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/drip-edge-roof-trim-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<section class="content">
+<h2>How to Use This Drip Edge & Roof Trim Calculator</h2>
+<p>Choose your roof style, then enter the building length (the wall parallel to the ridge), the width between eave walls, the pitch as rise per 12 inches of run, and your eave and rake overhangs. Add any dormer or porch edges in the extra fields, pick a piece length and a waste allowance, and press Calculate. You get linear feet for eaves and rakes, the number of pieces to buy, nails, an optional cost, and a table comparing different waste levels.</p>
+
+<h2>Why This Matters</h2>
+<p>Drip edge is the thin, L-shaped metal flashing that sits along the eaves and rakes of a shingle roof. It pushes water away from the fascia and rake board, keeps shingles from curling over the edge, and blocks wind-driven rain and insects from getting under the sheathing. It is cheap compared with the rest of a re-roof, but running short on installation day costs a trip to the supply house and sometimes a mismatched profile or color.</p>
+<p>Typical users are homeowners ordering materials for a tear-off, roofers writing quotes, and builders ordering for new construction. A 40 × 28 ft gable house with 12 inch overhangs and a 6/12 pitch has about 151 linear feet of edge. That is 16 pieces before waste and 18 after, or roughly $171 at $9.50 a piece. Add a dormer and a garage and the total can climb past 25 pieces. Rakes are longer than most people expect because they follow the slope, not the horizontal run. Measuring the ground footprint alone undercounts them by 10 to 40 percent on steep roofs.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator converts your pitch to a slope factor, finds the sloped length of one rake edge, then adds up eave and rake runs for the chosen roof style.</p>
+<div class="formula">Slope factor = √(1 + (pitch ÷ 12)²)<br>Slope length = (run + eave overhang) × slope factor<br>Gable: eaves = 2 × (L + 2 × rake overhang); rakes = 4 × slope length<br>Hip: eaves = 2 × (L + 2 × o) + 2 × (W + 2 × o); rakes = 0<br>Shed: eaves = L + 2 × rake overhang; rakes = 2 × slope length<br>Pieces = ROUNDUP(length × (1 + waste) ÷ (piece length − 2 in lap))<br>Nails = ROUNDUP(length × 12 ÷ spacing) + 2 per piece</div>
+<p>Run is half the width for gable and hip roofs and the full width for a shed roof. Eaves and rakes are rounded up separately, because they are often different profiles and offcuts cannot always be reused. Every result is rounded up, never down. The defaults follow the IRC R905.2.8.5 rule of thumb: drip edge at eaves and rakes of shingle roofs, at least 2 inch laps, and fasteners no more than 12 inches on center. We default to 10 inches, which is tighter than the code maximum. Codes vary by jurisdiction and edition, and this tool is a material estimate. It is not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>Gable roof, 40 ft long, 28 ft wide, 6/12 pitch, 12 inch overhangs on eaves and rakes, 10 ft pieces, 10% waste, nails at 10 inches.</p>
+<ul>
+<li>Slope factor = √(1 + 0.5²) = 1.1180</li>
+<li>Run = 28 ÷ 2 + 1 = 15 ft, so slope length = 15 × 1.1180 = 16.77 ft</li>
+<li>Eaves = 2 × (40 + 2) = 84.0 ft; rakes = 4 × 16.77 = 67.1 ft; total = 151.1 ft</li>
+<li>Usable piece length = 10 − 2/12 = 9.833 ft</li>
+<li>Eaves with waste: 84.0 × 1.10 = 92.4 ft ÷ 9.833 = 9.40, so 10 pieces</li>
+<li>Rakes with waste: 67.08 × 1.10 = 73.8 ft ÷ 9.833 = 7.50, so 8 pieces</li>
+<li>Total = 18 pieces. Nails = 182 + 2 × 18 = 218, so buy about 250.</li>
+<li>At $9.50 per piece the cost is 18 × $9.50 = $171.00.</li>
+</ul>
+
+<h2>Tips & Common Mistakes</h2>
+<ul>
+<li><strong>Measure rakes along the slope.</strong> Using the horizontal run underestimates rake length. A 12/12 roof has rakes 41% longer than its run.</li>
+<li><strong>Count every edge.</strong> Dormers, porch roofs, bump-outs and garage wings each add eave and rake length. Use the extra fields for them.</li>
+<li><strong>Match the underlayment order.</strong> A common practice is drip edge under the underlayment at eaves and over it at rakes. Check your shingle maker's instructions and local code.</li>
+<li><strong>Match the metals.</strong> Use galvanized or aluminum nails with aluminum or galvanized drip edge to avoid corrosion at the fasteners.</li>
+<li><strong>Don't cut waste too thin.</strong> Hips, valleys and awkward corners need mitered cuts. Ten percent is a sound default and 15% suits cut-up roofs.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much drip edge do I need for my roof?</summary><p>Add the length of all eaves and all rake edges, then divide by the usable piece length and round up. A simple 40 × 28 ft gable roof with 12 inch overhangs needs about 151 linear feet, or 18 ten-foot pieces with 10% waste.</p></details>
+<details><summary>Is drip edge required by building code?</summary><p>The IRC has required drip edge at the eaves and rakes of shingle roofs since the 2012 edition (R905.2.8.5), but local adoption differs. Check with your building department, and note that many shingle warranties also call for it.</p></details>
+<details><summary>Does drip edge go over or under the underlayment?</summary><p>Common practice is to put drip edge directly on the deck at eaves, with underlayment over it, and over the underlayment at rakes. Water then flows over the metal at the eave and cannot get beneath it at the rake. Follow your manufacturer's installation instructions.</p></details>
+<details><summary>Do I need drip edge on a hip roof?</summary><p>Yes, along all four eaves. A hip roof has no rake edges, so the calculator returns zero rake length for it. Hips and ridges are covered by cap shingles or ridge vent, not drip edge.</p></details>
+<details><summary>How much should drip edge pieces overlap?</summary><p>Overlap adjoining pieces by at least 2 inches. The calculator deducts a 2 inch lap from every piece, so a 10 ft piece covers 9.83 ft of roof edge.</p></details>
+<details><summary>Should I round up or down when ordering?</summary><p>Always round up. A short piece is hard to fix on installation day, while a spare piece is cheap and handy for repairs.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/roof-attic-ventilation-calculator/">Roof Attic Ventilation Calculator</a></li>
+<li><a href="/roof-pitch-rafter-calculator/">Roof Pitch & Rafter Length Calculator</a></li>
+<li><a href="/wheelchair-ramp-slope-length-calculator/">Wheelchair Ramp Slope & Length Calculator</a></li>
+<li><a href="/ridge-vent-length-calculator/">Ridge Vent Length Calculator</a></li>
+<li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li>
+<li><a href="/cubic-yards-to-tons-calculator/">Cubic Yards to Tons Calculator</a></li>
+</ul>
+</section>
+<nav class="cluster-nav" aria-label="More Roofing &amp; Exterior Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Roofing &amp; Exterior Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/roof-attic-ventilation-calculator/">Roof Attic Ventilation Calculator</a></li><li><a href="/roof-pitch-rafter-calculator/">Roof Pitch &amp; Rafter Length Calculator</a></li><li><a href="/asphalt-shingle-calculator/">Asphalt Shingle Calculator</a></li><li><a href="/deck-material-cost-estimator/">Deck Material &amp; Cost Estimator</a></li><li><a href="/deck-railing-baluster-spacing-calculator/">Deck Railing &amp; Baluster Spacing Calculator</a></li><li><a href="/egress-window-size-well-calculator/">Egress Window Size &amp; Well Calculator</a></li><li><a href="/fence-material-calculator/">Fence Material Calculator</a></li><li><a href="/soffit-fascia-material-calculator/">Soffit &amp; Fascia Material Calculator</a></li><li><a href="/roofing-calculators/"><strong>All Roofing &amp; Exterior calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+</main>
+<footer><div class="wrap"><a href="/about/">About</a><a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a><div>© 2025 toolwick.com</div></div></footer>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var quiet=false,last='';
+function nf(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function f1(n){return nf(n,1)}function ct(n){return nf(n,0)}function cur(n){return '$'+nf(n,2)}
+function setErr(id,m){if(quiet)return;var i=$(id),e=$('e-'+id);if(m){i.classList.add('bad');i.setAttribute('aria-invalid','true');e.textContent=m}else{i.classList.remove('bad');i.removeAttribute('aria-invalid');e.textContent=''}}
+function read(q){
+ quiet=!!q;var ok=true,v={};
+ function chk(id,min,max,msg,opt,ex){
+  var raw=$(id).value.trim();
+  if(raw===''){if(opt){v[id]=opt==='z'?0:null;setErr(id,'');return}setErr(id,'Enter a number.');ok=false;return}
+  var n=Number(raw);
+  if(!isFinite(n)||n<min||(ex&&n<=min)||n>max){setErr(id,msg);ok=false;return}
+  setErr(id,'');v[id]=n;
+ }
+ chk('len',0,500,'Enter a length greater than 0 and up to 500 ft.',0,true);
+ chk('wid',0,200,'Enter a width greater than 0 and up to 200 ft.',0,true);
+ chk('pitch',0,24,'Enter a pitch from 0 to 24 (rise per 12 in run).');
+ chk('eoh',0,48,'Enter an overhang from 0 to 48 inches.');
+ chk('roh',0,48,'Enter an overhang from 0 to 48 inches.');
+ chk('xe',0,5000,'Enter 0 or a positive length up to 5,000 ft.','z');
+ chk('xr',0,5000,'Enter 0 or a positive length up to 5,000 ft.','z');
+ chk('price',0,1000,'Enter 0 or a positive price up to $1,000.','n');
+ quiet=false;
+ if(!ok)return null;
+ v.type=$('type').value;v.piece=+$('piece').value;v.w=+$('waste').value/100;v.sp=+$('nail').value;
+ return v;
+}
+function geo(v){
+ var sf=Math.sqrt(1+Math.pow(v.pitch/12,2)),eo=v.eoh/12,ro=v.roh/12,run,rise,e,r;
+ if(v.type==='gable'){run=v.wid/2+eo;rise=v.wid/2*v.pitch/12;e=2*(v.len+2*ro);r=4*run*sf}
+ else if(v.type==='shed'){run=v.wid+eo;rise=v.wid*v.pitch/12;e=v.len+2*ro;r=2*run*sf}
+ else{run=v.wid/2+eo;rise=v.wid/2*v.pitch/12;e=2*(v.len+2*eo)+2*(v.wid+2*eo);r=0}
+ return{sf:sf,run:run,slope:run*sf,rise:rise,eaves:e+v.xe,rakes:r+v.xr};
+}
+function pcs(len,w,piece){return len>0?Math.ceil(len*(1+w)/(piece-2/12)-1e-9):0}
+function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
+function draw(v){
+ var g=geo(v),t=v.type,p=v.pitch,wL=110,wR=290,wT=150,base=186,s='';
+ var ov=v.eoh===0?0:clamp(v.eoh/12/v.wid*180,6,34),cap;
+ s+='<line x1="50" y1="'+base+'" x2="350" y2="'+base+'" stroke="#e0e0e0" stroke-width="2"/>';
+ var rv,ry,rl='',rx=200;
+ if(t==='gable'){
+  rv=clamp(90*p/12,6,80);var sl=rv/90,ly=wT+ov*sl;ry=wT-rv;
+  s+='<polygon points="'+wL+','+base+' '+wL+','+wT+' 200,'+ry+' '+wR+','+wT+' '+wR+','+base+'" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="1.5"/>';
+  s+='<polyline points="'+(wL-ov)+','+ly+' 200,'+ry+' '+(wR+ov)+','+ly+'" fill="none" stroke="#0077b6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>';
+  cap='Gable end view: blue rake edges get drip edge. Eave drip edge runs along the building length (into the page).';
+  rl='Slope length: '+f1(g.slope)+' ft';
+ }else if(t==='hip'){
+  rv=clamp(90*p/12,6,70);var ey=wT+ov*.3;ry=wT-rv;
+  s+='<rect x="'+wL+'" y="'+wT+'" width="180" height="'+(base-wT)+'" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="1.5"/>';
+  s+='<polygon points="'+(wL-ov)+','+ey+' 150,'+ry+' 250,'+ry+' '+(wR+ov)+','+ey+'" fill="#eaf4fb" stroke="#1a1a2e" stroke-width="1.5"/>';
+  s+='<line x1="'+(wL-ov)+'" y1="'+ey+'" x2="'+(wR+ov)+'" y2="'+ey+'" stroke="#0077b6" stroke-width="5" stroke-linecap="round"/>';
+  cap='Hip roof front view: blue eave drip edge wraps all four sides. There are no rake edges.';
+  rl='Hip slope length: '+f1(g.slope)+' ft';
+ }else{
+  rv=clamp(180*p/12,6,80);var sh=rv/180,ly2=wT+ov*sh;ry=wT-rv;rx=wR-0;
+  s+='<polygon points="'+wL+','+base+' '+wL+','+wT+' '+wR+','+ry+' '+wR+','+base+'" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="1.5"/>';
+  s+='<line x1="'+(wL-ov)+'" y1="'+ly2+'" x2="'+wR+'" y2="'+ry+'" stroke="#0077b6" stroke-width="4" stroke-linecap="round"/>';
+  cap='Shed roof end view: blue rake edges get drip edge, plus the low eave along the building length.';
+  rl='Slope length: '+f1(g.slope)+' ft';
+ }
+ var lx=t==='shed'?wR+8:206,ly3=t==='shed'?wT-rv/2+4:(rv>=24?wT-rv/2+4:wT+16);
+ s+='<line x1="'+rx+'" y1="'+ry+'" x2="'+rx+'" y2="'+wT+'" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4 3"/>';
+ s+='<text x="'+lx+'" y="'+ly3+'">Rise '+f1(g.rise)+' ft</text>';
+ s+='<line x1="'+wL+'" y1="'+base+'" x2="'+wL+'" y2="210" stroke="#e0e0e0"/><line x1="'+wR+'" y1="'+base+'" x2="'+wR+'" y2="210" stroke="#e0e0e0"/>';
+ s+='<line x1="'+wL+'" y1="204" x2="'+wR+'" y2="204" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+ s+='<text x="200" y="224" text-anchor="middle">Span '+f1(v.wid)+' ft</text>';
+ s+='<text x="8" y="18">'+rl+'</text><text x="8" y="36">Eave overhang: '+f1(v.eoh)+' in</text>';
+ s+='<text x="392" y="18" text-anchor="end">Pitch '+nf(p,p%1?1:0)+'/12</text>';
+ $('dg').innerHTML=s;$('dcap').textContent=cap;
+ $('svg').setAttribute('aria-label','Roof diagram: span '+f1(v.wid)+' ft, rise '+f1(g.rise)+' ft, pitch '+p+' in 12, eave overhang '+f1(v.eoh)+' in. '+cap);
+}
+function calc(){
+ var v=read();
+ if(!v){$('results').innerHTML='';return}
+ var g=geo(v),w=v.w,tot=g.eaves+g.rakes;
+ var pe=pcs(g.eaves,w,v.piece),pr=pcs(g.rakes,w,v.piece),tp=pe+pr;
+ var nails=Math.ceil(tot*12/v.sp-1e-9)+2*tp,buy=Math.ceil(nails/50)*50;
+ var hasP=v.price!==null&&v.price>0,cost=hasP?tp*v.price:0;
+ var h='<div class="res-inner"><div class="big">'+ct(tp)+' <small>pieces</small></div>';
+ h+='<p class="sub">of '+v.piece+' ft drip edge to cover '+f1(tot)+' linear ft of roof edge ('+f1(g.eaves*(1+w)+g.rakes*(1+w))+' ft with '+Math.round(w*100)+'% waste)'+(hasP?' · est. '+cur(cost):'')+'</p>';
+ h+='<h3>Breakdown</h3><div class="tw"><table><thead><tr><th>Section</th><th class="n">Length (ft)</th><th class="n">With waste (ft)</th><th class="n">Pieces</th></tr></thead><tbody>';
+ h+='<tr><td>Eaves</td><td class="n">'+f1(g.eaves)+'</td><td class="n">'+f1(g.eaves*(1+w))+'</td><td class="n">'+ct(pe)+'</td></tr>';
+ h+='<tr><td>Rakes</td><td class="n">'+f1(g.rakes)+'</td><td class="n">'+f1(g.rakes*(1+w))+'</td><td class="n">'+ct(pr)+'</td></tr>';
+ h+='<tr class="tot"><td>Total</td><td class="n">'+f1(tot)+'</td><td class="n">'+f1(tot*(1+w))+'</td><td class="n">'+ct(tp)+'</td></tr></tbody></table></div>';
+ h+='<h3>Roof geometry & fasteners</h3><div class="tw"><table><tbody>';
+ h+='<tr><td>Slope factor</td><td class="n">'+nf(g.sf,4)+'</td></tr>';
+ h+='<tr><td>Sloped rake length (one side)</td><td class="n">'+f1(g.slope)+' ft</td></tr>';
+ h+='<tr><td>Roof rise</td><td class="n">'+f1(g.rise)+' ft</td></tr>';
+ h+='<tr><td>Usable length per piece (2 in lap)</td><td class="n">'+nf(v.piece-2/12,2)+' ft</td></tr>';
+ h+='<tr><td>Nails at '+v.sp+' in spacing + 2 per piece</td><td class="n">'+ct(nails)+'</td></tr>';
+ h+='<tr><td>Nails to buy (rounded up to 50)</td><td class="n">'+ct(buy)+'</td></tr>';
+ if(hasP)h+='<tr><td>Estimated material cost</td><td class="n">'+cur(cost)+'</td></tr>';
+ h+='</tbody></table></div>';
+ h+='<h3>Waste comparison</h3><div class="tw"><table><thead><tr><th>Waste</th><th class="n">Total (ft)</th><th class="n">Pieces</th>'+(hasP?'<th class="n">Cost</th>':'')+'</tr></thead><tbody>';
+ var sc=[0,5,10,15,20],cp=Math.round(w*100);
+ if(sc.indexOf(cp)<0){sc.push(cp);sc.sort(function(a,b){return a-b})}
+ sc.forEach(function(x){var ww=x/100,n=pcs(g.eaves,ww,v.piece)+pcs(g.rakes,ww,v.piece);
+  h+='<tr'+(x===cp?' class="tot"':'')+'><td>'+x+'%'+(x===cp?' (selected)':'')+'</td><td class="n">'+f1(tot*(1+ww))+'</td><td class="n">'+ct(n)+'</td>'+(hasP?'<td class="n">'+cur(n*v.price)+'</td>':'')+'</tr>'});
+ h+='</tbody></table></div>';
+ h+='<p class="note">Planning estimate only. Based on the IRC R905.2.8.5 rule of thumb (drip edge at eaves and rakes, 2 in laps, fasteners at most 12 in on center), with all quantities rounded up. Local codes and editions vary; confirm with your building department and shingle manufacturer. This is not permit or inspection approval.</p>';
+ h+='<button type="button" class="cp" id="cpy">Copy results</button></div>';
+ last='Drip edge estimate ('+v.type+' roof)\nEaves: '+f1(g.eaves)+' ft ('+pe+' pcs)\nRakes: '+f1(g.rakes)+' ft ('+pr+' pcs)\nTotal: '+f1(tot)+' ft, '+Math.round(w*100)+'% waste\nPieces to buy: '+tp+' x '+v.piece+' ft\nNails: about '+buy+(hasP?'\nEstimated cost: '+cur(cost):'')+'\nCalculated at toolwick.com';
+ $('results').innerHTML=h;
+ draw(v);
+}
+function copy(){
+ var b=$('cpy');
+ function ok(){b.textContent='Copied!';setTimeout(function(){var c=$('cpy');if(c)c.textContent='Copy results'},2000)}
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(last).then(ok,fb)}else fb();
+ function fb(){var t=document.createElement('textarea');t.value=last;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(t)}
+}
+$('go').addEventListener('click',function(){requestAnimationFrame(calc)});
+$('results').addEventListener('click',function(e){if(e.target&&e.target.id==='cpy')copy()});
+document.querySelectorAll('input,select').forEach(function(el){
+ el.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();requestAnimationFrame(calc)}});
+});
+$('waste').addEventListener('input',function(){$('wout').textContent=this.value+'%'});
+$('type').addEventListener('change',function(){requestAnimationFrame(function(){var v=read(true);if(v)draw(v)})});
+var v0=read(true);if(v0)draw(v0);
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
