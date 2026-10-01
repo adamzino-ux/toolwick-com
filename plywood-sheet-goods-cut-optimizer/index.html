@@ -4,740 +4,609 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Plywood &amp; Sheet Goods Cut Optimizer — Free Calculator | Toolwick</title>
-<meta name="description" content="Optimize your plywood cuts to minimize waste. Enter sheet size and required pieces to get the most efficient cutting layout. Free plywood cut calculator…">
+<meta name="description" content="Free plywood cut calculator sheet optimizer: enter your cut list and sheet size to get sheets needed, waste percentage and a kerf-aware cutting layout.">
 <link rel="canonical" href="https://toolwick.com/plywood-sheet-goods-cut-optimizer/">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Plywood & Sheet Goods Cut Optimizer", "url": "https://toolwick.com/plywood-sheet-goods-cut-optimizer/", "description": "Optimize your plywood cuts to minimize waste. Enter sheet size and required pieces to get the most efficient cutting layout. Free plywood cut calculator…", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Plywood & Sheet Goods Cut Optimizer", "item": "https://toolwick.com/plywood-sheet-goods-cut-optimizer/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is saw kerf and why does it matter?", "acceptedAnswer": {"@type": "Answer", "text": "Kerf is the width of material removed by the saw blade during a cut. A standard 7¼\" circular saw blade removes about ⅛\" (0.125\") of wood per cut. If you're making 8 cuts across a sheet, that's 1\" of material lost to kerf alone — which can make pieces come out shorter than planned."}}, {"@type": "Question", "name": "Can I use this for materials other than plywood?", "acceptedAnswer": {"@type": "Answer", "text": "Absolutely. The tool works for any rectangular sheet material: MDF, melamine, OSB, cement board, drywall, acrylic, aluminum sheet, foam insulation, and more. Just enter the sheet dimensions and your required piece sizes."}}, {"@type": "Question", "name": "Why does the optimizer sometimes use more sheets than I expect?", "acceptedAnswer": {"@type": "Answer", "text": "The guillotine algorithm is efficient but not always perfect — it's NP-hard to find the absolute optimal solution for complex layouts. For most practical cut lists (under 15–20 pieces), it performs very well. If you have many small pieces, try grouping them by similar size for better results."}}, {"@type": "Question", "name": "Does piece rotation matter for grain direction?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — the optimizer may rotate pieces to fit more efficiently. For painted MDF or OSB this doesn't matter, but for hardwood plywood where grain direction affects appearance or strength, verify that rotated pieces are acceptable for your application before cutting."}}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Plywood & Sheet Goods Cut Optimizer", "url": "https://toolwick.com/plywood-sheet-goods-cut-optimizer/", "description": "Free plywood cut calculator sheet optimizer: enter your cut list and sheet size to get sheets needed, waste percentage and a kerf-aware cutting layout.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Plywood & Sheet Goods Cut Optimizer", "item": "https://toolwick.com/plywood-sheet-goods-cut-optimizer/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is saw kerf and why does it matter?", "acceptedAnswer": {"@type": "Answer", "text": "Kerf is the width of material the blade turns into sawdust, about ⅛\" (0.125\") per cut for a typical circular saw blade. It is why two 24\" pieces will not quite fit across a 48\" sheet: 24\" + ⅛\" + 24\" is 48⅛\". Over ten cuts the lost material adds up to 1¼\"."}}, {"@type": "Question", "name": "Can I use this for MDF, OSB, drywall or acrylic?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Any rectangular sheet material works, including MDF, melamine, OSB, cement board, drywall, acrylic and foam board. Enter the sheet size and your parts, and choose the matching units."}}, {"@type": "Question", "name": "Why did the optimizer use more sheets than I expected?", "acceptedAnswer": {"@type": "Answer", "text": "Area alone is not enough, because kerf and part shapes leave unusable strips. Finding the perfect layout is a hard problem, so the tool uses a fast heuristic that is usually very close. Try changing quantities or allowing rotation to see if a sheet can be saved."}}, {"@type": "Question", "name": "How much extra plywood should I buy?", "acceptedAnswer": {"@type": "Answer", "text": "A 10% spare allowance is a common rule of thumb, and it is the default here. Use 15% or more for figured veneer or complex parts. The tool always rounds up."}}, {"@type": "Question", "name": "Does rotation affect grain direction?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. With rotation on, a part may be turned 90° to fit better, which changes grain direction. The layout marks rotated parts with ↻, and you can turn rotation off entirely."}}, {"@type": "Question", "name": "Can I use this layout for structural sheathing?", "acceptedAnswer": {"@type": "Answer", "text": "It only plans material quantity and cuts. Structural panels must meet their span rating, edge-support and fastening requirements in your local adopted code, and local codes vary. Confirm with your building department or a licensed professional."}}]}]}</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f4f8;color:#1a1a2e;line-height:1.6;font-size:16px}
-a{color:#0077b6;text-decoration:none}
-a:hover{text-decoration:underline}
-nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0 1.5rem}
-.nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;height:48px}
-.nav-brand{font-weight:700;font-size:1.1rem;color:#1a1a2e}
-.nav-brand span{color:#0077b6}
-main{max-width:640px;margin:0 auto;padding:1.5rem 1rem 2rem}
-h1{font-size:1.5rem;font-weight:700;color:#1a1a2e;margin-bottom:.4rem}
-.subtitle{color:#555;font-size:.95rem;margin-bottom:1.5rem}
-.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:1.75rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:1.5rem}
-.section-title{font-size:1.05rem;font-weight:700;color:#1a1a2e;margin-bottom:1rem;padding-bottom:.4rem;border-bottom:2px solid #0077b6;display:inline-block}
-label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.3rem;margin-top:.9rem}
-label:first-of-type{margin-top:0}
-input,select{width:100%;border:1px solid #ddd;border-radius:5px;padding:12px 16px;font-size:.95rem;color:#1a1a2e;background:#fff;transition:border-color .2s,box-shadow .2s;min-height:44px}
-input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,.15)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;line-height:1.6;font-size:16px}
+a{color:#0077b6;text-decoration:underline}
+nav{border-bottom:3px solid #0077b6;padding:0 1.5rem}
+.nav-in{max-width:640px;margin:0 auto;height:52px;display:flex;align-items:center}
+.brand{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;min-height:44px;display:flex;align-items:center}
+main{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.7rem;line-height:1.25;margin-bottom:.75rem}
+.lead{color:#444;margin-bottom:2rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
+.section-title{font-size:1.05rem;font-weight:700;margin-bottom:1rem;display:block}
+.sub{font-size:.95rem;font-weight:700;margin:1.5rem 0 .5rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.3rem}
+input,select{width:100%;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font-size:1rem;color:#1a1a2e;background:#fff;min-height:44px;font-family:inherit}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px;border-color:#0077b6}
+button:focus-visible,summary:focus-visible,a:focus-visible,.table-wrap:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
 input.error,select.error{border-color:#e74c3c}
-.error-msg{color:#e74c3c;font-size:.8rem;margin-top:.25rem;display:none}
-.error-msg.show{display:block}
-.row-2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-.btn{background:#0077b6;color:#fff;border:none;border-radius:6px;padding:13px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:48px;transition:background .2s;margin-top:1.1rem}
+.err{display:none;color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.err.show{display:block}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.row+.row,.chk{margin-top:1rem}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.chk{display:flex;align-items:center;gap:.6rem;min-height:44px}
+.chk input{width:22px;height:22px;min-height:0;flex:none;padding:0}
+.chk label{margin:0;font-size:.95rem;color:#1a1a2e}
+.btn{display:block;width:100%;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:48px;cursor:pointer;margin-top:1.5rem;font-family:inherit}
 .btn:hover{background:#006299}
-.btn-secondary{background:#f8f9fa;color:#1a1a2e;border:1px solid #ddd;margin-top:.6rem;font-weight:500}
-.btn-secondary:hover{background:#e9ecef}
-.btn-small{background:#f0f4f8;color:#0077b6;border:1px solid #cce5f5;border-radius:5px;padding:5px 12px;font-size:.8rem;font-weight:600;cursor:pointer;min-height:32px;transition:background .2s}
-.btn-small:hover{background:#cce5f5}
-.results-section{opacity:0;transition:opacity .3s ease;pointer-events:none}
-.results-section.visible{opacity:1;pointer-events:all}
-.big-number{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1}
-.big-label{font-size:.85rem;color:#666;margin-top:.2rem}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.2rem}
-.stat-box{background:#f8f9fa;border:1px solid #e8edf2;border-radius:6px;padding:.9rem .75rem;text-align:center}
-.stat-val{font-size:1.4rem;font-weight:700;color:#0077b6}
-.stat-lbl{font-size:.75rem;color:#666;margin-top:.1rem}
-.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:420px}
-thead th{background:#f0f0f0;padding:9px 10px;text-align:left;font-weight:600;font-size:.82rem;color:#444;border-bottom:2px solid #ddd;white-space:nowrap}
-thead th.num{text-align:right}
+.btn-2{background:#f8f9fa;color:#1a1a2e;border:1px solid #ddd;margin-top:.75rem;font-weight:500}
+.btn-2:hover{background:#eceff2}
+.btn-sm{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.85rem;font-weight:600;min-height:44px;cursor:pointer;font-family:inherit}
+.btn-sm:hover{background:#eef7fc}
+.add{width:100%;margin-top:.5rem;background:#f0f7fc;border:1px dashed #0077b6}
+.piece-row{display:grid;grid-template-columns:1fr 1fr 1fr 44px;gap:.6rem;align-items:end;margin-bottom:.75rem}
+.rm{background:#fff;color:#c0392b;border:1px solid #e0b4ae;border-radius:6px;min-height:44px;width:44px;font-size:1.3rem;cursor:pointer;line-height:1}
+.rm:hover{background:#fdf0ee}
+#results-card,#layout-card,.copy-row{display:none}
+#results-card.visible,#layout-card.visible{display:block;animation:fi .3s ease}
+.copy-row.visible{display:block;margin:-1rem 0 2rem}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.hero{text-align:center;margin-bottom:1.25rem}
+.big{font-size:3rem;font-weight:800;color:#0077b6;line-height:1.1}
+.bl{font-size:.9rem;color:#444}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1rem}
+.stat{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.75rem .5rem;text-align:center}
+.stat b{display:block;font-size:1.3rem;color:#0077b6}
+.stat span{font-size:.75rem;color:#555;line-height:1.3;display:block}
+.bar{background:#f0f0f0;border-radius:4px;height:16px;overflow:hidden;margin:.75rem 0 .3rem}
+.bar i{display:block;height:100%;background:#0077b6}
+.bar i.mid{background:#e67e22}.bar i.hi{background:#e74c3c}
+.small{font-size:.8rem;color:#666}
+.tip{background:#f0f7fc;border-left:3px solid #0077b6;padding:.75rem 1rem;font-size:.88rem;margin-top:.75rem;border-radius:0 6px 6px 0}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:430px}
+th{background:#f0f0f0;text-align:left;padding:9px 10px;font-weight:600;font-size:.82rem;color:#444;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid #eee}
 tbody tr:nth-child(odd){background:#fafafa}
 tbody tr:nth-child(even){background:#fff}
-tbody td{padding:8px 10px;border-bottom:1px solid #eee;font-size:.85rem}
-tbody td.num{text-align:right;font-variant-numeric:tabular-nums}
-.cut-list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
-.piece-row{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:.5rem;align-items:end;margin-bottom:.6rem}
-.piece-row input{margin-top:0}
-.remove-btn{background:#fce8e8;color:#c0392b;border:1px solid #f5c6cb;border-radius:5px;padding:0 10px;cursor:pointer;min-height:44px;font-size:1.1rem;font-weight:700;transition:background .2s;white-space:nowrap}
-.remove-btn:hover{background:#f5c6cb}
-.add-piece-btn{background:#e8f4fd;color:#0077b6;border:1px solid #b8ddf8;border-radius:5px;padding:10px 16px;font-size:.88rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;margin-top:.3rem;transition:background .2s}
-.add-piece-btn:hover{background:#b8ddf8}
-.waste-bar-wrap{background:#f0f0f0;border-radius:4px;height:18px;overflow:hidden;margin:.3rem 0}
-.waste-bar-inner{height:100%;background:#0077b6;transition:width .5s ease;border-radius:4px}
-.waste-bar-inner.high{background:#e67e22}
-.waste-bar-inner.bad{background:#e74c3c}
-.bar-label{font-size:.78rem;color:#555;margin-top:.1rem}
-.tip-box{background:#e8f7ff;border-left:3px solid #0077b6;border-radius:0 6px 6px 0;padding:.8rem 1rem;font-size:.88rem;color:#1a1a2e;margin-top:.8rem}
+th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}
+.collapsed tr.extra{display:none}
+#showall{margin-top:.75rem}
+.tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem}
+.tabs button{background:#f8f9fa;border:1px solid #ddd;border-radius:6px;padding:8px 14px;min-height:44px;font-size:.9rem;cursor:pointer;font-family:inherit;color:#1a1a2e}
+.tabs button.on{background:#0077b6;color:#fff;border-color:#0077b6}
+.sv{display:none}.sv.on{display:block}
+.sheet-box{position:relative;width:100%;background:#f1f3f5;outline:2px solid #5a7a3a;margin:2px}
+.cp{position:absolute;border:1px solid;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#1a1a2e;overflow:hidden;text-align:center;line-height:1.1}
+.diagram{text-align:center}
+.diagram svg{width:100%;max-width:420px;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;justify-content:center;font-size:.82rem;color:#444;margin-top:.5rem}
+.legend i{display:inline-block;width:14px;height:14px;vertical-align:-2px;margin-right:.35rem;border:1px solid #0077b6;background:rgba(0,119,182,.18)}
+.legend i.w{background:#f8f9fa;border:1px dashed #666}
+#diag-cap{font-size:.9rem;color:#444;margin-top:.5rem}
+.safety{margin:0 0 2rem;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;color:#4a3b00}
 .ad-slot{min-height:0;margin:0}
-.content-section h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin:1.8rem 0 .6rem}
-.content-section p{font-size:.93rem;color:#333;margin-bottom:.7rem}
-.content-section ul{padding-left:1.4rem;margin-bottom:.7rem}
-.content-section li{font-size:.93rem;color:#333;margin-bottom:.35rem}
-details{margin-bottom:.6rem;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden}
-summary{padding:.8rem 1rem;font-weight:600;font-size:.9rem;cursor:pointer;background:#f8f9fa;list-style:none;display:flex;align-items:center;justify-content:space-between}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"＋";color:#0077b6;font-size:1rem}
-details[open] summary::after{content:"－"}
-details p{padding:.8rem 1rem;font-size:.88rem;color:#444;background:#fff}
-.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
-.related-link{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.75rem 1rem;font-size:.88rem;font-weight:500;color:#0077b6;transition:background .2s}
-.related-link:hover{background:#e8f4fd;text-decoration:none}
-footer{background:#fff;border-top:1px solid #e0e0e0;padding:1.2rem 1.5rem;text-align:center;font-size:.82rem;color:#666;margin-top:2rem}
-footer a{color:#666;margin:0 .6rem}
-footer a:hover{color:#0077b6}
-.diagram-wrap{margin-bottom:1.2rem;text-align:center}
-.diagram-wrap svg{max-width:100%;height:auto}
-.sheet-vis{margin-top:1rem}
-.sheet-vis-title{font-size:.85rem;font-weight:600;color:#444;margin-bottom:.5rem}
-.sheet-container{position:relative;background:#e8f0d8;border:2px solid #5a7a3a;border-radius:3px;overflow:hidden;display:inline-block}
-.cut-piece{position:absolute;border:1.5px solid #0077b6;background:rgba(0,119,182,.15);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:600;color:#0077b6;overflow:hidden;text-align:center;line-height:1.2}
-.cut-piece:hover{background:rgba(0,119,182,.3);z-index:10}
-.waste-piece{position:absolute;background:rgba(200,200,200,.3);border:1px dashed #999}
-.sheet-nav{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;flex-wrap:wrap}
-.sheet-nav button{background:#f0f4f8;border:1px solid #ddd;border-radius:5px;padding:6px 12px;cursor:pointer;font-size:.82rem;min-height:36px}
-.sheet-nav button.active{background:#0077b6;color:#fff;border-color:#0077b6}
-.sheet-info{font-size:.8rem;color:#666}
-.copy-wrap{display:flex;align-items:center;gap:.6rem;margin-top:.8rem}
-.kerf-note{font-size:.78rem;color:#666;margin-top:.3rem}
-@media(max-width:500px){
-  .row-2{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:1fr 1fr}
-  .piece-row{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
-  .piece-row .remove-btn{grid-column:span 2}
-  .related-grid{grid-template-columns:1fr}
-  .big-number{font-size:1.9rem}
-  h1{font-size:1.3rem}
+.content h2{font-size:1.25rem;margin:2rem 0 .75rem}
+.content p{margin-bottom:.8rem;color:#2a2a3e}
+.content ul{padding-left:1.3rem;margin-bottom:.8rem}
+.content li{margin-bottom:.45rem;color:#2a2a3e}
+code{background:#f8f9fa;padding:2px 6px;border-radius:4px;font-size:.88em}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:.6rem}
+summary{padding:.75rem 1rem;font-weight:600;cursor:pointer;min-height:44px;background:#f8f9fa;border-radius:6px}
+details p{padding:.75rem 1rem;margin:0}
+.content ul.related{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;list-style:none;padding:0}
+.related a{display:flex;align-items:center;min-height:44px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.5rem 1rem;font-size:.9rem}
+footer{border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:.85rem;color:#666}
+footer a{color:#555;margin:0 .6rem;display:inline-block;min-height:44px;line-height:44px;text-decoration:underline}
+@media(max-width:560px){
+.card{padding:1.25rem}
+.row{grid-template-columns:1fr}
+.piece-row{grid-template-columns:1fr 1fr}
+.piece-row .rm{justify-self:end}
+.content ul.related{grid-template-columns:1fr}
+.stats{grid-template-columns:1fr 1fr}
+h1{font-size:1.45rem}
+.big{font-size:2.5rem}
 }
 </style>
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://toolwick.com/plywood-sheet-goods-cut-optimizer/">
 <meta property="og:title" content="Plywood &amp; Sheet Goods Cut Optimizer">
-<meta property="og:description" content="Optimize your plywood cuts to minimize waste. Enter sheet size and required pieces to get the most efficient cutting layout. Free plywood cut calculator…">
+<meta property="og:description" content="Free plywood cut calculator sheet optimizer: enter your cut list and sheet size to get sheets needed, waste percentage and a kerf-aware cutting layout.">
 <meta property="og:site_name" content="Toolwick">
 <meta name="twitter:card" content="summary">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
-<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
 <style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
 </head>
 <body>
 <header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-brand">tool<span>wick</span>.com</a>
-  </div>
-</nav>
+<nav><div class="nav-in"><a class="brand" href="/">Toolwick</a></div></nav>
 <main>
-  <h1>Plywood & Sheet Goods Cut Optimizer</h1>
+<h1>Plywood &amp; Sheet Goods Cut Optimizer</h1>
 <p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
-  <p class="subtitle">Minimize waste and calculate how many sheets you need for any project.</p>
+<p class="lead">Use this plywood cut calculator sheet optimizer to find out how many sheets of plywood, MDF, OSB or melamine your project needs, how to lay the parts out, and how much material ends up as waste.</p>
 
-  <!-- DIAGRAM -->
-  <div class="card diagram-wrap">
-    <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" aria-label="Plywood sheet cutting diagram">
-      <!-- Full sheet outline -->
-      <rect x="20" y="30" width="280" height="160" fill="#e8f0d8" stroke="#5a7a3a" stroke-width="2"/>
-      <!-- Cut pieces inside sheet -->
-      <rect x="25" y="35" width="130" height="70" fill="rgba(0,119,182,.18)" stroke="#0077b6" stroke-width="1.5"/>
-      <rect x="160" y="35" width="130" height="70" fill="rgba(0,119,182,.18)" stroke="#0077b6" stroke-width="1.5"/>
-      <rect x="25" y="110" width="130" height="75" fill="rgba(0,119,182,.18)" stroke="#0077b6" stroke-width="1.5"/>
-      <rect x="160" y="110" width="130" height="55" fill="rgba(0,119,182,.18)" stroke="#0077b6" stroke-width="1.5"/>
-      <!-- Waste area -->
-      <rect x="160" y="170" width="130" height="15" fill="rgba(200,80,80,.12)" stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,2"/>
-      <text x="225" y="180" text-anchor="middle" font-size="8" fill="#c0392b">waste</text>
-      <!-- Piece labels -->
-      <text x="90" y="74" text-anchor="middle" font-size="11" font-weight="600" fill="#0077b6">Piece 1</text>
-      <text x="225" y="74" text-anchor="middle" font-size="11" font-weight="600" fill="#0077b6">Piece 2</text>
-      <text x="90" y="151" text-anchor="middle" font-size="11" font-weight="600" fill="#0077b6">Piece 3</text>
-      <text x="225" y="141" text-anchor="middle" font-size="11" font-weight="600" fill="#0077b6">Piece 4</text>
-      <!-- Sheet width arrow -->
-      <line x1="20" y1="200" x2="300" y2="200" stroke="#1a1a2e" stroke-width="1.2" marker-end="url(#arr)" marker-start="url(#arr2)"/>
-      <text x="160" y="212" text-anchor="middle" font-size="10" fill="#1a1a2e" id="diag-width-lbl">96"</text>
-      <!-- Sheet height arrow -->
-      <line x1="8" y1="30" x2="8" y2="190" stroke="#1a1a2e" stroke-width="1.2" marker-end="url(#arr)" marker-start="url(#arr2)"/>
-      <text x="4" y="112" text-anchor="middle" font-size="10" fill="#1a1a2e" transform="rotate(-90,4,112)" id="diag-height-lbl">48"</text>
-      <!-- Kerf lines -->
-      <line x1="157" y1="35" x2="157" y2="190" stroke="#888" stroke-width="1" stroke-dasharray="3,2"/>
-      <line x1="25" y1="107" x2="290" y2="107" stroke="#888" stroke-width="1" stroke-dasharray="3,2"/>
-      <text x="153" y="28" font-size="8" fill="#888" text-anchor="middle">kerf</text>
-      <!-- Right side legend -->
-      <rect x="340" y="30" width="14" height="14" fill="rgba(0,119,182,.18)" stroke="#0077b6" stroke-width="1.5"/>
-      <text x="360" y="41" font-size="11" fill="#1a1a2e">Cut pieces</text>
-      <rect x="340" y="52" width="14" height="14" fill="rgba(200,80,80,.12)" stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,2"/>
-      <text x="360" y="63" font-size="11" fill="#1a1a2e">Waste area</text>
-      <line x1="340" y1="80" x2="354" y2="80" stroke="#888" stroke-width="1" stroke-dasharray="3,2"/>
-      <text x="360" y="83" font-size="11" fill="#1a1a2e">Kerf / cut line</text>
-      <text x="340" y="108" font-size="11" fill="#555">Sheet size:</text>
-      <text x="340" y="123" font-size="13" font-weight="700" fill="#0077b6" id="diag-size-lbl">48" × 96"</text>
-      <text x="340" y="142" font-size="11" fill="#555">Kerf width:</text>
-      <text x="340" y="157" font-size="13" font-weight="700" fill="#1a1a2e" id="diag-kerf-lbl">⅛"</text>
-      <defs>
-        <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-          <path d="M0,0 L6,3 L0,6 Z" fill="#1a1a2e"/>
-        </marker>
-        <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
-          <path d="M0,0 L6,3 L0,6 Z" fill="#1a1a2e"/>
-        </marker>
-      </defs>
-    </svg>
-  </div>
+<div class="card diagram">
+<svg id="diag" viewBox="0 0 360 240" role="img" aria-label="Diagram of a plywood sheet divided into cut pieces, with width and length dimensions">
+<defs><marker id="ah" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L8,4L0,8z" fill="#1a1a2e"/></marker></defs>
+<g id="dg"></g>
+</svg>
+<div class="legend"><span><i></i>Cut pieces</span><span><i class="w"></i>Offcut / waste</span></div>
+<p id="diag-cap"></p>
+</div>
 
-  <!-- INPUT CARD -->
-  <div class="card">
-    <span class="section-title">Sheet Settings</span>
-    <div class="row-2">
-      <div>
-        <label for="sheet-type">Sheet Type</label>
-        <select id="sheet-type" onchange="applyPreset()">
-          <option value="custom">Custom Size</option>
-          <option value="4x8" selected>4×8 ft (48"×96") — Standard</option>
-          <option value="4x9">4×9 ft (48"×108")</option>
-          <option value="4x10">4×10 ft (48"×120")</option>
-          <option value="5x5">5×5 ft (60"×60")</option>
-          <option value="5x10">5×10 ft (60"×120")</option>
-        </select>
-      </div>
-      <div>
-        <label for="unit">Units</label>
-        <select id="unit">
-          <option value="in" selected>Inches</option>
-          <option value="mm">Millimeters</option>
-          <option value="cm">Centimeters</option>
-        </select>
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label for="sheet-w">Sheet Width</label>
-        <input type="number" id="sheet-w" value="48" min="1" step="0.5" placeholder="e.g. 48">
-        <div class="error-msg" id="err-sw">Enter a valid sheet width.</div>
-      </div>
-      <div>
-        <label for="sheet-h">Sheet Height / Length</label>
-        <input type="number" id="sheet-h" value="96" min="1" step="0.5" placeholder="e.g. 96">
-        <div class="error-msg" id="err-sh">Enter a valid sheet height.</div>
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label for="kerf">Saw Kerf (blade width)</label>
-        <input type="number" id="kerf" value="0.125" min="0" step="0.0625" placeholder="e.g. 0.125">
-        <div class="kerf-note">Typically ⅛" (0.125") for a circular saw</div>
-      </div>
-      <div>
-        <label for="sheet-cost">Cost per Sheet (optional)</label>
-        <input type="number" id="sheet-cost" value="" min="0" step="0.01" placeholder="e.g. 65.00">
-      </div>
-    </div>
+<div class="card" id="tool">
+<span class="section-title">Sheet Settings</span>
+<div class="row">
+<div><label for="sheet-type">Sheet Type</label>
+<select id="sheet-type">
+<option value="custom">Custom size</option>
+<option value="4x8" selected>4×8 ft (48"×96")</option>
+<option value="4x9">4×9 ft (48"×108")</option>
+<option value="4x10">4×10 ft (48"×120")</option>
+<option value="5x5">5×5 ft (60"×60")</option>
+<option value="5x10">5×10 ft (60"×120")</option>
+<option value="1220x2440">1220×2440 mm (metric)</option>
+</select></div>
+<div><label for="unit">Units</label>
+<select id="unit"><option value="in" selected>Inches</option><option value="mm">Millimeters</option><option value="cm">Centimeters</option></select></div>
+</div>
+<div class="row">
+<div><label for="sheet-w">Sheet Width (<span class="u">in</span>)</label>
+<input id="sheet-w" type="number" inputmode="decimal" min="0" step="0.5" value="48" aria-describedby="err-sheet-w">
+<div class="err" id="err-sheet-w"></div></div>
+<div><label for="sheet-h">Sheet Length (<span class="u">in</span>)</label>
+<input id="sheet-h" type="number" inputmode="decimal" min="0" step="0.5" value="96" aria-describedby="err-sheet-h">
+<div class="err" id="err-sheet-h"></div></div>
+</div>
+<div class="row">
+<div><label for="kerf">Saw Kerf (<span class="u">in</span>)</label>
+<input id="kerf" type="number" inputmode="decimal" min="0" step="0.0625" value="0.125" aria-describedby="err-kerf">
+<div class="hint">Circular saw blade ≈ ⅛" (0.125")</div>
+<div class="err" id="err-kerf"></div></div>
+<div><label for="cost">Cost per Sheet ($, optional)</label>
+<input id="cost" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 65.00" aria-describedby="err-cost">
+<div class="err" id="err-cost"></div></div>
+</div>
+<div class="row">
+<div><label for="spare">Spare Allowance (%)</label>
+<input id="spare" type="number" inputmode="decimal" min="0" max="100" step="1" value="10" aria-describedby="err-spare">
+<div class="hint">Extra sheets for defects and mistakes</div>
+<div class="err" id="err-spare"></div></div>
+<div class="chk" style="align-self:start;margin-top:1.55rem"><input id="rot" type="checkbox" checked><label for="rot">Allow 90° rotation</label></div>
+</div>
 
-    <div style="margin-top:1.4rem">
-      <div class="cut-list-header">
-        <span class="section-title" style="margin-bottom:0;border:none;font-size:.95rem">Required Pieces</span>
-        <span style="font-size:.78rem;color:#666">Width × Height — Qty</span>
-      </div>
-      <div id="pieces-container"></div>
-      <button class="add-piece-btn" onclick="addPieceRow()">＋ Add Another Piece Size</button>
-    </div>
+<span class="section-title" style="margin-top:1.75rem;margin-bottom:.6rem">Required Pieces</span>
+<div id="pieces"></div>
+<div class="err" id="err-pieces" role="alert"></div>
+<button type="button" class="btn-sm add" id="add">+ Add another piece size</button>
 
-    <button class="btn" onclick="requestAnimationFrame(()=>optimize())">⚡ Optimize Cuts</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
-    <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
-  </div>
+<button type="button" class="btn" id="go">Optimize Cuts</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<p class="hint" style="margin-top:.75rem">Planning estimates only. Verify against your actual panel size before cutting.</p>
+<button type="button" class="btn btn-2" id="clear">Clear All</button>
+</div>
 
-  <!-- RESULTS -->
-  <div class="card results-section" id="results-card">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
-      <span class="section-title" style="margin-bottom:0;border:none">Results</span>
-      <div class="copy-wrap" style="margin:0">
-        <button class="btn-small" onclick="copyResults()" id="copy-btn">📋 Copy Summary</button>
-      </div>
-    </div>
-    <div id="results-inner"></div>
-  </div>
+<div id="results-wrap" aria-live="polite" aria-atomic="true">
+<div class="card" id="results-card">
+<span class="section-title">Results</span>
+<div id="res-in"></div>
+</div>
+</div>
+<div class="copy-row" id="copy-row"><button type="button" class="btn-sm" id="copy">Copy summary</button></div>
 
-  <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="card" id="layout-card">
+<span class="section-title">Visual Cutting Layout</span>
+<div id="lay-in"></div>
+</div>
+
+<div class="safety" role="note">Planning estimate for material quantities only. It is not engineering, permit or inspection approval. If panels are structural (subfloor, wall or roof sheathing, shear walls), follow the panel span rating and the fastening schedule in your locally adopted code (commonly the IRC). Local codes vary, so confirm with your building department.</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
 <div class="ad-slot" id="ad-mid"></div>
 <section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/plywood-sheet-goods-cut-optimizer/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Plywood &amp;amp; Sheet Goods Cut Optimizer&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
 &lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/plywood-sheet-goods-cut-optimizer/&quot;&gt;Plywood &amp;amp; Sheet Goods Cut Optimizer&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/plywood-sheet-goods-cut-optimizer/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
 
-  <!-- CONTENT SECTION -->
-  <div class="content-section">
-    <h2>How to Use This Plywood Cut Optimizer</h2>
-    <p>Select your sheet size (or enter custom dimensions), set the saw kerf width, then add each piece size you need along with the required quantity. Hit <strong>Optimize Cuts</strong> and the tool instantly calculates how many sheets to buy, how to arrange pieces to minimize waste, and gives you a visual cutting layout for each sheet.</p>
-    <p>You can add up to 20 different piece sizes. The optional cost-per-sheet field will calculate your total material cost automatically.</p>
+<div class="content">
+<h2>How to Use This Plywood &amp; Sheet Goods Cut Optimizer</h2>
+<p>Pick a standard sheet size or enter your own, set the saw kerf, then list each part by width, height and quantity. Press <strong>Optimize Cuts</strong> to see how many sheets the layout needs, the waste percentage, a per-sheet breakdown and a scaled drawing of every sheet.</p>
+<p>Switch units any time: all your entered numbers are converted automatically. Turn off 90° rotation if grain direction matters. The spare allowance rounds your purchase up so you do not come up short.</p>
 
-    <h2>Why This Matters</h2>
-    <p>Plywood is expensive — a single sheet of ¾" cabinet-grade birch plywood runs $90–$130 at most lumber yards in 2024. A typical kitchen cabinet project might call for 15–20 sheets, meaning poor cut planning can waste $300–$600 in material. Even small jobs are affected: building three 24"×48" shelves from a single 4×8 sheet is very doable, but if you don't plan your cuts, you might buy two sheets unnecessarily.</p>
-    <p>Professional cabinetmakers, furniture builders, and contractors use cut optimization software costing hundreds of dollars. This free tool gives you the core functionality: a first-fit decreasing bin-packing algorithm that stacks pieces efficiently across sheets, accounts for saw kerf loss on every cut, and flags how much usable waste you'll have left over for scrap projects.</p>
-    <p>Whether you're building a workbench, cabinet carcasses, subfloor, or a shed floor, entering your cut list here before you buy saves trips to the store and money at the register.</p>
+<h2>Why This Matters</h2>
+<p>Sheet goods are one of the largest line items on any cabinet, shop-fixture, shed or subfloor job. A sheet of ¾-inch birch cabinet plywood commonly costs $80–$130, and a full kitchen of cabinet boxes can use 12–18 sheets, so one wasteful layout can burn $150 or more. Hobbyists feel it too: a workbench with a top, shelves and drawer parts might look like "about one sheet" on paper, but kerf, awkward part sizes and the need to avoid damaged edges often push it to two.</p>
+<p>Contractors use cut plans for subfloor and sheathing, where a 4×8 panel covers 32 square feet and every offcut that cannot be reused is landfill. Planning before you buy tells you whether you need 5 sheets or 6, whether a half-sheet will do, and which offcuts are worth saving. It also gives you a cut list you can hand to a lumber yard, many of which will run the panel saw for a small per-cut fee.</p>
 
-    <h2>How It's Calculated</h2>
-    <p>The optimizer uses a <strong>guillotine bin-packing algorithm</strong> — the same type used in professional sheet optimization software. Here's how it works:</p>
-    <ul>
-      <li><strong>Kerf deduction:</strong> Every cut removes blade-width material. If your kerf is ⅛" and you need a 24" piece, the cut actually consumes 24.125" of sheet.</li>
-      <li><strong>Piece sorting:</strong> Pieces are sorted largest to smallest (by area) before placement. Larger pieces are harder to fit, so placing them first produces tighter layouts.</li>
-      <li><strong>Guillotine split:</strong> When a piece is placed in a free rectangle, the leftover space is split into two new free rectangles (right and above), which are then available for smaller pieces.</li>
-      <li><strong>Both orientations tried:</strong> Each piece is tested both normally and rotated 90°, and the orientation wasting less space is chosen.</li>
-      <li><strong>Waste % formula:</strong> <code>Waste % = (Total Sheet Area − Total Piece Area) / Total Sheet Area × 100</code></li>
-    </ul>
-    <p>Note: guillotine cutting means pieces are arranged so each cut goes edge-to-edge — this matches real-world table saw and circular saw usage.</p>
+<h2>How It's Calculated</h2>
+<p>The layout uses a <strong>guillotine rectangle-packing heuristic</strong>, a practical rule of thumb rather than a code formula. Every cut runs edge to edge, like a table saw or track saw. The tool tries eight combinations (four sort orders and two split styles), then keeps the result with the fewest sheets.</p>
+<ul>
+<li><strong>Kerf:</strong> each neighbouring piece needs the blade width between them, so <code>n pieces across = n × width + (n − 1) × kerf</code> must not exceed the sheet width.</li>
+<li><strong>Best short-side fit:</strong> each piece goes in the free rectangle where it leaves the smallest gap, in both orientations if rotation is allowed.</li>
+<li><strong>Waste %:</strong> <code>(sheets × sheet area − total piece area) ÷ (sheets × sheet area) × 100</code>. Kerf and offcuts count as waste.</li>
+<li><strong>Suggested purchase:</strong> <code>ceil(sheets × (1 + spare % ÷ 100))</code>. It always rounds up, never down.</li>
+</ul>
+<p>The method is a heuristic, so on complex lists a hand-tuned layout may occasionally save one sheet. Parts that cannot fit the sheet in any allowed orientation are rejected with an error instead of being silently dropped.</p>
 
-    <h2>Tips & Common Mistakes</h2>
-    <ul>
-      <li><strong>Always include kerf:</strong> Forgetting the ⅛" blade width is the #1 cause of pieces coming out undersized. It compounds — 10 cuts = 1.25" lost.</li>
-      <li><strong>Add grain direction pieces carefully:</strong> The optimizer may rotate pieces for efficiency. If grain direction matters (face frames, tabletops), note which pieces can't be rotated and verify the layout manually.</li>
-      <li><strong>Order 5–10% extra:</strong> Even with perfect optimization, wood has defects, grain pockets, and you'll make measurement mistakes. Always add a small buffer.</li>
-      <li><strong>Save your offcuts:</strong> The tool shows waste dimensions. A 10"×96" offcut from one sheet might perfectly supply your next project's drawer bottoms.</li>
-      <li><strong>Check sheet dimensions at the store:</strong> "4×8" sheets are often actually 47.75"×95.75". Measure before cutting if tolerances are tight.</li>
-    </ul>
+<h2>Worked Example</h2>
+<p>Sheet: 48"×96" (4,608 sq in), kerf ⅛", 10% spare, and a cost of $65 per sheet. Parts: four 23.5"×47.5" panels and six 10"×20" shelf parts. These are the tool's default piece sizes; the cost rows only appear after you enter $65 in the cost field.</p>
+<ul>
+<li>Panel area: 23.5 × 47.5 = 1,116.25 sq in each, ×4 = 4,465 sq in. All four fit on sheet 1. A 2×2 grid works (two across need 47.125", two down need 95.125"). With rotation on, the tool usually draws them rotated to 47.5"×23.5" and stacked in one column instead: 4 × 23.5 + 3 × 0.125 = 94.375" of the 96" length. Either arrangement uses the same area, so the totals below do not change.</li>
+<li>Shelf area: 10 × 20 = 200 sq in each, ×6 = 1,200 sq in. What remains on sheet 1 is only thin strips (roughly 1.5" along the end and under ½" along the side), far too narrow for a 10"×20" part. All six shelf parts go on sheet 2.</li>
+<li>Total parts: 5,665 sq in. Two sheets give 9,216 sq in, so waste = 3,551 ÷ 9,216 = <strong>38.5%</strong>.</li>
+</ul>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Worked example results table"><table>
+<thead><tr><th>Item</th><th class="n">Value</th></tr></thead>
+<tbody>
+<tr><td>Sheets needed</td><td class="n">2</td></tr>
+<tr><td>Sheet 1 waste (4,465 sq in used)</td><td class="n">3.1%</td></tr>
+<tr><td>Sheet 2 waste (1,200 sq in used)</td><td class="n">74.0%</td></tr>
+<tr><td>Overall waste</td><td class="n">38.5%</td></tr>
+<tr><td>Suggested purchase (2 × 1.10 → round up)</td><td class="n">3 sheets</td></tr>
+<tr><td>Cost at $65/sheet: layout / suggested purchase</td><td class="n">$130.00 / $195.00</td></tr>
+</tbody></table></div>
 
-    <h2>Frequently Asked Questions</h2>
-    <details>
-      <summary>What is saw kerf and why does it matter?</summary>
-      <p>Kerf is the width of material removed by the saw blade during a cut. A standard 7¼" circular saw blade removes about ⅛" (0.125") of wood per cut. If you're making 8 cuts across a sheet, that's 1" of material lost to kerf alone — which can make pieces come out shorter than planned.</p>
-    </details>
-    <details>
-      <summary>Can I use this for materials other than plywood?</summary>
-      <p>Absolutely. The tool works for any rectangular sheet material: MDF, melamine, OSB, cement board, drywall, acrylic, aluminum sheet, foam insulation, and more. Just enter the sheet dimensions and your required piece sizes.</p>
-    </details>
-    <details>
-      <summary>Why does the optimizer sometimes use more sheets than I expect?</summary>
-      <p>The guillotine algorithm is efficient but not always perfect — it's NP-hard to find the absolute optimal solution for complex layouts. For most practical cut lists (under 15–20 pieces), it performs very well. If you have many small pieces, try grouping them by similar size for better results.</p>
-    </details>
-    <details>
-      <summary>Does piece rotation matter for grain direction?</summary>
-      <p>Yes — the optimizer may rotate pieces to fit more efficiently. For painted MDF or OSB this doesn't matter, but for hardwood plywood where grain direction affects appearance or strength, verify that rotated pieces are acceptable for your application before cutting.</p>
-    </details>
-  </div>
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Never set kerf to zero:</strong> ignoring the blade width is the classic reason parts come out short. Ten cuts can eat over an inch.</li>
+<li><strong>Measure the real sheet:</strong> many panels run a little under nominal, and factory edges may be damaged. Enter the measured size, or the layout may be a hair too optimistic.</li>
+<li><strong>Turn rotation off for grain-critical parts:</strong> face frames, visible veneer and tabletops need grain running the right way, and rotating a part can cost an extra sheet.</li>
+<li><strong>Cut oversize, then trim:</strong> for tight joinery, add 1/16"–⅛" to critical parts and trim to final size.</li>
+<li><strong>Keep the spare allowance:</strong> the suggested purchase rounds up on purpose. A second trip for one sheet from a different dye lot costs more than the spare.</li>
+</ul>
 
-  <!-- RELATED TOOLS -->
-  <div class="card" style="margin-top:1.5rem">
-    <span class="section-title">Related Tools</span>
-    <div class="related-grid" style="margin-top:.8rem">
-      <a href="/fence-material-calculator/" class="related-link">🪵 Fence Material Calculator</a>
-      <a href="/drywall-calculator/" class="related-link">🧱 Drywall Calculator</a>
-      <a href="/deck-material-cost-estimator/" class="related-link">🏗️ Deck Material & Cost Estimator</a>
-      <a href="/wire-gauge-ampacity-calculator/" class="related-link">⚡ Wire Gauge & Ampacity Calculator</a>
-      <a href="/paint-coverage-calculator/" class="related-link">🎨 Paint Coverage Calculator</a>
-      <a href="/lumber-board-foot-calculator/" class="related-link">📏 Lumber & Board Foot Calculator</a>
-    </div>
-  </div>
+<h2>Frequently Asked Questions</h2>
+<details><summary>What is saw kerf and why does it matter?</summary><p>Kerf is the width of material the blade turns into sawdust, about ⅛" (0.125") per cut for a typical circular saw blade. It is why two 24" pieces will not quite fit across a 48" sheet: 24" + ⅛" + 24" is 48⅛". Over ten cuts the lost material adds up to 1¼".</p></details>
+<details><summary>Can I use this for MDF, OSB, drywall or acrylic?</summary><p>Yes. Any rectangular sheet material works, including MDF, melamine, OSB, cement board, drywall, acrylic and foam board. Enter the sheet size and your parts, and choose the matching units.</p></details>
+<details><summary>Why did the optimizer use more sheets than I expected?</summary><p>Area alone is not enough, because kerf and part shapes leave unusable strips. Finding the perfect layout is a hard problem, so the tool uses a fast heuristic that is usually very close. Try changing quantities or allowing rotation to see if a sheet can be saved.</p></details>
+<details><summary>How much extra plywood should I buy?</summary><p>A 10% spare allowance is a common rule of thumb, and it is the default here. Use 15% or more for figured veneer or complex parts. The tool always rounds up.</p></details>
+<details><summary>Does rotation affect grain direction?</summary><p>Yes. With rotation on, a part may be turned 90° to fit better, which changes grain direction. The layout marks rotated parts with ↻, and you can turn rotation off entirely.</p></details>
+<details><summary>Can I use this layout for structural sheathing?</summary><p>It only plans material quantity and cuts. Structural panels must meet their span rating, edge-support and fastening requirements in your local adopted code, and local codes vary. Confirm with your building department or a licensed professional.</p></details>
 
-  <nav class="cluster-nav" aria-label="More Framing &amp; Structure Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Framing &amp; Structure Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li><li><a href="/floor-joist-span-size-calculator/">Floor Joist Span &amp; Size Calculator</a></li><li><a href="/header-beam-size-calculator/">Header Beam Size Calculator</a></li><li><a href="/knee-wall-stud-height-attic-storage-calculator/">Knee Wall Stud Height &amp; Attic Storage Calculator</a></li><li><a href="/lumber-board-foot-calculator/">Lumber &amp; Board Foot Calculator</a></li><li><a href="/pocket-door-rough-opening-cavity-calculator/">Pocket Door Rough Opening &amp; Cavity Calculator</a></li><li><a href="/stair-stringer-calculator/">Stair Stringer Calculator</a></li><li><a href="/roof-truss-span-spacing-calculator/">Truss Span &amp; Spacing Calculator</a></li><li><a href="/framing-calculators/"><strong>All Framing &amp; Structure calculators →</strong></a></li></ul></nav>
+<h2>Related Tools</h2>
+<ul class="related">
+<li><a href="/drip-edge-roof-trim-calculator/">Drip Edge &amp; Roof Trim Calculator</a></li>
+<li><a href="/wheelchair-ramp-slope-length-calculator/">Wheelchair Ramp Slope &amp; Length Calculator</a></li>
+<li><a href="/ridge-vent-length-calculator/">Ridge Vent Length Calculator</a></li>
+<li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li>
+<li><a href="/cubic-yards-to-tons-calculator/">Cubic Yards to Tons Calculator</a></li>
+<li><a href="/roofing-squares-calculator/">Roofing Squares Calculator</a></li>
+</ul>
+</div>
+
+<nav class="cluster-nav" aria-label="More Framing &amp; Structure Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Framing &amp; Structure Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li><li><a href="/floor-joist-span-size-calculator/">Floor Joist Span &amp; Size Calculator</a></li><li><a href="/header-beam-size-calculator/">Header Beam Size Calculator</a></li><li><a href="/knee-wall-stud-height-attic-storage-calculator/">Knee Wall Stud Height &amp; Attic Storage Calculator</a></li><li><a href="/lumber-board-foot-calculator/">Lumber &amp; Board Foot Calculator</a></li><li><a href="/pocket-door-rough-opening-cavity-calculator/">Pocket Door Rough Opening &amp; Cavity Calculator</a></li><li><a href="/stair-stringer-calculator/">Stair Stringer Calculator</a></li><li><a href="/roof-truss-span-spacing-calculator/">Truss Span &amp; Spacing Calculator</a></li><li><a href="/framing-calculators/"><strong>All Framing &amp; Structure calculators →</strong></a></li></ul></nav>
 <div class="ad-slot" id="ad-bottom"></div>
 </main>
-
 <footer>
-  <div>
-    <a href="/about/">About</a>
-    <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a>
-    <a href="/contact/">Contact</a>
-  </div>
-  <div style="margin-top:.4rem">© <span id="yr"></span> toolwick.com — Free Online Calculators</div>
+<div><a href="/about/">About</a> <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> <a href="/contact/">Contact</a></div>
+<div>© <span id="yr"></span> toolwick.com</div>
 </footer>
 
 <script>
-document.getElementById('yr').textContent = new Date().getFullYear();
+(function(){
+const $=id=>document.getElementById(id);
+const E=1e-6,MAXQ=500,MAXROWS=20;
+/* f = millimetres per one unit */
+const UN={in:{f:25.4,s:'"',a:'sq in',st:.5,ks:.0625},mm:{f:1,s:' mm',a:'sq mm',st:1,ks:.1},cm:{f:10,s:' cm',a:'sq cm',st:.5,ks:.01}};
+/* presets in inches */
+const PRE={'4x8':[48,96],'4x9':[48,108],'4x10':[48,120],'5x5':[60,60],'5x10':[60,120],'1220x2440':[1220/25.4,2440/25.4]};
+let prev='in',R=null,rid=0;
+const U=()=>UN[$('unit').value];
+const r3=n=>Math.round(n*1000)/1000;
+const fmt=(n,d)=>Number(n).toLocaleString('en-US',{minimumFractionDigits:d===undefined?2:d,maximumFractionDigits:d===undefined?2:d});
+const fd=n=>Number(r3(n)).toLocaleString('en-US',{maximumFractionDigits:3});
+const n1=n=>(Math.round(n*10)/10).toString();
+const TW=' tabindex="0" role="region" aria-label="Scrollable table"';
+$('yr').textContent=new Date().getFullYear();
 
-// ---- Piece rows management ----
-let pieceIdCounter = 0;
-function addPieceRow(w, h, qty) {
-  pieceIdCounter++;
-  const id = pieceIdCounter;
-  const cont = document.getElementById('pieces-container');
-  const div = document.createElement('div');
-  div.className = 'piece-row';
-  div.id = 'piece-row-' + id;
-  div.innerHTML = `
-    <div><label style="margin-top:0">Width</label><input type="number" id="pw-${id}" value="${w||''}" min="0.1" step="0.5" placeholder="e.g. 24" onkeydown="enterKey(event)"></div>
-    <div><label style="margin-top:0">Height</label><input type="number" id="ph-${id}" value="${h||''}" min="0.1" step="0.5" placeholder="e.g. 24" onkeydown="enterKey(event)"></div>
-    <div><label style="margin-top:0">Qty</label><input type="number" id="pq-${id}" value="${qty||1}" min="1" step="1" placeholder="1" onkeydown="enterKey(event)"></div>
-    <button class="remove-btn" onclick="removePiece(${id})" title="Remove">×</button>
-  `;
-  cont.appendChild(div);
+/* ---------- piece rows ---------- */
+function addRow(w,h,q){
+  const box=$('pieces');
+  if(box.children.length>=MAXROWS){showPieceErr('You can add up to '+MAXROWS+' piece sizes. Combine identical sizes with Qty.');return}
+  const id=++rid,a=$('unit').value,st=UN[a].st,d=document.createElement('div');
+  d.className='piece-row';
+  d.innerHTML='<div><label for="pw'+id+'">Width (<span class="u">'+a+'</span>)</label><input class="pw" id="pw'+id+'" type="number" inputmode="decimal" min="0" step="'+st+'" value="'+(w===undefined?'':w)+'"></div>'+
+  '<div><label for="ph'+id+'">Height (<span class="u">'+a+'</span>)</label><input class="ph" id="ph'+id+'" type="number" inputmode="decimal" min="0" step="'+st+'" value="'+(h===undefined?'':h)+'"></div>'+
+  '<div><label for="pq'+id+'">Qty</label><input class="pq" id="pq'+id+'" type="number" inputmode="numeric" min="1" max="'+MAXQ+'" step="1" value="'+(q||1)+'"></div>'+
+  '<button type="button" class="rm" aria-label="Remove this piece size">×</button>';
+  box.appendChild(d);
 }
-function removePiece(id) {
-  const el = document.getElementById('piece-row-' + id);
-  if (el) el.remove();
-}
-function getPieces() {
-  const rows = document.querySelectorAll('[id^="piece-row-"]');
-  const pieces = [];
-  rows.forEach(row => {
-    const id = row.id.replace('piece-row-', '');
-    const w = parseFloat(document.getElementById('pw-' + id)?.value);
-    const h = parseFloat(document.getElementById('ph-' + id)?.value);
-    const q = parseInt(document.getElementById('pq-' + id)?.value) || 1;
-    if (w > 0 && h > 0) pieces.push({w, h, qty: Math.max(1, q)});
+function showPieceErr(m){const e=$('err-pieces');e.textContent=m;e.classList.add('show')}
+function readPieces(){
+  const out=[];let bad=false;
+  document.querySelectorAll('.piece-row').forEach(row=>{
+    const w=row.querySelector('.pw'),h=row.querySelector('.ph'),q=row.querySelector('.pq');
+    [w,h,q].forEach(x=>x.classList.remove('error'));
+    if(w.value.trim()===''&&h.value.trim()==='')return;
+    const wn=parseFloat(w.value),hn=parseFloat(h.value),qn=Number(q.value);
+    let ok=true;
+    if(!(wn>0)){w.classList.add('error');ok=false}
+    if(!(hn>0)){h.classList.add('error');ok=false}
+    if(!Number.isInteger(qn)||qn<1||qn>MAXQ){q.classList.add('error');ok=false}
+    if(!ok){bad=true;return}
+    out.push({w:wn,h:hn,qty:qn,els:[w,h]});
   });
-  return pieces;
-}
-function clearAll() {
-  document.getElementById('pieces-container').innerHTML = '';
-  pieceIdCounter = 0;
-  addPieceRow(24, 24, 2);
-  addPieceRow(24, 48, 1);
-  document.getElementById('results-card').classList.remove('visible');
-  ['sheet-w','sheet-h','kerf','sheet-cost'].forEach(id => {
-    document.getElementById(id)?.classList.remove('error');
-  });
-}
-function enterKey(e) {
-  if (e.key === 'Enter') requestAnimationFrame(() => optimize());
-}
-function applyPreset() {
-  const v = document.getElementById('sheet-type').value;
-  const presets = {
-    '4x8': [48, 96], '4x9': [48, 108], '4x10': [48, 120],
-    '5x5': [60, 60], '5x10': [60, 120]
-  };
-  if (presets[v]) {
-    document.getElementById('sheet-w').value = presets[v][0];
-    document.getElementById('sheet-h').value = presets[v][1];
-    updateDiagram(presets[v][0], presets[v][1], parseFloat(document.getElementById('kerf').value)||0.125);
-  }
-}
-function updateDiagram(sw, sh, kerf) {
-  const unit = document.getElementById('unit').value;
-  const u = unit === 'in' ? '"' : unit === 'mm' ? 'mm' : 'cm';
-  document.getElementById('diag-width-lbl').textContent = sw + u;
-  document.getElementById('diag-height-lbl').textContent = sh + u;
-  document.getElementById('diag-size-lbl').textContent = sw + u + ' × ' + sh + u;
-  document.getElementById('diag-kerf-lbl').textContent = kerf + u;
+  return {out:out,bad:bad};
 }
 
-// ---- Guillotine bin packing ----
-function packSheets(sheetW, sheetH, items, kerf) {
-  // items: [{w,h,label}] — each item is one piece (expanded by qty)
-  // Sort by area descending
-  const sorted = [...items].sort((a, b) => (b.w * b.h) - (a.w * a.h));
-  const sheets = [];
+/* ---------- errors ---------- */
+function setErr(id,msg){
+  const el=$(id);el.classList.add('error');el.setAttribute('aria-invalid','true');
+  const e=$('err-'+id);e.textContent=msg;e.classList.add('show');
+}
+function clearErrs(){
+  document.querySelectorAll('input.error,select.error').forEach(e=>{e.classList.remove('error');e.removeAttribute('aria-invalid')});
+  document.querySelectorAll('.err').forEach(e=>{e.classList.remove('show');e.textContent=''});
+}
+function hideResults(){
+  R=null;
+  $('results-card').classList.remove('visible');$('layout-card').classList.remove('visible');$('copy-row').classList.remove('visible');
+  $('res-in').innerHTML='';$('lay-in').innerHTML='';
+  drawDiagram();
+}
 
-  function tryPack(freeRects, item, rotated) {
-    const pw = rotated ? item.h : item.w;
-    const ph = rotated ? item.w : item.h;
-    // Find best-fit short-side rectangle
-    let best = null, bestScore = Infinity;
-    for (let i = 0; i < freeRects.length; i++) {
-      const fr = freeRects[i];
-      if (pw <= fr.w && ph <= fr.h) {
-        const score = Math.min(fr.w - pw, fr.h - ph);
-        if (score < bestScore) { bestScore = score; best = {idx: i, fr}; }
+/* ---------- units & presets ---------- */
+function applyPreset(){
+  const v=$('sheet-type').value;
+  if(PRE[v]){const f=U().f;$('sheet-w').value=r3(PRE[v][0]*25.4/f);$('sheet-h').value=r3(PRE[v][1]*25.4/f)}
+  if(!R)drawDiagram();
+}
+function changeUnit(){
+  const nu=$('unit').value,ratio=UN[prev].f/UN[nu].f,un=UN[nu];
+  const cv=el=>{const v=parseFloat(el.value);if(isFinite(v))el.value=r3(v*ratio)};
+  ['sheet-w','sheet-h','kerf'].forEach(id=>cv($(id)));
+  document.querySelectorAll('.pw,.ph').forEach(el=>{cv(el);el.step=un.st});
+  $('sheet-w').step=un.st;$('sheet-h').step=un.st;$('kerf').step=un.ks;
+  document.querySelectorAll('.u').forEach(e=>e.textContent=nu);
+  prev=nu;
+  if($('sheet-type').value!=='custom')applyPreset();
+  if(R)optimize();else drawDiagram();
+}
+
+/* ---------- packing ---------- */
+function findFit(free,it,rot){
+  let best=null,bs=Infinity,bl=Infinity;
+  for(let i=0;i<free.length;i++){
+    const f=free[i];
+    for(let r=0;r<(rot?2:1);r++){
+      const pw=r?it.h:it.w,ph=r?it.w:it.h;
+      if(pw<=f.w+E&&ph<=f.h+E){
+        const a=f.w-pw,b=f.h-ph,s=Math.min(a,b),l=Math.max(a,b);
+        if(s<bs-E||(Math.abs(s-bs)<=E&&l<bl)){bs=s;bl=l;best={i:i,pw:pw,ph:ph,r:!!r}}
       }
     }
-    return best ? {best, pw, ph} : null;
   }
-
-  function placeItem(freeRects, fr, px, py, pw, ph, kerf) {
-    // Guillotine split — split remaining space
-    // Right rect
-    const rightW = fr.w - pw - kerf;
-    const rightH = fr.h;
-    if (rightW > 0 && rightH > 0) {
-      freeRects.push({x: fr.x + pw + kerf, y: fr.y, w: rightW, h: rightH});
-    }
-    // Top rect
-    const topW = pw;
-    const topH = fr.h - ph - kerf;
-    if (topW > 0 && topH > 0) {
-      freeRects.push({x: fr.x, y: fr.y + ph + kerf, w: topW, h: topH});
-    }
-  }
-
-  for (let i = 0; i < sorted.length; i++) {
-    const item = sorted[i];
-    let placed = false;
-    // Try to fit into existing sheets
-    for (let s = 0; s < sheets.length; s++) {
-      const sheet = sheets[s];
-      let res = tryPack(sheet.freeRects, item, false);
-      let rotated = false;
-      const res2 = tryPack(sheet.freeRects, item, true);
-      if (!res && res2) { res = res2; rotated = true; }
-      else if (res && res2) {
-        const sc1 = Math.min(res.best.fr.w - res.pw, res.best.fr.h - res.ph);
-        const sc2 = Math.min(res2.best.fr.w - res2.pw, res2.best.fr.h - res2.ph);
-        if (sc2 < sc1) { res = res2; rotated = true; }
-      }
-      if (res) {
-        const {best, pw, ph} = res;
-        const fr = best.fr;
-        sheet.placements.push({x: fr.x, y: fr.y, w: pw, h: ph, label: item.label, rotated});
-        placeItem(sheet.freeRects, fr, fr.x, fr.y, pw, ph, kerf);
-        sheet.freeRects.splice(best.idx, 1);
-        placed = true;
-        break;
-      }
-    }
-    if (!placed) {
-      // Open new sheet
-      const newSheet = {
-        freeRects: [{x: 0, y: 0, w: sheetW, h: sheetH}],
-        placements: []
-      };
-      let res = tryPack(newSheet.freeRects, item, false);
-      let rotated = false;
-      const res2 = tryPack(newSheet.freeRects, item, true);
-      if (!res && res2) { res = res2; rotated = true; }
-      else if (res && res2) {
-        const sc1 = Math.min(res.best.fr.w - res.pw, res.best.fr.h - res.ph);
-        const sc2 = Math.min(res2.best.fr.w - res2.pw, res2.best.fr.h - res2.ph);
-        if (sc2 < sc1) { res = res2; rotated = true; }
-      }
-      if (res) {
-        const {best, pw, ph} = res;
-        const fr = best.fr;
-        newSheet.placements.push({x: fr.x, y: fr.y, w: pw, h: ph, label: item.label, rotated});
-        placeItem(newSheet.freeRects, fr, fr.x, fr.y, pw, ph, kerf);
-        newSheet.freeRects.splice(best.idx, 1);
-      } else {
-        // Item bigger than sheet — mark as error
-        item.error = true;
-      }
-      sheets.push(newSheet);
-    }
-  }
-  return sheets;
+  return best;
 }
-
-let lastSheetW = 48, lastSheetH = 96, lastSheets = [], lastPieceArea = 0;
-let currentSheetView = 0;
-
-function fmt(n, dec) {
-  dec = dec === undefined ? 2 : dec;
-  return Number(n).toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
-}
-
-function optimize() {
-  // Validate
-  let valid = true;
-  function setErr(id, errId, show) {
-    document.getElementById(id).classList.toggle('error', show);
-    document.getElementById(errId).classList.toggle('show', show);
-    if (show) valid = false;
+function place(sheet,ft,it,k,mode){
+  const f=sheet.free.splice(ft.i,1)[0];
+  sheet.pl.push({x:f.x,y:f.y,w:ft.pw,h:ft.ph,label:it.label,rot:ft.r});
+  const rw=f.w-ft.pw-k,th=f.h-ft.ph-k;
+  if(mode===0){
+    if(rw>E)sheet.free.push({x:f.x+ft.pw+k,y:f.y,w:rw,h:f.h});
+    if(th>E)sheet.free.push({x:f.x,y:f.y+ft.ph+k,w:ft.pw,h:th});
+  }else{
+    if(rw>E)sheet.free.push({x:f.x+ft.pw+k,y:f.y,w:rw,h:ft.ph});
+    if(th>E)sheet.free.push({x:f.x,y:f.y+ft.ph+k,w:f.w,h:th});
   }
-  const sw = parseFloat(document.getElementById('sheet-w').value);
-  const sh = parseFloat(document.getElementById('sheet-h').value);
-  const kerf = parseFloat(document.getElementById('kerf').value) || 0;
-  const cost = parseFloat(document.getElementById('sheet-cost').value) || 0;
-  setErr('sheet-w', 'err-sw', !sw || sw <= 0);
-  setErr('sheet-h', 'err-sh', !sh || sh <= 0);
-  if (!valid) return;
+}
+function pack(items,sw,sh,k,rot,cmp,mode){
+  const sorted=items.slice().sort(cmp),sheets=[],unplaced=[];
+  for(const it of sorted){
+    let done=false;
+    for(const s of sheets){const ft=findFit(s.free,it,rot);if(ft){place(s,ft,it,k,mode);done=true;break}}
+    if(done)continue;
+    const ns={free:[{x:0,y:0,w:sw,h:sh}],pl:[]};
+    const ft=findFit(ns.free,it,rot);
+    if(!ft){unplaced.push(it);continue}
+    place(ns,ft,it,k,mode);sheets.push(ns);
+  }
+  return {sheets:sheets,unplaced:unplaced};
+}
+const STRATS=[
+  (a,b)=>b.w*b.h-a.w*a.h,
+  (a,b)=>Math.max(b.w,b.h)-Math.max(a.w,a.h)||b.w*b.h-a.w*a.h,
+  (a,b)=>b.h-a.h||b.w-a.w,
+  (a,b)=>b.w-a.w||b.h-a.h
+];
+function bigArea(r){let m=0;r.sheets.forEach(s=>s.free.forEach(f=>{m=Math.max(m,f.w*f.h)}));return m}
+function bigFree(s){let b=null,a=0;s.free.forEach(f=>{if(f.w*f.h>a){a=f.w*f.h;b=f}});return b?fd(b.w)+' × '+fd(b.h):'—'}
 
-  const rawPieces = getPieces();
-  if (rawPieces.length === 0) {
-    alert('Add at least one piece to optimize.');
+/* ---------- main ---------- */
+function optimize(){
+  clearErrs();
+  const un=$('unit').value,u=UN[un];let ok=true;
+  const bad=(id,m)=>{setErr(id,m);ok=false};
+  const sw=parseFloat($('sheet-w').value),sh=parseFloat($('sheet-h').value);
+  const kv=$('kerf').value.trim(),k=kv===''?0:Number(kv);
+  const cv=$('cost').value.trim(),cost=cv===''?0:Number(cv);
+  const sv=$('spare').value.trim(),spare=sv===''?0:Number(sv);
+  const rot=$('rot').checked;
+  if(!(sw>0))bad('sheet-w','Enter a sheet width greater than 0.');
+  if(!(sh>0))bad('sheet-h','Enter a sheet length greater than 0.');
+  if(!isFinite(k)||k<0)bad('kerf','Kerf must be 0 or more.');
+  else if(sw>0&&sh>0&&k>=Math.min(sw,sh)/4)bad('kerf','Kerf is far too large for this sheet. Check your units.');
+  if(!isFinite(cost)||cost<0)bad('cost','Enter a cost of 0 or more, or leave blank.');
+  if(!isFinite(spare)||spare<0||spare>100)bad('spare','Enter a percentage from 0 to 100.');
+  const rp=readPieces();let pe='';
+  if(rp.bad)pe='Fix the highlighted fields: width and height must be greater than 0, and quantity a whole number from 1 to '+MAXQ+'.';
+  else if(!rp.out.length)pe='Add at least one piece size (width and height) to optimize.';
+  else if(rp.out.reduce((s,p)=>s+p.qty,0)>MAXQ)pe='Maximum '+MAXQ+' pieces in total. Split very large jobs into separate runs.';
+  else if(sw>0&&sh>0){
+    const over=rp.out.filter(p=>!((p.w<=sw+E&&p.h<=sh+E)||(rot&&p.h<=sw+E&&p.w<=sh+E)));
+    if(over.length){
+      over.forEach(p=>p.els.forEach(e=>e.classList.add('error')));
+      pe='Too large for a '+fd(sw)+u.s+' × '+fd(sh)+u.s+' sheet'+(rot?'':' (rotation is off)')+': '+over.map(p=>fd(p.w)+' × '+fd(p.h)).join(', ')+'. Reduce the size, pick a larger sheet, or split the part.';
+    }
+  }
+  if(pe){showPieceErr(pe);ok=false}
+  if(!ok){
+    hideResults();
+    const f=document.querySelector('input.error');if(f)f.focus();
     return;
   }
 
-  // Expand qty into individual items
-  const items = [];
-  const pieceErrors = [];
-  rawPieces.forEach((p, pi) => {
-    if (p.w > sw && p.h > sh) {
-      pieceErrors.push(`Piece ${pi+1} (${p.w}×${p.h}) is larger than the sheet in both dimensions.`);
-      return;
-    }
-    for (let q = 0; q < p.qty; q++) {
-      items.push({w: p.w, h: p.h, label: `${p.w}×${p.h}`});
-    }
-  });
-
-  const sheets = packSheets(sw, sh, items, kerf);
-  lastSheetW = sw; lastSheetH = sh; lastSheets = sheets;
-  lastPieceArea = rawPieces.reduce((s, p) => s + p.w * p.h * p.qty, 0);
-  currentSheetView = 0;
-
-  const sheetArea = sw * sh;
-  const totalSheetArea = sheets.length * sheetArea;
-  const wasteArea = totalSheetArea - lastPieceArea;
-  const wastePercent = (wasteArea / totalSheetArea * 100);
-  const unit = document.getElementById('unit').value;
-  const u = unit === 'in' ? '"' : unit === 'mm' ? 'mm' : 'cm';
-  const totalCost = cost > 0 ? sheets.length * cost : 0;
-  const totalPieces = items.length;
-
-  // Build cut list table rows
-  let cutRows = '';
-  rawPieces.forEach((p, i) => {
-    const area = p.w * p.h * p.qty;
-    cutRows += `<tr>
-      <td>${i+1}</td>
-      <td>${fmt(p.w,2)}${u} × ${fmt(p.h,2)}${u}</td>
-      <td class="num">${p.qty}</td>
-      <td class="num">${fmt(p.w,2)} × ${fmt(p.h,2)}</td>
-      <td class="num">${fmt(area,2)}</td>
-    </tr>`;
-  });
-
-  // Waste bar color
-  const barColor = wastePercent < 20 ? '' : wastePercent < 35 ? 'high' : 'bad';
-
-  // Sheet summary table
-  let sheetRows = '';
-  sheets.forEach((sh2, i) => {
-    const usedArea = sh2.placements.reduce((s, p) => s + p.w * p.h, 0);
-    const shWaste = ((sheetArea - usedArea) / sheetArea * 100);
-    const pcs = sh2.placements.length;
-    sheetRows += `<tr>
-      <td>Sheet ${i+1}</td>
-      <td class="num">${pcs}</td>
-      <td class="num">${fmt(usedArea,1)}</td>
-      <td class="num">${fmt(shWaste,1)}%</td>
-    </tr>`;
-  });
-
-  const errHtml = pieceErrors.length ? `<div style="background:#ffeaea;border-left:3px solid #e74c3c;padding:.7rem 1rem;border-radius:0 6px 6px 0;font-size:.85rem;margin-bottom:.8rem;color:#c0392b">${pieceErrors.join('<br>')}</div>` : '';
-
-  const resultHTML = `
-    ${errHtml}
-    <div class="stats-grid">
-      <div class="stat-box">
-        <div class="stat-val">${sheets.length}</div>
-        <div class="stat-lbl">Sheets Needed</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-val">${fmt(wastePercent,1)}%</div>
-        <div class="stat-lbl">Waste</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-val">${totalPieces}</div>
-        <div class="stat-lbl">Total Pieces</div>
-      </div>
-    </div>
-    ${cost > 0 ? `<div class="stat-box" style="text-align:center;margin-bottom:.8rem"><div class="stat-val" style="font-size:1.8rem">$${fmt(totalCost,2)}</div><div class="stat-lbl">Estimated Material Cost</div></div>` : ''}
-    <div class="waste-bar-wrap"><div class="waste-bar-inner ${barColor}" style="width:${Math.min(100,wastePercent)}%"></div></div>
-    <div class="bar-label">Waste: ${fmt(wastePercent,1)}% — ${fmt(wasteArea,1)} sq ${u} wasted of ${fmt(totalSheetArea,1)} sq ${u} total</div>
-    ${wastePercent < 10 ? '<div class="tip-box">✅ Excellent efficiency! Under 10% waste is great for sheet goods.</div>' : wastePercent < 25 ? '<div class="tip-box">👍 Good layout. There may be room to optimize by reordering pieces.</div>' : '<div class="tip-box">⚠️ High waste detected. Try adjusting piece sizes or grouping similar pieces.</div>'}
-    
-    <h3 style="font-size:.95rem;font-weight:700;margin:1.2rem 0 .5rem">Per-Sheet Summary</h3>
-    <div class="table-wrap"><table>
-      <thead><tr><th>Sheet</th><th class="num">Pieces</th><th class="num">Used Area</th><th class="num">Waste</th></tr></thead>
-      <tbody>${sheetRows}</tbody>
-    </table></div>
-
-    <h3 style="font-size:.95rem;font-weight:700;margin:1.2rem 0 .5rem">Cut List</h3>
-    <div class="table-wrap"><table>
-      <thead><tr><th>#</th><th>Size</th><th class="num">Qty</th><th class="num">Dims (${u})</th><th class="num">Area</th></tr></thead>
-      <tbody>${cutRows}</tbody>
-    </table></div>
-
-    <h3 style="font-size:.95rem;font-weight:700;margin:1.2rem 0 .5rem">Visual Cutting Layout</h3>
-    <div id="sheet-vis-area"></div>
-  `;
-
-  document.getElementById('results-inner').innerHTML = resultHTML;
-  document.getElementById('results-card').classList.add('visible');
-
-  // Build visual layout
-  requestAnimationFrame(() => {
-    renderSheetVis();
-    updateDiagram(sw, sh, kerf);
-  });
-}
-
-function renderSheetVis() {
-  const area = document.getElementById('sheet-vis-area');
-  if (!area || lastSheets.length === 0) return;
-
-  const MAXW = Math.min(560, window.innerWidth - 60);
-  const scale = MAXW / lastSheetW;
-  const visH = Math.min(Math.round(lastSheetH * scale), 400);
-  const visW = MAXW;
-
-  // Build nav buttons
-  let navHtml = '<div class="sheet-nav">';
-  lastSheets.forEach((_, i) => {
-    navHtml += `<button id="snav-${i}" class="${i===currentSheetView?'active':''}" onclick="switchSheet(${i})">Sheet ${i+1}</button>`;
-  });
-  navHtml += `<span class="sheet-info" id="sheet-vis-info"></span></div>`;
-
-  // Build sheet visual
-  function buildSheetHTML(sheetIdx) {
-    const sheet = lastSheets[sheetIdx];
-    const sheetArea = lastSheetW * lastSheetH;
-    const usedArea = sheet.placements.reduce((s, p) => s + p.w * p.h, 0);
-    const wasteP = ((sheetArea - usedArea) / sheetArea * 100).toFixed(1);
-
-    const colors = [
-      'rgba(0,119,182,.22)','rgba(39,174,96,.22)','rgba(155,89,182,.22)',
-      'rgba(230,126,34,.22)','rgba(52,152,219,.22)','rgba(231,76,60,.22)',
-      'rgba(26,188,156,.22)','rgba(243,156,18,.22)','rgba(41,128,185,.22)',
-      'rgba(192,57,43,.22)','rgba(142,68,173,.22)','rgba(39,174,96,.22)'
-    ];
-    const borderColors = [
-      '#0077b6','#27ae60','#9b59b6','#e67e22','#2980b9','#e74c3c',
-      '#1abc9c','#f39c12','#2980b9','#c0392b','#8e44ad','#27ae60'
-    ];
-
-    let piecesHTML = '';
-    sheet.placements.forEach((p, pi) => {
-      const px = Math.round(p.x * scale);
-      const py = Math.round(p.y * scale);
-      const pw = Math.max(2, Math.round(p.w * scale) - 1);
-      const ph = Math.max(2, Math.round(p.h * scale) - 1);
-      const ci = pi % colors.length;
-      const lbl = pw > 28 && ph > 16 ? `<span style="font-size:${Math.max(8,Math.min(11,pw/8))}px;line-height:1.2;padding:1px">${p.label}${p.rotated?'↺':''}</span>` : '';
-      piecesHTML += `<div class="cut-piece" style="left:${px}px;top:${py}px;width:${pw}px;height:${ph}px;background:${colors[ci]};border-color:${borderColors[ci]}" title="${p.label}${p.rotated?' (rotated)':''}">${lbl}</div>`;
-    });
-
-    return {piecesHTML, wasteP, usedArea};
+  const items=[];
+  rp.out.forEach(p=>{for(let i=0;i<p.qty;i++)items.push({w:p.w,h:p.h,label:fd(p.w)+'×'+fd(p.h)})});
+  let best=null;
+  STRATS.forEach(c=>[0,1].forEach(m=>{
+    const r=pack(items,sw,sh,k,rot,c,m);
+    if(!best||r.unplaced.length<best.unplaced.length||(r.unplaced.length===best.unplaced.length&&(r.sheets.length<best.sheets.length||(r.sheets.length===best.sheets.length&&bigArea(r)>bigArea(best)))))best=r;
+  }));
+  if(best.unplaced.length||!best.sheets.length){
+    showPieceErr('Some pieces could not be placed on the sheet. Check the sizes and units.');
+    hideResults();return;
   }
 
-  const {piecesHTML, wasteP, usedArea} = buildSheetHTML(currentSheetView);
+  const sheets=best.sheets,n=sheets.length,sheetArea=sw*sh,totalArea=n*sheetArea;
+  let placed=0;sheets.forEach(s=>s.pl.forEach(p=>{placed+=p.w*p.h}));
+  const wasteArea=totalArea-placed,waste=wasteArea/totalArea*100;
+  const buy=Math.ceil(n*(1+spare/100)-1e-9);
+  const snap={sw:sw,sh:sh,k:k,u:un,sheets:sheets,total:items.length,waste:waste,buy:buy,spare:spare,cost:cost,rot:rot,n:n};
 
-  let html = navHtml;
-  html += `<div style="position:relative;display:inline-block">
-    <div class="sheet-container" id="sheet-vis-box" style="width:${visW}px;height:${visH}px">
-      ${piecesHTML}
-    </div>
-  </div>
-  <div style="margin-top:.4rem;font-size:.78rem;color:#666">
-    Sheet ${currentSheetView+1}: ${lastSheets[currentSheetView].placements.length} pieces — ${wasteP}% waste
-    &nbsp;|&nbsp; Hover pieces to see dimensions
-  </div>`;
+  const D=v=>fd(v)+u.s;
+  const barCls=waste<20?'':waste<35?'mid':'hi';
+  const tip=waste<15?'Tight layout: very little material is wasted.':waste<35?'Reasonable layout. Allowing rotation or adjusting quantities may save material.':'High waste. This is common with few or awkward parts. Check the offcut sizes for reusable pieces.';
+  const sRows=sheets.map((s,i)=>{
+    let used=0;s.pl.forEach(p=>{used+=p.w*p.h});
+    return '<tr'+(i>=10?' class="extra"':'')+'><td>Sheet '+(i+1)+'</td><td class="n">'+fmt(s.pl.length,0)+'</td><td class="n">'+fmt(used,1)+'</td><td class="n">'+fmt((sheetArea-used)/sheetArea*100,1)+'%</td><td class="n">'+bigFree(s)+'</td></tr>';
+  }).join('');
+  const cRows=rp.out.map((p,i)=>'<tr><td>'+(i+1)+'</td><td>'+fd(p.w)+' × '+fd(p.h)+'</td><td class="n">'+fmt(p.qty,0)+'</td><td class="n">'+fmt(p.w*p.h,2)+'</td><td class="n">'+fmt(p.w*p.h*p.qty,2)+'</td></tr>').join('');
+  const costHtml=cost>0?'<div class="table-wrap"'+TW+'><table style="min-width:0"><tbody><tr><td>Cost for layout ('+fmt(n,0)+' sheet'+(n>1?'s':'')+')</td><td class="n">$'+fmt(n*cost,2)+'</td></tr><tr><td>Cost for suggested purchase ('+fmt(buy,0)+' sheets)</td><td class="n"><strong>$'+fmt(buy*cost,2)+'</strong></td></tr></tbody></table></div>':'';
 
-  area.innerHTML = html;
+  const html='<div class="hero"><div class="big">'+fmt(n,0)+'</div><div class="bl">sheet'+(n>1?'s':'')+' needed ('+D(sw)+' × '+D(sh)+')</div></div>'+
+  '<div class="stats"><div class="stat"><b>'+fmt(waste,1)+'%</b><span>Waste</span></div><div class="stat"><b>'+fmt(items.length,0)+'</b><span>Pieces placed</span></div><div class="stat"><b>'+fmt(buy,0)+'</b><span>Suggested purchase (+'+fd(spare)+'% spare)</span></div></div>'+
+  costHtml+
+  '<div class="bar" aria-hidden="true"><i class="'+barCls+'" style="width:'+Math.min(100,waste).toFixed(1)+'%"></i></div>'+
+  '<div class="small">'+fmt(wasteArea,1)+' '+u.a+' wasted of '+fmt(totalArea,1)+' '+u.a+' total (kerf and offcuts included)</div>'+
+  '<div class="tip">'+tip+' Sheets are always rounded up. Treat this as a planning estimate and verify against your actual panel size.</div>'+
+  '<div class="sub">Per-sheet summary</div><div class="table-wrap'+(n>10?' collapsed':'')+'"'+TW+'><table><thead><tr><th>Sheet</th><th class="n">Pieces</th><th class="n">Used ('+u.a+')</th><th class="n">Waste</th><th class="n">Largest offcut</th></tr></thead><tbody>'+sRows+'</tbody></table></div>'+
+  (n>10?'<button type="button" class="btn-sm" id="showall" aria-expanded="false">Show all '+n+' sheets</button>':'')+
+  '<div class="sub">Cut list</div><div class="table-wrap"'+TW+'><table><thead><tr><th>#</th><th>Size ('+un+')</th><th class="n">Qty</th><th class="n">Area each</th><th class="n">Total area</th></tr></thead><tbody>'+cRows+'</tbody></table></div>';
+
+  const cmap={};let ci=0;
+  const mw=Math.min(560,Math.round(420*sw/sh));
+  const tabs=n>1?'<div class="tabs" role="group" aria-label="Choose sheet">'+sheets.map((s,i)=>'<button type="button" data-s="'+i+'" aria-pressed="'+(i===0)+'" class="'+(i===0?'on':'')+'">Sheet '+(i+1)+'</button>').join('')+'</div>':'';
+  const views=sheets.map((s,i)=>{
+    let used=0;
+    const ps=s.pl.map(p=>{
+      used+=p.w*p.h;
+      if(!(p.label in cmap))cmap[p.label]=(ci++*47)%360;
+      const hue=cmap[p.label],showL=p.w/sw>.15&&p.h/sh>.06;
+      return '<div class="cp" style="left:'+(p.x/sw*100).toFixed(3)+'%;top:'+(p.y/sh*100).toFixed(3)+'%;width:'+(p.w/sw*100).toFixed(3)+'%;height:'+(p.h/sh*100).toFixed(3)+'%;background:hsl('+hue+' 75% 86%);border-color:hsl('+hue+' 60% 35%)" title="'+p.label+(p.rot?' (rotated)':'')+'">'+(showL?'<span>'+p.label+(p.rot?' ↻':'')+'</span>':'')+'</div>';
+    }).join('');
+    return '<div class="sv'+(i===0?' on':'')+'" id="sv'+i+'"><div class="sheet-box" style="max-width:'+mw+'px;aspect-ratio:'+sw+' / '+sh+'">'+ps+'</div><p class="small" style="margin-top:.5rem">Sheet '+(i+1)+': '+s.pl.length+' piece'+(s.pl.length>1?'s':'')+', '+fmt((sheetArea-used)/sheetArea*100,1)+'% waste. Each colour is one piece size; ↻ marks rotated pieces.</p></div>';
+  }).join('');
+
+  requestAnimationFrame(()=>{
+    R=snap;
+    $('res-in').innerHTML=html;
+    $('lay-in').innerHTML=tabs+views;
+    $('results-card').classList.add('visible');$('layout-card').classList.add('visible');$('copy-row').classList.add('visible');
+    drawDiagram();
+    $('results-card').scrollIntoView({block:'start'});
+  });
 }
 
-function switchSheet(idx) {
-  currentSheetView = idx;
-  renderSheetVis();
-}
-
-function copyResults() {
-  const sheets = lastSheets.length;
-  if (!sheets) return;
-  const unit = document.getElementById('unit').value;
-  const u = unit === 'in' ? '"' : unit === 'mm' ? 'mm' : 'cm';
-  const sheetArea = lastSheetW * lastSheetH;
-  const totalSheetArea = sheets * sheetArea;
-  const wasteArea = totalSheetArea - lastPieceArea;
-  const wastePercent = (wasteArea / totalSheetArea * 100).toFixed(1);
-  let text = `Plywood Cut Optimizer Results\n`;
-  text += `================================\n`;
-  text += `Sheet size: ${lastSheetW}${u} × ${lastSheetH}${u}\n`;
-  text += `Sheets needed: ${lastSheets.length}\n`;
-  text += `Total pieces: ${lastSheets.reduce((s,sh)=>s+sh.placements.length,0)}\n`;
-  text += `Waste: ${wastePercent}%\n\n`;
-  text += `Per-sheet breakdown:\n`;
-  lastSheets.forEach((sh, i) => {
-    text += `  Sheet ${i+1}: ${sh.placements.length} pieces\n`;
-    sh.placements.forEach(p => {
-      text += `    - ${p.label}${p.rotated?' (rotated)':''} @ (${p.x.toFixed(1)}, ${p.y.toFixed(1)})\n`;
+/* ---------- diagram ---------- */
+function drawDiagram(){
+  const un=R?R.u:$('unit').value,u=UN[un];
+  const dm=v=>fd(v)+u.s;
+  let sw=parseFloat($('sheet-w').value),sh=parseFloat($('sheet-h').value),k=parseFloat($('kerf').value)||0,sheet=null;
+  if(R){sw=R.sw;sh=R.sh;k=R.k;sheet=R.sheets[0]}
+  const valid=sw>0&&sh>0,vw=valid?sw:48,vh=valid?sh:96;
+  const X0=44,Y0=14,AW=300,AH=180,s=Math.min(AW/vw,AH/vh),dw=vw*s,dh=vh*s,ox=X0+(AW-dw)/2,oy=Y0+(AH-dh)/2;
+  let g='<rect x="'+n1(ox)+'" y="'+n1(oy)+'" width="'+n1(dw)+'" height="'+n1(dh)+'" fill="#f8f9fa" stroke="#0077b6" stroke-width="2"/>';
+  if(sheet){
+    sheet.pl.forEach(p=>{
+      const x=ox+p.x*s,y=oy+p.y*s,w=p.w*s,h=p.h*s,t=p.label+(p.rot?' ↻':'');
+      g+='<rect x="'+n1(x)+'" y="'+n1(y)+'" width="'+n1(w)+'" height="'+n1(h)+'" fill="rgba(0,119,182,.18)" stroke="#0077b6" stroke-width="1"/>';
+      if(w>t.length*6.4+4&&h>15)g+='<text x="'+n1(x+w/2)+'" y="'+n1(y+h/2+4)+'" text-anchor="middle" font-size="11" fill="#1a1a2e">'+t+'</text>';
     });
-  });
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('copy-btn');
-    const orig = btn.textContent;
-    btn.textContent = '✅ Copied!';
-    setTimeout(() => { btn.textContent = orig; }, 2000);
-  }).catch(() => {
-    alert('Copy failed. Please select and copy the results manually.');
-  });
+  }else{
+    const P=[[0,0,.49,.55,'A'],[.51,0,.49,.55,'B'],[0,.57,.62,.43,'C'],[.64,.57,.36,.25,'D']];
+    P.forEach(q=>{
+      const x=ox+q[0]*dw,y=oy+q[1]*dh,w=q[2]*dw,h=q[3]*dh;
+      g+='<rect x="'+n1(x)+'" y="'+n1(y)+'" width="'+n1(w)+'" height="'+n1(h)+'" fill="rgba(0,119,182,.18)" stroke="#0077b6" stroke-width="1"/><text x="'+n1(x+w/2)+'" y="'+n1(y+h/2+4)+'" text-anchor="middle" font-size="12" fill="#1a1a2e">'+q[4]+'</text>';
+    });
+    g+='<rect x="'+n1(ox+.64*dw)+'" y="'+n1(oy+.84*dh)+'" width="'+n1(.36*dw)+'" height="'+n1(.16*dh)+'" fill="none" stroke="#666" stroke-dasharray="4 3"/>';
+  }
+  const by=oy+dh+16,lx=ox-16;
+  g+='<line x1="'+n1(ox)+'" y1="'+n1(oy+dh)+'" x2="'+n1(ox)+'" y2="'+n1(by+5)+'" stroke="#e0e0e0"/><line x1="'+n1(ox+dw)+'" y1="'+n1(oy+dh)+'" x2="'+n1(ox+dw)+'" y2="'+n1(by+5)+'" stroke="#e0e0e0"/>'+
+  '<line x1="'+n1(ox)+'" y1="'+n1(by)+'" x2="'+n1(ox+dw)+'" y2="'+n1(by)+'" stroke="#1a1a2e" stroke-width="1.2" marker-start="url(#ah)" marker-end="url(#ah)"/>'+
+  '<text x="'+n1(ox+dw/2)+'" y="'+n1(by+17)+'" text-anchor="middle" font-size="13" fill="#1a1a2e">'+(valid?dm(sw):'width')+'</text>'+
+  '<line x1="'+n1(ox)+'" y1="'+n1(oy)+'" x2="'+n1(lx-5)+'" y2="'+n1(oy)+'" stroke="#e0e0e0"/><line x1="'+n1(ox)+'" y1="'+n1(oy+dh)+'" x2="'+n1(lx-5)+'" y2="'+n1(oy+dh)+'" stroke="#e0e0e0"/>'+
+  '<line x1="'+n1(lx)+'" y1="'+n1(oy)+'" x2="'+n1(lx)+'" y2="'+n1(oy+dh)+'" stroke="#1a1a2e" stroke-width="1.2" marker-start="url(#ah)" marker-end="url(#ah)"/>'+
+  '<text x="'+n1(lx-7)+'" y="'+n1(oy+dh/2)+'" text-anchor="middle" font-size="13" fill="#1a1a2e" transform="rotate(-90 '+n1(lx-7)+' '+n1(oy+dh/2)+')">'+(valid?dm(sh):'length')+'</text>';
+  $('dg').innerHTML=g;
+  $('diag-cap').textContent=(sheet?'Sheet 1 of '+R.n+' from your layout. ':'Example layout. ')+(valid?'Sheet '+dm(sw)+' × '+dm(sh)+', kerf '+dm(k)+'.':'Enter a sheet size to update this drawing.');
 }
 
-// Init
-addPieceRow(24, 24, 2);
-addPieceRow(24, 48, 1);
+/* ---------- copy ---------- */
+function summary(){
+  const u=UN[R.u];let t='Plywood & Sheet Goods Cut Optimizer (Toolwick)\n';
+  t+='Sheet: '+fd(R.sw)+u.s+' x '+fd(R.sh)+u.s+', kerf '+fd(R.k)+u.s+', rotation '+(R.rot?'allowed':'off')+'\n';
+  t+='Sheets needed: '+R.n+' | Suggested purchase (+'+fd(R.spare)+'% spare): '+R.buy+'\n';
+  t+='Pieces: '+R.total+' | Waste: '+fmt(R.waste,1)+'%\n';
+  if(R.cost>0)t+='Cost: $'+fmt(R.n*R.cost,2)+' layout, $'+fmt(R.buy*R.cost,2)+' suggested purchase\n';
+  R.sheets.forEach((s,i)=>{
+    t+='\nSheet '+(i+1)+' (position = from top-left corner):\n';
+    s.pl.forEach(p=>{t+='  '+fd(p.w)+' x '+fd(p.h)+(p.rot?' (rotated)':'')+' at '+fd(p.x)+', '+fd(p.y)+'\n'});
+  });
+  return t+'\nPlanning estimate only; not engineering or code approval.';
+}
+function copyText(t,btn){
+  const done=()=>{btn.textContent='Copied!';setTimeout(()=>{btn.textContent='Copy summary'},2000)};
+  const fb=()=>{
+    const ta=document.createElement('textarea');ta.value=t;ta.setAttribute('aria-hidden','true');ta.style.cssText='position:fixed;opacity:0';
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');done()}catch(e){btn.textContent='Press Ctrl+C'}
+    document.body.removeChild(ta);
+  };
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,fb);else fb();
+}
+
+/* ---------- events ---------- */
+function clearAll(){
+  $('unit').value='in';prev='in';
+  $('sheet-type').value='4x8';
+  $('sheet-w').value=48;$('sheet-h').value=96;$('kerf').value=0.125;$('cost').value='';$('spare').value=10;$('rot').checked=true;
+  $('sheet-w').step=.5;$('sheet-h').step=.5;$('kerf').step=.0625;
+  document.querySelectorAll('.u').forEach(e=>e.textContent='in');
+  $('pieces').innerHTML='';rid=0;addRow(23.5,47.5,4);addRow(10,20,6);
+  clearErrs();hideResults();
+}
+$('go').addEventListener('click',()=>optimize());
+$('clear').addEventListener('click',clearAll);
+$('add').addEventListener('click',()=>{$('err-pieces').classList.remove('show');addRow()});
+$('unit').addEventListener('change',changeUnit);
+$('sheet-type').addEventListener('change',applyPreset);
+['sheet-w','sheet-h'].forEach(id=>$(id).addEventListener('input',()=>{$('sheet-type').value='custom';if(!R)drawDiagram()}));
+$('kerf').addEventListener('input',()=>{if(!R)drawDiagram()});
+$('tool').addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&e.target.tagName==='INPUT'&&e.target.type!=='checkbox'){e.preventDefault();optimize()}
+});
+$('pieces').addEventListener('click',e=>{
+  const b=e.target.closest('.rm');
+  if(b){b.closest('.piece-row').remove();$('err-pieces').classList.remove('show')}
+});
+$('res-in').addEventListener('click',e=>{
+  const b=e.target.closest('#showall');
+  if(b){
+    const w=b.previousElementSibling,c=w.classList.toggle('collapsed');
+    b.setAttribute('aria-expanded',String(!c));
+    b.textContent=c?'Show all '+R.n+' sheets':'Show fewer sheets';
+  }
+});
+$('lay-in').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-s]');
+  if(!b)return;
+  const i=b.getAttribute('data-s');
+  document.querySelectorAll('#lay-in .tabs button').forEach(x=>{const on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-pressed',String(on))});
+  document.querySelectorAll('#lay-in .sv').forEach(v=>v.classList.toggle('on',v.id==='sv'+i));
+});
+$('copy').addEventListener('click',()=>{if(R)copyText(summary(),$('copy'))});
+
+addRow(23.5,47.5,4);addRow(10,20,6);
 applyPreset();
+})();
 </script>
 <script id="a11y-js">(function(){function run(){
 var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
