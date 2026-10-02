@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Free Topsoil Calculator | Toolwick</title>
+<meta name="description" content="Free topsoil calculator: find how many cubic yards, tons and bags of topsoil you need for any bed, lawn or garden, with cost and depth comparison.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/topsoil-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+.intro{color:#333}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem;text-align:center}
+.diagram svg{width:100%;height:auto;max-width:520px;display:block;margin:0 auto}
+.diagram small{display:block;color:#666;font-size:.8rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.row.one{grid-template-columns:1fr}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.3rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;font-size:1rem;color:#1a1a2e;background:#fff}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;cursor:pointer}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.invalid{border-color:#e74c3c}
+.err{display:block;color:#c0392b;font-size:.82rem;margin-top:.3rem}
+.err:empty{display:none}
+.ticks{display:flex;justify-content:space-between;font-size:.75rem;color:#666}
+.btn{width:100%;min-height:48px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-size:1rem;font-weight:600;cursor:pointer;margin-top:.5rem}
+.btn:hover{background:#006299}
+#results{margin-top:1.5rem}
+.res{animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.big{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.big .lbl{font-size:.85rem;color:#444}
+.big .num{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.2}
+.big .num span{font-size:1.1rem;font-weight:600}
+.big .sub{color:#333;font-size:.95rem}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;min-height:44px;padding:8px 16px;font:inherit;font-size:.9rem;cursor:pointer;margin-bottom:1rem}
+.copy:hover{background:#f0f7fb}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+thead th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td,tbody th{padding:10px 12px;border-bottom:1px solid #e8e8e8;text-align:left;font-weight:400}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.n{text-align:right!important;white-space:nowrap}
+.cur td,.cur th{font-weight:700}
+h3{font-size:1rem;margin:1.25rem 0 .5rem}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;border-radius:0 6px 6px 0}
+.ad-slot{min-height:0;margin:0}
+code,.f{background:#f8f9fa;padding:.1rem .35rem;border-radius:4px;font-size:.92rem}
+ol,ul{padding-left:1.4rem;margin:0 0 1rem}
+li{margin-bottom:.4rem}
+details{border-bottom:1px solid #e8e8e8;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .5rem;color:#333}
+a{color:#0077b6}
+.rel li{margin-bottom:.6rem}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2rem;font-size:.9rem;color:#555;text-align:center}
+footer a{color:#0077b6;text-decoration:underline;margin:0 .5rem}
+@media(max-width:640px){.row{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.5rem}.big .num{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/topsoil-calculator/">
+<meta property="og:title" content="Topsoil Calculator">
+<meta property="og:description" content="Free topsoil calculator: find how many cubic yards, tons and bags of topsoil you need for any bed, lawn or garden, with cost and depth comparison.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Topsoil Calculator</h1>
+<p class="intro">This free topsoil calculator tells you how many cubic yards, tons and bags of topsoil you need for a garden bed, lawn, or fill area. Enter the shape and size, choose a depth, and get a ready-to-order quantity with weight and cost.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="diagram" viewBox="0 0 440 215" role="img" aria-labelledby="svgt">
+<title id="svgt">Diagram of a topsoil layer showing length, width and depth dimensions</title>
+<defs><marker id="ar" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 z" fill="#0077b6"/></marker></defs>
+<text id="t-vol" x="220" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#0077b6">Topsoil volume</text>
+<g id="g-rect">
+<polygon points="280,110 350,70 350,110 280,150" fill="#e0d2bd" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="90" y="110" width="190" height="40" fill="#e9dcc9" stroke="#0077b6" stroke-width="1.5"/>
+<polygon points="90,110 280,110 350,70 160,70" fill="#f6efe4" stroke="#0077b6" stroke-width="1.5"/>
+</g>
+<g id="g-circ" display="none">
+<path d="M90,110 L90,150 A95,30 0 0 0 280,150 L280,110 Z" fill="#e9dcc9" stroke="#0077b6" stroke-width="1.5"/>
+<ellipse cx="185" cy="110" rx="95" ry="30" fill="#f6efe4" stroke="#0077b6" stroke-width="1.5"/>
+</g>
+<g id="g-tri" display="none">
+<polygon points="280,110 200,72 200,112 280,150" fill="#e0d2bd" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="90" y="110" width="190" height="40" fill="#e9dcc9" stroke="#0077b6" stroke-width="1.5"/>
+<polygon points="90,110 280,110 200,72" fill="#f6efe4" stroke="#0077b6" stroke-width="1.5"/>
+<line x1="200" y1="72" x2="200" y2="110" stroke="#1a1a2e" stroke-width="1" stroke-dasharray="3 3"/>
+</g>
+<g stroke="#e0e0e0" stroke-width="1.2" stroke-dasharray="4 3">
+<line x1="68" y1="110" x2="90" y2="110"/><line x1="68" y1="150" x2="90" y2="150"/>
+<line x1="90" y1="152" x2="90" y2="178"/><line x1="280" y1="152" x2="280" y2="178"/>
+</g>
+<g stroke="#0077b6" stroke-width="1.5" fill="none">
+<line x1="76" y1="112" x2="76" y2="148" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="92" y1="172" x2="278" y2="172" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<g id="g-wid"><line x1="290" y1="164" x2="358" y2="124" marker-start="url(#ar)" marker-end="url(#ar)"/></g>
+</g>
+<text id="t-dep" x="68" y="134" text-anchor="end" font-size="12" fill="#1a1a2e">Depth</text>
+<text id="t-len" x="185" y="192" text-anchor="middle" font-size="12" fill="#1a1a2e">Length</text>
+<text id="t-wid" x="385" y="150" text-anchor="middle" font-size="12" fill="#1a1a2e">Width</text>
+</svg>
+<small>Diagram not to scale. Depth is exaggerated. Labels update when you calculate.</small>
+</div>
+
+<form id="f" novalidate>
+<div class="row one"><div><label for="shape">Area shape</label>
+<select id="shape"><option value="rect">Rectangle / square</option><option value="circle">Circle</option><option value="tri">Triangle</option></select></div></div>
+<div class="row">
+<div><label for="d1" id="l1">Length</label><input id="d1" type="number" inputmode="decimal" min="0" step="any" value="20" aria-describedby="e-d1"><span class="err" id="e-d1"></span></div>
+<div id="w2"><label for="d2" id="l2">Width</label><input id="d2" type="number" inputmode="decimal" min="0" step="any" value="10" aria-describedby="e-d2"><span class="err" id="e-d2"></span></div>
+</div>
+<div class="row">
+<div><label for="dunit">Size unit</label><select id="dunit"><option value="ft">Feet (ft)</option><option value="in">Inches (in)</option><option value="yd">Yards (yd)</option><option value="m">Meters (m)</option><option value="cm">Centimeters (cm)</option></select></div>
+<div><label for="count">Number of identical areas</label><input id="count" type="number" inputmode="numeric" min="1" step="1" value="1" aria-describedby="e-count"><span class="err" id="e-count"></span></div>
+</div>
+<div class="row">
+<div><label for="depth">Topsoil depth</label><input id="depth" type="number" inputmode="decimal" min="0" step="any" value="4" aria-describedby="e-depth"><span class="err" id="e-depth"></span></div>
+<div><label for="pdunit">Depth unit</label><select id="pdunit"><option value="in">Inches (in)</option><option value="cm">Centimeters (cm)</option><option value="ft">Feet (ft)</option></select></div>
+</div>
+<div class="row one"><div><label for="extra">Extra for settling &amp; waste: <strong id="pctv">10</strong>%</label>
+<input id="extra" type="range" min="0" max="30" step="1" value="10">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>15%</span><span>30%</span></div></div></div>
+<div class="row">
+<div><label for="dens">Soil weight (per cubic yard)</label><select id="dens"><option value="1.0">Dry / sandy — 2,000 lb</option><option value="1.2" selected>Average — 2,400 lb</option><option value="1.4">Wet / clay-heavy — 2,800 lb</option></select></div>
+<div><label for="bag">Bagged soil size</label><select id="bag"><option value="0.5">0.5 cu ft bag</option><option value="0.75" selected>0.75 cu ft bag</option><option value="1">1 cu ft bag</option><option value="1.5">1.5 cu ft bag</option></select></div>
+</div>
+<div class="row">
+<div><label for="price">Price per cubic yard ($, optional)</label><input id="price" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 35" aria-describedby="e-price"><span class="err" id="e-price"></span></div>
+<div><label for="deliv">Delivery fee ($, optional)</label><input id="deliv" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 60" aria-describedby="e-deliv"><span class="err" id="e-deliv"></span></div>
+</div>
+<button class="btn" type="submit" id="calcBtn">Calculate Topsoil</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<h2>How to Use This Topsoil Calculator</h2>
+<p>Choose the shape of the area (rectangle, circle or triangle), enter its dimensions and the depth of topsoil you want to spread, then set an allowance for settling and waste. Optionally add the price per cubic yard and any delivery fee. The calculator returns volume in cubic yards, cubic feet and cubic meters, weight in tons, the number of bags of bagged soil, a suggested order rounded up to the next half yard, and a table comparing other depths for the same area.</p>
+
+<h2>Why This Matters</h2>
+<p>Topsoil is sold by the cubic yard, but yards are hard to picture. Ordering too little means a second delivery fee, often $50 to $150, and a second batch that may differ in color and texture from the first. Ordering too much leaves a pile in the driveway that you have to move or pay to haul away.</p>
+<p>A homeowner building three raised beds, a landscaper top-dressing 5,000 square feet of lawn and a gardener filling a 12-inch vegetable plot all face the same question: how much is enough? Take a 1,000 square foot lawn renovation. Spreading 4 inches of topsoil needs about 12.4 cubic yards before any allowance, and about 13.6 yards with 10% extra. A yard of damp topsoil weighs 1.1 to 1.4 tons, so that is far more than a pickup can safely carry in one trip. Weight matters for trailer limits and for protecting your driveway. A good estimate also lets you compare bulk delivery against bagged soil, where the same job would take roughly 490 bags of 0.75 cubic feet.</p>
+
+<h2>How It's Calculated</h2>
+<p>Every measurement is converted to feet first, then the math runs in cubic feet before converting to yards.</p>
+<ul>
+<li><strong>Area:</strong> rectangle = length × width; circle = π × (diameter ÷ 2)²; triangle = ½ × base × height.</li>
+<li><strong>Volume</strong> (cu ft) = area (sq ft) × depth (ft) × number of identical areas.</li>
+<li><strong>Total with allowance</strong> = volume × (1 + allowance %).</li>
+<li><strong>Cubic yards</strong> = cubic feet ÷ 27, because 3 ft × 3 ft × 3 ft = 27 cu ft.</li>
+<li><strong>Suggested order</strong> = cubic yards rounded up to the next 0.5 yd.</li>
+<li><strong>Weight</strong> (tons) = suggested order × density (1.0, 1.2 or 1.4 short tons per cubic yard).</li>
+<li><strong>Bags</strong> = total cubic feet ÷ bag size, rounded up.</li>
+</ul>
+<p>A handy rule of thumb: one cubic yard covers 324 square feet at 1 inch deep, 108 square feet at 3 inches and 81 square feet at 4 inches. All rounding goes upward, never down, so you do not come up short. Densities are typical for screened loam. Real weight varies with moisture, sand and clay content, so confirm with your supplier. This is a planning estimate, not engineering, permit or inspection approval, and local codes vary.</p>
+
+<h2>Worked Example</h2>
+<p>Say you are filling a 20 ft × 10 ft garden area with 4 inches of average topsoil, a 10% settling allowance, a price of $35 per yard and a $60 delivery fee.</p>
+<ol>
+<li>Area = 20 × 10 = 200 sq ft.</li>
+<li>Depth = 4 ÷ 12 = 0.3333 ft, so volume = 200 × 0.3333 = 66.67 cu ft.</li>
+<li>Add 10%: 66.67 × 1.10 = 73.33 cu ft.</li>
+<li>Cubic yards = 73.33 ÷ 27 = 2.72 yd³.</li>
+<li>Suggested order, rounded up to the next half yard = 3.0 yd³.</li>
+<li>Weight = 3.0 × 1.2 = 3.6 tons (7,200 lb).</li>
+<li>Bagged alternative: 73.33 ÷ 0.75 = 97.8, so 98 bags.</li>
+<li>Cost = 3.0 × $35 + $60 = $165.00.</li>
+</ol>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Mixing units.</strong> The most common error is entering depth in feet when you meant inches. Check the depth unit: 4 feet of soil is 12 times more than 4 inches.</li>
+<li><strong>Skipping the settling allowance.</strong> Freshly spread soil compacts 10 to 20% after watering and rain. Use 10 to 15% for new beds and lawns.</li>
+<li><strong>Irregular areas.</strong> Split them into rectangles, circles and triangles, calculate each one, and add the results. Use the "identical areas" field only for matching shapes.</li>
+<li><strong>Ignoring drainage.</strong> Keep finished grade sloping away from the foundation. Model codes such as IRC R401.3 call for at least 6 inches of fall in the first 10 feet. Keep soil below siding and sill plates. Local codes vary.</li>
+<li><strong>Forgetting weight.</strong> Wet soil can approach 1.4 tons per yard. Check truck, trailer and driveway limits before ordering or hauling.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much topsoil do I need for 1,000 square feet at 4 inches?</summary><p>1,000 sq ft × (4 ÷ 12) ft = 333.3 cubic feet, or 12.35 cubic yards. Adding a 10% settling allowance brings it to about 13.6 cubic yards, so order 14 yards.</p></details>
+<details><summary>How many square feet does one cubic yard of topsoil cover?</summary><p>One cubic yard covers 324 square feet at 1 inch deep, 162 at 2 inches, 108 at 3 inches, 81 at 4 inches and 54 at 6 inches. Divide 324 by your depth in inches for a quick estimate.</p></details>
+<details><summary>How deep should topsoil be?</summary><p>For a new lawn, 4 to 6 inches is common. Vegetable and flower beds usually want 6 to 12 inches. Lawn top-dressing over an existing lawn is only about ¼ to ½ inch. Always follow your plant or seed guidance.</p></details>
+<details><summary>How much does a cubic yard of topsoil weigh?</summary><p>Typically 2,000 to 2,800 pounds, or about 1.0 to 1.4 short tons. Dry, sandy soil is lighter, while wet or clay-rich soil is heavier. This calculator lets you choose a weight class.</p></details>
+<details><summary>Is bulk or bagged topsoil cheaper?</summary><p>Bulk is almost always cheaper per yard once you need more than about a yard. One cubic yard equals 27 cubic feet, or 36 bags of 0.75 cubic feet. Bags suit small repairs, containers and spots you cannot reach with a wheelbarrow.</p></details>
+<details><summary>Should I order extra topsoil?</summary><p>Yes. Order 5 to 15% extra to cover settling, uneven ground and spillage. Left-over soil is easy to use elsewhere, while a short order means another delivery fee.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/mulch-calculator/">Mulch Calculator</a> — cubic yards of mulch for beds and borders</li>
+<li><a href="/cubic-yards-to-tons-calculator/">Cubic Yards to Tons Calculator</a> — convert soil volume to weight</li>
+<li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a> — bag counts for slabs and footings</li>
+<li><a href="/wheelchair-ramp-slope-length-calculator/">Wheelchair Ramp Slope &amp; Length Calculator</a> — plan a code-friendly ramp</li>
+<li><a href="/drip-edge-roof-trim-calculator/">Drip Edge &amp; Roof Trim Calculator</a> — roof edge trim lengths</li>
+<li><a href="/ridge-vent-length-calculator/">Ridge Vent Length Calculator</a> — ventilation along the ridge</li>
+</ul>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/topsoil-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var U={ft:1,'in':1/12,yd:3,m:3.280839895,cm:0.03280839895};
+var DP={'in':1/12,cm:1/30.48,ft:1};
+var L1={rect:'Length',circle:'Diameter',tri:'Base'},L2={rect:'Width',tri:'Height'};
+var done=false,lastText='';
+$('yr').textContent=new Date().getFullYear();
+function f2(n,d){d=d==null?2:d;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function ft(n){return (+n.toFixed(2)).toLocaleString('en-US',{maximumFractionDigits:2})}
+function num(id){var v=$(id).value.trim();return v===''?NaN:Number(v)}
+function opt(id){var v=$(id).value.trim();return v===''?0:Number(v)}
+function clearErr(){['d1','d2','count','depth','price','deliv'].forEach(function(id){$('e-'+id).textContent='';$(id).classList.remove('invalid');$(id).removeAttribute('aria-invalid')})}
+function shapeUI(){
+  var s=$('shape').value;
+  $('l1').textContent=L1[s];$('t-len').textContent=L1[s];
+  $('w2').style.display=s==='circle'?'none':'';
+  if(s!=='circle'){$('l2').textContent=L2[s];$('t-wid').textContent=L2[s]}
+  $('g-rect').setAttribute('display',s==='rect'?'':'none');
+  $('g-circ').setAttribute('display',s==='circle'?'':'none');
+  $('g-tri').setAttribute('display',s==='tri'?'':'none');
+  var w=s==='circle'?'none':'';
+  $('g-wid').setAttribute('display',w);$('t-wid').setAttribute('display',w);
+  $('t-dep').textContent='Depth';$('t-vol').textContent='Topsoil volume';
+}
+function calc(focus){
+  clearErr();
+  var s=$('shape').value,du=$('dunit').value,pu=$('pdunit').value,errs=[];
+  function bad(id,m){$('e-'+id).textContent=m;$(id).classList.add('invalid');$(id).setAttribute('aria-invalid','true');errs.push(id)}
+  var a=num('d1'),b=s==='circle'?1:num('d2'),dp=num('depth'),n=num('count'),extra=+$('extra').value,f=U[du];
+  if(!(a>0))bad('d1','Enter a size greater than 0.');else if(a*f>100000)bad('d1','That is over 100,000 ft. Check the value or unit.');
+  if(s!=='circle'){if(!(b>0))bad('d2','Enter a size greater than 0.');else if(b*f>100000)bad('d2','That is over 100,000 ft. Check the value or unit.')}
+  if(!(dp>0))bad('depth','Enter a depth greater than 0.');else if(dp*DP[pu]>10)bad('depth','Depth over 10 ft is not supported. Check the depth unit.');
+  if(!(n>=1)||!Number.isInteger(n)||n>1000)bad('count','Enter a whole number from 1 to 1,000.');
+  var price=opt('price'),deliv=opt('deliv');
+  if(isNaN(price)||price<0)bad('price','Enter a price of 0 or more, or leave blank.');
+  if(isNaN(deliv)||deliv<0)bad('deliv','Enter a fee of 0 or more, or leave blank.');
+  var A,dft,vol,tot,yd;
+  if(!errs.length){
+    var af=a*f,bf=b*f;
+    A=s==='rect'?af*bf:s==='circle'?Math.PI*af*af/4:0.5*af*bf;
+    dft=dp*DP[pu];vol=A*dft*n;tot=vol*(1+extra/100);yd=tot/27;
+    if(yd>1e6)bad('d1','Result is too large to be realistic. Check your values.');
+  }
+  if(errs.length){$('results').innerHTML='';lastText='';if(focus)$(errs[0]).focus();return}
+  done=true;
+  var dens=+$('dens').value,bag=+$('bag').value;
+  var order=Math.max(0.5,Math.ceil(yd*2-1e-9)/2),tons=order*dens,lb=tons*2000,tonnes=tons*0.907185;
+  var bags=Math.ceil(tot/bag-1e-9),loads=order/10,AT=A*n;
+  var cost=order*price+deliv,showCost=price>0||deliv>0;
+  var rows=[['Area covered',f2(AT,1)+' sq ft ('+f2(AT*0.09290304,1)+' m²)'],
+  ['Volume before allowance',f2(vol)+' cu ft'],
+  ['Total with '+extra+'% allowance',f2(tot)+' cu ft'],
+  ['Total (cubic yards)',f2(yd)+' yd³'],
+  ['Total (cubic meters)',f2(yd*0.764554858)+' m³'],
+  ['Suggested order (rounded up)',f2(order,1)+' yd³'],
+  ['Weight of suggested order',f2(tons,1)+' tons / '+f2(lb,0)+' lb'],
+  ['Weight (metric)',f2(tonnes,1)+' tonnes'],
+  ['Bagged soil ('+bag+' cu ft bags)',f2(bags,0)+' bags'],
+  ['Dump truck loads (10 yd³)',f2(loads)]];
+  if(showCost)rows.push(['Estimated cost','$'+f2(cost)]);
+  var t1='<div class="tw"><table><thead><tr><th>Measure</th><th class="n">Amount</th></tr></thead><tbody>';
+  rows.forEach(function(r){t1+='<tr><th scope="row">'+r[0]+'</th><td class="n">'+r[1]+'</td></tr>'});
+  t1+='</tbody></table></div>';
+  var cin=dft*12,t2='<h3>Compare other depths (same area, '+extra+'% allowance)</h3><div class="tw"><table><thead><tr><th>Depth</th><th class="n">Cubic yards</th><th class="n">Order</th><th class="n">Tons</th><th class="n">Bags</th></tr></thead><tbody>';
+  [1,2,3,4,6,8,12].forEach(function(d){
+    var y=AT*(d/12)*(1+extra/100)/27,o=Math.max(0.5,Math.ceil(y*2-1e-9)/2);
+    var cur=Math.abs(cin-d)<0.005;
+    t2+='<tr'+(cur?' class="cur"':'')+'><td>'+d+' in'+(cur?' (your depth)':'')+'</td><td class="n">'+f2(y)+'</td><td class="n">'+f2(o,1)+'</td><td class="n">'+f2(o*dens,1)+'</td><td class="n">'+f2(Math.ceil(y*27/bag-1e-9),0)+'</td></tr>';
+  });
+  t2+='</tbody></table></div>';
+  var html='<div class="res"><div class="big"><div class="lbl">Topsoil needed (includes '+extra+'% extra)</div><div class="num">'+f2(yd)+' <span>cubic yards</span></div><div class="sub">Order about <strong>'+f2(order,1)+' yd³</strong> (rounded up to the next ½ yard)</div></div>'
+  +'<button type="button" class="copy" id="copyBtn">Copy results</button>'+t1+t2
+  +'<p class="note">Planning estimate only. Quantities are rounded up and weights use typical densities, which vary with moisture and soil type. Slope finished grade away from buildings (see IRC R401.3 for the model-code rule of thumb). Local codes vary, and this is not engineering, permit or inspection approval.</p></div>';
+  lastText='Topsoil estimate ('+L1[s]+' '+ft(a)+' '+du+(s==='circle'?'':' x '+ft(b)+' '+du)+', depth '+ft(dp)+' '+pu+', x'+n+')\n'+rows.map(function(r){return r[0]+': '+r[1]}).join('\n')+'\nCalculated at toolwick.com/topsoil-calculator/';
+  requestAnimationFrame(function(){
+    $('results').innerHTML=html;
+    $('t-len').textContent=L1[s]+' '+ft(a)+' '+du;
+    if(s!=='circle')$('t-wid').textContent=L2[s]+' '+ft(b)+' '+du;
+    $('t-dep').textContent='Depth '+ft(dp)+' '+pu;
+    $('t-vol').textContent='Order ≈ '+f2(order,1)+' yd³ ('+f2(yd)+' yd³ needed)';
+  });
+}
+function run(focus){requestAnimationFrame(function(){calc(focus)})}
+$('f').addEventListener('submit',function(e){e.preventDefault();run(true)});
+$('shape').addEventListener('change',function(){shapeUI();if(done)run(false)});
+$('extra').addEventListener('input',function(){$('pctv').textContent=this.value;if(done)run(false)});
+['d1','d2','count','depth','price','deliv'].forEach(function(id){$(id).addEventListener('input',function(){if(done)run(false)})});
+['dunit','pdunit','dens','bag'].forEach(function(id){$(id).addEventListener('change',function(){if(done)run(false)})});
+$('results').addEventListener('click',function(e){
+  var b=e.target.closest('#copyBtn');if(!b||!lastText)return;
+  function ok(){b.textContent='Copied!';setTimeout(function(){var c=$('copyBtn');if(c)c.textContent='Copy results'},2000)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(ok,fb)}else fb();
+  function fb(){var t=document.createElement('textarea');t.value=lastText;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(x){}document.body.removeChild(t)}
+});
+shapeUI();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
