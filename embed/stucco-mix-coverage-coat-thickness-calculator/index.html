@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Stucco Mix Coverage &amp; Coat Thickness Calculator | Toolwick</title>
+<meta name="description" content="Stucco calculator: how much do I need? Enter wall size to get bags, mix volume, cost and coat thickness for scratch, brown and finish coats.">
+<link rel="canonical" href="https://toolwick.com/stucco-mix-coverage-coat-thickness-calculator/">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+a{color:#0077b6;text-decoration:underline}
+a:hover{color:#006299}
+:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+nav{border-bottom:1px solid #e0e0e0;padding:0 1.5rem}
+.nav-inner{max-width:640px;margin:0 auto;display:flex;align-items:center;min-height:52px}
+.nav-brand{font-weight:700;font-size:1.1rem;color:#1a1a2e;text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+.nav-brand span{color:#0077b6}
+main{max-width:640px;margin:0 auto;padding:2rem 1.5rem 3rem}
+h1{font-size:1.6rem;font-weight:800;line-height:1.3;margin-bottom:.75rem}
+.lead{color:#444;margin-bottom:2rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:2rem}
+.diagram-wrap{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:.75rem;margin-bottom:1.5rem;text-align:center}
+.diagram-wrap svg{width:100%;max-width:400px;height:auto;display:block;margin:0 auto}
+.cap{font-size:.8rem;color:#666;margin-top:.25rem}
+.group{margin-bottom:1.75rem}
+.group-title{font-size:.85rem;font-weight:700;color:#0077b6;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{margin-bottom:1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.4rem}
+input[type=number],select{width:100%;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font-size:1rem;color:#1a1a2e;background:#fff;min-height:44px;font-family:inherit}
+input[type=number]:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px;border-color:#0077b6}
+input.error{border-color:#e74c3c}
+input[type=range]{width:100%;height:44px;accent-color:#0077b6;cursor:pointer}
+.err{color:#c0392b;font-size:.82rem;margin-top:.3rem;display:none}
+.err.show{display:block}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.btn{display:block;width:100%;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;min-height:48px;font-family:inherit}
+.btn:hover{background:#006299}
+.btn-copy{background:#f8f9fa;color:#444;border:1px solid #ddd;border-radius:6px;padding:8px 16px;font-size:.82rem;cursor:pointer;min-height:44px;font-family:inherit}
+.btn-copy:hover{background:#eee}
+.result-card{animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.result-card{animation:none}}
+.result-head{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.res-title{font-size:1.05rem;font-weight:700}
+.key-main{text-align:center;padding:1rem 0 1.25rem}
+.key-number{font-size:3rem;font-weight:800;color:#0077b6;line-height:1.1;font-variant-numeric:tabular-nums}
+.key-label{color:#666;font-size:.9rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.stat{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:.75rem 1rem;text-align:center}
+.stat b{display:block;font-size:1.2rem;color:#1a1a2e;font-variant-numeric:tabular-nums}
+.stat span{font-size:.8rem;color:#666}
+.share{display:flex;height:12px;border-radius:6px;overflow:hidden;margin:0 0 1.25rem;background:#e0e0e0}
+.share i{display:block;height:100%}
+.c-scratch{background:#9ecae1}.c-brown{background:#c9a77c}.c-finish{background:#f1e9dc;box-shadow:inset 0 0 0 1px #c9c0b0}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.tw{overflow-x:auto;margin-bottom:1.5rem}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;font-weight:600;color:#444;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #eee}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+tr.tot td{font-weight:700;border-top:2px solid #ddd}
+.warn{background:#fff8e1;border:1px solid #f0c36d;color:#5c4300;border-radius:6px;padding:.75rem 1rem;margin-bottom:1rem;font-size:.9rem}
+.warn ul{padding-left:1.2rem}
+.note{font-size:.82rem;color:#666}
+.ad-slot{min-height:0;margin:0}
+.content h2{font-size:1.25rem;font-weight:700;margin:2.25rem 0 .75rem}
+.content p{color:#333;margin-bottom:.9rem;line-height:1.7}
+.content ul{padding-left:1.4rem;margin-bottom:1rem;color:#333}
+.content li{margin-bottom:.5rem;line-height:1.7}
+.formula{background:#f8f9fa;border-left:4px solid #0077b6;padding:.75rem 1rem;margin-bottom:1rem;font-size:.92rem;border-radius:0 6px 6px 0}
+.formula div{margin:.2rem 0}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:.75rem}
+summary{padding:12px 16px;font-weight:600;cursor:pointer;min-height:44px;display:flex;justify-content:space-between;align-items:center;gap:1rem;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';font-size:1.3rem;color:#0077b6}
+details[open] summary::after{content:'−'}
+details p{padding:0 16px 14px;margin:0;color:#444}
+.related{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem}
+.related a{display:flex;align-items:center;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.75rem 1rem;font-size:.9rem;min-height:44px}
+footer{background:#f8f9fa;border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:.85rem;color:#666}
+footer a{margin:0 .6rem;display:inline-block;min-height:44px;line-height:44px}
+@media (max-width:640px){
+h1{font-size:1.4rem}
+main{padding:1.5rem 1rem 2.5rem}
+.card{padding:1.25rem}
+.row,.related{grid-template-columns:1fr}
+.key-number{font-size:2.5rem}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/stucco-mix-coverage-coat-thickness-calculator/">
+<meta property="og:title" content="Stucco Mix Coverage &amp; Coat Thickness Calculator">
+<meta property="og:description" content="Stucco calculator: how much do I need? Enter wall size to get bags, mix volume, cost and coat thickness for scratch, brown and finish coats.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><div class="nav-inner"><a class="nav-brand" href="/">Tool<span>wick</span></a></div></nav>
+<main>
+<h1>Stucco Mix Coverage &amp; Coat Thickness Calculator</h1>
+<p class="lead">Use this stucco calculator to answer the question every plasterer asks: how much do I need? Enter your wall size and coat thicknesses to get bags per coat, total bags, wet mix volume, weight and material cost.</p>
+
+<div class="card">
+<div class="diagram-wrap">
+<svg id="diagram" viewBox="0 0 360 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cross-section of a stucco wall showing lath, scratch coat, brown coat and finish coat with thicknesses">
+<rect x="20" y="55" width="70" height="100" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="1.5"/>
+<text x="55" y="101" text-anchor="middle" font-size="11" fill="#1a1a2e" font-family="sans-serif">Wall</text>
+<text x="55" y="115" text-anchor="middle" font-size="11" fill="#1a1a2e" font-family="sans-serif">substrate</text>
+<rect id="dl1" x="90" y="55" width="34" height="100" fill="#9ecae1" stroke="#0077b6" stroke-width="1"/>
+<rect id="dl2" x="124" y="55" width="34" height="100" fill="#c9a77c" stroke="#0077b6" stroke-width="1"/>
+<rect id="dl3" x="158" y="55" width="11" height="100" fill="#f1e9dc" stroke="#0077b6" stroke-width="1"/>
+<line x1="90" y1="55" x2="90" y2="155" stroke="#0077b6" stroke-width="2.5" stroke-dasharray="5 3"/>
+<line x1="20" y1="55" x2="270" y2="55" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="20" y1="155" x2="270" y2="155" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="90" y="172" text-anchor="middle" font-size="11" fill="#1a1a2e" font-family="sans-serif">Lath + WRB</text>
+<line id="dimL" x1="90" y1="46" x2="169" y2="46" stroke="#0077b6" stroke-width="1.5"/>
+<line x1="90" y1="40" x2="90" y2="52" stroke="#0077b6" stroke-width="1.5"/>
+<line id="dimT" x1="169" y1="40" x2="169" y2="52" stroke="#0077b6" stroke-width="1.5"/>
+<text id="dimTxt" x="90" y="32" font-size="13" font-weight="700" fill="#1a1a2e" font-family="sans-serif">Total</text>
+<g id="lg1"><rect x="30" y="185" width="14" height="14" class="c-scratch" fill="#9ecae1" stroke="#0077b6"/><text id="lt1" x="52" y="197" font-size="13" fill="#1a1a2e" font-family="sans-serif"></text></g>
+<g id="lg2"><rect x="30" y="185" width="14" height="14" fill="#c9a77c" stroke="#0077b6"/><text id="lt2" x="52" y="197" font-size="13" fill="#1a1a2e" font-family="sans-serif"></text></g>
+<g id="lg3"><rect x="30" y="185" width="14" height="14" fill="#f1e9dc" stroke="#0077b6"/><text id="lt3" x="52" y="197" font-size="13" fill="#1a1a2e" font-family="sans-serif"></text></g>
+<text id="dWall" x="180" y="262" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a2e" font-family="sans-serif">Enter wall size, then calculate</text>
+</svg>
+<p class="cap">Cross-section, not to scale. Layers update as you change thickness or calculate.</p>
+</div>
+
+<div class="group">
+<div class="group-title">1. Wall size</div>
+<div class="row">
+<div class="fg"><label for="wallWidth">Wall width (<span class="u-len">ft</span>)</label><input type="number" id="wallWidth" inputmode="decimal" min="0" step="any" placeholder="e.g. 160" aria-describedby="err-wallWidth"><div class="err" id="err-wallWidth"></div></div>
+<div class="fg"><label for="wallHeight">Wall height (<span class="u-len">ft</span>)</label><input type="number" id="wallHeight" inputmode="decimal" min="0" step="any" placeholder="e.g. 9" aria-describedby="err-wallHeight"><div class="err" id="err-wallHeight"></div></div>
+</div>
+<div class="row">
+<div class="fg"><label for="unitSys">Units</label><select id="unitSys"><option value="ft">Feet / pounds (US)</option><option value="m">Meters / kilograms (metric)</option></select></div>
+<div class="fg"><label for="numSurfaces">Number of identical walls</label><input type="number" id="numSurfaces" inputmode="numeric" min="1" step="1" value="1" aria-describedby="err-numSurfaces"><div class="err" id="err-numSurfaces"></div></div>
+</div>
+<div class="fg"><label for="deductArea">Doors, windows &amp; openings to deduct (<span class="u-area">sq ft</span>)</label><input type="number" id="deductArea" inputmode="decimal" min="0" step="any" value="0" aria-describedby="err-deductArea"><div class="err" id="err-deductArea"></div><div class="hint">Total area of all openings. Leave 0 if none.</div></div>
+<div class="fg"><label for="wasteFactor">Waste allowance: <span id="wasteLbl">10%</span></label><input type="range" id="wasteFactor" min="5" max="30" step="1" value="10"><div class="hint">10% suits flat walls; use 15–25% for corners, arches and trim.</div></div>
+</div>
+
+<div class="group">
+<div class="group-title">2. Coats &amp; thickness</div>
+<div class="fg"><label for="coatSystem">Coat system</label><select id="coatSystem"><option value="3coat">3-coat (scratch + brown + finish)</option><option value="2coat">2-coat (brown + finish)</option><option value="1coat">1-coat (single base coat)</option></select></div>
+<div class="fg" id="gScratch"><label for="scratchThick">Scratch coat thickness: <span id="scratchLbl"></span></label><input type="range" id="scratchThick" min="4" max="12" step="1" value="6"></div>
+<div class="fg" id="gBrown"><label for="brownThick"><span id="brownName">Brown coat</span> thickness: <span id="brownLbl"></span></label><input type="range" id="brownThick" min="4" max="12" step="1" value="6"></div>
+<div class="fg" id="gFinish"><label for="finishThick">Finish coat thickness: <span id="finishLbl"></span></label><input type="range" id="finishThick" min="1" max="4" step="1" value="2"></div>
+</div>
+
+<div class="group">
+<div class="group-title">3. Mix &amp; price</div>
+<div class="fg"><label for="mixType">Mix type</label><select id="mixType"><option value="premix">Pre-blended base coat mix</option><option value="traditional">Site-mixed portland cement, lime &amp; sand (bagged blend)</option><option value="onecoat">Fiber-reinforced one-coat mix</option></select><div class="hint">Choosing a mix loads typical bag size and coverage below. Edit them to match your product label.</div></div>
+<div class="row">
+<div class="fg"><label for="bagWeight">Bag weight (<span class="u-wt">lb</span>)</label><input type="number" id="bagWeight" inputmode="decimal" min="0" step="any" aria-describedby="err-bagWeight"><div class="err" id="err-bagWeight"></div></div>
+<div class="fg"><label for="coverageRate">Coverage per bag at ⅜″ (<span class="u-area">sq ft</span>)</label><input type="number" id="coverageRate" inputmode="decimal" min="0" step="any" aria-describedby="err-coverageRate"><div class="err" id="err-coverageRate"></div></div>
+</div>
+<div class="fg"><label for="costPerBag">Price per bag ($)</label><input type="number" id="costPerBag" inputmode="decimal" min="0" step="0.01" value="14.99" aria-describedby="err-costPerBag"><div class="err" id="err-costPerBag"></div><div class="hint">Labels commonly list 20–30 sq ft per 80 lb bag at ⅜″. Finish coats are often a separate product; if yours lists its own coverage, run it as a separate 1-coat estimate.</div></div>
+</div>
+
+<button type="button" class="btn" id="calcBtn">Calculate Stucco Needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</div>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section class="content">
+<h2>How to Use This Stucco Calculator</h2>
+<p>Enter the wall width and height, the number of identical walls, and the total area of doors, windows and other openings to deduct. Pick a 1-, 2- or 3-coat system, set each coat's thickness with the sliders, then confirm the bag weight, coverage per bag and price from your product label. Press Calculate to get bags per coat, total bags (always rounded up), theoretical wet mix volume, total weight and material cost, in feet and pounds or meters and kilograms.</p>
+
+<h2>Why This Matters</h2>
+<p>Running short mid-wall is the classic stucco mistake. Stucco has to be applied wet-on-wet within a coat, so a missed bag count means a cold joint or a rushed supply run while your mix stiffens. Finish coat is worse: a second batch bought later can differ in color, and the difference shows as a visible patch across a whole elevation.</p>
+<p>Over-ordering hurts too. A typical 2,000 sq ft of wall area (not floor area, which is usually much smaller) with default settings needs about 234 bags, roughly $3,500 at $14.99 a bag. A 15% error either way is over $500, plus another 1,000+ pounds to haul and store. Openings matter more than people expect. Deducting a 3×7 ft door and two 3×4 ft windows (45 sq ft) removes about 5 bags, or $75–$80, from a three-coat job. Homeowners budgeting a DIY project, contractors writing bids, and plasterers loading a truck all need a number they can trust before the first bag is opened.</p>
+
+<h2>How It's Calculated</h2>
+<div class="formula">
+<div>Area with waste = (Width × Height × Walls − Openings) × (1 + Waste %)</div>
+<div>Bags per coat = Area with waste ÷ Coverage per bag at ⅜″ × (Coat thickness ÷ ⅜″), rounded up</div>
+<div>Wet volume = Area with waste × Coat thickness (in feet)</div>
+<div>Total cost = Total bags × Price per bag</div>
+</div>
+<p>Coverage on a bag label is quoted at a reference thickness, and this tool uses ⅜″. Coverage scales linearly with thickness, so a ¾″ coat needs exactly twice the bags of a ⅜″ coat over the same area. Each coat is rounded up to a whole bag separately, so the total never falls below what you will actually use. Metric inputs are converted internally (1 m = 3.28084 ft, 1 m² = 10.7639 sq ft, 1 kg = 2.20462 lb) and results are shown back in your chosen units.</p>
+<p>For reference, the thickness checks follow commonly cited rules of thumb from ASTM C926 and the stucco provisions of the IRC (R703): about ⅞″ total for three-coat work over metal lath, made up of ⅜″ scratch, ⅜″ brown and ⅛″ finish. The calculator flags thicknesses below that and single base coats thicker than ½″. This is an estimating aid, not an engineering, permit or inspection approval. Local codes, manufacturer data sheets and your building department decide what is required on your job.</p>
+
+<h2>Worked Example</h2>
+<p>A single-story house has 160 linear feet of exterior wall at 9 ft high. Openings are one 3×7 ft entry door (21 sq ft), one 9×7 ft garage door (63 sq ft) and six 3×5 ft windows (90 sq ft). Use the default 3-coat system, 10% waste, pre-blended mix at 22 sq ft per 80 lb bag at ⅜″, and $14.99 per bag. Enter width 160, height 9, walls 1 and deductions 174.</p>
+<ul>
+<li>Gross area: 160 × 9 × 1 = 1,440 sq ft.</li>
+<li>Openings: 21 + 63 + 90 = 174 sq ft, so net area is 1,266 sq ft.</li>
+<li>With 10% waste: 1,266 × 1.10 = 1,392.6 sq ft.</li>
+<li>Bags per ⅜″ coat: 1,392.6 ÷ 22 = 63.3. Scratch rounds up to 64 and brown to 64.</li>
+<li>Finish at ⅛″ is one third of that: 63.3 ÷ 3 = 21.1, rounded up to 22.</li>
+<li>Total: 64 + 64 + 22 = 150 bags, or 12,000 lb. Cost: 150 × $14.99 = $2,248.50.</li>
+<li>Wet volume: 1,392.6 × (⅞″ ÷ 12) = 101.54 cu ft, about 3.76 cu yd.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use the coverage printed on your bag.</strong> Products range from about 20 to 30 sq ft per 80 lb bag at ⅜″. A wrong rate is the biggest source of error, and the defaults here lean toward lower coverage, which means more bags.</li>
+<li><strong>Measure wall height from the weep screed to the top of the wall,</strong> including gable ends and parapets. Calculating a gable as a rectangle overstates it, so add triangles separately as extra walls.</li>
+<li><strong>Buy all finish coat at once.</strong> Buy the whole finish coat from the same batch number, and mix it in the same way every time, to keep the color uniform.</li>
+<li><strong>Don't over-thicken to save a coat.</strong> A base coat much beyond ½″ in one pass is prone to sagging and shrinkage cracks. Let each coat cure as the manufacturer directs before applying the next.</li>
+<li><strong>Raise the waste allowance for detailed work.</strong> Quoins, arches, soffits and many corners all use more mix than flat-wall math suggests. Add 15–25% for them.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many bags of stucco do I need for 1,000 sq ft of wall?</summary><p>With default settings (three coats, 10% waste, 22 sq ft per 80 lb bag at ⅜″) you need about 117 bags: 50 scratch, 50 brown and 17 finish. That is roughly $1,750 at $14.99 a bag. Change the coverage rate to match your product and the count updates.</p></details>
+<details><summary>How many square feet does a bag of stucco cover?</summary><p>An 80 lb bag of base coat usually covers 20–30 sq ft at ⅜″ thick, and proportionally more at thinner coats. Site-mixed blends tend to yield slightly less than pre-blended products. Always use the figure on your specific bag.</p></details>
+<details><summary>What thickness should each stucco coat be?</summary><p>A common three-coat system over lath is ⅜″ scratch, ⅜″ brown and ⅛″ finish, totaling about ⅞″. Two-coat and one-coat systems vary by manufacturer and base. Check the product data sheet and your local code, since this calculator only flags thicknesses well outside typical ranges.</p></details>
+<details><summary>How much waste should I add to a stucco estimate?</summary><p>Plan for 10% on plain, flat walls and 15–25% on walls with many corners, arches, trim or textures. Material is lost to the hawk, to mix that stiffens before use, and to uneven substrates. Unopened bags can often be returned, so it is safer to slightly overbuy than to run out.</p></details>
+<details><summary>Can I use this for EIFS or acrylic finishes?</summary><p>This tool is built for cement-based stucco sold by the bag. EIFS base coats and acrylic finishes are sold in pails and have their own coverage rates, so follow the manufacturer's figures instead. You can still use the 1-coat option with the pail's coverage if you convert it to a per-container rate.</p></details>
+<details><summary>Does the calculator work in metric?</summary><p>Yes. Choose meters and kilograms in the Units menu, and enter dimensions in meters and openings in square meters. Bag weight and coverage switch to kg and m² per bag, and results are reported in m², m³ and kg.</p></details>
+
+<h2>Related Tools</h2>
+<div class="related">
+<a href="/garage-slab-thickness-reinforcement-calculator/">Garage Concrete Slab Thickness &amp; Reinforcement Calculator</a>
+<a href="/wallpaper-coverage-roll-calculator/">Wallpaper Coverage &amp; Roll Calculator</a>
+<a href="/blown-in-insulation-coverage-calculator/">Blown-In Insulation Coverage Calculator</a>
+<a href="/spray-foam-insulation-calculator/">Spray Foam Insulation Coverage Calculator</a>
+<a href="/paint-coverage-calculator/">Paint Coverage Calculator</a>
+<a href="/tile-flooring-calculator/">Tile &amp; Flooring Coverage Calculator</a>
+</div>
+</section>
+
+</main>
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/stucco-mix-coverage-coat-thickness-calculator/">Toolwick</a></p>
+
+<script>
+const $=id=>document.getElementById(id);
+const FT=3.28084,SQ=10.7639,LB=2.20462,CUFT_M3=35.3147;
+const PRE={premix:{cov:22,name:'Pre-blended base coat mix'},traditional:{cov:20,name:'Site-mixed portland cement, lime & sand (bagged)'},onecoat:{cov:24,name:'Fiber-reinforced one-coat mix'}};
+let lastText='';
+const n=(x,d)=>Number(x).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const frac=v=>{let a=v,d=16;while(a%2===0&&d>1){a/=2;d/=2}return d===1?String(a):a+'/'+d};
+const fracM=v=>{const w=Math.floor(v/16),r=v%16;return r?(w?w+' ':'')+frac(r)+'″':w+'″'};
+const mm=v=>n(v/16*25.4,1);
+const thk=v=>fracM(v)+' ('+mm(v)+' mm)';
+const num=id=>{const v=$(id).value.trim();return v===''?NaN:Number(v)};
+
+function applyUnits(){
+ const m=$('unitSys').value==='m';
+ document.querySelectorAll('.u-len').forEach(e=>e.textContent=m?'m':'ft');
+ document.querySelectorAll('.u-area').forEach(e=>e.textContent=m?'m²':'sq ft');
+ document.querySelectorAll('.u-wt').forEach(e=>e.textContent=m?'kg':'lb');
+ applyPreset();
+}
+function applyPreset(){
+ const m=$('unitSys').value==='m',p=PRE[$('mixType').value];
+ if(m){const kg=40;$('bagWeight').value=kg;$('coverageRate').value=n(p.cov/80*kg*LB/SQ,2).replace(/,/g,'')}
+ else{$('bagWeight').value=80;$('coverageRate').value=p.cov}
+}
+function updateUI(){
+ const sys=$('coatSystem').value;
+ $('gScratch').style.display=sys==='3coat'?'':'none';
+ $('gFinish').style.display=sys==='1coat'?'none':'';
+ $('brownName').textContent=sys==='1coat'?'Base coat':sys==='2coat'?'Brown (base) coat':'Brown coat';
+ [['scratchThick','scratchLbl'],['brownThick','brownLbl'],['finishThick','finishLbl']].forEach(a=>{$(a[1]).textContent=thk(+$(a[0]).value)});
+ $('wasteLbl').textContent=$('wasteFactor').value+'%';
+ updateDiagram();
+}
+function updateDiagram(){
+ const sys=$('coatSystem').value,SC=90;
+ const L=[{i:1,s:+$('scratchThick').value,on:sys==='3coat',nm:'Scratch coat'},{i:2,s:+$('brownThick').value,on:true,nm:sys==='1coat'?'Base coat':'Brown coat'},{i:3,s:+$('finishThick').value,on:sys!=='1coat',nm:'Finish coat'}];
+ let x=90,tot=0,k=0;
+ L.forEach(l=>{
+  const w=l.on?l.s/16*SC:0;
+  $('dl'+l.i).setAttribute('x',x);$('dl'+l.i).setAttribute('width',w);
+  x+=w;if(l.on)tot+=l.s;
+  const g=$('lg'+l.i);g.style.display=l.on?'':'none';
+  if(l.on){g.setAttribute('transform','translate(0,'+(k*22)+')');k++;$('lt'+l.i).textContent=l.nm+': '+thk(l.s)}
+ });
+ $('dimL').setAttribute('x2',x);$('dimT').setAttribute('x1',x);$('dimT').setAttribute('x2',x);
+ $('dimTxt').textContent='Total '+thk(tot);
+}
+function clearErr(){
+ document.querySelectorAll('.err').forEach(e=>{e.classList.remove('show');e.textContent=''});
+ document.querySelectorAll('input.error').forEach(e=>{e.classList.remove('error');e.removeAttribute('aria-invalid')});
+}
+function calculate(){
+ clearErr();
+ const metric=$('unitSys').value==='m',au=metric?'m²':'sq ft';
+ const W=num('wallWidth'),H=num('wallHeight'),N=num('numSurfaces');
+ const D=$('deductArea').value.trim()===''?0:num('deductArea');
+ const waste=+$('wasteFactor').value,B=num('bagWeight'),C=num('coverageRate'),P=num('costPerBag');
+ const sys=$('coatSystem').value,errs=[];
+ const bad=(id,msg)=>{const e=$(id);e.classList.add('error');e.setAttribute('aria-invalid','true');const m=$('err-'+id);m.textContent=msg;m.classList.add('show');errs.push(id)};
+ if(!(W>0))bad('wallWidth','Enter a wall width greater than 0.');else if(W>10000)bad('wallWidth','That width looks too large (max 10,000).');
+ if(!(H>0))bad('wallHeight','Enter a wall height greater than 0.');else if(H>10000)bad('wallHeight','That height looks too large (max 10,000).');
+ if(!(Number.isInteger(N)&&N>=1&&N<=1000))bad('numSurfaces','Enter a whole number from 1 to 1,000.');
+ if(!(D>=0))bad('deductArea','Enter 0 or a positive area.');
+ else if(!errs.length&&D>=W*H*N)bad('deductArea','Openings must be smaller than the total wall area ('+n(W*H*N,1)+' '+au+').');
+ if(!(B>0))bad('bagWeight','Enter a bag weight greater than 0.');
+ if(!(C>0))bad('coverageRate','Enter a coverage greater than 0.');
+ if(!(P>=0))bad('costPerBag','Enter a price of 0 or more.');
+ if(errs.length){$('results').innerHTML='';lastText='';$(errs[0]).focus();return}
+
+ const kf=metric?FT:1,af=metric?SQ:1;
+ const gross=W*kf*H*kf*N,ded=D*af,net=gross-ded;
+ const area=net*(100+waste)/100,cov=C*af,bagLb=metric?B*LB:B;
+ const coats=[];
+ if(sys==='3coat')coats.push({nm:'Scratch coat',s:+$('scratchThick').value,c:'c-scratch'});
+ coats.push({nm:sys==='1coat'?'Base coat':'Brown coat',s:+$('brownThick').value,c:'c-brown'});
+ if(sys!=='1coat')coats.push({nm:'Finish coat',s:+$('finishThick').value,c:'c-finish'});
+ let bags=0,vol=0,ts=0;
+ coats.forEach(c=>{c.raw=area/cov*(c.s/6);c.bags=Math.max(1,Math.ceil(c.raw-1e-9));c.vol=area*(c.s/16)/12;c.cost=c.bags*P;bags+=c.bags;vol+=c.vol;ts+=c.s});
+ const cost=bags*P,wt=metric?bags*B:bags*B;
+ const dA=x=>n(metric?x/SQ:x,2);
+ const dVol=metric?n(vol/CUFT_M3,3)+' m³':n(vol,2)+' cu ft ('+n(vol/27,2)+' cu yd)';
+ const w=[];
+ if(sys==='3coat'&&ts<14)w.push('Total thickness ('+fracM(ts)+') is below the ⅞″ commonly cited for three-coat stucco over lath (ASTM C926 / IRC R703).');
+ if(sys==='3coat'&&coats[0].s<6)w.push('Scratch coat is under ⅜″, which may not fully embed the lath.');
+ if(sys==='2coat'&&ts<8)w.push('Total thickness ('+fracM(ts)+') is under ½″, thin for a two-coat system. Confirm with the manufacturer.');
+ if(sys==='1coat'&&coats[0].s<6)w.push('A one-coat base under ⅜″ is below typical manufacturer minimums. Check the data sheet.');
+ coats.forEach(c=>{if(c.c!=='c-finish'&&c.s>8)w.push(c.nm+' is over ½″. Thick single passes are prone to sagging and shrinkage cracks; many products require multiple lifts.')});
+ const sysName={'3coat':'3-coat','2coat':'2-coat','1coat':'1-coat'}[sys];
+ const rows=[
+  ['Gross wall area',dA(gross)+' '+au],['Openings deducted',dA(ded)+' '+au],['Net area',dA(net)+' '+au],['Waste allowance',waste+'%'],
+  ['Area incl. waste',dA(area)+' '+au],['Coat system',sysName],['Total thickness',thk(ts)],['Mix type',PRE[$('mixType').value].name],
+  ['Coverage per bag at ⅜″',n(C,2)+' '+au],['Bag weight',n(B,1)+' '+(metric?'kg':'lb')],['Wet mix volume (theoretical)',dVol],
+  ['Total bags (rounded up)',n(bags,0)],['Total weight',n(wt,0)+' '+(metric?'kg':'lb')],['Price per bag','$'+n(P,2)],['Total material cost','$'+n(cost,2)]
+ ];
+ requestAnimationFrame(()=>{
+  let h='<div class="card result-card"><div class="result-head"><div class="res-title">Your stucco estimate</div><button type="button" class="btn-copy" onclick="copyResults(this)">Copy results</button></div>';
+  h+='<div class="key-main"><div class="key-number">'+n(bags,0)+'</div><div class="key-label">bags needed ('+n(bagLb>0?B:0,0)+' '+(metric?'kg':'lb')+' each), rounded up per coat</div></div>';
+  h+='<div class="stats"><div class="stat"><b>$'+n(cost,2)+'</b><span>Material cost</span></div><div class="stat"><b>'+dA(area)+'</b><span>'+au+' incl. waste</span></div><div class="stat"><b>'+n(wt,0)+' '+(metric?'kg':'lb')+'</b><span>Total weight</span></div></div>';
+  if(w.length)h+='<div class="warn"><strong>Check your thickness:</strong><ul>'+w.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>';
+  h+='<div class="share" aria-hidden="true">'+coats.map(c=>'<i class="'+c.c+'" style="width:'+(c.bags/bags*100)+'%"></i>').join('')+'</div>';
+  h+='<div class="tw"><table><thead><tr><th>Coat</th><th class="num">Thickness</th><th class="num">Bags</th><th class="num">Cost</th></tr></thead><tbody>';
+  coats.forEach(c=>{h+='<tr><td><span class="sw '+c.c+'"></span>'+c.nm+'</td><td class="num">'+fracM(c.s)+'</td><td class="num">'+n(c.bags,0)+'</td><td class="num">$'+n(c.cost,2)+'</td></tr>'});
+  h+='<tr class="tot"><td>Total</td><td class="num">'+fracM(ts)+'</td><td class="num">'+n(bags,0)+'</td><td class="num">$'+n(cost,2)+'</td></tr></tbody></table></div>';
+  h+='<div class="tw"><table><thead><tr><th>Item</th><th class="num">Value</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+r[0]+'</td><td class="num">'+r[1]+'</td></tr>').join('')+'</tbody></table></div>';
+  h+='<p class="note">Estimate only, using linear coverage scaling and rounding up each coat. It is not a specification, engineering design, permit or inspection approval. Thickness checks follow commonly cited ASTM C926 / IRC R703 rules of thumb; local codes and manufacturer instructions govern.</p></div>';
+  $('results').innerHTML=h;
+  lastText='STUCCO ESTIMATE\n'+rows.map(r=>r[0]+': '+r[1]).join('\n')+'\n\n'+coats.map(c=>c.nm+' ('+fracM(c.s)+'): '+n(c.bags,0)+' bags, $'+n(c.cost,2)).join('\n');
+  $('dWall').textContent='Wall: '+n(W,1)+' × '+n(H,1)+' '+(metric?'m':'ft')+(N>1?' × '+N:'')+' = '+dA(gross)+' '+au;
+  updateDiagram();
+  $('results').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'nearest'});
+ });
+}
+function copyResults(btn){
+ if(!lastText)return;
+ const done=()=>{btn.textContent='Copied!';setTimeout(()=>{btn.textContent='Copy results'},2000)};
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,done)}
+ else{const t=document.createElement('textarea');t.value=lastText;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);done()}
+}
+$('calcBtn').addEventListener('click',()=>requestAnimationFrame(calculate));
+document.querySelectorAll('input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();requestAnimationFrame(calculate)}}));
+['scratchThick','brownThick','finishThick','wasteFactor','coatSystem'].forEach(id=>$(id).addEventListener('input',updateUI));
+$('coatSystem').addEventListener('change',updateUI);
+$('unitSys').addEventListener('change',applyUnits);
+$('mixType').addEventListener('change',applyPreset);
+$('yr').textContent=new Date().getFullYear();
+applyUnits();updateUI();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
