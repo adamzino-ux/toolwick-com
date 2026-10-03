@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Voltage Drop Calculator | Toolwick</title>
+<meta name="description" content="Free voltage drop calculator: find volts lost, percent drop and the minimum wire size for copper or aluminum, single-phase, DC or three-phase runs.">
+<link rel="canonical" href="https://toolwick.com/voltage-drop-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Voltage Drop Calculator", "url": "https://toolwick.com/voltage-drop-calculator/", "description": "Free voltage drop calculator: find volts lost, percent drop and the minimum wire size for copper or aluminum, single-phase, DC or three-phase runs.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Voltage Drop Calculator", "item": "https://toolwick.com/voltage-drop-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is an acceptable voltage drop?", "acceptedAnswer": {"@type": "Answer", "text": "The NEC recommends no more than 3% on a branch circuit and 5% combined for feeder and branch. For sensitive electronics or low-voltage lighting, aim for 2% or less. Some special systems, such as fire pumps, have mandatory limits, so check your local code."}}, {"@type": "Question", "name": "How do I calculate voltage drop for a wire?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply 2 (or 1.732 for three-phase) by the K constant, the current and the one-way length in feet, then divide by the wire's circular mils. Divide the result by the supply voltage for percent drop. This calculator does all of that and compares every standard size."}}, {"@type": "Question", "name": "Why does the calculator use one-way length?", "acceptedAnswer": {"@type": "Answer", "text": "Current flows out on one conductor and returns on another, so the effective path is twice the distance. The formula's factor of 2 already covers that, so you only measure the straight run from source to load."}}, {"@type": "Question", "name": "Does aluminum wire have more voltage drop than copper?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Aluminum's resistivity is about 64% higher (K of 21.2 versus 12.9), so the same gauge drops noticeably more voltage. Upsizing aluminum by one or two sizes usually compensates."}}, {"@type": "Question", "name": "How can I reduce voltage drop?", "acceptedAnswer": {"@type": "Answer", "text": "Use a larger wire, shorten the run, lower the current, or raise the system voltage. For long runs, moving from 120 V to 240 V cuts the percent drop to a quarter for the same power, because current halves and the voltage doubles."}}, {"@type": "Question", "name": "Can I use this for a permit or inspection?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is a planning estimate based on common NEC methods and does not account for every installation condition. Have a licensed electrician or engineer confirm the design, and follow your local code and inspector."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:1.75rem 0 .75rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2.25rem 0 .75rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{margin:0 0 1.5rem}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram text{fill:#1a1a2e;font-family:inherit}
+label,.lbl{display:block;font-size:.85rem;font-weight:500;color:#444;margin:0 0 .35rem}
+input[type=text],input[type=number],select{width:100%;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font-size:1rem;font-family:inherit;min-height:48px;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,input[type=range]:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.err{border-color:#e74c3c}
+.em{color:#c0392b;font-size:.85rem;min-height:0;margin-top:.3rem}
+.em:empty{display:none}
+.hint{color:#666;font-size:.82rem;margin-top:.3rem}
+.fld{margin-bottom:1.25rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.lr{display:flex;gap:.6rem}
+.lr input{flex:1;min-width:0}
+.lr select{width:92px;flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
+.chip{flex:1 1 auto;min-width:52px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 10px;min-height:44px;font-size:.9rem;font-weight:600;cursor:pointer}
+button.main{width:100%;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;min-height:48px;font-size:1.05rem;font-weight:600;cursor:pointer}
+button.main:hover{background:#006299}
+.ck{display:flex;align-items:center;gap:.6rem;min-height:44px;font-size:.95rem;font-weight:400;color:#1a1a2e}
+.ck input{width:22px;height:22px;flex:none;margin:0}
+input[type=range]{width:100%;height:44px;accent-color:#0077b6;margin:0;padding:0}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.sv{font-weight:700;color:#0077b6}
+#results{margin-top:1.5rem}
+.fade{animation:fd .3s ease}
+@keyframes fd{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.fade{animation:none}}
+.big{text-align:center;background:#f8f9fa;border-radius:8px;padding:1.25rem 1rem;margin-bottom:1.25rem}
+.big .n{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.big .s{color:#444;margin-top:.3rem}
+.pill{display:inline-block;margin-top:.7rem;padding:4px 14px;border-radius:99px;font-weight:700;font-size:.9rem}
+.pill.ok{background:#e6f4ea;color:#1b6b30}
+.pill.no{background:#fdeaea;color:#a8281c}
+.bar{position:relative;height:14px;background:#eee;border-radius:7px;margin:1.1rem 0 .3rem;overflow:visible}
+.bar i{display:block;height:100%;border-radius:7px}
+.bar i.ok{background:#2e9e4f}.bar i.no{background:#e74c3c}
+.bar b{position:absolute;left:50%;top:-4px;width:2px;height:22px;background:#1a1a2e}
+.bl{font-size:.8rem;color:#666;text-align:center}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #eee;white-space:nowrap}
+tr:nth-child(even) td{background:#fafafa}
+th.r,td.r{text-align:right}
+tr.sel td{background:#e8f4fa;font-weight:700}
+.cmp:not(.all) tr.x{display:none}
+.rec{background:#f8f9fa;border-left:4px solid #0077b6;padding:1rem 1.25rem;border-radius:0 8px 8px 0;margin:1.25rem 0}
+.rec p{margin:0 0 .4rem}.rec p:last-child{margin:0}
+.warn{color:#a8281c;font-weight:600}
+.sec{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:10px 18px;min-height:44px;font-size:.9rem;font-weight:600;cursor:pointer}
+.sec:hover{background:#f0f8fc}
+.btns{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.5rem}
+.note{font-size:.82rem;color:#666;margin-top:1rem}
+.ad-slot{min-height:0;margin:0}
+.formula{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.8rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9rem;overflow-x:auto;margin:0 0 1rem}
+ul,ol{padding-left:1.3rem;margin:0 0 1rem}li{margin-bottom:.5rem}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;font-weight:600;padding:.8rem 0;min-height:44px}
+details p{margin:0 0 1rem}
+.rel{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.rel li{margin:0}
+.rel a{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:12px 14px;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:2.5rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666;text-align:center}
+footer a{color:#0077b6;text-decoration:underline;margin:0 .5rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:560px){
+.card{padding:1.25rem}
+.g2{grid-template-columns:1fr}
+.rel{grid-template-columns:1fr}
+h1{font-size:1.6rem}
+.big .n{font-size:2.2rem}
+.sec{width:100%}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/voltage-drop-calculator/">
+<meta property="og:title" content="Voltage Drop Calculator">
+<meta property="og:description" content="Free voltage drop calculator: find volts lost, percent drop and the minimum wire size for copper or aluminum, single-phase, DC or three-phase runs.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Voltage Drop Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This voltage drop calculator shows how many volts a wire loses between the source and the load, what percentage of your supply that represents, and the smallest copper or aluminum conductor that keeps the loss within your limit. It works for single-phase AC, DC and three-phase circuits.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="diagram" viewBox="0 0 520 215" role="img" aria-label="Circuit diagram: a source on the left connected to a load on the right by wires. Labels show the one-way length, wire size, current and the calculated voltage drop.">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<line x1="90" y1="34" x2="90" y2="72" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>
+<line x1="430" y1="34" x2="430" y2="72" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>
+<line x1="92" y1="42" x2="428" y2="42" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dLen" x="260" y="30" text-anchor="middle" font-size="15">Length (one-way)</text>
+<rect x="10" y="60" width="80" height="100" rx="6" fill="#fff" stroke="#0077b6" stroke-width="2.5"/>
+<rect x="430" y="60" width="80" height="100" rx="6" fill="#fff" stroke="#0077b6" stroke-width="2.5"/>
+<text x="50" y="100" text-anchor="middle" font-size="12">SOURCE</text>
+<text id="dSrc" x="50" y="126" text-anchor="middle" font-size="15" font-weight="700">V in</text>
+<text x="470" y="100" text-anchor="middle" font-size="12">LOAD</text>
+<text id="dLoad" x="470" y="126" text-anchor="middle" font-size="15" font-weight="700">V out</text>
+<line x1="90" y1="78" x2="430" y2="78" stroke="#0077b6" stroke-width="3"/>
+<line id="w3" x1="90" y1="110" x2="430" y2="110" stroke="#0077b6" stroke-width="3" style="display:none"/>
+<line x1="90" y1="142" x2="430" y2="142" stroke="#0077b6" stroke-width="3"/>
+<path d="M244 70L262 78L244 86z" fill="#0077b6"/>
+<text id="dInfo" x="260" y="184" text-anchor="middle" font-size="15">Wire size · current</text>
+<text id="dDrop" x="260" y="206" text-anchor="middle" font-size="16" font-weight="700">Voltage drop</text>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="g2">
+<div class="fld">
+<label for="sys">System type</label>
+<select id="sys"><option value="1">Single-phase AC or DC (2-wire)</option><option value="3">Three-phase AC</option></select>
+</div>
+<div class="fld">
+<label for="mat">Conductor material</label>
+<select id="mat"><option value="cu">Copper</option><option value="al">Aluminum</option></select>
+</div>
+</div>
+
+<div class="fld">
+<label for="volt">Source voltage (V)</label>
+<input type="text" id="volt" inputmode="decimal" value="240" aria-describedby="voltE voltH" autocomplete="off">
+<div class="em" id="voltE"></div>
+<div class="hint" id="voltH">Use line-to-line voltage for three-phase.</div>
+<div class="chips" role="group" aria-label="Common voltages">
+<button type="button" class="chip" data-v="12">12</button><button type="button" class="chip" data-v="24">24</button><button type="button" class="chip" data-v="120">120</button><button type="button" class="chip" data-v="208">208</button><button type="button" class="chip" data-v="240">240</button><button type="button" class="chip" data-v="480">480</button>
+</div>
+</div>
+
+<div class="g2">
+<div class="fld">
+<label for="amps">Load current (A)</label>
+<input type="text" id="amps" inputmode="decimal" value="20" aria-describedby="ampsE" autocomplete="off">
+<div class="em" id="ampsE"></div>
+</div>
+<div class="fld">
+<label for="len">One-way length, source to load</label>
+<div class="lr">
+<input type="text" id="len" inputmode="decimal" value="100" aria-describedby="lenE" autocomplete="off">
+<select id="unit" aria-label="Length unit"><option value="ft">feet</option><option value="m">meters</option></select>
+</div>
+<div class="em" id="lenE"></div>
+</div>
+</div>
+
+<div class="fld">
+<label for="wire">Wire size</label>
+<select id="wire"></select>
+</div>
+
+<div class="fld">
+<label for="tgt">Maximum allowed voltage drop: <span class="sv" id="tgtV">3%</span></label>
+<input type="range" id="tgt" min="1" max="10" step="0.5" value="3">
+<div class="ticks"><span>1%</span><span>5%</span><span>10%</span></div>
+</div>
+
+<div class="fld">
+<label class="ck" for="cont"><input type="checkbox" id="cont" checked> Continuous load (3 hours or more): size at 125%</label>
+</div>
+
+<button type="submit" class="main" id="calcBtn">Calculate Voltage Drop</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<p class="note">Estimate only, using the NEC K-factor method at 75 °C and ampacities from NEC Table 310.16 (2023). Local codes vary. This is not engineering, permit or inspection approval.</p>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/voltage-drop-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Voltage Drop Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/voltage-drop-calculator/&quot;&gt;Voltage Drop Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/voltage-drop-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Voltage Drop Calculator</h2>
+<p>Choose the system type, then enter the supply voltage (line-to-line for three-phase), the load current in amps and the one-way distance from the source to the load. Pick a wire size and material, set the maximum drop you will accept (3% is the usual branch-circuit target), and press Calculate. You get the volts lost, percent drop, voltage at the load, power wasted as heat, a recommended minimum wire size and a table comparing every standard size.</p>
+
+<h2>Why This Matters</h2>
+<p>Every wire has resistance, and resistance eats voltage whenever current flows. On a short run you never notice. On a long one, lights dim, motors run hot, electronics reset and chargers fail to start. Take a 240 V, 30 A well pump 250 feet from the panel on 10 AWG copper. The drop is about 18.6 V, or 7.8%. The pump sees roughly 221 V, draws more current to compensate, and its windings run hot and wear out sooner.</p>
+<p>Low-voltage systems are hit hardest, because a volt or two is a large share of a small supply. A 12 V LED lighting run of 30 feet at 10 A on 14 AWG loses almost 1.9 V, nearly 16%. Electricians, solar installers, RV and marine owners, irrigation contractors and DIYers wiring a detached garage, shed or EV charger all run into this. Checking the numbers before you buy wire is far cheaper than pulling it out afterwards, and the extra copper often costs less than the callback.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator uses the standard K-factor (circular mil) method:</p>
+<div class="formula">Single-phase / DC: VD = 2 × K × I × L ÷ CM<br>Three-phase: VD = 1.732 × K × I × L ÷ CM</div>
+<p>K is the resistivity constant: 12.9 for copper and 21.2 for aluminum, in ohm-circular mils per foot at 75 °C. I is the current in amps. L is the one-way length in feet (meters are multiplied by 3.28084). CM is the conductor's area in circular mils, for example 6,530 for 12 AWG and 10,380 for 10 AWG. The factor of 2 covers the current going out and back. Percent drop is VD ÷ source voltage × 100, and voltage at the load is the source voltage minus VD. Heat loss is VD × I for single-phase and DC, and 1.732 × VD × I for three-phase.</p>
+<p>The 3% branch-circuit and 5% total (feeder plus branch) targets come from the informational notes to NEC 210.19(A) and 215.2(A). They are recommendations rather than hard rules for most circuits, though some systems have mandatory limits. For the minimum size, the tool picks the smallest standard conductor that meets both your drop limit and ampacity. Ampacity uses the 75 °C columns of NEC Table 310.16, capped by NEC 240.4(D) for small conductors (copper 14/12/10 AWG at 15/20/30 A, aluminum 12/10 AWG at 15/25 A). If you tick "continuous load," the required ampacity is 125% of the current. Ambient temperature, conduit fill and bundling are not derated here, so apply those separately. Results are always rounded to the next larger standard size, never smaller.</p>
+
+<h2>Worked Example</h2>
+<p>A 240 V single-phase subpanel feeds a 20 A continuous load 100 feet away, wired with 12 AWG copper and a 3% limit.</p>
+<ol>
+<li>K = 12.9 for copper; CM for 12 AWG = 6,530; factor 2 for single-phase.</li>
+<li>VD = 2 × 12.9 × 20 × 100 ÷ 6,530 = 51,600 ÷ 6,530 ≈ 7.90 V.</li>
+<li>Percent drop = 7.90 ÷ 240 × 100 ≈ 3.29%, so voltage at the load is about 232.10 V.</li>
+<li>Heat loss = 7.90 × 20 ≈ 158 W, wasted in the wire.</li>
+<li>3.29% is over the 3% limit, so step up to 10 AWG: VD = 51,600 ÷ 10,380 ≈ 4.97 V, or 2.07%.</li>
+<li>Check ampacity: 20 A × 125% = 25 A. 10 AWG copper is limited to 30 A, so it passes. The recommended minimum is 10 AWG copper.</li>
+</ol>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Enter one-way length.</strong> The calculator doubles it for the round trip. Entering the total wire length overstates the drop by 2×.</li>
+<li><strong>Round up, not down.</strong> If a result falls between two sizes, use the larger conductor. Wire is cheap next to equipment damage or a failed inspection.</li>
+<li><strong>Account for motor starting.</strong> Motors draw several times their running current for a moment. A run that looks fine at running amps can still stall a pump or compressor at startup.</li>
+<li><strong>Aluminum needs larger wire.</strong> It typically takes about two sizes up from copper for the same drop, and it needs AL-rated terminals and anti-oxidant compound.</li>
+<li><strong>Don't confuse drop with ampacity.</strong> A wire can carry the current safely and still drop too much voltage over distance. Both checks must pass, and your breaker must protect the conductor you install.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What is an acceptable voltage drop?</summary><p>The NEC recommends no more than 3% on a branch circuit and 5% combined for feeder and branch. For sensitive electronics or low-voltage lighting, aim for 2% or less. Some special systems, such as fire pumps, have mandatory limits, so check your local code.</p></details>
+<details><summary>How do I calculate voltage drop for a wire?</summary><p>Multiply 2 (or 1.732 for three-phase) by the K constant, the current and the one-way length in feet, then divide by the wire's circular mils. Divide the result by the supply voltage for percent drop. This calculator does all of that and compares every standard size.</p></details>
+<details><summary>Why does the calculator use one-way length?</summary><p>Current flows out on one conductor and returns on another, so the effective path is twice the distance. The formula's factor of 2 already covers that, so you only measure the straight run from source to load.</p></details>
+<details><summary>Does aluminum wire have more voltage drop than copper?</summary><p>Yes. Aluminum's resistivity is about 64% higher (K of 21.2 versus 12.9), so the same gauge drops noticeably more voltage. Upsizing aluminum by one or two sizes usually compensates.</p></details>
+<details><summary>How can I reduce voltage drop?</summary><p>Use a larger wire, shorten the run, lower the current, or raise the system voltage. For long runs, moving from 120 V to 240 V cuts the percent drop to a quarter for the same power, because current halves and the voltage doubles.</p></details>
+<details><summary>Can I use this for a permit or inspection?</summary><p>No. It is a planning estimate based on common NEC methods and does not account for every installation condition. Have a licensed electrician or engineer confirm the design, and follow your local code and inspector.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/topsoil-calculator/">Topsoil Calculator</a></li>
+<li><a href="/mulch-calculator/">Mulch Calculator</a></li>
+<li><a href="/drip-edge-roof-trim-calculator/">Drip Edge &amp; Roof Trim Calculator</a></li>
+<li><a href="/wheelchair-ramp-slope-length-calculator/">Wheelchair Ramp Slope &amp; Length Calculator</a></li>
+<li><a href="/ridge-vent-length-calculator/">Ridge Vent Length Calculator</a></li>
+<li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li>
+</ul>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<div><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></div>
+<div>© <span id="yr">2025</span> toolwick.com</div>
+</footer>
+</div>
+
+<script>
+(function(){
+var W=[['14 AWG',4110,15,null],['12 AWG',6530,20,15],['10 AWG',10380,30,25],['8 AWG',16510,50,40],['6 AWG',26240,65,50],['4 AWG',41740,85,65],['3 AWG',52620,100,75],['2 AWG',66360,115,90],['1 AWG',83690,130,100],['1/0 AWG',105600,150,120],['2/0 AWG',133100,175,135],['3/0 AWG',167800,200,155],['4/0 AWG',211600,230,180],['250 kcmil',250000,255,205],['300 kcmil',300000,285,230],['350 kcmil',350000,310,250],['400 kcmil',400000,335,270],['500 kcmil',500000,380,310]];
+var $=function(i){return document.getElementById(i)};
+var has=false,last='';
+var ws=$('wire'),o='';
+W.forEach(function(w,i){o+='<option value="'+i+'"'+(i===1?' selected':'')+'>'+w[0]+'</option>'});
+ws.innerHTML=o;
+$('yr').textContent=new Date().getFullYear();
+function num(id){var s=$(id).value.replace(/,/g,'').trim();return s===''?NaN:Number(s)}
+function f(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function g(n){return n.toLocaleString('en-US',{maximumFractionDigits:2})}
+function err(id,m){var e=$(id);e.classList.add('err');e.setAttribute('aria-invalid','true');$(id+'E').textContent=m}
+function clr(){['volt','amps','len'].forEach(function(id){var e=$(id);e.classList.remove('err');e.removeAttribute('aria-invalid');$(id+'E').textContent=''})}
+function draw(d){
+ $('w3').style.display=($('sys').value==='3')?'':'none';
+ if(!d){$('dSrc').textContent='V in';$('dLoad').textContent='V out';$('dLen').textContent='Length (one-way)';$('dInfo').textContent='Wire size · current';$('dDrop').textContent='Voltage drop';$('dDrop').style.fill='#1a1a2e';return}
+ $('dSrc').textContent=g(d.v)+' V';
+ $('dLoad').textContent=g(d.vl)+' V';
+ $('dLen').textContent='L = '+g(d.l)+' '+d.u+' one-way';
+ $('dInfo').textContent=d.n+' '+d.m+' · '+g(d.i)+' A';
+ $('dDrop').textContent='Drop: '+f(d.vd,2)+' V ('+f(d.pct,2)+'%)';
+ $('dDrop').style.fill=d.ok?'#1a1a2e':'#c0392b';
+}
+function calc(){
+ clr();
+ var v=num('volt'),i=num('amps'),l=num('len'),bad=false;
+ if(!isFinite(v)||v<=0){err('volt','Enter a voltage greater than 0.');bad=true}
+ else if(v>100000){err('volt','Enter a voltage of 100,000 V or less.');bad=true}
+ if(!isFinite(i)||i<=0){err('amps','Enter a current greater than 0 A.');bad=true}
+ else if(i>100000){err('amps','Enter a current of 100,000 A or less.');bad=true}
+ if(!isFinite(l)||l<=0){err('len','Enter a length greater than 0.');bad=true}
+ else if(l>1000000){err('len','Enter a length of 1,000,000 or less.');bad=true}
+ if(bad){requestAnimationFrame(function(){$('results').innerHTML='';has=false;draw(null)});return}
+ var al=$('mat').value==='al',ph=$('sys').value,tgt=+$('tgt').value,u=$('unit').value,cont=$('cont').checked;
+ var wi=+ws.value;if(al&&W[wi][3]==null)wi=1;
+ var ft=u==='m'?l*3.28084:l,K=al?21.2:12.9,F=ph==='3'?Math.sqrt(3):2,need=i*(cont?1.25:1);
+ var rows=[],sel=null,rec=null;
+ W.forEach(function(w,ix){
+  var amp=al?w[3]:w[2];if(amp==null)return;
+  var vd=F*K*i*ft/w[1],pct=vd/v*100,r={n:w[0],vd:vd,pct:pct,amp:amp,aok:amp>=need,dok:pct<=tgt,ix:ix};
+  rows.push(r);if(ix===wi)sel=r;if(!rec&&r.aok&&r.dok)rec=r;
+ });
+ var vl=Math.max(0,v-sel.vd),loss=(ph==='3'?Math.sqrt(3):1)*sel.vd*i,R=K*ft/W[wi][1];
+ var ok=sel.dok&&sel.aok,mn=al?'aluminum':'copper',ab=al?'Al':'Cu',sysT=ph==='3'?'three-phase':'single-phase/DC';
+ var h='<div class="fade"><div class="big"><div class="n">'+f(sel.vd,2)+' V</div><div class="s">'+f(sel.pct,2)+'% drop on a '+g(v)+' V '+sysT+' supply</div>';
+ h+='<span class="pill '+(ok?'ok':'no')+'">'+(ok?'✓ Within your '+g(tgt)+'% limit':(!sel.dok?'✗ Exceeds your '+g(tgt)+'% limit':'✗ Ampacity too low for this load'))+'</span>';
+ h+='<div class="bar" aria-hidden="true"><i class="'+(sel.dok?'ok':'no')+'" style="width:'+Math.min(100,sel.pct/tgt*50)+'%"></i><b></b></div><div class="bl">Black marker = your '+g(tgt)+'% limit</div></div>';
+ if(sel.vd>=v)h+='<p class="warn">The drop equals or exceeds the source voltage, so this wire is far too small for the run. Use a much larger size or a shorter run.</p>';
+ h+='<div class="tw"><table><thead><tr><th>Result</th><th class="r">Value</th></tr></thead><tbody>';
+ h+='<tr><td>Source voltage</td><td class="r">'+f(v,2)+' V</td></tr>';
+ h+='<tr><td>Voltage at load</td><td class="r">'+f(vl,2)+' V</td></tr>';
+ h+='<tr><td>Voltage drop</td><td class="r">'+f(sel.vd,2)+' V</td></tr>';
+ h+='<tr><td>Percent drop</td><td class="r">'+f(sel.pct,2)+'%</td></tr>';
+ h+='<tr><td>Power lost as heat</td><td class="r">'+f(loss,1)+' W</td></tr>';
+ h+='<tr><td>Resistance, one conductor</td><td class="r">'+f(R,4)+' Ω</td></tr>';
+ h+='<tr><td>Ampacity of '+sel.n+' '+ab+' (75 °C)</td><td class="r">'+f(sel.amp,0)+' A</td></tr>';
+ h+='<tr><td>Required ampacity</td><td class="r">'+f(need,1)+' A'+(cont?' (×125%)':'')+'</td></tr></tbody></table></div>';
+ h+='<div class="rec">';
+ if(rec){
+  h+='<p><strong>Smallest size meeting both limits: '+rec.n+' '+mn+'</strong> ('+f(rec.pct,2)+'% drop, '+f(rec.amp,0)+' A ampacity).</p>';
+  h+='<p>'+(ok?'Your selected '+sel.n+' meets both limits.':'Your selected '+sel.n+' does not. Use '+rec.n+' or larger.')+'</p>';
+ }else{
+  h+='<p class="warn">No standard size up to 500 kcmil meets both limits.</p><p>Consider parallel conductors (engineered), a higher voltage, a shorter run or a higher drop limit.</p>';
+ }
+ h+='</div>';
+ var n=rows.length;
+ h+='<div class="tw cmp" id="cmp"><table><thead><tr><th>Wire size</th><th class="r">Drop (V)</th><th class="r">Drop %</th><th class="r">Amps</th><th>Result</th></tr></thead><tbody>';
+ rows.forEach(function(r,k){
+  var t=r.dok&&r.aok?'Pass':(!r.dok&&!r.aok?'Drop &amp; amps':(!r.dok?'Drop high':'Amps low'));
+  h+='<tr class="'+(r.ix===wi?'sel ':'')+(k>=10?'x':'')+'"><td>'+r.n+(r.ix===wi?' (selected)':'')+'</td><td class="r">'+f(r.vd,2)+'</td><td class="r">'+f(r.pct,2)+'%</td><td class="r">'+f(r.amp,0)+'</td><td>'+t+'</td></tr>';
+ });
+ h+='</tbody></table></div><div class="btns">';
+ if(n>10)h+='<button type="button" class="sec" id="sa" data-n="'+n+'">Show all '+n+' sizes</button>';
+ h+='<button type="button" class="sec" id="cpy">Copy results</button></div></div>';
+ last='Voltage drop: '+f(sel.vd,2)+' V ('+f(sel.pct,2)+'%) on '+sel.n+' '+mn+', '+g(v)+' V '+sysT+', '+g(i)+' A, '+g(l)+' '+u+' one-way. Voltage at load: '+f(vl,2)+' V. Limit '+g(tgt)+'%: '+(sel.dok?'met':'exceeded')+'. '+(rec?'Smallest size meeting drop and ampacity: '+rec.n+' '+mn+'.':'No standard size up to 500 kcmil meets both limits.')+' Estimate only (NEC K-factor method); verify with local code.';
+ requestAnimationFrame(function(){
+  $('results').innerHTML=h;has=true;
+  draw({v:v,vl:vl,l:l,u:u,n:sel.n,m:ab,i:i,vd:sel.vd,pct:sel.pct,ok:ok});
+ });
+}
+function again(){if(has)requestAnimationFrame(calc)}
+$('f').addEventListener('submit',function(e){e.preventDefault();requestAnimationFrame(calc)});
+$('tgt').addEventListener('input',function(){$('tgtV').textContent=this.value+'%';again()});
+$('mat').addEventListener('change',function(){
+ var al=this.value==='al';ws.options[0].disabled=al;
+ if(al&&ws.value==='0')ws.value='1';again();
+});
+['sys','unit','wire','cont'].forEach(function(id){$(id).addEventListener('change',function(){if(id==='sys')$('w3').style.display=$('sys').value==='3'?'':'none';again()})});
+document.querySelectorAll('.chip').forEach(function(b){b.addEventListener('click',function(){$('volt').value=b.getAttribute('data-v');again()})});
+function copy(t,b){
+ function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+ function fb(){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(a);done()}
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,fb)}else fb();
+}
+$('results').addEventListener('click',function(e){
+ var b=e.target.closest('button');if(!b)return;
+ if(b.id==='cpy')copy(last,b);
+ if(b.id==='sa'){var c=$('cmp');c.classList.toggle('all');b.textContent=c.classList.contains('all')?'Show fewer sizes':'Show all '+b.getAttribute('data-n')+' sizes'}
+});
+requestAnimationFrame(calc);
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
