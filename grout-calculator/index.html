@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Grout Calculator | Toolwick</title>
+<meta name="description" content="Free grout calculator: estimate how many pounds or bags of grout you need from tile size, joint width, thickness and waste. Imperial and metric.">
+<link rel="canonical" href="https://toolwick.com/grout-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Grout Calculator", "url": "https://toolwick.com/grout-calculator/", "description": "Free grout calculator: estimate how many pounds or bags of grout you need from tile size, joint width, thickness and waste. Imperial and metric.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Grout Calculator", "item": "https://toolwick.com/grout-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much grout do I need per square foot?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on tile size, joint width and thickness. For 12×12 tile with 1/8 in joints and 3/8 in thickness it is about 0.065 lb per sq ft before waste. For 2×2 mosaic with the same joint and thickness it is roughly 0.39 lb per sq ft."}}, {"@type": "Question", "name": "How many square feet does a 10 lb bag of grout cover?", "acceptedAnswer": {"@type": "Answer", "text": "Using the examples above with 10% waste, a 10 lb bag covers about 140 sq ft of 12×12 tile but only about 23 sq ft of 2×2 mosaic. The calculator shows the coverage per bag for your exact inputs. Bag labels often quote a single best-case figure."}}, {"@type": "Question", "name": "Do I need sanded or unsanded grout?", "acceptedAnswer": {"@type": "Answer", "text": "As a general rule, sanded grout is used for joints wider than 1/8 in because the sand resists shrinking and cracking. Unsanded grout suits narrow joints and delicate surfaces such as polished marble or glass. Always confirm with the grout manufacturer's instructions."}}, {"@type": "Question", "name": "How much extra grout should I add for waste?", "acceptedAnswer": {"@type": "Answer", "text": "The default is 10%, which suits most standard jobs. Use 15–20% for natural stone, hand-made or irregular tiles, and for complicated layouts. Precisely made rectified tile with narrow joints can get by with around 5%."}}, {"@type": "Question", "name": "Does tile thickness really matter?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Grout fills the joint to the full depth of the tile, so the volume is directly proportional to thickness. A 3/4 in thick paver needs twice the grout of a 3/8 in tile with the same size and joint width."}}, {"@type": "Question", "name": "Can I use this grout calculator for epoxy grout?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, select epoxy to apply a typical density of 105 lb/ft³. Epoxy is usually sold in fixed-size kits, so enter the kit weight as the bag size and compare the result with the yield printed on the kit."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.65;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+nav a:hover{text-decoration:underline}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 1rem}
+h2{font-size:1.35rem;margin:2.5rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.intro{color:#333;font-size:1.05rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagrams{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:2rem}
+.diagrams svg{width:100%;height:auto;display:block}
+svg text{font-size:13px;fill:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+svg .sm{font-size:12px;fill:#444}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:0;border-color:#0077b6}
+input.bad{border-color:#e74c3c}
+input[type=range]{padding:0;border:0;height:44px;accent-color:#0077b6;background:transparent}
+input[type=range]:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.err:empty{display:none}
+.row{display:block}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:44px;width:100%;cursor:pointer;font-family:inherit}
+button:hover{background:#006299}
+button:focus-visible{outline:2px solid #1a1a2e;outline-offset:2px}
+button.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;font-weight:500;width:100%;margin-top:1rem}
+button.copy:hover{background:#f0f7fb}
+.results{margin-top:2rem;opacity:0;transition:opacity .3s ease}
+.results.show{opacity:1}
+.results:empty{margin:0}
+.rh{font-size:.85rem;font-weight:600;color:#444;text-transform:uppercase;letter-spacing:.04em}
+.big{font-size:2.6rem;font-weight:700;color:#0077b6;line-height:1.2;margin:.25rem 0}
+.sub{color:#333}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid #e8e8e8;text-align:right}
+thead th{background:#f0f0f0;font-weight:600}
+th:first-child,td:first-child{text-align:left}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+tbody th{font-weight:500;background:none}
+tr.you td,tr.you th{font-weight:700;color:#005a8a}
+.note{background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;font-size:.9rem;color:#333;border-radius:0 6px 6px 0;margin:1rem 0}
+.fine{font-size:.85rem;color:#666;margin-top:1rem}
+.content{background:#f8f9fa;border-radius:8px;padding:.5rem 1.5rem 1.5rem;margin:2rem 0}
+.formula{background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;overflow-x:auto;margin:0 0 1rem}
+ul,ol{padding-left:1.25rem;margin:0 0 1rem}
+li{margin-bottom:.5rem}
+details{background:#fff;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:.6rem}
+summary{padding:12px 16px;cursor:pointer;font-weight:600;min-height:44px}
+summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+details p{padding:0 16px;margin:0 0 1rem}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #eee;margin-top:2rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+@media(min-width:641px){.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.2rem}.content{padding:.25rem 1rem 1rem}}
+@media(prefers-reduced-motion:reduce){.results{transition:none}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/grout-calculator/">
+<meta property="og:title" content="Grout Calculator">
+<meta property="og:description" content="Free grout calculator: estimate how many pounds or bags of grout you need from tile size, joint width, thickness and waste. Imperial and metric.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<main>
+<h1>Grout Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p class="intro">Use this grout calculator to estimate how much grout your tile job needs. Enter the area, tile size, joint width and tile thickness to get pounds (or kilograms) of grout and the number of bags to buy, rounded up so you don't run short halfway across the floor.</p>
+
+<div class="card">
+<div class="diagrams" id="diagram">
+<svg viewBox="0 0 300 240" role="img" aria-label="Plan view of tiles showing tile length L, tile width W and grout joint width J">
+<text x="150" y="16" text-anchor="middle" class="sm">Plan view (top-down)</text>
+<rect x="50" y="60" width="212" height="140" fill="#cfe8f5"/>
+<rect x="50" y="60" width="100" height="64" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="162" y="60" width="100" height="64" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="50" y="136" width="100" height="64" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="162" y="136" width="100" height="64" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<g stroke="#0077b6" stroke-width="1.5" fill="none"><path d="M50 48H150M50 43V53M150 43V53"/><path d="M38 60V124M33 60H43M33 124H43"/></g>
+<text x="100" y="38" text-anchor="middle" id="dL">L = 12 in</text>
+<text x="20" y="92" text-anchor="middle" transform="rotate(-90 20 92)" id="dW">W = 12 in</text>
+<path d="M156 216V204M152 208l4-5 4 5" stroke="#1a1a2e" stroke-width="1.5" fill="none"/>
+<text x="156" y="232" text-anchor="middle" id="dJ">Joint J = 0.125 in</text>
+</svg>
+<svg viewBox="0 0 300 240" role="img" aria-label="Side section of two tiles with a grout joint showing joint width J and tile thickness T, which sets grout depth">
+<text x="150" y="16" text-anchor="middle" class="sm">Side section</text>
+<rect x="20" y="170" width="220" height="30" fill="#f8f9fa" stroke="#e0e0e0"/>
+<text x="130" y="190" text-anchor="middle" class="sm">Substrate</text>
+<rect x="30" y="110" width="80" height="60" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="110" y="110" width="40" height="60" fill="#cfe8f5" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4 3"/>
+<rect x="150" y="110" width="80" height="60" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<text x="70" y="144" text-anchor="middle" class="sm">tile</text>
+<text x="130" y="144" text-anchor="middle" class="sm">grout</text>
+<text x="190" y="144" text-anchor="middle" class="sm">tile</text>
+<g stroke="#e0e0e0" stroke-width="1"><path d="M230 110H245M240 170H245"/></g>
+<g stroke="#0077b6" stroke-width="1.5" fill="none"><path d="M250 110V170M245 110H255M245 170H255"/><path d="M110 98H150M110 93V103M150 93V103"/></g>
+<text x="270" y="140" text-anchor="middle" transform="rotate(-90 270 140)" id="dT">T = 0.375 in</text>
+<text x="130" y="84" text-anchor="middle" id="dJ2">J = 0.125 in</text>
+<text x="150" y="224" text-anchor="middle" class="sm">Grout fills joint to full tile depth</text>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="row">
+<div class="field"><label for="units">Unit system</label>
+<select id="units"><option value="imp">Imperial (in, sq ft, lb)</option><option value="met">Metric (mm, m², kg)</option></select></div>
+<div class="field"><label for="gtype">Grout type</label>
+<select id="gtype"><option value="100" data-n="sanded cement" selected>Sanded cement (≈100 lb/ft³)</option><option value="95" data-n="unsanded cement">Unsanded cement (≈95 lb/ft³)</option><option value="105" data-n="epoxy">Epoxy (≈105 lb/ft³)</option></select></div>
+</div>
+<div class="field"><label for="area">Area to tile (<span class="ua">sq ft</span>)</label>
+<input id="area" type="number" inputmode="decimal" step="any" min="0" value="100" aria-describedby="area-err"><div class="err" id="area-err"></div></div>
+<div class="field"><label for="preset">Common tile size</label>
+<select id="preset"><option value="custom">Custom size (enter below)</option><option value="2x2">2 × 2 in mosaic</option><option value="3x6">3 × 6 in subway</option><option value="4x4">4 × 4 in</option><option value="6x6">6 × 6 in</option><option value="12x12" selected>12 × 12 in</option><option value="12x24">12 × 24 in</option><option value="24x24">24 × 24 in</option><option value="6x24">6 × 24 in plank</option></select></div>
+<div class="row">
+<div class="field"><label for="tl">Tile length L (<span class="ul">in</span>)</label>
+<input id="tl" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="tl-err"><div class="err" id="tl-err"></div></div>
+<div class="field"><label for="tw">Tile width W (<span class="ul">in</span>)</label>
+<input id="tw" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="tw-err"><div class="err" id="tw-err"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="jw">Joint width J (<span class="ul">in</span>)</label>
+<input id="jw" type="number" inputmode="decimal" step="any" min="0" value="0.125" aria-describedby="jw-err"><div class="err" id="jw-err"></div></div>
+<div class="field"><label for="th">Tile thickness T (<span class="ul">in</span>)</label>
+<input id="th" type="number" inputmode="decimal" step="any" min="0" value="0.375" aria-describedby="th-err"><div class="err" id="th-err"></div></div>
+</div>
+<div class="field"><label for="bag">Bag size (<span class="um">lb</span>)</label>
+<input id="bag" type="number" inputmode="decimal" step="any" min="0" value="10" aria-describedby="bag-err"><div class="err" id="bag-err"></div></div>
+<div class="field"><label for="waste">Waste &amp; spillage allowance: <span id="wv">10%</span></label>
+<input id="waste" type="range" min="0" max="30" step="1" value="10">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>15%</span><span>30%</span></div></div>
+<button type="submit" id="go">Calculate grout needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div class="results" id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/grout-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Grout Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/grout-calculator/&quot;&gt;Grout Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/grout-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<div class="content">
+<h2>How to Use This Grout Calculator</h2>
+<p>Enter the floor or wall area you are tiling, pick a common tile size (or type your own length and width), then add your grout joint width and tile thickness. Choose the grout type, set a waste allowance with the slider, and enter the size of the bag you plan to buy. Press Calculate to see total grout in pounds and kilograms, bags to buy, leftover, coverage per bag, and a table comparing different joint widths for the same tile.</p>
+
+<h2>Why This Matters</h2>
+<p>Grout is one of those materials you only think about at the very end of a tile job, which is exactly when running short hurts. Grout colors can vary slightly between production lots, so a second bag from a different batch may not match the first, and you cannot easily stop mid-floor while the mix sets. Over-buying has a cost too: epoxy grout kits often cost several times as much as cement grout, and a few unneeded kits add up fast.</p>
+<p>Tile size drives the answer more than most people expect. A 100 sq ft bathroom floor in 12×12 tile with 1/8 in joints needs only about 7 lb of grout. The same room in 2×2 mosaic needs roughly 43 lb, more than six times as much, because there are far more joint lines per square foot. Joint width and tile thickness scale the quantity in a straight line: double either one and you double the grout.</p>
+<p>Tilers use this kind of estimate when quoting jobs, homeowners use it to buy the right number of bags in one trip, and renovators use it to compare joint widths before choosing a tile layout. Pairing it with a sensible waste factor keeps you covered for spillage, sponge loss and the extra grout that sinks into porous or uneven tile edges.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator uses the standard volumetric estimating formula found in many grout manufacturers' guides. All dimensions are converted to inches internally:</p>
+<div class="formula">Volume (in³) = Area (in²) × (L + W) ÷ (L × W) × J × T<br>Weight (lb) = Volume (in³) ÷ 1,728 × density (lb/ft³)<br>Total (lb) = Weight × (1 + waste %)<br>Bags = Total ÷ bag size, rounded up</div>
+<p>L and W are the tile length and width, J is the joint width and T is the tile thickness, which sets the grout depth. The fraction (L + W) ÷ (L × W) is the length of joint per unit of tile area. Multiply it by the area and you get total joint length; multiply by J and T and you get the volume of the joint channel.</p>
+<p>Density is the planning figure for dry grout per cubic foot of finished joint: about 100 lb/ft³ for sanded cement grout, 95 for unsanded, and 105 for epoxy. Real products differ, so treat these as typical values. Metric inputs use 1 in = 25.4 mm, 1 m² = 1,550 in² and 1 lb = 0.4536 kg.</p>
+<p>The formula ignores the tiny corner term J², so it slightly over-estimates, which is the safe direction. Bag counts are always rounded up, never down. Remember this is a materials estimate, not a specification: installation methods are covered by standards such as ANSI A108/A118 and the TCNA Handbook, and manufacturer coverage charts and local requirements vary. Check the label on the product you buy.</p>
+
+<h2>Worked Example</h2>
+<p>Suppose you are tiling 100 sq ft with 12×12 in sanded-grout tile, a 1/8 in (0.125 in) joint, 3/8 in (0.375 in) tile thickness, 10% waste and 10 lb bags.</p>
+<ol>
+<li>Area in square inches: 100 × 144 = 14,400 in².</li>
+<li>Joint length per unit area: (12 + 12) ÷ (12 × 12) = 0.1667.</li>
+<li>Volume: 14,400 × 0.1667 × 0.125 × 0.375 = 112.5 in³ (0.0651 ft³).</li>
+<li>Weight at 100 lb/ft³: 0.0651 × 100 = 6.51 lb.</li>
+<li>Add 10% waste: 6.51 × 1.10 = 7.16 lb (3.25 kg).</li>
+<li>Bags: 7.16 ÷ 10 = 0.72, rounded up to <strong>1 bag</strong> with about 2.84 lb left over.</li>
+</ol>
+<p>Switch the tile to a 2×2 in mosaic with the same joint and thickness and the volume jumps to 675 in³, or about 43 lb with waste, which means 5 bags of 10 lb.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the tiled area, not the room.</strong> Subtract tubs, islands and cabinets, but keep waste at 10% or more for cut-heavy layouts.</li>
+<li><strong>Use the real tile thickness.</strong> Thick porcelain pavers and stone (1/2 in or more) need much more grout than 1/4 in wall tile. Measure one tile edge with a ruler.</li>
+<li><strong>Match grout to joint width.</strong> Sanded grout is generally used for joints wider than 1/8 in, and unsanded for 1/8 in or narrower and for easily scratched surfaces. Follow the manufacturer's range.</li>
+<li><strong>Buy everything from one lot.</strong> Check the lot number on every bag so the color stays consistent across the room.</li>
+<li><strong>Protect yourself.</strong> Sanded and cement grouts contain silica and are alkaline, so wear a dust mask, gloves and eye protection when mixing. Ventilate well when working with epoxy.</li>
+<li><strong>Add extra for rough or tumbled tiles.</strong> Uneven edges, wide lippage and porous surfaces absorb more grout than the formula assumes.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much grout do I need per square foot?</summary><p>It depends on tile size, joint width and thickness. For 12×12 tile with 1/8 in joints and 3/8 in thickness it is about 0.065 lb per sq ft before waste. For 2×2 mosaic with the same joint and thickness it is roughly 0.39 lb per sq ft.</p></details>
+<details><summary>How many square feet does a 10 lb bag of grout cover?</summary><p>Using the examples above with 10% waste, a 10 lb bag covers about 140 sq ft of 12×12 tile but only about 23 sq ft of 2×2 mosaic. The calculator shows the coverage per bag for your exact inputs. Bag labels often quote a single best-case figure.</p></details>
+<details><summary>Do I need sanded or unsanded grout?</summary><p>As a general rule, sanded grout is used for joints wider than 1/8 in because the sand resists shrinking and cracking. Unsanded grout suits narrow joints and delicate surfaces such as polished marble or glass. Always confirm with the grout manufacturer's instructions.</p></details>
+<details><summary>How much extra grout should I add for waste?</summary><p>The default is 10%, which suits most standard jobs. Use 15–20% for natural stone, hand-made or irregular tiles, and for complicated layouts. Precisely made rectified tile with narrow joints can get by with around 5%.</p></details>
+<details><summary>Does tile thickness really matter?</summary><p>Yes. Grout fills the joint to the full depth of the tile, so the volume is directly proportional to thickness. A 3/4 in thick paver needs twice the grout of a 3/8 in tile with the same size and joint width.</p></details>
+<details><summary>Can I use this grout calculator for epoxy grout?</summary><p>Yes, select epoxy to apply a typical density of 105 lb/ft³. Epoxy is usually sold in fixed-size kits, so enter the kit weight as the bag size and compare the result with the yield printed on the kit.</p></details>
+</div>
+
+<h2>Related Tools</h2>
+<ul>
+<li><a href="/voltage-drop-calculator/">Voltage Drop Calculator</a></li>
+<li><a href="/topsoil-calculator/">Topsoil Calculator</a></li>
+<li><a href="/mulch-calculator/">Mulch Calculator</a></li>
+<li><a href="/drip-edge-roof-trim-calculator/">Drip Edge &amp; Roof Trim Calculator</a></li>
+<li><a href="/wheelchair-ramp-slope-length-calculator/">Wheelchair Ramp Slope &amp; Length Calculator</a></li>
+<li><a href="/ridge-vent-length-calculator/">Ridge Vent Length Calculator</a></li>
+</ul>
+</main>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<a href="/about/">About</a><a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a>
+<div>© <span id="yr">2025</span> toolwick.com</div>
+</footer>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var sys='imp',lastSummary='',shown=false;
+var PRE={'2x2':[2,2],'3x6':[3,6],'4x4':[4,4],'6x6':[6,6],'12x12':[12,12],'12x24':[12,24],'24x24':[24,24],'6x24':[6,24]};
+var LIM={imp:{area:[0.01,100000,'sq ft'],L:[0.25,120,'in'],W:[0.25,120,'in'],J:[0.01,2,'in'],T:[0.05,2,'in'],bag:[0.1,1000,'lb']},
+met:{area:[0.001,10000,'m²'],L:[5,3000,'mm'],W:[5,3000,'mm'],J:[0.25,50,'mm'],T:[1,50,'mm'],bag:[0.05,500,'kg']}};
+var NAMES={area:'area',L:'tile length',W:'tile width',J:'joint width',T:'tile thickness',bag:'bag size'};
+var IDS={area:'area',L:'tl',W:'tw',J:'jw',T:'th',bag:'bag'};
+var KG=0.45359237;
+function fmt(n,d){return Number(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:d===undefined?2:d})}
+function fix(n,d){return Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function toIn(v){return sys==='imp'?v:v/25.4}
+function lk(lb){return fix(lb,2)+' lb / '+fix(lb*KG,2)+' kg'}
+function err(id,msg){var e=$(id+'-err'),i=$(id);e.textContent=msg||'';if(msg){i.classList.add('bad');i.setAttribute('aria-invalid','true')}else{i.classList.remove('bad');i.removeAttribute('aria-invalid')}}
+function labels(){var m=sys==='imp';
+document.querySelectorAll('.ua').forEach(function(e){e.textContent=m?'sq ft':'m²'});
+document.querySelectorAll('.ul').forEach(function(e){e.textContent=m?'in':'mm'});
+document.querySelectorAll('.um').forEach(function(e){e.textContent=m?'lb':'kg'})}
+function dg(){var u=sys==='imp'?'in':'mm',d=sys==='imp'?3:2;
+function g(id){var n=parseFloat($(id).value);return isFinite(n)&&n>0?fmt(n,d)+' '+u:'?'}
+$('dL').textContent='L = '+g('tl');$('dW').textContent='W = '+g('tw');
+$('dJ').textContent='Joint J = '+g('jw');$('dJ2').textContent='J = '+g('jw');$('dT').textContent='T = '+g('th')}
+function clearRes(){var r=$('results');r.classList.remove('show');r.innerHTML='';shown=false}
+function read(){var lim=LIM[sys],v={},ok=true,k;
+for(k in IDS){var raw=$(IDS[k]).value.trim(),n=parseFloat(raw),mn=lim[k][0],mx=lim[k][1],u=lim[k][2],m='';
+if(raw===''||!isFinite(n))m='Enter a number for the '+NAMES[k]+'.';
+else if(n<=0)m='The '+NAMES[k]+' must be greater than zero.';
+else if(n<mn||n>mx)m='The '+NAMES[k]+' must be between '+fmt(mn,3)+' and '+fmt(mx,3)+' '+u+'.';
+v[k]=n;err(IDS[k],m);if(m)ok=false}
+if(ok){var j=toIn(v.J),s=Math.min(toIn(v.L),toIn(v.W));if(j>=s){err('jw',"Joint width must be smaller than the tile's shortest side.");ok=false}}
+return ok?v:null}
+function need(aIn,L,W,J,T,dens,waste){var vol=aIn*(L+W)/(L*W)*J*T,lb=vol/1728*dens;return{vol:vol,lb:lb,total:lb*(1+waste/100)}}
+function calculate(){
+var d=read();dg();
+if(!d){clearRes();var b=document.querySelector('input.bad');if(b)b.focus();return}
+var imp=sys==='imp',u=imp?'in':'mm',au=imp?'sq ft':'m²',mu=imp?'lb':'kg',dd=imp?3:2;
+var dens=+$('gtype').value,waste=+$('waste').value,tn=$('gtype').selectedOptions[0].getAttribute('data-n');
+var bagLb=imp?d.bag:d.bag/KG,aIn=d.area*(imp?144:1550.0031);
+var L=toIn(d.L),W=toIn(d.W),J=toIn(d.J),T=toIn(d.T);
+var r=need(aIn,L,W,J,T,dens,waste),bags=Math.max(1,Math.ceil(r.total/bagLb-1e-9)),left=bags*bagLb-r.total;
+var cov=d.area*bagLb/r.total;
+var tile=fmt(d.L,dd)+' × '+fmt(d.W,dd)+' '+u,joint=fmt(d.J,dd)+' '+u,thick=fmt(d.T,dd)+' '+u;
+var data=[['Area covered',fmt(d.area,2)+' '+au],['Tile size',tile],['Joint width',joint],['Tile thickness (grout depth)',thick],
+['Grout volume (no waste)',fix(r.vol/1728,4)+' ft³ / '+fix(r.vol*0.016387064,2)+' L'],
+['Grout weight (no waste)',lk(r.lb)],['Waste allowance ('+waste+'%)',lk(r.total-r.lb)],
+['<strong>Total grout needed</strong>','<strong>'+lk(r.total)+'</strong>'],
+['Bags to buy',bags+' × '+fmt(d.bag,2)+' '+mu],['Leftover after the job',lk(left)],
+['Approx. coverage per bag',fmt(cov,1)+' '+au]];
+var t1='<div class="tw"><table><thead><tr><th>Item</th><th>Value</th></tr></thead><tbody>'+data.map(function(x){return '<tr><th scope="row">'+x[0]+'</th><td>'+x[1]+'</td></tr>'}).join('')+'</tbody></table></div>';
+var js=imp?[['1/16 in',0.0625],['1/8 in',0.125],['3/16 in',0.1875],['1/4 in',0.25],['3/8 in',0.375]]:[['2 mm',2/25.4],['3 mm',3/25.4],['5 mm',5/25.4],['6 mm',6/25.4],['10 mm',10/25.4]];
+var s=Math.min(L,W),hit=false,list=[];
+js.forEach(function(x){if(x[1]<s){var m=Math.abs(x[1]-J)<0.0005;if(m)hit=true;list.push([x[0],x[1],m])}});
+if(!hit)list.unshift(['Your joint: '+joint,J,true]);
+var t2='<div class="tw"><table><thead><tr><th>Joint width</th><th>Grout incl. waste</th><th>Bags</th></tr></thead><tbody>'+list.map(function(x){var q=need(aIn,L,W,x[1],T,dens,waste);return '<tr'+(x[2]?' class="you"':'')+'><th scope="row">'+x[0]+'</th><td>'+lk(q.total)+'</td><td>'+Math.max(1,Math.ceil(q.total/bagLb-1e-9))+'</td></tr>'}).join('')+'</tbody></table></div>';
+var note='';
+if(J>=0.125-1e-9&&dens===95)note='Unsanded grout is generally meant for joints of 1/8 in (3 mm) or narrower. Your joint is that width or wider, so check the manufacturer\'s joint range or consider sanded grout.';
+else if(J<0.125-1e-9&&dens===100)note='Sanded grout is generally meant for joints wider than 1/8 in (3 mm). Your joint is narrower, so check the manufacturer\'s range or consider unsanded grout.';
+else if(dens===105)note='Epoxy grout is usually sold in fixed kits. Enter the kit weight as the bag size and compare the result with the yield printed on the kit.';
+var html='<div class="rh">Your grout estimate</div><div class="big">'+bags+(bags===1?' bag':' bags')+'</div>'
++'<p class="sub">of '+fmt(d.bag,2)+' '+mu+' '+tn+' grout. You need about <strong>'+lk(r.total)+'</strong> including '+waste+'% waste. Bags are always rounded up.</p>'
++t1+(note?'<div class="note">'+note+'</div>':'')
++'<div class="rh">Joint width comparison</div>'+t2
++'<button type="button" class="copy">Copy results</button>'
++'<p class="fine">Planning estimate only, based on the standard volumetric formula and typical grout densities. It is not a specification or approval. Check the manufacturer\'s coverage chart and installation instructions (ANSI A108/A118, TCNA Handbook); local requirements vary.</p>';
+lastSummary='Grout estimate (Toolwick Grout Calculator)\nArea: '+fmt(d.area,2)+' '+au+'\nTile: '+tile+'\nJoint: '+joint+'\nThickness: '+thick+'\nGrout type: '+tn+'\nWaste: '+waste+'%\nTotal grout needed: '+lk(r.total)+'\nBags to buy: '+bags+' x '+fmt(d.bag,2)+' '+mu;
+requestAnimationFrame(function(){var res=$('results');res.classList.remove('show');res.innerHTML=html;shown=true;requestAnimationFrame(function(){res.classList.add('show')})})}
+function copyText(t){if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t);
+return new Promise(function(ok,no){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')?ok():no()}catch(x){no()}document.body.removeChild(a)})}
+$('results').addEventListener('click',function(e){var b=e.target.closest('.copy');if(!b)return;
+copyText(lastSummary).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)},function(){b.textContent='Copy failed';setTimeout(function(){b.textContent='Copy results'},2000)})});
+$('f').addEventListener('submit',function(e){e.preventDefault();requestAnimationFrame(calculate)});
+function applyPre(){var p=PRE[$('preset').value];if(!p)return;var f=sys==='imp'?1:25.4;$('tl').value=+(p[0]*f).toFixed(2);$('tw').value=+(p[1]*f).toFixed(2)}
+$('preset').addEventListener('change',function(){applyPre();dg()});
+['tl','tw'].forEach(function(id){$(id).addEventListener('input',function(){$('preset').value='custom'})});
+['area','tl','tw','jw','th'].forEach(function(id){$(id).addEventListener('input',dg)});
+$('waste').addEventListener('input',function(){$('wv').textContent=$('waste').value+'%';if(shown)requestAnimationFrame(calculate)});
+$('units').addEventListener('change',function(){var ns=$('units').value;if(ns===sys)return;var toMet=ns==='met';
+function cv(id,f,d){var e=$(id),n=parseFloat(e.value);if(isFinite(n)&&n>0)e.value=+(n*f).toFixed(d)}
+var lf=toMet?25.4:1/25.4,ld=toMet?2:3;
+['tl','tw','jw','th'].forEach(function(id){cv(id,lf,ld)});
+cv('area',toMet?0.09290304:10.7639104,2);cv('bag',toMet?KG:1/KG,2);
+sys=ns;labels();for(var k in IDS)err(IDS[k],'');
+if($('preset').value!=='custom')applyPre();dg();clearRes()});
+$('yr').textContent=new Date().getFullYear();
+labels();dg();requestAnimationFrame(calculate);
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
