@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Free Watts to Amps Calculator | Toolwick</title>
+<meta name="description" content="Free watts to amps calculator for DC, single-phase and three-phase AC. Get amps, minimum breaker size and copper wire gauge using NEC rules.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/watts-to-amps-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Watts to Amps Calculator", "url": "https://toolwick.com/watts-to-amps-calculator/", "description": "Free watts to amps calculator for DC, single-phase and three-phase AC. Get amps, minimum breaker size and copper wire gauge using NEC rules.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Watts to Amps Calculator", "item": "https://toolwick.com/watts-to-amps-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many amps is 1,000 watts?", "acceptedAnswer": {"@type": "Answer", "text": "At 120 V and a power factor of 1.00, 1,000 W is 8.33 A. At 240 V it is 4.17 A, and at 12 V DC it is 83.33 A. The same watts mean far more amps at low voltage."}}, {"@type": "Question", "name": "Can I convert watts to amps without knowing the voltage?", "acceptedAnswer": {"@type": "Answer", "text": "No. Amps depend on both watts and volts, so you need the voltage. Check the appliance nameplate, or use the nominal supply voltage such as 120 V or 240 V in North America."}}, {"@type": "Question", "name": "What is the formula for watts to amps?", "acceptedAnswer": {"@type": "Answer", "text": "For DC and purely resistive loads, amps = watts ÷ volts. For AC single-phase, divide by volts × power factor. For three-phase, divide by 1.732 × volts × power factor."}}, {"@type": "Question", "name": "How many amps is 3,000 watts at 240 volts?", "acceptedAnswer": {"@type": "Answer", "text": "At a power factor of 1.00, 3,000 W at 240 V is 12.50 A. At a power factor of 0.90 it is 13.89 A. With the continuous-load 125% rule, the design current is 15.63 A (PF 1.00), so the minimum breaker is 20 A."}}, {"@type": "Question", "name": "What breaker do I need for a 2,000 watt load at 120 volts?", "acceptedAnswer": {"@type": "Answer", "text": "The load draws 16.67 A. If it runs 3+ hours, the 125% rule gives 20.83 A, so the next standard breaker is 25 A with 10 AWG copper. If it is not continuous, a 20 A breaker with 12 AWG wire is the minimum."}}, {"@type": "Question", "name": "Is the calculation different for three-phase power?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Three-phase current is lower for the same total watts because the load is shared across three conductors. Use the total watts and the line-to-line voltage, and divide by 1.732 × volts × power factor."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+nav{border-bottom:1px solid #eee}
+.nav-in{max-width:640px;margin:0 auto;padding:.5rem 1.5rem}
+.brand{display:inline-block;padding:.6rem 0;font-weight:800;font-size:1.2rem;color:#0077b6;text-decoration:none}
+main{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.9rem;line-height:1.2;margin:.5rem 0 1rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2.2rem 0 .75rem}
+p{margin:0 0 1rem}
+main a,footer a{color:#0077b6;text-decoration:underline}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;height:auto}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.4rem}
+input[type=text],select{width:100%;min-height:48px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input[type=text]:focus,select:focus,input[type=range]:focus-visible,input[type=checkbox]:focus-visible{outline:2px solid #0077b6;outline-offset:2px;border-color:#0077b6}
+.row{display:flex;gap:.5rem}
+.row select{width:96px;flex:none}
+.invalid{border-color:#e74c3c!important}
+.err{color:#c0392b;font-size:.85rem;margin:.4rem 0 0}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem}
+.chip{min-height:44px;padding:0 14px;border:1px solid #0077b6;background:#fff;color:#0077b6;border-radius:6px;font-weight:600;font-size:.95rem;cursor:pointer;font-family:inherit}
+.chip:hover{background:#eaf5fb}
+input[type=range]{width:100%;height:44px;accent-color:#0077b6;margin:0}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.hint{font-size:.85rem;color:#666;margin:.4rem 0 0}
+.check{display:flex;align-items:center;gap:.6rem;min-height:44px}
+.check input{width:24px;height:24px;margin:0;accent-color:#0077b6;flex:none}
+.check label{margin:0;font-size:.95rem;color:#1a1a2e;cursor:pointer}
+button.main{width:100%;min-height:48px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+button.main:hover{background:#006299}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.copy{width:100%;min-height:44px;margin-top:1rem;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit}
+.copy:hover{background:#eaf5fb}
+#results{margin-top:1.5rem}
+.fade{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}}
+.big{font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1.1;word-break:break-word}
+.sub{color:#555;margin:.3rem 0 1.25rem;font-size:.95rem}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:.6rem .75rem;font-size:.85rem;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:.6rem .75rem;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+tbody tr.hl{background:#e6f2f9;font-weight:600}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+h3{font-size:1rem;margin:1.25rem 0 .5rem}
+.bar{height:14px;background:#e9ecef;border-radius:7px;overflow:hidden;margin:.4rem 0 .4rem}
+.bar i{display:block;height:100%;background:#0077b6}
+.warn{background:#fff6e5;border:1px solid #f0c36d;border-radius:6px;padding:.75rem 1rem;font-size:.9rem;margin-bottom:1rem;color:#5c4100}
+.note{background:#f8f9fa;border-radius:6px;padding:1rem;font-size:.85rem;color:#555;margin:0}
+.content{margin-top:2.5rem}
+code,.formula{background:#f8f9fa;border-radius:4px;padding:.15rem .4rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9rem}
+.fbox{background:#f8f9fa;border-left:4px solid #0077b6;padding:.8rem 1rem;margin:0 0 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9rem;overflow-x:auto}
+.fbox div{white-space:nowrap}
+ul,ol{padding-left:1.3rem;margin:0 0 1rem}
+li{margin-bottom:.5rem}
+details{border-bottom:1px solid #e0e0e0}
+summary{min-height:44px;padding:.7rem 0;cursor:pointer;font-weight:600}
+details p{margin:0 0 1rem;color:#333}
+.related{list-style:none;padding:0;display:grid;gap:.5rem}
+.related li{margin:0}
+.related a{display:block;padding:.7rem 1rem;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;min-height:44px}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #eee;margin-top:2rem}
+.foot-in{max-width:640px;margin:0 auto;padding:1.5rem;font-size:.9rem;color:#555}
+.foot-in a{color:#444;display:inline-block;padding:.5rem .25rem}
+@media (max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.3rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/watts-to-amps-calculator/">
+<meta property="og:title" content="Watts to Amps Calculator">
+<meta property="og:description" content="Free watts to amps calculator for DC, single-phase and three-phase AC. Get amps, minimum breaker size and copper wire gauge using NEC rules.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav><div class="nav-in"><a class="brand" href="/">Toolwick</a></div></nav>
+<main>
+<h1>Watts to Amps Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This free watts to amps calculator converts power in watts or kilowatts into current in amps for DC, single-phase AC and three-phase AC circuits. Enter the wattage, voltage and power factor to get the amps instantly, plus a conservative minimum breaker size and copper wire gauge based on NEC rules.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="diag" viewBox="0 0 480 240" role="img" aria-labelledby="dTitle dDesc" xmlns="http://www.w3.org/2000/svg">
+<title id="dTitle">Circuit diagram showing source voltage, load wattage and calculated current</title>
+<desc id="dDesc">Press Calculate to label the diagram with your values.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0077b6"/></marker></defs>
+<line x1="120" y1="130" x2="120" y2="188" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="360" y1="130" x2="360" y2="188" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="125" y1="176" x2="355" y2="176" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text x="240" y="196" text-anchor="middle" font-size="12" fill="#1a1a2e">circuit conductors (see Voltage Drop Calculator)</text>
+<line x1="120" y1="70" x2="360" y2="70" stroke="#0077b6" stroke-width="3"/>
+<line x1="120" y1="130" x2="360" y2="130" stroke="#0077b6" stroke-width="3"/>
+<rect x="10" y="40" width="110" height="110" rx="8" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<text x="65" y="66" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">SOURCE</text>
+<text id="dV" x="65" y="102" text-anchor="middle" font-size="19" font-weight="700" fill="#1a1a2e">? V</text>
+<text id="dT" x="65" y="128" text-anchor="middle" font-size="12" fill="#1a1a2e">AC 1-phase</text>
+<rect x="360" y="40" width="110" height="110" rx="8" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<text x="415" y="66" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">LOAD</text>
+<text id="dP" x="415" y="102" text-anchor="middle" font-size="19" font-weight="700" fill="#1a1a2e">? W</text>
+<text id="dPF" x="415" y="128" text-anchor="middle" font-size="12" fill="#1a1a2e"></text>
+<rect x="145" y="54" width="110" height="32" rx="4" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<text id="dB" x="200" y="75" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a2e">Breaker</text>
+<line x1="272" y1="50" x2="345" y2="50" stroke="#0077b6" stroke-width="2.5" marker-end="url(#ah)"/>
+<text id="dI" x="240" y="108" text-anchor="middle" font-size="22" font-weight="700" fill="#0077b6">I = ? A</text>
+<text id="dF1" x="240" y="218" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a2e">I = P ÷ (V × PF)</text>
+<text id="dF2" x="240" y="236" text-anchor="middle" font-size="13" fill="#1a1a2e"></text>
+</svg>
+</div>
+
+<div class="field">
+<label for="power">Power</label>
+<div class="row">
+<input id="power" type="text" inputmode="decimal" value="1800" autocomplete="off" aria-describedby="powerErr">
+<select id="punit" aria-label="Power unit"><option value="1">W</option><option value="1000">kW</option></select>
+</div>
+<p class="err" id="powerErr" hidden></p>
+</div>
+
+<div class="field">
+<label for="volt">Voltage (V)</label>
+<input id="volt" type="text" inputmode="decimal" value="120" autocomplete="off" aria-describedby="voltErr">
+<div class="chips" role="group" aria-label="Common voltages">
+<button type="button" class="chip" data-v="12">12 V</button>
+<button type="button" class="chip" data-v="24">24 V</button>
+<button type="button" class="chip" data-v="120">120 V</button>
+<button type="button" class="chip" data-v="208">208 V</button>
+<button type="button" class="chip" data-v="240">240 V</button>
+<button type="button" class="chip" data-v="480">480 V</button>
+</div>
+<p class="err" id="voltErr" hidden></p>
+</div>
+
+<div class="field">
+<label for="ctype">Circuit type</label>
+<select id="ctype">
+<option value="1" selected>AC single-phase</option>
+<option value="3">AC three-phase (line-to-line voltage)</option>
+<option value="dc">DC</option>
+</select>
+</div>
+
+<div class="field" id="pfGroup">
+<label for="pf">Power factor (AC only): <span id="pfOut">1.00</span></label>
+<input type="range" id="pf" min="0.5" max="1" step="0.01" value="1">
+<div class="ticks" aria-hidden="true"><span>0.50</span><span>0.75</span><span>1.00</span></div>
+<p class="hint">Resistive heaters: 1.00. LED drivers: about 0.90. Motors and compressors: 0.80–0.85. A lower power factor means more amps.</p>
+</div>
+
+<div class="check">
+<input type="checkbox" id="cont" checked>
+<label for="cont">Continuous load (3+ hours): apply the 125% rule</label>
+</div>
+
+<button type="button" class="main" id="calcBtn">Calculate Amps</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<button type="button" class="copy" id="copyBtn" hidden>Copy results</button>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/watts-to-amps-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Watts to Amps Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/watts-to-amps-calculator/&quot;&gt;Watts to Amps Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/watts-to-amps-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<section class="content">
+<h2>How to Use This Watts to Amps Calculator</h2>
+<p>Type the load's power in watts (or switch the unit to kW), enter the supply voltage, and choose DC, single-phase AC or three-phase AC. For AC loads, set the power factor with the slider; leave it at 1.00 for resistive loads such as heaters. The result shows the current in amps, the design current, a minimum standard breaker size, a minimum copper wire gauge, and the same load at other common voltages.</p>
+
+<h2>Why This Matters</h2>
+<p>Nameplates list watts, but breakers, wire, extension cords, generators and inverters are limited by amps. A 1,800 W space heater looks modest until you see that it pulls 15 amps at 120 V. That is the entire rating of a standard 15 A circuit, with nothing left for a lamp or a phone charger. Electricians run this conversion when adding a circuit for a hot tub (often 50 A at 240 V), or when checking whether a 2,000 W generator can carry a 1,500 W load. Camper and solar builders use it constantly: a 1,000 W inverter on a 12 V battery draws over 83 A, which is why the cables are so thick and the fuses so large.</p>
+<p>Homeowners use the same math to stop tripping breakers, and landlords use it to check a tenant's appliance load. DIYers use it to buy the right wire before they start. An error in one direction wastes money on oversized cable. An error in the other direction can overheat conductors and start a fire. A quick, consistent calculation that always rounds toward the safe side is worth keeping bookmarked.</p>
+
+<h2>How It's Calculated</h2>
+<p>Power, voltage and current are linked by <code>P = V × I</code>, so current is power divided by voltage. AC circuits add the power factor (PF), which accounts for the part of the current that does no useful work. Three-phase circuits add the square root of 3 (about 1.732).</p>
+<div class="fbox">
+<div>DC: I = P ÷ V</div>
+<div>AC single-phase: I = P ÷ (V × PF)</div>
+<div>AC three-phase: I = P ÷ (√3 × V × PF)</div>
+</div>
+<p>For three-phase, P is the total power of all three phases and V is the line-to-line voltage, such as 208 V or 480 V.</p>
+<p>The sizing steps follow common NEC (NFPA 70) practice. A continuous load multiplies the current by 1.25, per NEC 210.20(A) and 215.2(A)(1). The tool then rounds up to the next standard breaker rating from NEC 240.6(A): 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100, 110, 125, 150, 175, 200 A and so on. Wire size is the smallest copper conductor whose NEC Table 310.16 ampacity is at least the breaker rating. It uses the 60 °C column up to 100 A and the 75 °C column above that (NEC 110.14(C)). Results always round up, never down. The tool assumes no more than three current-carrying conductors, a 30 °C ambient temperature and a short run. Local codes vary, and the output is not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>A 1,800 W space heater plugs into a 120 V single-phase circuit and will run for hours. Power factor is 1.00 because it is a resistive load. These are the default values in the calculator above.</p>
+<ol>
+<li>Current: 1,800 ÷ (120 × 1.00) = <strong>15.00 A</strong>.</li>
+<li>Continuous load: 15.00 × 1.25 = 18.75 A design current.</li>
+<li>Next standard breaker at or above 18.75 A: <strong>20 A</strong>.</li>
+<li>Smallest copper wire with at least 20 A in the 60 °C column: <strong>12 AWG</strong> (20 A).</li>
+</ol>
+<p>So the heater needs a dedicated 20 A circuit on 12 AWG wire. On a 15 A breaker it would run at 100% of the rating, well above the 80% guideline for continuous loads.</p>
+<p>Three-phase variation: a 10,000 W load at 208 V, PF 0.85, draws 10,000 ÷ (1.732 × 208 × 0.85) = 32.66 A. With the 125% rule that is 40.82 A, which rounds up to a 45 A breaker and 6 AWG copper (55 A).</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use the real voltage.</strong> A constant-power load such as a motor drive or inverter draws more amps at 208 V than at 240 V. Check the nameplate rather than assuming 120 or 240.</li>
+<li><strong>Don't ignore power factor on motors.</strong> Compressors, pumps and transformers often sit at 0.80–0.85, which raises the current by 15–25% compared with PF 1.00. Motor nameplate watts are often output power, so divide by efficiency to get input watts.</li>
+<li><strong>Remember startup surge.</strong> Motors can draw 3–7 times their running amps for a moment. Size generators and inverters for the surge, not just the running figure.</li>
+<li><strong>Never "fix" a tripping breaker by upsizing it.</strong> The breaker protects the wire. A larger breaker on the same wire removes that protection.</li>
+<li><strong>Long runs need extra checking.</strong> The wire size here ignores voltage drop and temperature derating. Use the <a href="/voltage-drop-calculator/">Voltage Drop Calculator</a> for runs over about 50 feet.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many amps is 1,000 watts?</summary><p>At 120 V and a power factor of 1.00, 1,000 W is 8.33 A. At 240 V it is 4.17 A, and at 12 V DC it is 83.33 A. The same watts mean far more amps at low voltage.</p></details>
+<details><summary>Can I convert watts to amps without knowing the voltage?</summary><p>No. Amps depend on both watts and volts, so you need the voltage. Check the appliance nameplate, or use the nominal supply voltage such as 120 V or 240 V in North America.</p></details>
+<details><summary>What is the formula for watts to amps?</summary><p>For DC and purely resistive loads, amps = watts ÷ volts. For AC single-phase, divide by volts × power factor. For three-phase, divide by 1.732 × volts × power factor.</p></details>
+<details><summary>How many amps is 3,000 watts at 240 volts?</summary><p>At a power factor of 1.00, 3,000 W at 240 V is 12.50 A. At a power factor of 0.90 it is 13.89 A. With the continuous-load 125% rule, the design current is 15.63 A (PF 1.00), so the minimum breaker is 20 A.</p></details>
+<details><summary>What breaker do I need for a 2,000 watt load at 120 volts?</summary><p>The load draws 16.67 A. If it runs 3+ hours, the 125% rule gives 20.83 A, so the next standard breaker is 25 A with 10 AWG copper. If it is not continuous, a 20 A breaker with 12 AWG wire is the minimum.</p></details>
+<details><summary>Is the calculation different for three-phase power?</summary><p>Yes. Three-phase current is lower for the same total watts because the load is shared across three conductors. Use the total watts and the line-to-line voltage, and divide by 1.732 × volts × power factor.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="related">
+<li><a href="/voltage-drop-calculator/">Voltage Drop Calculator</a></li>
+<li><a href="/grout-calculator/">Grout Calculator</a></li>
+<li><a href="/topsoil-calculator/">Topsoil Calculator</a></li>
+<li><a href="/mulch-calculator/">Mulch Calculator</a></li>
+<li><a href="/drip-edge-roof-trim-calculator/">Drip Edge &amp; Roof Trim Calculator</a></li>
+<li><a href="/wheelchair-ramp-slope-length-calculator/">Wheelchair Ramp Slope &amp; Length Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer><div class="foot-in">
+<a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a>
+<p style="margin:.75rem 0 0">© <span id="yr">2025</span> toolwick.com</p>
+</div></footer>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const SQ3=Math.sqrt(3);
+const BR=[15,20,25,30,35,40,45,50,60,70,80,90,100,110,125,150,175,200,225,250,300,350,400,450,500,600,700,800,1000,1200,1600,2000];
+// [name, 60C ampacity, 75C ampacity] copper, NEC 310.16
+const WIRE=[["14 AWG",15,20],["12 AWG",20,25],["10 AWG",30,35],["8 AWG",40,50],["6 AWG",55,65],["4 AWG",70,85],["3 AWG",85,100],["2 AWG",95,115],["1 AWG",110,130],["1/0 AWG",125,150],["2/0 AWG",145,175],["3/0 AWG",165,200],["4/0 AWG",195,230],["250 kcmil",215,255],["300 kcmil",240,285],["350 kcmil",260,310],["400 kcmil",280,335],["500 kcmil",320,380],["600 kcmil",355,420],["700 kcmil",385,460],["750 kcmil",400,475],["800 kcmil",410,490],["900 kcmil",435,520],["1000 kcmil",455,545]];
+const CMP=[12,24,48,120,208,240,277,480];
+const TN={dc:'DC','1':'AC single-phase','3':'AC three-phase'};
+let shown=false,lastText='',tmr=null;
+
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function fmtG(n){return Number(n.toFixed(2)).toLocaleString('en-US',{maximumFractionDigits:2});}
+function fmtA(a){if(a>=1)return fmt(a,2);if(a>=0.01)return fmt(a,3);if(a>=0.0001)return fmt(a,5);return a.toExponential(2);}
+function num(s){s=String(s).replace(/[,\s]/g,'');if(!/^[+-]?(\d+\.?\d*|\.\d+)$/.test(s))return NaN;return Number(s);}
+function amps(p,v,t,pf){return t==='dc'?p/v:t==='1'?p/(v*pf):p/(SQ3*v*pf);}
+function brk(d){for(const b of BR){if(b>=d-1e-9)return b;}return null;}
+function wire(b){const c=b<=100?1:2;for(const w of WIRE){if(w[c]>=b)return{n:w[0],a:w[c],t:c===1?60:75};}return null;}
+function setErr(id,m){const i=$(id),e=$(id+'Err');i.classList.add('invalid');i.setAttribute('aria-invalid','true');e.textContent=m;e.hidden=false;}
+function clrErr(id){const i=$(id);i.classList.remove('invalid');i.removeAttribute('aria-invalid');$(id+'Err').hidden=true;}
+function setT(id,t){$(id).textContent=t;}
+
+function draw(o){
+  const t=$('ctype').value;
+  const sym=t==='dc'?'I = P ÷ V':t==='1'?'I = P ÷ (V × PF)':'I = P ÷ (√3 × V × PF)';
+  setT('dF1',sym);
+  setT('dT',TN[t].replace('AC single-phase','AC 1-phase').replace('AC three-phase','AC 3-phase'));
+  const f2=$('dF2');
+  if(!o){setT('dV','? V');setT('dP','? W');setT('dPF','');setT('dB','Breaker');setT('dI','I = ? A');setT('dF2','');f2.removeAttribute('textLength');
+    setT('dDesc','Press Calculate to label the diagram with your values.');return;}
+  setT('dV',fmtG(o.v)+' V');
+  setT('dP',o.p>=10000?fmtG(o.p/1000)+' kW':fmtG(o.p)+' W');
+  setT('dPF',t==='dc'?'':'PF '+fmtG(o.pf));
+  setT('dB',o.v>1000?'Breaker n/a':o.b?o.b+' A breaker':'> 2,000 A');
+  setT('dI','I = '+fmtA(o.a)+' A');
+  const pw=fmtG(o.p),vv=fmtG(o.v),pf=fmtG(o.pf);
+  const s=t==='dc'?'= '+pw+' ÷ '+vv+' = '+fmtA(o.a)+' A':t==='1'?'= '+pw+' ÷ ('+vv+' × '+pf+') = '+fmtA(o.a)+' A':'= '+pw+' ÷ (1.732 × '+vv+' × '+pf+') = '+fmtA(o.a)+' A';
+  setT('dF2',s);
+  if(s.length>50){f2.setAttribute('textLength','450');f2.setAttribute('lengthAdjust','spacingAndGlyphs');}else{f2.removeAttribute('textLength');f2.removeAttribute('lengthAdjust');}
+  setT('dDesc','Source of '+fmtG(o.v)+' volts feeding a load of '+fmtG(o.p)+' watts, drawing '+fmtA(o.a)+' amps.');
+}
+
+function calc(anim){
+  clrErr('power');clrErr('volt');
+  const pr=$('power').value,vr=$('volt').value;
+  let p=num(pr),v=num(vr),bad='';
+  const type=$('ctype').value,cont=$('cont').checked;
+  if(isNaN(p)){setErr('power',pr.trim()===''?'Enter the power in watts.':'Enter a valid number, such as 1500 or 1,500.');bad='power';}
+  else{p*=+$('punit').value;
+    if(p<=0){setErr('power','Power must be greater than zero.');bad='power';}
+    else if(p>1e8){setErr('power','Power must be 100,000,000 W (100 MW) or less.');bad='power';}}
+  if(isNaN(v)){setErr('volt',vr.trim()===''?'Enter the voltage.':'Enter a valid number, such as 120 or 240.');bad=bad||'volt';}
+  else if(v<=0){setErr('volt','Voltage must be greater than zero.');bad=bad||'volt';}
+  else if(v>100000){setErr('volt','Voltage must be 100,000 V or less.');bad=bad||'volt';}
+  if(bad){
+    shown=false;$('results').innerHTML='';$('copyBtn').hidden=true;draw(null);
+    if(anim)$(bad).focus();
+    return;
+  }
+  const pf=type==='dc'?1:Math.round(parseFloat($('pf').value)*100)/100;
+  const mult=cont?1.25:1;
+  const a=amps(p,v,type,pf),d=a*mult;
+  const lv=v<=1000;
+  const b=lv?brk(d):null;
+  const w=b?wire(b):null;
+  let brTxt,wTxt;
+  if(!lv){brTxt=wTxt='Not provided above 1,000 V';}
+  else{
+    brTxt=b?b+' A':'Above 2,000 A: engineered design';
+    wTxt=w?w.n+' copper ('+w.t+' °C column, '+w.a+' A)':b?'Above single-conductor table: parallel sets or engineered design':'Engineered design';
+  }
+  const desc=fmtG(p)+' W at '+fmtG(v)+' V, '+TN[type]+(type==='dc'?'':', PF '+fmtG(pf));
+  const kw=p>=1000?' ('+fmtG(p/1000)+' kW)':'';
+  const rows=[['Power',fmtG(p)+' W'+kw],['Voltage',fmtG(v)+' V'],['Circuit type',TN[type]],['Power factor',type==='dc'?'n/a (DC)':fmtG(pf)],
+    ['Calculated current',fmtA(a)+' A'],['Design current (× '+(cont?'1.25 continuous':'1.00 non-continuous')+')',fmtA(d)+' A'],
+    ['Minimum breaker (next standard size)',brTxt],['Minimum copper conductor',wTxt]];
+  let h='<div class="res'+(anim?' fade':'')+'"><div class="big">'+fmtA(a)+' A</div><p class="sub">'+desc+'</p>';
+  h+='<div class="tw"><table><thead><tr><th>Item</th><th class="n">Value</th></tr></thead><tbody>';
+  for(const r of rows)h+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>';
+  h+='</tbody></table></div>';
+  if(b&&lv){const pc=Math.min(100,a/b*100);
+    h+='<p style="margin:0">Calculated current is '+fmt(pc,0)+'% of the '+b+' A breaker rating.</p><div class="bar" role="img" aria-label="'+fmt(pc,0)+' percent of breaker rating"><i style="width:'+pc.toFixed(1)+'%"></i></div>';}
+  if(a>400&&lv)h+='<div class="warn">Over 400 A is feeder or service territory. Have a licensed electrician or engineer design this circuit.</div>';
+  if(!lv)h+='<div class="warn">Voltages above 1,000 V are medium-voltage. The NEC low-voltage tables used here do not apply.</div>';
+  if(v<30&&lv)h+='<div class="warn">Low-voltage circuits (vehicle, marine, solar, Class 2) can fall under other rules. Treat the wire size as a conservative minimum and follow the equipment maker\'s instructions.</div>';
+  h+='<h3>Same load at other voltages</h3><div class="tw"><table><thead><tr><th>Voltage</th><th class="n">Current</th><th class="n">Min breaker</th></tr></thead><tbody>';
+  for(const cv of CMP){const ca=amps(p,cv,type,pf),cb=brk(ca*mult);
+    h+='<tr'+(cv===v?' class="hl"':'')+'><td>'+cv+' V</td><td class="n">'+fmtA(ca)+' A</td><td class="n">'+(cb?cb+' A':'Engineered')+'</td></tr>';}
+  h+='</tbody></table></div>';
+  h+='<p class="note">Sizing follows NEC (NFPA 70) 210.20(A)/215.2(A)(1) for the 125% continuous-load rule, 240.6(A) for standard breaker ratings, and Table 310.16 copper ampacities (60 °C column up to 100 A, 75 °C above, per 110.14(C)). It assumes three or fewer current-carrying conductors, 30 °C ambient and a short run, and always rounds up. Add derating and voltage drop where they apply. Local codes vary. This is not engineering, permit or inspection approval.</p></div>';
+  lastText='Watts to Amps (Toolwick): '+desc+' = '+fmtA(a)+' A. Design current '+fmtA(d)+' A ('+(cont?'125% continuous':'non-continuous')+'). Minimum breaker: '+brTxt+'. Minimum copper conductor: '+wTxt+'. Based on NEC 240.6(A) and 310.16; local codes vary.';
+  draw({p:p,v:v,pf:pf,a:a,b:b});
+  $('results').innerHTML=h;
+  $('copyBtn').hidden=false;
+  shown=true;
+}
+
+function run(anim){requestAnimationFrame(()=>calc(anim));}
+function again(){if(shown)requestAnimationFrame(()=>calc(false));}
+function pfUi(){$('pfOut').textContent=(+$('pf').value).toFixed(2);$('pfGroup').hidden=$('ctype').value==='dc';}
+
+$('calcBtn').addEventListener('click',()=>run(true));
+document.querySelector('.card').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('input')){e.preventDefault();run(true);}});
+$('pf').addEventListener('input',()=>{pfUi();again();});
+$('ctype').addEventListener('change',()=>{pfUi();if(shown)again();else draw(null);});
+$('punit').addEventListener('change',again);
+$('cont').addEventListener('change',again);
+document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{$('volt').value=c.dataset.v;clrErr('volt');again();}));
+$('copyBtn').addEventListener('click',()=>{
+  const done=()=>{const b=$('copyBtn');b.textContent='Copied!';clearTimeout(tmr);tmr=setTimeout(()=>{b.textContent='Copy results';},2000);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,fb);}else fb();
+  function fb(){const t=document.createElement('textarea');t.value=lastText;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(x){}document.body.removeChild(t);done();}
+});
+$('yr').textContent=new Date().getFullYear();
+pfUi();draw(null);run(false);
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
