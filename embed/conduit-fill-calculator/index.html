@@ -4,107 +4,99 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free Conduit Fill Calculator | Toolwick</title>
-<meta name="description" content="Calculate conduit fill percentage instantly. Add multiple wire sizes, select conduit type and size, and get NEC-compliant fill results for EMT, PVC, and more.">
+<meta name="description" content="Free conduit fill calculator: pick EMT, IMC, RMC or PVC conduit, add wire sizes, and check NEC Chapter 9 fill percentage and the smallest trade size.">
 <link rel="canonical" href="https://toolwick.com/conduit-fill-calculator/">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
-a{color:#0077b6;text-decoration:none}
-a:hover{text-decoration:underline}
-nav{border-bottom:1px solid #e0e0e0;padding:12px 20px;background:#fff}
-nav a{font-weight:600;font-size:1rem;color:#1a1a2e}
-nav a:hover{color:#0077b6;text-decoration:none}
+a{color:#0077b6;text-decoration:underline}
+a:hover{color:#006299}
+.topnav{border-bottom:1px solid #e0e0e0;padding:12px 1.5rem}
+.topnav a{font-weight:700;font-size:1.05rem;color:#1a1a2e;text-decoration:none}
 .container{max-width:640px;margin:0 auto;padding:1.5rem}
-h1{font-size:1.6rem;font-weight:700;margin-bottom:0.4rem;color:#1a1a2e}
-.subtitle{color:#666;font-size:0.9rem;margin-bottom:1.5rem}
-.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
-label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:5px}
-select,input[type="number"],input[type="text"]{width:100%;border:1px solid #ddd;border-radius:5px;padding:12px 16px;font-size:0.95rem;color:#1a1a2e;background:#fff;transition:border-color 0.2s,box-shadow 0.2s;-webkit-appearance:none;appearance:none}
-select:focus,input:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
-select.error,input.error{border-color:#e74c3c;box-shadow:0 0 0 3px rgba(231,76,60,0.1)}
-.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:4px;display:none}
-.form-group{margin-bottom:1.2rem}
+h1{font-size:1.7rem;line-height:1.25;margin-bottom:.6rem}
+h2{font-size:1.2rem;margin:0 0 .7rem}
+h3{font-size:1rem;margin:1rem 0 .5rem}
+.lead{color:#444;font-size:.98rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
+label,.lbl{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:5px}
+select,input[type=number]{width:100%;min-height:44px;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font-size:1rem;color:#1a1a2e;background:#fff;font-family:inherit}
+select:focus,input:focus{outline:2px solid #0077b6;outline-offset:2px;border-color:#0077b6}
+select.error,input.error{border-color:#e74c3c}
+.error-msg{color:#c0392b;font-size:.82rem;margin-top:4px;display:none}
+.fg{margin-bottom:1.2rem}
 .row{display:flex;gap:12px}
-.row .form-group{flex:1}
-.btn{background:#0077b6;color:#fff;border:none;border-radius:6px;padding:12px 24px;font-size:0.95rem;font-weight:600;cursor:pointer;transition:background 0.2s;width:100%;min-height:44px}
+.row .fg{flex:1}
+.btn{background:#0077b6;color:#fff;border:none;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background .2s}
 .btn:hover{background:#006299}
-.btn-secondary{background:#fff;color:#0077b6;border:1px solid #0077b6;padding:8px 16px;border-radius:5px;font-size:0.85rem;font-weight:500;cursor:pointer;min-height:36px;transition:background 0.2s}
-.btn-secondary:hover{background:#f0f8ff}
-.btn-danger{background:#fff;color:#e74c3c;border:1px solid #e74c3c;padding:7px 14px;border-radius:5px;font-size:0.82rem;font-weight:500;cursor:pointer;min-height:36px;transition:background 0.2s}
-.btn-danger:hover{background:#fff5f5}
-.btn-add{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:5px;padding:10px 20px;font-size:0.9rem;font-weight:600;cursor:pointer;min-height:44px;width:100%;margin-bottom:1rem;transition:background 0.2s}
+.btn:focus-visible,.btn-add:focus-visible,.btn-rm:focus-visible,.copy-btn:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.btn-add{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:10px 20px;font-size:.95rem;font-weight:600;cursor:pointer;min-height:44px;width:100%;margin-bottom:1.2rem}
 .btn-add:hover{background:#f0f8ff}
-.results-section{opacity:0;transition:opacity 0.3s ease;display:none}
-.results-section.visible{opacity:1;display:block}
-.big-number{font-size:2.8rem;font-weight:700;color:#0077b6;line-height:1}
-.big-label{font-size:0.85rem;color:#666;margin-top:4px}
-.result-cards{display:flex;gap:12px;margin-bottom:1.5rem;flex-wrap:wrap}
-.result-card{flex:1;min-width:130px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;text-align:center}
-.status-ok{color:#27ae60}
-.status-warn{color:#f39c12}
-.status-fail{color:#e74c3c}
-.status-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:600;margin-top:0.5rem}
-.badge-ok{background:#d4edda;color:#155724}
-.badge-warn{background:#fff3cd;color:#856404}
-.badge-fail{background:#f8d7da;color:#721c24}
-.fill-bar-wrap{background:#e0e0e0;border-radius:20px;height:18px;overflow:hidden;margin:0.8rem 0}
-.fill-bar{height:100%;border-radius:20px;transition:width 0.5s ease}
-.fill-bar-ok{background:#27ae60}
-.fill-bar-warn{background:#f39c12}
-.fill-bar-fail{background:#e74c3c}
-table{width:100%;border-collapse:collapse;font-size:0.88rem}
-th{background:#f0f0f0;padding:8px 10px;text-align:left;font-weight:600;color:#444;border-bottom:2px solid #ddd}
-th.num,td.num{text-align:right}
-td{padding:7px 10px;border-bottom:1px solid #eee;color:#1a1a2e}
-tr:nth-child(even) td{background:#fafafa}
-.table-scroll{overflow-x:auto}
-.wire-row{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:12px 14px;margin-bottom:8px;position:relative}
-.wire-row-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.wire-row-label{font-size:0.82rem;font-weight:600;color:#0077b6}
-.wire-fields{display:flex;gap:8px;flex-wrap:wrap}
-.wire-fields .form-group{flex:1;min-width:100px;margin-bottom:0}
-.wire-fields select,.wire-fields input{font-size:0.85rem;padding:8px 10px}
-.copy-btn{background:#f0f8ff;border:1px solid #b3d9ef;color:#0077b6;border-radius:4px;padding:4px 10px;font-size:0.78rem;font-weight:500;cursor:pointer;transition:background 0.2s}
-.copy-btn:hover{background:#d0eaf7}
-.section-sep{border:none;border-top:1px solid #e0e0e0;margin:2rem 0}
-h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin-bottom:0.7rem;margin-top:0}
-h3{font-size:1rem;font-weight:600;color:#1a1a2e;margin-bottom:0.5rem}
-.content-section{margin-bottom:2rem}
-.content-section p{margin-bottom:0.8rem;color:#333;font-size:0.93rem}
-.content-section ul{padding-left:1.3rem;margin-bottom:0.8rem}
-.content-section li{color:#333;font-size:0.93rem;margin-bottom:0.3rem}
-details{border:1px solid #e0e0e0;border-radius:6px;padding:0;margin-bottom:8px;overflow:hidden}
-summary{padding:12px 16px;font-weight:600;font-size:0.9rem;cursor:pointer;background:#f8f9fa;list-style:none;display:flex;justify-content:space-between;align-items:center}
-summary::-webkit-details-marker{display:none}
-summary::after{content:'▼';font-size:0.7rem;color:#0077b6;transition:transform 0.2s}
-details[open] summary::after{transform:rotate(180deg)}
+.btn-rm{background:#fff;color:#c0392b;border:1px solid #c0392b;border-radius:6px;padding:6px 14px;font-size:.82rem;font-weight:500;cursor:pointer;min-height:44px}
+.btn-rm:hover{background:#fff5f5}
+.wire{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:12px 14px;margin-bottom:10px}
+.wire-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.wire-h span{font-size:.85rem;font-weight:600;color:#0b5a8a}
+.wf{display:flex;gap:10px;flex-wrap:wrap}
+.wf .fg{flex:1;min-width:130px;margin-bottom:0}
+.wf .fg.q{flex:0 0 100px;min-width:90px}
+.fade{opacity:0;transition:opacity .3s ease}
+.fade.in{opacity:1}
+.big{font-size:2.8rem;font-weight:700;color:#0077b6;line-height:1.1}
+.cap{font-size:.82rem;color:#666;margin-top:4px}
+.rc{display:flex;gap:12px;flex-wrap:wrap;margin:1rem 0 1.2rem}
+.rc div.c{flex:1;min-width:140px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:1rem;text-align:center}
+.rc .mid{font-size:1.7rem;font-weight:700;color:#1a1a2e;line-height:1.2}
+.bar{background:#e0e0e0;border-radius:20px;height:16px;overflow:hidden;margin:.6rem 0}
+.bar i{display:block;height:100%;border-radius:20px}
+.ok{background:#2e8b57}.warn{background:#d9901a}.fail{background:#d64533}
+.badge{display:inline-block;padding:5px 14px;border-radius:20px;font-size:.85rem;font-weight:600;margin:.4rem 0 1rem}
+.b-ok{background:#d4edda;color:#155724}.b-warn{background:#fff3cd;color:#664d03}.b-fail{background:#f8d7da;color:#721c24}
+.tw{overflow-x:auto;margin-bottom:1.2rem}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{background:#f0f0f0;padding:8px 10px;text-align:left;font-weight:600;color:#444;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid #eee}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right}
+tr.sel td{font-weight:700;background:#e8f4fd}
+.t-ok{color:#1e6b3a;font-weight:600}.t-fail{color:#c0392b;font-weight:600}
+.copy-btn{background:#f0f8ff;border:1px solid #9cc9e2;color:#0b5a8a;border-radius:4px;padding:6px 12px;font-size:.8rem;font-weight:500;cursor:pointer;min-height:44px}
+.copy-btn:hover{background:#d8ecf8}
+.rhead{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.note{font-size:.82rem;color:#555;margin-top:.5rem}
+.safety{margin:0 0 2rem;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00}
+.diagram{margin-bottom:1.5rem;text-align:center}
+.diagram svg{width:100%;height:auto;max-width:420px}
+.diagram p{font-size:.8rem;color:#555;margin-top:.3rem}
+.content section{margin-bottom:2rem}
+.content p{margin-bottom:.8rem;color:#2b2b3c;font-size:.95rem}
+.content ul{padding-left:1.3rem;margin-bottom:.8rem}
+.content li{margin-bottom:.45rem;font-size:.95rem;color:#2b2b3c}
+.formula{background:#f0f8ff;border:1px solid #b3d9ef;border-radius:6px;padding:12px 16px;font-family:ui-monospace,Consolas,monospace;font-size:.86rem;margin:.6rem 0 1rem;overflow-x:auto;white-space:pre-wrap}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:8px;overflow:hidden}
+summary{padding:12px 16px;font-weight:600;font-size:.93rem;cursor:pointer;background:#f8f9fa;min-height:44px}
 details[open] summary{border-bottom:1px solid #e0e0e0}
-.faq-answer{padding:12px 16px;font-size:0.88rem;color:#333;line-height:1.6}
-.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.related-link{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:12px 14px;font-size:0.88rem;font-weight:500;color:#0077b6;display:block;transition:background 0.2s}
-.related-link:hover{background:#e8f4fd;text-decoration:none}
+details p{padding:12px 16px;margin:0!important}
+.rel{list-style:none;padding:0!important;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rel li{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:12px 14px;margin:0!important;font-size:.85rem!important;color:#555!important}
+.rel a{display:block;font-size:.9rem;font-weight:600}
 .ad-slot{min-height:0;margin:0}
-footer{border-top:1px solid #e0e0e0;padding:1.5rem 20px;text-align:center;font-size:0.82rem;color:#666;background:#f8f9fa}
-footer a{color:#666;margin:0 8px}
-footer a:hover{color:#0077b6}
-.diagram-wrap{margin-bottom:1.5rem;text-align:center}
-svg#conduit-diagram{max-width:100%;height:auto}
-.formula-box{background:#f0f8ff;border:1px solid #b3d9ef;border-radius:6px;padding:12px 16px;font-family:monospace;font-size:0.88rem;color:#1a1a2e;margin:0.6rem 0}
+footer{border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:.85rem;color:#555;background:#f8f9fa}
+footer a{color:#444;margin:0 8px;text-decoration:underline}
 @media(max-width:640px){
-  .result-cards{flex-direction:column}
-  .result-card{min-width:unset}
-  .row{flex-direction:column;gap:0}
-  .related-grid{grid-template-columns:1fr}
-  h1{font-size:1.35rem}
-  .big-number{font-size:2.2rem}
-  .wire-fields{flex-direction:column}
-  .wire-fields .form-group{min-width:unset}
+h1{font-size:1.4rem}
+.card{padding:1.25rem}
+.row{flex-direction:column;gap:0}
+.rel{grid-template-columns:1fr}
+.big{font-size:2.3rem}
+.wf .fg,.wf .fg.q{flex:1 1 100%}
 }
 </style>
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://toolwick.com/conduit-fill-calculator/">
 <meta property="og:title" content="Conduit Fill Calculator">
-<meta property="og:description" content="Calculate conduit fill percentage instantly. Add multiple wire sizes, select conduit type and size, and get NEC-compliant fill results for EMT, PVC, and more.">
+<meta property="og:description" content="Free conduit fill calculator: pick EMT, IMC, RMC or PVC conduit, add wire sizes, and check NEC Chapter 9 fill percentage and the smallest trade size.">
 <meta property="og:site_name" content="Toolwick">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -115,557 +107,289 @@ svg#conduit-diagram{max-width:100%;height:auto}
 <base target="_blank">
 </head>
 <body>
+<nav class="topnav" aria-label="Site"><a href="/">Toolwick</a></nav>
+<main class="container">
+<h1>Conduit Fill Calculator</h1>
+<p class="lead">This conduit fill calculator checks how full a raceway is under NEC Chapter 9. Choose the conduit type and trade size, list your conductors, and see the fill percentage, the legal limit and the smallest size that works.</p>
 
-<div class="container">
-  <h1>Conduit Fill Calculator</h1>
-  <p class="subtitle">Calculate conduit fill percentage per NEC code — add multiple wire sizes and get instant results.</p>
+<div class="diagram">
+<svg id="dg" viewBox="0 0 400 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dgt">
+<title id="dgt">Cross-section of a conduit showing conductor fill area against the NEC limit</title>
+<circle cx="200" cy="100" r="96" fill="none" stroke="#0077b6" stroke-width="3"/>
+<circle cx="200" cy="100" r="88" fill="#f8f9fa" stroke="#0077b6" stroke-width="1.5"/>
+<circle id="dg-fc" cx="200" cy="100" r="0" fill="rgba(0,119,182,.22)" stroke="#0077b6" stroke-width="1.5"/>
+<circle id="dg-mc" cx="200" cy="100" r="0" fill="none" stroke="#1a1a2e" stroke-width="1.2" stroke-dasharray="5,4"/>
+<line x1="112" y1="100" x2="112" y2="218" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="288" y1="100" x2="288" y2="218" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="112" y1="212" x2="288" y2="212" stroke="#0077b6" stroke-width="1.5"/>
+<polygon points="112,212 122,208 122,216" fill="#0077b6"/>
+<polygon points="288,212 278,208 278,216" fill="#0077b6"/>
+<text id="dg-id" x="200" y="234" text-anchor="middle" font-size="15" fill="#1a1a2e" font-family="sans-serif">Inner Ø —</text>
+<text id="dg-pct" x="200" y="104" text-anchor="middle" font-size="26" font-weight="700" fill="#0077b6" font-family="sans-serif">—</text>
+<text x="200" y="122" text-anchor="middle" font-size="12" fill="#1a1a2e" font-family="sans-serif">of area filled</text>
+<text id="dg-cd" x="200" y="258" text-anchor="middle" font-size="15" font-weight="600" fill="#0077b6" font-family="sans-serif">—</text>
+<text id="dg-mx" x="200" y="278" text-anchor="middle" font-size="14" fill="#1a1a2e" font-family="sans-serif">NEC limit (dashed): —</text>
+</svg>
+<p>Shaded circle = total conductor area shown as one equivalent circle. Dashed circle = NEC maximum fill. Update by pressing Calculate.</p>
+</div>
 
-  <!-- SVG Diagram -->
-  <div class="diagram-wrap">
-    <svg id="conduit-diagram" viewBox="0 0 580 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:580px">
-      <!-- Outer conduit -->
-      <ellipse cx="290" cy="100" rx="90" ry="90" fill="none" stroke="#0077b6" stroke-width="3"/>
-      <ellipse cx="290" cy="100" rx="82" ry="82" fill="#f8f9fa" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="5,4"/>
-      <!-- Wire circles inside -->
-      <circle cx="270" cy="85" r="18" fill="rgba(0,119,182,0.15)" stroke="#0077b6" stroke-width="1.5"/>
-      <circle cx="308" cy="85" r="18" fill="rgba(0,119,182,0.15)" stroke="#0077b6" stroke-width="1.5"/>
-      <circle cx="288" cy="118" r="18" fill="rgba(0,119,182,0.15)" stroke="#0077b6" stroke-width="1.5"/>
-      <!-- Conduit outer diameter label -->
-      <line x1="290" y1="8" x2="380" y2="8" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4,3"/>
-      <line x1="290" y1="8" x2="290" y2="15" stroke="#1a1a2e" stroke-width="1.5"/>
-      <line x1="380" y1="8" x2="380" y2="15" stroke="#1a1a2e" stroke-width="1.5"/>
-      <line x1="290" y1="8" x2="380" y2="8" stroke="#1a1a2e" stroke-width="1.5"/>
-      <text x="335" y="5" text-anchor="middle" font-size="11" fill="#1a1a2e" font-family="sans-serif">Inner Ø</text>
-      <!-- Fill % label -->
-      <text id="diag-fill" x="290" y="104" text-anchor="middle" font-size="22" font-weight="700" fill="#0077b6" font-family="sans-serif">—%</text>
-      <text x="290" y="120" text-anchor="middle" font-size="10" fill="#666" font-family="sans-serif">fill</text>
-      <!-- Conduit size label left -->
-      <line x1="190" y1="100" x2="140" y2="100" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4,3"/>
-      <text id="diag-conduit" x="138" y="97" text-anchor="end" font-size="11" fill="#1a1a2e" font-family="sans-serif">Conduit</text>
-      <text id="diag-conduit2" x="138" y="110" text-anchor="end" font-size="11" fill="#0077b6" font-family="sans-serif">—</text>
-      <!-- Wire count label right -->
-      <line x1="390" y1="100" x2="440" y2="100" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4,3"/>
-      <text id="diag-wires" x="442" y="97" text-anchor="start" font-size="11" fill="#1a1a2e" font-family="sans-serif">Wires</text>
-      <text id="diag-wires2" x="442" y="110" text-anchor="start" font-size="11" fill="#0077b6" font-family="sans-serif">—</text>
-      <!-- Max fill label bottom -->
-      <line x1="290" y1="192" x2="290" y2="185" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4,3"/>
-      <text id="diag-max" x="290" y="197" text-anchor="middle" font-size="10" fill="#666" font-family="sans-serif">Max fill: —%</text>
-    </svg>
-  </div>
+<div class="card" id="tool">
+<div class="row">
+<div class="fg"><label for="ctype">Conduit type</label>
+<select id="ctype">
+<option value="EMT">EMT (Electrical Metallic Tubing)</option>
+<option value="IMC">IMC (Intermediate Metal Conduit)</option>
+<option value="RMC">RMC (Rigid Metal Conduit)</option>
+<option value="PVC40">PVC Schedule 40</option>
+<option value="PVC80">PVC Schedule 80</option>
+</select></div>
+<div class="fg"><label for="csize">Trade size</label><select id="csize"></select></div>
+</div>
+<div class="lbl" id="wl">Conductors (include neutrals and grounds)</div>
+<div id="wires" role="group" aria-labelledby="wl"></div>
+<div class="error-msg" id="werr" role="alert"></div>
+<button type="button" class="btn-add" id="addBtn">+ Add another wire size</button>
+<button type="button" class="btn" id="calcBtn">Calculate Fill</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<p class="note">Uses NEC Chapter 9, Tables 1, 4 and 5. Fill is rounded up and remaining space is rounded down. ENT and flexible conduit are not included; use Table 4 directly for those.</p>
+</div>
 
-  <div class="card">
-    <!-- Conduit Selection -->
-    <div class="row">
-      <div class="form-group">
-        <label for="conduitType">Conduit Type</label>
-        <select id="conduitType">
-          <option value="EMT">EMT (Electrical Metallic Tubing)</option>
-          <option value="IMC">IMC (Intermediate Metal Conduit)</option>
-          <option value="RMC">RMC (Rigid Metal Conduit)</option>
-          <option value="PVC40">PVC Schedule 40</option>
-          <option value="PVC80">PVC Schedule 80</option>
-          <option value="ENT">ENT (Electrical Nonmetallic Tubing)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="conduitSize">Trade Size</label>
-        <select id="conduitSize">
-          <option value="0.5">½"</option>
-          <option value="0.75">¾"</option>
-          <option value="1" selected>1"</option>
-          <option value="1.25">1¼"</option>
-          <option value="1.5">1½"</option>
-          <option value="2">2"</option>
-          <option value="2.5">2½"</option>
-          <option value="3">3"</option>
-          <option value="3.5">3½"</option>
-          <option value="4">4"</option>
-          <option value="5">5"</option>
-          <option value="6">6"</option>
-        </select>
-        <div class="error-msg" id="conduit-err">Please select a conduit size.</div>
-      </div>
-    </div>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
 
-    <!-- Wires List -->
-    <div style="margin-bottom:0.8rem">
-      <label>Wires / Conductors</label>
-    </div>
-    <div id="wiresList"></div>
-    <button class="btn-add" onclick="addWireRow()">+ Add Wire</button>
+<aside class="safety" role="note">Planning estimate based on NEC (NFPA 70) Chapter 9, Tables 1, 4 and 5, which carry the same fill percentages and areas in recent editions. The edition your jurisdiction has adopted, and any local amendments, may differ. This tool is not engineering advice or permit or inspection approval. Confirm your design with a licensed electrician and your local authority having jurisdiction.</aside>
 
-    <button class="btn" onclick="requestAnimationFrame(calculate)">Calculate Fill</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
-  </div>
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
 
-  <!-- Results -->
-  <div class="results-section card" id="resultsSection">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:1rem">
-      <h2 style="margin:0">Results</h2>
-      <button class="copy-btn" id="copyBtn" onclick="copyResults()">Copy Results</button>
-    </div>
+<div class="content">
+<section>
+<h2>How to Use This Conduit Fill Calculator</h2>
+<p>Pick the conduit type and trade size you plan to use. Then enter each group of conductors: insulation type, AWG or kcmil size, and quantity. Use the add button for each different size, and include neutrals and equipment grounds. Press Calculate Fill, or press Enter in the quantity box.</p>
+<p>You get the fill percentage, the NEC limit for your conductor count, the remaining area, and a table showing the fill at every trade size for that conduit type. The smallest size that stays within the limit is marked with a star.</p>
+</section>
 
-    <div class="result-cards" id="resultCards"></div>
-    <div class="fill-bar-wrap"><div class="fill-bar" id="fillBar"></div></div>
-    <div id="statusBadge" style="margin-bottom:1rem"></div>
+<section>
+<h2>Why This Matters</h2>
+<p>Conduit fill limits protect two things: the insulation and your ability to pull the wire. Packed conductors trap heat, and the longer the pull, the more insulation damage you risk from friction and pulling tension. Undersized conduit is a frequent cause of failed rough-in inspections, and the fix after drywall is up is expensive.</p>
+<p>The numbers surprise people. A single 4/0 AWG THHN conductor has an area of 0.3237 in². In ¾" EMT, which has 0.533 in² of interior area, that is about 60.7% fill. The limit for one conductor is 53%, so it fails. Moving to 1" EMT (0.864 in²) drops it to 37.5%, which passes. Two 4/0 THHN conductors are worse: the limit drops to 31%, and 1½" EMT comes in at 31.8%, just over. They need 2" EMT (19.3% fill).</p>
+<p>Electricians use this check for feeders, motor circuits and home runs. Designers use it to size underground PVC runs. Homeowners running a subpanel feed to a detached garage use it to avoid buying the wrong conduit. In every case the question is the same: do the conductors fit within the percentage of conduit area the code allows?</p>
+</section>
 
-    <div class="table-scroll">
-      <table id="resultsTable">
-        <thead>
-          <tr>
-            <th>Wire Type</th>
-            <th>Size (AWG/kcmil)</th>
-            <th>Insulation</th>
-            <th class="num">Qty</th>
-            <th class="num">Area (in²) each</th>
-            <th class="num">Total Area (in²)</th>
-          </tr>
-        </thead>
-        <tbody id="resultsTableBody"></tbody>
-        <tfoot id="resultsTableFoot"></tfoot>
-      </table>
-    </div>
-    <div id="conduitInfo" style="margin-top:1rem;font-size:0.85rem;color:#555"></div>
-  </div>
+<section>
+<h2>How It's Calculated</h2>
+<p>Fill is the total cross-sectional area of all conductors, including insulation, divided by the interior cross-sectional area of the conduit:</p>
+<div class="formula">Fill % = (Σ conductor area × quantity) ÷ conduit interior area × 100</div>
+<p>Conductor areas come from NEC Chapter 9, Table 5. Conduit interior areas come from Table 4, which is based on the actual inside diameter of each conduit type. The same trade size has different interior areas in EMT, IMC, rigid, PVC Schedule 40 and Schedule 80, so type matters. The allowed percentage comes from Chapter 9, Table 1:</p>
+<ul>
+<li><strong>1 conductor:</strong> 53% of interior area</li>
+<li><strong>2 conductors:</strong> 31%</li>
+<li><strong>3 or more conductors:</strong> 40%</li>
+</ul>
+<div class="formula">Max fill area = conduit area × limit %
+Remaining area = max fill area − conductor area</div>
+<p>THW values for 14–8 AWG use the larger Table 5 areas, which is the conservative choice for TW as well. Always check Table 5 for your exact insulation type. This tool does not apply the 60% allowance for nipples of 24 in. or less, and it does not handle multiconductor cable, compact conductors or bare conductors.</p>
+</section>
 
-  <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<section>
+<h2>Worked Example</h2>
+<p>Say you are pulling three 4 AWG THHN phase and neutral conductors plus one 8 AWG THHN ground in 1" EMT.</p>
+<ul>
+<li>Three 4 AWG THHN: 3 × 0.0824 = 0.2472 in²</li>
+<li>One 8 AWG THHN: 1 × 0.0366 = 0.0366 in²</li>
+<li>Total conductor area: 0.2838 in² for 4 conductors, so the 40% limit applies</li>
+<li>1" EMT interior area: 0.864 in². Max fill area: 0.864 × 0.40 = 0.3456 in²</li>
+<li>Fill: 0.2838 ÷ 0.864 = 32.85%, shown rounded up as 32.9%</li>
+<li>Remaining space: 0.3456 − 0.2838 = 0.0618 in²</li>
+</ul>
+<p>The result is within the limit. Try ¾" EMT (0.533 in²) and the same conductors fill 53.3% (rounded up), well over 40%, so 1" is the smallest suitable EMT. This is exactly what the calculator shows as its defaults.</p>
+</section>
 
-  <hr class="section-sep">
+<section>
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Count every conductor.</strong> Neutrals and equipment grounds count toward fill. Forgetting the ground is the classic way to land a few percent over.</li>
+<li><strong>Fill is not ampacity.</strong> Passing fill does not mean the wires are sized correctly. More than three current-carrying conductors in one raceway also triggers ampacity adjustment factors under NEC 310.15.</li>
+<li><strong>Match the insulation.</strong> THHN, XHHW and THW have different diameters at the same AWG, so using the wrong row can swing the answer noticeably.</li>
+<li><strong>Leave pulling room.</strong> A run at 38% with several bends can be much harder to pull than the same run at 28% and straight. Consider the next size up for long runs, and stay within bend limits (typically 360° between pull points).</li>
+<li><strong>When it is close, go up a size.</strong> A result a hair under the limit leaves no margin for a table or measurement error.</li>
+</ul>
+</section>
 
-  <!-- Content Section -->
-  <div class="content-section">
-    <h2>How to Use This Conduit Fill Calculator</h2>
-    <p>Select your conduit type (EMT, PVC, RMC, etc.) and trade size from the dropdowns. Then click <strong>"+ Add Wire"</strong> to add each conductor — choose the wire type, AWG/kcmil size, insulation type, and quantity. Click <strong>"Calculate Fill"</strong> to see total fill percentage, area used, and NEC compliance status instantly.</p>
-    <p>You can add as many wire rows as needed. Mix different wire sizes and insulation types to reflect real-world installations.</p>
-  </div>
+<section>
+<h2>Frequently Asked Questions</h2>
+<details><summary>What is the maximum conduit fill percentage allowed by the NEC?</summary>
+<p>NEC Chapter 9, Table 1 allows 53% for one conductor, 31% for two conductors, and 40% for three or more. Percentages apply to the conduit's interior cross-sectional area. Your local jurisdiction may adopt a different NEC edition or amend these rules.</p></details>
+<details><summary>Does the ground wire count toward conduit fill?</summary>
+<p>Yes. Equipment grounding conductors count toward fill, and so do neutrals. Add them as a row in the calculator along with your phase conductors. Bare grounds are measured differently in the NEC, but entering an insulated equivalent is a safe, slightly conservative approach.</p></details>
+<details><summary>Why does a conduit with two wires have a lower limit than one with three?</summary>
+<p>Two round conductors tend to lie side by side and can jam against the conduit wall during a pull, which is why the NEC allows only 31%. With three or more conductors the limit is 40%. This is why a 2-wire run sometimes needs a bigger conduit than a 3-wire run with the same conductors.</p></details>
+<details><summary>Can I mix different wire sizes and insulation types?</summary>
+<p>Yes. Add a row for each size and insulation type with its quantity. The calculator sums all areas and compares against one limit based on the total conductor count. The NEC does not restrict mixing sizes for fill purposes.</p></details>
+<details><summary>What is the difference between EMT and rigid conduit fill?</summary>
+<p>From ½" to 2", IMC and rigid (RMC) have slightly larger interior areas than EMT, but from 2½" up EMT is larger. PVC Schedule 40 and 80 are smaller still, with Schedule 80 having thicker walls and less interior space. Select the actual type you are installing.</p></details>
+<details><summary>Is a passing result the same as code approval?</summary>
+<p>No. It is a fill check only. Inspectors also look at ampacity, bend count, support, bushings, conduit type for the location and local amendments. Treat the result as a planning aid and confirm with your authority having jurisdiction.</p></details>
+</section>
 
-  <div class="content-section">
-    <h2>Why This Matters</h2>
-    <p>Conduit fill limits exist for two critical reasons: heat dissipation and ease of wire pulling. When conductors are packed too tightly, heat from current flow cannot escape efficiently, which can degrade insulation and create fire hazards over time. The National Electrical Code (NEC) Article 358 and related tables establish maximum fill percentages to address exactly this.</p>
-    <p>The NEC allows <strong>53% fill for one conductor</strong>, <strong>31% fill for two conductors</strong>, and <strong>40% fill for three or more conductors</strong>. An electrician running a single 4/0 AWG THHN through ¾" EMT would hit 53% — legal for one wire, but add a second and you'd exceed the 31% limit. Knowing this in advance saves time, material waste, and failed inspections.</p>
-    <p>Contractors use conduit fill calculations when designing panel feeders, motor branch circuits, and home runs. HVAC technicians need it for equipment branch circuits. Industrial electricians running 3-phase 480V feeders in 2" RMC must verify fill before pulling wire. Getting it wrong means re-pulling or upsizing conduit after walls are closed — an expensive fix.</p>
-  </div>
-
-  <div class="content-section">
-    <h2>How It's Calculated</h2>
-    <p>The fill percentage is simply the total cross-sectional area of all conductors divided by the usable interior area of the conduit:</p>
-    <div class="formula-box">Fill % = (Sum of all wire cross-sections ÷ Conduit interior area) × 100</div>
-    <p>Wire cross-section areas come from NEC Chapter 9, Table 5 (conductor properties). Conduit interior areas come from NEC Chapter 9, Table 4. Both are standardized — this calculator uses those exact tabulated values so results match NEC tables precisely.</p>
-    <p>The maximum allowed fill depends on the number of conductors: <strong>1 wire = 53%</strong>, <strong>2 wires = 31%</strong>, <strong>3+ wires = 40%</strong> of the conduit's interior cross-sectional area. Ground wires and neutrals count toward fill just like phase conductors.</p>
-    <div class="formula-box">Max Fill Area (in²) = Conduit Interior Area × Max Fill %
-Remaining Space = Max Fill Area − Total Wire Area</div>
-  </div>
-
-  <div class="content-section">
-    <h2>Tips &amp; Common Mistakes</h2>
-    <ul>
-      <li><strong>Count every conductor:</strong> Equipment grounding conductors and neutrals must be included in fill calculations — they're not exempt just because they carry less current.</li>
-      <li><strong>Use the correct insulation type:</strong> THHN/THWN has a different diameter than XHHW or TW for the same AWG — the conductor areas differ and can push you over the limit.</li>
-      <li><strong>Don't forget conduit fittings:</strong> Long-radius ells and tight bends can make wire pulling difficult even at 35% fill. Keep pulling runs under 360° of total bends for practical installations.</li>
-      <li><strong>Upsizing for future capacity:</strong> Many engineers design to 30% fill to leave room for future circuits. A 40% fill job is code-legal but leaves no margin for additions.</li>
-      <li><strong>Parallel conductors:</strong> When running parallel sets (e.g., 2 sets of 500 kcmil per phase), count each individual conductor separately in your fill calculation.</li>
-    </ul>
-  </div>
-
-  <div class="content-section">
-    <h2>Frequently Asked Questions</h2>
-    <details>
-      <summary>What is the maximum conduit fill percentage allowed by NEC?</summary>
-      <div class="faq-answer">The NEC allows 53% fill for one conductor, 31% for two conductors, and 40% for three or more conductors. These limits apply to the conduit's interior cross-sectional area. Going over these limits is a code violation and can cause overheating or failed inspections.</div>
-    </details>
-    <details>
-      <summary>Does the ground wire count toward conduit fill?</summary>
-      <div class="faq-answer">Yes. Equipment grounding conductors (EGCs) must be included in conduit fill calculations per NEC Chapter 9. Many electricians forget this and end up over the fill limit. Always add your ground wire to the wire list before calculating.</div>
-    </details>
-    <details>
-      <summary>What's the difference between EMT and RMC fill capacities?</summary>
-      <div class="faq-answer">For the same trade size, EMT has a slightly larger interior diameter than RMC because EMT has thinner walls. This means EMT can fit slightly more wire area than RMC at the same trade size. Always select the correct conduit type to get accurate results.</div>
-    </details>
-    <details>
-      <summary>Can I mix different wire sizes in the same conduit?</summary>
-      <div class="faq-answer">Yes, and this calculator handles mixed wire sizes. Add each group of wires as a separate row with its size, insulation type, and quantity. The tool sums all areas and compares against the conduit's maximum fill. There's no NEC restriction on mixing wire sizes — only the total fill percentage matters.</div>
-    </details>
-  </div>
-
-  <hr class="section-sep">
-
-  <div class="content-section">
-    <h2>Related Tools</h2>
-    <div class="related-grid">
-      <a class="related-link" href="/excavation-earthwork-volume-calculator/">⛏ Excavation &amp; Earthwork Volume Calculator</a>
-      <a class="related-link" href="/roof-truss-span-spacing-calculator/">🏠 Truss Span &amp; Spacing Calculator</a>
-      <a class="related-link" href="/rebar-spacing-weight-calculator/">🔩 Rebar Spacing &amp; Weight Calculator</a>
-      <a class="related-link" href="/plywood-sheet-goods-cut-optimizer/">🪵 Plywood &amp; Sheet Goods Cut Optimizer</a>
-      <a class="related-link" href="/fence-material-calculator/">🚧 Fence Material Calculator</a>
-      <a class="related-link" href="/drywall-calculator/">🧱 Drywall Calculator</a>
-    </div>
-  </div>
-
-  </div>
+<section>
+<h2>Related Tools</h2>
+<h3>Closest to conduit and wiring work</h3>
+<ul class="rel">
+<li><a href="/cable-tray-fill-sizing-calculator/">Cable Tray Fill &amp; Sizing Calculator</a>Fill check for tray instead of conduit.</li>
+<li><a href="/watts-to-amps-calculator/">Watts to Amps Calculator</a>Convert a load to amps before sizing wire.</li>
+</ul>
+<h3>Other building-project calculators</h3>
+<ul class="rel">
+<li><a href="/linear-feet-to-square-feet-calculator/">Linear Feet to Square Feet Calculator</a>Convert run lengths to area.</li>
+<li><a href="/paver-quantity-calculator/">Paver Quantity Calculator</a>Estimate pavers for a patio or path.</li>
+<li><a href="/siding-calculator/">Siding Calculator</a>Estimate siding for a wall area.</li>
+<li><a href="/grout-calculator/">Grout Calculator</a>Estimate grout for a tile job.</li>
+</ul>
+</section>
+</div>
+</main>
 
 <p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/conduit-fill-calculator/">Toolwick</a></p>
 
 <script>
-// ─── NEC Chapter 9, Table 4: Conduit Interior Areas (sq in) ───
-// [type][tradeSize] = { totalArea, fill1, fill2, fill3plus }
-// Values sourced from NEC 2020 Chapter 9, Table 4
-const CONDUIT_DATA = {
-  EMT: {
-    "0.5":  { id: 0.622,  area: 0.304 },
-    "0.75": { id: 0.824,  area: 0.533 },
-    "1":    { id: 1.049,  area: 0.864 },
-    "1.25": { id: 1.380,  area: 1.496 },
-    "1.5":  { id: 1.610,  area: 2.036 },
-    "2":    { id: 2.067,  area: 3.356 },
-    "2.5":  { id: 2.731,  area: 5.858 },
-    "3":    { id: 3.356,  area: 8.846 },
-    "3.5":  { id: 3.834,  area: 11.545 },
-    "4":    { id: 4.334,  area: 14.753 }
-  },
-  IMC: {
-    "0.5":  { id: 0.660,  area: 0.342 },
-    "0.75": { id: 0.864,  area: 0.586 },
-    "1":    { id: 1.105,  area: 0.959 },
-    "1.25": { id: 1.448,  area: 1.647 },
-    "1.5":  { id: 1.683,  area: 2.225 },
-    "2":    { id: 2.150,  area: 3.630 },
-    "2.5":  { id: 2.557,  area: 5.135 },
-    "3":    { id: 3.176,  area: 7.922 },
-    "3.5":  { id: 3.671,  area: 10.584 },
-    "4":    { id: 4.166,  area: 13.631 }
-  },
-  RMC: {
-    "0.5":  { id: 0.622,  area: 0.304 },
-    "0.75": { id: 0.824,  area: 0.533 },
-    "1":    { id: 1.049,  area: 0.864 },
-    "1.25": { id: 1.380,  area: 1.496 },
-    "1.5":  { id: 1.610,  area: 2.036 },
-    "2":    { id: 2.067,  area: 3.356 },
-    "2.5":  { id: 2.469,  area: 4.788 },
-    "3":    { id: 3.068,  area: 7.393 },
-    "3.5":  { id: 3.548,  area: 9.887 },
-    "4":    { id: 4.026,  area: 12.730 },
-    "5":    { id: 5.047,  area: 20.000 },
-    "6":    { id: 6.065,  area: 28.890 }
-  },
-  PVC40: {
-    "0.5":  { id: 0.602,  area: 0.285 },
-    "0.75": { id: 0.804,  area: 0.508 },
-    "1":    { id: 1.029,  area: 0.832 },
-    "1.25": { id: 1.360,  area: 1.453 },
-    "1.5":  { id: 1.590,  area: 1.986 },
-    "2":    { id: 2.047,  area: 3.291 },
-    "2.5":  { id: 2.445,  area: 4.695 },
-    "3":    { id: 3.042,  area: 7.268 },
-    "3.5":  { id: 3.521,  area: 9.737 },
-    "4":    { id: 3.998,  area: 12.554 },
-    "5":    { id: 5.016,  area: 19.761 },
-    "6":    { id: 6.031,  area: 28.567 }
-  },
-  PVC80: {
-    "0.5":  { id: 0.546,  area: 0.234 },
-    "0.75": { id: 0.742,  area: 0.433 },
-    "1":    { id: 0.957,  area: 0.719 },
-    "1.25": { id: 1.278,  area: 1.283 },
-    "1.5":  { id: 1.500,  area: 1.767 },
-    "2":    { id: 1.939,  area: 2.953 },
-    "2.5":  { id: 2.290,  area: 4.119 },
-    "3":    { id: 2.864,  area: 6.442 },
-    "3.5":  { id: 3.322,  area: 8.669 },
-    "4":    { id: 3.786,  area: 11.258 },
-    "5":    { id: 4.768,  area: 17.855 },
-    "6":    { id: 5.709,  area: 25.598 }
-  },
-  ENT: {
-    "0.5":  { id: 0.560,  area: 0.246 },
-    "0.75": { id: 0.760,  area: 0.454 },
-    "1":    { id: 0.990,  area: 0.770 },
-    "1.25": { id: 1.340,  area: 1.410 },
-    "1.5":  { id: 1.570,  area: 1.936 },
-    "2":    { id: 2.020,  area: 3.205 }
-  }
+(function(){
+var SZ=['0.5','0.75','1','1.25','1.5','2','2.5','3','3.5','4','5','6'];
+var SL=['½"','¾"','1"','1¼"','1½"','2"','2½"','3"','3½"','4"','5"','6"'];
+// NEC Chapter 9 Table 4: inside diameter (in) and 100% interior area (in²)
+var CD={
+EMT:{n:'EMT',i:[0.622,0.824,1.049,1.380,1.610,2.067,2.731,3.356,3.834,4.334],a:[0.304,0.533,0.864,1.496,2.036,3.356,5.858,8.846,11.545,14.753]},
+IMC:{n:'IMC',i:[0.660,0.864,1.105,1.448,1.683,2.150,2.557,3.176,3.671,4.166],a:[0.342,0.586,0.959,1.647,2.225,3.630,5.135,7.922,10.584,13.631]},
+RMC:{n:'RMC',i:[0.632,0.836,1.063,1.394,1.624,2.083,2.489,3.090,3.570,4.050,5.073,6.093],a:[0.314,0.549,0.887,1.526,2.071,3.408,4.866,7.499,10.010,12.882,20.212,29.158]},
+PVC40:{n:'PVC Sch 40',i:[0.602,0.804,1.029,1.360,1.590,2.047,2.445,3.042,3.521,3.998,5.016,6.031],a:[0.285,0.508,0.832,1.453,1.986,3.291,4.695,7.268,9.737,12.554,19.761,28.567]},
+PVC80:{n:'PVC Sch 80',i:[0.526,0.722,0.936,1.255,1.476,1.913,2.290,2.864,3.326,3.786,4.768,5.709],a:[0.217,0.409,0.688,1.237,1.711,2.874,4.119,6.442,8.688,11.258,17.855,25.598]}
 };
-
-// NEC Chapter 9, Table 5: Conductor Areas (sq in)
-// [insulation][awg] = area in sq in
-// AWG/kcmil sizes with THHN/THWN, XHHW, TW/THW insulation
-const WIRE_AREAS = {
-  "THHN/THWN": {
-    "14":   0.0097, "12":  0.0133, "10":  0.0211, "8":   0.0366,
-    "6":    0.0507, "4":   0.0824, "3":   0.0973, "2":   0.1158,
-    "1":    0.1562, "1/0": 0.1855, "2/0": 0.2223, "3/0": 0.2679,
-    "4/0":  0.3237, "250": 0.3970, "300": 0.4608, "350": 0.5281,
-    "400":  0.5958, "500": 0.7073, "600": 0.8676, "700": 0.9887,
-    "750":  1.0496, "1000":1.3478
-  },
-  "XHHW": {
-    "14":   0.0097, "12":  0.0133, "10":  0.0211, "8":   0.0437,
-    "6":    0.0590, "4":   0.0814, "3":   0.0962, "2":   0.1146,
-    "1":    0.1534, "1/0": 0.1825, "2/0": 0.2190, "3/0": 0.2642,
-    "4/0":  0.3197, "250": 0.3904, "300": 0.4536, "350": 0.5193,
-    "400":  0.5855, "500": 0.6939, "600": 0.8153, "700": 0.9229,
-    "750":  0.9887, "1000":1.2370
-  },
-  "TW/THW": {
-    "14":   0.0139, "12":  0.0181, "10":  0.0243, "8":   0.0437,
-    "6":    0.0726, "4":   0.1087, "3":   0.1263, "2":   0.1473,
-    "1":    0.1901, "1/0": 0.2223, "2/0": 0.2624, "3/0": 0.3117,
-    "4/0":  0.3718, "250": 0.4596, "300": 0.5281, "350": 0.5958,
-    "400":  0.6648, "500": 0.7854, "600": 0.9331
-  },
-  "THWN-2": {
-    "14":   0.0097, "12":  0.0133, "10":  0.0211, "8":   0.0366,
-    "6":    0.0507, "4":   0.0824, "3":   0.0973, "2":   0.1158,
-    "1":    0.1562, "1/0": 0.1855, "2/0": 0.2223, "3/0": 0.2679,
-    "4/0":  0.3237, "250": 0.3970, "300": 0.4608, "350": 0.5281,
-    "400":  0.5958, "500": 0.7073, "600": 0.8676, "700": 0.9887,
-    "750":  1.0496, "1000":1.3478
-  },
-  "USE/RHH/RHW": {
-    "14":   0.0293, "12":  0.0353, "10":  0.0437, "8":   0.0835,
-    "6":    0.1041, "4":   0.1333, "3":   0.1521, "2":   0.1750,
-    "1":    0.2660, "1/0": 0.3039, "2/0": 0.3505, "3/0": 0.4072,
-    "4/0":  0.4754, "250": 0.6291, "300": 0.7088, "350": 0.7870,
-    "400":  0.8659, "500": 1.0026, "600": 1.2272, "700": 1.3561,
-    "750":  1.4272
-  }
+// NEC Chapter 9 Table 5 conductor areas (in²), same order as AW
+var AW=['14','12','10','8','6','4','3','2','1','1/0','2/0','3/0','4/0','250','300','350','400','500','600','700','750','1000'];
+var WI={
+THHN:{n:'THHN / THWN / THWN-2',a:[0.0097,0.0133,0.0211,0.0366,0.0507,0.0824,0.0973,0.1158,0.1562,0.1855,0.2223,0.2679,0.3237,0.3970,0.4608,0.5242,0.5863,0.7073,0.8676,0.9887,1.0496,1.3478]},
+XHHW:{n:'XHHW / XHHW-2 / XHH',a:[0.0139,0.0181,0.0243,0.0437,0.0590,0.0814,0.0962,0.1146,0.1534,0.1825,0.2190,0.2642,0.3197,0.3904,0.4536,0.5166,0.5782,0.6984,0.8709,0.9923,1.0532,1.3519]},
+THW:{n:'THW / THW-2 / TW',a:[0.0209,0.0260,0.0333,0.0556,0.0726,0.0973,0.1134,0.1333,0.1901,0.2223,0.2624,0.3117,0.3718,0.4596,0.5281,0.5958,0.6619,0.7793,0.9676,1.1010,1.1652,1.4784]}
 };
+var $=function(id){return document.getElementById(id)};
+var wc=0,lastText='';
+function wl(s){return s+(parseInt(s,10)>=250?' kcmil':' AWG')}
+function f(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function ceil1(x){return Math.ceil(x*10-1e-9)/10}
+function floor4(x){return Math.floor(x*1e4+1e-9)/1e4}
 
-const AWG_ORDER = ["14","12","10","8","6","4","3","2","1","1/0","2/0","3/0","4/0","250","300","350","400","500","600","700","750","1000"];
-
-let wireCount = 0;
-
-function addWireRow(type, size, insul, qty) {
-  wireCount++;
-  const id = wireCount;
-  const div = document.createElement('div');
-  div.className = 'wire-row';
-  div.id = 'wire-row-' + id;
-
-  const insulOptions = Object.keys(WIRE_AREAS).map(k =>
-    `<option value="${k}"${insul===k?' selected':''}>${k}</option>`
-  ).join('');
-
-  const sizeOptions = AWG_ORDER.map(s =>
-    `<option value="${s}"${size===s?' selected':''}>${s}</option>`
-  ).join('');
-
-  div.innerHTML = `
-    <div class="wire-row-header">
-      <span class="wire-row-label">Wire #${id}</span>
-      <button class="btn-danger" onclick="removeWire(${id})" aria-label="Remove wire">✕ Remove</button>
-    </div>
-    <div class="wire-fields">
-      <div class="form-group">
-        <label>Insulation</label>
-        <select class="wire-insul" data-id="${id}">${insulOptions}</select>
-      </div>
-      <div class="form-group">
-        <label>AWG / kcmil</label>
-        <select class="wire-size" data-id="${id}">${sizeOptions}</select>
-      </div>
-      <div class="form-group">
-        <label>Quantity</label>
-        <input type="number" class="wire-qty" data-id="${id}" value="${qty||1}" min="1" max="99" style="padding:8px 10px;font-size:0.85rem">
-      </div>
-    </div>`;
-
-  document.getElementById('wiresList').appendChild(div);
-
-  div.querySelectorAll('input').forEach(el => {
-    el.addEventListener('keydown', e => { if(e.key==='Enter') requestAnimationFrame(calculate); });
+function fillSizes(){
+  var C=CD[$('ctype').value],n=C.a.length,ci=SZ.indexOf($('csize').value),h='',i;
+  for(i=0;i<n;i++)h+='<option value="'+SZ[i]+'">'+SL[i]+'</option>';
+  $('csize').innerHTML=h;
+  $('csize').value=SZ[ci<0?2:Math.min(ci,n-1)];
+}
+function renumber(){
+  document.querySelectorAll('.wire').forEach(function(w,i){
+    w.querySelector('.wn').textContent='Wire group '+(i+1);
+    w.querySelector('.btn-rm').setAttribute('aria-label','Remove wire group '+(i+1));
   });
 }
-
-function removeWire(id) {
-  const el = document.getElementById('wire-row-' + id);
-  if(el) el.remove();
+function addWire(ins,size,qty){
+  wc++;var id=wc,io='',so='',k;
+  for(k in WI)io+='<option value="'+k+'"'+(k===ins?' selected':'')+'>'+WI[k].n+'</option>';
+  AW.forEach(function(s){so+='<option value="'+s+'"'+(s===size?' selected':'')+'>'+wl(s)+'</option>'});
+  var d=document.createElement('div');d.className='wire';d.id='w'+id;
+  d.innerHTML='<div class="wire-h"><span class="wn">Wire group</span><button type="button" class="btn-rm" data-rm="'+id+'">Remove</button></div>'+
+  '<div class="wf"><div class="fg"><label for="wi'+id+'">Insulation</label><select id="wi'+id+'" class="wi">'+io+'</select></div>'+
+  '<div class="fg"><label for="ws'+id+'">Size</label><select id="ws'+id+'" class="ws">'+so+'</select></div>'+
+  '<div class="fg q"><label for="wq'+id+'">Quantity</label><input type="number" id="wq'+id+'" class="wq" value="'+qty+'" min="1" max="99" step="1" inputmode="numeric"><div class="error-msg" id="we'+id+'">Enter a whole number from 1 to 99.</div></div></div>';
+  $('wires').appendChild(d);
+  renumber();
 }
-
-function fmt(n, dec=4) {
-  if(dec===0) return n.toLocaleString('en-US',{maximumFractionDigits:0});
-  return n.toFixed(dec);
+function resetDiagram(){
+  $('dg-fc').setAttribute('r',0);$('dg-mc').setAttribute('r',0);
+  $('dg-pct').textContent='—';$('dg-cd').textContent='—';
+  $('dg-mx').textContent='NEC limit (dashed): —';$('dg-id').textContent='Inner Ø —';
 }
-
-function fmtPct(n) { return n.toFixed(1) + '%'; }
-
-function getWires() {
-  const rows = document.querySelectorAll('.wire-row');
-  const wires = [];
-  rows.forEach(row => {
-    const insul = row.querySelector('.wire-insul').value;
-    const size  = row.querySelector('.wire-size').value;
-    const qty   = parseInt(row.querySelector('.wire-qty').value) || 1;
-    wires.push({ insul, size, qty });
-  });
-  return wires;
-}
-
-function calculate() {
-  // Clear old errors
-  document.querySelectorAll('.error-msg').forEach(e => e.style.display='none');
-  document.querySelectorAll('.error').forEach(e => e.classList.remove('error'));
-
-  const conduitType = document.getElementById('conduitType').value;
-  const conduitSize = document.getElementById('conduitSize').value;
-  const wires = getWires();
-
-  // Validate conduit
-  if(!CONDUIT_DATA[conduitType] || !CONDUIT_DATA[conduitType][conduitSize]) {
-    document.getElementById('conduitSize').classList.add('error');
-    document.getElementById('conduit-err').style.display='block';
-    document.getElementById('conduit-err').textContent = 'This conduit type/size combination is not in NEC tables. Please choose a valid combination.';
-    return;
-  }
-
-  if(wires.length === 0) {
-    alert('Please add at least one wire.');
-    return;
-  }
-
-  const conduit = CONDUIT_DATA[conduitType][conduitSize];
-  const totalConduitArea = conduit.area;
-
-  // Determine max fill %
-  const numConductors = wires.reduce((a,w)=>a+w.qty, 0);
-  let maxFillPct = 40;
-  let maxFillLabel = '40%';
-  if(numConductors === 1)  { maxFillPct = 53; maxFillLabel = '53%'; }
-  if(numConductors === 2)  { maxFillPct = 31; maxFillLabel = '31%'; }
-
-  const maxFillArea = totalConduitArea * (maxFillPct / 100);
-
-  // Calculate wire areas
-  let totalWireArea = 0;
-  const wireRows = [];
-  let hasError = false;
-
-  wires.forEach((w, i) => {
-    const areaTable = WIRE_AREAS[w.insul];
-    if(!areaTable || !areaTable[w.size]) {
-      hasError = true;
-      wireRows.push({ ...w, areaEach: null, totalArea: null, error: true });
-      return;
+function calculate(){
+  var t=$('ctype').value,si=SZ.indexOf($('csize').value),C=CD[t];
+  var rows=document.querySelectorAll('.wire'),ws=[],bad=false;
+  document.querySelectorAll('.error-msg').forEach(function(e){e.style.display='none'});
+  document.querySelectorAll('.wq.error').forEach(function(e){e.classList.remove('error');e.removeAttribute('aria-invalid');e.removeAttribute('aria-describedby')});
+  rows.forEach(function(r){
+    var q=r.querySelector('.wq'),v=q.value.trim(),n=Number(v);
+    if(v===''||!isFinite(n)||n<1||n>99||Math.floor(n)!==n){
+      bad=true;q.classList.add('error');q.setAttribute('aria-invalid','true');
+      var em=r.querySelector('.error-msg');em.style.display='block';q.setAttribute('aria-describedby',em.id);return;
     }
-    const areaEach = areaTable[w.size];
-    const total = areaEach * w.qty;
-    totalWireArea += total;
-    wireRows.push({ ...w, areaEach, totalArea: total, error: false });
+    ws.push({ins:r.querySelector('.wi').value,sz:r.querySelector('.ws').value,q:n});
   });
+  if(!rows.length){bad=true;$('werr').textContent='Add at least one wire group to calculate fill.';$('werr').style.display='block'}
+  if(si<0||si>=C.a.length)bad=true;
+  if(bad){$('results').innerHTML='';resetDiagram();return}
 
-  if(hasError) {
-    alert('One or more wire size/insulation combinations are not found in NEC tables. Please check your inputs.');
-    return;
+  var area=C.a[si],cnt=0,tot=0,lines='',copyLines='';
+  ws.forEach(function(w){
+    var ae=WI[w.ins].a[AW.indexOf(w.sz)],ta=ae*w.q;cnt+=w.q;tot+=ta;
+    lines+='<tr><td>'+WI[w.ins].n+'</td><td>'+wl(w.sz)+'</td><td class="n">'+w.q+'</td><td class="n">'+f(ae,4)+'</td><td class="n">'+f(ta,4)+'</td></tr>';
+    copyLines+='\n  '+w.q+' × '+wl(w.sz)+' '+WI[w.ins].n.split(' ')[0];
+  });
+  var lim=cnt===1?53:(cnt===2?31:40),maxA=area*lim/100,fill=tot/area*100,pass=tot<=maxA;
+  var near=pass&&fill>=lim*0.9;
+  var st=pass?(near?'Within limit — close to the maximum':'Within NEC fill limit'):'Over NEC fill limit';
+  var bc=pass?(near?'b-warn':'b-ok'):'b-fail',kc=pass?(near?'warn':'ok'):'fail';
+  var rem=maxA-tot,remTxt=rem>=0?'Remaining space':'Over by';
+  var remVal=rem>=0?floor4(rem):Math.ceil(-rem*1e4-1e-9)/1e4;
+  var rec=-1,cmp='',i,cw=cnt+' conductor'+(cnt>1?'s':'');
+  for(i=0;i<C.a.length;i++){if(rec<0&&tot<=C.a[i]*lim/100)rec=i}
+  for(i=0;i<C.a.length;i++){
+    var fp=tot/C.a[i]*100,p=tot<=C.a[i]*lim/100;
+    cmp+='<tr'+(i===si?' class="sel"':'')+'><td>'+SL[i]+(i===si?' (selected)':'')+(i===rec?' ★':'')+'</td><td class="n">'+f(C.a[i],3)+'</td><td class="n">'+f(C.a[i]*lim/100,4)+'</td><td class="n">'+f(ceil1(fp),1)+'%</td><td class="'+(p?'t-ok':'t-fail')+'">'+(p?'Pass':'Fail')+'</td></tr>';
   }
-
-  const fillPct = (totalWireArea / totalConduitArea) * 100;
-  const remaining = maxFillArea - totalWireArea;
-  const isOK = fillPct <= maxFillPct;
-  const isWarn = fillPct > maxFillPct * 0.85 && fillPct <= maxFillPct;
-  const statusText = isOK ? (isWarn ? 'Near Limit' : 'PASS — Code Compliant') : 'FAIL — Over Fill Limit';
-  const statusClass = isOK ? (isWarn ? 'status-warn' : 'status-ok') : 'status-fail';
-  const badgeClass = isOK ? (isWarn ? 'badge-warn' : 'badge-ok') : 'badge-fail';
-  const barClass = isOK ? (isWarn ? 'fill-bar-warn' : 'fill-bar-ok') : 'fill-bar-fail';
-
-  // Build table HTML
-  let tbodyHTML = '';
-  wireRows.forEach(w => {
-    tbodyHTML += `<tr>
-      <td>${w.insul}</td>
-      <td>${w.size} AWG${parseInt(w.size)>250||['250','300','350','400','500','600','700','750','1000'].includes(w.size)?'/kcmil':''}</td>
-      <td>${w.insul}</td>
-      <td class="num">${w.qty}</td>
-      <td class="num">${fmt(w.areaEach,4)}</td>
-      <td class="num">${fmt(w.totalArea,4)}</td>
-    </tr>`;
-  });
-
-  const tfootHTML = `<tr style="font-weight:700;background:#f0f0f0">
-    <td colspan="3">Total (${numConductors} conductor${numConductors!==1?'s':''})</td>
-    <td class="num">${numConductors}</td>
-    <td class="num">—</td>
-    <td class="num">${fmt(totalWireArea,4)}</td>
-  </tr>`;
-
-  const conduitTypeName = {EMT:'EMT',IMC:'IMC',RMC:'RMC',PVC40:'PVC Sch 40',PVC80:'PVC Sch 80',ENT:'ENT'}[conduitType]||conduitType;
-  const conduitInfoHTML = `
-    <table style="font-size:0.83rem">
-      <tr><td style="color:#666;padding:4px 8px 4px 0">Conduit Type</td><td style="padding:4px 0"><strong>${conduitTypeName} ${conduitSize}"</strong></td></tr>
-      <tr><td style="color:#666;padding:4px 8px 4px 0">Interior Diameter</td><td style="padding:4px 0"><strong>${conduit.id}"</strong></td></tr>
-      <tr><td style="color:#666;padding:4px 8px 4px 0">Total Interior Area</td><td style="padding:4px 0"><strong>${fmt(totalConduitArea,4)} in²</strong></td></tr>
-      <tr><td style="color:#666;padding:4px 8px 4px 0">Max Fill Area (${maxFillLabel})</td><td style="padding:4px 0"><strong>${fmt(maxFillArea,4)} in²</strong></td></tr>
-      <tr><td style="color:#666;padding:4px 8px 4px 0">Wire Area Used</td><td style="padding:4px 0"><strong>${fmt(totalWireArea,4)} in²</strong></td></tr>
-      <tr><td style="color:#666;padding:4px 8px 4px 0">${remaining>=0?'Remaining Space':'Over by'}</td><td style="padding:4px 0"><strong class="${remaining>=0?'status-ok':'status-fail'}">${fmt(Math.abs(remaining),4)} in²</strong></td></tr>
-    </table>`;
-
-  const resultCardsHTML = `
-    <div class="result-card">
-      <div class="big-number ${statusClass}">${fmtPct(fillPct)}</div>
-      <div class="big-label">Fill Percentage</div>
-    </div>
-    <div class="result-card">
-      <div class="big-number" style="font-size:1.8rem;color:#1a1a2e">${maxFillLabel}</div>
-      <div class="big-label">Max Allowed (NEC)</div>
-    </div>
-    <div class="result-card">
-      <div class="big-number" style="font-size:1.8rem;color:#1a1a2e">${numConductors}</div>
-      <div class="big-label">Conductors Total</div>
-    </div>`;
-
-  // Copy string
-  window._copyText = `Conduit Fill Results\nConduit: ${conduitTypeName} ${conduitSize}"\nFill: ${fmtPct(fillPct)} (Max: ${maxFillLabel})\nStatus: ${statusText}\nTotal Wire Area: ${fmt(totalWireArea,4)} in²\nConduit Interior Area: ${fmt(totalConduitArea,4)} in²`;
-
-  // DOM updates
-  document.getElementById('resultCards').innerHTML = resultCardsHTML;
-  document.getElementById('fillBar').style.width = Math.min(fillPct, 100) + '%';
-  document.getElementById('fillBar').className = 'fill-bar ' + barClass;
-  document.getElementById('statusBadge').innerHTML = `<span class="status-badge ${badgeClass}">${statusText}</span>`;
-  document.getElementById('resultsTableBody').innerHTML = tbodyHTML;
-  document.getElementById('resultsTableFoot').innerHTML = tfootHTML;
-  document.getElementById('conduitInfo').innerHTML = conduitInfoHTML;
-
-  const section = document.getElementById('resultsSection');
-  section.style.display = 'block';
-  requestAnimationFrame(() => { section.classList.add('visible'); });
-
-  // Update SVG diagram
-  document.getElementById('diag-fill').textContent = fmtPct(fillPct);
-  document.getElementById('diag-fill').setAttribute('fill', isOK ? (isWarn ? '#f39c12' : '#27ae60') : '#e74c3c');
-  document.getElementById('diag-conduit2').textContent = `${conduitTypeName} ${conduitSize}"`;
-  document.getElementById('diag-wires2').textContent = `${numConductors} wire${numConductors!==1?'s':''}`;
-  document.getElementById('diag-max').textContent = `Max fill: ${maxFillLabel}`;
+  var recTxt=rec>=0?SL[rec]+' '+C.n:'None in '+C.n;
+  var recNote=rec>=0?'<p class="note">★ Smallest '+C.n+' trade size within the limit for these conductors: <strong>'+SL[rec]+'</strong>. If your selected size fails, use this one or larger. For long or bend-heavy pulls, consider going one size up.</p>':'<p class="note"><strong>No '+C.n+' trade size is large enough.</strong> Split the conductors across parallel conduits or choose a larger conduit type.</p>';
+  lastText='Conduit Fill Result ('+C.n+' '+SL[si]+')'+copyLines+'\nFill: '+f(ceil1(fill),1)+'% (NEC limit '+lim+'% for '+cw+')\nStatus: '+st+'\nConductor area: '+f(tot,4)+' in² of '+f(area,3)+' in² interior\nSmallest suitable size: '+recTxt+'\nPlanning estimate (NEC Ch. 9 Tables 1, 4, 5). Verify with your AHJ.';
+  var h='<div class="card fade" id="rc"><div class="rhead"><h2 style="margin:0">Results</h2><button type="button" class="copy-btn" id="cpb">Copy results</button></div>'+
+  '<div class="rc"><div class="c"><div class="big">'+f(ceil1(fill),1)+'%</div><div class="cap">Fill percentage</div></div>'+
+  '<div class="c"><div class="mid">'+lim+'%</div><div class="cap">NEC limit ('+cw+')</div></div>'+
+  '<div class="c"><div class="mid">'+(rec>=0?SL[rec]:'—')+'</div><div class="cap">Smallest '+C.n+' size that fits</div></div></div>'+
+  '<div class="bar" aria-hidden="true"><i class="'+kc+'" style="width:'+Math.min(fill,100)+'%"></i></div>'+
+  '<span class="badge '+bc+'">'+st+'</span>'+
+  '<div class="tw"><table><thead><tr><th>Insulation</th><th>Size</th><th class="n">Qty</th><th class="n">Area each (in²)</th><th class="n">Total (in²)</th></tr></thead><tbody>'+lines+'</tbody></table></div>'+
+  '<div class="tw"><table><tbody>'+
+  '<tr><td>Conduit</td><td class="n"><strong>'+C.n+' '+SL[si]+'</strong></td></tr>'+
+  '<tr><td>Inside diameter</td><td class="n">'+f(C.i[si],3)+' in</td></tr>'+
+  '<tr><td>Interior area (100%)</td><td class="n">'+f(area,3)+' in²</td></tr>'+
+  '<tr><td>Max fill area ('+lim+'%)</td><td class="n">'+f(maxA,4)+' in²</td></tr>'+
+  '<tr><td>Conductor area ('+cw+')</td><td class="n">'+f(tot,4)+' in²</td></tr>'+
+  '<tr><td>'+remTxt+'</td><td class="n"><strong class="'+(rem>=0?'t-ok':'t-fail')+'">'+f(remVal,4)+' in²</strong></td></tr></tbody></table></div>'+
+  '<h3>Fill at each '+C.n+' trade size</h3><div class="tw"><table><thead><tr><th>Trade size</th><th class="n">Interior (in²)</th><th class="n">Max fill (in²)</th><th class="n">Fill</th><th>Result</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'+recNote+
+  '<p class="note">Planning estimate only (NEC Chapter 9, Tables 1, 4 and 5). Not permit or inspection approval.</p></div>';
+  $('results').innerHTML=h;
+  var R=88;
+  $('dg-fc').setAttribute('r',(R*Math.sqrt(Math.min(fill,100)/100)).toFixed(1));
+  $('dg-mc').setAttribute('r',(R*Math.sqrt(lim/100)).toFixed(1));
+  $('dg-pct').textContent=f(ceil1(fill),1)+'%';
+  $('dg-cd').textContent=C.n+' '+SL[si]+' · '+cnt+' wire'+(cnt>1?'s':'');
+  $('dg-mx').textContent='NEC limit (dashed): '+lim+'% = '+f(maxA,3)+' in²';
+  $('dg-id').textContent='Inner Ø '+f(C.i[si],3)+' in';
+  requestAnimationFrame(function(){var r=$('rc');if(r)r.classList.add('in')});
 }
-
-function copyResults() {
-  if(!window._copyText) return;
-  navigator.clipboard.writeText(window._copyText).then(() => {
-    const btn = document.getElementById('copyBtn');
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = 'Copy Results', 2000);
-  }).catch(() => {
-    // fallback
-    const ta = document.createElement('textarea');
-    ta.value = window._copyText;
-    ta.style.position='fixed';ta.style.opacity='0';
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    const btn = document.getElementById('copyBtn');
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = 'Copy Results', 2000);
-  });
+function copyRes(){
+  var b=$('cpb');
+  function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+  function fb(){var ta=document.createElement('textarea');ta.value=lastText;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(ta);done()}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,fb)}else fb();
 }
-
-// Enter key on selects
-document.addEventListener('keydown', e => {
-  if(e.key === 'Enter' && (e.target.tagName==='SELECT' || e.target.tagName==='INPUT')) {
-    requestAnimationFrame(calculate);
-  }
+function run(){requestAnimationFrame(calculate)}
+$('ctype').addEventListener('change',fillSizes);
+$('addBtn').addEventListener('click',function(){addWire('THHN','12',1)});
+$('calcBtn').addEventListener('click',run);
+$('wires').addEventListener('click',function(e){
+  var b=e.target.closest('[data-rm]');
+  if(b){var el=$('w'+b.getAttribute('data-rm'));if(el){el.remove();renumber()}}
 });
-
-// Initialize with 3 wires
-addWireRow('THHN/THWN', '12', 'THHN/THWN', 3);
-addWireRow('THHN/THWN', '12', 'THHN/THWN', 1);
+$('results').addEventListener('click',function(e){if(e.target.id==='cpb')copyRes()});
+$('tool').addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&e.target.tagName==='INPUT'){e.preventDefault();run()}
+});
+fillSizes();
+addWire('THHN','4',3);addWire('THHN','8',1);
+calculate();
+})();
 </script>
 <script id="a11y-js">(function(){function run(){
 var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
