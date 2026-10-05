@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Linear Feet to Square Feet Calculator | Toolwick</title>
+<meta name="description" content="Free linear feet to square feet calculator. Convert board length and width to square feet, add waste, and get square yards, meters and boards to buy.">
+<link rel="canonical" href="https://toolwick.com/linear-feet-to-square-feet-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Linear Feet to Square Feet Calculator", "url": "https://toolwick.com/linear-feet-to-square-feet-calculator/", "description": "Free linear feet to square feet calculator. Convert board length and width to square feet, add waste, and get square yards, meters and boards to buy.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Linear Feet to Square Feet Calculator", "item": "https://toolwick.com/linear-feet-to-square-feet-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do you convert linear feet to square feet?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply the length in linear feet by the width in feet. If the width is in inches, divide it by 12 first. For example, 100 linear feet of 6-inch wide material is 100 × 0.5 = 50 square feet."}}, {"@type": "Question", "name": "How many linear feet are in a square foot?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on the width. Divide 12 by the width in inches. A 3.5-inch board gives about 3.43 linear feet per square foot, a 5.5-inch board gives about 2.18, and a 12-inch board gives exactly 1."}}, {"@type": "Question", "name": "Can you convert linear feet to square feet without a width?", "acceptedAnswer": {"@type": "Answer", "text": "No. Linear feet measure length only, and square feet measure area, so you need a second dimension. Without a width, any answer would be a guess."}}, {"@type": "Question", "name": "How much waste should I add for flooring or decking?", "acceptedAnswer": {"@type": "Answer", "text": "A common starting point is 10% for straight-lay installations and 15% for diagonal or complex layouts. Add more if the room has many corners or if you want spare boards for future repairs. Always round the final quantity up."}}, {"@type": "Question", "name": "How do I convert square feet to linear feet?", "acceptedAnswer": {"@type": "Answer", "text": "Divide the area in square feet by the width in feet. To cover 150 sq ft with 7.25-inch boards (0.604 ft), you need about 248.3 linear feet before waste. Use the second tab above to include waste and round up automatically."}}, {"@type": "Question", "name": "Is a linear foot the same as a board foot?", "acceptedAnswer": {"@type": "Answer", "text": "No. A linear foot is one foot of length regardless of thickness or width. A board foot is a volume of 144 cubic inches, usually 1 inch thick by 12 inches wide by 12 inches long. Hardwood is often priced by the board foot, while dimensional lumber and trim are priced by the linear foot."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.75rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.5rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+.intro{color:#333}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin:0 0 1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram figcaption{font-size:.85rem;color:#555;text-align:center;padding:0 .5rem .25rem}
+.tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab{flex:1 1 140px;min-height:44px;padding:10px 12px;border:1px solid #ddd;background:#f8f9fa;color:#1a1a2e;border-radius:6px;font:inherit;font-weight:600;cursor:pointer}
+.tab[aria-selected="true"]{background:#0077b6;border-color:#0077b6;color:#fff}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.4rem}
+input[type=text],input[type=number],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;background:#fff;color:#1a1a2e;min-height:48px}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6;margin:0}
+input.err{border-color:#e74c3c}
+.errmsg{color:#c0392b;font-size:.85rem;margin-top:.35rem;min-height:0}
+.row{display:flex;gap:.75rem;flex-wrap:wrap}
+.row input{flex:1 1 140px;width:auto}
+.row select{flex:0 0 110px;width:110px}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.m2{display:none}
+form.mode2 .m1{display:none}
+form.mode2 .m2{display:block}
+.btn{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-weight:600;cursor:pointer;width:100%;min-height:48px}
+.btn:hover{background:#006299}
+#results{margin-top:2rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.big span{font-size:1.1rem;font-weight:600;color:#444}
+.sub{color:#444;margin:.25rem 0 1rem}
+.stats{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.stat{flex:1 1 180px;background:#f8f9fa;border-radius:8px;padding:.75rem 1rem}
+.stat b{display:block;font-size:1.25rem;color:#1a1a2e}
+.stat small{color:#555;font-size:.8rem}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}
+h3{font-size:1rem;margin:1.25rem 0 .5rem}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 14px;font:inherit;font-size:.85rem;cursor:pointer;min-height:44px}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.6rem .9rem;margin:1rem 0;border-radius:0 6px 6px 0}
+.ad-slot{min-height:0;margin:0}
+.content ul{padding-left:1.25rem;margin:0 0 1rem}
+.content li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;margin:0 0 1rem;overflow-x:auto}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:.6rem 0;min-height:44px}
+details p{color:#333}
+.related{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.75rem}
+.related li{margin:0;flex:1 1 180px}
+.related a{display:block;padding:12px 16px;border:1px solid #e0e0e0;border-radius:6px;color:#0077b6;background:#f8f9fa;min-height:44px}
+a{color:#0077b6;text-decoration:underline}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem;display:inline-block;min-height:32px}
+@media(max-width:640px){h1{font-size:1.5rem}.card{padding:1.25rem}.big{font-size:2.2rem}}
+@media(prefers-reduced-motion:reduce){.res{animation:none}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/linear-feet-to-square-feet-calculator/">
+<meta property="og:title" content="Linear Feet to Square Feet Calculator">
+<meta property="og:description" content="Free linear feet to square feet calculator. Convert board length and width to square feet, add waste, and get square yards, meters and boards to buy.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Linear Feet to Square Feet Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p class="intro">This linear feet to square feet calculator turns the length of any strip material — deck boards, fence pickets, trim, flooring planks, edging or fabric — into square feet of coverage. Enter the length and width, add a waste allowance, and see the area in square feet, square yards and square meters. Use the second tab to work backwards from an area to the linear feet you need to buy.</p>
+
+<div class="card">
+<figure class="diagram" style="margin:0 0 1.5rem">
+<svg viewBox="0 0 480 205" role="img" aria-labelledby="dt">
+<title id="dt">Diagram of a board showing its length, width and resulting area</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<rect x="40" y="70" width="300" height="70" fill="#e6f3fa" stroke="#0077b6" stroke-width="2"/>
+<path d="M40 90H340M40 120H340" stroke="#e0e0e0" stroke-width="1.5" fill="none"/>
+<path d="M40 50V68M340 50V68" stroke="#bbb" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+<path d="M342 70H385M342 140H385" stroke="#bbb" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+<line x1="42" y1="56" x2="338" y2="56" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="372" y1="72" x2="372" y2="138" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="svgL" x="190" y="40" text-anchor="middle" font-size="15" font-weight="600" fill="#1a1a2e">Length (ft)</text>
+<text id="svgW" x="384" y="101" font-size="15" font-weight="600" fill="#1a1a2e">Width</text>
+<text id="svgW2" x="384" y="120" font-size="13" fill="#1a1a2e"></text>
+<text id="svgA" x="190" y="110" text-anchor="middle" font-size="16" font-weight="700" fill="#0077b6">Area = L × W</text>
+<text x="190" y="180" text-anchor="middle" font-size="13" fill="#1a1a2e">Square feet = length (ft) × width (ft)</text>
+</svg>
+<figcaption>Labels update with your numbers when you calculate.</figcaption>
+</figure>
+
+<div class="tabs" role="tablist" aria-label="Calculation direction">
+<button type="button" class="tab" role="tab" aria-selected="true" data-m="1">Linear ft → Sq ft</button>
+<button type="button" class="tab" role="tab" aria-selected="false" data-m="2">Sq ft → Linear ft</button>
+</div>
+
+<form id="form" novalidate onsubmit="return false">
+<div class="field m1">
+<label for="len">Length (linear feet)</label>
+<input type="text" id="len" inputmode="decimal" autocomplete="off" value="120" aria-describedby="len-err">
+<div class="errmsg" id="len-err"></div>
+</div>
+<div class="field m2">
+<label for="area">Area to cover (square feet)</label>
+<input type="text" id="area" inputmode="decimal" autocomplete="off" value="200" aria-describedby="area-err">
+<div class="errmsg" id="area-err"></div>
+</div>
+<div class="field">
+<label for="wid">Width of the material</label>
+<div class="row">
+<input type="text" id="wid" inputmode="decimal" autocomplete="off" value="5.5" aria-describedby="wid-err">
+<select id="unit" aria-label="Width unit"><option value="in">inches</option><option value="ft">feet</option></select>
+</div>
+<div class="errmsg" id="wid-err"></div>
+</div>
+<div class="field">
+<label for="waste">Waste allowance: <output id="wasteVal" for="waste">10%</output></label>
+<input type="range" id="waste" min="0" max="30" step="1" value="10">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>15%</span><span>30%</span></div>
+</div>
+<button type="button" class="btn" id="calcBtn">Calculate</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/linear-feet-to-square-feet-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Linear Feet to Square Feet Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/linear-feet-to-square-feet-calculator/&quot;&gt;Linear Feet to Square Feet Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/linear-feet-to-square-feet-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<div class="content">
+<h2>How to Use This Linear Feet to Square Feet Calculator</h2>
+<p>Pick the direction you need. On the first tab, type the total length of material in linear feet, then the width of one piece in inches or feet. The calculator returns the net area, the area including your waste allowance, and a suggested order quantity rounded up. On the second tab, enter the area you want to cover and the width of the material, and it tells you how many linear feet to buy, plus how many 8, 10, 12 and 16 ft boards that equals.</p>
+
+<h2>Why This Matters</h2>
+<p>Lumber yards sell decking, fence boards, baseboard and trim by the linear foot, but the job you are planning is usually measured in square feet. A 12 × 16 ft deck is 192 square feet, yet nobody sells deck boards by the square foot. You have to convert in both directions to compare prices, check a quote or avoid a second trip to the store.</p>
+<p>The same conversion shows up everywhere. A fence contractor quoting $4.20 per linear foot of 5.5-inch cedar boards is really charging about $9.16 per square foot of coverage. A flooring installer working with 3.5-inch strip oak needs roughly 3.4 linear feet for every square foot of floor, before waste. Fabric, vinyl, gutter guards, roofing underlayment and landscape edging all follow the same pattern.</p>
+<p>Getting the conversion wrong is expensive. Under-order by 5% and you wait days for a matching batch, with possible colour variation. Over-order by 30% and you pay for material that sits in the garage. A quick, accurate calculation with a sensible waste factor keeps the project on budget.</p>
+
+<h2>How It's Calculated</h2>
+<p>The math is plain rectangle geometry. A strip of material is a long, narrow rectangle, so its area is its length times its width, with both measured in the same unit. Because length is quoted in feet and width is usually in inches, the width is converted to feet first by dividing by 12.</p>
+<div class="formula">Width (ft) = width (in) ÷ 12<br>Net area (sq ft) = length (linear ft) × width (ft)<br>Area with waste = net area × (1 + waste % ÷ 100)<br>Linear ft needed = area with waste ÷ width (ft)</div>
+<p>Square yards are the area divided by 9, and square meters are the area multiplied by 0.09290304. Order quantities are always rounded up to the next whole square foot or linear foot, never down, so the estimate errs on the side of having enough.</p>
+<p><strong>Rule of thumb and limits:</strong> this tool uses standard area geometry and the common 5–15% waste guideline for straight-lay projects. No building code sets these numbers. It is a material-estimating aid only, not an engineering, permit or inspection approval. Local codes, span tables and manufacturer instructions vary, so confirm quantities and any structural requirements with your supplier or local building department.</p>
+
+<h2>Worked Example</h2>
+<p>You are decking a small platform with 5.5-inch wide boards (the actual width of a 5/4×6 deck board) and have priced 120 linear feet. Allow 10% waste.</p>
+<ul>
+<li>Width in feet: 5.5 ÷ 12 = 0.4583 ft</li>
+<li>Net area: 120 × 0.4583 = 55.00 sq ft</li>
+<li>Waste at 10%: 55.00 × 0.10 = 5.50 sq ft</li>
+<li>Area with waste: 55.00 + 5.50 = 60.50 sq ft, so order at least 61 sq ft worth</li>
+<li>In other units: 60.50 ÷ 9 = 6.72 sq yd, and 60.50 × 0.0929 = 5.62 sq m</li>
+</ul>
+<p>Going the other way, to cover 200 sq ft with the same boards plus 10% waste you need 220 ÷ 0.4583 = 480 linear feet. That is 60 boards at 8 ft, 48 at 10 ft, 40 at 12 ft or 30 at 16 ft.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use actual width, not nominal.</strong> A "1×6" or "2×6" is about 5.5 inches wide, a 2×4 is 3.5 inches, and a 1×8 is 7.25 inches. Using the nominal size overstates your coverage.</li>
+<li><strong>Account for gaps.</strong> Deck boards are often spaced 1/8 to 1/4 inch apart. For tighter accuracy, add the gap to the board width, so a 5.5 in board with a 1/8 in gap covers 5.625 in.</li>
+<li><strong>Match waste to the layout.</strong> Straight runs often need 5–10%, diagonal or herringbone patterns 15% or more, and rooms with many cuts or defective stock may need extra. Round up, never down.</li>
+<li><strong>Do not mix units.</strong> The most common error is multiplying feet by inches. If the width is 12 inches or more, double-check that you chose the right unit.</li>
+<li><strong>Think about board length.</strong> Buying 16 ft boards for a 10 ft run wastes 6 ft per piece. Choose lengths that divide well into your runs.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How do you convert linear feet to square feet?</summary><p>Multiply the length in linear feet by the width in feet. If the width is in inches, divide it by 12 first. For example, 100 linear feet of 6-inch wide material is 100 × 0.5 = 50 square feet.</p></details>
+<details><summary>How many linear feet are in a square foot?</summary><p>It depends on the width. Divide 12 by the width in inches. A 3.5-inch board gives about 3.43 linear feet per square foot, a 5.5-inch board gives about 2.18, and a 12-inch board gives exactly 1.</p></details>
+<details><summary>Can you convert linear feet to square feet without a width?</summary><p>No. Linear feet measure length only, and square feet measure area, so you need a second dimension. Without a width, any answer would be a guess.</p></details>
+<details><summary>How much waste should I add for flooring or decking?</summary><p>A common starting point is 10% for straight-lay installations and 15% for diagonal or complex layouts. Add more if the room has many corners or if you want spare boards for future repairs. Always round the final quantity up.</p></details>
+<details><summary>How do I convert square feet to linear feet?</summary><p>Divide the area in square feet by the width in feet. To cover 150 sq ft with 7.25-inch boards (0.604 ft), you need about 248.3 linear feet before waste. Use the second tab above to include waste and round up automatically.</p></details>
+<details><summary>Is a linear foot the same as a board foot?</summary><p>No. A linear foot is one foot of length regardless of thickness or width. A board foot is a volume of 144 cubic inches, usually 1 inch thick by 12 inches wide by 12 inches long. Hardwood is often priced by the board foot, while dimensional lumber and trim are priced by the linear foot.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="related">
+<li><a href="/siding-calculator/">Siding Calculator</a></li>
+<li><a href="/watts-to-amps-calculator/">Watts to Amps Calculator</a></li>
+<li><a href="/grout-calculator/">Grout Calculator</a></li>
+<li><a href="/voltage-drop-calculator/">Voltage Drop Calculator</a></li>
+<li><a href="/topsoil-calculator/">Topsoil Calculator</a></li>
+<li><a href="/mulch-calculator/">Mulch Calculator</a></li>
+</ul>
+</div>
+</main>
+
+<div class="wrap"><div class="ad-slot" id="ad-bottom"></div></div>
+
+<footer>
+<div class="wrap">
+<p><a href="/about/">About</a> <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> <a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</div>
+</footer>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var mode=1,lastCopy='',has=false;
+var form=$('form'),res=$('results');
+var WID=[[1.5,'1x2 / 2x2'],[2.5,'1x3'],[3.5,'1x4 / 2x4'],[5.5,'1x6 / 2x6 / deck board'],[7.25,'1x8 / 2x8'],[9.25,'1x10 / 2x10'],[11.25,'1x12 / 2x12'],[12,'1 ft strip'],[24,'2 ft strip'],[48,'4 ft strip']];
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:d==null?2:d})}
+function f2(n){return n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function up(x){return Math.ceil(+x.toFixed(6))}
+function num(id){var v=$(id).value.replace(/,/g,'').trim();if(v==='')return NaN;return Number(v)}
+function clearErr(){['len','area','wid'].forEach(function(i){$(i).classList.remove('err');$(i).removeAttribute('aria-invalid');$(i+'-err').textContent=''})}
+function setErr(id,msg){$(id).classList.add('err');$(id).setAttribute('aria-invalid','true');$(id+'-err').textContent=msg}
+function svg(l,w1,w2,a){$('svgL').textContent=l;$('svgW').textContent=w1;$('svgW2').textContent=w2;$('svgA').textContent=a}
+function resetSvg(){svg('Length (ft)','Width','','Area = L × W')}
+function calculate(){
+clearErr();
+var bad=false,L,A,w=num('wid'),u=$('unit').value,wp=+$('waste').value;
+if(mode===1){L=num('len');
+if(isNaN(L)){setErr('len','Enter the length in linear feet, for example 120.');bad=true}
+else if(L<=0){setErr('len','Length must be greater than zero.');bad=true}
+else if(L>10000000){setErr('len','That length is too large. Enter 10,000,000 ft or less.');bad=true}}
+else{A=num('area');
+if(isNaN(A)){setErr('area','Enter the area in square feet, for example 200.');bad=true}
+else if(A<=0){setErr('area','Area must be greater than zero.');bad=true}
+else if(A>100000000){setErr('area','That area is too large. Enter 100,000,000 sq ft or less.');bad=true}}
+if(isNaN(w)){setErr('wid','Enter the width of the material, for example 5.5.');bad=true}
+else if(w<=0){setErr('wid','Width must be greater than zero.');bad=true}
+else if((u==='in'&&w>1200)||(u==='ft'&&w>100)){setErr('wid','That width is too large. Check the unit.');bad=true}
+if(bad){has=false;requestAnimationFrame(function(){res.innerHTML='';resetSvg()});return}
+var wft=u==='in'?w/12:w,win=u==='in'?w:w*12;
+var mult=1+wp/100,html,wtxt=fmt(win,3)+' in',wtxt2=fmt(wft,4)+' ft';
+var note=(u==='in'&&w>=12)?'<div class="note">Your width is '+fmt(w)+' in. If you meant feet, switch the unit to feet.</div>':'';
+var tbl='';
+if(mode===1){
+var net=L*wft,wa=net*(wp/100),tot=net*mult,buy=up(tot);
+lastCopy='Linear feet to square feet: '+fmt(L)+' linear ft × '+fmt(wft,4)+' ft wide = '+f2(net)+' sq ft; with '+wp+'% waste = '+f2(tot)+' sq ft (order at least '+fmt(buy)+' sq ft).';
+tbl=WID.map(function(r){return '<tr><td>'+r[0]+' in</td><td>'+r[1]+'</td><td class="n">'+f2(L*(r[0]/12)*mult)+'</td></tr>'}).join('');
+html='<div class="res"><div class="big">'+f2(net)+' <span>sq ft</span></div><p class="sub">Net area of '+fmt(L)+' linear ft at '+fmt(win,3)+' in wide.</p>'
++'<div class="stats"><div class="stat"><small>With '+wp+'% waste</small><b>'+f2(tot)+' sq ft</b></div><div class="stat"><small>Order at least (rounded up)</small><b>'+fmt(buy)+' sq ft</b></div></div>'+note
++'<h3>Breakdown</h3><div class="tw"><table><thead><tr><th>Item</th><th class="n">Value</th></tr></thead><tbody>'
++'<tr><td>Length</td><td class="n">'+fmt(L)+' linear ft</td></tr>'
++'<tr><td>Width</td><td class="n">'+fmt(win,3)+' in ('+fmt(wft,4)+' ft)</td></tr>'
++'<tr><td>Net area</td><td class="n">'+f2(net)+' sq ft</td></tr>'
++'<tr><td>Waste allowance ('+wp+'%)</td><td class="n">'+f2(wa)+' sq ft</td></tr>'
++'<tr><td>Total with waste</td><td class="n">'+f2(tot)+' sq ft</td></tr>'
++'<tr><td>Square yards (with waste)</td><td class="n">'+f2(tot/9)+' sq yd</td></tr>'
++'<tr><td>Square meters (with waste)</td><td class="n">'+f2(tot*0.09290304)+' sq m</td></tr>'
++'</tbody></table></div>'
++'<h3>Your '+fmt(L)+' ft at common widths (with '+wp+'% waste)</h3><div class="tw"><table><thead><tr><th>Width</th><th>Typical use (actual size)</th><th class="n">Sq ft</th></tr></thead><tbody>'+tbl+'</tbody></table></div>'
++'<p class="note">Estimate only. Round up when buying and confirm quantities with your supplier. Local codes and manufacturer instructions vary.</p>'
++'<button type="button" class="copy" id="copyBtn">Copy result</button></div>';
+svg('Length = '+fmt(L)+' ft','W = '+fmt(win,3)+' in',wtxt2,'Area = '+f2(net)+' sq ft');
+}else{
+var at=A*mult,lfx=at/wft,lfb=up(lfx);
+lastCopy='Square feet to linear feet: '+fmt(A)+' sq ft + '+wp+'% waste = '+f2(at)+' sq ft; at '+fmt(win,3)+' in wide you need '+fmt(lfb)+' linear ft (rounded up).';
+tbl=WID.map(function(r){return '<tr><td>'+r[0]+' in</td><td>'+r[1]+'</td><td class="n">'+fmt(up(at/(r[0]/12)),0)+'</td></tr>'}).join('');
+var bl=[8,10,12,16].map(function(b){return '<tr><td>'+b+' ft boards</td><td class="n">'+fmt(up(lfx/b),0)+' pcs ('+fmt(up(lfx/b)*b,0)+' ft)</td></tr>'}).join('');
+html='<div class="res"><div class="big">'+fmt(lfb,0)+' <span>linear ft</span></div><p class="sub">To cover '+fmt(A)+' sq ft with '+fmt(win,3)+' in wide material, rounded up.</p>'
++'<div class="stats"><div class="stat"><small>Exact, with '+wp+'% waste</small><b>'+f2(lfx)+' linear ft</b></div><div class="stat"><small>Area including waste</small><b>'+f2(at)+' sq ft</b></div></div>'+note
++'<h3>Breakdown</h3><div class="tw"><table><thead><tr><th>Item</th><th class="n">Value</th></tr></thead><tbody>'
++'<tr><td>Area to cover</td><td class="n">'+f2(A)+' sq ft</td></tr>'
++'<tr><td>Waste allowance ('+wp+'%)</td><td class="n">'+f2(A*wp/100)+' sq ft</td></tr>'
++'<tr><td>Area with waste</td><td class="n">'+f2(at)+' sq ft</td></tr>'
++'<tr><td>Width</td><td class="n">'+fmt(win,3)+' in ('+fmt(wft,4)+' ft)</td></tr>'
++'<tr><td>Linear feet without waste</td><td class="n">'+f2(A/wft)+' ft</td></tr>'
++'<tr><td>Linear feet with waste (rounded up)</td><td class="n">'+fmt(lfb,0)+' ft</td></tr>'
++'</tbody></table></div>'
++'<h3>Boards to buy by length</h3><div class="tw"><table><thead><tr><th>Board length</th><th class="n">Pieces needed (total)</th></tr></thead><tbody>'+bl+'</tbody></table></div>'
++'<h3>Linear feet needed for '+fmt(A)+' sq ft at common widths</h3><div class="tw"><table><thead><tr><th>Width</th><th>Typical use (actual size)</th><th class="n">Linear ft</th></tr></thead><tbody>'+tbl+'</tbody></table></div>'
++'<p class="note">Estimate only. Pieces are rounded up per board length. Confirm quantities with your supplier; local codes and manufacturer instructions vary.</p>'
++'<button type="button" class="copy" id="copyBtn">Copy result</button></div>';
+svg('Length needed = '+fmt(lfb,0)+' ft','W = '+fmt(win,3)+' in',wtxt2,'Area = '+f2(at)+' sq ft');
+}
+has=true;
+requestAnimationFrame(function(){res.innerHTML=html});
+}
+function run(){requestAnimationFrame(calculate)}
+$('calcBtn').addEventListener('click',run);
+['len','area','wid'].forEach(function(i){$(i).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();run()}})});
+$('waste').addEventListener('input',function(){$('wasteVal').textContent=this.value+'%';if(has)run()});
+$('unit').addEventListener('change',function(){if(has)run()});
+var tabs=document.querySelectorAll('.tab');
+tabs.forEach(function(b){b.addEventListener('click',function(){
+mode=+b.dataset.m;has=false;form.classList.toggle('mode2',mode===2);
+tabs.forEach(function(t){t.setAttribute('aria-selected',t===b?'true':'false')});
+clearErr();res.innerHTML='';resetSvg()})});
+res.addEventListener('click',function(e){
+if(e.target.id!=='copyBtn')return;
+var b=e.target;
+function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy result'},2000)}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastCopy).then(done,fb)}else fb();
+function fb(){var t=document.createElement('textarea');t.value=lastCopy;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(t);done()}
+});
+$('yr').textContent=new Date().getFullYear();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
