@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Paver Quantity Calculator | Toolwick</title>
+<meta name="description" content="Free patio stone calculator: enter patio size, paver dimensions, joint width and waste to get exact paver counts, pallets and cost estimates.">
+<link rel="canonical" href="https://toolwick.com/paver-quantity-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Paver Quantity Calculator", "url": "https://toolwick.com/paver-quantity-calculator/", "description": "Free patio stone calculator: enter patio size, paver dimensions, joint width and waste to get exact paver counts, pallets and cost estimates.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Paver Quantity Calculator", "item": "https://toolwick.com/paver-quantity-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many pavers do I need for a 10x10 patio?", "acceptedAnswer": {"@type": "Answer", "text": "A 100 sq ft patio with 6 × 9 in pavers and 1/8 in joints needs about 258 pavers with no waste. Adding 10% waste brings that to roughly 284. Enter your own numbers above for an exact count."}}, {"@type": "Question", "name": "How much extra should I order for waste?", "acceptedAnswer": {"@type": "Answer", "text": "A common rule of thumb is 5% for simple rectangles, 10% for running bond, 15% for herringbone or diagonal patterns and 20% for curves. Add more if you are a first-time installer or the patio has many corners."}}, {"@type": "Question", "name": "Do joint widths really change the paver count?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Each joint adds to the footprint of every stone, so wider joints mean fewer pavers per square foot. On small pavers such as 4 × 8 in, a 3/8 in joint instead of 1/8 in lowers the count by about 8.5%, because the footprint grows from 33.5 to 36.6 sq in."}}, {"@type": "Question", "name": "How do I convert pavers to pallets?", "acceptedAnswer": {"@type": "Answer", "text": "Divide your area including waste by the coverage printed on the pallet tag, then round up. Pallet coverage commonly ranges from 80 to 150 sq ft depending on paver thickness and size, so confirm with your supplier."}}, {"@type": "Question", "name": "Does this calculator include base gravel and sand?", "acceptedAnswer": {"@type": "Answer", "text": "No, it covers only the pavers themselves. Base depth varies with soil, climate and traffic, so use the related base and sand calculator and follow manufacturer and local guidance."}}, {"@type": "Question", "name": "Can I use it for walkways and driveways?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Enter the length and width of any rectangular area, or split an irregular shape into rectangles and add the results. Driveways need a deeper base and a more rigorous edge restraint, which are outside this tool's scope."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.5rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 1rem}
+h2{font-size:1.35rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.dia{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+.dia svg{display:block;width:100%;height:auto}
+.dia text{fill:#1a1a2e;font-family:inherit}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;height:44px;background:transparent}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.err{border-color:#e74c3c}
+.em{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.f{margin-bottom:1.25rem}
+.row{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:640px){.row{grid-template-columns:1fr 1fr}}
+.opt{font-weight:400;color:#666}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.btn{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;font-family:inherit}
+.btn:hover{background:#006299}
+#formErr{color:#c0392b;font-size:.9rem;margin-bottom:.75rem}
+#results{margin-top:1.5rem}
+.fade{animation:fi .3s ease both}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.5rem}
+.big{font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1.1}
+.sub{color:#444;font-size:.95rem}
+.tw{overflow-x:auto;margin-bottom:1.5rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(even) td{background:#fafafa}
+th.n,td.n{text-align:right}
+tr.cur td{font-weight:700}
+h3{font-size:1rem;margin:0 0 .5rem}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;min-height:44px;font-size:.9rem;cursor:pointer;font-family:inherit}
+.copy:hover{background:#f0f8fc}
+.note{font-size:.85rem;color:#666;margin-top:1rem}
+.sec{background:#f8f9fa;border-radius:8px;padding:1rem 1.25rem;margin:1rem 0;overflow-x:auto}
+.safety{margin:1.25rem 0;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00}
+details{border-bottom:1px solid #e0e0e0;padding:.5rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .75rem}
+li{margin-bottom:.5rem}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.5rem 0 2rem;font-size:.9rem;color:#666}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+code{background:#f0f0f0;padding:2px 6px;border-radius:4px;font-size:.9em}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.5rem}.big{font-size:2.3rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/paver-quantity-calculator/">
+<meta property="og:title" content="Paver Quantity Calculator">
+<meta property="og:description" content="Free patio stone calculator: enter patio size, paver dimensions, joint width and waste to get exact paver counts, pallets and cost estimates.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<main>
+<h1>Paver Quantity Calculator: Free Patio Stone Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This paver quantity calculator doubles as a patio stone calculator: enter your patio size, paver dimensions, joint width and waste allowance, and it returns how many pavers to order, always rounded up so you don't come up short.</p>
+
+<div class="card">
+<div class="dia">
+<svg id="diagram" viewBox="0 0 400 245" role="img" aria-labelledby="dgT dgD">
+<title id="dgT">Patio top view with paver layout</title>
+<desc id="dgD">Top-down view of a rectangular patio filled with pavers, labeled with its length, width, paver size, joint width and paver count.</desc>
+<defs>
+<pattern id="pv" width="24" height="24" patternUnits="userSpaceOnUse"><rect width="24" height="24" fill="#eaf4fa"/><path d="M0 0H24M0 12H24M0 24H24M0 0V12M12 12V24" stroke="#0077b6" stroke-opacity=".45" fill="none"/></pattern>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse"><path d="M0 1L8 4L0 7z" fill="#0077b6"/></marker>
+</defs>
+<rect id="dgR" x="82" y="20" width="156" height="130" fill="url(#pv)" stroke="#0077b6" stroke-width="2"/>
+<g stroke="#bdbdbd" stroke-dasharray="4 3" fill="none"><line id="gv1" x1="82" x2="82" y1="150" y2="172"/><line id="gv2" x1="238" x2="238" y1="150" y2="172"/><line id="gh1" x1="238" x2="260" y1="20" y2="20"/><line id="gh2" x1="238" x2="260" y1="150" y2="150"/></g>
+<g stroke="#0077b6" stroke-width="1.5"><line id="dgL" x1="82" x2="238" y1="166" y2="166" marker-start="url(#ar)" marker-end="url(#ar)"/><line id="dgW" x1="254" x2="254" y1="20" y2="150" marker-start="url(#ar)" marker-end="url(#ar)"/></g>
+<text id="tL" x="160" y="184" text-anchor="middle" font-size="13" font-weight="600">12 ft</text>
+<text id="tW" x="262" y="89" font-size="13" font-weight="600">10 ft</text>
+<text id="c1" x="200" y="213" text-anchor="middle" font-size="12">Paver: 9 × 6 in · joint 0.125 in</text>
+<text id="c2" x="200" y="234" text-anchor="middle" font-size="14" font-weight="700" style="fill:#0077b6">Enter values and calculate</text>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="f"><label for="unit">Units</label>
+<select id="unit"><option value="i">Imperial (feet, inches)</option><option value="m">Metric (meters, centimeters)</option></select></div>
+<div class="row">
+<div class="f"><label for="len">Patio length (<span class="lu">ft</span>)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="lenErr"><div class="em" id="lenErr"></div></div>
+<div class="f"><label for="wid">Patio width (<span class="lu">ft</span>)</label><input id="wid" type="number" inputmode="decimal" step="any" min="0" value="10" aria-describedby="widErr"><div class="em" id="widErr"></div></div>
+</div>
+<div class="f"><label for="sub">Area to subtract, like a planter or fire pit (<span class="au">sq ft</span>) <span class="opt">optional</span></label><input id="sub" type="number" inputmode="decimal" step="any" min="0" value="0" aria-describedby="subErr"><div class="em" id="subErr"></div></div>
+<div class="f"><label for="pre">Paver size preset</label>
+<select id="pre"><option value="4x8">4 × 8 in brick paver</option><option value="6x6">6 × 6 in</option><option value="6x9" selected>6 × 9 in</option><option value="9x9">9 × 9 in</option><option value="12x12">12 × 12 in</option><option value="12x24">12 × 24 in</option><option value="16x16">16 × 16 in</option><option value="18x18">18 × 18 in</option><option value="24x24">24 × 24 in</option><option value="c">Custom size</option></select></div>
+<div class="row">
+<div class="f"><label for="pl">Paver length (<span class="pu">in</span>)</label><input id="pl" type="number" inputmode="decimal" step="any" min="0" value="9" aria-describedby="plErr"><div class="em" id="plErr"></div></div>
+<div class="f"><label for="pw">Paver width (<span class="pu">in</span>)</label><input id="pw" type="number" inputmode="decimal" step="any" min="0" value="6" aria-describedby="pwErr"><div class="em" id="pwErr"></div></div>
+</div>
+<div class="f"><label for="jt">Joint width (<span class="ju">in</span>)</label><input id="jt" type="number" inputmode="decimal" step="any" min="0" value="0.125" aria-describedby="jtErr"><div class="em" id="jtErr"></div></div>
+<div class="f"><label for="pat">Laying pattern</label>
+<select id="pat"><option value="5">Simple rectangle, few cuts (5%)</option><option value="10" selected>Running bond or basketweave (10%)</option><option value="15">Herringbone or diagonal (15%)</option><option value="20">Curves, circles or many cuts (20%)</option></select></div>
+<div class="f"><label for="waste">Waste allowance: <span id="wv">10%</span></label><input id="waste" type="range" min="0" max="25" step="1" value="10"><div class="ticks"><span>0%</span><span>25%</span></div></div>
+<div class="row">
+<div class="f"><label for="price">Price per paver ($) <span class="opt">optional</span></label><input id="price" type="number" inputmode="decimal" step="any" min="0" aria-describedby="priceErr"><div class="em" id="priceErr"></div></div>
+<div class="f"><label for="pal">Coverage per pallet (<span class="au">sq ft</span>) <span class="opt">optional</span></label><input id="pal" type="number" inputmode="decimal" step="any" min="0" aria-describedby="palErr"><div class="em" id="palErr"></div></div>
+</div>
+<div id="formErr" role="alert"></div>
+<button class="btn" type="submit">Calculate Pavers Needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<div class="safety" role="note">Estimates for planning only. Building codes, soil and site conditions vary by location. Confirm paver dimensions and pallet coverage with your supplier, and check with your local building department or a licensed contractor for excavation, drainage and structural questions. This tool is not engineering, permit or inspection approval.</div>
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/paver-quantity-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Paver Quantity Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/paver-quantity-calculator/&quot;&gt;Paver Quantity Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/paver-quantity-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Paver Quantity Calculator</h2>
+<p>Enter the length and width of your patio, walkway or driveway, then pick a paver size (or type a custom one) and the joint width between stones. Choose your laying pattern to set a waste allowance, or drag the slider yourself. Press Calculate to see how many pavers to order, how many pallets that equals if you entered pallet coverage, and what it will cost if you entered a price per paver. The diagram above redraws with your own dimensions and paver count each time you calculate.</p>
+
+<h2>Why This Matters</h2>
+<p>Paver orders are one of the most expensive "almost right" mistakes in a landscaping project. Pavers are sold by the pallet, often from a specific production lot, and colors vary slightly from batch to batch. If you run short by 30 stones on a 12 × 10 ft patio, the reorder may not match, and a half-finished patio can sit for weeks while you wait. Order too many and you've tied up hundreds of dollars in leftover stone, since many yards will not take back cut or opened pallets.</p>
+<p>Homeowners planning a weekend patio use a patio stone calculator to budget before visiting the yard. Contractors use it to write quotes and confirm deliveries. A 6 × 9 in paver covers roughly 0.39 sq ft once joints are included, so even small errors in joint width or waste add up. A 20 × 30 ft driveway apron, for example, needs about 1,546 pavers before waste, which you would round to 1,550 when thinking about it. The difference between a 5% and 15% allowance there is roughly 155 stones, about a pallet.</p>
+<p>Use this tool at the planning stage, again when you finalize the design, and once more right before you place the order. Comparing paver sizes in the results table also helps you decide whether large-format slabs, which install faster, are worth the higher price per square foot.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator works in square inches internally so that any combination of units gives the same answer. Each paver occupies its own face area plus half of the joint on every side, which is the same as adding one full joint width to both its length and width:</p>
+<div class="sec"><code>Pavers = ⌈ Net area ÷ ((L + joint) × (W + joint)) × (1 + waste%) ⌉</code></div>
+<p>Net area is the patio length times width, minus any area you subtract. The result is rounded up to the next whole paver, never down. Pallets are calculated as <code>⌈ net area × (1 + waste%) ÷ coverage per pallet ⌉</code>, again rounded up. Metric inputs are converted exactly (1 in = 2.54 cm = 25.4 mm), and the size presets use the true inch dimensions in either unit system.</p>
+<p>The waste presets follow common industry rules of thumb: about 5% for a plain rectangle with few cuts, 10% for running bond or basketweave, 15% for herringbone or diagonal layouts, and 20% for curves, circles and heavily cut edges. These are not code requirements, and your own layout, cutting skill and edge restraint may call for more. Base depth, compaction and drainage depend on soil, frost and load; follow the paver manufacturer's instructions and local building rules. For base and bedding sand materials, see the <a href="/paver-patio-calculator/">Paver Patio Base &amp; Sand Calculator</a>.</p>
+
+<h2>Worked Example</h2>
+<p>Take a 12 ft × 10 ft patio, 6 × 9 in pavers, 1/8 in (0.125 in) joints, a running bond pattern (10% waste), $1.50 per paver, and pallets covering 100 sq ft.</p>
+<ol>
+<li>Patio area: 12 × 10 = 120 sq ft = 17,280 sq in.</li>
+<li>Paver footprint with joints: (9 + 0.125) × (6 + 0.125) = 55.89 sq in.</li>
+<li>Raw paver count: 17,280 ÷ 55.89 = 309.17, which rounds up to 310 pavers with no waste.</li>
+<li>With 10% waste: 309.17 × 1.10 = 340.09, rounded up to 341 pavers, so 31 extra.</li>
+<li>Pallets: 120 × 1.10 = 132 sq ft ÷ 100 = 1.32, rounded up to 2 pallets.</li>
+<li>Cost: 341 × $1.50 = $511.50.</li>
+</ol>
+<p>Those are the same figures the calculator shows when you enter these values.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the paver, not the label.</strong> Nominal sizes such as "6 × 9" can be off by a fraction of an inch. Measure a real stone and use a custom size if it differs.</li>
+<li><strong>Don't forget the joints.</strong> If you ignore a 1/8 in joint, you treat each 6 × 9 stone as covering 54 sq in instead of the true 55.89 sq in, so you would order about 3.5% too many. Wider joints and smaller pavers make that error larger.</li>
+<li><strong>Subtract fixed features only once.</strong> Deduct planters, fire pits or steps you won't pave, but keep the full area for curved edges, since cuts create waste.</li>
+<li><strong>Keep spares.</strong> Hold back a few pavers from the same lot for future repairs. Colors and finishes rarely match later orders.</li>
+<li><strong>Round pallets up and confirm with your supplier.</strong> Pallet coverage varies by product and by how the yard counts it. Ask before you pay.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many pavers do I need for a 10x10 patio?</summary><p>A 100 sq ft patio with 6 × 9 in pavers and 1/8 in joints needs about 258 pavers with no waste. Adding 10% waste brings that to roughly 284. Enter your own numbers above for an exact count.</p></details>
+<details><summary>How much extra should I order for waste?</summary><p>A common rule of thumb is 5% for simple rectangles, 10% for running bond, 15% for herringbone or diagonal patterns and 20% for curves. Add more if you are a first-time installer or the patio has many corners.</p></details>
+<details><summary>Do joint widths really change the paver count?</summary><p>Yes. Each joint adds to the footprint of every stone, so wider joints mean fewer pavers per square foot. On small pavers such as 4 × 8 in, a 3/8 in joint instead of 1/8 in lowers the count by about 8.5%, because the footprint grows from 33.5 to 36.6 sq in.</p></details>
+<details><summary>How do I convert pavers to pallets?</summary><p>Divide your area including waste by the coverage printed on the pallet tag, then round up. Pallet coverage commonly ranges from 80 to 150 sq ft depending on paver thickness and size, so confirm with your supplier.</p></details>
+<details><summary>Does this calculator include base gravel and sand?</summary><p>No, it covers only the pavers themselves. Base depth varies with soil, climate and traffic, so use the related base and sand calculator and follow manufacturer and local guidance.</p></details>
+<details><summary>Can I use it for walkways and driveways?</summary><p>Yes. Enter the length and width of any rectangular area, or split an irregular shape into rectangles and add the results. Driveways need a deeper base and a more rigorous edge restraint, which are outside this tool's scope.</p></details>
+
+<h2>Related Tools</h2>
+<p>Closest to this patio project:</p>
+<ul>
+<li><a href="/paver-patio-calculator/">Paver Patio Base &amp; Sand Calculator</a> – gravel base and bedding sand to go under your pavers.</li>
+<li><a href="/linear-feet-to-square-feet-calculator/">Linear Feet to Square Feet Calculator</a> – turn walkway lengths and widths into area.</li>
+<li><a href="/grout-calculator/">Grout Calculator</a> – joint material for tile and stone surfaces.</li>
+</ul>
+<p>More construction calculators:</p>
+<ul>
+<li><a href="/siding-calculator/">Siding Calculator</a></li>
+<li><a href="/drywall-screw-spacing-quantity-calculator/">Drywall Screw Spacing &amp; Quantity Calculator</a></li>
+<li><a href="/watts-to-amps-calculator/">Watts to Amps Calculator</a></li>
+</ul>
+</main>
+<nav class="cluster-nav" aria-label="More Concrete, Masonry &amp; Foundations Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Concrete, Masonry &amp; Foundations Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/paver-patio-calculator/">Paver Patio Base &amp; Sand Calculator</a></li><li><a href="/shower-pan-mortar-bed-calculator/">Bathtub &amp; Shower Pan Mortar Bed Calculator</a></li><li><a href="/brick-mortar-calculator/">Brick &amp; Mortar Calculator</a></li><li><a href="/cinder-block-wall-calculator/">Cinder Block Wall Calculator</a></li><li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li><li><a href="/concrete-volume-calculator/">Concrete Volume Calculator</a></li><li><a href="/deck-footing-frost-depth-calculator/">Deck Footing Size &amp; Frost Depth Calculator</a></li><li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a></li><li><a href="/concrete-calculators/"><strong>All Concrete, Masonry &amp; Foundations calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+<footer>
+<a href="/about/">About</a><a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a>
+<div>© <span id="yr">2025</span> toolwick.com</div>
+</footer>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const fmt=(n,d=0)=>n.toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:0});
+const money=n=>'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const isM=()=>$('unit').value==='m';
+/* factor from imperial value to metric display value */
+const CV={len:.3048,wid:.3048,sub:.09290304,pl:2.54,pw:2.54,jt:25.4,pal:.09290304};
+const SIZES=[[4,8],[6,6],[6,9],[12,12],[16,16],[24,24]];
+let lastText='';
+$('yr').textContent=new Date().getFullYear();
+function syncImp(id){const el=$(id),raw=el.value.trim();
+ if(raw===''||!isFinite(+raw)){delete el.dataset.imp;return}
+ el.dataset.imp=isM()?(+raw)/CV[id]:+raw}
+for(const id in CV){syncImp(id);$(id).addEventListener('input',()=>syncImp(id))}
+function labels(){const m=isM();
+ document.querySelectorAll('.lu').forEach(e=>e.textContent=m?'m':'ft');
+ document.querySelectorAll('.pu').forEach(e=>e.textContent=m?'cm':'in');
+ document.querySelectorAll('.ju').forEach(e=>e.textContent=m?'mm':'in');
+ document.querySelectorAll('.au').forEach(e=>e.textContent=m?'sq m':'sq ft');}
+function setErr(id,msg){const e=$(id);e.classList.toggle('err',!!msg);if(msg)e.setAttribute('aria-invalid','true');else e.removeAttribute('aria-invalid');$(id+'Err').textContent=msg||'';}
+function read(id,o){const raw=$(id).value.trim();
+ if(raw===''){if(o.req){setErr(id,'Enter '+o.l+'.');return null}setErr(id,'');return 0}
+ const v=Number(raw);
+ if(!isFinite(v)||v<0){setErr(id,o.l+' must be zero or a positive number.');return null}
+ if(o.g&&v===0){setErr(id,o.l+' must be greater than zero.');return null}
+ if(v>o.max){setErr(id,'That looks too large. Maximum is '+fmt(o.max)+'.');return null}
+ setErr(id,'');return v}
+function drawing(Lv,Wv,lt,wt,c1,c2){
+ const s=Math.min(260/Lv,130/Wv),w=Math.max(50,Lv*s),h=Math.max(30,Wv*s),x=160-w/2,y=20+(130-h)/2,b=y+h,r=x+w;
+ const A=(id,o)=>{const e=$(id);for(const k in o)e.setAttribute(k,o[k])};
+ A('dgR',{x:x,y:y,width:w,height:h});
+ A('dgL',{x1:x,x2:r,y1:b+16,y2:b+16});
+ A('gv1',{x1:x,x2:x,y1:b,y2:b+22});A('gv2',{x1:r,x2:r,y1:b,y2:b+22});
+ A('dgW',{x1:r+16,x2:r+16,y1:y,y2:b});
+ A('gh1',{x1:r,x2:r+22,y1:y,y2:y});A('gh2',{x1:r,x2:r+22,y1:b,y2:b});
+ A('tL',{x:160,y:b+34});$('tL').textContent=lt;
+ A('tW',{x:r+24,y:y+h/2+4});$('tW').textContent=wt;
+ $('c1').textContent=c1;$('c2').textContent=c2}
+function fail(){$('results').innerHTML='';lastText='';$('c2').textContent='Fix the highlighted values'}
+function calculate(){
+ const m=isM(),au=m?'sq m':'sq ft',lu=m?'m':'ft',pu=m?'cm':'in',ju=m?'mm':'in';
+ $('formErr').textContent='';
+ const L=read('len',{req:1,g:1,l:'the patio length',max:m?300:1000});
+ const W=read('wid',{req:1,g:1,l:'the patio width',max:m?300:1000});
+ const S=read('sub',{l:'The area to subtract',max:1e6});
+ const PL=read('pl',{req:1,g:1,l:'the paver length',max:m?150:60});
+ const PW=read('pw',{req:1,g:1,l:'the paver width',max:m?150:60});
+ const J=read('jt',{l:'The joint width',max:m?50:2});
+ const P=read('price',{l:'The price',max:10000});
+ const PAL=read('pal',{l:'The pallet coverage',max:1e5});
+ if([L,W,S,PL,PW,J,P,PAL].some(v=>v===null))return fail();
+ const wp=+$('waste').value,k=m?1550.0031:144;
+ const gross=(m?L*39.3700787:L*12)*(m?W*39.3700787:W*12);
+ const net=gross-S*k;
+ if(net<=0){setErr('sub','Area to subtract must be smaller than the patio area ('+fmt(gross/k,2)+' '+au+').');return fail()}
+ const pl=m?PL/2.54:PL,pw=m?PW/2.54:PW,j=m?J/25.4:J;
+ const fp=(pl+j)*(pw+j),raw=net/fp,base=Math.ceil(raw-1e-9);
+ const cnt=(w,f)=>Math.ceil((f||raw)*(1+w/100)-1e-9);
+ const order=cnt(wp);
+ if(order>5e6){$('formErr').textContent='That works out to more than 5,000,000 pavers. Check your paver size and units.';return fail()}
+ const netA=net/k,ordA=netA*(1+wp/100),extra=order-base;
+ const pallets=PAL>0?Math.ceil(ordA/PAL-1e-9):0;
+ const cost=P>0?order*P:0;
+ const tr=(a,b)=>'<tr><td>'+a+'</td><td class="n">'+b+'</td></tr>';
+ let t=tr('Patio area',fmt(gross/k,2)+' '+au);
+ if(S>0)t+=tr('Area subtracted','−'+fmt(S,2)+' '+au);
+ t+=tr('Net area to pave',fmt(netA,2)+' '+au)+tr('Area with '+wp+'% waste',fmt(ordA,2)+' '+au)
+  +tr('Pavers per '+au+' (with joints)',fmt(k/fp,2))+tr('Pavers, no waste',fmt(base))+tr('Extra for waste',fmt(extra))
+  +tr('<strong>Pavers to order</strong>','<strong>'+fmt(order)+'</strong>');
+ if(pallets)t+=tr('Pallets (rounded up)',fmt(pallets));
+ if(cost)t+=tr('Estimated paver cost',money(cost));
+ let ws=[5,10,15,20];if(ws.indexOf(wp)<0){ws.push(wp);ws.sort((a,b)=>a-b)}
+ let wr='';ws.forEach(w=>{const c=cnt(w);wr+='<tr'+(w===wp?' class="cur"':'')+'><td>'+w+'%</td><td class="n">'+fmt(c)+'</td><td class="n">'+fmt(c-base)+'</td>'+(P>0?'<td class="n">'+money(c*P)+'</td>':'')+'</tr>'});
+ let sr='';SIZES.forEach(s=>{const f=(s[0]+j)*(s[1]+j),c=cnt(wp,net/f);
+  const nm=m?fmt(s[0]*2.54,2)+' × '+fmt(s[1]*2.54,2)+' cm':s[0]+' × '+s[1]+' in';
+  sr+='<tr><td>'+nm+'</td><td class="n">'+fmt(k/f,2)+'</td><td class="n">'+fmt(c)+'</td></tr>'});
+ lastText='Paver estimate: '+fmt(order)+' pavers to order ('+wp+'% waste included)\nPatio: '+fmt(L,2)+' x '+fmt(W,2)+' '+lu+', net area '+fmt(netA,2)+' '+au+'\nPaver: '+fmt(PL,2)+' x '+fmt(PW,2)+' '+pu+', joint '+fmt(J,3)+' '+ju+'\nPavers without waste: '+fmt(base)+(pallets?'\nPallets: '+fmt(pallets):'')+(cost?'\nEstimated cost: '+money(cost):'');
+ const tw='<div class="tw" tabindex="0" role="region" aria-label="Scrollable table">';
+ const html='<div class="fade"><div class="key"><div class="big">'+fmt(order)+'</div><div class="sub">pavers to order, including '+wp+'% waste (rounded up)</div></div>'
+  +tw+'<table><thead><tr><th>Item</th><th class="n">Amount</th></tr></thead><tbody>'+t+'</tbody></table></div>'
+  +'<h3>Waste comparison</h3>'+tw+'<table><thead><tr><th>Waste</th><th class="n">Pavers</th><th class="n">Extra</th>'+(P>0?'<th class="n">Cost</th>':'')+'</tr></thead><tbody>'+wr+'</tbody></table></div>'
+  +'<h3>Same patio, other paver sizes</h3>'+tw+'<table><thead><tr><th>Paver size</th><th class="n">Per '+au+'</th><th class="n">Pavers needed</th></tr></thead><tbody>'+sr+'</tbody></table></div>'
+  +'<button type="button" class="copy" id="copyBtn">Copy results</button>'
+  +'<p class="note">Counts and pallets are rounded up. Waste percentages are industry rules of thumb, not code requirements. Confirm paver dimensions and pallet coverage with your supplier and follow the manufacturer and local codes for base preparation. This estimate is not engineering, permit or inspection approval.</p></div>';
+ $('results').innerHTML=html;
+ const fl=(v,d)=>fmt(v,d)+' '+lu;
+ drawing(L,W,fl(L,2),fl(W,2),'Paver: '+fmt(PL,2)+' × '+fmt(PW,2)+' '+pu+' · joint '+fmt(J,3)+' '+ju,'≈ '+fmt(order)+' pavers incl. '+wp+'% waste');
+}
+$('f').addEventListener('submit',e=>{e.preventDefault();requestAnimationFrame(calculate)});
+$('unit').addEventListener('change',()=>{const toM=isM();
+ for(const id in CV){const el=$(id);
+  if(el.dataset.imp!==undefined){const v=+el.dataset.imp;el.value=+(toM?v*CV[id]:v).toPrecision(6)}}
+ labels();requestAnimationFrame(calculate)});
+$('pre').addEventListener('change',()=>{const v=$('pre').value;if(v==='c')return;
+ const s=v.split('x').map(Number),m=isM();
+ $('pl').dataset.imp=s[1];$('pw').dataset.imp=s[0];
+ $('pl').value=m?+(s[1]*2.54).toFixed(2):s[1];$('pw').value=m?+(s[0]*2.54).toFixed(2):s[0]});
+['pl','pw'].forEach(id=>$(id).addEventListener('input',()=>{$('pre').value='c'}));
+$('pat').addEventListener('change',()=>{$('waste').value=$('pat').value;$('wv').textContent=$('pat').value+'%'});
+$('waste').addEventListener('input',()=>{$('wv').textContent=$('waste').value+'%'});
+$('results').addEventListener('click',e=>{if(e.target.id!=='copyBtn'||!lastText)return;
+ const b=e.target,done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,()=>{})}
+ else{const ta=document.createElement('textarea');ta.value=lastText;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(ta)}});
+labels();requestAnimationFrame(calculate);
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
