@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Polymeric Sand Calculator | Toolwick</title>
+<meta name="description" content="Free polymeric sand calculator: estimate how many bags you need from patio area, paver size, joint width and waste. Includes a joint diagram.">
+<link rel="canonical" href="https://toolwick.com/polymeric-sand-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Polymeric Sand Calculator", "url": "https://toolwick.com/polymeric-sand-calculator/", "description": "Free polymeric sand calculator: estimate how many bags you need from patio area, paver size, joint width and waste. Includes a joint diagram.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Polymeric Sand Calculator", "item": "https://toolwick.com/polymeric-sand-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many bags of polymeric sand do I need per 100 square feet?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on paver size and joint width. For 4 × 8 in pavers, 2 3/8 in thick with 1/8 in joints, 100 sq ft needs about 97 lb including 15% waste, or two 50 lb bags. Larger pavers need less, and wider joints need more."}}, {"@type": "Question", "name": "Does polymeric sand fill the whole joint?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Fill the joint to about 1/8 in below the paver surface, not just the top inch. Use regular jointing sand underneath only if the product label allows it. Full-depth fill gives the best hold and prevents the surface sand from sinking."}}, {"@type": "Question", "name": "Can I use polymeric sand in 1/2 inch joints?", "acceptedAnswer": {"@type": "Answer", "text": "Some products are rated for joints up to 1/2 in or wider, but many standard formulas are limited to 1/4 or 3/8 in. Check the label. This calculator supports up to 1/2 in so you can plan quantities, but the right product is your call."}}, {"@type": "Question", "name": "Should I buy extra polymeric sand?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, at least one extra bag on a job over a few hundred square feet, or use the waste slider. Because the result is rounded up to full bags, you already carry a small buffer. Unopened bags can often be returned."}}, {"@type": "Question", "name": "Do chamfered or beveled pavers need more sand?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Beveled edges create a V-shaped pocket at the top of each joint that this simple grid model does not count. Move the waste slider toward 20% to 25% for heavily beveled or tumbled pavers."}}, {"@type": "Question", "name": "What is the difference between polymeric sand and regular joint sand?", "acceptedAnswer": {"@type": "Answer", "text": "Polymeric sand contains binders that harden when misted with water, which helps resist weeds, ants and washout. Regular joint sand stays loose and needs topping up. Polymeric sand costs more per pound, so getting the quantity right matters."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.75rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;line-height:1.3;margin:2.5rem 0 .75rem}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.lead{color:#444;font-size:1.05rem}
+.diagram{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:.75rem;margin:1.5rem 0}
+.diagram svg{width:100%;height:auto;display:block}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:1.25rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+@media(min-width:641px){.card{padding:2rem}}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input:focus,select:focus{outline-offset:0;border-color:#0077b6}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;background:transparent}
+.invalid{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin:.3rem 0 0}
+.err:empty{display:none}
+.field{margin-bottom:1.1rem}
+.hint{font-size:.8rem;color:#666;margin:.3rem 0 0}
+.grid{display:grid;gap:0 1rem}
+@media(min-width:641px){.grid{grid-template-columns:1fr 1fr}}
+.tabs{display:flex;gap:.5rem;margin-bottom:1.1rem}
+.tab{flex:1;min-height:44px;padding:10px 12px;border:1px solid #ddd;background:#f8f9fa;color:#1a1a2e;border-radius:6px;font-size:.95rem;font-weight:500;cursor:pointer;font-family:inherit}
+.tab.on{background:#0077b6;border-color:#0077b6;color:#fff}
+.hide{display:none}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.btn{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:.5rem}
+.btn:hover{background:#006299}
+.btn.sec{width:auto;background:#fff;color:#0077b6;border:1px solid #0077b6;font-size:.85rem;padding:8px 16px;font-weight:500;margin-top:1rem}
+.btn.sec:hover{background:#f0f7fb}
+.results{opacity:0;transition:opacity .3s ease}
+.results.show{opacity:1}
+.results:not(:empty){margin-top:2rem}
+.sum{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.big{font-size:1rem;color:#444}
+.num{display:block;font-size:3.2rem;line-height:1.1;font-weight:700;color:#0077b6}
+.sum p{margin:.4rem 0 0;color:#444}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(even) td{background:#fafafa}
+th.n,td.n{text-align:right}
+tr.cur td{font-weight:700;color:#0077b6}
+.note{font-size:.85rem;color:#444;background:#fff8e6;border:1px solid #f0d58a;border-radius:6px;padding:.6rem .9rem;margin:0 0 .8rem}
+.small{font-size:.8rem;color:#666}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0}
+summary{min-height:44px;padding:.7rem 0;cursor:pointer;font-weight:600}
+details p{margin:0 0 1rem}
+ul,ol{padding-left:1.3rem;margin:0 0 1rem}
+li{margin-bottom:.5rem}
+code{background:#f0f0f0;padding:2px 6px;border-radius:4px;font-size:.9em}
+.formula{background:#f8f9fa;border-left:3px solid #0077b6;padding:.8rem 1rem;margin:0 0 1rem;font-size:.92rem;overflow-x:auto}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{color:#0077b6;display:inline-block;min-height:24px;margin-right:1rem}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/polymeric-sand-calculator/">
+<meta property="og:title" content="Polymeric Sand Calculator">
+<meta property="og:description" content="Free polymeric sand calculator: estimate how many bags you need from patio area, paver size, joint width and waste. Includes a joint diagram.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<main>
+<h1>Polymeric Sand Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p class="lead">This polymeric sand calculator tells you how many bags to buy for a paver patio, walkway or driveway. Enter your area, paver size, thickness and joint width, and it returns the pounds of sand needed and the bag count, rounded up.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 400 252" role="img" aria-labelledby="svT svD" id="diag">
+<title id="svT">Cross-section of a paver joint filled with polymeric sand</title>
+<desc id="svD">Two pavers with a joint between them. The joint is filled with polymeric sand to one eighth inch below the paver surface, above bedding sand and a compacted base.</desc>
+<defs><marker id="ar" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L7 4L1 7z" fill="#0077b6"/></marker></defs>
+<rect x="20" y="56" width="130" height="84" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="190" y="56" width="190" height="84" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="150" y="68" width="40" height="72" fill="#0077b6" fill-opacity=".4"/>
+<line x1="150" y1="68" x2="190" y2="68" stroke="#0077b6" stroke-width="2"/>
+<rect x="20" y="140" width="360" height="34" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="2"/>
+<rect x="20" y="174" width="360" height="34" fill="#f0f0f0" stroke="#e0e0e0" stroke-width="2"/>
+<text x="30" y="161" font-size="12" fill="#1a1a2e">Bedding sand</text>
+<text x="30" y="195" font-size="12" fill="#1a1a2e">Compacted base</text>
+<line x1="150" y1="42" x2="150" y2="56" stroke="#bbb" stroke-width="1.5"/>
+<line x1="190" y1="42" x2="190" y2="56" stroke="#bbb" stroke-width="1.5"/>
+<line x1="152" y1="42" x2="188" y2="42" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="svJ" x="170" y="28" font-size="14" font-weight="600" text-anchor="middle" fill="#1a1a2e">Joint 1/8 in</text>
+<line x1="36" y1="58" x2="36" y2="138" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text x="46" y="92" font-size="13" fill="#1a1a2e">Thickness</text>
+<text id="svT2" x="46" y="110" font-size="14" font-weight="600" fill="#1a1a2e">2 3/8 in</text>
+<line x1="206" y1="70" x2="206" y2="138" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text x="214" y="98" font-size="13" fill="#1a1a2e">Sand fill</text>
+<text id="svF" x="214" y="116" font-size="14" font-weight="600" fill="#1a1a2e">2 1/4 in</text>
+<line x1="190" y1="68" x2="280" y2="68" stroke="#0077b6" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="287" y="74" font-size="13" fill="#1a1a2e">Sand stops</text>
+<text x="287" y="90" font-size="13" fill="#1a1a2e">1/8 in below</text>
+<text x="287" y="106" font-size="13" fill="#1a1a2e">the surface</text>
+<text x="200" y="228" font-size="12" text-anchor="middle" fill="#1a1a2e">Blue fill = polymeric sand in the joint</text>
+<text id="svC" x="200" y="246" font-size="13" font-weight="600" text-anchor="middle" fill="#1a1a2e">Example: 4 × 8 in pavers, 1/8 in joints</text>
+</svg>
+</div>
+
+<div class="card" id="tool">
+<div class="tabs" role="tablist" aria-label="Area entry method">
+<button type="button" class="tab on" id="tabRect" role="tab" aria-selected="true" aria-controls="panelRect">Length × Width</button>
+<button type="button" class="tab" id="tabArea" role="tab" aria-selected="false" aria-controls="panelArea">Total Area</button>
+</div>
+<div id="panelRect" role="tabpanel" aria-labelledby="tabRect" class="grid">
+<div class="field"><label for="lenFt">Area length (ft)</label><input type="number" id="lenFt" value="15" min="0" step="any" inputmode="decimal" aria-describedby="e_lenFt"><p class="err" id="e_lenFt"></p></div>
+<div class="field"><label for="widFt">Area width (ft)</label><input type="number" id="widFt" value="12" min="0" step="any" inputmode="decimal" aria-describedby="e_widFt"><p class="err" id="e_widFt"></p></div>
+</div>
+<div id="panelArea" role="tabpanel" aria-labelledby="tabArea" class="hide">
+<div class="field"><label for="areaDirect">Total paved area (sq ft)</label><input type="number" id="areaDirect" value="180" min="0" step="any" inputmode="decimal" aria-describedby="e_areaDirect"><p class="err" id="e_areaDirect"></p><p class="hint">Use this for irregular shapes: add up each section's area.</p></div>
+</div>
+
+<div class="field"><label for="preset">Paver size preset</label>
+<select id="preset">
+<option value="8x4" selected>4 × 8 in (standard brick)</option>
+<option value="6x6">6 × 6 in</option>
+<option value="9x6">6 × 9 in</option>
+<option value="8x8">8 × 8 in</option>
+<option value="12x12">12 × 12 in</option>
+<option value="24x12">12 × 24 in</option>
+<option value="16x16">16 × 16 in</option>
+<option value="24x24">24 × 24 in</option>
+<option value="custom">Custom size</option>
+</select></div>
+<div class="grid">
+<div class="field"><label for="paverL">Paver length (in)</label><input type="number" id="paverL" value="8" min="0" step="any" inputmode="decimal" aria-describedby="e_paverL"><p class="err" id="e_paverL"></p></div>
+<div class="field"><label for="paverW">Paver width (in)</label><input type="number" id="paverW" value="4" min="0" step="any" inputmode="decimal" aria-describedby="e_paverW"><p class="err" id="e_paverW"></p></div>
+<div class="field"><label for="thick">Paver thickness (in)</label><input type="number" id="thick" value="2.375" min="0" step="0.125" inputmode="decimal" aria-describedby="e_thick h_thick"><p class="err" id="e_thick"></p><p class="hint" id="h_thick">Common: 2 3/8 in (60 mm), 3 1/8 in (80 mm).</p></div>
+<div class="field"><label for="joint">Joint width</label>
+<select id="joint">
+<option value="0.0625">1/16 in</option>
+<option value="0.125" selected>1/8 in</option>
+<option value="0.1875">3/16 in</option>
+<option value="0.25">1/4 in</option>
+<option value="0.375">3/8 in</option>
+<option value="0.5">1/2 in</option>
+</select></div>
+<div class="field"><label for="bag">Bag size</label>
+<select id="bag">
+<option value="20">20 lb</option>
+<option value="25">25 lb</option>
+<option value="30">30 lb</option>
+<option value="40">40 lb</option>
+<option value="50" selected>50 lb</option>
+</select></div>
+<div class="field"><label for="price">Price per bag (optional, $)</label><input type="number" id="price" min="0" step="0.01" inputmode="decimal" aria-describedby="e_price"><p class="err" id="e_price"></p></div>
+</div>
+<div class="field"><label for="waste">Waste &amp; settling allowance: <output id="wasteOut" for="waste">15%</output></label>
+<input type="range" id="waste" min="0" max="30" step="1" value="15">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>15%</span><span>30%</span></div></div>
+<button type="button" class="btn" id="calcBtn">Calculate Polymeric Sand</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</div>
+
+<div class="results" id="results" aria-live="polite" aria-atomic="true"></div>
+<div id="copyWrap" class="hide"><button type="button" class="btn sec" id="copyBtn">Copy results</button></div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/polymeric-sand-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Polymeric Sand Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/polymeric-sand-calculator/&quot;&gt;Polymeric Sand Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/polymeric-sand-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<section>
+<h2>How to Use This Polymeric Sand Calculator</h2>
+<p>Start by entering the size of your paved area, either as length and width in feet or as a total square footage if the shape is irregular. Pick your paver size (or type a custom one), the paver thickness, the joint width, and the bag size you plan to buy. The waste slider covers sweeping loss, settling and uneven joints; 15% is a sensible default.</p>
+<p>Press Calculate to see the number of bags to buy (always rounded up), the total pounds of sand, the coverage you can expect per bag, and a side-by-side table showing how other joint widths would change the order. Add a bag price to see the estimated cost. The diagram above updates with your own dimensions.</p>
+
+<h2>Why This Matters</h2>
+<p>Polymeric sand is not cheap. A 50 lb bag usually costs $25 to $45, and a mid-size patio can take four to eight bags. Running short on the last row is a real problem, because the product has to be swept in, compacted, misted and left alone during a single dry window, usually 24 hours with no rain. A second trip to the store can also mean a different dye lot and a visible color mismatch in the joints.</p>
+<p>Joint width changes the quantity more than most people expect. Going from 1/8 in to 3/8 in joints on 4 × 8 in pavers nearly triples the sand, because the joint share of the surface climbs from about 4.5% to about 12.7%. Paver size matters too: large 24 × 24 in slabs have far less joint length per square foot than small 4 × 4 in units, so they need much less sand.</p>
+<p>Homeowners planning a weekend patio, landscapers quoting a walkway, and contractors ordering for a driveway all need the same thing: a defensible number before the truck leaves the yard. This tool gives you that number from the geometry of your joints instead of a one-size-fits-all coverage guess.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator treats your paving as a repeating grid. Each paver plus one joint forms a cell, and the joint is whatever part of the cell is not paver.</p>
+<div class="formula">
+cell area = (length + joint) × (width + joint)<br>
+joint share = 1 − (length × width) ÷ cell area<br>
+fill depth = paver thickness − 1/8 in<br>
+joint volume (cu ft) = area × joint share × fill depth ÷ 12<br>
+sand (lb) = joint volume × 100 lb/cu ft × (1 + waste %)<br>
+bags = sand ÷ bag size, rounded up to a whole bag
+</div>
+<p>The assumptions are deliberately on the cautious side. The sand is assumed to fill the full joint depth, stopping 1/8 in below the paver surface, which is the usual manufacturer guidance so the sand does not sit proud and leave haze. Loose polymeric sand is taken at about 100 lb per cubic foot. The result is always rounded up to full bags, never down.</p>
+<p>This is a rule-of-thumb estimate, not a code calculation, engineering design, or inspection approval. Product coverage charts differ between brands, chamfered or beveled paver edges add joint volume, and local rules or HOA requirements may apply. If your product label gives a coverage chart for your paver size, use the larger of the two answers.</p>
+
+<h2>Worked Example</h2>
+<p>A 15 ft × 12 ft patio of standard 4 × 8 in pavers, 2 3/8 in thick, with 1/8 in joints, 15% waste and 50 lb bags:</p>
+<ol>
+<li>Area: 15 × 12 = <strong>180 sq ft</strong>.</li>
+<li>Cell area: (8 + 0.125) × (4 + 0.125) = 33.516 sq in. The paver itself is 32 sq in.</li>
+<li>Joint share: 1 − 32 ÷ 33.516 = <strong>4.52%</strong> of the surface.</li>
+<li>Fill depth: 2.375 − 0.125 = 2.25 in = 0.1875 ft.</li>
+<li>Joint volume: 180 × 0.0452 × 0.1875 = <strong>1.53 cu ft</strong>.</li>
+<li>Sand before waste: 1.53 × 100 = 152.6 lb.</li>
+<li>With 15% waste: 152.6 × 1.15 = <strong>175.5 lb</strong>.</li>
+<li>Bags: 175.5 ÷ 50 = 3.51, rounded up to <strong>4 bags</strong>, covering about 51 sq ft each.</li>
+</ol>
+<p>Those are the same figures the calculator shows when you press the button with its default inputs.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Check the joint width limits on the bag.</strong> Many products are rated for 1/16 in to 1/2 in joints; wider joints need a product made for them or the sand may crack and wash out.</li>
+<li><strong>Don't skip the waste allowance.</strong> Sweeping, compaction and joints that settle after the first pass are why 10% to 20% extra is normal.</li>
+<li><strong>Buy all bags from the same lot.</strong> Color varies slightly between batches, so check the lot number on every bag and keep one unopened for later top-ups.</li>
+<li><strong>Keep the pavers dry and the forecast clear.</strong> Wet joints cause the sand to activate early and leave a hard haze on the surface. Plan for 24 hours of dry weather after activation.</li>
+<li><strong>Protect your lungs and eyes.</strong> Sand dust contains crystalline silica; wear an N95-type mask and eye protection when pouring and sweeping.</li>
+<li><strong>Make sure joints are deep enough.</strong> Most manufacturers want at least 1 in of joint depth; thin pavers or heavy bedding intrusion can fall short.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many bags of polymeric sand do I need per 100 square feet?</summary><p>It depends on paver size and joint width. For 4 × 8 in pavers, 2 3/8 in thick with 1/8 in joints, 100 sq ft needs about 97 lb including 15% waste, or two 50 lb bags. Larger pavers need less, and wider joints need more.</p></details>
+<details><summary>Does polymeric sand fill the whole joint?</summary><p>Yes. Fill the joint to about 1/8 in below the paver surface, not just the top inch. Use regular jointing sand underneath only if the product label allows it. Full-depth fill gives the best hold and prevents the surface sand from sinking.</p></details>
+<details><summary>Can I use polymeric sand in 1/2 inch joints?</summary><p>Some products are rated for joints up to 1/2 in or wider, but many standard formulas are limited to 1/4 or 3/8 in. Check the label. This calculator supports up to 1/2 in so you can plan quantities, but the right product is your call.</p></details>
+<details><summary>Should I buy extra polymeric sand?</summary><p>Yes, at least one extra bag on a job over a few hundred square feet, or use the waste slider. Because the result is rounded up to full bags, you already carry a small buffer. Unopened bags can often be returned.</p></details>
+<details><summary>Do chamfered or beveled pavers need more sand?</summary><p>Yes. Beveled edges create a V-shaped pocket at the top of each joint that this simple grid model does not count. Move the waste slider toward 20% to 25% for heavily beveled or tumbled pavers.</p></details>
+<details><summary>What is the difference between polymeric sand and regular joint sand?</summary><p>Polymeric sand contains binders that harden when misted with water, which helps resist weeds, ants and washout. Regular joint sand stays loose and needs topping up. Polymeric sand costs more per pound, so getting the quantity right matters.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul>
+<li><a href="/paver-patio-calculator/">Paver Patio Base &amp; Sand Calculator</a></li>
+<li><a href="/feet-inches-to-decimal-feet-calculator/">Feet and Inches to Decimal Feet Calculator</a></li>
+<li><a href="/paver-quantity-calculator/">Paver Quantity Calculator</a></li>
+<li><a href="/linear-feet-to-square-feet-calculator/">Linear Feet to Square Feet Calculator</a></li>
+<li><a href="/siding-calculator/">Siding Calculator</a></li>
+<li><a href="/watts-to-amps-calculator/">Watts to Amps Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<p><a href="/about/">About</a><a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</footer>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const GAP=.125,DENS=100,JW=[.0625,.125,.1875,.25,.375,.5];
+let mode='rect',has=false,lastText='';
+const fmt=(n,d)=>n.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});
+const fmtA=n=>fmt(n,Number.isInteger(n)?0:1);
+function fr(x){const s=Math.round(x*16);if(s>0&&Math.abs(x*16-s)<.02){let w=Math.floor(s/16),r=s%16,d=16;while(r&&r%2===0){r/=2;d/=2}return r?(w?w+' ':'')+r+'/'+d:String(w)}return fmt(x,2)}
+const num=id=>{const v=$(id).value.trim();return v===''?NaN:Number(v)};
+function err(id,m){const e=$('e_'+id),i=$(id);e.textContent=m||'';i.classList.toggle('invalid',!!m);if(m)i.setAttribute('aria-invalid','true');else i.removeAttribute('aria-invalid')}
+function setMode(m){mode=m;['Rect','Area'].forEach(n=>{const on=(n==='Rect')===(m==='rect');$('tab'+n).classList.toggle('on',on);$('tab'+n).setAttribute('aria-selected',on?'true':'false');$('panel'+n).classList.toggle('hide',!on)})}
+$('tabRect').addEventListener('click',()=>setMode('rect'));
+$('tabArea').addEventListener('click',()=>setMode('area'));
+$('preset').addEventListener('change',()=>{const v=$('preset').value;if(v!=='custom'){const p=v.split('x');$('paverL').value=p[0];$('paverW').value=p[1]}});
+['paverL','paverW'].forEach(i=>$(i).addEventListener('input',()=>{$('preset').value='custom'}));
+function est(area,pl,pw,j,th,waste,bag){
+const f=1-(pl*pw)/((pl+j)*(pw+j)),depth=th-GAP,vol=area*f*depth/12,base=vol*DENS,total=base*(1+waste/100),exact=total/bag;
+return{f,depth,vol,base,total,exact,bags:Math.max(1,Math.ceil(exact-1e-9))}}
+function calculate(){
+['lenFt','widFt','areaDirect','paverL','paverW','thick','price'].forEach(i=>err(i,''));
+let ok=true,area=0;
+const rng=(id,min,max,msg)=>{const v=num(id);if(isNaN(v)||v<min||v>max){err(id,msg);ok=false;return NaN}return v};
+if(mode==='rect'){
+const l=rng('lenFt',.1,1000,'Enter a length between 0.1 and 1,000 ft.'),w=rng('widFt',.1,1000,'Enter a width between 0.1 and 1,000 ft.');
+area=l*w}else{area=rng('areaDirect',1,100000,'Enter an area between 1 and 100,000 sq ft.')}
+const pl=rng('paverL',1,96,'Enter a paver length between 1 and 96 in.'),pw=rng('paverW',1,96,'Enter a paver width between 1 and 96 in.'),th=rng('thick',.5,12,'Enter a thickness between 0.5 and 12 in.');
+let price=0;
+if($('price').value.trim()!==''){price=num('price');if(isNaN(price)||price<0||price>10000){err('price','Enter a price of 0 or more, or leave it blank.');ok=false}}
+if(!ok){has=false;requestAnimationFrame(()=>{const r=$('results');r.classList.remove('show');r.innerHTML='';$('copyWrap').classList.add('hide');const b=document.querySelector('.invalid');if(b)b.focus()});return}
+const jw=Number($('joint').value),bag=Number($('bag').value),waste=Number($('waste').value);
+const e=est(area,pl,pw,jw,th,waste,bag);
+const cov=Math.floor(area/e.exact*1)/1;
+const covBag=e.total>0?Math.floor(area/e.exact):0;
+const sizeTxt=fr(Math.min(pl,pw))+' × '+fr(Math.max(pl,pw))+' in';
+let notes='';
+if(e.depth<1)notes+='<p class="note">Fill depth is under 1 in. Most manufacturers require at least 1 in of joint depth for polymeric sand to lock properly, so check your product label.</p>';
+if(jw>=.375)notes+='<p class="note">Joints of 3/8 in or wider need a product rated for wide joints. Check the label before buying.</p>';
+const rows=[
+['Surface area',fmtA(area)+' sq ft'],
+['Paver size',sizeTxt],
+['Joint width',fr(jw)+' in'],
+['Joint share of surface',fmt(e.f*100,2)+'%'],
+['Sand fill depth',fr(e.depth)+' in'],
+['Joint volume',fmt(e.vol,2)+' cu ft'],
+['Sand before waste',fmt(e.base,1)+' lb'],
+['Waste allowance',waste+'% ('+fmt(e.total-e.base,1)+' lb)'],
+['Total sand needed',fmt(e.total,1)+' lb'],
+['Bags (exact)',fmt(e.exact,2)+' × '+bag+' lb'],
+['Coverage per bag (incl. waste)',fmt(covBag)+' sq ft']];
+if(price>0)rows.push(['Estimated cost ('+e.bags+' bags)','$'+fmt(e.bags*price,2)]);
+let t='<div class="tw"><table><thead><tr><th>Detail</th><th class="n">Value</th></tr></thead><tbody>';
+rows.forEach(r=>{t+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>'});
+t+='</tbody></table></div>';
+let s='<h3>Compare joint widths (same inputs)</h3><div class="tw"><table><thead><tr><th>Joint width</th><th class="n">Joint share</th><th class="n">Total lb</th><th class="n">Bags</th></tr></thead><tbody>';
+JW.forEach(j=>{const x=est(area,pl,pw,j,th,waste,bag),c=Math.abs(j-jw)<1e-9;s+='<tr'+(c?' class="cur"':'')+'><td>'+fr(j)+' in'+(c?' (yours)':'')+'</td><td class="n">'+fmt(x.f*100,1)+'%</td><td class="n">'+fmt(x.total,1)+'</td><td class="n">'+x.bags+'</td></tr>'});
+s+='</tbody></table></div>';
+const html='<div class="sum"><div class="big">Buy at least<span class="num">'+fmt(e.bags)+' bag'+(e.bags===1?'':'s')+'</span>of '+bag+' lb polymeric sand</div><p>About '+fmt(e.total,1)+' lb needed including '+waste+'% waste'+(price>0?' · est. $'+fmt(e.bags*price,2):'')+'</p></div>'+notes+t+s+'<p class="small">Planning estimate from a rule-of-thumb joint-volume method (full-depth fill to 1/8 in below the surface, 100 lb/cu ft). Bags are rounded up. It is not engineering, permit or inspection approval; follow your product label and local rules.</p>';
+lastText='Polymeric sand estimate\nArea: '+fmtA(area)+' sq ft\nPavers: '+sizeTxt+', '+fmt(th,3).replace(/0+$/,'').replace(/\.$/,'')+' in thick\nJoint width: '+fr(jw)+' in\nWaste: '+waste+'%\nTotal sand: '+fmt(e.total,1)+' lb\nBags to buy: '+e.bags+' x '+bag+' lb'+(price>0?'\nEstimated cost: $'+fmt(e.bags*price,2):'')+'\n(Planning estimate only. Follow the product label and local rules.)';
+has=true;
+requestAnimationFrame(()=>{
+const r=$('results');r.classList.remove('show');r.innerHTML=html;
+$('svJ').textContent='Joint '+fr(jw)+' in';
+$('svT2').textContent=fr(th)+' in';
+$('svF').textContent=fr(e.depth)+' in';
+$('svC').textContent=sizeTxt+' pavers · '+fr(jw)+' in joints · '+fmt(e.f*100,1)+'% joint';
+$('copyWrap').classList.remove('hide');
+requestAnimationFrame(()=>r.classList.add('show'))})}
+const go=()=>requestAnimationFrame(calculate);
+$('calcBtn').addEventListener('click',go);
+$('tool').addEventListener('keydown',ev=>{if(ev.key==='Enter'&&(ev.target.tagName==='INPUT'||ev.target.tagName==='SELECT')){ev.preventDefault();go()}});
+$('waste').addEventListener('input',()=>{$('wasteOut').textContent=$('waste').value+'%';if(has)go()});
+$('copyBtn').addEventListener('click',()=>{
+const b=$('copyBtn'),done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,()=>fb())}else fb();
+function fb(){const a=document.createElement('textarea');a.value=lastText;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(a)}});
+$('yr').textContent=new Date().getFullYear();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
