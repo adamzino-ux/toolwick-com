@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Free Tuckpointing Cost Calculator | Toolwick</title>
+<meta name="description" content="Free tuckpointing cost calculator: estimate repointing cost, linear feet of mortar joints, and mortar bags needed for your brick wall in seconds.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/tuckpointing-cost-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Tuckpointing Cost Calculator", "url": "https://toolwick.com/tuckpointing-cost-calculator/", "description": "Free tuckpointing cost calculator: estimate repointing cost, linear feet of mortar joints, and mortar bags needed for your brick wall in seconds.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Tuckpointing Cost Calculator", "item": "https://toolwick.com/tuckpointing-cost-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much does tuckpointing cost per square foot?", "acceptedAnswer": {"@type": "Answer", "text": "Most jobs land between about $8 and $25 per square foot, depending on joint size, access and region. This calculator typically shows $10 to $21 per sq ft for standard brick, and more for historic lime work or tall walls needing scaffolding."}}, {"@type": "Question", "name": "What is the difference between tuckpointing and repointing?", "acceptedAnswer": {"@type": "Answer", "text": "Repointing replaces deteriorated mortar in the joints. Traditional tuckpointing adds a thin contrasting mortar line over the new mortar to imitate fine joints. In everyday usage, contractors use the words interchangeably."}}, {"@type": "Question", "name": "How long does tuckpointing last?", "acceptedAnswer": {"@type": "Answer", "text": "Well-done repointing with the right mortar commonly lasts 25 to 50 years. Poor mortar choices, shallow cuts or ongoing moisture problems can shorten that to less than 10 years."}}, {"@type": "Question", "name": "How many bags of mortar do I need for 1,000 square feet?", "acceptedAnswer": {"@type": "Answer", "text": "With modular brick, 3/8 in joints and 3/4 in depth, 1,000 sq ft needs about 6,000 lin ft of joint, or roughly 25 bags of 80 lb mortar including waste. Wider or deeper joints raise that quickly, so check the joint inputs."}}, {"@type": "Question", "name": "Can I tuckpoint brick myself?", "acceptedAnswer": {"@type": "Answer", "text": "Small areas on a ground-level wall are feasible if you cut joints cleanly, match the mortar and keep it damp while curing. Large or elevated areas are safer with a mason, because ladder work and silica dust are real hazards."}}, {"@type": "Question", "name": "Do I need to repoint the whole wall?", "acceptedAnswer": {"@type": "Answer", "text": "Not always. If only certain areas have failed, spot repointing saves money, so use the slider to model a smaller share. Many masons recommend the whole wall when more than about 25% of joints are bad, because matching old and new mortar can look patchy."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.65;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #e0e0e0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram text{fill:#1a1a2e;font-family:inherit}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.f{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font-size:1rem;min-height:44px;background:#fff;color:#1a1a2e;font-family:inherit}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666;margin-top:-.4rem}
+.err{border-color:#e74c3c!important}
+.msg{color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;min-height:44px;width:100%;font-family:inherit}
+button:hover{background:#006299}
+button.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;padding:8px 16px;font-size:.85rem;font-weight:500;margin-top:1rem}
+button.copy:hover{background:#f0f7fb}
+#results{margin-top:1.5rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.sub{color:#444;margin:.25rem 0 .5rem}
+.note{background:#f8f9fa;border-left:4px solid #0077b6;padding:.75rem 1rem;font-size:.9rem;margin:1rem 0;border-radius:0 6px 6px 0}
+.warn{border-left-color:#e67e22}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.r,td.r{text-align:right;font-variant-numeric:tabular-nums}
+tr.tot td{font-weight:700}
+h3{font-size:1rem;margin:1.5rem 0 .25rem}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.5rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .75rem}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0}
+.rel li{margin:0}
+.rel a{display:block;padding:10px 0;min-height:44px;border-bottom:1px solid #eee}
+code{background:#f0f0f0;padding:2px 6px;border-radius:4px;font-size:.9em}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;display:inline-block;padding:10px 4px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/tuckpointing-cost-calculator/">
+<meta property="og:title" content="Tuckpointing Cost Calculator">
+<meta property="og:description" content="Free tuckpointing cost calculator: estimate repointing cost, linear feet of mortar joints, and mortar bags needed for your brick wall in seconds.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Tuckpointing Cost Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This tuckpointing cost calculator estimates what it will cost to grind out and refill the mortar joints on a brick wall. Enter your wall size, brick type and joint details to get total cost, linear feet of joints, and the number of mortar bags to buy.</p>
+
+<div class="card">
+<div class="diagram" aria-hidden="false">
+<svg viewBox="0 0 600 275" role="img" aria-label="Diagram of a brick wall elevation with width and height, and a side view of a mortar joint showing joint width and cut depth">
+<defs>
+<pattern id="bk" width="40" height="34" patternUnits="userSpaceOnUse"><rect width="40" height="34" fill="#fff"/><path d="M0 0H40M0 17H40M0 34H40M0 0V17M20 17V34" stroke="#e0e0e0" stroke-width="2" fill="none"/></pattern>
+<marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker>
+</defs>
+<rect x="44" y="30" width="296" height="170" fill="url(#bk)" stroke="#0077b6" stroke-width="2"/>
+<rect x="220" y="70" width="80" height="70" fill="#fff" stroke="#0077b6" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="260" y="110" font-size="15" text-anchor="middle">openings</text>
+<line x1="44" y1="222" x2="340" y2="222" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dw" x="192" y="244" font-size="17" text-anchor="middle" font-weight="600">Wall width</text>
+<line x1="24" y1="30" x2="24" y2="200" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dh" x="14" y="115" font-size="16" text-anchor="middle" font-weight="600" transform="rotate(-90 14 115)">Wall height</text>
+<text id="di" x="192" y="268" font-size="15" text-anchor="middle">Net area and joint length</text>
+<text x="470" y="24" font-size="16" text-anchor="middle" font-weight="600">Joint side view</text>
+<rect id="bt" x="400" y="45" width="140" height="65" fill="#f8f9fa" stroke="#0077b6" stroke-width="2"/>
+<rect id="bb" x="400" y="140" width="140" height="65" fill="#f8f9fa" stroke="#0077b6" stroke-width="2"/>
+<rect id="mo" x="452" y="110" width="88" height="30" fill="#0077b6" fill-opacity=".25" stroke="#0077b6" stroke-width="1"/>
+<rect id="rk" x="400" y="110" width="52" height="30" fill="none" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line id="jl" x1="556" y1="110" x2="556" y2="140" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="jt" x="563" y="130" font-size="16" font-weight="600">3/8″</text>
+<line id="dl" x1="400" y1="222" x2="452" y2="222" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dt" x="470" y="250" font-size="16" text-anchor="middle" font-weight="600">Cut depth 3/4″</text>
+<line x1="400" y1="40" x2="400" y2="212" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="3 3"/>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="grid">
+<div class="f"><label for="w">Wall width (ft)</label><input type="number" id="w" inputmode="decimal" step="any" min="0" value="40" aria-describedby="e-w"><div class="msg" id="e-w"></div></div>
+<div class="f"><label for="h">Wall height (ft)</label><input type="number" id="h" inputmode="decimal" step="any" min="0" value="12" aria-describedby="e-h"><div class="msg" id="e-h"></div></div>
+<div class="f"><label for="n">Number of identical walls</label><input type="number" id="n" inputmode="numeric" step="1" min="1" value="1" aria-describedby="e-n"><div class="msg" id="e-n"></div></div>
+<div class="f"><label for="op">Windows and doors to subtract (sq ft)</label><input type="number" id="op" inputmode="decimal" step="any" min="0" value="60" aria-describedby="e-op"><div class="msg" id="e-op"></div></div>
+</div>
+<div class="f"><label for="pct">Share of joints that need work: <output id="pv">100%</output></label><input type="range" id="pct" min="10" max="100" step="5" value="100"><div class="ticks"><span>10%</span><span>50%</span><span>100%</span></div><div class="hint">Use 100% unless a mason confirmed only spot repairs.</div></div>
+<div class="grid">
+<div class="f"><label for="br">Brick size</label><select id="br"><option value="mod">Modular / standard (6.0 lin ft per sq ft)</option><option value="nor">Norman (5.5 lin ft per sq ft)</option><option value="rom">Roman (7.0 lin ft per sq ft)</option><option value="uti">Utility / jumbo (4.0 lin ft per sq ft)</option></select></div>
+<div class="f"><label for="mt">Mortar type</label><select id="mt"><option value="N">Type N (standard repointing)</option><option value="O">Type O (soft, older brick)</option><option value="S">Type S (harder, newer brick)</option><option value="L">Natural hydraulic lime (historic)</option></select></div>
+<div class="f"><label for="jw">Joint width</label><select id="jw"><option value="0.25" data-l="1/4″">1/4 in</option><option value="0.375" data-l="3/8″" selected>3/8 in</option><option value="0.5" data-l="1/2″">1/2 in</option></select></div>
+<div class="f"><label for="jd">Cut-out depth</label><select id="jd"><option value="0.5" data-l="1/2″">1/2 in</option><option value="0.75" data-l="3/4″" selected>3/4 in</option><option value="1" data-l="1″">1 in</option><option value="1.5" data-l="1 1/2″">1 1/2 in</option></select></div>
+<div class="f"><label for="ac">Height / access</label><select id="ac"><option value="1">1 story, ground reach (×1.00)</option><option value="1.15">2 stories, ladder or staging (×1.15)</option><option value="1.4">3+ stories, scaffold or lift (×1.40)</option></select></div>
+<div class="f"><label for="mk">Local labor market</label><select id="mk"><option value="low">Lower-cost area ($1.75 per lin ft)</option><option value="avg" selected>Average area ($2.50 per lin ft)</option><option value="high">High-cost metro ($3.50 per lin ft)</option></select></div>
+</div>
+<div class="f"><label for="bag">Mortar price per 80 lb bag ($)</label><input type="number" id="bag" inputmode="decimal" step="any" min="0" value="14" aria-describedby="e-bag"><div class="msg" id="e-bag"></div></div>
+<button type="submit" id="go">Calculate Tuckpointing Cost</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/tuckpointing-cost-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Tuckpointing Cost Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/tuckpointing-cost-calculator/&quot;&gt;Tuckpointing Cost Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/tuckpointing-cost-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Tuckpointing Cost Calculator</h2>
+<p>Enter the width and height of each brick wall, how many identical walls you have, and the square footage of windows and doors to deduct. Pick your brick size, joint dimensions, mortar type, access difficulty and local labor market. Press calculate to see a mid-range price, a likely low-to-high range, the linear feet of joint, and how many 80 lb mortar bags to order. The diagram updates with your numbers.</p>
+
+<h2>Why This Matters</h2>
+<p>Mortar is the sacrificial part of a brick wall. It is softer than the brick so it wears first, and after 25 to 40 years it often crumbles, recesses or cracks. Open joints let water into the wall, which leads to spalling brick, rotted framing, peeling interior paint and freeze-thaw damage. Repointing before that happens is far cheaper than rebuilding a wall section, which can run several times the cost.</p>
+<p>Homeowners use an estimate like this before calling masons, so a quote of $3,000 or $15,000 can be judged against a realistic number. Buyers of older rowhouses and brownstones use it to budget deferred maintenance. Property managers use it to compare bids for a three-story façade. A 1,000 sq ft wall holds about 6,000 linear feet of joint, and a few dollars of difference per foot becomes thousands of dollars. Knowing the joint length, rather than just the wall area, makes bids easier to compare.</p>
+<p>A quick note on terms: in the strict sense, tuckpointing means filling joints with matching mortar and adding a thin decorative line. Most contractors and homeowners use it interchangeably with repointing, and that is how this tool treats it.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator works from joint length, because labor is driven by how many feet of mortar must be ground out and refilled.</p>
+<ul>
+<li><strong>Net area</strong> = (width × height × walls) − openings. Repointed area = net area × share of joints needing work.</li>
+<li><strong>Joint length per sq ft</strong> = 12 ÷ course height (in) + 12 ÷ brick length (in). Modular brick has an 8/3 in course and 8 in length, so 4.5 + 1.5 = 6.0 lin ft per sq ft.</li>
+<li><strong>Mortar volume (cu ft)</strong> = joint length × joint width × cut depth ÷ 144, plus 25% waste. A bag is assumed to yield 0.6 cu ft, and bags are always rounded up.</li>
+<li><strong>Labor</strong> = joint length × market rate × mortar factor (1.15 for lime). Access adds ×1.15 or ×1.40. Supplies add 5% of labor for blades, dust control and cleanup. Contingency adds 10%.</li>
+<li><strong>Total</strong> = labor + access + supplies + materials + contingency, rounded up to the next $5. Low and high are 85% and 125% of the estimate. A $1,200 minimum job charge applies to small jobs.</li>
+</ul>
+<p>This follows common masonry rules of thumb: cut joints to at least 2 to 2½ times the joint width, and use mortar no harder than the surrounding brick (ASTM C270 types, and the guidance in NPS Preservation Brief 2 for historic masonry). Local codes, labor prices and contractor practices vary, so treat the output as a planning estimate. It is not a bid, an engineering opinion or an inspection.</p>
+
+<h2>Worked Example</h2>
+<p>A brick rowhouse side wall is 40 ft wide and 12 ft high, with two windows and a door totaling 60 sq ft. It has modular brick, 3/8 in joints cut 3/4 in deep, Type N mortar at $14 per bag, one story of access, and an average market.</p>
+<div class="tw"><table><thead><tr><th>Step</th><th class="r">Result</th></tr></thead><tbody>
+<tr><td>Gross area 40 × 12</td><td class="r">480 sq ft</td></tr>
+<tr><td>Net area (480 − 60)</td><td class="r">420 sq ft</td></tr>
+<tr><td>Joint length 420 × 6.0</td><td class="r">2,520 lin ft</td></tr>
+<tr><td>Mortar in place 2,520 × 0.375 × 0.75 ÷ 144</td><td class="r">4.92 cu ft</td></tr>
+<tr><td>With 25% waste ÷ 0.6 = 10.25, rounded up</td><td class="r">11 bags</td></tr>
+<tr><td>Labor 2,520 × $2.50</td><td class="r">$6,300</td></tr>
+<tr><td>Materials 11 × $14</td><td class="r">$154</td></tr>
+<tr><td>Supplies 5% of labor</td><td class="r">$315</td></tr>
+<tr><td>Contingency 10% of $6,769</td><td class="r">$677</td></tr>
+<tr class="tot"><td>Total, rounded up to the next $5</td><td class="r">$7,450</td></tr>
+</tbody></table></div>
+<p>That is about $17.74 per sq ft of wall, with a likely range of $6,330 to $9,310. Enter the same values above and you should see the same figures.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Never use mortar harder than your brick.</strong> Portland-heavy mortar on soft, old brick forces the brick to take the moisture and stress, and the faces spall. Pre-1930 buildings usually need Type O or lime.</li>
+<li><strong>Cut deep enough.</strong> Shallow cuts of 1/4 in or less fall out within a few winters. Aim for at least 2× the joint width, and always to sound mortar.</li>
+<li><strong>Don't grind with a wide blade into the brick edges.</strong> Skilled masons use narrow blades or hand chisels on thin joints, which is part of why historic work costs more.</li>
+<li><strong>Look for structure problems first.</strong> Stair-step cracks, bulging or leaning walls, and failed lintels need a mason or structural engineer before any repointing.</li>
+<li><strong>Plan for dust and lead.</strong> Grinding creates silica dust, so crews should use shrouded grinders with vacuums and follow OSHA silica rules. Painted brick or pre-1978 trim may contain lead.</li>
+<li><strong>Get three written quotes.</strong> Ask each to state joint depth, mortar type and sample-panel approval so the quotes are comparable.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much does tuckpointing cost per square foot?</summary><p>Most jobs land between about $8 and $25 per square foot, depending on joint size, access and region. This calculator typically shows $10 to $21 per sq ft for standard brick, and more for historic lime work or tall walls needing scaffolding.</p></details>
+<details><summary>What is the difference between tuckpointing and repointing?</summary><p>Repointing replaces deteriorated mortar in the joints. Traditional tuckpointing adds a thin contrasting mortar line over the new mortar to imitate fine joints. In everyday usage, contractors use the words interchangeably.</p></details>
+<details><summary>How long does tuckpointing last?</summary><p>Well-done repointing with the right mortar commonly lasts 25 to 50 years. Poor mortar choices, shallow cuts or ongoing moisture problems can shorten that to less than 10 years.</p></details>
+<details><summary>How many bags of mortar do I need for 1,000 square feet?</summary><p>With modular brick, 3/8 in joints and 3/4 in depth, 1,000 sq ft needs about 6,000 lin ft of joint, or roughly 25 bags of 80 lb mortar including waste. Wider or deeper joints raise that quickly, so check the joint inputs.</p></details>
+<details><summary>Can I tuckpoint brick myself?</summary><p>Small areas on a ground-level wall are feasible if you cut joints cleanly, match the mortar and keep it damp while curing. Large or elevated areas are safer with a mason, because ladder work and silica dust are real hazards.</p></details>
+<details><summary>Do I need to repoint the whole wall?</summary><p>Not always. If only certain areas have failed, spot repointing saves money, so use the slider to model a smaller share. Many masons recommend the whole wall when more than about 25% of joints are bad, because matching old and new mortar can look patchy.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/slope-percent-to-degrees-inches-per-foot-calculator/">Slope Percent to Degrees &amp; Inches-per-Foot Calculator</a></li>
+<li><a href="/polymeric-sand-calculator/">Polymeric Sand Calculator</a></li>
+<li><a href="/feet-inches-to-decimal-feet-calculator/">Feet and Inches to Decimal Feet Calculator</a></li>
+<li><a href="/paver-quantity-calculator/">Paver Quantity Calculator</a></li>
+<li><a href="/linear-feet-to-square-feet-calculator/">Linear Feet to Square Feet Calculator</a></li>
+<li><a href="/siding-calculator/">Siding Calculator</a></li>
+</ul>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a><br>© 2025 toolwick.com</footer>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var BR={mod:{h:8/3,L:8},nor:{h:8/3,L:12},rom:{h:2,L:12},uti:{h:4,L:12}};
+var MK={low:1.75,avg:2.5,high:3.5};
+var MT={N:{p:1,l:1},O:{p:1.1,l:1},S:{p:1.05,l:1},L:{p:2.2,l:1.15}};
+var MKN={low:'Lower-cost area',avg:'Average area',high:'High-cost metro'};
+function nf(x,d){return x.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0})}
+function $$(x){return '$'+nf(Math.round(x))}
+function up5(x){return Math.ceil(x/5-1e-9)*5}
+function lab(id){var s=$(id);return s.options[s.selectedIndex].getAttribute('data-l')}
+var last='';
+$('pct').addEventListener('input',function(){$('pv').textContent=this.value+'%'});
+function setErr(id,m){$(id).classList.add('err');$('e-'+id).textContent=m;$(id).setAttribute('aria-invalid','true')}
+function clr(){['w','h','n','op','bag'].forEach(function(i){$(i).classList.remove('err');$('e-'+i).textContent='';$(i).removeAttribute('aria-invalid')})}
+function cost(lf,bags,bp,mk,acc,mt){
+ var labor=lf*MK[mk]*mt.l,access=labor*(acc-1),sup=labor*0.05,mat=bags*bp*mt.p;
+ var sub=labor+access+sup+mat,cont=sub*0.1,raw=sub+cont,min=false;
+ if(raw<1200){raw=1200;min=true}
+ return {labor:labor,access:access,sup:sup,mat:mat,cont:cont,raw:raw,min:min,total:up5(raw)};
+}
+function diagram(o){
+ var cy=125,sc=70,g=o.jw*sc,dp=o.jd*sc;
+ $('dw').textContent=nf(o.w,o.w%1?1:0)+' ft wide'+(o.n>1?' (×'+o.n+' walls)':'');
+ $('dh').textContent=nf(o.h,o.h%1?1:0)+' ft high';
+ $('di').textContent='Net '+nf(o.net,0)+' sq ft · '+nf(o.lf,0)+' lin ft of joint';
+ $('bt').setAttribute('height',cy-g/2-45);
+ $('bb').setAttribute('y',cy+g/2);$('bb').setAttribute('height',205-(cy+g/2));
+ $('mo').setAttribute('x',400+dp);$('mo').setAttribute('width',140-dp);$('mo').setAttribute('y',cy-g/2);$('mo').setAttribute('height',g);
+ $('rk').setAttribute('width',dp);$('rk').setAttribute('y',cy-g/2);$('rk').setAttribute('height',g);
+ $('jl').setAttribute('y1',cy-g/2);$('jl').setAttribute('y2',cy+g/2);
+ $('jt').textContent=o.jwl;
+ $('dl').setAttribute('x2',400+dp);
+ $('dt').textContent='Cut depth '+o.jdl;
+}
+function calc(){
+ clr();
+ var w=parseFloat($('w').value),h=parseFloat($('h').value),n=parseFloat($('n').value),op=parseFloat($('op').value),bp=parseFloat($('bag').value),ok=true;
+ if(!(w>0)){setErr('w','Enter a wall width greater than 0.');ok=false}else if(w>1000){setErr('w','Width must be 1,000 ft or less.');ok=false}
+ if(!(h>0)){setErr('h','Enter a wall height greater than 0.');ok=false}else if(h>200){setErr('h','Height must be 200 ft or less.');ok=false}
+ if(!(n>=1)||n%1!==0){setErr('n','Enter a whole number of walls, 1 or more.');ok=false}else if(n>100){setErr('n','Use 100 walls or fewer.');ok=false}
+ if(isNaN(op)||op<0){setErr('op','Enter 0 or more square feet of openings.');ok=false}
+ if(isNaN(bp)||bp<0){setErr('bag','Enter a bag price of 0 or more.');ok=false}else if(bp>500){setErr('bag','Bag price looks too high; use $500 or less.');ok=false}
+ if(ok){var gr=w*h*n;if(op>=gr){setErr('op','Openings ('+nf(op,0)+' sq ft) must be less than the gross wall area ('+nf(gr,0)+' sq ft).');ok=false}}
+ if(!ok){last='';requestAnimationFrame(function(){$('results').innerHTML=''});return}
+ var gross=w*h*n,net=gross-op,pct=parseInt($('pct').value,10)/100,area=net*pct;
+ var b=BR[$('br').value],lfsf=12/b.h+12/b.L,lf=area*lfsf;
+ var jw=parseFloat($('jw').value),jd=parseFloat($('jd').value);
+ var vol=lf*jw*jd/144,volw=vol*1.25,bags=Math.max(1,Math.ceil(volw/0.6-1e-9));
+ var mt=MT[$('mt').value],acc=parseFloat($('ac').value),mk=$('mk').value;
+ var c=cost(lf,bags,bp,mk,acc,mt),low=up5(c.raw*0.85),high=up5(c.raw*1.25),psf=c.total/area;
+ var jwl=lab('jw'),jdl=lab('jd');
+ var notes='';
+ if(jd<2*jw)notes+='<div class="note warn">Cut depth is less than 2× joint width. Shallow joints often fail early, so consider cutting deeper (at least '+nf(2*jw,2)+' in for this joint width).</div>';
+ if($('mt').value==='S')notes+='<div class="note warn">Type S mortar is harder than most older brick. Confirm with a mason that it is not stronger than your brick before using it.</div>';
+ if(c.min)notes+='<div class="note">A $1,200 minimum job charge was applied because the calculated cost was lower.</div>';
+ if(acc>1)notes+='<div class="note">Access multiplier is a rough allowance. Scaffold rental and permits are often quoted separately, so ask for them in writing.</div>';
+ var t1=[['Gross wall area',nf(gross,0)+' sq ft'],['Openings deducted',nf(op,0)+' sq ft'],['Net wall area',nf(net,0)+' sq ft'],['Area to repoint ('+Math.round(pct*100)+'%)',nf(area,0)+' sq ft'],['Joint length ('+nf(lfsf,1)+' lin ft per sq ft)',nf(lf,0)+' lin ft'],['Joint size (width × depth)',jwl+' × '+jdl],['Mortar in place',nf(vol,2)+' cu ft'],['Mortar with 25% waste',nf(volw,2)+' cu ft'],['80 lb bags (rounded up)',nf(bags,0)]];
+ var h1='';t1.forEach(function(r){h1+='<tr><td>'+r[0]+'</td><td class="r">'+r[1]+'</td></tr>'});
+ var t2=[['Labor ('+MKN[mk]+')',c.labor],['Access / height allowance',c.access],['Supplies and cleanup (5%)',c.sup],['Mortar materials',c.mat],['Contingency (10%)',c.cont]];
+ var h2='';t2.forEach(function(r){h2+='<tr><td>'+r[0]+'</td><td class="r">'+$$(r[1])+'</td></tr>'});
+ var h3='';['low','avg','high'].forEach(function(k){var cc=cost(lf,bags,bp,k,acc,mt);h3+='<tr><td>'+MKN[k]+(k===mk?' (selected)':'')+'</td><td class="r">'+$$(up5(cc.raw*0.85))+'</td><td class="r">'+$$(cc.total)+'</td><td class="r">'+$$(up5(cc.raw*1.25))+'</td></tr>'});
+ var html='<div class="res"><div class="big">'+$$(c.total)+'</div><div class="sub">Estimated total · likely range '+$$(low)+' to '+$$(high)+'</div><div class="sub">About $'+nf(psf,2)+' per sq ft repointed · '+nf(bags,0)+' bags of mortar</div>'+notes+
+ '<h3>Cost breakdown</h3><div class="tw"><table><thead><tr><th>Item</th><th class="r">Cost</th></tr></thead><tbody>'+h2+'<tr class="tot"><td>Estimated total (rounded up)</td><td class="r">'+$$(c.total)+'</td></tr></tbody></table></div>'+
+ '<h3>Quantities</h3><div class="tw"><table><thead><tr><th>Measure</th><th class="r">Value</th></tr></thead><tbody>'+h1+'</tbody></table></div>'+
+ '<h3>Compare by market level</h3><div class="tw"><table><thead><tr><th>Market</th><th class="r">Low</th><th class="r">Estimate</th><th class="r">High</th></tr></thead><tbody>'+h3+'</tbody></table></div>'+
+ '<p class="hint">Planning estimate only, not a contractor bid, engineering opinion or inspection. Prices and codes vary locally; bags and costs are rounded up.</p>'+
+ '<button type="button" class="copy" id="cp">Copy results</button></div>';
+ last='Tuckpointing estimate: '+$$(c.total)+' (range '+$$(low)+' to '+$$(high)+')\nNet wall area: '+nf(net,0)+' sq ft; area to repoint: '+nf(area,0)+' sq ft\nJoint length: '+nf(lf,0)+' lin ft ('+jwl+' wide, '+jdl+' deep)\nMortar: '+nf(bags,0)+' x 80 lb bags\nLabor '+$$(c.labor)+', access '+$$(c.access)+', supplies '+$$(c.sup)+', materials '+$$(c.mat)+', contingency '+$$(c.cont);
+ requestAnimationFrame(function(){
+  $('results').innerHTML=html;
+  diagram({w:w,h:h,n:n,net:net,lf:lf,jw:jw,jd:jd,jwl:jwl,jdl:jdl});
+ });
+}
+$('f').addEventListener('submit',function(e){e.preventDefault();calc()});
+['br','mt','jw','jd','ac','mk'].forEach(function(i){$(i).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();calc()}})});
+$('results').addEventListener('click',function(e){
+ if(e.target.id!=='cp')return;
+ var btn=e.target;
+ function done(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy results'},2000)}
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(last).then(done,function(){fb()})}else fb();
+ function fb(){var t=document.createElement('textarea');t.value=last;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(t);done()}
+});
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
