@@ -4,676 +4,517 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free Excavation &amp; Earthwork Volume Calculator | Toolwick</title>
-<meta name="description" content="Calculate excavation volume, soil weight, and truck loads for any dig shape. Free online earthwork calculator for construction, landscaping, and civil projects.">
+<meta name="description" content="Free excavation calculator: find bank and loose soil volume, truck loads, weight and haul cost for rectangular, sloped, round or irregular digs.">
 <link rel="canonical" href="https://toolwick.com/excavation-earthwork-volume-calculator/">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Excavation & Earthwork Volume Calculator", "url": "https://toolwick.com/excavation-earthwork-volume-calculator/", "description": "Calculate excavation volume, soil weight, and truck loads for any dig shape. Free online earthwork calculator for construction, landscaping, and civil projects.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Excavation & Earthwork Volume Calculator", "item": "https://toolwick.com/excavation-earthwork-volume-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is swell factor and why does it change my volume?", "acceptedAnswer": {"@type": "Answer", "text": "Swell factor is the percentage by which excavated soil expands once it's removed from the ground. Compacted earth has air driven out; when excavated, the particles loosen and take up more space. A cubic yard of clay in the ground may become 1.35 cubic yards in a dump truck, directly affecting how many loads you need."}}, {"@type": "Question", "name": "Should I use bank volume or swelled volume for truck count?", "acceptedAnswer": {"@type": "Answer", "text": "Always use swelled (loose) volume for calculating truck loads, since that's how much physical space the soil occupies in the truck. Bank volume is what you report on your bid as the amount of material to be removed from the ground. Both numbers are shown in the results."}}, {"@type": "Question", "name": "What's the difference between rectangular and trapezoidal excavation?", "acceptedAnswer": {"@type": "Answer", "text": "A rectangular cut has perfectly vertical walls — common for machine-cut utility trenches in firm soil or rock. A trapezoidal cut has sloped sides (a wider top than bottom), which is required in softer or cohesionless soils for wall stability and OSHA compliance. Use the trapezoidal tab whenever your walls can't be vertical."}}, {"@type": "Question", "name": "Can I use metric units with this calculator?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — each shape tab has a unit selector. Choose \"Metric (m / m³)\" to enter dimensions in meters and get results in cubic meters. Soil density, weight, and haul cost calculations all adapt automatically. Truck capacity input remains in yd³ by convention but you can enter m³ equivalent (1 yd³ ≈ 0.765 m³)."}}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Excavation & Earthwork Volume Calculator", "url": "https://toolwick.com/excavation-earthwork-volume-calculator/", "description": "Free excavation calculator: find bank and loose soil volume, truck loads, weight and haul cost for rectangular, sloped, round or irregular digs.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Excavation & Earthwork Volume Calculator", "item": "https://toolwick.com/excavation-earthwork-volume-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is swell factor and what number should I use?", "acceptedAnswer": {"@type": "Answer", "text": "Swell factor is the percentage soil expands when it is dug out and loosened. Sand and gravel swell about 10–15%, loam 20–30% and clay 30–40%. If you are unsure, pick the higher end so you do not run short of trucks."}}, {"@type": "Question", "name": "Should I use bank volume or loose volume to count truck loads?", "acceptedAnswer": {"@type": "Answer", "text": "Use loose volume, because that is the space the soil takes up in the truck. Bank volume is the in-ground quantity you normally put on a bid. The calculator shows both and bases truck loads on loose volume."}}, {"@type": "Question", "name": "What is the difference between rectangular and trapezoidal excavation?", "acceptedAnswer": {"@type": "Answer", "text": "A rectangular cut has vertical walls and works in stable rock or when shoring holds the sides. A trapezoidal cut is wider at the top than at the bottom because the walls are sloped back. Use the trapezoidal tab for open-cut trenches in soil."}}, {"@type": "Question", "name": "Can I use metric units?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Switch the unit system to Metric and every label changes to metres and cubic metres, including the truck-capacity field. The default truck becomes 7.6 m³ (about 10 yd³). If you switch units, re-enter your dimensions."}}, {"@type": "Question", "name": "How many cubic yards does a dump truck hold?", "acceptedAnswer": {"@type": "Answer", "text": "A tandem-axle dump truck typically carries 10–12 yd³, and a tri-axle about 14–16 yd³. Ratings are usually heaped capacity. Dense or wet soil often hits the weight limit before the truck is full, so confirm the payload with your hauler."}}, {"@type": "Question", "name": "Does this tell me whether my trench is safe?", "acceptedAnswer": {"@type": "Answer", "text": "No. It flags depths and wall slopes that usually need sloping, shoring or a shield under OSHA Subpart P, but only a competent person on site can classify the soil and approve a protective system. Treat the notices as reminders, not approval."}}]}]}</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
-a{color:#0077b6;text-decoration:none}
-a:hover{text-decoration:underline}
-nav{border-bottom:1px solid #e0e0e0;padding:12px 1.5rem;background:#fff}
-nav a{font-weight:600;font-size:1rem;color:#1a1a2e}
+a{color:#0077b6;text-decoration:underline}
+a:hover{color:#006299}
+.topnav{border-bottom:1px solid #e0e0e0;padding:.5rem 1.5rem}
+.topnav a{font-weight:700;font-size:1.1rem;color:#1a1a2e;text-decoration:none;display:inline-block;line-height:44px}
 .container{max-width:640px;margin:0 auto;padding:1.5rem}
-h1{font-size:1.55rem;font-weight:700;margin-bottom:0.4rem;color:#1a1a2e}
-.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
-.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
-.diagram-wrap{text-align:center;margin-bottom:1.5rem;background:#f8f9fa;border-radius:6px;padding:1rem}
-.diagram-wrap svg{max-width:100%;height:auto}
-.tabs{display:flex;gap:0;margin-bottom:1.5rem;border:1px solid #ddd;border-radius:6px;overflow:hidden}
-.tab-btn{flex:1;padding:10px 8px;background:#f8f9fa;border:none;cursor:pointer;font-size:0.85rem;font-weight:500;color:#555;transition:background 0.2s,color 0.2s;min-height:44px}
-.tab-btn.active{background:#0077b6;color:#fff}
-.tab-btn:not(:last-child){border-right:1px solid #ddd}
-.tab-panel{display:none}
-.tab-panel.active{display:block}
-label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:5px;margin-top:1rem}
-label:first-of-type{margin-top:0}
-input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;transition:box-shadow 0.2s,border-color 0.2s;min-height:44px}
-input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+h1{font-size:1.6rem;line-height:1.25;margin-bottom:.6rem}
+.lead{color:#444;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
+.diagram-wrap{border:1px solid #e0e0e0;border-radius:6px;padding:.5rem;margin-bottom:1.5rem;background:#fff}
+#diagram{display:block;width:100%;height:auto}
+.shape{display:none}.shape.on{display:inline}
+.dim{stroke:#1a1a2e;stroke-width:1.3;marker-start:url(#ar);marker-end:url(#ar)}
+.gd{stroke:#e0e0e0;stroke-width:1.5;stroke-dasharray:4 3}
+.dl{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;font-weight:600;fill:#1a1a2e;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
+.cap{font-size:.8rem;color:#666;text-align:center;margin-top:.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff;min-height:44px}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px;border-color:#0077b6}
+input[type=range]{padding:0;border:none;height:44px;accent-color:#0077b6;background:transparent}
 input.error{border-color:#e74c3c}
-.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:4px;display:none}
+.error-msg{color:#c0392b;font-size:.82rem;margin-top:4px;display:none}
 .error-msg.visible{display:block}
-.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.btn-primary{width:100%;background:#0077b6;color:#fff;border:none;padding:13px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:1.5rem;min-height:44px;transition:background 0.2s}
-.btn-primary:hover{background:#006299}
-.results-section{opacity:0;transition:opacity 0.3s ease;display:none}
-.results-section.visible{opacity:1;display:block}
-.key-metric{text-align:center;padding:1.5rem;background:#f0f8ff;border-radius:8px;border:1px solid #b3d9f0;margin-bottom:1.5rem}
-.key-metric .big-num{font-size:2.4rem;font-weight:700;color:#0077b6;line-height:1.2}
-.key-metric .big-label{font-size:0.9rem;color:#555;margin-top:4px}
-.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
-.metric-card{background:#f8f9fa;border-radius:6px;padding:1rem;text-align:center;border:1px solid #e0e0e0}
-.metric-card .val{font-size:1.3rem;font-weight:700;color:#0077b6}
-.metric-card .lbl{font-size:0.78rem;color:#666;margin-top:2px}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:0.9rem}
-thead tr{background:#f0f0f0}
-th{padding:10px 12px;text-align:left;font-weight:600;color:#333;border-bottom:2px solid #ddd}
-th.num,td.num{text-align:right}
-tbody tr:nth-child(even){background:#fafafa}
-tbody tr:nth-child(odd){background:#fff}
-td{padding:9px 12px;border-bottom:1px solid #eee;color:#1a1a2e}
-.copy-btn{background:transparent;border:1px solid #0077b6;color:#0077b6;padding:6px 14px;border-radius:5px;font-size:0.82rem;cursor:pointer;transition:background 0.2s,color 0.2s;min-height:36px}
+.f{margin-bottom:1rem}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin:1.5rem 0 1.25rem}
+.tabs button{min-height:44px;padding:8px 6px;border:1px solid #ddd;background:#f8f9fa;color:#333;border-radius:6px;font-size:.85rem;font-weight:500;font-family:inherit;cursor:pointer}
+.tabs button.on{background:#0077b6;border-color:#0077b6;color:#fff}
+.panel{display:none}.panel.on{display:block}
+.opts{border-top:1px solid #eee;margin-top:.5rem;padding-top:1.25rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.hint{font-size:.8rem;color:#666;margin-top:.25rem}
+.btn{display:block;width:100%;background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;font-family:inherit;cursor:pointer;min-height:44px;margin-top:.5rem}
+.btn:hover{background:#006299}
+.copy-row{display:flex;justify-content:flex-end;margin-bottom:.5rem}
+.copy-row[hidden]{display:none}
+.copy-btn{background:#fff;border:1px solid #0077b6;color:#0077b6;padding:6px 14px;border-radius:6px;font-size:.85rem;font-family:inherit;cursor:pointer;min-height:44px}
 .copy-btn:hover{background:#0077b6;color:#fff}
-.copy-row{display:flex;justify-content:flex-end;margin-bottom:0.8rem}
-.swell-row{display:flex;align-items:center;gap:0.75rem;margin-top:0.75rem}
-.swell-row input[type=range]{flex:1;padding:0;min-height:auto;height:6px;cursor:pointer;border:none;background:transparent;box-shadow:none}
-.swell-row input[type=range]:focus{box-shadow:none;border:none}
-.swell-val{font-weight:600;color:#0077b6;min-width:40px;text-align:right}
+.results-card{opacity:0;transition:opacity .3s ease}
+.results-card.visible{opacity:1}
+.key{text-align:center;padding:1.25rem 1rem;background:#f0f8ff;border:1px solid #b3d9f0;border-radius:8px;margin-bottom:1.25rem}
+.key .big{font-size:2.3rem;font-weight:700;color:#0077b6;line-height:1.2}
+.key .lbl{font-size:.9rem;color:#444;margin-top:4px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+.mc{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.9rem .5rem;text-align:center}
+.mc .val{font-size:1.25rem;font-weight:700;color:#0077b6;overflow-wrap:anywhere}
+.mc .lb{font-size:.8rem;color:#555}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#f0f0f0;padding:10px 12px;text-align:left;font-weight:600;border-bottom:2px solid #ddd}
+td{padding:9px 12px;border-bottom:1px solid #eee}
+tbody tr:nth-child(odd){background:#fafafa}tbody tr:nth-child(even){background:#fff}
+th.num,td.num{text-align:right}
+.tw h3,.res-h{font-size:1rem;margin:0 0 .5rem}
+.fbox{background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;font-size:.85rem;color:#444;overflow-wrap:anywhere}
+.warn,.safety{border-left:3px solid #e0a800;background:#fff8e1;color:#4a3b00;font-size:.85rem;line-height:1.5;padding:.8rem 1rem;margin-bottom:1.25rem;border-radius:0 6px 6px 0}
 .ad-slot{min-height:0;margin:0}
-.content-section{margin-bottom:2rem}
-.content-section h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin-bottom:0.6rem;margin-top:1.5rem}
-.content-section p{color:#444;font-size:0.95rem;margin-bottom:0.7rem}
-.content-section ul{color:#444;font-size:0.95rem;padding-left:1.3rem;margin-bottom:0.7rem}
-.content-section ul li{margin-bottom:0.4rem}
-details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:0.6rem;background:#f8f9fa}
-summary{padding:0.75rem 1rem;cursor:pointer;font-weight:500;font-size:0.95rem;color:#1a1a2e;list-style:none}
-summary::-webkit-details-marker{display:none}
-summary::before{content:"▶ ";font-size:0.7rem;color:#0077b6}
-details[open] summary::before{content:"▼ "}
-details p{padding:0 1rem 0.75rem;color:#444;font-size:0.9rem}
-.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-top:0.8rem}
-.related-link{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:0.7rem 1rem;font-size:0.88rem;color:#0077b6;transition:background 0.2s}
-.related-link:hover{background:#e8f4fb;text-decoration:none}
-footer{background:#f8f9fa;border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:0.85rem;color:#666;margin-top:2rem}
-footer a{color:#555;margin:0 0.5rem}
-footer a:hover{color:#0077b6}
-.formula-box{background:#f0f8ff;border-left:3px solid #0077b6;padding:0.75rem 1rem;border-radius:0 6px 6px 0;font-family:monospace;font-size:0.88rem;color:#1a1a2e;margin:0.5rem 0}
+.content h2{font-size:1.25rem;margin:2rem 0 .6rem}
+.content p,.content li{color:#333;font-size:.97rem;margin-bottom:.7rem}
+.content ul,.content ol{padding-left:1.3rem;margin-bottom:.7rem}
+.fm{background:#f0f8ff;border-left:3px solid #0077b6;padding:.5rem 1rem;border-radius:0 6px 6px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;margin-bottom:.5rem;overflow-wrap:anywhere}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:.6rem;background:#f8f9fa}
+summary{cursor:pointer;padding:.7rem 1rem;font-weight:600;font-size:.95rem;min-height:44px}
+details p{padding:0 1rem;margin-bottom:.8rem}
+.rel{list-style:none;padding:0!important;display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.rel li{margin:0}
+.rel a{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.7rem 1rem;font-size:.9rem;min-height:44px}
+footer{background:#f8f9fa;border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:.85rem;color:#666;margin-top:2rem}
+footer a{color:#444;margin:0 .6rem;display:inline-block;line-height:44px}
 @media(max-width:640px){
-  .row-2{grid-template-columns:1fr}
-  .metrics-grid{grid-template-columns:1fr 1fr}
-  .related-grid{grid-template-columns:1fr}
-  h1{font-size:1.3rem}
-  .key-metric .big-num{font-size:1.9rem}
-  .card{padding:1.25rem}
+.row-2{grid-template-columns:1fr}
+.tabs{grid-template-columns:1fr 1fr}
+.rel{grid-template-columns:1fr}
+h1{font-size:1.35rem}
+.card{padding:1.25rem}
+.key .big{font-size:1.8rem}
 }
+@media(prefers-reduced-motion:reduce){.results-card{transition:none}}
 </style>
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://toolwick.com/excavation-earthwork-volume-calculator/">
 <meta property="og:title" content="Excavation &amp; Earthwork Volume Calculator">
-<meta property="og:description" content="Calculate excavation volume, soil weight, and truck loads for any dig shape. Free online earthwork calculator for construction, landscaping, and civil projects.">
+<meta property="og:description" content="Free excavation calculator: find bank and loose soil volume, truck loads, weight and haul cost for rectangular, sloped, round or irregular digs.">
 <meta property="og:site_name" content="Toolwick">
 <meta name="twitter:card" content="summary">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
-<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
 <style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
 </head>
 <body>
 <header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
-<div class="container">
+<nav class="topnav"><a href="/">Toolwick</a></nav>
+<main class="container">
 <h1>Excavation &amp; Earthwork Volume Calculator</h1>
 <p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
-<p class="subtitle">Calculate cut volume, soil weight, truck loads &amp; haul costs for any excavation shape.</p>
+<p class="lead">Use this free excavation calculator to find bank volume, loose (swelled) volume, truck loads, soil weight and haul cost for any dig — rectangular, sloped, round or irregular.</p>
 
-<div class="card">
-  <!-- SVG DIAGRAM -->
+<div class="card" id="tool">
   <div class="diagram-wrap">
-    <svg id="diagram" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Excavation cross-section diagram">
-      <!-- ground surface -->
-      <line x1="20" y1="55" x2="480" y2="55" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="6,4"/>
-      <!-- slope left -->
-      <line x1="60" y1="55" x2="100" y2="160" stroke="#0077b6" stroke-width="2"/>
-      <!-- bottom -->
-      <line x1="100" y1="160" x2="400" y2="160" stroke="#0077b6" stroke-width="2.5"/>
-      <!-- slope right -->
-      <line x1="400" y1="160" x2="440" y2="55" stroke="#0077b6" stroke-width="2"/>
-      <!-- top width brace -->
-      <line x1="60" y1="40" x2="440" y2="40" stroke="#1a1a2e" stroke-width="1"/>
-      <line x1="60" y1="35" x2="60" y2="45" stroke="#1a1a2e" stroke-width="1.5"/>
-      <line x1="440" y1="35" x2="440" y2="45" stroke="#1a1a2e" stroke-width="1.5"/>
-      <text id="lbl-top-w" x="250" y="32" text-anchor="middle" font-size="12" fill="#1a1a2e" font-family="sans-serif">Top Width (W)</text>
-      <!-- bottom width brace -->
-      <line x1="100" y1="178" x2="400" y2="178" stroke="#1a1a2e" stroke-width="1"/>
-      <line x1="100" y1="173" x2="100" y2="183" stroke="#1a1a2e" stroke-width="1.5"/>
-      <line x1="400" y1="173" x2="400" y2="183" stroke="#1a1a2e" stroke-width="1.5"/>
-      <text id="lbl-bot-w" x="250" y="195" text-anchor="middle" font-size="12" fill="#1a1a2e" font-family="sans-serif">Bottom Width (BW)</text>
-      <!-- depth arrow -->
-      <line x1="460" y1="55" x2="460" y2="160" stroke="#1a1a2e" stroke-width="1"/>
-      <line x1="455" y1="55" x2="465" y2="55" stroke="#1a1a2e" stroke-width="1.5"/>
-      <line x1="455" y1="160" x2="465" y2="160" stroke="#1a1a2e" stroke-width="1.5"/>
-      <text id="lbl-depth" x="480" y="112" text-anchor="middle" font-size="12" fill="#1a1a2e" font-family="sans-serif" writing-mode="tb" transform="rotate(90,480,107)">Depth (D)</text>
-      <!-- fill hatch -->
-      <pattern id="hatch" patternUnits="userSpaceOnUse" width="10" height="10">
-        <line x1="0" y1="10" x2="10" y2="0" stroke="#b3d9f0" stroke-width="1"/>
-      </pattern>
-      <polygon points="60,55 100,160 400,160 440,55" fill="url(#hatch)" opacity="0.5"/>
-      <!-- ground label -->
-      <text x="25" y="51" font-size="11" fill="#888" font-family="sans-serif">Ground</text>
+    <svg id="diagram" viewBox="0 0 440 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Excavation diagram: rectangular dig showing length, width and depth">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="#1a1a2e"/></marker>
+        <pattern id="ht" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#b3d9f0" stroke-width="2"/></pattern>
+      </defs>
+      <g id="g-rect" class="shape on">
+        <rect x="80" y="70" width="180" height="90" fill="#e6f3fa" stroke="#0077b6" stroke-width="2"/>
+        <polygon points="80,70 260,70 340,30 160,30" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+        <polygon points="260,70 340,30 340,120 260,160" fill="#cfe8f5" stroke="#0077b6" stroke-width="2"/>
+        <line class="gd" x1="60" y1="70" x2="80" y2="70"/><line class="gd" x1="60" y1="160" x2="80" y2="160"/>
+        <line class="gd" x1="80" y1="160" x2="80" y2="190"/><line class="gd" x1="260" y1="160" x2="260" y2="190"/>
+        <line class="gd" x1="260" y1="160" x2="268" y2="176"/><line class="gd" x1="340" y1="120" x2="348" y2="136"/>
+        <line class="dim" x1="60" y1="70" x2="60" y2="160"/>
+        <line class="dim" x1="80" y1="185" x2="260" y2="185"/>
+        <line class="dim" x1="268" y1="176" x2="348" y2="136"/>
+        <text id="d-r-l" class="dl" x="170" y="208" text-anchor="middle">Length (L)</text>
+        <text id="d-r-w" class="dl" transform="translate(318 177) rotate(-26.57)" text-anchor="middle">Width (W)</text>
+        <text id="d-r-d" class="dl" transform="translate(52 115) rotate(-90)" text-anchor="middle">Depth (D)</text>
+      </g>
+      <g id="g-trap" class="shape">
+        <line class="gd" x1="10" y1="50" x2="430" y2="50"/>
+        <polygon points="70,50 330,50 290,160 110,160" fill="#e6f3fa" stroke="#0077b6" stroke-width="2"/>
+        <polygon points="70,50 330,50 290,160 110,160" fill="url(#ht)"/>
+        <line class="gd" x1="70" y1="50" x2="70" y2="26"/><line class="gd" x1="330" y1="50" x2="330" y2="26"/>
+        <line class="gd" x1="110" y1="160" x2="110" y2="186"/><line class="gd" x1="290" y1="160" x2="290" y2="186"/>
+        <line class="gd" x1="290" y1="160" x2="390" y2="160"/>
+        <line class="dim" x1="70" y1="30" x2="330" y2="30"/>
+        <line class="dim" x1="110" y1="182" x2="290" y2="182"/>
+        <line class="dim" x1="385" y1="50" x2="385" y2="160"/>
+        <text id="d-t-top" class="dl" x="200" y="22" text-anchor="middle">Top width (TW)</text>
+        <text id="d-t-bot" class="dl" x="200" y="205" text-anchor="middle">Bottom width (BW)</text>
+        <text id="d-t-d" class="dl" transform="translate(405 105) rotate(-90)" text-anchor="middle">Depth (D)</text>
+        <text id="d-t-s" class="dl" x="8" y="132">H:V</text>
+      </g>
+      <g id="g-circ" class="shape">
+        <path d="M110 60V160A110 24 0 0 0 330 160V60" fill="#e6f3fa" stroke="#0077b6" stroke-width="2"/>
+        <ellipse cx="220" cy="60" rx="110" ry="24" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+        <line class="gd" x1="330" y1="60" x2="390" y2="60"/><line class="gd" x1="330" y1="160" x2="390" y2="160"/>
+        <line class="dim" x1="110" y1="60" x2="330" y2="60"/>
+        <line class="dim" x1="385" y1="60" x2="385" y2="160"/>
+        <text id="d-c-dia" class="dl" x="220" y="52" text-anchor="middle">Diameter</text>
+        <text id="d-c-d" class="dl" transform="translate(405 110) rotate(-90)" text-anchor="middle">Depth (D)</text>
+      </g>
+      <g id="g-pris" class="shape">
+        <line class="gd" x1="10" y1="50" x2="430" y2="50"/>
+        <polygon points="70,50 350,50 280,160 140,160" fill="#e6f3fa" stroke="#0077b6" stroke-width="2"/>
+        <polygon points="70,50 350,50 280,160 140,160" fill="url(#ht)"/>
+        <line x1="105" y1="105" x2="315" y2="105" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <line class="gd" x1="280" y1="160" x2="390" y2="160"/>
+        <line class="dim" x1="385" y1="50" x2="385" y2="160"/>
+        <text id="d-p-a1" class="dl" x="210" y="40" text-anchor="middle">Top area (A1)</text>
+        <text id="d-p-am" class="dl" x="210" y="98" text-anchor="middle">Mid-height area (Am)</text>
+        <text id="d-p-a2" class="dl" x="210" y="184" text-anchor="middle">Bottom area (A2)</text>
+        <text id="d-p-d" class="dl" transform="translate(405 105) rotate(-90)" text-anchor="middle">Height (D)</text>
+      </g>
     </svg>
+    <p class="cap" id="cap">Oblique view of the soil volume removed: length × width × depth.</p>
   </div>
 
-  <!-- TABS -->
-  <div class="tabs" role="tablist">
-    <button class="tab-btn active" data-tab="rectangular" role="tab" aria-selected="true" onclick="switchTab('rectangular')">Rectangular</button>
-    <button class="tab-btn" data-tab="trapezoidal" role="tab" onclick="switchTab('trapezoidal')">Trapezoidal</button>
-    <button class="tab-btn" data-tab="circular" role="tab" onclick="switchTab('circular')">Circular Pit</button>
-    <button class="tab-btn" data-tab="prismoidal" role="tab" onclick="switchTab('prismoidal')">Prismoidal</button>
+  <div class="f">
+    <label for="unit">Unit system</label>
+    <select id="unit"><option value="ft">Imperial (ft, yd³)</option><option value="m">Metric (m, m³)</option></select>
   </div>
 
-  <!-- RECTANGULAR -->
-  <div id="tab-rectangular" class="tab-panel active">
+  <div class="tabs" role="tablist" aria-label="Excavation shape">
+    <button type="button" class="on" role="tab" id="t-rect" data-t="rect" aria-selected="true" aria-controls="tab-rect">Rectangular</button>
+    <button type="button" role="tab" id="t-trap" data-t="trap" aria-selected="false" aria-controls="tab-trap" tabindex="-1">Trapezoidal</button>
+    <button type="button" role="tab" id="t-circ" data-t="circ" aria-selected="false" aria-controls="tab-circ" tabindex="-1">Circular Pit</button>
+    <button type="button" role="tab" id="t-pris" data-t="pris" aria-selected="false" aria-controls="tab-pris" tabindex="-1">Prismoidal</button>
+  </div>
+
+  <div id="tab-rect" class="panel on" role="tabpanel" aria-labelledby="t-rect">
     <div class="row-2">
-      <div>
-        <label for="r-length">Length (ft)</label>
-        <input type="number" id="r-length" placeholder="e.g. 20" min="0" step="any">
-        <div class="error-msg" id="err-r-length">Enter a valid positive number.</div>
-      </div>
-      <div>
-        <label for="r-width">Width (ft)</label>
-        <input type="number" id="r-width" placeholder="e.g. 10" min="0" step="any">
-        <div class="error-msg" id="err-r-width">Enter a valid positive number.</div>
-      </div>
+      <div class="f"><label for="r-length">Length (<span class="u-len">ft</span>)</label><input type="number" inputmode="decimal" id="r-length" min="0" step="any" data-ph="24" data-phm="7"><div class="error-msg" id="err-r-length" role="alert"></div></div>
+      <div class="f"><label for="r-width">Width (<span class="u-len">ft</span>)</label><input type="number" inputmode="decimal" id="r-width" min="0" step="any" data-ph="16" data-phm="5"><div class="error-msg" id="err-r-width" role="alert"></div></div>
+    </div>
+    <div class="f"><label for="r-depth">Depth (<span class="u-len">ft</span>)</label><input type="number" inputmode="decimal" id="r-depth" min="0" step="any" data-ph="6" data-phm="2"><div class="error-msg" id="err-r-depth" role="alert"></div></div>
+  </div>
+
+  <div id="tab-trap" class="panel" role="tabpanel" aria-labelledby="t-trap">
+    <div class="row-2">
+      <div class="f"><label for="t-top-w">Top width (<span class="u-len">ft</span>)</label><input type="number" inputmode="decimal" id="t-top-w" min="0" step="any" data-ph="14" data-phm="4.5"><div class="error-msg" id="err-t-top-w" role="alert"></div></div>
+      <div class="f"><label for="t-bot-w">Bottom width (<span class="u-len">ft</span>)</label><input type="number" inputmode="decimal" id="t-bot-w" min="0" step="any" data-ph="10" data-phm="3"><div class="error-msg" id="err-t-bot-w" role="alert"></div></div>
     </div>
     <div class="row-2">
-      <div>
-        <label for="r-depth">Depth (ft)</label>
-        <input type="number" id="r-depth" placeholder="e.g. 5" min="0" step="any">
-        <div class="error-msg" id="err-r-depth">Enter a valid positive number.</div>
-      </div>
-      <div>
-        <label for="r-unit">Unit System</label>
-        <select id="r-unit">
-          <option value="ft">Imperial (ft / yd³)</option>
-          <option value="m">Metric (m / m³)</option>
-        </select>
-      </div>
+      <div class="f"><label for="t-length">Length (<span class="u-len">ft</span>)</label><input type="number" inputmode="decimal" id="t-length" min="0" step="any" data-ph="50" data-phm="15"><div class="error-msg" id="err-t-length" role="alert"></div></div>
+      <div class="f"><label for="t-depth">Depth (<span class="u-len">ft</span>)</label><input type="number" inputmode="decimal" id="t-depth" min="0" step="any" data-ph="6" data-phm="2"><div class="error-msg" id="err-t-depth" role="alert"></div></div>
     </div>
   </div>
 
-  <!-- TRAPEZOIDAL -->
-  <div id="tab-trapezoidal" class="tab-panel">
+  <div id="tab-circ" class="panel" role="tabpanel" aria-labelledby="t-circ">
     <div class="row-2">
-      <div>
-        <label for="t-top-w">Top Width (ft)</label>
-        <input type="number" id="t-top-w" placeholder="e.g. 14" min="0" step="any">
-        <div class="error-msg" id="err-t-top-w">Enter a valid positive number.</div>
-      </div>
-      <div>
-        <label for="t-bot-w">Bottom Width (ft)</label>
-        <input type="number" id="t-bot-w" placeholder="e.g. 10" min="0" step="any">
-        <div class="error-msg" id="err-t-bot-w">Enter a valid positive number.</div>
-      </div>
+      <div class="f"><label for="c-diameter">Diameter (<span class="u-len">ft</span>)</label><input type="number" inputmode="decimal" id="c-diameter" min="0" step="any" data-ph="8" data-phm="2.5"><div class="error-msg" id="err-c-diameter" role="alert"></div></div>
+      <div class="f"><label for="c-depth">Depth (<span class="u-len">ft</span>)</label><input type="number" inputmode="decimal" id="c-depth" min="0" step="any" data-ph="4" data-phm="1.2"><div class="error-msg" id="err-c-depth" role="alert"></div></div>
+    </div>
+  </div>
+
+  <div id="tab-pris" class="panel" role="tabpanel" aria-labelledby="t-pris">
+    <p class="hint" style="margin-bottom:.75rem">For irregular cuts: enter the cross-section area at the top, at mid-height and at the bottom.</p>
+    <div class="row-2">
+      <div class="f"><label for="p-a1">Top area, A1 (<span class="u-area">ft²</span>)</label><input type="number" inputmode="decimal" id="p-a1" min="0" step="any" data-ph="200" data-phm="18"><div class="error-msg" id="err-p-a1" role="alert"></div></div>
+      <div class="f"><label for="p-am">Mid-height area, Am (<span class="u-area">ft²</span>)</label><input type="number" inputmode="decimal" id="p-am" min="0" step="any" data-ph="140" data-phm="13"><div class="error-msg" id="err-p-am" role="alert"></div></div>
     </div>
     <div class="row-2">
-      <div>
-        <label for="t-length">Length (ft)</label>
-        <input type="number" id="t-length" placeholder="e.g. 50" min="0" step="any">
-        <div class="error-msg" id="err-t-length">Enter a valid positive number.</div>
-      </div>
-      <div>
-        <label for="t-depth">Depth (ft)</label>
-        <input type="number" id="t-depth" placeholder="e.g. 6" min="0" step="any">
-        <div class="error-msg" id="err-t-depth">Enter a valid positive number.</div>
-      </div>
+      <div class="f"><label for="p-a2">Bottom area, A2 (<span class="u-area">ft²</span>)</label><input type="number" inputmode="decimal" id="p-a2" min="0" step="any" data-ph="100" data-phm="9"><div class="error-msg" id="err-p-a2" role="alert"></div></div>
+      <div class="f"><label for="p-depth">Depth / height (<span class="u-len">ft</span>)</label><input type="number" inputmode="decimal" id="p-depth" min="0" step="any" data-ph="8" data-phm="2.5"><div class="error-msg" id="err-p-depth" role="alert"></div></div>
     </div>
-    <div>
-      <label for="t-unit">Unit System</label>
-      <select id="t-unit">
-        <option value="ft">Imperial (ft / yd³)</option>
-        <option value="m">Metric (m / m³)</option>
+  </div>
+
+  <div class="opts">
+    <div class="f">
+      <label for="soil">Soil type</label>
+      <select id="soil">
+        <option value="1800">Loam / topsoil (1,800 kg/m³ · 112 lb/ft³)</option>
+        <option value="1600">Sandy soil (1,600 kg/m³ · 100 lb/ft³)</option>
+        <option value="2000">Clay (2,000 kg/m³ · 125 lb/ft³)</option>
+        <option value="2240">Gravel (2,240 kg/m³ · 140 lb/ft³)</option>
+        <option value="2400">Dense rock (2,400 kg/m³ · 150 lb/ft³)</option>
+        <option value="custom">Custom density…</option>
       </select>
     </div>
-  </div>
-
-  <!-- CIRCULAR -->
-  <div id="tab-circular" class="tab-panel">
+    <div class="f" id="cd-wrap" style="display:none"><label for="custom-density">Custom density (<span class="u-dens">lb/ft³</span>)</label><input type="number" inputmode="decimal" id="custom-density" min="0" step="any" data-ph="110" data-phm="1750"><div class="error-msg" id="err-custom-density" role="alert"></div></div>
     <div class="row-2">
-      <div>
-        <label for="c-diameter">Diameter (ft)</label>
-        <input type="number" id="c-diameter" placeholder="e.g. 8" min="0" step="any">
-        <div class="error-msg" id="err-c-diameter">Enter a valid positive number.</div>
-      </div>
-      <div>
-        <label for="c-depth">Depth (ft)</label>
-        <input type="number" id="c-depth" placeholder="e.g. 4" min="0" step="any">
-        <div class="error-msg" id="err-c-depth">Enter a valid positive number.</div>
-      </div>
+      <div class="f"><label for="truck-cap">Truck capacity (<span class="u-vol">yd³</span>)</label><input type="number" inputmode="decimal" id="truck-cap" value="10" min="0" step="any"><div class="error-msg" id="err-truck-cap" role="alert"></div></div>
+      <div class="f"><label for="haul-cost">Haul cost per load ($)</label><input type="number" inputmode="decimal" id="haul-cost" value="300" min="0" step="any"><div class="error-msg" id="err-haul-cost" role="alert"></div></div>
     </div>
-    <div>
-      <label for="c-unit">Unit System</label>
-      <select id="c-unit">
-        <option value="ft">Imperial (ft / yd³)</option>
-        <option value="m">Metric (m / m³)</option>
-      </select>
+    <div class="f"><label for="fill-back">Soil kept on site for backfill / regrading (%)</label><input type="number" inputmode="decimal" id="fill-back" value="0" min="0" max="100" step="any"><div class="error-msg" id="err-fill-back" role="alert"></div></div>
+    <div class="f">
+      <label for="swell">Swell factor: <strong id="swell-out">25%</strong></label>
+      <input type="range" id="swell" min="0" max="60" step="1" value="25" aria-valuetext="25 percent">
+      <div class="ticks"><span>0%</span><span>60%</span></div>
+      <p class="hint">Typical: sand and gravel 10–15%, loam 20–30%, clay 30–40%, blasted rock 40–60%.</p>
     </div>
   </div>
-
-  <!-- PRISMOIDAL -->
-  <div id="tab-prismoidal" class="tab-panel">
-    <p style="font-size:0.85rem;color:#666;margin-bottom:0.5rem;">Uses the Prismoidal Formula for irregular cross-sections.</p>
-    <div class="row-2">
-      <div>
-        <label for="p-a1">Area at Top (ft²)</label>
-        <input type="number" id="p-a1" placeholder="e.g. 200" min="0" step="any">
-        <div class="error-msg" id="err-p-a1">Enter a valid positive number.</div>
-      </div>
-      <div>
-        <label for="p-am">Mid-Section Area (ft²)</label>
-        <input type="number" id="p-am" placeholder="e.g. 140" min="0" step="any">
-        <div class="error-msg" id="err-p-am">Enter a valid positive number.</div>
-      </div>
-    </div>
-    <div class="row-2">
-      <div>
-        <label for="p-a2">Area at Bottom (ft²)</label>
-        <input type="number" id="p-a2" placeholder="e.g. 100" min="0" step="any">
-        <div class="error-msg" id="err-p-a2">Enter a valid positive number.</div>
-      </div>
-      <div>
-        <label for="p-depth">Depth / Height (ft)</label>
-        <input type="number" id="p-depth" placeholder="e.g. 8" min="0" step="any">
-        <div class="error-msg" id="err-p-depth">Enter a valid positive number.</div>
-      </div>
-    </div>
-    <div>
-      <label for="p-unit">Unit System</label>
-      <select id="p-unit">
-        <option value="ft">Imperial (ft / yd³)</option>
-        <option value="m">Metric (m / m³)</option>
-      </select>
-    </div>
-  </div>
-
-  <!-- SHARED OPTIONS -->
-  <div style="border-top:1px solid #eee;margin-top:1.5rem;padding-top:1rem">
-    <div class="row-2">
-      <div>
-        <label for="soil-type">Soil Type</label>
-        <select id="soil-type">
-          <option value="1800">Loam / Topsoil (~112 lb/ft³)</option>
-          <option value="1600">Sandy Soil (~100 lb/ft³)</option>
-          <option value="2000">Clay (~125 lb/ft³)</option>
-          <option value="2240">Gravel (~140 lb/ft³)</option>
-          <option value="2400">Dense Rock (~150 lb/ft³)</option>
-          <option value="custom">Custom density…</option>
-        </select>
-      </div>
-      <div id="custom-density-wrap" style="display:none">
-        <label for="custom-density">Custom Density (kg/m³)</label>
-        <input type="number" id="custom-density" placeholder="e.g. 1750" min="1" step="any">
-      </div>
-      <div>
-        <label for="truck-capacity">Truck Capacity (yd³)</label>
-        <input type="number" id="truck-capacity" value="10" min="0.1" step="any">
-      </div>
-    </div>
-    <div class="row-2" style="margin-top:0">
-      <div>
-        <label for="haul-cost">Haul Cost per Truck ($/load)</label>
-        <input type="number" id="haul-cost" value="300" min="0" step="any">
-      </div>
-      <div>
-        <label for="fill-back">Fill-Back % (soil returned)</label>
-        <input type="number" id="fill-back" value="0" min="0" max="100" step="any">
-      </div>
-    </div>
-    <label style="margin-top:0.75rem">Swell Factor: <span id="swell-display">25%</span></label>
-    <div class="swell-row">
-      <span style="font-size:0.8rem;color:#666">0%</span>
-      <input type="range" id="swell-slider" min="0" max="60" value="25" step="1" aria-label="Swell factor percentage">
-      <span style="font-size:0.8rem;color:#666">60%</span>
-      <span class="swell-val" id="swell-val-display">25%</span>
-    </div>
-  </div>
-
-  <button class="btn-primary" id="calcBtn">Calculate Excavation</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+  <button class="btn" id="calcBtn" type="button">Calculate Excavation</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
 </div>
 
-<!-- RESULTS -->
-<div class="results-section card" id="results-section">
-  <div class="copy-row">
-    <button class="copy-btn" id="copyBtn">Copy Results</button>
-  </div>
-  <div id="results-content"></div>
-</div>
+<div class="copy-row" id="copyRow" hidden><button class="copy-btn" id="copyBtn" type="button">Copy results</button></div>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+
+<aside class="safety" role="note">Planning estimates only — not engineering, permit or inspection approval. Trench and excavation safety notes follow OSHA 29 CFR 1926 Subpart P (U.S.); local codes, soil conditions and utility rules vary. Call 811 (or your local utility locate service) before you dig, and use a licensed contractor or engineer for deep or complex excavations.</aside>
 
 <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
 <div class="ad-slot" id="ad-mid"></div>
 <section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/excavation-earthwork-volume-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Excavation &amp;amp; Earthwork Volume Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
 &lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/excavation-earthwork-volume-calculator/&quot;&gt;Excavation &amp;amp; Earthwork Volume Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/excavation-earthwork-volume-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
 
-<!-- CONTENT SECTION -->
-<div class="content-section">
+<section class="content">
   <h2>How to Use This Excavation Calculator</h2>
-  <p>Select the shape of your excavation (rectangular, trapezoidal, circular pit, or prismoidal for irregular cuts), enter the dimensions in your preferred unit system, then choose soil type and truck capacity. Hit <strong>Calculate Excavation</strong> to instantly see bank volume, swelled (loose) volume, truck loads, weight, and estimated haul cost.</p>
-  <p>Adjust the <strong>Swell Factor</strong> slider to match your soil conditions — this is the volume increase that happens when soil is disturbed and loosened during excavation.</p>
+  <p>Choose your unit system, then pick the shape that best matches the dig: <strong>Rectangular</strong> for basements and foundations, <strong>Trapezoidal</strong> for trenches and ponds with sloped walls, <strong>Circular Pit</strong> for dry wells and tanks, or <strong>Prismoidal</strong> when you know the cross-section areas at the top, middle and bottom. Enter the dimensions, soil type, truck capacity, haul cost, the share of soil you will keep on site, and a swell factor. Press Calculate to see bank volume, loose volume, truck loads, soil weight and haul cost. The diagram fills in your numbers. Labels and the truck-capacity field switch units when you change the unit system.</p>
 
   <h2>Why This Matters</h2>
-  <p>Getting earthwork volumes right is one of the most financially significant steps in any construction project. Underestimate, and you'll be ordering extra truck hauls mid-project at premium rates. Overestimate, and you're paying workers to move soil you didn't need to. On a typical residential foundation — say a 30 × 40 ft footprint at 5 ft deep — the difference between a 20% and 30% swell factor estimate translates to 22 additional cubic yards of loose material, which at $300/load could mean $660 in unexpected costs.</p>
-  <p>Civil engineers, site contractors, landscape graders, and pool installers all rely on accurate earthwork calculations before mobilizing equipment. A trench for a utility line uses the trapezoidal formula because of sloped walls required for worker safety. A septic pit is circular. A road cut may need the prismoidal method for accuracy across irregular terrain. This calculator covers all four common scenarios, plus real-world outputs like weight (for weight-restricted haul roads) and fill-back volume (when a portion of the soil is returned for backfill).</p>
+  <p>Earthwork is paid for by the cubic yard, so a small volume error turns into real money fast. Take a 30 × 40 ft footprint dug 5 ft deep. That is 6,000 ft³, or 222.2 yd³ of bank (in-ground) soil. At 20% swell you haul 266.7 yd³, which is 27 loads in a 10 yd³ truck. At 30% swell it is 288.9 yd³, or 29 loads. Two extra loads at $300 each is $600 you did not budget, before dump fees.</p>
+  <p>Homeowners digging for a pool, footings or a drainage trench use the same math as contractors bidding a basement or utility run. Estimators use it to size equipment and crews. Landscapers use it to decide whether to haul soil away or regrade it on site. Weight matters too: a tandem dump truck loaded with wet clay can hit its legal weight limit before it is volume-full, so the tool reports the weight of one full load. Depth is also a safety issue. At 5 ft, OSHA rules call for sloping, shoring or a trench shield, and that changes how much you have to dig.</p>
 
   <h2>How It's Calculated</h2>
-  <p>The core formulas used:</p>
-  <div class="formula-box">Rectangular: V = L × W × D</div>
-  <div class="formula-box">Trapezoidal: V = ((TW + BW) / 2) × D × L</div>
-  <div class="formula-box">Circular Pit: V = π × (D/2)² × Depth</div>
-  <div class="formula-box">Prismoidal: V = (D / 6) × (A1 + 4×Am + A2)</div>
-  <div class="formula-box">Swelled Volume = Bank Volume × (1 + Swell% / 100)</div>
-  <div class="formula-box">Soil Weight = Bank Volume × Soil Density</div>
-  <div class="formula-box">Trucks = Swelled Volume ÷ Truck Capacity (rounded up)</div>
-  <p style="margin-top:0.6rem">The prismoidal formula (Simpson's Rule applied to volumes) is the most accurate method for irregular cross-sections and is used in AASHTO standards for roadway earthwork. Bank volume is the in-situ (undisturbed) volume. Loose/swelled volume accounts for the fact that excavated soil expands when disturbed.</p>
+  <p>All shape volumes are computed in cubic feet or cubic metres first. Imperial results divide by 27 to give cubic yards.</p>
+  <div class="fm">Rectangular: V = L × W × D</div>
+  <div class="fm">Trapezoidal: V = ((TW + BW) ÷ 2) × D × L</div>
+  <div class="fm">Circular pit: V = π × (Diameter ÷ 2)² × D</div>
+  <div class="fm">Prismoidal: V = (D ÷ 6) × (A1 + 4 × Am + A2)</div>
+  <div class="fm">Loose volume = Bank volume × (1 + swell %)</div>
+  <div class="fm">Volume to haul = Loose volume × (1 − kept on site %)</div>
+  <div class="fm">Truck loads = Volume to haul ÷ truck capacity, rounded up</div>
+  <div class="fm">Weight = Bank volume × soil density</div>
+  <p style="margin-top:.7rem">The prismoidal formula is Simpson's rule applied along the depth. It is exact when the cross-section area changes as a quadratic or simpler function, as in pyramids, cones, frustums and wedges. <em>Am</em> is the area measured at mid-height, not the average of the end areas. Soil density does not change with swell, so weight is based on bank volume, while a full truck carries the bank density divided by (1 + swell). Densities are typical values and real soil can differ by 15% or more with moisture.</p>
+  <p>Truck loads and weights are always rounded up so you do not under-order. Safety messages use the OSHA 29 CFR 1926 Subpart P rules of thumb: a ladder or ramp within 25 ft of workers at 4 ft deep, a protective system at 5 ft, and an engineer-designed system beyond 20 ft. The maximum allowable wall slopes are 1½H:1V (Type C soil), 1H:1V (Type B) and ¾H:1V (Type A). Local rules vary.</p>
+
+  <h2>Worked Example</h2>
+  <p>A homeowner digs a 24 ft × 16 ft × 6 ft pit for a basement addition in loam. Settings: Rectangular tab, Imperial, Loam / topsoil, swell 25%, 10 yd³ truck, $300 per load, 20% of the soil kept on site.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Step</th><th>Calculation</th><th class="num">Tool shows</th></tr></thead>
+    <tbody>
+      <tr><td>Bank volume</td><td>24 × 16 × 6 = 2,304 ft³ ÷ 27</td><td class="num">85.33 yd³</td></tr>
+      <tr><td>Loose volume</td><td>85.33 × 1.25</td><td class="num">106.67 yd³</td></tr>
+      <tr><td>Kept on site</td><td>85.33 × 0.20</td><td class="num">17.07 yd³</td></tr>
+      <tr><td>Volume to haul</td><td>106.67 × 0.80</td><td class="num">85.33 yd³</td></tr>
+      <tr><td>Truck loads</td><td>85.33 ÷ 10 = 8.53, rounded up</td><td class="num">9 loads</td></tr>
+      <tr><td>Haul cost</td><td>9 × $300</td><td class="num">$2,700</td></tr>
+      <tr><td>Total soil weight</td><td>2,304 ft³ × 112.37 lb/ft³ ÷ 2,000</td><td class="num">129.46 US tons</td></tr>
+      <tr><td>Weight to haul</td><td>80% of total</td><td class="num">103.57 US tons</td></tr>
+      <tr><td>One full load</td><td>10 yd³ × 27 × 112.37 ÷ 1.25 ÷ 2,000</td><td class="num">12.14 US tons</td></tr>
+    </tbody>
+  </table></div>
+  <p>Weights are rounded up to the next hundredth, so they can read 0.01 higher than ordinary rounding. At 6 ft deep the pit also triggers the tool's protective-system notice. If the soil swells 40% instead, the haul volume becomes 95.57 yd³, which is 10 loads and $3,000.</p>
 
   <h2>Tips &amp; Common Mistakes</h2>
   <ul>
-    <li><strong>Always add a swell factor</strong> — most contractors forget this and underorder trucking. Typical values: sand 10–15%, loam 20–30%, clay 25–40%.</li>
-    <li><strong>Measure twice</strong> — even a 6-inch depth error on a 20×40 ft slab represents 148 ft³ (~5.5 yd³) of extra material.</li>
-    <li><strong>Fill-back matters</strong> — if you're excavating for a foundation, a large percentage of soil gets backfilled after framing. Only the net removal volume needs trucking.</li>
-    <li><strong>Truck payload vs volume</strong> — some haul restrictions are by weight (especially near bridges). Use the weight output here to cross-check against your truck's legal gross weight.</li>
-    <li><strong>Slopes require trapezoidal math</strong> — OSHA requires sloped walls in many soil conditions for worker safety, which means the cut is never truly rectangular. Use the trapezoidal tab for trenches.</li>
+    <li><strong>Always include swell.</strong> Bank volume tells you how much hole you dig, but loose volume tells you how many trucks you need.</li>
+    <li><strong>Small depth errors add up.</strong> Digging 6 inches (0.5 ft) too deep over a 20 × 40 ft area adds 20 × 40 × 0.5 = 400 ft³, about 14.8 yd³. With swell that is roughly two extra truckloads.</li>
+    <li><strong>Add working room.</strong> Foundation and form crews usually need 1–2 ft of extra space around the footprint, so enter the dug size, not the finished size.</li>
+    <li><strong>Remember topsoil stripping and footing trenches.</strong> They are separate volumes. Run each one through the calculator and add the results.</li>
+    <li><strong>Check weight as well as volume.</strong> Wet clay and rock can overload a truck that is only partly full. Compare the full-load weight with your hauler's payload limit.</li>
   </ul>
 
   <h2>Frequently Asked Questions</h2>
-  <details>
-    <summary>What is swell factor and why does it change my volume?</summary>
-    <p>Swell factor is the percentage by which excavated soil expands once it's removed from the ground. Compacted earth has air driven out; when excavated, the particles loosen and take up more space. A cubic yard of clay in the ground may become 1.35 cubic yards in a dump truck, directly affecting how many loads you need.</p>
-  </details>
-  <details>
-    <summary>Should I use bank volume or swelled volume for truck count?</summary>
-    <p>Always use swelled (loose) volume for calculating truck loads, since that's how much physical space the soil occupies in the truck. Bank volume is what you report on your bid as the amount of material to be removed from the ground. Both numbers are shown in the results.</p>
-  </details>
-  <details>
-    <summary>What's the difference between rectangular and trapezoidal excavation?</summary>
-    <p>A rectangular cut has perfectly vertical walls — common for machine-cut utility trenches in firm soil or rock. A trapezoidal cut has sloped sides (a wider top than bottom), which is required in softer or cohesionless soils for wall stability and OSHA compliance. Use the trapezoidal tab whenever your walls can't be vertical.</p>
-  </details>
-  <details>
-    <summary>Can I use metric units with this calculator?</summary>
-    <p>Yes — each shape tab has a unit selector. Choose "Metric (m / m³)" to enter dimensions in meters and get results in cubic meters. Soil density, weight, and haul cost calculations all adapt automatically. Truck capacity input remains in yd³ by convention but you can enter m³ equivalent (1 yd³ ≈ 0.765 m³).</p>
-  </details>
+  <details><summary>What is swell factor and what number should I use?</summary><p>Swell factor is the percentage soil expands when it is dug out and loosened. Sand and gravel swell about 10–15%, loam 20–30% and clay 30–40%. If you are unsure, pick the higher end so you do not run short of trucks.</p></details>
+  <details><summary>Should I use bank volume or loose volume to count truck loads?</summary><p>Use loose volume, because that is the space the soil takes up in the truck. Bank volume is the in-ground quantity you normally put on a bid. The calculator shows both and bases truck loads on loose volume.</p></details>
+  <details><summary>What is the difference between rectangular and trapezoidal excavation?</summary><p>A rectangular cut has vertical walls and works in stable rock or when shoring holds the sides. A trapezoidal cut is wider at the top than at the bottom because the walls are sloped back. Use the trapezoidal tab for open-cut trenches in soil.</p></details>
+  <details><summary>Can I use metric units?</summary><p>Yes. Switch the unit system to Metric and every label changes to metres and cubic metres, including the truck-capacity field. The default truck becomes 7.6 m³ (about 10 yd³). If you switch units, re-enter your dimensions.</p></details>
+  <details><summary>How many cubic yards does a dump truck hold?</summary><p>A tandem-axle dump truck typically carries 10–12 yd³, and a tri-axle about 14–16 yd³. Ratings are usually heaped capacity. Dense or wet soil often hits the weight limit before the truck is full, so confirm the payload with your hauler.</p></details>
+  <details><summary>Does this tell me whether my trench is safe?</summary><p>No. It flags depths and wall slopes that usually need sloping, shoring or a shield under OSHA Subpart P, but only a competent person on site can classify the soil and approve a protective system. Treat the notices as reminders, not approval.</p></details>
 
   <h2>Related Tools</h2>
-  <div class="related-grid">
-    <a class="related-link" href="/roof-truss-span-spacing-calculator/">Truss Span &amp; Spacing Calculator</a>
-    <a class="related-link" href="/rebar-spacing-weight-calculator/">Rebar Spacing &amp; Weight Calculator</a>
-    <a class="related-link" href="/plywood-sheet-goods-cut-optimizer/">Plywood &amp; Sheet Goods Cut Optimizer</a>
-    <a class="related-link" href="/fence-material-calculator/">Fence Material Calculator</a>
-    <a class="related-link" href="/drywall-calculator/">Drywall Calculator</a>
-    <a class="related-link" href="/deck-material-cost-estimator/">Deck Material &amp; Cost Estimator</a>
-  </div>
-</div>
-
+  <ul class="rel">
+    <li><a href="/concrete-volume-calculator/">Concrete Volume Calculator</a></li>
+    <li><a href="/tuckpointing-cost-calculator/">Tuckpointing Cost Calculator</a></li>
+    <li><a href="/slope-percent-to-degrees-inches-per-foot-calculator/">Slope Percent to Degrees &amp; Inches-per-Foot Calculator</a></li>
+    <li><a href="/polymeric-sand-calculator/">Polymeric Sand Calculator</a></li>
+    <li><a href="/feet-inches-to-decimal-feet-calculator/">Feet and Inches to Decimal Feet Calculator</a></li>
+    <li><a href="/paver-quantity-calculator/">Paver Quantity Calculator</a></li>
+  </ul>
+</section>
 <nav class="cluster-nav" aria-label="More Site Work &amp; Equipment Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Site Work &amp; Equipment Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/gravel-driveway-calculator/">Gravel Driveway Calculator</a></li><li><a href="/scaffolding-material-rental-cost-estimator/">Scaffolding Material &amp; Rental Cost Estimator</a></li><li><a href="/welding-rod-wire-consumption-calculator/">Welding Rod &amp; Wire Consumption Calculator</a></li></ul></nav>
 <div class="ad-slot" id="ad-bottom"></div>
+</main>
 
 <footer>
-  <div style="margin-bottom:0.5rem">
-    <a href="/about/">About</a>
-    <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a>
-    <a href="/contact/">Contact</a>
-  </div>
-  &copy; <span id="yr"></span> toolwick.com — Free Online Calculators
+  <div><a href="/about/">About</a><a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a></div>
+  <div>&copy; <span id="yr"></span> toolwick.com</div>
 </footer>
-</div>
 
 <script>
-document.getElementById('yr').textContent = new Date().getFullYear();
+(function(){
+const $=id=>document.getElementById(id),Q=s=>document.querySelectorAll(s);
+const TABS=['rect','trap','circ','pris'];
+const CAPS={rect:'Oblique view of the soil volume removed: length × width × depth.',trap:'Cross-section. Length runs into the page; slope is horizontal : vertical per wall.',circ:'Cylindrical pit: diameter across the top, depth straight down.',pris:'Side view of an irregular cut. Areas are measured at the top, at mid-height and at the bottom.'};
+const DEF={'d-r-l':'Length (L)','d-r-w':'Width (W)','d-r-d':'Depth (D)','d-t-top':'Top width (TW)','d-t-bot':'Bottom width (BW)','d-t-d':'Depth (D)','d-t-s':'H:V','d-c-dia':'Diameter','d-c-d':'Depth (D)','d-p-a1':'Top area (A1)','d-p-am':'Mid-height area (Am)','d-p-a2':'Bottom area (A2)','d-p-d':'Height (D)'};
+let tab='rect',errs=[],prevM=false;
+const fmt=(n,d=2)=>isFinite(n)?(+n+0).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}):'—';
+const cf=n=>(+n+0).toLocaleString('en-US',{maximumFractionDigits:2});
+const up=(n,d)=>{const k=Math.pow(10,d);return Math.ceil(n*k-1e-6)/k};
+const dn=(n,d)=>{const k=Math.pow(10,d);return Math.floor(n*k+1e-6)/k};
+const setD=m=>{for(const k in m){const e=$(k);if(e)e.textContent=m[k]}};
+const num=id=>{const v=$(id).value.trim();return v===''?NaN:Number(v)};
+function bad(id,msg){const e=$(id);e.classList.add('error');e.setAttribute('aria-invalid','true');const m=$('err-'+id);m.textContent=msg;m.classList.add('visible');errs.push(id)}
+function clearErrors(){errs=[];Q('input.error').forEach(i=>{i.classList.remove('error');i.removeAttribute('aria-invalid')});Q('.error-msg.visible').forEach(e=>{e.classList.remove('visible');e.textContent=''})}
+function pos(id,lbl,max){max=max||1e5;const v=num(id);if(!(v>0))bad(id,'Enter a '+lbl+' greater than 0.');else if(v>max)bad(id,'That looks too large — check your units.');return v}
+function nn(id,lbl){const v=num(id);if(!(v>=0))bad(id,'Enter '+lbl+' of 0 or more.');else if(v>1e9)bad(id,'That looks too large — check your units.');return v}
+function clearRes(){$('results').innerHTML='';$('copyRow').hidden=true}
 
-// TAB SWITCHING
-let currentTab = 'rectangular';
-function switchTab(tab) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  document.querySelector('[data-tab="' + tab + '"]').classList.add('active');
-  currentTab = tab;
-  updateDiagram(tab);
-  clearErrors();
+function sw(t){
+  tab=t;
+  TABS.forEach(k=>{const on=k===t;$('tab-'+k).classList.toggle('on',on);$('g-'+k).classList.toggle('on',on);const b=$('t-'+k);b.classList.toggle('on',on);b.setAttribute('aria-selected',on?'true':'false');b.tabIndex=on?0:-1});
+  setD(DEF);$('cap').textContent=CAPS[t];$('diagram').setAttribute('aria-label','Excavation diagram: '+t);
+  clearErrors();clearRes();
 }
-
-function updateDiagram(tab) {
-  const svg = document.getElementById('diagram');
-  const labels = {
-    rectangular: ['Top Width (W)', 'Bottom Width (W)', 'Depth (D)'],
-    trapezoidal: ['Top Width (TW)', 'Bottom Width (BW)', 'Depth (D)'],
-    circular: ['Diameter (⌀)', '', 'Depth (D)'],
-    prismoidal: ['Top Area (A1)', 'Bottom Area (A2)', 'Height (D)']
-  };
-  const l = labels[tab] || labels.rectangular;
-  document.getElementById('lbl-top-w').textContent = l[0];
-  document.getElementById('lbl-bot-w').textContent = l[1];
-  document.getElementById('lbl-depth').textContent = l[2];
-}
-
-// SWELL SLIDER
-const swellSlider = document.getElementById('swell-slider');
-const swellDisplay = document.getElementById('swell-display');
-const swellVal = document.getElementById('swell-val-display');
-swellSlider.addEventListener('input', function() {
-  swellDisplay.textContent = this.value + '%';
-  swellVal.textContent = this.value + '%';
-});
-
-// CUSTOM DENSITY TOGGLE
-document.getElementById('soil-type').addEventListener('change', function() {
-  document.getElementById('custom-density-wrap').style.display = this.value === 'custom' ? 'block' : 'none';
-});
-
-// UNIT LABEL SYNC
-function getUnitLabel(tab) {
-  const sel = document.getElementById(tab[0] + '-unit') || document.querySelector(`#tab-${tab} select`);
-  if (!sel) return 'ft';
-  return sel.value;
-}
-
-// HELPERS
-function fmt(n, d = 2) {
-  if (isNaN(n) || !isFinite(n)) return '—';
-  return Number(n.toFixed(d)).toLocaleString('en-US', {minimumFractionDigits: d, maximumFractionDigits: d});
-}
-function fmtInt(n) {
-  if (isNaN(n) || !isFinite(n)) return '—';
-  return Math.ceil(n).toLocaleString('en-US');
-}
-function getVal(id) {
-  return parseFloat(document.getElementById(id).value);
-}
-function setError(id, show) {
-  const el = document.getElementById(id);
-  const err = document.getElementById('err-' + id);
-  if (el) el.classList.toggle('error', show);
-  if (err) err.classList.toggle('visible', show);
-}
-function clearErrors() {
-  document.querySelectorAll('input.error').forEach(i => i.classList.remove('error'));
-  document.querySelectorAll('.error-msg.visible').forEach(e => e.classList.remove('visible'));
-}
-
-function getDensityKgm3() {
-  const sel = document.getElementById('soil-type').value;
-  if (sel === 'custom') {
-    const v = getVal('custom-density');
-    return isNaN(v) || v <= 0 ? 1800 : v;
-  }
-  return parseFloat(sel);
-}
-
-function calculate() {
-  clearErrors();
-  const swell = parseFloat(swellSlider.value) / 100;
-  const truckCap = getVal('truck-capacity');
-  const haulCost = getVal('haul-cost');
-  const fillBackPct = getVal('fill-back');
-  const densityKgm3 = getDensityKgm3();
-  const densityLbFt3 = densityKgm3 * 0.0624279;
-
-  let bankVol = 0; // in native units (ft³ or m³)
-  let valid = true;
-  let unitSys = 'ft';
-  let formula = '';
-  let dimRows = [];
-
-  if (currentTab === 'rectangular') {
-    const L = getVal('r-length'), W = getVal('r-width'), D = getVal('r-depth');
-    unitSys = document.getElementById('r-unit').value;
-    if (!L || L <= 0) { setError('r-length', true); valid = false; }
-    if (!W || W <= 0) { setError('r-width', true); valid = false; }
-    if (!D || D <= 0) { setError('r-depth', true); valid = false; }
-    if (!valid) return showError();
-    bankVol = L * W * D;
-    formula = `V = L × W × D = ${fmt(L,2)} × ${fmt(W,2)} × ${fmt(D,2)}`;
-    dimRows = [['Length', fmt(L,2) + ' ' + unitSys], ['Width', fmt(W,2) + ' ' + unitSys], ['Depth', fmt(D,2) + ' ' + unitSys]];
-    updateDiagramLabels('W='+fmt(W,1)+unitSys, 'W='+fmt(W,1)+unitSys, 'D='+fmt(D,1)+unitSys);
-  } else if (currentTab === 'trapezoidal') {
-    const TW = getVal('t-top-w'), BW = getVal('t-bot-w'), L = getVal('t-length'), D = getVal('t-depth');
-    unitSys = document.getElementById('t-unit').value;
-    if (!TW || TW <= 0) { setError('t-top-w', true); valid = false; }
-    if (!BW || BW <= 0) { setError('t-bot-w', true); valid = false; }
-    if (!L || L <= 0) { setError('t-length', true); valid = false; }
-    if (!D || D <= 0) { setError('t-depth', true); valid = false; }
-    if (!valid) return showError();
-    bankVol = ((TW + BW) / 2) * D * L;
-    formula = `V = ((TW+BW)/2) × D × L = ((${fmt(TW,2)}+${fmt(BW,2)})/2) × ${fmt(D,2)} × ${fmt(L,2)}`;
-    dimRows = [['Top Width', fmt(TW,2)+' '+unitSys], ['Bottom Width', fmt(BW,2)+' '+unitSys], ['Length', fmt(L,2)+' '+unitSys], ['Depth', fmt(D,2)+' '+unitSys]];
-    updateDiagramLabels('TW='+fmt(TW,1)+unitSys, 'BW='+fmt(BW,1)+unitSys, 'D='+fmt(D,1)+unitSys);
-  } else if (currentTab === 'circular') {
-    const diam = getVal('c-diameter'), dep = getVal('c-depth');
-    unitSys = document.getElementById('c-unit').value;
-    if (!diam || diam <= 0) { setError('c-diameter', true); valid = false; }
-    if (!dep || dep <= 0) { setError('c-depth', true); valid = false; }
-    if (!valid) return showError();
-    bankVol = Math.PI * Math.pow(diam / 2, 2) * dep;
-    formula = `V = π × (D/2)² × Depth = π × ${fmt(diam/2,2)}² × ${fmt(dep,2)}`;
-    dimRows = [['Diameter', fmt(diam,2)+' '+unitSys], ['Radius', fmt(diam/2,2)+' '+unitSys], ['Depth', fmt(dep,2)+' '+unitSys]];
-    updateDiagramLabels('⌀='+fmt(diam,1)+unitSys, '', 'D='+fmt(dep,1)+unitSys);
-  } else if (currentTab === 'prismoidal') {
-    const a1 = getVal('p-a1'), am = getVal('p-am'), a2 = getVal('p-a2'), dep = getVal('p-depth');
-    unitSys = document.getElementById('p-unit').value;
-    if (!a1 || a1 < 0) { setError('p-a1', true); valid = false; }
-    if (!am || am < 0) { setError('p-am', true); valid = false; }
-    if (!a2 || a2 < 0) { setError('p-a2', true); valid = false; }
-    if (!dep || dep <= 0) { setError('p-depth', true); valid = false; }
-    if (!valid) return showError();
-    bankVol = (dep / 6) * (a1 + 4 * am + a2);
-    formula = `V = (D/6) × (A1 + 4×Am + A2) = (${fmt(dep,2)}/6) × (${fmt(a1,2)} + 4×${fmt(am,2)} + ${fmt(a2,2)})`;
-    dimRows = [['Top Area', fmt(a1,2)+' '+unitSys+'²'], ['Mid-Section Area', fmt(am,2)+' '+unitSys+'²'], ['Bottom Area', fmt(a2,2)+' '+unitSys+'²'], ['Depth', fmt(dep,2)+' '+unitSys]];
-    updateDiagramLabels('A1='+fmt(a1,1)+unitSys+'²', 'A2='+fmt(a2,1)+unitSys+'²', 'D='+fmt(dep,1)+unitSys);
-  }
-
-  // Convert to cubic yards or m³
-  let bankVolDisplay, looseVol, unit3;
-  if (unitSys === 'ft') {
-    bankVolDisplay = bankVol / 27; // ft³ → yd³
-    looseVol = bankVolDisplay * (1 + swell);
-    unit3 = 'yd³';
-  } else {
-    bankVolDisplay = bankVol; // already m³
-    looseVol = bankVolDisplay * (1 + swell);
-    unit3 = 'm³';
-  }
-
-  const fillBackFrac = isNaN(fillBackPct) ? 0 : Math.max(0, Math.min(100, fillBackPct)) / 100;
-  const netRemoveVol = looseVol * (1 - fillBackFrac);
-  const tcap = (!truckCap || truckCap <= 0) ? 10 : truckCap;
-  const truckLoads = netRemoveVol / tcap;
-  const hCost = (!haulCost || haulCost < 0) ? 0 : haulCost;
-  const totalCost = Math.ceil(truckLoads) * hCost;
-
-  // Weight
-  let weightTons, weightUnit;
-  if (unitSys === 'ft') {
-    const weightLb = (bankVol) * densityLbFt3;
-    weightTons = weightLb / 2000;
-    weightUnit = 'US tons';
-  } else {
-    const weightKg = bankVol * densityKgm3;
-    weightTons = weightKg / 1000;
-    weightUnit = 'metric tons';
-  }
-
-  const fillBackVol = bankVolDisplay * fillBackFrac;
-  const slope = currentTab === 'trapezoidal' ? (() => {
-    const TW = getVal('t-top-w'), BW = getVal('t-bot-w'), D = getVal('t-depth');
-    return ((TW - BW) / 2 / D).toFixed(2);
-  })() : '—';
-
-  requestAnimationFrame(() => {
-    let dimHtml = dimRows.map(r => `<tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`).join('');
-    let html = `
-      <div class="key-metric">
-        <div class="big-num">${fmt(bankVolDisplay, 1)} ${unit3}</div>
-        <div class="big-label">Bank (In-Situ) Excavation Volume</div>
-      </div>
-      <div class="metrics-grid">
-        <div class="metric-card"><div class="val">${fmt(looseVol, 1)}</div><div class="lbl">Loose Volume (${unit3})</div></div>
-        <div class="metric-card"><div class="val">${fmtInt(truckLoads)}</div><div class="lbl">Truck Loads Required</div></div>
-        <div class="metric-card"><div class="val">${fmt(weightTons, 1)}</div><div class="lbl">Weight (${weightUnit})</div></div>
-        <div class="metric-card"><div class="val">$${fmt(totalCost, 0)}</div><div class="lbl">Est. Haul Cost</div></div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Parameter</th><th class="num">Value</th></tr></thead>
-          <tbody>
-            ${dimHtml}
-            <tr><td>Swell Factor</td><td class="num">${(swell*100).toFixed(0)}%</td></tr>
-            <tr><td>Bank Volume</td><td class="num">${fmt(bankVolDisplay,2)} ${unit3}</td></tr>
-            <tr><td>Loose / Swelled Volume</td><td class="num">${fmt(looseVol,2)} ${unit3}</td></tr>
-            <tr><td>Fill-Back Volume</td><td class="num">${fmt(fillBackVol,2)} ${unit3}</td></tr>
-            <tr><td>Net Removal Volume</td><td class="num">${fmt(netRemoveVol,2)} ${unit3}</td></tr>
-            <tr><td>Soil Weight</td><td class="num">${fmt(weightTons,2)} ${weightUnit}</td></tr>
-            <tr><td>Truck Capacity</td><td class="num">${fmt(tcap,1)} ${unit3}/load</td></tr>
-            <tr><td>Truck Loads (ceiling)</td><td class="num">${fmtInt(truckLoads)} loads</td></tr>
-            <tr><td>Cost per Load</td><td class="num">$${fmt(hCost,2)}</td></tr>
-            <tr><td>Total Haul Cost</td><td class="num">$${fmt(totalCost,2)}</td></tr>
-            ${currentTab==='trapezoidal' ? `<tr><td>Side Slope (H:V)</td><td class="num">${slope}:1</td></tr>` : ''}
-          </tbody>
-        </table>
-      </div>
-      <div style="margin-top:1rem;background:#f8f9fa;border-radius:6px;padding:0.75rem 1rem;font-size:0.82rem;color:#555">
-        <strong>Formula used:</strong> ${formula}
-      </div>
-    `;
-    document.getElementById('results-content').innerHTML = html;
-    const rs = document.getElementById('results-section');
-    rs.style.display = 'block';
-    requestAnimationFrame(() => rs.classList.add('visible'));
-
-    // store for copy
-    window._lastResults = `Excavation Volume: ${fmt(bankVolDisplay,1)} ${unit3}\nLoose Volume: ${fmt(looseVol,1)} ${unit3}\nWeight: ${fmt(weightTons,1)} ${weightUnit}\nTruck Loads: ${fmtInt(truckLoads)}\nTotal Haul Cost: $${fmt(totalCost,2)}\nFormula: ${formula}`;
-  });
-}
-
-function updateDiagramLabels(top, bot, dep) {
-  const t = document.getElementById('lbl-top-w');
-  const b = document.getElementById('lbl-bot-w');
-  const d = document.getElementById('lbl-depth');
-  if (t && top) t.textContent = top;
-  if (b && bot) b.textContent = bot;
-  if (d && dep) d.textContent = dep;
-}
-
-function showError() {
-  // errors already set above
-}
-
-// ENTER KEY
-document.querySelectorAll('input[type=number]').forEach(inp => {
-  inp.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('calcBtn').click(); });
-});
-
-document.getElementById('calcBtn').addEventListener('click', () => {
-  requestAnimationFrame(() => calculate());
-});
-
-// COPY
-document.getElementById('copyBtn').addEventListener('click', function() {
-  const text = window._lastResults || '';
-  if (!text) return;
-  navigator.clipboard.writeText(text).then(() => {
-    this.textContent = 'Copied!';
-    setTimeout(() => { this.textContent = 'Copy Results'; }, 2000);
-  }).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    this.textContent = 'Copied!';
-    setTimeout(() => { this.textContent = 'Copy Results'; }, 2000);
+Q('.tabs button').forEach(b=>{
+  b.addEventListener('click',()=>sw(b.dataset.t));
+  b.addEventListener('keydown',e=>{
+    const i=TABS.indexOf(tab);let n=-1;
+    if(e.key==='ArrowRight')n=(i+1)%4;else if(e.key==='ArrowLeft')n=(i+3)%4;else if(e.key==='Home')n=0;else if(e.key==='End')n=3;
+    if(n>=0){e.preventDefault();sw(TABS[n]);$('t-'+TABS[n]).focus()}
   });
 });
+
+function applyUnit(){
+  const m=$('unit').value==='m';
+  Q('.u-len').forEach(e=>e.textContent=m?'m':'ft');
+  Q('.u-area').forEach(e=>e.textContent=m?'m²':'ft²');
+  Q('.u-vol').forEach(e=>e.textContent=m?'m³':'yd³');
+  Q('.u-dens').forEach(e=>e.textContent=m?'kg/m³':'lb/ft³');
+  Q('[data-ph]').forEach(e=>e.placeholder=m?e.dataset.phm:e.dataset.ph);
+  const t=$('truck-cap');
+  if(m!==prevM&&t.value===(prevM?'7.6':'10'))t.value=m?'7.6':'10';
+  prevM=m;clearErrors();clearRes();
+}
+$('unit').addEventListener('change',applyUnit);
+$('soil').addEventListener('change',function(){$('cd-wrap').style.display=this.value==='custom'?'block':'none'});
+$('swell').addEventListener('input',function(){$('swell-out').textContent=this.value+'%';this.setAttribute('aria-valuetext',this.value+' percent')});
+
+function slopeNote(h){
+  const s=fmt(dn(h,2),2)+'H:1V';
+  return h>=1.5?'Wall slope '+s+' is at or flatter than the Type C maximum (1½H:1V).':
+    h>=1?'Wall slope '+s+' is steeper than the Type C maximum (1½H:1V); it is allowed only if a competent person classifies the soil as Type B or better.':
+    h>=0.75?'Wall slope '+s+' is steeper than the Type B maximum (1H:1V); only Type A soil (¾H:1V) permits it.':
+    'Wall slope '+s+' is steeper than any OSHA maximum slope except stable rock; plan on shoring or a trench shield.';
+}
+
+function calc(){
+  clearErrors();
+  const m=$('unit').value==='m',u=m?'m':'ft',a=u+'²',v3=m?'m³':'yd³';
+  let vol,formula,rows,dg,depth,hv=null,desc;
+  if(tab==='rect'){
+    const L=pos('r-length','length'),W=pos('r-width','width'),D=pos('r-depth','depth');
+    vol=L*W*D;depth=D;
+    formula='V = L × W × D = '+cf(L)+' × '+cf(W)+' × '+cf(D)+' = '+fmt(vol)+' '+u+'³';
+    rows=[['Length',fmt(L)+' '+u],['Width',fmt(W)+' '+u],['Depth',fmt(D)+' '+u]];
+    dg={'d-r-l':'L = '+cf(L)+' '+u,'d-r-w':'W = '+cf(W)+' '+u,'d-r-d':'D = '+cf(D)+' '+u};
+    desc='rectangular, '+cf(L)+' by '+cf(W)+' by '+cf(D)+' '+u+' deep';
+  }else if(tab==='trap'){
+    const TW=pos('t-top-w','top width'),BW=pos('t-bot-w','bottom width'),L=pos('t-length','length'),D=pos('t-depth','depth');
+    if(TW>0&&BW>0&&TW<BW)bad('t-top-w','Top width must be at least the bottom width.');
+    vol=(TW+BW)/2*D*L;depth=D;hv=(TW-BW)/2/D;
+    formula='V = ((TW + BW) ÷ 2) × D × L = (('+cf(TW)+' + '+cf(BW)+') ÷ 2) × '+cf(D)+' × '+cf(L)+' = '+fmt(vol)+' '+u+'³';
+    rows=[['Top width',fmt(TW)+' '+u],['Bottom width',fmt(BW)+' '+u],['Length',fmt(L)+' '+u],['Depth',fmt(D)+' '+u]];
+    dg={'d-t-top':'TW = '+cf(TW)+' '+u,'d-t-bot':'BW = '+cf(BW)+' '+u,'d-t-d':'D = '+cf(D)+' '+u,'d-t-s':cf(dn(hv,2))+'H:1V'};
+    desc='trapezoidal, top '+cf(TW)+', bottom '+cf(BW)+', length '+cf(L)+', depth '+cf(D)+' '+u;
+  }else if(tab==='circ'){
+    const di=pos('c-diameter','diameter'),D=pos('c-depth','depth');
+    vol=Math.PI*Math.pow(di/2,2)*D;depth=D;
+    formula='V = π × (Diameter ÷ 2)² × D = π × '+cf(di/2)+'² × '+cf(D)+' = '+fmt(vol)+' '+u+'³';
+    rows=[['Diameter',fmt(di)+' '+u],['Radius',fmt(di/2)+' '+u],['Depth',fmt(D)+' '+u]];
+    dg={'d-c-dia':'Dia = '+cf(di)+' '+u,'d-c-d':'D = '+cf(D)+' '+u};
+    desc='circular pit, diameter '+cf(di)+' and depth '+cf(D)+' '+u;
+  }else{
+    const a1=nn('p-a1','an area'),am=nn('p-am','an area'),a2=nn('p-a2','an area'),D=pos('p-depth','depth');
+    if(a1>=0&&am>=0&&a2>=0&&a1+4*am+a2===0)bad('p-am','At least one area must be greater than 0.');
+    vol=D/6*(a1+4*am+a2);depth=D;
+    formula='V = (D ÷ 6) × (A1 + 4 × Am + A2) = ('+cf(D)+' ÷ 6) × ('+cf(a1)+' + 4 × '+cf(am)+' + '+cf(a2)+') = '+fmt(vol)+' '+u+'³';
+    rows=[['Top area (A1)',fmt(a1)+' '+a],['Mid-height area (Am)',fmt(am)+' '+a],['Bottom area (A2)',fmt(a2)+' '+a],['Depth',fmt(D)+' '+u]];
+    dg={'d-p-a1':'A1 = '+cf(a1)+' '+a,'d-p-am':'Am = '+cf(am)+' '+a,'d-p-a2':'A2 = '+cf(a2)+' '+a,'d-p-d':'D = '+cf(D)+' '+u};
+    desc='prismoidal cut, depth '+cf(D)+' '+u;
+  }
+  const cap=pos('truck-cap','truck capacity ('+v3+')',1e4);
+  const cost=num('haul-cost');if(!(cost>=0&&cost<=1e7))bad('haul-cost','Enter a cost per load of $0 or more.');
+  const reuse=num('fill-back');if(!(reuse>=0&&reuse<=100))bad('fill-back','Enter a percentage from 0 to 100.');
+  let kg=+$('soil').value;
+  if($('soil').value==='custom'){
+    const dv=num('custom-density');kg=m?dv:dv*16.018463;
+    if(!(kg>=300&&kg<=4000))bad('custom-density',m?'Enter a density from 300 to 4,000 kg/m³.':'Enter a density from 19 to 249 lb/ft³.');
+  }
+  if(errs.length){clearRes();$(errs[0]).focus();return}
+
+  const swell=$('swell').value/100,keep=reuse/100;
+  const bank=m?vol:vol/27,loose=bank*(1+swell),haulV=loose*(1-keep);
+  const loadsOf=h=>Math.max(0,Math.ceil(h/cap-1e-9));
+  const loads=loadsOf(haulV),total=loads*cost;
+  const lbft=kg*0.062427961;
+  const wTot=m?vol*kg/1000:vol*lbft/2000,wUnit=m?'metric tons':'US tons';
+  const wHaul=wTot*(1-keep);
+  const wLoad=m?cap*kg/(1+swell)/1000:cap*27*lbft/(1+swell)/2000;
+  const other=m?fmt(bank*1.30795062)+' yd³':fmt(vol)+' ft³';
+  const dens=m?fmt(kg,0)+' kg/m³':fmt(lbft)+' lb/ft³ ('+fmt(kg,0)+' kg/m³)';
+
+  const dft=m?depth*3.28084:depth;let sf='';
+  if(dft>=4){
+    sf='Depth is '+fmt(dft,1)+' ft ('+fmt(dft*0.3048,2)+' m). ';
+    if(dft>=5){
+      sf+='Cuts 5 ft (1.5 m) or deeper generally need sloping, shoring or a trench shield unless cut entirely in stable rock, and a competent person must classify the soil. ';
+      if(tab==='trap')sf+=slopeNote(hv)+' ';
+      else if(tab==='pris')sf+='Check that the wall angles behind your areas meet OSHA slope limits. ';
+      else sf+='These walls are vertical, so plan on shoring or a shield, or use the Trapezoidal tab with sloped walls. ';
+      if(dft>=20)sf+='Protective systems over 20 ft deep must be designed by a registered professional engineer. ';
+    }else sf+='Cuts 4 ft (1.2 m) or deeper need a ladder, ramp or stairway within 25 ft of workers (OSHA 29 CFR 1926.651), and protective systems start at 5 ft. ';
+  }
+
+  const sens=[['Your setting ('+(swell*100).toFixed(0)+'%)',swell]].concat([0,10,20,30,40,50].map(s=>[s+'%',s/100])).map((r,i)=>{
+    const l=bank*(1+r[1]),n=loadsOf(l*(1-keep));
+    const t=i===0?'<strong>'+r[0]+'</strong>':r[0];
+    return '<tr><td>'+t+'</td><td class="num">'+fmt(l)+'</td><td class="num">'+n.toLocaleString('en-US')+'</td><td class="num">$'+fmt(n*cost,0)+'</td></tr>';
+  }).join('');
+  const dimHtml=rows.map(r=>'<tr><td>'+r[0]+'</td><td class="num">'+r[1]+'</td></tr>').join('');
+  const html='<div class="card results-card" id="rc">'+
+    '<div class="key"><div class="big">'+fmt(bank)+' '+v3+'</div><div class="lbl">Bank (in-ground) excavation volume</div></div>'+
+    '<div class="grid">'+
+    '<div class="mc"><div class="val">'+fmt(loose)+'</div><div class="lb">Loose volume ('+v3+')</div></div>'+
+    '<div class="mc"><div class="val">'+loads.toLocaleString('en-US')+'</div><div class="lb">Truck loads (rounded up)</div></div>'+
+    '<div class="mc"><div class="val">'+fmt(up(wHaul,2))+'</div><div class="lb">Weight to haul ('+wUnit+')</div></div>'+
+    '<div class="mc"><div class="val">$'+fmt(total,0)+'</div><div class="lb">Estimated haul cost</div></div></div>'+
+    (sf?'<div class="warn" role="note"><strong>Trench safety:</strong> '+sf+'This is a reminder, not approval; local rules vary.</div>':'')+
+    '<div class="tw"><table><thead><tr><th>Parameter</th><th class="num">Value</th></tr></thead><tbody>'+dimHtml+
+    '<tr><td>Bank volume</td><td class="num">'+fmt(bank)+' '+v3+'</td></tr>'+
+    '<tr><td>Bank volume ('+(m?'yd³':'ft³')+')</td><td class="num">'+other+'</td></tr>'+
+    '<tr><td>Swell factor</td><td class="num">'+(swell*100).toFixed(0)+'%</td></tr>'+
+    '<tr><td>Loose volume</td><td class="num">'+fmt(loose)+' '+v3+'</td></tr>'+
+    '<tr><td>Kept on site (bank volume)</td><td class="num">'+fmt(bank*keep)+' '+v3+'</td></tr>'+
+    '<tr><td>Volume to haul (loose)</td><td class="num">'+fmt(haulV)+' '+v3+'</td></tr>'+
+    '<tr><td>Soil density used</td><td class="num">'+dens+'</td></tr>'+
+    '<tr><td>Total soil weight (bank)</td><td class="num">'+fmt(up(wTot,2))+' '+wUnit+'</td></tr>'+
+    '<tr><td>Weight to haul</td><td class="num">'+fmt(up(wHaul,2))+' '+wUnit+'</td></tr>'+
+    '<tr><td>Truck capacity</td><td class="num">'+fmt(cap)+' '+v3+'</td></tr>'+
+    '<tr><td>Weight of one full load</td><td class="num">'+fmt(up(wLoad,2))+' '+wUnit+'</td></tr>'+
+    '<tr><td>Truck loads (rounded up)</td><td class="num">'+loads.toLocaleString('en-US')+'</td></tr>'+
+    '<tr><td>Cost per load</td><td class="num">$'+fmt(cost)+'</td></tr>'+
+    '<tr><td>Total haul cost</td><td class="num">$'+fmt(total)+'</td></tr>'+
+    (hv!==null?'<tr><td>Side slope (each wall)</td><td class="num">'+fmt(dn(hv,2),2)+'H : 1V</td></tr>':'')+
+    '</tbody></table></div>'+
+    '<div class="tw"><h3>Swell comparison</h3><table><thead><tr><th>Swell</th><th class="num">Loose ('+v3+')</th><th class="num">Loads</th><th class="num">Haul cost</th></tr></thead><tbody>'+sens+'</tbody></table></div>'+
+    '<div class="fbox"><strong>Formula used:</strong> '+formula+'<br>Weights are rounded up. Estimate only — not engineering or permit approval.</div></div>';
+
+  window._cp='Excavation volume (bank): '+fmt(bank)+' '+v3+'\nLoose volume: '+fmt(loose)+' '+v3+' (swell '+(swell*100).toFixed(0)+'%)\nVolume to haul: '+fmt(haulV)+' '+v3+'\nTruck loads: '+loads+' x '+fmt(cap)+' '+v3+'\nWeight to haul: '+fmt(up(wHaul,2))+' '+wUnit+'\nHaul cost: $'+fmt(total)+'\nFormula: '+formula;
+  $('results').innerHTML=html;
+  $('copyRow').hidden=false;
+  setD(dg);$('diagram').setAttribute('aria-label','Excavation diagram: '+desc);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{const c=$('rc');if(c){c.classList.add('visible');c.scrollIntoView({block:'nearest',behavior:'smooth'})}}));
+}
+const run=()=>requestAnimationFrame(calc);
+$('calcBtn').addEventListener('click',run);
+Q('input').forEach(i=>{
+  if($('err-'+i.id))i.setAttribute('aria-describedby','err-'+i.id);
+  i.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();run()}});
+});
+
+$('copyBtn').addEventListener('click',function(){
+  const b=this,t=window._cp||'';if(!t)return;
+  const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+  const fb=()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(ta);done()};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,fb);else fb();
+});
+
+$('yr').textContent=new Date().getFullYear();
+applyUnit();
+})();
 </script>
 <script id="a11y-js">(function(){function run(){
 var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
