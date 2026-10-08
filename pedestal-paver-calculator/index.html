@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Pedestal Paver Calculator | Toolwick</title>
+<meta name="description" content="Free pedestal paver calculator: enter your patio or deck size and paver size to get pavers, pedestals, height range and load per pedestal.">
+<link rel="canonical" href="https://toolwick.com/pedestal-paver-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Pedestal Paver Calculator", "url": "https://toolwick.com/pedestal-paver-calculator/", "description": "Free pedestal paver calculator: enter your patio or deck size and paver size to get pavers, pedestals, height range and load per pedestal.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Pedestal Paver Calculator", "item": "https://toolwick.com/pedestal-paver-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many pedestals do I need per paver?", "acceptedAnswer": {"@type": "Answer", "text": "With standard 4-point support, you need about one pedestal per paver in the field, because each pedestal sits under four corners. Add one extra row and one extra column of pedestals around the edge. With 6-point support, expect about two per paver."}}, {"@type": "Question", "name": "How many pedestals do I need for 24 × 24 pavers?", "acceptedAnswer": {"@type": "Answer", "text": "Count the pavers across (n) and down (m), then multiply (n + 1) × (m + 1). A 10 × 6 grid of 24 in pavers needs 77 pedestals before waste. This calculator does that count and adds your spare percentage."}}, {"@type": "Question", "name": "How do I handle a sloped substrate?", "acceptedAnswer": {"@type": "Answer", "text": "Keep the paver surface level or sloped as you design it, and let pedestal height absorb the substrate slope. Multiply slope by run to get the height difference, then pick pedestals whose adjustment range covers the minimum to maximum height, using slope-correcting heads where the manufacturer allows."}}, {"@type": "Question", "name": "How much weight can a paver pedestal hold?", "acceptedAnswer": {"@type": "Answer", "text": "Ratings vary widely by product, from about 1,000 lb to several thousand pounds per pedestal. Compare the estimated load shown here with the manufacturer's published capacity, and choose a rating comfortably higher."}}, {"@type": "Question", "name": "Do pedestal pavers need a permit or engineer?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on where you live and where you build. Ground-level patios often do not, while elevated decks, balconies and rooftops usually require a check of the structure's capacity. Ask your local building department; this calculator does not replace that review."}}, {"@type": "Question", "name": "How much waste should I allow?", "acceptedAnswer": {"@type": "Answer", "text": "Ten percent is a common starting point for simple rectangles, covering cuts and breakage. Use 15–20% for diagonal layouts, small areas, or fragile materials, and keep a few spare pedestals for height mistakes."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;font-size:1rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 1.5rem}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px;padding:0}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.9rem;line-height:1.25;margin:.5rem 0 1rem}
+h2{font-size:1.35rem;margin:2rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;max-width:420px;height:auto;margin:0 auto}
+.diagram text{fill:#1a1a2e;font-family:inherit}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.field{margin-bottom:1rem}
+.row .field{margin-bottom:0}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.invalid{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;min-height:0;margin-top:.25rem}
+.hint{font-size:.8rem;color:#666;margin-top:.25rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.hidden{display:none}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:44px;cursor:pointer;width:100%;font-family:inherit}
+button:hover{background:#006299}
+button.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;padding:8px 16px;font-size:.85rem;font-weight:500;margin-top:1rem}
+button.copy:hover{background:#f0f7fb}
+#results{margin-top:1.5rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.keys{display:flex;gap:1rem;flex-wrap:wrap;background:#f8f9fa;border-radius:8px;padding:1.25rem;margin-bottom:1rem}
+.keys div{flex:1 1 140px}
+.big{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.1}
+.klabel{font-size:.9rem;color:#444}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;font-weight:600}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right}
+tr.cur td{font-weight:700}
+.warn{background:#fff8e6;border:1px solid #f0d58a;border-radius:6px;padding:.75rem 1rem;margin:0 0 .75rem;font-size:.9rem;color:#5c4400}
+.note{font-size:.85rem;color:#666}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .5rem}
+.rel{list-style:none;padding:0;margin:0}
+.rel li{border-bottom:1px solid #eee}
+.rel a{display:block;padding:.7rem 0;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.5rem;text-align:center;font-size:.9rem;color:#666}
+footer a{color:#0077b6;margin:0 .5rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:640px){.row{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/pedestal-paver-calculator/">
+<meta property="og:title" content="Pedestal Paver Calculator">
+<meta property="og:description" content="Free pedestal paver calculator: enter your patio or deck size and paver size to get pavers, pedestals, height range and load per pedestal.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<main class="wrap">
+<h1>Pedestal Paver Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This free pedestal paver calculator turns your patio, terrace or rooftop dimensions into a shopping list: how many pavers, how many pedestals, what height range the pedestals must cover, and roughly how much load each pedestal carries.</p>
+
+<div class="card">
+<div class="diagram" aria-label="Diagram of a pedestal paver layout in plan and side view">
+<svg id="dia" viewBox="0 0 340 445" role="img" aria-labelledby="dt">
+<title id="dt">Plan view of a paver grid with pedestals at the corners, and a side view showing pedestal height on a sloped substrate</title>
+<defs><marker id="ar" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M0,0L6,3L0,6z" fill="#0077b6"/></marker></defs>
+<text x="170" y="14" text-anchor="middle" font-size="12" font-weight="700">Plan view</text>
+<text id="sL" x="180" y="30" text-anchor="middle" font-size="12">Length: 20 ft</text>
+<line x1="40" y1="36" x2="320" y2="36" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="26" y1="44" x2="26" y2="194" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="sW" transform="translate(14,119) rotate(-90)" text-anchor="middle" font-size="12">Width: 12 ft</text>
+<g id="grid"></g>
+<text id="sP" x="180" y="214" text-anchor="middle" font-size="12">24 × 24 in pavers, 1/8 in joints</text>
+<text id="sC" x="180" y="230" text-anchor="middle" font-size="12">Your layout: 10 × 6 pavers, 77 pedestals (dots)</text>
+<line x1="20" y1="244" x2="320" y2="244" stroke="#e0e0e0"/>
+<text x="170" y="262" text-anchor="middle" font-size="12" font-weight="700">Side view</text>
+<text id="sT" x="180" y="282" text-anchor="middle" font-size="12">Paver 0.8 in thick</text>
+<rect x="40" y="290" width="138" height="10" fill="#eaf4fa" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="182" y="290" width="138" height="10" fill="#eaf4fa" stroke="#0077b6" stroke-width="1.5"/>
+<polygon points="40,404 320,376 320,420 40,420" fill="#e0e0e0" stroke="#1a1a2e" stroke-width="1"/>
+<rect x="76" y="300" width="8" height="97" fill="#eaf4fa" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="66" y="397" width="28" height="3" fill="#0077b6"/>
+<rect x="276" y="300" width="8" height="77" fill="#eaf4fa" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="266" y="377" width="28" height="3" fill="#0077b6"/>
+<line x1="108" y1="300" x2="108" y2="400" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4 3" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="sMax" x="114" y="354" font-size="12">Max 4.5 in</text>
+<line x1="252" y1="300" x2="252" y2="380" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4 3" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="sMin" x="246" y="344" text-anchor="end" font-size="12">Min 2.0 in</text>
+<text id="sS" x="180" y="438" text-anchor="middle" font-size="12">Substrate slope 1% (exaggerated)</text>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="row">
+<div class="field"><label for="len">Length (ft)</label><input id="len" type="number" inputmode="decimal" step="any" value="20" aria-describedby="e-len"><div class="err" id="e-len"></div></div>
+<div class="field"><label for="wid">Width (ft)</label><input id="wid" type="number" inputmode="decimal" step="any" value="12" aria-describedby="e-wid"><div class="err" id="e-wid"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="size">Paver size (inches)</label>
+<select id="size"><option value="12x12">12 × 12</option><option value="12x24">12 × 24</option><option value="16x16">16 × 16</option><option value="18x18">18 × 18</option><option value="24x24" selected>24 × 24</option><option value="24x36">24 × 36</option><option value="24x48">24 × 48</option><option value="30x30">30 × 30</option><option value="32x32">32 × 32</option><option value="custom">Custom size…</option></select></div>
+<div class="field"><label for="orient">Long side of paver runs</label>
+<select id="orient"><option value="along">Along the length</option><option value="across">Across the width</option></select></div>
+</div>
+<div class="row hidden" id="customRow">
+<div class="field"><label for="cw">Custom paver side A (in)</label><input id="cw" type="number" inputmode="decimal" step="any" value="24" aria-describedby="e-cw"><div class="err" id="e-cw"></div></div>
+<div class="field"><label for="ch">Custom paver side B (in)</label><input id="ch" type="number" inputmode="decimal" step="any" value="24" aria-describedby="e-ch"><div class="err" id="e-ch"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="gap">Joint gap (spacer tab)</label>
+<select id="gap"><option value="0.125" selected>1/8 in</option><option value="0.1875">3/16 in</option><option value="0.25">1/4 in</option></select></div>
+<div class="field"><label for="mat">Paver material</label>
+<select id="mat"><option value="0" data-psf="10" data-thk="0.8">Porcelain 2 cm (≈10 psf)</option><option value="1" data-psf="25" data-thk="2">Concrete 2 in (≈25 psf)</option><option value="2" data-psf="18" data-thk="1.25">Natural stone 1.25 in (≈18 psf)</option><option value="3" data-psf="34" data-thk="2.75">Thick concrete/stone 70 mm (≈34 psf)</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="live">Design live load</label>
+<select id="live"><option value="40">40 psf — residential deck (IRC R301.5)</option><option value="60" selected>60 psf — balcony / terrace</option><option value="100">100 psf — assembly / commercial (IBC 1607.1)</option></select></div>
+<div class="field"><label for="sup">Pedestal support pattern</label>
+<select id="sup"><option value="auto" selected>Auto (6-point if side &gt; 24 in)</option><option value="4">4-point (corners only)</option><option value="6">6-point (corners + mid long edges)</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="minh">Lowest pedestal height needed (in)</label><input id="minh" type="number" inputmode="decimal" step="any" value="2" aria-describedby="e-minh"><div class="err" id="e-minh"></div></div>
+<div class="field"><label for="slope">Substrate slope (%)</label><input id="slope" type="number" inputmode="decimal" step="any" value="1" aria-describedby="e-slope"><div class="err" id="e-slope"></div><div class="hint">Drainage slope is commonly 1–2% (⅛–¼ in per ft).</div></div>
+</div>
+<div class="field"><label for="waste">Waste &amp; spares: <span id="wv">10</span>%</label><input id="waste" type="range" min="0" max="20" step="1" value="10"><div class="ticks"><span>0%</span><span>10%</span><span>20%</span></div></div>
+<button type="submit" id="go">Calculate Pedestals &amp; Pavers</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/pedestal-paver-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Pedestal Paver Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/pedestal-paver-calculator/&quot;&gt;Pedestal Paver Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/pedestal-paver-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Pedestal Paver Calculator</h2>
+<p>Enter the length and width of the area in feet, pick your paver size, joint gap and material, and choose the design live load. Add the lowest pedestal height you need and the slope of the structure underneath. Press Calculate to get the pavers and pedestals to order, the pedestal height range, the estimated load on each pedestal, and a comparison of other paver sizes for the same area.</p>
+
+<h2>Why This Matters</h2>
+<p>Pedestal pavers sit on adjustable plastic or fiber-reinforced supports instead of sand or mortar. That makes them the go-to system for rooftop terraces, balconies, over-waterproofed slabs and uneven concrete patios, because water drains beneath the surface and you can still reach the membrane later. The catch is that every pedestal is a line item. A 20 × 12 ft terrace in 24 × 24 in pavers needs about 60 pavers but 77 pedestals, because the edge row and column need support too. At roughly $4–$12 per pedestal, miscounting by 10 percent is a real cost, and a short count stops the job because you cannot improvise a missing support.</p>
+<p>Height and weight matter just as much. A drainage slope of 1% across 20 ft is 2.4 inches of difference, so the pedestals at one end must be that much taller than the other end, and a pedestal rated for 1 to 2 inches simply will not reach. Porcelain pavers are light, around 10 pounds per square foot, while 2-inch concrete pavers are about 25. On an elevated structure that difference, plus people and furniture, decides which pedestals and which framing you can use. Landscapers, deck builders, roofers and homeowners planning a weekend project all need these numbers before they order.</p>
+
+<h2>How It's Calculated</h2>
+<p>Everything is done in inches. With paver sides <em>p<sub>w</sub></em> (along the length) and <em>p<sub>h</sub></em> (across the width) and joint gap <em>g</em>:</p>
+<ul>
+<li><strong>Columns:</strong> n = ⌈(L × 12 + g) ÷ (p<sub>w</sub> + g)⌉, and <strong>rows:</strong> m = ⌈(W × 12 + g) ÷ (p<sub>h</sub> + g)⌉. Any partial paver counts as a whole paver, because it is cut from a full one.</li>
+<li><strong>4-point pedestals:</strong> (n + 1) × (m + 1), since neighboring pavers share each corner pedestal.</li>
+<li><strong>6-point pedestals:</strong> the 4-point count plus one pedestal at the middle of each long edge, n × (m + 1) when the long side runs along the length.</li>
+<li><strong>Order quantity:</strong> ⌈count × (1 + waste%)⌉ for both pavers and pedestals.</li>
+<li><strong>Height range:</strong> the lowest height you entered (rounded down to ¼ in) up to that height plus slope% × the longer side, rounded up to the next ¼ in. Assuming the slope runs along the longer side is the worst case.</li>
+<li><strong>Load per pedestal:</strong> (paver dead load + live load, in psf) × paver cell area in ft², rounded up to the next 10 lb. This assumes every pedestal carries one full paver cell, which overstates the load on a 4-point or 6-point layout on purpose.</li>
+</ul>
+<p>Live loads follow the common values in IRC Table R301.5 (40 psf decks, 60 psf balconies) and IBC Table 1607.1 (100 psf assembly areas). Material weights are typical figures; use the manufacturer's data sheet for real products. Local codes vary, and this tool is a planning estimate, not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>A 20 × 12 ft terrace, 24 × 24 in porcelain pavers (2 cm, 10 psf), 1/8 in joints, 10% waste, 60 psf live load, 2 in minimum pedestal height, 1% slope.</p>
+<ol>
+<li>Columns: (240 + 0.125) ÷ 24.125 = 9.95, so n = 10. Rows: (144 + 0.125) ÷ 24.125 = 5.97, so m = 6.</li>
+<li>Pavers in the layout: 10 × 6 = 60 (45 full, 15 cut). With 10% waste: 60 × 1.1 = 66 pavers to order.</li>
+<li>Pedestals: 11 × 7 = 77, and 77 × 1.1 = 84.7, so order 85.</li>
+<li>Height: 1% × 240 in = 2.4 in of slope, so the range is 2.00 to 4.50 in (4.4 rounded up).</li>
+<li>Load: cell area = 24.125² ÷ 144 = 4.04 ft². (10 + 60) × 4.04 = 283 lb, rounded up to 290 lb per pedestal.</li>
+<li>Edge restraint: 2 × (20 + 12) = 64 ft.</li>
+</ol>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Forgetting the edge row of pedestals.</strong> A grid of n × m pavers needs (n + 1) × (m + 1) supports, not n × m.</li>
+<li><strong>Ignoring slope.</strong> Measure the high and low points of the substrate. If the range exceeds one pedestal's adjustment, you need taller pedestals or slope-correcting heads. Our <a href="/slope-percent-to-degrees-inches-per-foot-calculator/">slope converter</a> helps turn inches-per-foot into percent.</li>
+<li><strong>Using 4-point support under large pavers.</strong> Long pavers such as 24 × 48 in typically need mid-edge support. Follow the paver manufacturer's span rules.</li>
+<li><strong>Skipping edge restraints.</strong> Perimeter pavers can drift or tip without a restraint or a curb, especially on rooftops.</li>
+<li><strong>Measuring to the inch and trusting the answer.</strong> If a dimension is just a hair over a whole number of pavers, you get a thin sliver cut. Consider shifting the layout so both edges get a wider cut.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many pedestals do I need per paver?</summary><p>With standard 4-point support, you need about one pedestal per paver in the field, because each pedestal sits under four corners. Add one extra row and one extra column of pedestals around the edge. With 6-point support, expect about two per paver.</p></details>
+<details><summary>How many pedestals do I need for 24 × 24 pavers?</summary><p>Count the pavers across (n) and down (m), then multiply (n + 1) × (m + 1). A 10 × 6 grid of 24 in pavers needs 77 pedestals before waste. This calculator does that count and adds your spare percentage.</p></details>
+<details><summary>How do I handle a sloped substrate?</summary><p>Keep the paver surface level or sloped as you design it, and let pedestal height absorb the substrate slope. Multiply slope by run to get the height difference, then pick pedestals whose adjustment range covers the minimum to maximum height, using slope-correcting heads where the manufacturer allows.</p></details>
+<details><summary>How much weight can a paver pedestal hold?</summary><p>Ratings vary widely by product, from about 1,000 lb to several thousand pounds per pedestal. Compare the estimated load shown here with the manufacturer's published capacity, and choose a rating comfortably higher.</p></details>
+<details><summary>Do pedestal pavers need a permit or engineer?</summary><p>It depends on where you live and where you build. Ground-level patios often do not, while elevated decks, balconies and rooftops usually require a check of the structure's capacity. Ask your local building department; this calculator does not replace that review.</p></details>
+<details><summary>How much waste should I allow?</summary><p>Ten percent is a common starting point for simple rectangles, covering cuts and breakage. Use 15–20% for diagonal layouts, small areas, or fragile materials, and keep a few spare pedestals for height mistakes.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/paver-quantity-calculator/">Paver Quantity Calculator</a></li>
+<li><a href="/paver-patio-calculator/">Paver Patio Base &amp; Sand Calculator</a></li>
+<li><a href="/contractor-markup-profit-margin-calculator/">Contractor Markup &amp; Profit Margin Calculator</a></li>
+<li><a href="/tuckpointing-cost-calculator/">Tuckpointing Cost Calculator</a></li>
+<li><a href="/slope-percent-to-degrees-inches-per-foot-calculator/">Slope Percent to Degrees &amp; Inches-per-Foot Calculator</a></li>
+<li><a href="/polymeric-sand-calculator/">Polymeric Sand Calculator</a></li>
+</ul>
+
+<nav class="cluster-nav" aria-label="More Concrete, Masonry &amp; Foundations Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Concrete, Masonry &amp; Foundations Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/paver-patio-calculator/">Paver Patio Base &amp; Sand Calculator</a></li><li><a href="/paver-quantity-calculator/">Paver Quantity Calculator</a></li><li><a href="/shower-pan-mortar-bed-calculator/">Bathtub &amp; Shower Pan Mortar Bed Calculator</a></li><li><a href="/brick-mortar-calculator/">Brick &amp; Mortar Calculator</a></li><li><a href="/cinder-block-wall-calculator/">Cinder Block Wall Calculator</a></li><li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li><li><a href="/concrete-volume-calculator/">Concrete Volume Calculator</a></li><li><a href="/deck-footing-frost-depth-calculator/">Deck Footing Size &amp; Frost Depth Calculator</a></li><li><a href="/concrete-calculators/"><strong>All Concrete, Masonry &amp; Foundations calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+</main>
+<footer>
+<p><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</footer>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+function fmt(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function f2(n){return n.toLocaleString('en-US',{maximumFractionDigits:2})}
+var GAPS={'0.125':'1/8','0.1875':'3/16','0.25':'1/4'};
+var lastText='';
+$('yr').textContent=new Date().getFullYear();
+// draw plan grid
+(function(){var s='',i,j;for(i=0;i<4;i++)for(j=0;j<3;j++)s+='<rect x="'+(41.5+70*i)+'" y="'+(45.5+50*j)+'" width="67" height="47" fill="#eaf4fa" stroke="#0077b6" stroke-width="1"/>';
+for(i=0;i<=4;i++)for(j=0;j<=3;j++)s+='<circle cx="'+(40+70*i)+'" cy="'+(44+50*j)+'" r="3.5" fill="#0077b6"/>';
+$('grid').innerHTML=s})();
+$('size').addEventListener('change',function(){$('customRow').classList.toggle('hidden',this.value!=='custom')});
+$('waste').addEventListener('input',function(){$('wv').textContent=this.value});
+['len','wid','cw','ch','minh','slope'].forEach(function(id){$(id).addEventListener('input',function(){clr(id)})});
+function clr(id){$(id).classList.remove('invalid');$(id).removeAttribute('aria-invalid');$('e-'+id).textContent=''}
+function chk(id,min,max,msg){var el=$(id),x=parseFloat(el.value);
+if(!isFinite(x)||x<min||x>max){el.classList.add('invalid');el.setAttribute('aria-invalid','true');$('e-'+id).textContent=msg;return null}
+clr(id);return x}
+function layout(L,W,pw,ph,g,w,sup){
+var Li=L*12,Wi=W*12,nf=(Li+g)/(pw+g),mf=(Wi+g)/(ph+g);
+var n=Math.max(1,Math.ceil(nf-1e-9)),m=Math.max(1,Math.ceil(mf-1e-9));
+var fn=Math.floor(nf+1e-9),fm=Math.floor(mf+1e-9);
+var six=sup==='6'||(sup==='auto'&&Math.max(pw,ph)>24.01);
+var base=(n+1)*(m+1),extra=six?(pw>=ph?n*(m+1):m*(n+1)):0;
+var total=base+extra;
+return {n:n,m:m,fn:fn,fm:fm,six:six,total:total,cells:n*m,
+pav:Math.ceil(n*m*(1+w)),ped:Math.ceil(total*(1+w)-1e-9),
+remN:Li-fn*(pw+g),remM:Wi-fm*(ph+g)}}
+function calc(){
+var L=chk('len',1,500,'Enter a length between 1 and 500 ft.');
+var W=chk('wid',1,500,'Enter a width between 1 and 500 ft.');
+var custom=$('size').value==='custom',a,b;
+if(custom){a=chk('cw',6,72,'Enter a paver side from 6 to 72 in.');b=chk('ch',6,72,'Enter a paver side from 6 to 72 in.')}
+else{var p=$('size').value.split('x');a=+p[0];b=+p[1]}
+var mh=chk('minh',0.25,36,'Enter a height from 0.25 to 36 in.');
+var sl=chk('slope',0,25,'Enter a slope from 0 to 25 %.');
+if([L,W,a,b,mh,sl].some(function(x){return x===null})){$('results').innerHTML='';return}
+var lg=Math.max(a,b),sh=Math.min(a,b),along=$('orient').value==='along';
+var pw=along?lg:sh,ph=along?sh:lg;
+var g=parseFloat($('gap').value),w=parseInt($('waste').value,10)/100,sup=$('sup').value;
+var opt=$('mat').options[$('mat').selectedIndex],dead=+opt.dataset.psf,thk=+opt.dataset.thk;
+var live=+$('live').value;
+var r=layout(L,W,pw,ph,g,w,sup);
+var cell=(pw+g)*(ph+g)/144;
+var load=Math.ceil((dead+live)*cell/10)*10;
+var perWt=dead*pw*ph/144;
+var totWt=Math.ceil(dead*r.cells*cell/10)*10;
+var area=L*W,perim=Math.ceil(2*(L+W));
+var longSide=Math.max(L,W)*12,vari=sl/100*longSide;
+var hMin=Math.floor(mh*4)/4,hMax=Math.ceil((mh+vari)*4)/4;
+var cut=r.cells-r.fn*r.fm;
+var warns=[];
+if(!r.six&&Math.max(pw,ph)>24.01)warns.push('Pavers with a side over 24 in on 4-point support may crack or flex. Check the paver manufacturer\'s span limits.');
+if(hMax>24)warns.push('Pedestals taller than about 24 in usually need lateral bracing or a different system. Confirm with the pedestal manufacturer.');
+if(sl>2)warns.push('A slope above 2% often exceeds what slope-correcting pedestal heads can fix. Check the manufacturer\'s correction limit.');
+if(load>1000)warns.push('Estimated load per pedestal exceeds 1,000 lb. Confirm the pedestal rating and the structure\'s capacity.');
+if(cut>0&&((r.fn<r.n&&r.remN>0.01&&r.remN<3)||(r.fm<r.m&&r.remM>0.01&&r.remM<3)))warns.push('The edge cut is a sliver under 3 in. Consider shifting the layout so both edges get a wider cut.');
+var sc=r.six?'6-point (corners + mid long edges)':'4-point (corners)';
+var rows=[['Area',f2(area)+' sq ft'],['Layout (along × across)',r.n+' × '+r.m+' pavers'],['Full pavers',fmt(r.fn*r.fm)],['Cut pavers (edges)',fmt(cut)],['Pavers in layout',fmt(r.cells)],['Spares ('+Math.round(w*100)+'%)',fmt(r.pav-r.cells)],['Pavers to order',fmt(r.pav)],['Support pattern',sc],['Pedestals in layout',fmt(r.total)],['Pedestals to order',fmt(r.ped)],['Edge restraint (perimeter)',fmt(perim)+' ft'],['Pedestal height range',fmt(hMin,2)+' – '+fmt(hMax,2)+' in'],['Slope height difference',fmt(vari,2)+' in'],['Dead weight per paver',fmt(perWt,1)+' lb'],['Estimated load per pedestal',fmt(load)+' lb'],['Total paver dead weight',fmt(totWt)+' lb']];
+var h='<div class="res"><div class="keys"><div><div class="big">'+fmt(r.ped)+'</div><div class="klabel">pedestals to order</div></div><div><div class="big">'+fmt(r.pav)+'</div><div class="klabel">pavers to order</div></div><div><div class="big">'+fmt(load)+' lb</div><div class="klabel">est. load per pedestal</div></div></div>';
+warns.forEach(function(x){h+='<p class="warn">⚠ '+x+'</p>'});
+h+='<div class="tw"><table><thead><tr><th>Item</th><th class="n">Result</th></tr></thead><tbody>';
+rows.forEach(function(x){h+='<tr><td>'+x[0]+'</td><td class="n">'+x[1]+'</td></tr>'});
+h+='</tbody></table></div><h3>Compare paver sizes for the same area</h3><div class="tw"><table><thead><tr><th>Paver size</th><th class="n">Pavers</th><th class="n">Pedestals</th><th>Support</th></tr></thead><tbody>';
+[[12,12],[16,16],[18,18],[24,24],[24,36],[24,48]].forEach(function(s){
+var x=Math.max(s[0],s[1]),y=Math.min(s[0],s[1]),cw=along?x:y,chh=along?y:x;
+var q=layout(L,W,cw,chh,g,w,sup);
+h+='<tr'+(cw===pw&&chh===ph?' class="cur"':'')+'><td>'+s[0]+' × '+s[1]+' in</td><td class="n">'+fmt(q.pav)+'</td><td class="n">'+fmt(q.ped)+'</td><td>'+(q.six?'6-point':'4-point')+'</td></tr>'});
+h+='</tbody></table></div><p class="note">Quantities include your waste allowance. Load estimates are conservative rules of thumb (IRC R301.5 / IBC 1607.1 live loads); local codes vary. This is not engineering, permit or inspection approval.</p><button type="button" class="copy" id="cp">Copy results</button></div>';
+lastText='Pedestal paver estimate — '+f2(L)+' × '+f2(W)+' ft, '+f2(pw)+' × '+f2(ph)+' in pavers, '+GAPS[g]+' in joints\nPavers to order: '+fmt(r.pav)+'\nPedestals to order: '+fmt(r.ped)+' ('+sc+')\nPedestal height range: '+fmt(hMin,2)+' – '+fmt(hMax,2)+' in\nEstimated load per pedestal: '+fmt(load)+' lb\nEdge restraint: '+fmt(perim)+' ft';
+requestAnimationFrame(function(){
+$('results').innerHTML=h;
+$('sL').textContent='Length: '+f2(L)+' ft';
+$('sW').textContent='Width: '+f2(W)+' ft';
+$('sP').textContent=f2(pw)+' × '+f2(ph)+' in pavers, '+GAPS[g]+' in joints';
+$('sC').textContent='Your layout: '+r.n+' × '+r.m+' pavers, '+fmt(r.total)+' pedestals (dots)';
+$('sT').textContent='Paver '+f2(thk)+' in thick';
+$('sMax').textContent='Max '+fmt(hMax,2)+' in';
+$('sMin').textContent='Min '+fmt(hMin,2)+' in';
+$('sS').textContent='Substrate slope '+f2(sl)+'% (exaggerated)';
+})}
+$('f').addEventListener('submit',function(e){e.preventDefault();calc()});
+$('results').addEventListener('click',function(e){
+if(e.target.id!=='cp')return;var b=e.target;
+function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,fb)}else fb();
+function fb(){var t=document.createElement('textarea');t.value=lastText;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(t);done()}
+});
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
