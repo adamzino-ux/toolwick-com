@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Septic Drain Field Size Calculator | Toolwick</title>
+<meta name="description" content="Free septic field size calculator: enter bedrooms and soil perc rate to get drain field square footage, trench length, layout and footprint.">
+<link rel="canonical" href="https://toolwick.com/septic-drain-field-size-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+[hidden]{display:none!important}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 0}
+nav a{font-weight:700;font-size:1.1rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.2rem 0 .6rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.6rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram p{font-size:.85rem;color:#555;margin:.4rem 0 0;text-align:center}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font-size:1rem;min-height:48px;background:#fff;color:#1a1a2e;font-family:inherit}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,input[type=range]:focus-visible,input[type=checkbox]:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.err{border-color:#e74c3c}
+.msg{color:#c0392b;font-size:.85rem;margin:.35rem 0 0}
+.msg:empty{display:none}
+.grid2{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:600px){.grid2{grid-template-columns:1fr 1fr}}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666;margin-top:-.4rem}
+.chk{display:flex;align-items:center;gap:.6rem;min-height:44px}
+.chk input{width:22px;height:22px;margin:0;accent-color:#0077b6;flex:none}
+.chk label{margin:0;font-size:.9rem}
+button.go{width:100%;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:48px;cursor:pointer;font-family:inherit}
+button.go:hover{background:#006299}
+#results{margin-top:1.5rem}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.fade{animation:none}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.big{display:block;font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.15}
+.key small{color:#555;font-size:.9rem}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.num{text-align:right}
+th.num{text-align:right}
+tr.hl td{font-weight:700;color:#005a8a}
+.bar{background:#e8eef2;border-radius:3px;height:10px;min-width:90px}
+.bar i{display:block;height:10px;background:#0077b6;border-radius:3px}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;border-radius:0 6px 6px 0}
+.warn{font-size:.9rem;color:#7a2e0e;background:#fff4ec;border-left:3px solid #e67e22;padding:.75rem 1rem;border-radius:0 6px 6px 0;margin-bottom:1rem}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.85rem;min-height:44px;cursor:pointer;font-family:inherit;font-weight:600;margin-top:.5rem}
+.copy:hover{background:#f0f8fc}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center;padding:.4rem 0}
+details p{margin:.2rem 0 1rem}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0;display:grid;gap:.5rem}
+.rel li{margin:0}
+.rel a{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:12px 16px;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.5rem}.big{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/septic-drain-field-size-calculator/">
+<meta property="og:title" content="Septic Drain Field Size Calculator">
+<meta property="og:description" content="Free septic field size calculator: enter bedrooms and soil perc rate to get drain field square footage, trench length, layout and footprint.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Septic Drain Field Size Calculator</h1>
+<p>Use this septic field size calculator to estimate the absorption area, total trench length and field footprint your drain field needs, based on bedrooms (or daily flow) and your soil's percolation rate. Results are rounded up, never down.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="svg" viewBox="0 0 520 300" role="img" aria-label="Plan view of a septic drain field showing tank, distribution box and parallel trenches">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<g id="dyn" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" font-size="14" fill="#1a1a2e"></g>
+</svg>
+<p id="cap">Plan view (example). Press Calculate to update with your numbers.</p>
+</div>
+
+<form id="f" novalidate>
+<div class="field">
+<label for="flowMode">Daily flow basis</label>
+<select id="flowMode">
+<option value="150" selected>150 gallons per day per bedroom (conservative)</option>
+<option value="120">120 gallons per day per bedroom (some local codes)</option>
+<option value="custom">I know my design flow (gallons per day)</option>
+</select>
+</div>
+<div class="field" id="bedWrap">
+<label for="bed">Number of bedrooms</label>
+<input type="number" id="bed" inputmode="numeric" min="1" max="20" step="1" value="3" aria-describedby="e-bed">
+<p class="msg" id="e-bed"></p>
+</div>
+<div class="field" id="gpdWrap" hidden>
+<label for="gpd">Design flow (gallons per day)</label>
+<input type="number" id="gpd" inputmode="decimal" min="50" max="10000" step="any" value="450" aria-describedby="e-gpd">
+<p class="msg" id="e-gpd"></p>
+</div>
+<div class="chk">
+<input type="checkbox" id="disp"><label for="disp">Add 25% for garbage disposal, large soaking tub or frequent guests</label>
+</div>
+<div class="field" style="margin-top:1rem">
+<label for="soil">Soil type</label>
+<select id="soil">
+<option value="perc" selected>I have a perc test result</option>
+<option value="5">Sand or gravelly sand (about 1–5 min/in)</option>
+<option value="10">Sandy loam (about 6–10 min/in)</option>
+<option value="15">Loam (about 11–15 min/in)</option>
+<option value="30">Silt loam (about 16–30 min/in)</option>
+<option value="45">Clay loam (about 31–45 min/in)</option>
+<option value="60">Slow clay loam / silty clay (about 46–60 min/in)</option>
+</select>
+</div>
+<div class="field" id="percWrap">
+<label for="perc">Percolation rate (minutes per inch)</label>
+<input type="number" id="perc" inputmode="decimal" min="1" max="60" step="any" value="25" aria-describedby="e-perc">
+<p class="msg" id="e-perc"></p>
+</div>
+<div class="grid2">
+<div class="field">
+<label for="tw">Trench width</label>
+<select id="tw"><option value="2">2 ft</option><option value="3" selected>3 ft</option><option value="4">4 ft</option></select>
+</div>
+<div class="field">
+<label for="sp">Space between trench sidewalls</label>
+<select id="sp"><option value="6" selected>6 ft (typical minimum)</option><option value="8">8 ft</option><option value="10">10 ft</option></select>
+</div>
+</div>
+<div class="field">
+<label for="maxLen">Maximum trench length: <span id="lenOut">100</span> ft</label>
+<input type="range" id="maxLen" min="40" max="100" step="5" value="100">
+<div class="ticks" aria-hidden="true"><span>40 ft</span><span>70 ft</span><span>100 ft</span></div>
+</div>
+<button type="submit" class="go">Calculate Drain Field Size</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<h2>How to Use This Septic Drain Field Size Calculator</h2>
+<p>Enter the number of bedrooms (or a known daily flow in gallons), pick your soil type or type in your percolation test result in minutes per inch, then choose your trench width, spacing and the longest trench your lot can fit. Press Calculate to see the required absorption area in square feet, the total trench length, a recommended trench layout with its footprint, and a side-by-side comparison of how the same house would size in different soils.</p>
+
+<h2>Why This Matters</h2>
+<p>The drain field (also called a leach field or soil absorption system) is the most expensive and most failure-prone part of a septic system. The tank only separates solids; the soil does the real treatment. If the field is too small for the water your household sends to it, effluent surfaces in the yard, backs up into the house, or contaminates a nearby well. Replacing a failed field commonly runs $10,000 to $30,000, so sizing it right the first time is cheap insurance.</p>
+<p>You will want to run the numbers when you are buying rural land and need to know whether a three-bedroom house will fit beside the one good soil area, when you are adding a bedroom (which raises the legal design flow even if nobody moves in), or when a perc test comes back slower than you hoped. For example, a four-bedroom home in loam with a 15 min/in perc needs about 858 sq ft of trench bottom, but the same home in a 45 min/in clay loam needs 1,500 sq ft. That is roughly 75% more soil and excavation. Seeing that gap early helps you decide where to site the house, how much of the lot to protect from driveways and pools, and whether to budget for an engineered alternative system.</p>
+
+<h2>How It's Calculated</h2>
+<p>The method is a standard application-rate approach, similar in structure to the one described in the EPA Onsite Wastewater Treatment Systems Manual (EPA/625/R-00/008), combined with the common rule of thumb of 150 gallons per day per bedroom. Many state and county codes use this structure, but their exact flows and rates differ, so treat the result as a planning estimate rather than a code calculation.</p>
+<p><strong>Design flow (gpd)</strong> = bedrooms × 150 (or 120), × 1.25 if the extra-use box is checked.<br>
+<strong>Absorption area (sq ft)</strong> = design flow ÷ application rate (gallons per day per sq ft).<br>
+<strong>Total trench length (ft)</strong> = absorption area ÷ trench width.<br>
+<strong>Number of trenches</strong> = total length ÷ maximum trench length, rounded up.<br>
+<strong>Field width</strong> = (trenches × trench width) + ((trenches − 1) × sidewall spacing).</p>
+<p>The application rate comes from the perc rate. This calculator applies one representative, conservative rate to each perc band. The values resemble those used in many state codes and older EPA-era guidance, but they are not a copy of any single published table, and your jurisdiction's table may be higher or lower:</p>
+<div class="tw"><table>
+<thead><tr><th>Perc rate (min/in)</th><th class="num">Application rate (gal/day/sq ft)</th></tr></thead>
+<tbody>
+<tr><td>1–5</td><td class="num">1.2</td></tr>
+<tr><td>6–10</td><td class="num">0.8</td></tr>
+<tr><td>11–15</td><td class="num">0.7</td></tr>
+<tr><td>16–30</td><td class="num">0.5</td></tr>
+<tr><td>31–45</td><td class="num">0.4</td></tr>
+<tr><td>46–60</td><td class="num">0.3</td></tr>
+</tbody></table></div>
+<p>A perc rate that falls between bands (for example 5.5) is placed in the slower band, which gives the larger field. Only the trench bottom is counted as absorption area (no sidewall credit), no reduction is taken for chambers or other products, and every value is rounded up to a whole foot. Soil slower than 60 min/in, or faster than 1 min/in, is outside what a conventional gravity field is normally approved for, so the tool will not return a number for it. A typical code also expects a reserve area for a future replacement field; the results show it as a footprint equal to the primary field.</p>
+
+<h2>Worked Example</h2>
+<p>A family is building a 3-bedroom house on a lot with a 25 min/in perc rate. They choose 3 ft wide trenches, 6 ft between sidewalls and a 100 ft maximum run.</p>
+<ul>
+<li>Design flow: 3 bedrooms × 150 = <strong>450 gpd</strong>.</li>
+<li>Perc 25 min/in falls in the 16–30 band, so the application rate is <strong>0.5 gal/day/sq ft</strong>.</li>
+<li>Absorption area: 450 ÷ 0.5 = <strong>900 sq ft</strong>.</li>
+<li>Total trench length: 900 ÷ 3 = <strong>300 ft</strong>.</li>
+<li>Trenches: 300 ÷ 100 = <strong>3 trenches × 100 ft</strong>.</li>
+<li>Field width: (3 × 3) + (2 × 6) = <strong>21 ft</strong>, so the footprint is 21 ft × 100 ft = 2,100 sq ft.</li>
+<li>Reserve area: another 2,100 sq ft should stay clear for a replacement field.</li>
+</ul>
+<p>Adding a garbage disposal (+25%) lifts the flow to 562.5 gpd, the area to 1,125 sq ft, and the layout to 4 trenches of 94 ft each.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Size by bedrooms, not by occupants.</strong> Codes use bedroom count because future owners may fill every room. A den that could be a bedroom may be counted as one.</li>
+<li><strong>Use a real perc test.</strong> Soil-type guesses are only a rough guide. A licensed site evaluator's soil borings and perc results decide what the health department will accept.</li>
+<li><strong>Protect the area.</strong> Never drive, park or build on the field or its reserve area. Compaction ruins absorption faster than almost anything else.</li>
+<li><strong>Keep setbacks in mind.</strong> Wells, streams, property lines, foundations and slopes all require separation distances that add to the footprint shown here.</li>
+<li><strong>Don't shrink the field to save money.</strong> If the result does not fit your lot, ask about mound, pressure-dosed or other engineered systems instead of undersizing a conventional field.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How big should a septic drain field be for a 3-bedroom house?</summary><p>With the 150 gpd per bedroom rule, a 3-bedroom home has a 450 gpd design flow. In good loam (0.7 gal/day/sq ft) that is about 643 sq ft; in a 25 min/in soil it is 900 sq ft. Slower soils need substantially more.</p></details>
+<details><summary>What is a perc test and what is a good result?</summary><p>A percolation test measures how many minutes water takes to drop one inch in a hole dug in your soil. Lower numbers mean faster drainage. This calculator accepts results from 1 to 60 min/in, and results in the 10 to 30 range are generally the easiest to build in.</p></details>
+<details><summary>How many feet of drain field per bedroom?</summary><p>There is no single number, because it depends on soil and trench width. In a 25 min/in soil with 3 ft trenches, each bedroom needs roughly 100 ft of trench. In fast sandy soil (1.2 gal/day/sq ft) it falls to about 42 ft per bedroom with 3 ft trenches.</p></details>
+<details><summary>How much land do I need for a septic field?</summary><p>Plan for the field footprint plus an equal reserve area, plus setbacks from wells, buildings and property lines. For a 3-bedroom home that works out to roughly 3,000 sq ft of protected soil in good soils and up to 8,000 sq ft in slow clay, before setbacks.</p></details>
+<details><summary>Why does the calculator say my perc rate is not suitable?</summary><p>Conventional gravity drain fields are generally limited to soils between roughly 1 and 60 minutes per inch. Slower soils cannot absorb enough water, and very fast soils may not treat it adequately. Your local health department or a licensed designer can advise on mound, sand-filter or other alternatives.</p></details>
+<details><summary>Does this replace a permit or a designer's plan?</summary><p>No. It is a planning estimate based on common rules of thumb, and local codes vary in flow rates, application rates, setbacks and approved products. A licensed designer or the local health authority must approve the actual system.</p></details>
+
+<h2>Related Tools</h2>
+<h3>Septic and site planning</h3>
+<ul class="rel">
+<li><a href="/septic-tank-size-calculator/">Septic Tank Size Calculator</a></li>
+<li><a href="/slope-percent-to-degrees-inches-per-foot-calculator/">Slope Percent to Degrees &amp; Inches-per-Foot Calculator</a></li>
+</ul>
+<h3>More construction calculators</h3>
+<ul class="rel">
+<li><a href="/drywall-installation-cost-calculator/">Drywall Installation Cost Calculator</a></li>
+<li><a href="/pedestal-paver-calculator/">Pedestal Paver Calculator</a></li>
+<li><a href="/contractor-markup-profit-margin-calculator/">Contractor Markup &amp; Profit Margin Calculator</a></li>
+<li><a href="/tuckpointing-cost-calculator/">Tuckpointing Cost Calculator</a></li>
+</ul>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/septic-drain-field-size-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const fmt=(n,d=0)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const BANDS=[{max:5,rate:1.2,label:'1–5'},{max:10,rate:0.8,label:'6–10'},{max:15,rate:0.7,label:'11–15'},{max:30,rate:0.5,label:'16–30'},{max:45,rate:0.4,label:'31–45'},{max:60,rate:0.3,label:'46–60'}];
+const up=x=>Math.ceil(x-1e-9);
+const DEF_CAP='Plan view (example). Press Calculate to update with your numbers.';
+const DEF_ARIA='Plan view of a septic drain field showing tank, distribution box and parallel trenches';
+const MAXDRAW=12;
+let lastText='',hasRes=false;
+$('yr').textContent=new Date().getFullYear();
+
+function sync(){
+  $('bedWrap').hidden=$('flowMode').value==='custom';
+  $('gpdWrap').hidden=$('flowMode').value!=='custom';
+  $('percWrap').hidden=$('soil').value!=='perc';
+}
+function err(id,m){$(id).classList.add('err');$(id).setAttribute('aria-invalid','true');$('e-'+id).textContent=m}
+function clr(id){$(id).classList.remove('err');$(id).removeAttribute('aria-invalid');$('e-'+id).textContent=''}
+
+function draw(d){
+  const N=d?d.n:4,n=Math.min(N,MAXDRAW);
+  const pitch=Math.min(34,190/n),th=Math.max(3,Math.min(16,pitch*0.45));
+  const h=(n-1)*pitch+th,top=150-h/2,bot=top+h;
+  const cy=i=>top+th/2+i*pitch;
+  const X0=118,X1=450;
+  let s='';
+  s+='<text x="260" y="22" text-anchor="middle" font-weight="700">'+(d?fmt(d.n)+' trench'+(d.n>1?'es':'')+' × '+fmt(d.tw)+' ft wide'+(d.n>1?', '+fmt(d.sp)+' ft apart':''):'Septic drain field (plan view)')+'</text>';
+  if(d&&N>MAXDRAW)s+='<text x="260" y="42" text-anchor="middle" font-size="12" fill="#555">Showing '+MAXDRAW+' of '+fmt(N)+' trenches (not to scale)</text>';
+  s+='<rect x="10" y="132" width="40" height="36" rx="3" fill="#f8f9fa" stroke="#0077b6" stroke-width="2"/><text x="30" y="188" text-anchor="middle">Tank</text>';
+  s+='<line x1="50" y1="150" x2="70" y2="150" stroke="#0077b6" stroke-width="2"/>';
+  s+='<rect x="70" y="142" width="16" height="16" fill="#fff" stroke="#0077b6" stroke-width="2"/><text x="78" y="130" text-anchor="middle">D-box</text>';
+  s+='<line x1="86" y1="150" x2="100" y2="150" stroke="#0077b6" stroke-width="2"/>';
+  s+='<line x1="100" y1="'+cy(0)+'" x2="100" y2="'+cy(n-1)+'" stroke="#0077b6" stroke-width="2"/>';
+  for(let i=0;i<n;i++){
+    const y=cy(i);
+    s+='<line x1="100" y1="'+y+'" x2="'+X0+'" y2="'+y+'" stroke="#0077b6" stroke-width="2"/>';
+    s+='<rect x="'+X0+'" y="'+(top+i*pitch)+'" width="'+(X1-X0)+'" height="'+th+'" rx="2" fill="#e6f3fa" stroke="#0077b6" stroke-width="1.5"/>';
+    if(th>=7)s+='<line x1="'+X0+'" y1="'+y+'" x2="'+X1+'" y2="'+y+'" stroke="#0077b6" stroke-dasharray="5 4"/>';
+  }
+  s+='<line x1="'+X1+'" y1="'+top+'" x2="478" y2="'+top+'" stroke="#e0e0e0" stroke-dasharray="4 3"/>';
+  s+='<line x1="'+X1+'" y1="'+bot+'" x2="478" y2="'+bot+'" stroke="#e0e0e0" stroke-dasharray="4 3"/>';
+  s+='<line x1="470" y1="'+top+'" x2="470" y2="'+bot+'" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  s+='<text transform="translate(497 150) rotate(90)" text-anchor="middle">'+(d?'Field width '+fmt(d.fw)+' ft':'Field width')+'</text>';
+  s+='<line x1="'+X0+'" y1="'+bot+'" x2="'+X0+'" y2="262" stroke="#e0e0e0" stroke-dasharray="4 3"/>';
+  s+='<line x1="'+X1+'" y1="'+bot+'" x2="'+X1+'" y2="262" stroke="#e0e0e0" stroke-dasharray="4 3"/>';
+  s+='<line x1="'+X0+'" y1="256" x2="'+X1+'" y2="256" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  s+='<text x="'+((X0+X1)/2)+'" y="282" text-anchor="middle">'+(d?'Trench length '+fmt(d.len)+' ft each':'Trench length')+'</text>';
+  $('dyn').innerHTML=s;
+  if(d){
+    $('cap').textContent='Your layout: '+fmt(d.n)+' × '+fmt(d.len)+' ft trenches, '+fmt(d.tw)+' ft wide, field footprint about '+fmt(d.fw)+' × '+fmt(d.len)+' ft.'+(N>MAXDRAW?' Diagram shows only the first '+MAXDRAW+' trenches.':'');
+    $('svg').setAttribute('aria-label',$('cap').textContent);
+  }else{
+    $('cap').textContent=DEF_CAP;
+    $('svg').setAttribute('aria-label',DEF_ARIA);
+  }
+}
+
+function calc(){
+  ['bed','gpd','perc'].forEach(clr);
+  let ok=true,base,baseTxt,perc;
+  const mode=$('flowMode').value,soil=$('soil').value;
+  if(mode==='custom'){
+    const raw=$('gpd').value.trim(),g=Number(raw);
+    if(raw===''||!isFinite(g)||g<50||g>10000){err('gpd','Enter a daily flow between 50 and 10,000 gallons per day.');ok=false}
+    else{base=g;baseTxt='Entered design flow'}
+  }else{
+    const raw=$('bed').value.trim(),b=Number(raw);
+    if(raw===''||!Number.isInteger(b)||b<1||b>20){err('bed','Enter a whole number of bedrooms from 1 to 20.');ok=false}
+    else{base=b*Number(mode);baseTxt=b+' bedroom'+(b>1?'s':'')+' × '+mode+' gpd'}
+  }
+  if(soil==='perc'){
+    const raw=$('perc').value.trim();perc=Number(raw);
+    if(raw===''||!isFinite(perc)||perc<1){err('perc','Enter a perc rate of at least 1 minute per inch.');ok=false}
+    else if(perc>60){err('perc','Soil slower than 60 min/in is generally not suitable for a conventional drain field. Ask a licensed designer about alternative systems.');ok=false}
+  }else perc=Number(soil);
+  if(!ok){hasRes=false;$('results').innerHTML='';draw(null);return}
+
+  const flow=base*($('disp').checked?1.25:1);
+  const band=BANDS.find(b=>perc<=b.max),rate=band.rate;
+  const W=Number($('tw').value),S=Number($('sp').value),M=Number($('maxLen').value);
+  const area=up(flow/rate);
+  const totLen=up(area/W);
+  const n=up(totLen/M);
+  const len=up(totLen/n);
+  const inst=n*len*W;
+  const fw=n*W+(n-1)*S;
+  const foot=fw*len;
+  const percTxt=Number.isInteger(perc)?fmt(perc):fmt(perc,1);
+
+  let t1='<tbody>';
+  const rows=[
+    ['Design flow',fmt(flow,flow%1?1:0)+' gpd'+($('disp').checked?' (incl. +25%)':'')],
+    ['Basis',baseTxt],
+    ['Perc rate / band',percTxt+' min/in ('+band.label+')'],
+    ['Application rate',fmt(rate,1)+' gal/day/sq ft'],
+    ['Required absorption area',fmt(area)+' sq ft'],
+    ['Total trench length ('+W+' ft wide)',fmt(totLen)+' ft'],
+    ['Recommended layout',fmt(n)+' trench'+(n>1?'es':'')+' × '+fmt(len)+' ft'],
+    ['Installed absorption area',fmt(inst)+' sq ft'],
+    ['Field footprint',fmt(fw)+' × '+fmt(len)+' ft = '+fmt(foot)+' sq ft'],
+    ['Reserve (replacement) area to keep clear','≈ '+fmt(foot)+' sq ft']
+  ];
+  rows.forEach(r=>{t1+='<tr><td>'+r[0]+'</td><td class="num">'+r[1]+'</td></tr>'});
+  t1+='</tbody>';
+
+  let t2='<tbody>';
+  for(let k=n;k<=n+5;k++){
+    const l=up(totLen/k);
+    t2+='<tr'+(k===n?' class="hl"':'')+'><td class="num">'+fmt(k)+'</td><td class="num">'+fmt(l)+'</td><td class="num">'+fmt(k*l*W)+'</td><td class="num">'+fmt(k*W+(k-1)*S)+' × '+fmt(l)+'</td></tr>';
+  }
+  t2+='</tbody>';
+
+  const areas=BANDS.map(b=>up(flow/b.rate)),mx=Math.max.apply(null,areas);
+  let t3='<tbody>';
+  BANDS.forEach((b,i)=>{
+    t3+='<tr'+(b===band?' class="hl"':'')+'><td>'+b.label+'</td><td class="num">'+fmt(b.rate,1)+'</td><td class="num">'+fmt(areas[i])+'</td><td class="num">'+fmt(up(areas[i]/W))+'</td><td><div class="bar"><i style="width:'+Math.round(areas[i]/mx*100)+'%"></i></div></td></tr>';
+  });
+  t3+='</tbody>';
+
+  lastText='Septic drain field estimate\nDesign flow: '+fmt(flow,flow%1?1:0)+' gpd\nPerc rate: '+percTxt+' min/in (application rate '+fmt(rate,1)+' gal/day/sq ft)\nRequired absorption area: '+fmt(area)+' sq ft\nTotal trench length: '+fmt(totLen)+' ft at '+W+' ft wide\nLayout: '+fmt(n)+' trench'+(n>1?'es':'')+' × '+fmt(len)+' ft\nField footprint: '+fmt(fw)+' × '+fmt(len)+' ft\nPlanning estimate only; local codes vary and a licensed designer and permit are required.';
+
+  const warn=n>20?'<p class="warn"><strong>Very large field.</strong> This layout needs '+fmt(n)+' trenches. A conventional gravity field this size is usually impractical; ask a licensed designer or your health department about alternative or engineered systems, or a longer maximum trench length if your lot allows it.</p>':'';
+
+  const html='<div class="fade"><div class="key"><span class="big">'+fmt(area)+' sq ft</span><small>Required absorption (trench bottom) area</small></div>'
+  +warn
+  +'<div class="tw"><table><thead><tr><th>Item</th><th class="num">Value</th></tr></thead>'+t1+'</table></div>'
+  +'<h3>Layout options (same area)</h3><div class="tw"><table><thead><tr><th class="num">Trenches</th><th class="num">Length each (ft)</th><th class="num">Installed sq ft</th><th class="num">Footprint (ft)</th></tr></thead>'+t2+'</table></div>'
+  +'<h3>Same flow in different soils</h3><div class="tw"><table><thead><tr><th>Perc (min/in)</th><th class="num">Rate</th><th class="num">Area (sq ft)</th><th class="num">Trench (ft)</th><th>Compare</th></tr></thead>'+t3+'</table></div>'
+  +'<p class="note">Planning estimate using a representative application-rate method and a bedroom-based flow rule of thumb (150 or 120 gpd per bedroom), rounded up. Local health department codes vary on flow, rates and setbacks. This is not engineering, permit or inspection approval; a licensed designer and a site evaluation are required.</p>'
+  +'<button type="button" class="copy" id="copyBtn">Copy results</button></div>';
+
+  hasRes=true;
+  $('results').innerHTML=html;
+  draw({n:n,len:len,tw:W,sp:S,fw:fw});
+}
+
+function run(){requestAnimationFrame(calc)}
+$('f').addEventListener('submit',e=>{e.preventDefault();run()});
+$('flowMode').addEventListener('change',sync);
+$('soil').addEventListener('change',sync);
+$('maxLen').addEventListener('input',()=>{$('lenOut').textContent=$('maxLen').value;if(hasRes)run()});
+['tw','sp'].forEach(id=>$(id).addEventListener('change',()=>{if(hasRes)run()}));
+$('results').addEventListener('click',e=>{
+  if(e.target.id!=='copyBtn')return;
+  const b=e.target;
+  const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,()=>{})}
+  else{const ta=document.createElement('textarea');ta.value=lastText;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(ta)}
+});
+sync();draw(null);
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
