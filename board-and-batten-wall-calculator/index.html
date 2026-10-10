@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Free Board and Batten Wall Calculator | Toolwick</title>
+<meta name="description" content="Free board and batten calculator: enter wall size, batten width and spacing to get batten and board counts, even layout marks, nails, glue and paint.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/board-and-batten-wall-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Board and Batten Wall Calculator", "url": "https://toolwick.com/board-and-batten-wall-calculator/", "description": "Free board and batten calculator: enter wall size, batten width and spacing to get batten and board counts, even layout marks, nails, glue and paint.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Board and Batten Wall Calculator", "item": "https://toolwick.com/board-and-batten-wall-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many battens do I need for a wall?", "acceptedAnswer": {"@type": "Answer", "text": "Divide the wall width, minus one batten width, by your spacing, round up and add one. A 12 ft wall at 16 in centers takes 10 battens. Add about 10% extra for bows, splits and mistakes."}}, {"@type": "Question", "name": "What is the best spacing for board and batten?", "acceptedAnswer": {"@type": "Answer", "text": "Most people choose 12 to 16 in on center, which lines up with 16 in stud spacing. Wider spacing of 18 to 24 in looks bolder and uses less lumber. Let the calculator even out the gaps so the last one matches the rest."}}, {"@type": "Question", "name": "How wide should the battens be?", "acceptedAnswer": {"@type": "Answer", "text": "A 1x2 (1.5 in actual) is the most common for interior walls. Use 1x3 (2.5 in) for a heavier look or taller walls. In traditional board and batten, wider battens also hide more of the seam."}}, {"@type": "Question", "name": "How tall should board and batten wainscot be?", "acceptedAnswer": {"@type": "Answer", "text": "Many designers choose one-third to one-half of the wall height, so about 32 to 48 in on an 8 ft wall. Full-height treatments are popular too. Keep the top rail level and make sure it clears outlets and window sills."}}, {"@type": "Question", "name": "Do I subtract windows and doors?", "acceptedAnswer": {"@type": "Answer", "text": "This tool deducts openings only from the paint area. Battens are counted across the full width, which is the safe side because pieces get cut around openings. With large openings, you can trim the batten count by hand."}}, {"@type": "Question", "name": "Can I use this for exterior siding?", "acceptedAnswer": {"@type": "Answer", "text": "It gives a material estimate, but exterior walls have extra requirements such as flashing, a water-resistive barrier and corrosion-resistant fasteners (see IRC R703 and the manufacturer's instructions). Local codes vary, so check with your building department."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+[hidden]{display:none!important}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.15rem;display:inline-block;line-height:44px}
+h1{font-size:1.9rem;line-height:1.2;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2rem 0 .6rem}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:.6rem 0}
+a{color:#0077b6;text-decoration:underline}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus,select:focus,.tw:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#fff;border-bottom:1px solid #eee;margin-bottom:1.5rem;padding-bottom:1rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram text{fill:#1a1a2e;font-size:20px;font-family:inherit}
+.diagram .lg{font-size:18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem 1rem}
+.full{grid-column:1/-1}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;min-height:44px;background:#fff;color:#1a1a2e;font-family:inherit}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6;margin:0}
+.ends{display:flex;justify-content:space-between;font-size:.75rem;color:#666}
+.err{border-color:#e74c3c!important}
+.msg{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.msg:empty{margin:0}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.chk{display:flex;align-items:center;gap:.6rem;min-height:44px}
+.chk input{width:22px;height:22px;accent-color:#0077b6;margin:0;flex:none}
+.chk label{margin:0;font-size:.95rem;color:#1a1a2e}
+.btn{width:100%;background:#0077b6;color:#fff;border:1px solid #0077b6;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:44px;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+.btn.sec{background:#fff;color:#0077b6;margin-top:.75rem}
+.btn.sec:hover{background:#eef6fb}
+.btn.copy{width:auto;padding:8px 16px;font-size:.9rem;font-weight:500}
+#actions{margin-top:1rem}
+#results{margin-top:1.5rem;opacity:0;transition:opacity .3s ease}
+#results.show{opacity:1}
+#results:empty{margin:0}
+.keys{display:flex;flex-wrap:wrap;gap:1rem;background:#f8f9fa;border-radius:8px;padding:1.25rem}
+.k{flex:1 1 120px}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.med{font-size:1.5rem;font-weight:700;color:#0077b6;line-height:1.3}
+.lbl{font-size:.85rem;color:#444}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;padding:.6rem .75rem;text-align:right;white-space:nowrap;border-bottom:1px solid #ddd}
+td{padding:.6rem .75rem;border-bottom:1px solid #e8e8e8;text-align:right;white-space:nowrap}
+th.l,td.l{text-align:left}
+td.l{white-space:normal}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.collapsed .x{display:none}
+.note{font-size:.85rem;color:#444;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;border-radius:0 6px 6px 0;margin-top:1.25rem}
+.safety{margin:1.25rem 0;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00}
+.ad-slot{min-height:0;margin:0}
+.content ul{padding-left:1.25rem}
+.content li{margin:.4rem 0}
+.formula{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;overflow-x:auto}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.2rem 0 .9rem}
+.rel{list-style:none;padding:0!important}
+.rel li{margin:0!important}
+.rel a{display:inline-block;padding:.55rem 0}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555;text-align:center}
+footer a{display:inline-block;padding:.6rem .6rem}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.2rem}}
+@media(prefers-reduced-motion:reduce){#results{transition:none}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/board-and-batten-wall-calculator/">
+<meta property="og:title" content="Board and Batten Wall Calculator">
+<meta property="og:description" content="Free board and batten calculator: enter wall size, batten width and spacing to get batten and board counts, even layout marks, nails, glue and paint.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<div class="wrap">
+<h1>Board and Batten Wall Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This board and batten calculator tells you how many battens and boards to buy for an accent wall, wainscot or full-height wall. It also gives even spacing, layout marks to measure from the corner, plus nails, adhesive and paint.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="svg" viewBox="0 0 600 310" role="img" aria-label="Wall elevation diagram showing batten layout">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L10 5L0 9z" fill="#0077b6"/></marker></defs>
+<g id="dg"></g>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="grid">
+<div><label for="w">Wall width (ft)</label><input type="number" id="w" inputmode="decimal" step="any" value="12" aria-describedby="e-w"><div class="msg" id="e-w"></div></div>
+<div><label for="h">Height to cover (ft)</label><input type="number" id="h" inputmode="decimal" step="any" value="8" aria-describedby="e-h"><div class="msg" id="e-h"></div></div>
+<div class="full"><label for="style">Style</label>
+<select id="style"><option value="bat" selected>Battens on a flat wall (drywall or panel)</option><option value="trad">Traditional: boards with battens over the seams</option></select></div>
+<div><label for="bt">Batten width (in)</label><input type="number" id="bt" inputmode="decimal" step="any" value="1.5" aria-describedby="h-bt e-bt"><div class="hint" id="h-bt">1x2 = 1.5, 1x3 = 2.5, 1x4 = 3.5</div><div class="msg" id="e-bt"></div></div>
+<div id="f-bw" hidden><label for="bw">Board width (in)</label><input type="number" id="bw" inputmode="decimal" step="any" value="7.25" aria-describedby="h-bw e-bw"><div class="hint" id="h-bw">1x6 = 5.5, 1x8 = 7.25, 1x10 = 9.25</div><div class="msg" id="e-bw"></div></div>
+<div id="f-sp"><label for="sp">Target spacing: <span id="spv">16</span> in o.c.</label><input type="range" id="sp" min="6" max="24" step="0.5" value="16" aria-describedby="e-sp"><div class="ends"><span>6 in</span><span>24 in</span></div><div class="msg" id="e-sp"></div></div>
+<div><label for="op">Windows/doors area (sq ft)</label><input type="number" id="op" inputmode="decimal" step="any" value="0" aria-describedby="h-op e-op"><div class="hint" id="h-op">Deducted from paint area only</div><div class="msg" id="e-op"></div></div>
+<div><label for="stock">Stock length (ft)</label><select id="stock"><option value="8" selected>8 ft</option><option value="10">10 ft</option><option value="12">12 ft</option><option value="16">16 ft</option></select></div>
+<div class="full"><label for="waste">Waste allowance: <span id="wv">10</span>%</label><input type="range" id="waste" min="0" max="25" step="1" value="10"><div class="ends"><span>0%</span><span>25%</span></div></div>
+<div class="chk"><input type="checkbox" id="top"><label for="top">Add top rail (full width)</label></div>
+<div class="chk"><input type="checkbox" id="bot"><label for="bot">Add bottom rail (full width)</label></div>
+<div class="full"><button type="submit" class="btn" id="go">Calculate</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p></div>
+</div>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<div id="actions" hidden><button type="button" class="btn copy" id="copy">Copy results</button></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/board-and-batten-wall-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Board and Batten Wall Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/board-and-batten-wall-calculator/&quot;&gt;Board and Batten Wall Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/board-and-batten-wall-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<div class="safety" role="note">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department before you build.</div>
+
+<div class="content">
+<h2>How to Use This Board and Batten Wall Calculator</h2>
+<p>Enter the wall width and the height you plan to cover: about 8 ft for a full wall, or 3 to 4 ft for wainscot. Pick a style. "Battens on a flat wall" is the modern look, with battens at even spacing over drywall or a panel. "Traditional" puts a batten over every board seam. Set the batten width and your target spacing or board width, then press Calculate.</p>
+<p>You get a batten count, exact center-to-center spacing, a shopping list with waste included, and layout marks to measure from the left corner. The diagram redraws with your numbers.</p>
+
+<h2>Why This Matters</h2>
+<p>Board and batten is one of the cheapest ways to give a plain wall character, but it is unforgiving. Uneven spacing is the first thing the eye catches: a narrow sliver of wall crammed into a corner, or a last gap half the width of the others. Doing the math first lets you nudge the spacing by an inch or so until every gap matches.</p>
+<p>Counts change quickly with small adjustments. A 12 ft wall with 1x2 battens at 16 in centers needs 10 battens. At 12 in centers it needs 13, which means three more pieces, about 40 more nails and an extra hour of caulking. A wrong count means a second trip to the store, and a second batch of lumber is often bowed or from a different lot.</p>
+<p>Homeowners use this to budget a weekend accent wall. Contractors use it to price hallway wainscot quickly. It also helps in a nursery, dining room or entryway where several walls get the same pattern and you want everything consistent.</p>
+
+<h2>How It's Calculated</h2>
+<p>All layout math runs in inches, and every count rounds up so you never end up short.</p>
+<div class="formula">Battens on a flat wall:<br>N = ceil((W − b) ÷ S) + 1<br>actual spacing = (W − b) ÷ (N − 1)<br>visible gap = actual spacing − b<br><br>Traditional:<br>boards = ceil(W ÷ board width)<br>battens = boards + 1</div>
+<p>W is wall width, b is batten width and S is your target spacing. Because N rounds up, the actual spacing is never wider than your target, and the first and last battens sit flush at the corners.</p>
+<p><strong>Stock pieces:</strong> if a piece fits within your stock length, the tool divides stock length by piece length (rounded down) to see how many pieces come from one board. Waste is added and the total rounds up. Longer pieces are priced by linear feet and need splices over framing.</p>
+<p><strong>Fasteners and finish:</strong> nails are counted at 16 in stations (common stud spacing), two per station, plus waste. This is a rule of thumb, so follow your product's instructions. Adhesive assumes one 10 oz tube per 25 linear feet. Paint is net area × 2 coats × 1.15 ÷ 350 sq ft per gallon, rounded up to the next quart.</p>
+<p>This is a material estimate, not engineering, permit or inspection approval. Local codes vary. Exterior wall coverings, flashing and water-resistive barriers fall under rules such as IRC R703, so confirm details with your building department.</p>
+
+<h2>Worked Example</h2>
+<p>A 12 ft wide, 8 ft tall wall with one 3 ft × 5 ft window (15 sq ft). Flat-wall style, 1x2 battens (1.5 in), 16 in target spacing, 8 ft stock, 10% waste, no rails.</p>
+<ul>
+<li><strong>Convert:</strong> W = 144 in, H = 96 in.</li>
+<li><strong>Battens:</strong> (144 − 1.5) ÷ 16 = 8.91, rounded up to 9, plus 1 gives <strong>10 battens</strong>.</li>
+<li><strong>Spacing:</strong> 142.5 ÷ 9 = 15.83 in, or 15 13/16" to the nearest 1/16. The visible gap is 14 5/16".</li>
+<li><strong>Stock:</strong> each 8 ft batten uses one 8 ft board; 10 plus 10% waste = <strong>11 boards</strong>.</li>
+<li><strong>Nails:</strong> 96 ÷ 16 = 6, plus 1 = 7 stations. 10 × 7 × 2 = 140, which is 154 with waste.</li>
+<li><strong>Adhesive:</strong> 80 lin ft ÷ 25 = 3.2, so <strong>4 tubes</strong>.</li>
+<li><strong>Paint:</strong> net area 96 − 15 = 81 sq ft. 81 × 2 × 1.15 ÷ 350 = 0.53 gal, so buy <strong>0.75 gal</strong>.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li>Measure the wall width at the top, middle and bottom. Walls are rarely square, so order from the largest number.</li>
+<li>Find and mark studs first. Nails into framing hold far better than nails into drywall alone, so use adhesive plus brads where a batten falls between studs.</li>
+<li>Snap a level line for the top rail or cap first, then work down. Don't trust the ceiling to be level.</li>
+<li>Mark outlets and switches on your layout. Boxes may need extenders to sit flush with the batten face.</li>
+<li>Prime and paint battens before installing, then caulk joints and fill nail holes. Buy all lumber at once and save the straightest pieces for the longest runs.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many battens do I need for a wall?</summary><p>Divide the wall width, minus one batten width, by your spacing, round up and add one. A 12 ft wall at 16 in centers takes 10 battens. Add about 10% extra for bows, splits and mistakes.</p></details>
+<details><summary>What is the best spacing for board and batten?</summary><p>Most people choose 12 to 16 in on center, which lines up with 16 in stud spacing. Wider spacing of 18 to 24 in looks bolder and uses less lumber. Let the calculator even out the gaps so the last one matches the rest.</p></details>
+<details><summary>How wide should the battens be?</summary><p>A 1x2 (1.5 in actual) is the most common for interior walls. Use 1x3 (2.5 in) for a heavier look or taller walls. In traditional board and batten, wider battens also hide more of the seam.</p></details>
+<details><summary>How tall should board and batten wainscot be?</summary><p>Many designers choose one-third to one-half of the wall height, so about 32 to 48 in on an 8 ft wall. Full-height treatments are popular too. Keep the top rail level and make sure it clears outlets and window sills.</p></details>
+<details><summary>Do I subtract windows and doors?</summary><p>This tool deducts openings only from the paint area. Battens are counted across the full width, which is the safe side because pieces get cut around openings. With large openings, you can trim the batten count by hand.</p></details>
+<details><summary>Can I use this for exterior siding?</summary><p>It gives a material estimate, but exterior walls have extra requirements such as flashing, a water-resistive barrier and corrosion-resistant fasteners (see IRC R703 and the manufacturer's instructions). Local codes vary, so check with your building department.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/knee-wall-stud-height-attic-storage-calculator/">Knee Wall Stud Height &amp; Attic Storage Calculator</a></li>
+<li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li>
+<li><a href="/cinder-block-wall-calculator/">Cinder Block Wall Calculator</a></li>
+<li><a href="/hardwood-floor-board-count-waste-calculator/">Hardwood Floor Board Count &amp; Waste Calculator</a></li>
+<li><a href="/masonry-wall-bond-pattern-generator/">Masonry Wall Bond Pattern Generator</a></li>
+<li><a href="/retaining-wall-block-calculator/">Retaining Wall Block Calculator</a></li>
+</ul>
+</div>
+
+<nav class="cluster-nav" aria-label="More Framing &amp; Structure Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Framing &amp; Structure Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li><li><a href="/knee-wall-stud-height-attic-storage-calculator/">Knee Wall Stud Height &amp; Attic Storage Calculator</a></li><li><a href="/lumber-board-foot-calculator/">Lumber &amp; Board Foot Calculator</a></li><li><a href="/floor-joist-span-size-calculator/">Floor Joist Span &amp; Size Calculator</a></li><li><a href="/header-beam-size-calculator/">Header Beam Size Calculator</a></li><li><a href="/plywood-sheet-goods-cut-optimizer/">Plywood &amp; Sheet Goods Cut Optimizer</a></li><li><a href="/pocket-door-rough-opening-cavity-calculator/">Pocket Door Rough Opening &amp; Cavity Calculator</a></li><li><a href="/stair-stringer-calculator/">Stair Stringer Calculator</a></li><li><a href="/framing-calculators/"><strong>All Framing &amp; Structure calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const F=(n,d=2)=>n.toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:0});
+const num=id=>{const s=$(id).value.trim();return s===''?NaN:Number(s)};
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+function fr(x){const t=Math.round(x*16),w=Math.floor(t/16),r=t%16;if(!r)return w+'"';const g=gcd(r,16);return (w?w+' ':'')+(r/g)+'/'+(16/g)+'"'}
+let shown=false,firstBad=null,lastTxt='';
+$('yr').textContent=new Date().getFullYear();
+
+function err(k,m){$('e-'+k).textContent=m;const el=$(k);el.classList.add('err');el.setAttribute('aria-invalid','true');if(!firstBad)firstBad=el}
+function clearErr(){firstBad=null;document.querySelectorAll('.msg').forEach(m=>m.textContent='');document.querySelectorAll('input,select').forEach(i=>{i.classList.remove('err');i.removeAttribute('aria-invalid')})}
+
+function read(){
+ clearErr();
+ const v={style:$('style').value,w:num('w'),h:num('h'),bt:num('bt'),bw:num('bw'),sp:+$('sp').value,op:$('op').value.trim()===''?0:Number($('op').value),waste:+$('waste').value,stock:+$('stock').value,top:$('top').checked,bot:$('bot').checked};
+ const trad=v.style==='trad';let ok=true;const bad=(k,m)=>{err(k,m);ok=false};
+ if(!(v.w>0))bad('w','Enter the wall width in feet (greater than 0).');else if(v.w>500)bad('w','Width must be 500 ft or less.');
+ if(!(v.h>0))bad('h','Enter the height to cover in feet (greater than 0).');else if(v.h>40)bad('h','Height must be 40 ft or less.');
+ if(!(v.bt>0))bad('bt','Enter the batten width in inches.');else if(v.bt<0.5||v.bt>8)bad('bt','Batten width should be between 0.5 and 8 in.');
+ if(ok&&v.w*12<=v.bt)bad('w','Wall must be wider than one batten.');
+ if(trad){if(!(v.bw>0))bad('bw','Enter the board width in inches.');else if(v.bw<3||v.bw>24)bad('bw','Board width should be between 3 and 24 in.');else if(v.bw<=v.bt)bad('bw','Boards must be wider than the battens.')}
+ else if(v.bt>0&&v.sp<=v.bt)bad('sp','Spacing must be larger than the batten width.');
+ if(!(v.op>=0))bad('op','Enter 0 or a positive area.');else if(v.w>0&&v.h>0&&v.op>=v.w*v.h)bad('op','Openings must be smaller than the wall area ('+F(v.w*v.h)+' sq ft).');
+ if(!ok){if(firstBad)firstBad.focus();return null}
+ return v;
+}
+
+function stk(count,len,st,wf){let base,sp=false;if(len<=st+1e-9){base=Math.ceil(count/Math.floor(st/len+1e-9)-1e-9)}else{base=Math.ceil(count*len/st-1e-9);sp=true}return{base,buy:Math.ceil(base*wf-1e-9),sp}}
+
+function calc(v){
+ const W=v.w*12,H=v.h*12,bt=v.bt,trad=v.style==='trad',wf=1+v.waste/100;
+ let n=0,N,cs=[],act=0,gap=0,last=0;
+ if(trad){n=Math.max(1,Math.ceil(W/v.bw-1e-9));N=n+1;last=W-(n-1)*v.bw;cs.push(bt/2);for(let i=1;i<n;i++)cs.push(i*v.bw);cs.push(W-bt/2)}
+ else{N=Math.max(2,Math.ceil((W-bt)/v.sp-1e-9)+1);act=(W-bt)/(N-1);gap=act-bt;for(let i=0;i<N;i++)cs.push(bt/2+i*act)}
+ const rails=(v.top?1:0)+(v.bot?1:0);
+ const bat=stk(N,v.h,v.stock,wf),brd=trad?stk(n,v.h,v.stock,wf):null,rl=rails?stk(rails,v.w,v.stock,wf):null;
+ const st=Math.ceil(H/16-1e-9)+1,rst=Math.ceil(W/16-1e-9)+1;
+ const nb=(N+n)*st*2+rails*rst*2,nails=Math.ceil(nb*wf-1e-9);
+ const lf=N*v.h+rails*v.w,tubes=Math.max(1,Math.ceil(lf/25-1e-9));
+ const net=v.w*v.h-v.op,gal=net*2*1.15/350,galBuy=Math.max(.25,Math.ceil(gal*4-1e-9)/4);
+ return{W,H,n,N,cs,act,gap,last,rails,bat,brd,rl,nb,nails,lf,tubes,net,gal,galBuy};
+}
+
+function draw(v,c){
+ const trad=v.style==='trad',k0=Math.min(470/v.w,165/v.h),w=v.w*k0,h=v.h*k0,ox=300-w/2,oy=58,kk=k0/12,R=x=>Math.round(x*10)/10;
+ let s='<rect x="'+R(ox)+'" y="'+oy+'" width="'+R(w)+'" height="'+R(h)+'" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="2"/>';
+ if(trad&&c.n<=60)for(let i=0;i<c.n;i++){const bw=Math.min(v.bw,c.W-i*v.bw);s+='<rect x="'+R(ox+i*v.bw*kk)+'" y="'+oy+'" width="'+R(bw*kk)+'" height="'+R(h)+'" fill="'+(i%2?'#f8f9fa':'#e3f0f8')+'"/>'}
+ const bwp=Math.max(v.bt*kk,1.4),gp=trad?v.bw*kk:c.act*kk,step=Math.max(1,Math.ceil(4/gp));
+ const bx=x=>'<rect x="'+R(ox+x*kk-bwp/2)+'" y="'+oy+'" width="'+R(bwp)+'" height="'+R(h)+'" fill="#0077b6"/>';
+ for(let i=0;i<c.cs.length;i+=step)s+=bx(c.cs[i]);
+ if((c.cs.length-1)%step)s+=bx(c.cs[c.cs.length-1]);
+ const rh=Math.min(12,Math.max(4,h*.05));
+ if(v.top)s+='<rect x="'+R(ox)+'" y="'+oy+'" width="'+R(w)+'" height="'+R(rh)+'" fill="#1a1a2e" fill-opacity=".75"/>';
+ if(v.bot)s+='<rect x="'+R(ox)+'" y="'+R(oy+h-rh)+'" width="'+R(w)+'" height="'+R(rh)+'" fill="#1a1a2e" fill-opacity=".75"/>';
+ const ln=(a,b,c2,d,ex)=>'<line x1="'+R(a)+'" y1="'+R(b)+'" x2="'+R(c2)+'" y2="'+R(d)+'" '+ex+'/>';
+ const dim='stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"',gd='stroke="#bbb" stroke-width="1.5" stroke-dasharray="4 3"';
+ s+=ln(ox-12,oy,ox-12,oy+h,dim)+ln(ox-20,oy,ox,oy,gd)+ln(ox-20,oy+h,ox,oy+h,gd);
+ const hx=ox-20,hy=oy+h/2;
+ s+='<text transform="rotate(-90 '+R(hx)+' '+R(hy)+')" x="'+R(hx)+'" y="'+R(hy)+'" text-anchor="middle">'+F(v.h)+' ft</text>';
+ const wy=oy+h+22;
+ s+=ln(ox,wy,ox+w,wy,dim)+ln(ox,oy+h,ox,wy+6,gd)+ln(ox+w,oy+h,ox+w,wy+6,gd);
+ s+='<text x="300" y="'+R(wy+28)+'" text-anchor="middle">'+F(v.w)+' ft wide</text>';
+ const x1=trad?ox:ox+c.cs[0]*kk,x2=trad?ox+Math.min(v.bw,c.W)*kk:ox+c.cs[1]*kk;
+ s+=ln(x1,oy-12,x2,oy-12,dim)+ln(x1,oy-18,x1,oy,gd)+ln(x2,oy-18,x2,oy,gd);
+ const top=trad?c.n+' boards × '+F(v.bw)+' in · '+c.N+' battens':F(c.act,2)+' in o.c. · '+c.N+' battens';
+ s+='<text x="300" y="26" text-anchor="middle">'+top+'</text>';
+ s+='<rect x="40" y="285" width="14" height="14" fill="#0077b6"/><text class="lg" x="60" y="298">Batten '+F(v.bt)+' in wide</text>';
+ if(c.rails)s+='<rect x="330" y="285" width="14" height="14" fill="#1a1a2e" fill-opacity=".75"/><text class="lg" x="350" y="298">Horizontal rail</text>';
+ $('dg').innerHTML=s;
+ $('svg').setAttribute('aria-label','Wall elevation, '+F(v.w)+' ft wide by '+F(v.h)+' ft tall, with '+c.N+' battens');
+}
+
+function render(v,c){
+ const trad=v.style==='trad',S=v.stock;
+ let h='<div class="keys"><div class="k"><div class="big">'+F(c.N)+'</div><div class="lbl">battens in layout</div></div>';
+ h+=trad?'<div class="k"><div class="med">'+F(c.n)+'</div><div class="lbl">boards ('+F(v.bw)+' in wide)</div></div>':'<div class="k"><div class="med">'+fr(c.gap)+'</div><div class="lbl">visible gap between battens</div></div>';
+ h+='<div class="k"><div class="med">'+F(c.net,1)+' sq ft</div><div class="lbl">net wall area</div></div></div>';
+ if(trad){h+='<p>Boards run edge to edge; battens cover every seam and both corners.'+(Math.abs(c.last-v.bw)>0.01?' The last board is cut to '+fr(c.last)+' ('+F(c.last,2)+' in).':'')+(c.last<3?' That last board is very narrow, so rip the last two boards evenly instead.':'')+'</p>'}
+ else{h+='<p>Space '+F(c.N)+' battens <strong>'+fr(c.act)+'</strong> center to center ('+F(c.act,2)+' in). That is never wider than your '+F(v.sp,1)+' in target, and the first and last battens sit flush at the corners.</p>'}
+ const r=(a,b,d)=>'<tr><td class="l">'+a+'</td><td>'+b+'</td><td>'+d+'</td></tr>';
+ let rows='';
+ if(trad)rows+=r('Boards ('+F(v.bw)+' in)',F(c.n)+' × '+F(v.h)+' ft',F(c.brd.buy)+' × '+S+' ft');
+ rows+=r('Battens ('+F(v.bt)+' in)',F(c.N)+' × '+F(v.h)+' ft',F(c.bat.buy)+' × '+S+' ft');
+ if(c.rails)rows+=r('Rails ('+(v.top?'top':'')+(v.top&&v.bot?' + ':'')+(v.bot?'bottom':'')+')',c.rails+' × '+F(v.w)+' ft',F(c.rl.buy)+' × '+S+' ft');
+ rows+=r('Nails (2 per station, 16 in)',F(c.nb),F(c.nails));
+ rows+=r('Adhesive, 10 oz tubes',F(c.lf,1)+' lin ft',F(c.tubes)+' tubes');
+ rows+=r('Paint, 2 coats',F(c.gal,2)+' gal',F(c.galBuy,2)+' gal');
+ h+='<h3>Shopping list (waste included)</h3><div class="tw"><table><thead><tr><th class="l">Item</th><th>Need</th><th>Buy</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+ if(c.bat.sp||(c.brd&&c.brd.sp))h+='<p class="hint">Pieces are longer than your stock length. Plan staggered splices over framing and buy extra.</p>';
+ if(!trad){
+  let cr='';
+  [12,16,18,24].forEach(s=>{if(s>v.bt){const N=Math.max(2,Math.ceil((c.W-v.bt)/s-1e-9)+1);cr+='<tr><td class="l">'+s+' in</td><td>'+F(N)+'</td><td>'+fr((c.W-v.bt)/(N-1))+'</td></tr>'}});
+  if(cr)h+='<h3>Compare spacings</h3><div class="tw"><table><thead><tr><th class="l">Target spacing</th><th>Battens</th><th>Actual o.c.</th></tr></thead><tbody>'+cr+'</tbody></table></div>';
+ }
+ let lr='';
+ c.cs.forEach((x,i)=>{lr+='<tr'+(i>9?' class="x"':'')+'><td>'+(i+1)+'</td><td>'+F(x,2)+'</td><td>'+fr(x)+'</td><td>'+fr(x-v.bt/2)+'</td></tr>'});
+ h+='<h3>Batten layout marks (from the left corner)</h3><div class="tw"><table id="lt"'+(c.N>10?' class="collapsed"':'')+'><thead><tr><th>#</th><th>Center (in)</th><th>Center (1/16)</th><th>Left edge (1/16)</th></tr></thead><tbody>'+lr+'</tbody></table></div>';
+ if(c.N>10)h+='<button type="button" class="btn sec showall">Show all '+F(c.N)+' marks</button>';
+ h+='<div class="note">Counts round up. Nails assume at least 1 in of penetration into framing, a rule of thumb; follow product instructions. This is a material estimate, not engineering, permit or inspection approval. Local codes vary, and exterior walls fall under rules such as IRC R703.</div>';
+ return h;
+}
+
+function text(v,c){
+ const t=v.style==='trad';
+ const a=['Board and Batten Wall Calculator (toolwick.com)','Wall: '+F(v.w)+' ft wide x '+F(v.h)+' ft tall, net area '+F(c.net,1)+' sq ft',t?'Style: traditional, '+F(v.bw)+' in boards, '+F(v.bt)+' in battens':'Style: battens on flat wall, '+F(v.bt)+' in battens, '+F(c.act,2)+' in o.c. ('+fr(c.act)+'), gap '+fr(c.gap)];
+ if(t)a.push('Boards: '+c.n+' (buy '+c.brd.buy+' x '+v.stock+' ft)');
+ a.push('Battens: '+c.N+' (buy '+c.bat.buy+' x '+v.stock+' ft)');
+ if(c.rails)a.push('Rails: '+c.rails+' x '+F(v.w)+' ft (buy '+c.rl.buy+' x '+v.stock+' ft)');
+ a.push('Nails: '+F(c.nails),'Adhesive: '+c.tubes+' tubes','Paint: '+F(c.galBuy,2)+' gal','Waste allowance: '+v.waste+'%. Estimate only; local codes vary.');
+ return a.join('\n');
+}
+
+function run(){
+ const v=read(),res=$('results');
+ if(!v){res.classList.remove('show');res.innerHTML='';$('actions').hidden=true;shown=false;return}
+ const c=calc(v);
+ draw(v,c);
+ lastTxt=text(v,c);
+ res.classList.remove('show');
+ res.innerHTML=render(v,c);
+ res.querySelectorAll('.tw').forEach(t=>{t.tabIndex=0;t.setAttribute('role','region');t.setAttribute('aria-label','Scrollable table')});
+ $('actions').hidden=false;shown=true;
+ requestAnimationFrame(()=>res.classList.add('show'));
+}
+const go=()=>requestAnimationFrame(run);
+function mode(){const t=$('style').value==='trad';$('f-bw').hidden=!t;$('f-sp').hidden=t}
+
+$('f').addEventListener('submit',e=>{e.preventDefault();go()});
+$('style').addEventListener('change',()=>{mode();if(shown)go()});
+['stock','top','bot'].forEach(i=>$(i).addEventListener('change',()=>{if(shown)go()}));
+$('sp').addEventListener('input',()=>{$('spv').textContent=F(+$('sp').value,1);if(shown)go()});
+$('waste').addEventListener('input',()=>{$('wv').textContent=$('waste').value;if(shown)go()});
+$('results').addEventListener('click',e=>{const b=e.target.closest('.showall');if(b){b.hidden=true;const t=$('lt');if(t)t.classList.remove('collapsed')}});
+$('copy').addEventListener('click',async()=>{
+ try{await navigator.clipboard.writeText(lastTxt)}catch(x){const t=document.createElement('textarea');t.value=lastTxt;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(y){}t.remove()}
+ $('copy').textContent='Copied!';setTimeout(()=>{$('copy').textContent='Copy results'},2000);
+});
+mode();
+(function(){const v=read();if(v)draw(v,calc(v))})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
