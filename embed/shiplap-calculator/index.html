@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Shiplap Calculator | Toolwick</title>
+<meta name="description" content="Free shiplap calculator: enter wall size, openings, board width and length to get boards to order, waste, fasteners and cost, with a live diagram.">
+<link rel="canonical" href="https://toolwick.com/shiplap-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.65;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.15rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.2;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.5rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 10px rgba(0,0,0,.06);margin:2rem 0}
+.dia{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem;text-align:center}
+.dia svg{width:100%;max-width:440px;height:auto;display:block;margin:0 auto}
+#dia text{font-size:11px;fill:#1a1a2e}
+.grid{display:grid;grid-template-columns:1fr;gap:0 1rem}
+.f{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:0;border-color:#0077b6}
+input.bad,select.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:44px;width:100%;cursor:pointer;font-family:inherit}
+button:hover{background:#006299}
+button:focus-visible{outline:3px solid #1a1a2e;outline-offset:2px}
+button.sec{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;padding:8px 16px;font-size:.9rem;margin-top:1rem}
+button.sec:hover{background:#eef7fc}
+#results{margin-top:1.5rem}
+.res{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.res{animation:none}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.big{display:block;font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1.1}
+.key small{color:#444;font-size:.9rem}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(odd) td{background:#fafafa}
+tr:nth-child(even) td{background:#fff}
+th.n,td.n{text-align:right}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;margin:0 0 .75rem}
+h3{font-size:1rem;margin:1.25rem 0 .5rem}
+details{border-bottom:1px solid #e8e8e8;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:.75rem 0;min-height:44px}
+details p{margin:0 0 1rem}
+.formula{background:#f8f9fa;padding:1rem;border-radius:6px;font-family:Consolas,Menlo,monospace;font-size:.88rem;overflow-x:auto;line-height:1.8}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0}.rel li{margin:0}.rel a{display:block;padding:.6rem 0;border-bottom:1px solid #eee;min-height:44px}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2rem;font-size:.9rem;color:#666}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+.hide{display:none}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.3rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/shiplap-calculator/">
+<meta property="og:title" content="Shiplap Calculator">
+<meta property="og:description" content="Free shiplap calculator: enter wall size, openings, board width and length to get boards to order, waste, fasteners and cost, with a live diagram.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<main>
+<h1>Shiplap Calculator</h1>
+<p>This shiplap calculator tells you how many boards to buy for an accent wall, a whole room or an exterior wall. Enter the wall size, subtract doors and windows, choose a board profile, and get a conservative, rounded-up order with waste, fasteners and cost.</p>
+
+<div class="card">
+<div class="dia">
+<svg id="dia" viewBox="0 0 400 256" role="img" aria-labelledby="dt dd">
+<title id="dt">Shiplap wall diagram</title>
+<desc id="dd">A wall with its width and height dimensions, the exposed face width of one shiplap board highlighted, and a dashed box for door and window openings.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<g id="dyn"></g>
+</svg>
+</div>
+
+<div class="grid">
+<div class="f"><label for="w">Wall width (ft)</label><input id="w" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="w-err"><div class="err" id="w-err"></div><div class="hint">Use decimals: 10.5 = 10 ft 6 in.</div></div>
+<div class="f"><label for="h">Wall height (ft)</label><input id="h" type="number" inputmode="decimal" step="any" min="0" value="8" aria-describedby="h-err"><div class="err" id="h-err"></div></div>
+<div class="f"><label for="n">Number of identical walls</label><input id="n" type="number" inputmode="numeric" step="1" min="1" value="1" aria-describedby="n-err"><div class="err" id="n-err"></div></div>
+<div class="f"><label for="op">Doors &amp; windows total (sq ft)</label><input id="op" type="number" inputmode="decimal" step="any" min="0" value="20" aria-describedby="op-err"><div class="err" id="op-err"></div><div class="hint">Door ≈ 20 sq ft, window ≈ 15 sq ft.</div></div>
+<div class="f"><label for="prof">Board profile (exposed face)</label>
+<select id="prof" aria-describedby="prof-err">
+<option value="3.125">1×4 — 3-1/8 in face</option>
+<option value="5.125" selected>1×6 — 5-1/8 in face</option>
+<option value="6.875">1×8 — 6-7/8 in face</option>
+<option value="8.875">1×10 — 8-7/8 in face</option>
+<option value="10.875">1×12 — 10-7/8 in face</option>
+<option value="custom">Custom face width…</option>
+</select><div class="err" id="prof-err"></div></div>
+<div class="f hide" id="custwrap"><label for="cust">Custom exposed face (in)</label><input id="cust" type="number" inputmode="decimal" step="any" min="0" value="5.5" aria-describedby="cust-err"><div class="err" id="cust-err"></div><div class="hint">Use the coverage printed on the package.</div></div>
+<div class="f"><label for="len">Board length</label>
+<select id="len"><option value="8" selected>8 ft</option><option value="10">10 ft</option><option value="12">12 ft</option><option value="16">16 ft</option></select></div>
+<div class="f"><label for="ori">Board direction</label>
+<select id="ori"><option value="h" selected>Horizontal (courses run across)</option><option value="v">Vertical (boards run floor to ceiling)</option></select></div>
+<div class="f"><label for="price">Price per board ($, optional)</label><input id="price" type="number" inputmode="decimal" step="any" min="0" placeholder="e.g. 14.50" aria-describedby="price-err"><div class="err" id="price-err"></div></div>
+</div>
+<div class="f"><label for="waste">Waste allowance: <span id="wv">10%</span></label><input id="waste" type="range" min="5" max="25" step="1" value="10"><div class="ticks"><span>5%</span><span>15%</span><span>25%</span></div><div class="hint">10% suits simple walls; use 15%+ for many cutouts or diagonal layouts.</div></div>
+<button id="go" type="button">Calculate Shiplap Needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Shiplap Calculator</h2>
+<p>Enter the width and height of the wall in feet, the number of identical walls, and the combined area of doors and windows you will not cover. Choose the board profile, which sets the exposed face, plus the board length and direction. Slide the waste allowance to match your layout. Press Calculate to see boards to order, courses, linear feet, fasteners and cost. A table compares 8, 10, 12 and 16 ft lengths so you can pick the one with the least surplus. The diagram above redraws with your numbers.</p>
+
+<h2>Why This Matters</h2>
+<p>Shiplap is sold by the piece, but you cover walls by the square foot, and the gap between those two is where budgets go wrong. A 12 × 8 ft accent wall is 96 square feet. Subtract a 20 sq ft door and 76 sq ft remains. A 1×6 board only covers about 0.43 sq ft per linear foot once the lap is hidden, so that small wall needs roughly 178 linear feet before any waste. Guess from the nominal 6-inch width and you will order too few boards, make a second trip, and risk a different batch with a slightly different color.</p>
+<p>The calculator is useful to homeowners planning a weekend feature wall, to carpenters pricing a mudroom or nursery, and to anyone cladding a garage, a shed or a covered porch. Prices vary widely by material. Primed pine, cedar and MDF commonly run from about $1 to $4 per linear foot, so a 10% ordering error on a 400 sq ft job can mean a few hundred dollars. Ordering the right length also helps. A 12 ft wall covered with 8 ft boards leaves 4 ft offcuts that can start the next course. A 13 ft wall wastes far more.</p>
+
+<h2>How It's Calculated</h2>
+<div class="formula">Net area = (width × height × walls) − openings<br>Coverage per linear ft = exposed face (in) ÷ 12<br>Linear ft = net area ÷ coverage<br>Linear ft with waste = linear ft × (1 + waste %)<br>Boards (area method) = ROUNDUP(linear ft with waste ÷ board length)</div>
+<p>As a second check, the tool runs a cut plan. Horizontal boards form courses, each as long as the wall is wide. Vertical boards are each as long as the wall is tall. It counts the pieces, scales them for openings, and works out how many whole boards you need when each board yields as many full-length pieces as will fit. Offcuts are reused only for the remainder piece, and any remainder is treated as at least 1 ft long. The order is the larger of the two methods, always rounded up.</p>
+<p>Fasteners assume framing or furring at 16 in on center, which is the common rule of thumb. Each board crosses a bearing point every 16 in, so the count is ordered linear feet × 0.75 crossings × 2 nails (1 for faces of 4 in or less), rounded up to the next 50. This is a materials estimate for interior and exterior cladding. It is not an engineering, permit or inspection approval. Exterior siding must follow the manufacturer's instructions and local code (in the US, see IRC R703), and local codes vary.</p>
+
+<h2>Worked Example</h2>
+<p>A 12 ft wide, 8 ft tall wall with a 20 sq ft door, 1×6 shiplap (5.125 in face), 8 ft boards, horizontal, 10% waste:</p>
+<ul>
+<li>Gross area: 12 × 8 = 96.00 sq ft. Net area: 96 − 20 = 76.00 sq ft.</li>
+<li>Coverage: 5.125 ÷ 12 = 0.4271 sq ft per linear ft. Linear feet: 76 ÷ 0.4271 = 177.95 ft.</li>
+<li>With 10% waste: 177.95 × 1.10 = 195.74 ft. Divided by 8 ft boards = 24.47, which rounds up to 25 boards.</li>
+<li>Cut plan: 96 in ÷ 5.125 = 19 courses of 12 ft. Scaling for the door gives 16 pieces. Each takes one full 8 ft board plus a 4 ft remainder, and two remainders fit per board, so 16 + 8 = 24 boards.</li>
+<li>Order = the larger of 25 and 24 = <strong>25 boards</strong>. Surplus is 25 × 8 × 0.4271 − 76 = 9.42 sq ft.</li>
+<li>Fasteners: 25 × 8 × 0.75 = 150 crossings × 2 = 300 nails. At $14.50 per board the cost is $362.50.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use the exposed face, not the nominal size.</strong> A "1×6" is 5½ in wide and covers about 5-1/8 in once the lap is hidden. Check the package coverage and use the custom option if it differs.</li>
+<li><strong>Buy everything at once.</strong> Color and milling vary between lots, so add a few spare boards to the first order.</li>
+<li><strong>Acclimate the boards.</strong> Leave them in the room for 48 to 72 hours before installing so seasonal movement does not open your gaps.</li>
+<li><strong>Find the framing first.</strong> Mark stud lines before nailing. Vertical boards need horizontal furring or blocking at 16 in. Stagger butt joints over studs, never in a line.</li>
+<li><strong>Don't subtract tiny openings.</strong> Outlets and switches are not worth deducting. Use more waste if the wall has many cutouts, sloped ceilings or an odd shape.</li>
+<li><strong>Mind moisture and fire.</strong> In bathrooms and exterior locations use boards and finishes rated for the exposure, and check local code for flame-spread requirements.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many shiplap boards do I need for a 10×10 room?</summary><p>With 8 ft ceilings, four 10 ft walls are 320 sq ft. Subtracting a door and a window (about 35 sq ft) leaves 285 sq ft. With 1×6 boards at 10% waste that is about 734 linear feet, or roughly 92 eight-foot boards. Enter your own numbers above for an exact count.</p></details>
+<details><summary>How much waste should I add for shiplap?</summary><p>Ten percent is the usual minimum for a simple rectangular wall. Use 15% when the wall has many windows, outlets or angles, or when you want to pick around knots and defects. Use 20–25% for diagonal or herringbone patterns.</p></details>
+<details><summary>Should shiplap run horizontal or vertical?</summary><p>Horizontal is the classic look and makes a room feel wider. Vertical draws the eye up and suits low ceilings. Both use the same area, but the cut plan differs because course length and board length interact differently. Vertical also needs horizontal blocking or furring to nail into.</p></details>
+<details><summary>Do I subtract windows and doors from the wall area?</summary><p>Yes, if you will not cover them. Subtract the full opening area, about 20 sq ft for a standard door and 12–20 sq ft for a typical window. The calculator still counts full-length pieces in the cut plan, so it will not under-order when openings split a course.</p></details>
+<details><summary>What is the difference between shiplap and nickel gap?</summary><p>Shiplap boards have a rabbeted edge so they overlap, and the gap can be nearly closed. Nickel gap boards are usually tongue-and-groove with a deliberate gap about the thickness of a nickel. Their coverage is similar, so use the exposed face stated on the package.</p></details>
+<details><summary>How many nails or screws does shiplap need?</summary><p>A common rule is two fasteners per board at each stud or furring strip, spaced 16 in on center, and one for faces of 4 in or less. This calculator rounds that count up to the next 50. Always follow the board manufacturer's fastener type, length and spacing, and local code for exterior use.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/septic-drain-field-size-calculator/">Septic Drain Field Size Calculator</a></li>
+<li><a href="/drywall-installation-cost-calculator/">Drywall Installation Cost Calculator</a></li>
+<li><a href="/pedestal-paver-calculator/">Pedestal Paver Calculator</a></li>
+<li><a href="/contractor-markup-profit-margin-calculator/">Contractor Markup &amp; Profit Margin Calculator</a></li>
+<li><a href="/tuckpointing-cost-calculator/">Tuckpointing Cost Calculator</a></li>
+<li><a href="/slope-percent-to-degrees-inches-per-foot-calculator/">Slope Percent to Degrees &amp; Inches-per-Foot Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/shiplap-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var fmt=function(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var fm=function(n,m){return n.toLocaleString('en-US',{maximumFractionDigits:m})};
+var ids=['w','h','n','op','prof','cust','price'];
+var lastText='';
+function val(id){var v=$(id).value.trim();return v===''?NaN:Number(v)}
+function opt(id){return $(id).value.trim()===''?0:val(id)}
+function err(id,m){var e=$(id);e.classList.add('bad');e.setAttribute('aria-invalid','true');$(id+'-err').textContent=m}
+function clearErr(){ids.forEach(function(i){var e=$(i);e.classList.remove('bad');e.removeAttribute('aria-invalid');$(i+'-err').textContent=''})}
+function read(){
+var r={w:val('w'),h:val('h'),n:val('n'),op:opt('op'),price:opt('price'),len:+$('len').value,ori:$('ori').value,waste:+$('waste').value/100};
+var p=$('prof').value;r.face=p==='custom'?val('cust'):+p;return r}
+function validate(r){
+var bad=false;
+if(!(r.w>0&&r.w<=500)){err('w','Enter a wall width between 0.1 and 500 ft.');bad=true}
+if(!(r.h>0&&r.h<=100)){err('h','Enter a wall height between 0.1 and 100 ft.');bad=true}
+if(!(r.n>=1&&r.n<=100&&Math.floor(r.n)===r.n)){err('n','Enter a whole number of walls from 1 to 100.');bad=true}
+if(!(r.op>=0)){err('op','Openings must be 0 or more square feet.');bad=true}
+else if(!bad&&r.op>=r.w*r.h*r.n){err('op','Openings must be smaller than the total wall area ('+fmt(r.w*r.h*r.n,2)+' sq ft).');bad=true}
+if(!(r.face>=1&&r.face<=24)){err($('prof').value==='custom'?'cust':'prof','Enter an exposed face width between 1 and 24 in.');bad=true}
+if(!(r.price>=0)){err('price','Price must be 0 or more, or leave it blank.');bad=true}
+return !bad}
+function compute(r){
+var o={};o.gross=r.w*r.h*r.n;o.net=o.gross-r.op;o.ratio=o.net/o.gross;
+o.cov=r.face/12;o.lin=o.net/o.cov;o.linW=o.lin*(1+r.waste);
+var hz=r.ori==='h';
+o.perWall=hz?Math.ceil(r.h*12/r.face-1e-9):Math.ceil(r.w*12/r.face-1e-9);
+o.pLen=hz?r.w:r.h;
+o.pNet=Math.max(1,Math.ceil(o.perWall*r.n*o.ratio-1e-9));
+o.boards=function(L){
+var a=Math.ceil(o.linW/L-1e-9),full=Math.floor(o.pLen/L+1e-9),rem=o.pLen-full*L,c=o.pNet*full;
+if(rem>1e-9){rem=Math.max(rem,1);c+=Math.ceil(o.pNet/Math.max(1,Math.floor(L/rem+1e-9)))}
+return{a:a,c:c,o:Math.max(a,c)}};
+return o}
+function draw(r,cap){
+var W=r.w,H=r.h,mw=250,mh=165,s=Math.min(mw/W,mh/H),pw=W*s,ph=H*s,x=60+(mw-pw)/2,y=28+(mh-ph)/2,hz=r.ori==='h';
+var fp=Math.max(r.face/12*s,2.5),o='',p,len=hz?ph:pw,step=Math.max(fp,len/70);
+var B='stroke="#0077b6" stroke-opacity=".45" stroke-width="1"';
+o+='<rect x="'+x+'" y="'+y+'" width="'+pw+'" height="'+ph+'" fill="#fff"/>';
+o+=hz?'<rect x="'+x+'" y="'+y+'" width="'+pw+'" height="'+Math.min(fp,ph)+'" fill="#0077b6" fill-opacity=".22"/>':'<rect x="'+x+'" y="'+y+'" width="'+Math.min(fp,pw)+'" height="'+ph+'" fill="#0077b6" fill-opacity=".22"/>';
+for(p=step;p<len-.5;p+=step){o+=hz?'<line x1="'+x+'" x2="'+(x+pw)+'" y1="'+(y+p)+'" y2="'+(y+p)+'" '+B+'/>':'<line y1="'+y+'" y2="'+(y+ph)+'" x1="'+(x+p)+'" x2="'+(x+p)+'" '+B+'/>'}
+if(r.op>0){
+var a=Math.min(r.op/(W*H*r.n),.8)*pw*ph,ow=Math.min(Math.sqrt(a*.7),pw*.85),oh=Math.min(a/ow,ph*.85);
+o+='<rect x="'+(x+(pw-ow)/2)+'" y="'+(y+(ph-oh)/2)+'" width="'+ow+'" height="'+oh+'" fill="#fff" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4 3"/>';
+o+='<text x="'+(x+pw/2)+'" y="'+(y+ph/2+4)+'" text-anchor="middle" stroke="#fff" stroke-width="3" paint-order="stroke" style="font-size:10px">− '+fm(r.op,1)+' sq ft</text>'}
+o+='<rect x="'+x+'" y="'+y+'" width="'+pw+'" height="'+ph+'" fill="none" stroke="#0077b6" stroke-width="2"/>';
+var xa=x-16,yb=y+ph+16,G='stroke="#e0e0e0" stroke-dasharray="3 3"',A='stroke="#0077b6" stroke-width="1.5" marker-start="url(#ah)" marker-end="url(#ah)"';
+o+='<line x1="'+(x-2)+'" x2="'+(xa-5)+'" y1="'+y+'" y2="'+y+'" '+G+'/><line x1="'+(x-2)+'" x2="'+(xa-5)+'" y1="'+(y+ph)+'" y2="'+(y+ph)+'" '+G+'/>';
+o+='<line x1="'+xa+'" x2="'+xa+'" y1="'+y+'" y2="'+(y+ph)+'" '+A+'/>';
+o+='<text transform="translate('+(xa-6)+','+(y+ph/2)+') rotate(-90)" text-anchor="middle">'+fm(H,2)+' ft</text>';
+o+='<line x1="'+x+'" x2="'+x+'" y1="'+(y+ph+2)+'" y2="'+(yb+5)+'" '+G+'/><line x1="'+(x+pw)+'" x2="'+(x+pw)+'" y1="'+(y+ph+2)+'" y2="'+(yb+5)+'" '+G+'/>';
+o+='<line x1="'+x+'" x2="'+(x+pw)+'" y1="'+yb+'" y2="'+yb+'" '+A+'/>';
+o+='<text x="'+(x+pw/2)+'" y="'+(yb+16)+'" text-anchor="middle">'+fm(W,2)+' ft wide</text>';
+var fl=fm(r.face,3)+' in';
+if(hz){var xr=x+pw+10;
+o+='<line x1="'+xr+'" x2="'+xr+'" y1="'+y+'" y2="'+(y+Math.min(fp,ph))+'" stroke="#0077b6" stroke-width="2"/>';
+o+='<text x="'+(xr+7)+'" y="'+(y+Math.min(fp,ph)/2+1)+'">'+fl+'</text><text x="'+(xr+7)+'" y="'+(y+Math.min(fp,ph)/2+14)+'" style="font-size:9px">exposed face</text>'}
+else{var yt=y-8;
+o+='<line x1="'+x+'" x2="'+(x+Math.min(fp,pw))+'" y1="'+yt+'" y2="'+yt+'" stroke="#0077b6" stroke-width="2"/>';
+o+='<text x="'+(x+Math.min(fp,pw)+6)+'" y="'+(yt+4)+'">'+fl+' exposed face</text>'}
+o+='<text x="200" y="250" text-anchor="middle" style="font-size:11px;font-weight:600">'+cap+'</text>';
+$('dyn').innerHTML=o}
+function calc(){
+clearErr();var r=read();
+if(!validate(r)){$('results').innerHTML='';lastText='';return}
+var c=compute(r),sel=c.boards(r.len),ord=sel.o,hz=r.ori==='h';
+var surplus=ord*r.len*c.cov-c.net;
+var per=r.face<=4?1:2,nails=Math.ceil(ord*r.len*.75*per/50)*50;
+var cost=r.price>0?ord*r.price:0;
+var row=function(a,b){return'<tr><td>'+a+'</td><td class="n">'+b+'</td></tr>'};
+var rows=[
+['Gross wall area',fmt(c.gross,2)+' sq ft'],
+['Openings (not covered)','− '+fmt(r.op,2)+' sq ft'],
+['Net area to cover',fmt(c.net,2)+' sq ft'],
+['Exposed face',fm(r.face,3)+' in'],
+[hz?'Courses per wall':'Boards across per wall',fmt(c.perWall,0)],
+['Piece length',fm(c.pLen,2)+' ft'],
+['Linear feet (net)',fmt(c.lin,2)+' ft'],
+['Waste allowance',fm(r.waste*100,0)+'% → '+fmt(c.linW,2)+' ft'],
+['Boards by area method',fmt(sel.a,0)],
+['Boards by cut plan',fmt(sel.c,0)],
+['Boards to order ('+r.len+' ft)',fmt(ord,0)],
+['Surplus coverage',fmt(surplus,2)+' sq ft'],
+['Fasteners (approx.)',fmt(nails,0)]];
+if(cost>0){rows.push(['Estimated material cost','$'+fmt(cost,2)]);rows.push(['Cost per sq ft covered','$'+fmt(cost/c.net,2)])}
+var t1=rows.map(function(x){return row(x[0],x[1])}).join('');
+var t2=[8,10,12,16].map(function(L){var b=c.boards(L),su=b.o*L*c.cov-c.net;
+return'<tr><td>'+L+' ft'+(L===r.len?' (your pick)':'')+'</td><td class="n">'+fmt(b.o,0)+'</td><td class="n">'+fmt(b.o*L,0)+'</td><td class="n">'+fmt(su,2)+'</td></tr>'}).join('');
+var notes='';
+if(c.pLen>r.len)notes+='<p class="note">Each '+(hz?'course':'board')+' is longer than a '+r.len+' ft board, so joints are needed. Stagger them and land every joint on a stud or furring strip.</p>';
+if(!hz)notes+='<p class="note">Vertical boards need horizontal blocking or furring at 16 in on center to nail into.</p>';
+notes+='<p class="note">Materials estimate only, always rounded up. Fasteners assume framing at 16 in on center. Follow the manufacturer\'s instructions and local codes (exterior siding: see IRC R703). This is not an engineering, permit or inspection approval.</p>';
+var html='<div class="res"><div class="key"><span class="big">'+fmt(ord,0)+'</span><small>'+r.len+' ft boards to order · '+fmt(ord*r.len,0)+' linear ft · covers '+fmt(ord*r.len*c.cov,2)+' sq ft</small></div>'
++'<div class="tw"><table><thead><tr><th>Detail</th><th class="n">Value</th></tr></thead><tbody>'+t1+'</tbody></table></div>'
++'<h3>Compare board lengths</h3><div class="tw"><table><thead><tr><th>Length</th><th class="n">Boards</th><th class="n">Total ft</th><th class="n">Surplus sq ft</th></tr></thead><tbody>'+t2+'</tbody></table></div>'
++notes+'<button type="button" class="sec" id="copyBtn">Copy results</button></div>';
+lastText='Shiplap estimate (toolwick.com/shiplap-calculator/)\nWall: '+fm(r.w,2)+' x '+fm(r.h,2)+' ft x '+r.n+' wall(s), openings '+fmt(r.op,2)+' sq ft\nBoard: '+fm(r.face,3)+' in exposed face, '+r.len+' ft, '+(hz?'horizontal':'vertical')+', waste '+fm(r.waste*100,0)+'%\nNet area: '+fmt(c.net,2)+' sq ft\nBoards to order: '+fmt(ord,0)+'\nFasteners (approx.): '+fmt(nails,0)+(cost>0?'\nEstimated cost: $'+fmt(cost,2):'');
+requestAnimationFrame(function(){
+$('results').innerHTML=html;
+draw(r,fmt(c.perWall,0)+(hz?' courses':' boards across')+' per wall · '+fmt(ord,0)+' × '+r.len+' ft boards')})}
+function copy(btn){
+var done=function(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy results'},2000)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,function(){fb()})}else fb();
+function fb(){var t=document.createElement('textarea');t.value=lastText;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(t)}}
+$('go').addEventListener('click',function(){requestAnimationFrame(calc)});
+['w','h','n','op','prof','cust','len','ori','waste','price'].forEach(function(i){$(i).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();requestAnimationFrame(calc)}})});
+$('results').addEventListener('click',function(e){if(e.target.id==='copyBtn')copy(e.target)});
+$('waste').addEventListener('input',function(){$('wv').textContent=this.value+'%'});
+$('prof').addEventListener('change',function(){$('custwrap').classList.toggle('hide',this.value!=='custom')});
+(function init(){var r=read();if(r.w>0&&r.h>0&&r.face>0)draw(r,'Press Calculate to see your counts')})();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
