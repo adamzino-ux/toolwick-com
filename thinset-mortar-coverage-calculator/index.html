@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Thinset Mortar Coverage Calculator | Toolwick</title>
+<meta name="description" content="Free thinset calculator: estimate how many bags of thinset mortar you need from area, trowel notch size, method and waste. Instant, conservative results.">
+<link rel="canonical" href="https://toolwick.com/thinset-mortar-coverage-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Thinset Mortar Coverage Calculator", "url": "https://toolwick.com/thinset-mortar-coverage-calculator/", "description": "Free thinset calculator: estimate how many bags of thinset mortar you need from area, trowel notch size, method and waste. Instant, conservative results.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Thinset Mortar Coverage Calculator", "item": "https://toolwick.com/thinset-mortar-coverage-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many square feet does a 50 lb bag of thinset cover?", "acceptedAnswer": {"@type": "Answer", "text": "It depends mostly on the trowel. A 50 lb bag typically covers about 90 sq ft with a 1/4\" × 1/4\" notch, 70 sq ft with a 1/4\" × 3/8\" notch, and 40 to 50 sq ft with a 1/2\" × 1/2\" notch. Back-buttering or an uneven floor reduces those numbers."}}, {"@type": "Question", "name": "How much thinset do I need for 100 square feet?", "acceptedAnswer": {"@type": "Answer", "text": "With 10% waste you are covering 110 sq ft. On a 1/4\" × 3/8\" notch that is about 1.6 bags, so buy 2. On a 1/2\" × 1/2\" notch it is about 2.4 bags, so buy 3. Back-buttering pushes both numbers higher."}}, {"@type": "Question", "name": "What size trowel do I need for 12x24 tile?", "acceptedAnswer": {"@type": "Answer", "text": "Large rectangular tile usually calls for a 1/2\" × 1/2\" square notch or a 3/4\" U-notch, plus back-buttering. Check the tile maker's installation guide and your mortar's data sheet, since they set the requirement."}}, {"@type": "Question", "name": "Do I have to back-butter tile?", "acceptedAnswer": {"@type": "Answer", "text": "It is commonly recommended for tiles with an edge of 15\" or more, and for any tile where lifting one shows poor mortar contact. It adds mortar usage, which is why this thinset calculator has a back-buttered setting."}}, {"@type": "Question", "name": "How long does mixed thinset last in the bucket?", "acceptedAnswer": {"@type": "Answer", "text": "Pot life is often around two to four hours, but it varies with product, temperature and humidity. Follow the label, and never re-wet mortar that has started to stiffen."}}, {"@type": "Question", "name": "Does modified thinset cover differently than unmodified?", "acceptedAnswer": {"@type": "Answer", "text": "Coverage is usually similar, because it is driven by trowel notch and technique rather than polymer content. Some rapid-set and lightweight mortars cover more per bag, so use the label figure in the custom option if yours differs."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.75rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram text{fill:#1a1a2e;font-family:inherit}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.f{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;font-size:1rem;background:#fff;color:#1a1a2e}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;height:44px}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.hint{font-size:.85rem;color:#666;margin-top:.3rem}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-weight:600;cursor:pointer;min-height:44px;width:100%}
+button:hover{background:#006299}
+button.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;padding:8px 16px;font-size:.85rem;font-weight:500}
+button.copy:hover{background:#f0f8fc}
+[hidden]{display:none!important}
+#results{margin-top:1.5rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.big{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.num{display:block;font-size:3rem;font-weight:800;color:#0077b6;line-height:1.1}
+.big small{display:block;color:#444;font-size:.95rem;margin-top:.35rem}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(even) td{background:#fafafa}
+th.r,td.r{text-align:right}
+tr.sel td{background:#e8f4fa;font-weight:600}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;border-radius:0 6px 6px 0}
+.cs{font-size:.85rem;color:#2c6e2f;margin-left:.5rem}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e5e5e5;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .5rem}
+.rel{padding-left:1.2rem}
+.rel li{margin-bottom:.5rem}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:480px){.row{grid-template-columns:1fr;gap:0}.card{padding:1.25rem}h1{font-size:1.5rem}.num{font-size:2.5rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/thinset-mortar-coverage-calculator/">
+<meta property="og:title" content="Thinset Mortar Coverage Calculator">
+<meta property="og:description" content="Free thinset calculator: estimate how many bags of thinset mortar you need from area, trowel notch size, method and waste. Instant, conservative results.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Thinset Mortar Coverage Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This thinset calculator tells you how many bags of thinset mortar to buy for a tile job. Enter your floor or wall area, pick your trowel notch size and setting method, and get a rounded-up bag count, total weight and a side-by-side trowel comparison.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="dg" viewBox="0 0 520 230" role="img" aria-label="Cross-section of tile set on thinset mortar with notch depth">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<text id="t1" x="10" y="22" font-size="14" font-weight="700"></text>
+<text id="t2" x="10" y="42" font-size="14"></text>
+<rect id="tile" x="10" y="90" width="390" height="26" fill="#fff" stroke="#1a1a2e" stroke-width="2"/>
+<text id="tl" x="205" y="108" font-size="13" text-anchor="middle">Tile</text>
+<g id="ridges"></g>
+<rect x="10" y="170" width="390" height="36" fill="#f8f9fa" stroke="#0077b6" stroke-width="2"/>
+<text x="205" y="193" font-size="13" text-anchor="middle">Substrate (subfloor / backer)</text>
+<line id="g1" x1="400" y1="130" x2="420" y2="130" stroke="#999" stroke-dasharray="4 3"/>
+<line x1="400" y1="170" x2="420" y2="170" stroke="#999" stroke-dasharray="4 3"/>
+<line id="ar1" x1="415" y1="130" x2="415" y2="170" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dl1" x="426" y="146" font-size="13">Notch</text>
+<text id="dl2" x="426" y="162" font-size="13" font-weight="700"></text>
+<text x="10" y="224" font-size="12" fill="#444" style="fill:#444">Full-contact ridges collapse flat when the tile is pressed in.</text>
+</svg>
+</div>
+
+<div class="f"><label for="mode">Enter area as</label>
+<select id="mode"><option value="dim">Length × width</option><option value="area">Total area (sq ft)</option></select></div>
+
+<div id="dimBox" class="row">
+<div class="f"><label for="len">Length (ft)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="15" aria-describedby="e_len"><div class="err" id="e_len"></div></div>
+<div class="f"><label for="wid">Width (ft)</label><input id="wid" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="e_wid"><div class="err" id="e_wid"></div></div>
+</div>
+<div id="areaBox" class="f" hidden><label for="ta">Total area (sq ft)</label><input id="ta" type="number" inputmode="decimal" step="any" min="0" value="180" aria-describedby="e_ta"><div class="err" id="e_ta"></div></div>
+
+<div class="f"><label for="trowel">Trowel notch size (match to your tile)</label>
+<select id="trowel">
+<option value="v316">3/16" × 5/32" V-notch — mosaics up to 2"</option>
+<option value="sq14">1/4" × 1/4" square — tiles up to 8"</option>
+<option value="sq1438">1/4" × 3/8" square — tiles 8"–12"</option>
+<option value="sq12" selected>1/2" × 1/2" square — tiles 12"–18"</option>
+<option value="sq34">3/4" × 3/4" square — large, heavy tile</option>
+<option value="custom">Custom — use my bag label coverage</option>
+</select></div>
+
+<div id="covBox" class="f" hidden><label for="cov">Coverage per 50 lb bag (sq ft, from the bag label)</label><input id="cov" type="number" inputmode="decimal" step="any" min="0" value="50" aria-describedby="e_cov"><div class="err" id="e_cov"></div>
+<div class="hint">Use the lower number if the label gives a range.</div></div>
+
+<div class="row">
+<div class="f"><label for="method">Setting method</label>
+<select id="method">
+<option value="1">Standard (flat substrate)</option>
+<option value="0.75" selected>Back-buttered (large format)</option>
+<option value="0.85">Uneven substrate / flattening</option>
+<option value="0.65">Back-buttered + uneven</option>
+</select></div>
+<div class="f"><label for="bag">Bag size</label>
+<select id="bag"><option value="50" selected>50 lb</option><option value="40">40 lb</option><option value="25">25 lb</option></select></div>
+</div>
+
+<div class="f"><label for="waste">Waste &amp; overage allowance: <output id="wv" for="waste">10%</output></label>
+<input id="waste" type="range" min="0" max="25" step="1" value="10">
+<div class="ticks"><span>0%</span><span>25%</span></div></div>
+
+<div class="f"><label for="price">Price per bag (optional, $)</label><input id="price" type="number" inputmode="decimal" step="any" min="0" value="28" aria-describedby="e_price"><div class="err" id="e_price"></div></div>
+
+<button id="go" type="button">Calculate Thinset</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/thinset-mortar-coverage-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Thinset Mortar Coverage Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/thinset-mortar-coverage-calculator/&quot;&gt;Thinset Mortar Coverage Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/thinset-mortar-coverage-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Thinset Calculator</h2>
+<p>Enter the area you plan to tile, either as length × width or as a single square-footage figure. Choose the trowel notch that matches your tile size, then pick your setting method: standard, back-buttered, or an uneven substrate that needs extra mortar. Adjust the waste slider and the bag size to match what your store sells. The tool returns the number of bags to buy, the total weight, an optional cost, and a comparison of every trowel size for the same job.</p>
+
+<h2>Why This Matters</h2>
+<p>Thinset is one of the easiest materials to misjudge. Buy too little and you are stuck halfway across a floor with a half-set row, a mixed batch curing in the bucket, and a trip to the store. Mortar that sat open for an hour will not bond the same as fresh material, and a second bag from a different lot can differ slightly in color and cure time. Buy too much and you have paid for 50 lb bags that harden in the garage.</p>
+<p>The trowel is the biggest variable. A 12"×24" porcelain tile on a 1/2" square notch with back-buttering can use more than twice the mortar per square foot of a 4"×4" wall tile on a 1/4" notch. On a 180 sq ft kitchen, that is the difference between 3 bags and 6 bags. Uneven subfloors add more, because the mortar fills low spots before it supports the tile.</p>
+<p>Homeowners use a thinset calculator before a weekend bathroom remodel, and tile setters use it to price jobs and order exact quantities. Anyone laying large-format tile in a shower or on an exterior patio benefits most, since those jobs demand full mortar contact and cannot afford a shortage.</p>
+
+<h2>How It's Calculated</h2>
+<p>Thinset coverage is quoted per bag, so the calculation works backward from the area. The tool uses typical planning coverage for a 50 lb bag at each notch size, set toward the conservative end of manufacturer ranges: 110 sq ft for a 3/16" V-notch, 90 for 1/4" × 1/4", 70 for 1/4" × 3/8", 45 for 1/2" × 1/2", and 30 for 3/4" × 3/4". Other bag sizes scale in proportion to weight.</p>
+<p><strong>Coverage per bag</strong> = base coverage × (bag lb ÷ 50) × method factor</p>
+<p><strong>Bags needed</strong> = round up [ area × (1 + waste %) ÷ coverage per bag ]</p>
+<p>The method factors are 1.00 for standard setting, 0.75 for back-buttering, 0.85 for an uneven substrate, and 0.65 for both. Bags are always rounded up, never down. Total weight is bags × bag weight, and 1 lb = 0.4536 kg.</p>
+<p>These are planning estimates. Actual coverage depends on the product, how hard you comb the ridges, tile back texture and flatness. Tile industry guidance (ANSI A108.5 and the TCNA Handbook) calls for solid mortar contact, commonly at least 80% in dry interior areas and 95% in showers and exterior areas. Always follow your mortar's data sheet and your local code. This estimate is not an engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>A 15 ft × 12 ft kitchen floor gets 12"×24" porcelain tile. The setter uses a 1/2" × 1/2" square notch trowel, back-butters each tile, uses 50 lb bags and allows 10% waste. Bags cost $28.</p>
+<ol>
+<li>Area = 15 × 12 = <strong>180 sq ft</strong>.</li>
+<li>Base coverage for the 1/2" × 1/2" notch = 45 sq ft per 50 lb bag.</li>
+<li>Back-buttered factor 0.75 → 45 × 0.75 = <strong>33.75 sq ft per bag</strong>.</li>
+<li>Area with 10% waste = 180 × 1.10 = <strong>198 sq ft</strong>.</li>
+<li>Bags = 198 ÷ 33.75 = 5.87, rounded up to <strong>6 bags</strong>.</li>
+<li>Weight = 6 × 50 = <strong>300 lb (136.08 kg)</strong>. Cost = 6 × $28 = <strong>$168.00</strong>.</li>
+</ol>
+<p>The calculator's default inputs are exactly this job, so you can compare the output against these steps.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Match the trowel to the tile, not to the bag.</strong> Larger, heavier tiles need deeper ridges, and a notch that is too small leaves voids that crack tile under load.</li>
+<li><strong>Back-butter tiles 15" or larger.</strong> Skim a thin coat on the tile back and comb the floor. It improves contact and evens out slight warp, but it uses more mortar, so use the back-buttered setting.</li>
+<li><strong>Lift a tile to check contact.</strong> Pull up one freshly set tile. If the back is not almost fully covered, switch to a larger notch or add back-buttering and recalculate.</li>
+<li><strong>Do not mix a whole bag at once.</strong> Mix only what you can spread before it skins over. Open time and pot life are on the label and are shorter in heat.</li>
+<li><strong>Flatten the floor first.</strong> Thinset is not a leveling compound. Heavy lippage or dips are better fixed with a patch or self-leveler, then tile on a standard setting.</li>
+<li><strong>Round up, and keep a spare bag if you can.</strong> Returning one sealed bag costs far less than a shortage mid-job.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many square feet does a 50 lb bag of thinset cover?</summary><p>It depends mostly on the trowel. A 50 lb bag typically covers about 90 sq ft with a 1/4" × 1/4" notch, 70 sq ft with a 1/4" × 3/8" notch, and 40 to 50 sq ft with a 1/2" × 1/2" notch. Back-buttering or an uneven floor reduces those numbers.</p></details>
+<details><summary>How much thinset do I need for 100 square feet?</summary><p>With 10% waste you are covering 110 sq ft. On a 1/4" × 3/8" notch that is about 1.6 bags, so buy 2. On a 1/2" × 1/2" notch it is about 2.4 bags, so buy 3. Back-buttering pushes both numbers higher.</p></details>
+<details><summary>What size trowel do I need for 12x24 tile?</summary><p>Large rectangular tile usually calls for a 1/2" × 1/2" square notch or a 3/4" U-notch, plus back-buttering. Check the tile maker's installation guide and your mortar's data sheet, since they set the requirement.</p></details>
+<details><summary>Do I have to back-butter tile?</summary><p>It is commonly recommended for tiles with an edge of 15" or more, and for any tile where lifting one shows poor mortar contact. It adds mortar usage, which is why this thinset calculator has a back-buttered setting.</p></details>
+<details><summary>How long does mixed thinset last in the bucket?</summary><p>Pot life is often around two to four hours, but it varies with product, temperature and humidity. Follow the label, and never re-wet mortar that has started to stiffen.</p></details>
+<details><summary>Does modified thinset cover differently than unmodified?</summary><p>Coverage is usually similar, because it is driven by trowel notch and technique rather than polymer content. Some rapid-set and lightweight mortars cover more per bag, so use the label figure in the custom option if yours differs.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/stucco-mix-coverage-coat-thickness-calculator/">Stucco Mix Coverage &amp; Coat Thickness Calculator</a></li>
+<li><a href="/shower-pan-mortar-bed-calculator/">Bathtub &amp; Shower Pan Mortar Bed Calculator</a></li>
+<li><a href="/wallpaper-coverage-roll-calculator/">Wallpaper Coverage &amp; Roll Calculator</a></li>
+<li><a href="/blown-in-insulation-coverage-calculator/">Blown-In Insulation Coverage Calculator</a></li>
+<li><a href="/spray-foam-insulation-calculator/">Spray Foam Insulation Coverage Calculator</a></li>
+<li><a href="/brick-mortar-calculator/">Brick &amp; Mortar Calculator</a></li>
+</ul>
+
+<nav class="cluster-nav" aria-label="More Concrete, Masonry &amp; Foundations Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Concrete, Masonry &amp; Foundations Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/shower-pan-mortar-bed-calculator/">Bathtub &amp; Shower Pan Mortar Bed Calculator</a></li><li><a href="/brick-mortar-calculator/">Brick &amp; Mortar Calculator</a></li><li><a href="/cinder-block-wall-calculator/">Cinder Block Wall Calculator</a></li><li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li><li><a href="/concrete-volume-calculator/">Concrete Volume Calculator</a></li><li><a href="/deck-footing-frost-depth-calculator/">Deck Footing Size &amp; Frost Depth Calculator</a></li><li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a></li><li><a href="/footing-foundation-size-calculator/">Footing &amp; Foundation Size Calculator</a></li><li><a href="/concrete-calculators/"><strong>All Concrete, Masonry &amp; Foundations calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<p><a href="/about/">About</a> <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> <a href="/contact/">Contact</a></p>
+<p>© 2025 toolwick.com. Estimates only; local codes and manufacturer instructions take priority.</p>
+</footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const T={
+v316:{n:'3/16" × 5/32" V-notch',c:110,d:.156,dl:'5/32"'},
+sq14:{n:'1/4" × 1/4" square-notch',c:90,d:.25,dl:'1/4"'},
+sq1438:{n:'1/4" × 3/8" square-notch',c:70,d:.375,dl:'3/8"'},
+sq12:{n:'1/2" × 1/2" square-notch',c:45,d:.5,dl:'1/2"'},
+sq34:{n:'3/4" × 3/4" square-notch',c:30,d:.75,dl:'3/4"'}
+};
+const fmt=(n,d)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const num=id=>parseFloat($(id).value);
+let summary='';
+
+function drawSvg(name,dl,d,area,bags,lb){
+  const h=Math.round(d*80),base=170;
+  let r='';
+  for(let i=0;i<7;i++)r+='<rect x="'+(26+54*i)+'" y="'+(base-h)+'" width="24" height="'+h+'" fill="#cfe7f3" stroke="#0077b6" stroke-width="2"/>';
+  $('ridges').innerHTML=r;
+  const ty=base-h-26;
+  $('tile').setAttribute('y',ty);$('tl').setAttribute('y',ty+17);
+  $('g1').setAttribute('y1',base-h);$('g1').setAttribute('y2',base-h);
+  $('ar1').setAttribute('y1',base-h);
+  const m=base-h/2;
+  $('dl1').setAttribute('y',m-2);$('dl2').setAttribute('y',m+14);
+  $('dl2').textContent=dl;
+  $('t1').textContent=name;
+  $('t2').textContent=fmt(area,1)+' sq ft → '+fmt(bags,0)+' × '+lb+' lb bags';
+  $('dg').setAttribute('aria-label','Tile on thinset: '+name+', notch depth '+dl+'; '+fmt(area,1)+' square feet needs '+fmt(bags,0)+' bags');
+}
+
+function calc(){
+  let ok=true,first=null;
+  document.querySelectorAll('.err').forEach(e=>e.textContent='');
+  document.querySelectorAll('.bad').forEach(e=>{e.classList.remove('bad');e.removeAttribute('aria-invalid')});
+  const bad=(id,m)=>{$(id).classList.add('bad');$(id).setAttribute('aria-invalid','true');$('e_'+id).textContent=m;if(ok)first=id;ok=false};
+  const mode=$('mode').value,key=$('trowel').value;
+  let L=0,W=0,A=0,cv=0,price=null;
+  if(mode==='dim'){
+    L=num('len');W=num('wid');
+    if(!(L>0))bad('len','Enter a length greater than 0 ft.');else if(L>1000)bad('len','Length must be 1,000 ft or less.');
+    if(!(W>0))bad('wid','Enter a width greater than 0 ft.');else if(W>1000)bad('wid','Width must be 1,000 ft or less.');
+  }else{
+    A=num('ta');
+    if(!(A>0))bad('ta','Enter an area greater than 0 sq ft.');else if(A>1000000)bad('ta','Area must be 1,000,000 sq ft or less.');
+  }
+  if(key==='custom'){cv=num('cov');if(!(cv>0))bad('cov','Enter the label coverage, greater than 0.');else if(cv>1000)bad('cov','Coverage above 1,000 sq ft per bag looks wrong. Check the label.')}
+  const pr=$('price').value.trim();
+  if(pr!==''){const p=parseFloat(pr);if(!(p>=0)||p>10000)bad('price','Enter a price of 0 or more.');else price=p}
+  if(!ok){$('results').innerHTML='';$(first).focus();return}
+  const area=mode==='dim'?L*W:A;
+  const f=parseFloat($('method').value),lb=+$('bag').value,waste=+$('waste').value;
+  const mtxt=$('method').options[$('method').selectedIndex].text;
+  const areaW=area*(1+waste/100);
+  const per=(k)=>(k==='custom'?cv:T[k].c)*lb/50*f;
+  const bagsFor=k=>Math.max(1,Math.ceil(areaW/per(k)-1e-9));
+  const pb=per(key),exact=areaW/pb,bags=bagsFor(key);
+  const wLb=bags*lb,wKg=wLb*0.45359237;
+  const t=key==='custom'?{n:'Custom coverage ('+fmt(cv,1)+' sq ft per 50 lb)',d:.25,dl:'varies'}:T[key];
+  let rows='';
+  for(const k in T){rows+='<tr'+(k===key?' class="sel"':'')+'><td>'+T[k].n+'</td><td class="r">'+fmt(per(k),1)+'</td><td class="r">'+fmt(bagsFor(k),0)+'</td></tr>'}
+  if(key==='custom')rows+='<tr class="sel"><td>Custom</td><td class="r">'+fmt(pb,1)+'</td><td class="r">'+fmt(bags,0)+'</td></tr>';
+  let cost='';
+  if(price!==null)cost='<tr><td>Estimated cost ('+bags+' × $'+fmt(price,2)+')</td><td class="r">$'+fmt(bags*price,2)+'</td></tr>';
+  summary='Thinset estimate: '+fmt(bags,0)+' × '+lb+' lb bags ('+fmt(wLb,0)+' lb). Area '+fmt(area,1)+' sq ft + '+waste+'% waste; '+t.n+'; '+mtxt+'; '+fmt(pb,1)+' sq ft per bag.'+(price!==null?' Est. cost $'+fmt(bags*price,2)+'.':'');
+  const html='<div class="res"><div class="big"><span class="num">'+fmt(bags,0)+'</span>bag'+(bags===1?'':'s')+' of '+lb+' lb thinset<small>Exact need: '+fmt(exact,2)+' bags, rounded up so you do not run short</small></div>'
+  +'<div class="tw"><table><tr><th>Detail</th><th class="r">Value</th></tr>'
+  +'<tr><td>Tiled area</td><td class="r">'+fmt(area,1)+' sq ft</td></tr>'
+  +'<tr><td>Area incl. '+waste+'% waste</td><td class="r">'+fmt(areaW,1)+' sq ft</td></tr>'
+  +'<tr><td>Trowel</td><td class="r">'+t.n+'</td></tr>'
+  +'<tr><td>Method</td><td class="r">'+mtxt+'</td></tr>'
+  +'<tr><td>Coverage per '+lb+' lb bag</td><td class="r">'+fmt(pb,1)+' sq ft</td></tr>'
+  +'<tr><td>Total dry weight</td><td class="r">'+fmt(wLb,0)+' lb / '+fmt(wKg,1)+' kg</td></tr>'
+  +cost+'</table></div>'
+  +'<h2 style="font-size:1.05rem;margin:1.5rem 0 .5rem">Compare trowel sizes for this job</h2>'
+  +'<div class="tw"><table><tr><th>Trowel</th><th class="r">Sq ft / bag</th><th class="r">Bags</th></tr>'+rows+'</table></div>'
+  +'<p><button type="button" class="copy" id="cp">Copy results</button><span class="cs" id="cs" role="status"></span></p>'
+  +'<p class="note">Planning estimate using typical coverage, rounded up. Always check your mortar data sheet, tile maker instructions (ANSI A108.5 / TCNA Handbook contact-coverage guidance) and local codes. Not an engineering or inspection approval.</p></div>';
+  requestAnimationFrame(()=>{
+    $('results').innerHTML=html;
+    drawSvg(t.n,t.dl,t.d,area,bags,lb);
+  });
+}
+
+$('results').addEventListener('click',e=>{
+  if(e.target.id!=='cp')return;
+  const done=()=>{const s=$('cs');s.textContent='Copied!';setTimeout(()=>{s.textContent=''},2000)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(summary).then(done,()=>{})}
+  else{const a=document.createElement('textarea');a.value=summary;document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(a)}
+});
+$('go').addEventListener('click',()=>{requestAnimationFrame(calc)});
+document.querySelectorAll('input,select').forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();requestAnimationFrame(calc)}}));
+$('mode').addEventListener('change',()=>{const d=$('mode').value==='dim';$('dimBox').hidden=!d;$('areaBox').hidden=d});
+$('trowel').addEventListener('change',()=>{$('covBox').hidden=$('trowel').value!=='custom'});
+$('waste').addEventListener('input',()=>{$('wv').textContent=$('waste').value+'%'});
+requestAnimationFrame(calc);
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
