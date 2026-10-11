@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Wainscoting Calculator | Toolwick</title>
+<meta name="description" content="Free wainscoting calculator: estimate beadboard sheets, planks or picture frame molding, trim, adhesive and paint for your walls, with waste included.">
+<link rel="canonical" href="https://toolwick.com/wainscoting-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Wainscoting Calculator", "url": "https://toolwick.com/wainscoting-calculator/", "description": "Free wainscoting calculator: estimate beadboard sheets, planks or picture frame molding, trim, adhesive and paint for your walls, with waste included.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Wainscoting Calculator", "item": "https://toolwick.com/wainscoting-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much wainscoting do I need for a room?", "acceptedAnswer": {"@type": "Answer", "text": "Add up the wall lengths you want to cover, subtract door widths, and multiply by the panel height. Then add 10% waste. This wainscoting calculator does that and converts the result into sheets, boards, trim pieces, adhesive and paint."}}, {"@type": "Question", "name": "What height should wainscoting be?", "acceptedAnswer": {"@type": "Answer", "text": "A common rule is one-third of the wall height: about 32–36 inches in an 8 ft room, or 40–42 inches in a 9 ft room. Anything from one-quarter to two-fifths of the wall can look right. The comparison table shows how each height changes quantities."}}, {"@type": "Question", "name": "How much waste should I allow?", "acceptedAnswer": {"@type": "Answer", "text": "Ten percent suits simple straight walls, 15% suits rooms with many corners, outlets or windows, and 20–25% suits diagonal layouts or first-time installers. When in doubt, go higher and keep the extra for repairs."}}, {"@type": "Question", "name": "How many sheets of beadboard cover a wall?", "acceptedAnswer": {"@type": "Answer", "text": "A 4×8 ft sheet cut to a height under 48 in gives two 48-inch-wide strips, so one sheet covers about 8 ft of wall at that height. Taller panels yield only one strip, so a sheet covers just 4 ft of wall."}}, {"@type": "Question", "name": "Does wainscoting go behind the baseboard and under the cap?", "acceptedAnswer": {"@type": "Answer", "text": "Usually panels run to the floor behind the baseboard, and the cap rail sits on top of the panel edge. That is why the calculator subtracts the cap height from the panel height but keeps the baseboard in the run."}}, {"@type": "Question", "name": "Is this the same as board and batten or shiplap?", "acceptedAnswer": {"@type": "Answer", "text": "No, those use different materials and spacing. Try the Board and Batten Wall Calculator or the Shiplap Calculator for those looks."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.4rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.15rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;margin:2rem 0 .75rem;line-height:1.2}
+h2{font-size:1.35rem;margin:2.5rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.75rem 0 .6rem}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.field{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.bad{border-color:#e74c3c}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666;margin-top:-.25rem}
+.err{color:#c0392b;font-size:.85rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.hide{display:none}
+.sec{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:#666;margin:1.5rem 0 .75rem;font-weight:600}
+button.primary{width:100%;min-height:44px;padding:12px 24px;background:#0077b6;color:#fff;border:0;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:.5rem}
+button.primary:hover{background:#006299}
+button.copy{min-height:44px;padding:8px 18px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;font-size:.9rem;cursor:pointer;font-family:inherit;margin-top:1rem}
+button.copy:hover{background:#f0f8fc}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}}
+.key{text-align:center;background:#f8f9fa;border-radius:8px;padding:1.25rem;margin:1.75rem 0 1rem}
+.big{font-size:3rem;font-weight:800;color:#0077b6;line-height:1.1}
+.klabel{font-size:.95rem;color:#444;margin-top:.35rem}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #eee;background:#fff}
+tr:nth-child(even) td{background:#fafafa}
+th.num,td.num{text-align:right;white-space:nowrap}
+tr.cur td{font-weight:700;color:#005a8c}
+.small{font-size:.85rem;color:#555}
+.errbox{background:#fdf0ee;border:1px solid #e74c3c;border-radius:6px;padding:1rem;color:#8a2a1f;margin-top:1.5rem}
+.formula{background:#f8f9fa;border-left:3px solid #0077b6;padding:.9rem 1rem;font-size:.92rem;margin:0 0 1rem;overflow-x:auto}
+.formula div{margin:.25rem 0}
+ul{padding-left:1.25rem;margin:0 0 1rem}
+li{margin-bottom:.5rem}
+details{border-bottom:1px solid #e0e0e0}
+summary{min-height:44px;padding:.7rem 0;cursor:pointer;font-weight:600}
+details p{margin:0 0 1rem}
+.related{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.related li{margin:0}
+.related a{display:block;padding:.7rem 1rem;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;min-height:44px}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+@media (max-width:640px){.card{padding:1.25rem}.row{grid-template-columns:1fr;gap:0}.related{grid-template-columns:1fr}h1{font-size:1.6rem}.big{font-size:2.6rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/wainscoting-calculator/">
+<meta property="og:title" content="Wainscoting Calculator">
+<meta property="og:description" content="Free wainscoting calculator: estimate beadboard sheets, planks or picture frame molding, trim, adhesive and paint for your walls, with waste included.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Wainscoting Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>Use this wainscoting calculator to estimate how many beadboard sheets, tongue-and-groove planks or picture frame molding pieces you need, plus cap rail, baseboard, adhesive and paint. Enter your wall length, panel height and openings to get a rounded-up shopping list in seconds.</p>
+
+<div class="card">
+<div class="diagram">
+<svg viewBox="0 0 400 270" role="img" aria-labelledby="svgt">
+<title id="svgt">Wall elevation showing ceiling height, wainscoting height and wall run</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<g id="dyn"></g>
+</svg>
+</div>
+
+<div id="form">
+<div class="field"><label for="style">Wainscoting style</label>
+<select id="style"><option value="sheet">Beadboard sheets (4×8 ft)</option><option value="plank">Beadboard / tongue-and-groove planks (8 ft)</option><option value="frame">Picture frame molding on backer panel</option></select></div>
+
+<div class="row">
+<div class="field"><label for="len">Total wall length to cover (ft)</label><input id="len" type="number" inputmode="decimal" step="any" value="52" aria-describedby="e-len"><div class="err" id="e-len"></div></div>
+<div class="field"><label for="ceil">Ceiling height (ft)</label><input id="ceil" type="number" inputmode="decimal" step="any" value="8" aria-describedby="e-ceil"><div class="err" id="e-ceil"></div></div>
+</div>
+
+<div class="field"><label for="hgt">Wainscoting height: <span id="hv">36</span> in</label>
+<input id="hgt" type="range" min="24" max="60" step="1" value="36" aria-describedby="e-hgt">
+<div class="ticks" aria-hidden="true"><span>24 in</span><span>42 in</span><span>60 in</span></div><div class="err" id="e-hgt"></div></div>
+
+<div class="sec">Openings</div>
+<div class="row">
+<div class="field"><label for="doors">Number of doors</label><input id="doors" type="number" inputmode="numeric" min="0" value="1" aria-describedby="e-doors"><div class="err" id="e-doors"></div></div>
+<div class="field"><label for="doorW">Door width incl. casing (in)</label><input id="doorW" type="number" inputmode="decimal" step="any" value="32" aria-describedby="e-doorW"><div class="err" id="e-doorW"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="wins">Number of windows</label><input id="wins" type="number" inputmode="numeric" min="0" value="0" aria-describedby="e-wins"><div class="err" id="e-wins"></div></div>
+<div class="field"><label for="winW">Window width (in)</label><input id="winW" type="number" inputmode="decimal" step="any" value="36" aria-describedby="e-winW"><div class="err" id="e-winW"></div></div>
+</div>
+<div class="field"><label for="sill">Window sill height above floor (in)</label><input id="sill" type="number" inputmode="decimal" step="any" value="30" aria-describedby="e-sill"><div class="err" id="e-sill"></div></div>
+
+<div class="sec">Trim and layout</div>
+<div class="row">
+<div class="field"><label for="cap">Cap rail height (in)</label><input id="cap" type="number" inputmode="decimal" step="any" value="2" aria-describedby="e-cap"><div class="err" id="e-cap"></div></div>
+<div class="field"><label for="base">Baseboard height (in)</label><input id="base" type="number" inputmode="decimal" step="any" value="5" aria-describedby="e-base"><div class="err" id="e-base"></div></div>
+</div>
+<div class="field"><label for="nb">Baseboard</label><select id="nb"><option value="yes">Install new baseboard</option><option value="no">Keep existing baseboard</option></select></div>
+
+<div id="g-plank" class="field hide"><label for="plank">Plank coverage width (in)</label>
+<select id="plank"><option value="3.125">3-1/8 in</option><option value="3.5">3-1/2 in</option><option value="5.25">5-1/4 in</option></select></div>
+
+<div id="g-frame" class="row hide">
+<div class="field"><label for="boxW">Target box width (in)</label><input id="boxW" type="number" inputmode="decimal" step="any" value="18" aria-describedby="e-boxW"><div class="err" id="e-boxW"></div></div>
+<div class="field"><label for="gap">Gap / stile between boxes (in)</label><input id="gap" type="number" inputmode="decimal" step="any" value="3" aria-describedby="e-gap"><div class="err" id="e-gap"></div></div>
+</div>
+
+<div class="field"><label for="waste">Waste allowance: <span id="wv">10</span>%</label>
+<input id="waste" type="range" min="5" max="25" step="1" value="10">
+<div class="ticks" aria-hidden="true"><span>5%</span><span>15%</span><span>25%</span></div></div>
+
+<div class="row">
+<div class="field"><label for="pMain">Price per sheet / board (optional)</label><input id="pMain" type="number" inputmode="decimal" step="any" min="0" placeholder="0 = skip cost" aria-describedby="e-pMain"><div class="err" id="e-pMain"></div></div>
+<div class="field"><label for="pTrim">Trim price per linear ft (optional)</label><input id="pTrim" type="number" inputmode="decimal" step="any" min="0" placeholder="0 = skip cost" aria-describedby="e-pTrim"><div class="err" id="e-pTrim"></div></div>
+</div>
+
+<button class="primary" id="go" type="button">Calculate Materials</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</div>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/wainscoting-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Wainscoting Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/wainscoting-calculator/&quot;&gt;Wainscoting Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/wainscoting-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Wainscoting Calculator</h2>
+<p>Pick a style, then enter the total length of wall you plan to cover in feet, your ceiling height, and the finished wainscoting height in inches (the slider starts at 36 in). Add doors and windows so their openings are deducted, set the cap rail and baseboard heights, and choose a waste allowance. Press Calculate to see the sheet or board count, trim lengths, adhesive tubes, paint and an optional cost. The diagram redraws with your dimensions, and the comparison table shows how other heights change your order.</p>
+
+<h2>Why This Matters</h2>
+<p>Wainscoting is one of the few DIY upgrades that adds character and protects walls from scuffs, but the materials are sold in awkward units. A 4×8 ft beadboard sheet covers 32 square feet, yet cut to a 34-inch panel height each sheet yields only two 48-inch-wide strips and a 28-inch offcut. Order by square footage alone and you can end up a sheet short in the middle of a Saturday project, then find the next batch has a different grain or finish.</p>
+<p>Dining rooms, hallways, mudrooms, stairwells and bathrooms are the usual candidates. Take a 14 × 12 ft dining room: about 52 ft of wall, minus a 32-inch doorway, at 36 inches high is roughly 148 square feet. Area alone suggests five sheets, but the strip layout actually needs seven. Picture frame molding is trickier still, because the box count depends on the layout and a half-inch error repeated across ten boxes is very visible. Running the numbers first lets you buy once, compare heights and styles on cost, and plan trim and paint at the same time.</p>
+
+<h2>How It's Calculated</h2>
+<div class="formula">
+<div>Run (in) = length × 12 − doors × door width</div>
+<div>Area (sq ft) = [run × height − windows × width × max(0, height − sill)] ÷ 144</div>
+<div>Sheets = max( ⌈panel area × (1 + waste) ÷ 32⌉ , ⌈run × (1 + waste) ÷ (48 × strips)⌉ )</div>
+<div>Strips per sheet = ⌊96 ÷ panel height⌋, where panel height = wainscot height − cap rail</div>
+<div>Planks = ⌈⌈run × (1 + waste) ÷ coverage⌉ ÷ ⌊96 ÷ panel height⌋⌉</div>
+<div>Frame boxes n = round((run − gap) ÷ (target width + gap)); width = (run − gap × (n + 1)) ÷ n</div>
+<div>Box height = height − cap − baseboard − 2 × gap; molding = n × 2 × (w + h) ÷ 12 × (1 + waste)</div>
+</div>
+<p>Cap rail and baseboard equal the run in feet times (1 + waste), divided by 8-ft lengths. Adhesive assumes one 10 oz tube per 25 sq ft of panel (plus one per 60 ft of frame molding). Paint is net area × 1.15 (1.25 for frame molding) × 2 coats ÷ 350 sq ft per gallon, rounded up to the next quart. Every quantity rounds up, never down. Windows are deducted from area but not from run-based trim, which keeps the estimate on the generous side.</p>
+<p>These are materials estimates based on standard product sizes and trim-carpentry rules of thumb, not engineering, permit or inspection approval. No building code sets wainscoting layout, but local rules on fire rating, moisture and electrical box setback (such as NEC 314.20) may apply. Codes vary by jurisdiction.</p>
+
+<h2>Worked Example</h2>
+<p>Inputs: beadboard sheets, 52 ft of wall, 8 ft ceiling, 36 in height, one 32 in door, no windows, 2 in cap rail, new 5 in baseboard, 10% waste.</p>
+<ul>
+<li>Run = 52 × 12 − 32 = 592 in (49.33 ft).</li>
+<li>Net area = 592 × 36 ÷ 144 = 148.0 sq ft.</li>
+<li>Panel height = 36 − 2 = 34 in, so strips per sheet = ⌊96 ÷ 34⌋ = 2.</li>
+<li>Strip method: 592 × 1.10 = 651.2 in ÷ 96 = 6.78, so 7. Area method: 139.8 sq ft × 1.10 ÷ 32 = 4.8, so 5. The larger figure wins: <strong>7 sheets</strong>.</li>
+<li>Cap rail: 49.33 × 1.10 = 54.3 ft, so 7 eight-foot pieces. Baseboard: also 7 pieces.</li>
+<li>Adhesive: 139.8 ÷ 25 = 5.6, so 6 tubes.</li>
+<li>Paint: 148.0 × 1.15 × 2 ÷ 350 = 0.97 gal, so buy 1 gallon.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Order by layout, not just area.</strong> Offcuts from 4×8 sheets rarely fit elsewhere, which is why the calculator checks both methods and uses the larger number.</li>
+<li><strong>Follow the one-third guideline.</strong> Wainscoting is traditionally about a third of wall height, roughly 32–36 in on an 8 ft wall. Avoid a top edge that lines up with outlets, window sills or chair backs unless intended.</li>
+<li><strong>Find the studs first.</strong> Mark stud lines (usually 16 in on center) before nailing, and keep a ledger of where cutouts for outlets and switches fall.</li>
+<li><strong>Plan for electrical boxes.</strong> Panels thicken the wall, so boxes in combustible surfaces usually need extenders to stay flush. Check local code or ask an electrician.</li>
+<li><strong>Acclimate and seal.</strong> Let panels sit in the room for 48 hours, and use moisture-resistant PVC or primed MDF in bathrooms. For frame layouts spanning several walls, calculate each wall separately so boxes end evenly.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much wainscoting do I need for a room?</summary><p>Add up the wall lengths you want to cover, subtract door widths, and multiply by the panel height. Then add 10% waste. This wainscoting calculator does that and converts the result into sheets, boards, trim pieces, adhesive and paint.</p></details>
+<details><summary>What height should wainscoting be?</summary><p>A common rule is one-third of the wall height: about 32–36 inches in an 8 ft room, or 40–42 inches in a 9 ft room. Anything from one-quarter to two-fifths of the wall can look right. The comparison table shows how each height changes quantities.</p></details>
+<details><summary>How much waste should I allow?</summary><p>Ten percent suits simple straight walls, 15% suits rooms with many corners, outlets or windows, and 20–25% suits diagonal layouts or first-time installers. When in doubt, go higher and keep the extra for repairs.</p></details>
+<details><summary>How many sheets of beadboard cover a wall?</summary><p>A 4×8 ft sheet cut to a height under 48 in gives two 48-inch-wide strips, so one sheet covers about 8 ft of wall at that height. Taller panels yield only one strip, so a sheet covers just 4 ft of wall.</p></details>
+<details><summary>Does wainscoting go behind the baseboard and under the cap?</summary><p>Usually panels run to the floor behind the baseboard, and the cap rail sits on top of the panel edge. That is why the calculator subtracts the cap height from the panel height but keeps the baseboard in the run.</p></details>
+<details><summary>Is this the same as board and batten or shiplap?</summary><p>No, those use different materials and spacing. Try the <a href="/board-and-batten-wall-calculator/">Board and Batten Wall Calculator</a> or the <a href="/shiplap-calculator/">Shiplap Calculator</a> for those looks.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="related">
+<li><a href="/board-and-batten-wall-calculator/">Board and Batten Wall Calculator</a></li>
+<li><a href="/shiplap-calculator/">Shiplap Calculator</a></li>
+<li><a href="/septic-drain-field-size-calculator/">Septic Drain Field Size Calculator</a></li>
+<li><a href="/drywall-installation-cost-calculator/">Drywall Installation Cost Calculator</a></li>
+<li><a href="/pedestal-paver-calculator/">Pedestal Paver Calculator</a></li>
+<li><a href="/contractor-markup-profit-margin-calculator/">Contractor Markup &amp; Profit Margin Calculator</a></li>
+</ul>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<a href="/about/">About</a><a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a>
+<div>© <span id="yr">2025</span> toolwick.com</div>
+</footer>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const fmt=(n,d=0)=>Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const f2=n=>Number(n).toLocaleString('en-US',{maximumFractionDigits:2});
+const ST={sheet:'Beadboard sheets',plank:'Beadboard planks',frame:'Picture frame molding'};
+let last='';
+$('yr').textContent=new Date().getFullYear();
+function num(id){const v=$(id).value.trim();return v===''?NaN:Number(v);}
+function setErr(id,m){const e=$(id);e.classList.toggle('bad',!!m);e.setAttribute('aria-invalid',m?'true':'false');$('e-'+id).textContent=m||'';return !m;}
+function read(){
+  let ok=true;
+  const p={style:$('style').value,nb:$('nb').value==='yes',plank:Number($('plank').value),waste:Number($('waste').value),H:Number($('hgt').value)};
+  setErr('hgt','');
+  const f=(id,min,max,msg,int)=>{const v=num(id);const bad=!isFinite(v)||v<min||v>max||(int&&v!==Math.floor(v));ok=setErr(id,bad?msg:'')&&ok;p[id]=v;};
+  f('len',0.1,10000,'Enter the total wall length in feet (more than 0).');
+  f('ceil',5,30,'Ceiling height should be between 5 and 30 ft.');
+  f('doors',0,50,'Enter a whole number from 0 to 50.',1);
+  f('wins',0,50,'Enter a whole number from 0 to 50.',1);
+  if(p.doors>0)f('doorW',12,144,'Door width should be 12 to 144 in.');else{setErr('doorW','');p.doorW=0;}
+  if(p.wins>0){f('winW',6,240,'Window width should be 6 to 240 in.');f('sill',0,120,'Sill height should be 0 to 120 in.');}else{setErr('winW','');setErr('sill','');p.winW=0;p.sill=0;}
+  f('cap',0,12,'Cap rail height should be 0 to 12 in.');
+  f('base',0,24,'Baseboard height should be 0 to 24 in.');
+  if(p.style==='frame'){f('boxW',6,60,'Box width should be 6 to 60 in.');f('gap',1,12,'Gap should be 1 to 12 in.');}else{setErr('boxW','');setErr('gap','');}
+  ['pMain','pTrim'].forEach(id=>{const raw=$(id).value.trim();if(raw===''){p[id]=0;setErr(id,'');}else f(id,0,100000,'Enter a price of 0 or more.');});
+  if(ok){
+    if(p.H>=p.ceil*12){ok=setErr('hgt','Wainscoting height must be lower than the ceiling height.')&&ok;}
+    if(p.cap+p.base>=p.H){ok=setErr('cap','Cap rail plus baseboard must be shorter than the wainscoting height.')&&ok;}
+    if(p.len*12-p.doors*p.doorW<=0){ok=setErr('len','Door widths add up to more than the wall length.')&&ok;}
+  }
+  return {p,ok};
+}
+function calc(p,H){
+  const k=1+p.waste/100,run=p.len*12-p.doors*p.doorW,frame=p.style==='frame';
+  const area=h=>Math.max(0,(run*h-p.wins*p.winW*Math.max(0,h-p.sill))/144);
+  const panelH=H-p.cap;
+  if(run<=0||panelH<=0||p.cap+p.base>=H)return null;
+  const r={H,run,panelH,net:area(H),areaP:area(panelH),frame};
+  if(r.net<=0||r.areaP<=0)return null;
+  const e=1e-9;
+  if(p.style==='sheet'){
+    const s=Math.floor(96/panelH);if(s<1)return null;
+    const a=Math.ceil(r.areaP*k/32-e),b=Math.ceil(run*k/(48*s)-e);
+    r.main=Math.max(1,a,b);r.mainLabel='4×8 ft beadboard sheets';r.mainShort='sheets';
+    r.note=s+' strip'+(s>1?'s':'')+' per sheet; layout needs '+b+', area alone '+a;
+  }else if(p.style==='plank'){
+    const per=Math.floor(96/panelH);if(per<1)return null;
+    const pcs=Math.ceil(run*k/p.plank-e);
+    r.main=Math.max(1,Math.ceil(pcs/per-e));r.mainLabel='8-ft planks ('+f2(p.plank)+' in coverage)';r.mainShort='boards';
+    r.note=fmt(pcs)+' pieces at '+f2(panelH)+' in, '+per+' per board';
+  }else{
+    const g=p.gap,avail=H-p.cap-p.base,n=Math.max(1,Math.round((run-g)/(p.boxW+g)));
+    const w=(run-g*(n+1))/n,bh=avail-2*g;
+    if(w<=0||bh<=0)return null;
+    r.n=n;r.w=w;r.bh=bh;
+    r.moldLF=n*2*(w+bh)/12*k;r.moldPcs=Math.ceil(r.moldLF/8-e);
+    r.main=Math.max(1,Math.ceil(r.areaP*k/32-e));r.mainLabel='4×8 ft backer panels (1/4 in)';r.mainShort='backer sheets';
+    r.note=f2(r.areaP*k)+' sq ft with waste';
+  }
+  r.capLF=p.cap>0?run/12*k:0;r.capPcs=r.capLF?Math.ceil(r.capLF/8-e):0;
+  r.baseLF=(p.nb&&p.base>0)?run/12*k:0;r.basePcs=r.baseLF?Math.ceil(r.baseLF/8-e):0;
+  r.tubes=Math.ceil(r.areaP/25+(frame?r.moldLF/60:0)-e);
+  r.paintCalc=r.net*(frame?1.25:1.15)*2/350;r.paint=Math.ceil(r.paintCalc*4-e)/4;
+  r.trimPcs=r.capPcs+r.basePcs+(frame?r.moldPcs:0);
+  r.cost=r.main*p.pMain+r.trimPcs*8*p.pTrim;
+  return r;
+}
+function render(p,r){
+  const rows=[];
+  rows.push(['Wall run covered',fmt(r.run/12,2)+' ft',p.doors>0?'After '+p.doors+' door'+(p.doors>1?'s':'')+' deducted':'No doors deducted']);
+  rows.push(['Wainscoting area',fmt(r.net,1)+' sq ft','Height '+p.H+' in'+(p.wins>0?'; windows deducted below sill':'')]);
+  rows.push([r.mainLabel,fmt(r.main),r.note+'; '+p.waste+'% waste']);
+  if(r.frame){
+    rows.push(['Frame layout',r.n+' boxes',fmt(r.w,2)+' × '+fmt(r.bh,2)+' in each']);
+    rows.push(['Picture frame molding',fmt(r.moldLF,1)+' ft',r.moldPcs+' × 8-ft pieces']);
+  }
+  if(r.capPcs)rows.push(['Cap rail',fmt(r.capLF,1)+' ft',r.capPcs+' × 8-ft pieces']);
+  if(r.basePcs)rows.push(['Baseboard',fmt(r.baseLF,1)+' ft',r.basePcs+' × 8-ft pieces']);
+  rows.push(['Construction adhesive',fmt(r.tubes)+' tubes','10 oz tubes, rounded up']);
+  rows.push(['Paint (2 coats)',fmt(r.paint,2)+' gal',fmt(r.paintCalc,2)+' gal calculated, rounded up to a quart']);
+  if(r.cost>0)rows.push(['Estimated material cost','$'+fmt(r.cost,2),'Panels plus trim bought in 8-ft lengths']);
+  let t='<table><thead><tr><th>Item</th><th class="num">Quantity</th><th>Notes</th></tr></thead><tbody>';
+  rows.forEach(x=>{t+='<tr><td>'+x[0]+'</td><td class="num">'+x[1]+'</td><td>'+x[2]+'</td></tr>';});
+  t+='</tbody></table>';
+  const pct=p.H/(p.ceil*12)*100;
+  const guide='Your wainscoting is '+fmt(pct,0)+'% of the ceiling height. A common guideline is about one-third ('+fmt(p.ceil*12/3,0)+' in for this ceiling); one-quarter to two-fifths also works.';
+  const hs=[32,36,42,48];if(hs.indexOf(p.H)<0)hs.push(p.H);hs.sort((a,b)=>a-b);
+  let c='<table><thead><tr><th>Height</th><th class="num">Area (sq ft)</th><th class="num">'+(r.frame?'Backer sheets':r.mainShort[0].toUpperCase()+r.mainShort.slice(1))+'</th><th class="num">Cap pieces</th></tr></thead><tbody>';
+  hs.forEach(h=>{
+    const q=h<p.ceil*12?calc(p,h):null;
+    c+='<tr'+(h===p.H?' class="cur"':'')+'><td>'+h+' in'+(h===p.H?' (current)':'')+'</td>'+(q?'<td class="num">'+fmt(q.net,1)+'</td><td class="num">'+fmt(q.main)+'</td><td class="num">'+fmt(q.capPcs)+'</td>':'<td class="num">—</td><td class="num">—</td><td class="num">—</td>')+'</tr>';
+  });
+  c+='</tbody></table>';
+  const keyLbl=r.mainLabel+' to buy (includes '+p.waste+'% waste)'+(r.frame?' and '+r.moldPcs+' × 8-ft molding pieces':'');
+  last='Wainscoting estimate ('+ST[p.style]+', '+p.H+' in high, '+fmt(p.len,2)+' ft of wall)\n'+rows.map(x=>x[0]+': '+x[1]+' ('+x[2]+')').join('\n')+'\nEstimate only; local codes vary.';
+  return '<div class="fade"><div class="key"><div class="big">'+fmt(r.main)+'</div><div class="klabel">'+keyLbl+'</div></div><div class="tw">'+t+'</div><p class="small">'+guide+'</p><h3>Compare other heights</h3><div class="tw">'+c+'</div><button class="copy" type="button" id="copyBtn">Copy results</button><p class="small">Estimates only. All quantities round up. Always verify against manufacturer instructions, and note that local codes vary; this is not engineering, permit or inspection approval.</p></div>';
+}
+function calculate(){
+  const {p,ok}=read();
+  if(!ok){$('results').innerHTML='';last='';soft();return;}
+  const r=calc(p,p.H);
+  if(!r){$('results').innerHTML='<div class="errbox">These dimensions leave no room for panels. Check the wainscoting height, cap rail, baseboard, gap and door widths.</div>';last='';soft();return;}
+  $('results').innerHTML=render(p,r);
+  soft();
+}
+function soft(){
+  const g=(id,d)=>{const v=num(id);return isFinite(v)&&v>=0?v:d;};
+  const s={style:$('style').value,ceil:Math.max(g('ceil',8),1),len:g('len',24),H:Number($('hgt').value),cap:g('cap',2),base:g('base',5),boxW:Math.max(g('boxW',18),1),gap:Math.max(g('gap',3),1)};
+  draw(s);
+}
+function draw(s){
+  const top=20,bot=220,x0=70,x1=330,ci=s.ceil*12,cl=Math.min(s.H,ci);
+  const hp=200*cl/ci,ty=bot-hp;
+  const cp=s.cap>0?Math.max(3,200*Math.min(s.cap,cl)/ci):0,bp=s.base>0?Math.max(3,200*Math.min(s.base,cl)/ci):0;
+  const py1=ty+cp,py2=bot-bp;
+  let h='<rect x="70" y="20" width="260" height="200" fill="#f8f9fa" stroke="#e0e0e0"/>';
+  h+='<rect x="70" y="'+ty+'" width="260" height="'+hp+'" fill="#e8f3f9" stroke="#0077b6" stroke-width="1.5"/>';
+  if(py2>py1){
+    if(s.style==='frame'){
+      const n=Math.max(2,Math.min(8,Math.round((s.len*12-s.gap)/(s.boxW+s.gap)))),gp=7,bw=(260-gp*(n+1))/n;
+      if(bw>6&&py2-py1>2*gp+4){for(let i=0;i<n;i++)h+='<rect x="'+(x0+gp+i*(bw+gp)).toFixed(1)+'" y="'+(py1+gp).toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+(py2-py1-2*gp).toFixed(1)+'" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>';}
+    }else{
+      const st=s.style==='sheet'?12:7;let d='';
+      for(let x=x0+st;x<x1;x+=st)d+='M'+x+' '+py1.toFixed(1)+'V'+py2.toFixed(1);
+      h+='<path d="'+d+'" stroke="#0077b6" stroke-opacity=".4" fill="none"/>';
+    }
+  }
+  if(cp)h+='<rect x="66" y="'+ty+'" width="268" height="'+cp.toFixed(1)+'" fill="#0077b6"/>';
+  if(bp)h+='<rect x="70" y="'+(bot-bp).toFixed(1)+'" width="260" height="'+bp.toFixed(1)+'" fill="#bcdcec" stroke="#0077b6"/>';
+  h+='<line x1="50" y1="220" x2="330" y2="220" stroke="#1a1a2e" stroke-width="2"/><line x1="50" y1="20" x2="330" y2="20" stroke="#1a1a2e" stroke-width="2"/>';
+  h+='<line x1="46" y1="20" x2="70" y2="20" stroke="#e0e0e0" stroke-dasharray="4 3"/>';
+  h+='<line x1="45" y1="22" x2="45" y2="218" stroke="#0077b6" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  h+='<text x="30" y="120" transform="rotate(-90 30 120)" text-anchor="middle" font-size="12" fill="#1a1a2e">Ceiling '+f2(s.ceil)+' ft</text>';
+  h+='<line x1="330" y1="'+ty+'" x2="358" y2="'+ty+'" stroke="#999" stroke-dasharray="4 3"/>';
+  h+='<line x1="352" y1="'+(ty+1)+'" x2="352" y2="219" stroke="#0077b6" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  h+='<text x="372" y="'+((ty+bot)/2).toFixed(1)+'" transform="rotate(90 372 '+((ty+bot)/2).toFixed(1)+')" text-anchor="middle" font-size="12" fill="#1a1a2e">Height '+f2(s.H)+' in</text>';
+  h+='<line x1="70" y1="238" x2="330" y2="238" stroke="#0077b6" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  h+='<line x1="70" y1="222" x2="70" y2="244" stroke="#e0e0e0"/><line x1="330" y1="222" x2="330" y2="244" stroke="#e0e0e0"/>';
+  h+='<text x="200" y="258" text-anchor="middle" font-size="12" fill="#1a1a2e">Wall run '+f2(s.len)+' ft</text>';
+  if(ty>46)h+='<text x="200" y="'+(ty-8).toFixed(1)+'" text-anchor="middle" font-size="12" fill="#1a1a2e">'+ST[s.style]+'</text>';
+  $('dyn').innerHTML=h;
+}
+function vis(){const s=$('style').value;$('g-plank').classList.toggle('hide',s!=='plank');$('g-frame').classList.toggle('hide',s!=='frame');}
+$('hgt').addEventListener('input',()=>{$('hv').textContent=$('hgt').value;});
+$('waste').addEventListener('input',()=>{$('wv').textContent=$('waste').value;});
+['style','len','ceil','hgt','cap','base','boxW','gap'].forEach(id=>$(id).addEventListener('input',soft));
+$('style').addEventListener('change',()=>{vis();soft();});
+$('go').addEventListener('click',()=>{requestAnimationFrame(calculate);});
+$('form').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')){e.preventDefault();requestAnimationFrame(calculate);}});
+$('results').addEventListener('click',e=>{
+  if(e.target.id!=='copyBtn'||!last)return;
+  const b=e.target,done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results';},2000);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(last).then(done,()=>fb());}else fb();
+  function fb(){const t=document.createElement('textarea');t.value=last;document.body.appendChild(t);t.select();try{document.execCommand('copy');done();}catch(x){}document.body.removeChild(t);}
+});
+vis();soft();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
