@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Roof Underlayment Calculator | Toolwick</title>
+<meta name="description" content="Free roof underlayment calculator: estimate rolls of felt, synthetic or ice barrier from roof size and pitch, with waste, laps and cap nails.">
+<link rel="canonical" href="https://toolwick.com/roof-underlayment-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.5rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.15rem;display:inline-flex;align-items:center;min-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diag{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diag svg{display:block;width:100%;height:auto}
+.diag .t{font-size:15px;fill:#1a1a2e}
+.diag .l{font-size:13px;fill:#1a1a2e}
+.diag .b{font-weight:600}
+.f{margin-bottom:1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;font-size:1rem;min-height:44px;background:#fff;color:#1a1a2e}
+input:focus,select:focus,summary:focus-visible{outline:2px solid #0077b6;outline-offset:1px;border-color:#0077b6}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6;margin:0}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.hint{font-size:.8rem;color:#666;margin-top:.25rem}
+.msg{display:none;color:#c0392b;font-size:.85rem;margin-top:.25rem}
+.err .msg{display:block}
+.err input{border-color:#e74c3c;border-width:2px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.tabs{display:flex;gap:.5rem;margin-bottom:1.25rem}
+.tabs button{flex:1;min-height:44px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;font:inherit;font-weight:600;font-size:.9rem;cursor:pointer;padding:6px 8px}
+.tabs button[aria-pressed=true]{background:#0077b6;color:#fff}
+.chk{display:flex;align-items:center;gap:.6rem;min-height:44px;font-size:.95rem;color:#1a1a2e;cursor:pointer;margin:0}
+.chk input{width:22px;height:22px;accent-color:#0077b6;flex:none}
+.hide{display:none}
+.sub-box{background:#f8f9fa;border:1px solid #e8e8e8;border-radius:6px;padding:1rem 1rem .25rem;margin-bottom:1rem}
+details.adv{margin-bottom:1rem}
+details.adv>summary{font-weight:600;color:#0077b6;cursor:pointer;min-height:44px;display:flex;align-items:center}
+.btn{display:block;width:100%;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-weight:600;min-height:44px;cursor:pointer}
+.btn:hover{background:#006299}
+.btn:focus-visible,.copy:focus-visible,.tabs button:focus-visible{outline:2px solid #1a1a2e;outline-offset:2px}
+#results{margin-top:1.5rem}
+.res-in{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.res-in{animation:none}}
+.keyw{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+.keyw .lbl{font-size:.85rem;color:#444;font-weight:500}
+.key{font-size:2.6rem;font-weight:700;color:#0077b6;line-height:1.2}
+.key2{font-size:1.2rem;font-weight:700;color:#0077b6;margin-top:.25rem}
+.keyw .s{font-size:.85rem;color:#555;margin-top:.35rem}
+.rh{font-weight:600;margin:1.25rem 0 .25rem}
+.tw{overflow-x:auto;margin:.5rem 0 1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(odd) td{background:#fafafa}
+tr:nth-child(even) td{background:#fff}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.sel td{font-weight:700}
+.warn{background:#fff8e1;border-left:4px solid #b26a00;padding:.65rem 1rem;margin:.6rem 0;font-size:.9rem;border-radius:4px}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;min-height:44px;font:inherit;font-size:.9rem;font-weight:600;cursor:pointer}
+.note{background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;font-size:.85rem;color:#555;margin-top:1.25rem}
+.ad-slot{min-height:0;margin:0}
+.content h2{font-size:1.35rem;margin:2.25rem 0 .75rem;line-height:1.3}
+.content a,footer a{color:#0077b6;text-decoration:underline}
+.content li{margin-bottom:.4rem}
+.fm{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;overflow-x:auto;white-space:pre-wrap;margin:.75rem 0}
+details.q{border-bottom:1px solid #e0e0e0}
+details.q summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center;padding:.4rem 0}
+details.q p{margin:.25rem 0 1rem}
+.rel{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.rel a{display:flex;align-items:center;min-height:44px;padding:.5rem .75rem;border:1px solid #e0e0e0;border-radius:6px;background:#f8f9fa}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555;text-align:center}
+footer a{display:inline-block;padding:.5rem .4rem}
+@media(max-width:640px){.card{padding:1.25rem}.row,.rel{grid-template-columns:1fr}h1{font-size:1.6rem}.key{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/roof-underlayment-calculator/">
+<meta property="og:title" content="Roof Underlayment Calculator">
+<meta property="og:description" content="Free roof underlayment calculator: estimate rolls of felt, synthetic or ice barrier from roof size and pitch, with waste, laps and cap nails.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Roof Underlayment Calculator</h1>
+<p>This roof underlayment calculator estimates how many rolls of felt, synthetic or self-adhered underlayment your roof needs. Enter your building size (or a known roof area) and pitch. It adds waste, laps, double coverage on low slopes, optional ice barrier at the eaves and the cap nails to fasten it all.</p>
+
+<div class="card">
+<div class="diag">
+<svg id="dg" viewBox="0 0 400 276" role="img" aria-labelledby="dgT dgD">
+<title id="dgT">Roof cross-section showing pitch, rise, span and slope length</title>
+<desc id="dgD">Gable-end view of a roof with the roof deck, underlayment layer, rise, building width and slope length labelled with your values.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<line x1="0" y1="240" x2="400" y2="240" stroke="#e0e0e0" stroke-width="2"/>
+<rect x="100" y="200" width="200" height="40" fill="#fff" stroke="#1a1a2e" stroke-width="1.5"/>
+<g id="dyn"></g>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="tabs" role="group" aria-label="Input method">
+<button type="button" id="tSize" aria-pressed="true">From building size</button>
+<button type="button" id="tArea" aria-pressed="false">From roof area</button>
+</div>
+
+<div class="m-size">
+<div class="row">
+<div class="f" id="f-len"><label for="len">Building length (ft)</label><input type="number" id="len" inputmode="decimal" step="any" value="40" aria-describedby="len-m"><div class="msg" id="len-m"></div></div>
+<div class="f" id="f-wid"><label for="wid">Building width (ft)</label><input type="number" id="wid" inputmode="decimal" step="any" value="28" aria-describedby="wid-m"><div class="msg" id="wid-m"></div></div>
+</div>
+<div class="row">
+<div class="f" id="f-ov"><label for="ov">Overhang, all sides (in)</label><input type="number" id="ov" inputmode="decimal" step="any" value="12" aria-describedby="ov-m"><div class="msg" id="ov-m"></div></div>
+<div class="f"><label for="style">Roof style</label><select id="style"><option value="gable">Gable (eaves on 2 sides)</option><option value="hip">Hip (eaves on 4 sides)</option></select></div>
+</div>
+</div>
+
+<div class="m-area hide">
+<div class="f" id="f-area"><label for="area">Roof surface area (sq ft)</label><input type="number" id="area" inputmode="decimal" step="any" value="1500" aria-describedby="area-m"><div class="msg" id="area-m"></div><div class="hint">The sloped surface area, not the footprint.</div></div>
+</div>
+
+<div class="row">
+<div class="f" id="f-pitch"><label for="pitch">Roof pitch (rise per 12 in. of run)</label><input type="number" id="pitch" inputmode="decimal" step="any" value="6" aria-describedby="pitch-m"><div class="msg" id="pitch-m"></div><div class="hint">6 means 6:12.</div></div>
+<div class="f"><label for="type">Underlayment type</label><select id="type"><option value="syn">Synthetic (48 in. × 250 ft)</option><option value="felt15">#15 asphalt felt (36 in. × 144 ft)</option><option value="felt30">#30 asphalt felt (36 in. × 72 ft)</option><option value="sa">Self-adhered (36 in. × 67 ft)</option></select></div>
+</div>
+
+<div class="f"><label for="lay">Coverage layers</label><select id="lay"><option value="auto">Automatic (by pitch)</option><option value="1">Single layer</option><option value="2">Double layer</option></select><div class="hint">Slopes under 4:12 are always calculated as double coverage.</div></div>
+
+<div class="f"><label for="waste">Waste allowance: <output id="wv">10%</output></label><input type="range" id="waste" min="5" max="25" step="1" value="10"><div class="ticks" aria-hidden="true"><span>5%</span><span>15%</span><span>25%</span></div></div>
+
+<label class="chk" for="ice"><input type="checkbox" id="ice"> Add ice &amp; water barrier at eaves and valleys</label>
+<div class="sub-box hide" id="icef">
+<div class="f" id="f-eave"><label for="eave">Eave length (ft)</label><input type="number" id="eave" inputmode="decimal" step="any" aria-describedby="eave-m"><div class="msg" id="eave-m"></div><div class="hint">Building-size mode: leave blank to use your dimensions. Roof-area mode: required.</div></div>
+<div class="row">
+<div class="f" id="f-iw"><label for="iw">Strip width up the slope (ft)</label><input type="number" id="iw" inputmode="decimal" step="any" value="4" aria-describedby="iw-m"><div class="msg" id="iw-m"></div></div>
+<div class="f" id="f-val"><label for="val">Valley length (ft)</label><input type="number" id="val" inputmode="decimal" step="any" value="0" aria-describedby="val-m"><div class="msg" id="val-m"></div></div>
+</div>
+</div>
+
+<details class="adv"><summary>Optional: pricing and custom roll size</summary>
+<div class="row">
+<div class="f" id="f-pr"><label for="pr">Underlayment price per roll ($)</label><input type="number" id="pr" inputmode="decimal" step="any" aria-describedby="pr-m"><div class="msg" id="pr-m"></div></div>
+<div class="f" id="f-ipr"><label for="ipr">Ice barrier price per roll ($)</label><input type="number" id="ipr" inputmode="decimal" step="any" aria-describedby="ipr-m"><div class="msg" id="ipr-m"></div></div>
+</div>
+<div class="f" id="f-cust"><label for="cust">Your roll's net coverage (sq ft, after laps)</label><input type="number" id="cust" inputmode="decimal" step="any" aria-describedby="cust-m"><div class="msg" id="cust-m"></div><div class="hint">Overrides the selected type. Roll sizes vary by brand, so check your label.</div></div>
+</details>
+
+<button type="submit" class="btn" id="go">Calculate Underlayment</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<div class="note">Planning estimate only. Follows the IRC Chapter 9 underlayment provisions (R905.1.1, R905.1.2, R905.2.7; 2018/2021 editions) and common product standards (ASTM D226, D4869, D1970). Local codes, wind zones and manufacturer instructions vary and may require more. This is not a permit, engineering or inspection approval.</div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<div class="content">
+<h2>How to Use This Roof Underlayment Calculator</h2>
+<p>Choose "From building size" to enter the length, width and overhang of a gable or hip roof, or switch to "From roof area" if you already know the sloped area. Enter the pitch, pick your underlayment and set a waste allowance. Tick the ice barrier box if your area needs it. The result shows how many rolls to buy, how many cap nails to order, and a side-by-side comparison of every underlayment type.</p>
+
+<h2>Why This Matters</h2>
+<p>Underlayment is the backup layer under your shingles, tiles or metal. It sheds wind-driven rain, protects the deck while the roof is being installed, and is the layer that stops water at the eaves when ice dams form. Ordering the right amount matters because the roof is only as dry as its weakest bare patch. A typical 2,000 sq ft ranch on a 6:12 roof has about 2,400 sq ft of surface, or 24 "squares". That is far more than the footprint suggests, because pitch adds area.</p>
+<p>Running short mid-job means a supply run with the deck exposed to weather. Over-ordering ties up money in rolls that may not be returnable. Roll sizes also differ a lot: a #15 felt roll nets about 408 sq ft, while a synthetic roll nets over 900 sq ft. Homeowners comparing quotes, contractors writing material lists and DIYers planning a weekend tear-off all need the same number: rolls, rounded up, with the right overlap and waste built in.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator turns your building size into sloped roof area, then divides by the usable coverage of one roll:</p>
+<div class="fm">Slope factor = √(1 + (pitch ÷ 12)²)
+Roof area = (length + 2×overhang) × (width + 2×overhang) × slope factor
+Net roll coverage = (roll width − headlap) ÷ 12 × roll length
+Rolls = ⌈ area × layers × (1 + waste) ÷ net coverage ⌉</div>
+<p>Headlap is 2 in. for felt, 4 in. for synthetic and 3 in. for self-adhered rolls. Layers are 2 for pitches under 4:12 (double coverage per IRC R905.2.7) and 1 otherwise. Rolls are always rounded up.</p>
+<p>For ice barrier, a 36-in. roll covers one course. A strip wider than 36 in. needs extra courses, each adding 33 in. after a 3-in. lap. Rolls = ⌈(courses × eave length + valley length) × (1 + waste) ÷ 67 ft⌉. Under IRC R905.1.2 the barrier must reach at least 24 in. inside the exterior wall line, so the tool also shows that minimum width, (overhang + 24 in.) ÷ 12 × slope factor, and warns if your strip is shorter. Cap nails are estimated at 2 per sq ft of underlayment, including waste, in boxes of 3,000. Match your manufacturer's nailing pattern if it is tighter. The ice barrier area is not subtracted from the main underlayment, which errs on the safe side.</p>
+
+<h2>Worked Example</h2>
+<p>A 40 ft × 28 ft gable house with 12-in. overhangs, a 6:12 pitch, synthetic underlayment and 10% waste (the tool's defaults):</p>
+<ol>
+<li>Plan area with overhang: (40 + 2) × (28 + 2) = 42 × 30 = 1,260 sq ft.</li>
+<li>Slope factor: √(1 + 0.5²) = 1.118. Roof area = 1,260 × 1.118 = 1,408.7 sq ft (14.09 squares).</li>
+<li>Pitch is 6:12, so 1 layer. With 10% waste: 1,408.7 × 1.10 = 1,549.6 sq ft.</li>
+<li>Synthetic net coverage: (48 − 4) ÷ 12 × 250 = 916.7 sq ft per roll. 1,549.6 ÷ 916.7 = 1.69, so <strong>2 rolls</strong>.</li>
+<li>Cap nails: 1,549.6 × 2 = 3,100 nails, which is 2 boxes of 3,000.</li>
+</ol>
+<p>With the ice barrier ticked and a 4 ft strip: the gable eaves are 2 × 42 = 84 ft, and a 48-in. strip needs 1 + ⌈12 ÷ 33⌉ = 2 courses. That is 168 lineal ft × 1.10 = 184.8 ft ÷ 67 = 2.76, so <strong>3 rolls</strong>. The minimum width to reach 24 in. inside the wall is (12 + 24) ÷ 12 × 1.118 = 3.35 ft, so 4 ft clears it. In the comparison table, #15 felt needs 4 rolls, #30 felt 8 rolls and self-adhered 9 rolls.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Don't use the footprint.</strong> Floor area ignores pitch and overhangs. A 6:12 roof has about 12% more surface than its plan, and a 12:12 roof about 41% more.</li>
+<li><strong>Raise the waste allowance for cut-up roofs.</strong> Hips, valleys, dormers and chimneys use more material. Use 10–15% for these and 15–20% for very complex roofs.</li>
+<li><strong>Don't subtract skylights or chimneys.</strong> The offcuts are rarely usable, and the leftover covers mistakes and partial rolls.</li>
+<li><strong>Check low slopes.</strong> From 2:12 up to under 4:12 you need double coverage, and asphalt shingles aren't permitted below 2:12. Those roofs need a low-slope system.</li>
+<li><strong>Mind exposure limits.</strong> Felt and synthetics can only stay uncovered for a limited time, from days to months depending on the product. Order roofing so the underlayment isn't left exposed.</li>
+<li><strong>Read the roll label.</strong> Brand roll sizes and laps differ. Use the custom coverage field if your roll doesn't match the defaults.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details class="q"><summary>How many rolls of underlayment do I need for 1,000 square feet?</summary><p>With a 10% waste allowance you need to cover 1,100 sq ft. That is 2 rolls of synthetic (about 917 sq ft net each), 3 rolls of #15 felt, or 6 rolls of #30 felt. Add double coverage if the pitch is under 4:12.</p></details>
+<details class="q"><summary>What is a roofing "square"?</summary><p>One square is 100 sq ft of roof surface. A 2,400 sq ft roof is 24 squares. Roofing materials and labor are commonly priced per square.</p></details>
+<details class="q"><summary>Is synthetic underlayment better than felt?</summary><p>Synthetics are lighter, tear-resistant, and cover more per roll, and many tolerate longer exposure. Felt is cheaper and familiar. Your shingle manufacturer and local code decide what is acceptable, so check the shingle wrapper and local requirements.</p></details>
+<details class="q"><summary>Do I need two layers of underlayment on a low-slope roof?</summary><p>Under the IRC, slopes from 2:12 up to under 4:12 need double underlayment coverage with asphalt shingles. This calculator applies two layers automatically for those pitches. Below 2:12, asphalt shingles aren't permitted at all.</p></details>
+<details class="q"><summary>How far up the roof should ice and water barrier go?</summary><p>Where code or local history calls for it, the barrier should extend from the eave edge to at least 24 in. inside the exterior wall line, measured horizontally. Some installers go further, so confirm with your local building department.</p></details>
+<details class="q"><summary>Should I subtract for skylights and chimneys?</summary><p>No. Small openings save very little material and the offcuts are hard to reuse. Keep the full roof area and use the waste allowance to cover cuts and mistakes.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/drip-edge-roof-trim-calculator/">Drip Edge &amp; Roof Trim Calculator</a></li>
+<li><a href="/roof-attic-ventilation-calculator/">Roof Attic Ventilation Calculator</a></li>
+<li><a href="/roof-pitch-rafter-calculator/">Roof Pitch &amp; Rafter Length Calculator</a></li>
+<li><a href="/thinset-mortar-coverage-calculator/">Thinset Mortar Coverage Calculator</a></li>
+<li><a href="/wainscoting-calculator/">Wainscoting Calculator</a></li>
+<li><a href="/board-and-batten-wall-calculator/">Board and Batten Wall Calculator</a></li>
+</ul>
+</div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/roof-underlayment-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const nf=(n,d)=>n.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d===undefined?2:d});
+const T={
+felt15:{n:'#15 asphalt felt',w:36,l:144,lap:2},
+felt30:{n:'#30 asphalt felt',w:36,l:72,lap:2},
+syn:{n:'Synthetic underlayment',w:48,l:250,lap:4},
+sa:{n:'Self-adhered (peel-and-stick)',w:36,l:67,lap:3}};
+for(const k in T){T[k].net=(T[k].w-T[k].lap)/12*T[k].l;}
+const ICE_L=67;
+let mode='size',bad=false,first=null,copyTxt='';
+$('yr').textContent=new Date().getFullYear();
+
+function setMode(m){
+mode=m;
+document.querySelectorAll('.m-size').forEach(e=>e.classList.toggle('hide',m!=='size'));
+document.querySelectorAll('.m-area').forEach(e=>e.classList.toggle('hide',m!=='area'));
+$('tSize').setAttribute('aria-pressed',m==='size');
+$('tArea').setAttribute('aria-pressed',m==='area');
+}
+$('tSize').addEventListener('click',()=>setMode('size'));
+$('tArea').addEventListener('click',()=>setMode('area'));
+$('ice').addEventListener('change',()=>$('icef').classList.toggle('hide',!$('ice').checked));
+$('waste').addEventListener('input',()=>{$('wv').textContent=$('waste').value+'%';});
+
+function setErr(id,msg){bad=true;if(!first)first=id;$('f-'+id).classList.add('err');$(id+'-m').textContent=msg;$(id).setAttribute('aria-invalid','true');}
+function clearErr(){bad=false;first=null;document.querySelectorAll('.f.err').forEach(e=>e.classList.remove('err'));document.querySelectorAll('[aria-invalid]').forEach(e=>e.removeAttribute('aria-invalid'));}
+function rd(id,min,max,opt,excl){
+const s=$(id).value.trim();
+if(s===''){if(!opt)setErr(id,'Enter a value.');return null;}
+const n=Number(s);
+if(!isFinite(n)){setErr(id,'Enter a valid number.');return null;}
+if(excl?n<=min:n<min){setErr(id,excl?'Must be greater than '+nf(min)+'.':'Must be '+nf(min)+' or more.');return null;}
+if(n>max){setErr(id,'Must be '+nf(max)+' or less.');return null;}
+return n;
+}
+
+function draw(o){
+const pv=Math.min(Math.max(o.p,0),18),k=pv/12,yW=200,rY=yW-100*k,eY=yW+20*k;
+const th=Math.atan(k),ang=Math.atan(o.p/12)*180/Math.PI;
+const sn=Math.sin(th),cs=Math.cos(th);
+let s='';
+s+='<line x1="10" y1="12" x2="28" y2="12" stroke="#1a1a2e" stroke-width="2"/><text class="l" x="33" y="16">Deck</text>';
+s+='<line x1="72" y1="12" x2="90" y2="12" stroke="#0077b6" stroke-width="3"/><text class="l" x="95" y="16">Underlayment</text>';
+if(o.ice){
+s+='<line x1="192" y1="12" x2="210" y2="12" stroke="#0077b6" stroke-width="8" opacity=".3"/><text class="l" x="215" y="16">Ice barrier</text>';
+const xi=80+120*.3,yi=eY+(rY-eY)*.3;
+s+=`<polyline points="80,${eY-5} ${xi},${yi-5}" fill="none" stroke="#0077b6" stroke-width="8" opacity=".3"/>`;
+s+=`<polyline points="320,${eY-5} ${400-xi},${yi-5}" fill="none" stroke="#0077b6" stroke-width="8" opacity=".3"/>`;
+}
+s+=`<polyline points="80,${eY} 200,${rY} 320,${eY}" fill="none" stroke="#1a1a2e" stroke-width="2"/>`;
+s+=`<polyline points="80,${eY-4} 200,${rY-4} 320,${eY-4}" fill="none" stroke="#0077b6" stroke-width="3"/>`;
+s+=`<line x1="200" y1="${rY}" x2="200" y2="200" stroke="#0077b6" stroke-dasharray="4 3"/>`;
+s+=`<line x1="200" y1="${rY}" x2="345" y2="${rY}" stroke="#bbb" stroke-dasharray="4 3"/><line x1="300" y1="200" x2="345" y2="200" stroke="#bbb" stroke-dasharray="4 3"/>`;
+if(200-rY>8)s+=`<line x1="345" y1="198" x2="345" y2="${rY+2}" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>`;
+const ry=(rY+200)/2;
+s+=`<text class="t" x="351" y="${ry-1}">Rise</text><text class="t b" x="351" y="${ry+15}">${o.riseTxt}</text>`;
+const mx=140-18*sn,my=(eY+rY)/2-18*cs;
+s+=`<text class="t b" text-anchor="middle" transform="translate(${mx.toFixed(1)} ${my.toFixed(1)}) rotate(${(-th*180/Math.PI).toFixed(1)})">${o.slopeTxt}</text>`;
+s+=`<text class="t" x="200" y="226" text-anchor="middle">${nf(o.p)}:12 pitch · ${ang.toFixed(1)}°</text>`;
+if(o.span!=null){
+s+='<line x1="100" y1="254" x2="300" y2="254" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+s+=`<text class="t b" x="200" y="272" text-anchor="middle">Building width ${nf(o.span,1)} ft</text>`;
+}else{
+s+=`<text class="t b" x="200" y="266" text-anchor="middle">Roof area ${nf(o.area,0)} sq ft</text>`;
+}
+$('dyn').innerHTML=s;
+}
+draw({p:6,span:28,riseTxt:'7.0 ft',slopeTxt:'Slope 16.8 ft',ice:false});
+
+function calc(){
+clearErr();
+let len,wid,ov,area0;
+if(mode==='size'){len=rd('len',0,1000,0,1);wid=rd('wid',0,1000,0,1);ov=rd('ov',0,60);}
+else{area0=rd('area',0,200000,0,1);}
+const p=rd('pitch',0,24);
+const ice=$('ice').checked;
+let eave=null,iw=null,val=0;
+if(ice){eave=rd('eave',0,10000,mode==='size',1);iw=rd('iw',1,20);const v=rd('val',0,5000,1);val=v===null?0:v;}
+const pr=rd('pr',0,100000,1),ipr=rd('ipr',0,100000,1),cust=rd('cust',10,5000,1);
+if(bad){$('results').innerHTML='';const el=$(first);if(el)el.focus();return;}
+
+const t=T[$('type').value],type=$('type').value;
+const net=cust||t.net;
+const waste=(+$('waste').value)/100;
+const sf=Math.sqrt(1+Math.pow(p/12,2));
+let area,eaveAuto=null,sugW=null;
+if(mode==='size'){
+const L=len+2*ov/12,W=wid+2*ov/12;
+area=L*W*sf;
+eaveAuto=$('style').value==='gable'?2*L:2*(L+W);
+sugW=(ov+24)/12*sf;
+}else area=area0;
+const sel=$('lay').value;
+const base=sel==='auto'?(p<4?2:1):+sel;
+const layers=p<4?Math.max(2,base):base;
+const req=area*layers*(1+waste);
+const rolls=Math.ceil(req/net-1e-9);
+const nails=type==='sa'?0:Math.ceil(req*2-1e-9);
+const boxes=Math.ceil(nails/3000-1e-9);
+
+const warns=[];
+if(p<2)warns.push('Slope under 2:12: asphalt shingles are not permitted (IRC R905.2.2). A low-slope roofing system is needed, so treat these counts as planning figures only.');
+else if(p<4)warns.push('Slopes from 2:12 to under 4:12 need double underlayment coverage (IRC R905.2.7). Two layers have been applied.');
+if(waste<.1)warns.push('A waste allowance under 10% can leave you short on roofs with hips, valleys, dormers or chimneys.');
+
+let ic=null;
+if(ice){
+const eaveLen=eave!==null?eave:eaveAuto;
+const wIn=iw*12;
+const courses=wIn<=36?1:1+Math.ceil((wIn-36)/33-1e-9);
+const lineal=courses*eaveLen+val;
+const r=Math.ceil(lineal*(1+waste)/ICE_L-1e-9);
+ic={eaveLen,courses,lineal,rolls:r};
+if(sugW!==null&&iw<sugW)warns.push('Your ice barrier strip ('+nf(iw,2)+' ft) is narrower than the '+nf(sugW,2)+' ft needed to reach 24 in. inside the exterior wall line (IRC R905.1.2). Increase the strip width.');
+else if(sugW!==null)warns.push('Minimum strip width to reach 24 in. inside the wall line: '+nf(sugW,2)+' ft up the slope. Ice barrier is needed only where code or local ice-dam history requires it.');
+}
+
+const rowsT=(a,b)=>`<tr><td>${a}</td><td class="n">${b}</td></tr>`;
+let rows='';
+rows+=rowsT(mode==='size'?'Roof surface area (with overhang, slope-adjusted)':'Roof surface area',nf(area,1)+' sq ft');
+rows+=rowsT('Roofing squares',nf(area/100,2));
+rows+=rowsT('Pitch / slope factor',nf(p)+':12 / '+sf.toFixed(3));
+rows+=rowsT('Coverage layers',layers);
+rows+=rowsT('Waste allowance',Math.round(waste*100)+'%');
+rows+=rowsT('Material to cover (incl. layers + waste)',nf(req,1)+' sq ft');
+rows+=rowsT('Net coverage per roll'+(cust?' (custom)':''),nf(net,1)+' sq ft');
+rows+=rowsT('Rolls needed (exact)',nf(req/net,2));
+rows+=rowsT('<strong>Rolls to buy</strong>','<strong>'+nf(rolls)+'</strong>');
+rows+=rowsT('Cap nails (about 2 per sq ft)',type==='sa'?'Not needed':nf(nails)+' ('+nf(boxes)+' box'+(boxes===1?'':'es')+' of 3,000)');
+if(ic){
+rows+=rowsT('Ice barrier courses',ic.courses);
+rows+=rowsT('Ice barrier lineal feet (incl. valleys)',nf(ic.lineal,1)+' ft');
+rows+=rowsT('<strong>Ice barrier rolls to buy</strong> (36 in. × 67 ft)','<strong>'+nf(ic.rolls)+'</strong>');
+}
+let cost=0,costTxt='';
+if(pr!==null){const c=rolls*pr;cost+=c;rows+=rowsT('Underlayment cost','$'+nf(c,2));}
+if(ic&&ipr!==null){const c=ic.rolls*ipr;cost+=c;rows+=rowsT('Ice barrier cost','$'+nf(c,2));}
+if((pr!==null)||(ic&&ipr!==null)){rows+=rowsT('<strong>Estimated material total</strong>','<strong>$'+nf(cost,2)+'</strong>');costTxt='Estimated material total: $'+nf(cost,2);}
+
+let cmp='';
+for(const k in T){
+const x=T[k],nt=cust&&k===type?cust:x.net,r=Math.ceil(req/nt-1e-9);
+cmp+=`<tr class="${k===type?'sel':''}"><td>${x.n}</td><td class="n">${x.w} in. × ${x.l} ft</td><td class="n">${nf(nt,1)}</td><td class="n">${nf(r)}</td></tr>`;
+}
+
+const wh=warns.map(w=>`<div class="warn">${w}</div>`).join('');
+copyTxt=['Roof underlayment estimate (Toolwick)',
+'Roof area: '+nf(area,1)+' sq ft ('+nf(area/100,2)+' squares), pitch '+nf(p)+':12',
+t.n+': '+nf(rolls)+' rolls ('+layers+' layer'+(layers>1?'s':'')+', '+Math.round(waste*100)+'% waste)',
+nails?'Cap nails: '+nf(nails)+' ('+nf(boxes)+' box'+(boxes===1?'':'es')+' of 3,000)':'',
+ic?'Ice & water barrier: '+nf(ic.rolls)+' rolls ('+nf(ic.lineal,1)+' lineal ft)':'',
+costTxt,'Planning estimate only; verify with local code and manufacturer instructions.'].filter(Boolean).join('\n');
+
+const html=`<div class="res-in">
+<div class="keyw"><div class="lbl">You need</div><div class="key">${nf(rolls)} ${rolls===1?'roll':'rolls'}</div>${ic?`<div class="key2">+ ${nf(ic.rolls)} ice &amp; water barrier ${ic.rolls===1?'roll':'rolls'}</div>`:''}<div class="s">${t.n} · ${nf(req,0)} sq ft to cover${layers>1?' · '+layers+' layers':''}</div></div>
+${wh}
+<div class="rh">Your estimate</div>
+<div class="tw"><table><tbody>${rows}</tbody></table></div>
+<div class="rh">Compare underlayment types (same roof)</div>
+<div class="tw"><table><thead><tr><th>Type</th><th class="n">Roll size</th><th class="n">Net sq ft</th><th class="n">Rolls</th></tr></thead><tbody>${cmp}</tbody></table></div>
+<button type="button" class="copy" id="copyBtn">Copy results</button></div>`;
+$('results').innerHTML=html;
+
+if(mode==='size'){
+draw({p:p,span:wid,riseTxt:nf(wid/2*p/12,1)+' ft',slopeTxt:'Slope '+nf((wid/2+ov/12)*sf,1)+' ft',ice:ice});
+}else{
+draw({p:p,span:null,area:area,riseTxt:nf(p)+' per 12',slopeTxt:'Factor '+sf.toFixed(3),ice:ice});
+}
+}
+
+function fallbackCopy(done){
+const ta=document.createElement('textarea');ta.value=copyTxt;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';
+document.body.appendChild(ta);ta.select();
+try{document.execCommand('copy');done();}catch(e){}
+document.body.removeChild(ta);
+}
+$('results').addEventListener('click',e=>{
+if(e.target.id!=='copyBtn')return;
+const done=()=>{const b=$('copyBtn');if(!b)return;b.textContent='Copied!';setTimeout(()=>{const c=$('copyBtn');if(c)c.textContent='Copy results';},2000);};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(copyTxt).then(done,()=>fallbackCopy(done));}
+else fallbackCopy(done);
+});
+$('f').addEventListener('submit',e=>{e.preventDefault();requestAnimationFrame(calc);});
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
