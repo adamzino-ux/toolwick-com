@@ -119,7 +119,7 @@ h1{font-size:1.45rem}
 <p class="subtitle">This wire gauge ampacity calculator finds the smallest AWG wire for your load, then checks it against breaker size, terminal temperature limits, derating and voltage drop. It follows NEC Table 310.16 / 310.17 and the 240.4(D) small-conductor rule. Codes vary locally, and the result is not permit or inspection approval.</p>
 
 <div class="diagram-wrap">
-<svg id="diagram" viewBox="0 0 520 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram of a wire run from a source to a load showing voltage, current, wire gauge and one-way length">
+<svg id="diagram" viewBox="0 0 520 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram of a wire run from a source to a load. Run a calculation to fill in your values.">
 <title>Wire run: source to load</title>
 <defs>
 <marker id="aR" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#0077b6"/></marker>
@@ -127,21 +127,21 @@ h1{font-size:1.45rem}
 </defs>
 <rect x="10" y="68" width="80" height="62" rx="6" fill="#fff" stroke="#0077b6" stroke-width="2"/>
 <text x="50" y="92" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">SOURCE</text>
-<text id="dV" x="50" y="114" text-anchor="middle" font-size="12" fill="#1a1a2e">120 V · 1φ</text>
+<text id="dV" x="50" y="114" text-anchor="middle" font-size="12" fill="#1a1a2e">— V</text>
 <rect x="430" y="68" width="80" height="62" rx="6" fill="#fff" stroke="#0077b6" stroke-width="2"/>
 <text x="470" y="92" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">LOAD</text>
-<text id="dA" x="470" y="114" text-anchor="middle" font-size="13" fill="#1a1a2e">20 A</text>
+<text id="dA" x="470" y="114" text-anchor="middle" font-size="13" fill="#1a1a2e">— A</text>
 <line x1="90" y1="86" x2="430" y2="86" stroke="#0077b6" stroke-width="4"/>
 <line x1="90" y1="112" x2="430" y2="112" stroke="#0077b6" stroke-width="4"/>
 <rect x="185" y="88" width="150" height="22" rx="11" fill="#fff" stroke="#0077b6" stroke-width="1.5"/>
-<text id="dG" x="260" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">12 AWG · Cu</text>
+<text id="dG" x="260" y="104" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">— AWG</text>
 <line x1="170" y1="58" x2="350" y2="58" stroke="#0077b6" stroke-width="1.5" marker-end="url(#aR)"/>
 <text x="260" y="48" text-anchor="middle" font-size="12" fill="#1a1a2e">current flow</text>
 <line x1="90" y1="132" x2="90" y2="152" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>
 <line x1="430" y1="132" x2="430" y2="152" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>
 <line x1="92" y1="146" x2="428" y2="146" stroke="#0077b6" stroke-width="1.5" marker-start="url(#aL)" marker-end="url(#aR)"/>
-<text id="dL" x="260" y="140" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">60 ft one-way</text>
-<text id="dD" x="260" y="174" text-anchor="middle" font-size="13" fill="#1a1a2e">Voltage drop: — (run a calculation)</text>
+<text id="dL" x="260" y="140" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">— ft one-way</text>
+<text id="dD" x="260" y="174" text-anchor="middle" font-size="13" fill="#1a1a2e">Run a calculation to fill in your values</text>
 </svg>
 </div>
 
@@ -192,26 +192,31 @@ h1{font-size:1.45rem}
 <div class="tab-content" id="tab-check" role="tabpanel" aria-labelledby="tb-check">
 <div class="row-2">
 <div class="field"><label for="chkAWG">Existing wire gauge</label><select id="chkAWG"></select></div>
-<div class="field"><label for="chkAmps">Load or breaker size (amps)</label>
-<input type="number" id="chkAmps" min="0" step="any" inputmode="decimal" placeholder="e.g. 20" aria-describedby="err-chkAmps">
-<div class="error-msg" id="err-chkAmps" hidden></div></div>
-</div>
-<div class="row-2">
 <div class="field"><label for="chkMat">Conductor material</label>
 <select id="chkMat" onchange="onMat('chk')"><option value="copper">Copper</option><option value="aluminum">Aluminum</option></select>
 <div class="hint">Aluminum building wire starts at 12 AWG, so 14 AWG is disabled for it.</div></div>
-<div class="field"><label for="chkInsul">Wire insulation rating</label><select id="chkInsul" class="insul"></select></div>
 </div>
 <div class="row-2">
+<div class="field"><label for="chkMode">The number I'm entering is a</label>
+<select id="chkMode" onchange="onMode()"><option value="load">Load current (the device draws this)</option><option value="breaker">Breaker / fuse rating (already installed)</option></select></div>
+<div class="field"><label for="chkAmps" id="chkAmpsL">Load current (amps)</label>
+<input type="number" id="chkAmps" value="20" min="0" step="any" inputmode="decimal" aria-describedby="err-chkAmps">
+<div class="error-msg" id="err-chkAmps" hidden></div></div>
+</div>
+<div class="row-2">
+<div class="field"><label for="chkInsul">Wire insulation rating</label><select id="chkInsul" class="insul"></select></div>
 <div class="field"><label for="chkTerm">Breaker / terminal rating</label><select id="chkTerm" class="term"></select></div>
+</div>
+<div class="row-2">
 <div class="field"><label for="chkInstall">Installation</label>
 <select id="chkInstall"><option value="conduit">Conduit / cable (Table 310.16)</option><option value="free">Free air (Table 310.17)</option></select></div>
+<div class="field"><label for="chkAmb">Ambient temperature</label><select id="chkAmb"></select></div>
 </div>
 <div class="row-2">
-<div class="field"><label for="chkAmb">Ambient temperature</label><select id="chkAmb"></select></div>
 <div class="field"><label for="chkBun">Current-carrying conductors bundled</label><select id="chkBun"></select></div>
+<div class="field"><label class="chk" for="chkCont" style="margin-top:1.4rem"><input type="checkbox" id="chkCont"> Continuous load (125%)</label>
+<div class="hint">Applies to load entries only. A breaker rating is always checked as entered.</div></div>
 </div>
-<div class="field"><label class="chk" for="chkCont"><input type="checkbox" id="chkCont"> Continuous load (3+ hours, apply 125%)</label></div>
 <button class="primary" type="button" onclick="calcCheck()">Check Wire Suitability</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
 </div>
 
@@ -234,14 +239,14 @@ h1{font-size:1.45rem}
 <div id="results" aria-live="polite" aria-atomic="true"></div>
 <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
 
-<div class="safety" role="note">Estimates only. Values follow NEC Table 310.16 and 310.17 (30°C ambient base, 2020/2023 editions), the 110.14(C) termination rule, 210.19/215.2 continuous-load sizing and 240.4(D). Local amendments vary and other conditions can apply, such as motors, parallel runs, nonmetallic cable rules and special occupancies. Results round toward the safer (larger wire, standard breaker rounded up) side but are not engineering, permit or inspection approval. Have final wiring verified by a licensed electrician and your local inspector.</div>
+<div class="safety" role="note">Estimates only. Values follow NEC Table 310.16 and 310.17 (30°C ambient base, 2020/2023 editions), the 110.14(C) termination rule, 210.19/215.2 continuous-load sizing and 240.4(D). Local amendments vary and other conditions can apply, such as motors, parallel runs, nonmetallic cable rules and special occupancies. Results round toward the safer side (larger wire, standard breaker rounded up) but are not engineering, permit or inspection approval. Have final wiring verified by a licensed electrician and your local inspector.</div>
 
 <div class="content">
 <h2>How to Use This Wire Gauge &amp; Ampacity Calculator</h2>
-<p>Pick a tab. <strong>Find Gauge</strong> takes your load in amps, the system voltage and phase (chosen together so a mismatch like 120 V three-phase is impossible), the one-way run length, wire material, insulation rating, breaker/terminal rating, installation method, ambient temperature and number of bundled conductors. It returns the smallest AWG that passes every check, the standard breaker size, the usable ampacity and the voltage drop. <strong>Check Wire</strong> tests wire you already own against a load. <strong>Voltage Drop</strong> uses sliders so you can see the effect of length and current on any gauge.</p>
+<p>Pick a tab. <strong>Find Gauge</strong> takes your load in amps, the system voltage and phase, the one-way run length, wire material, insulation rating, breaker/terminal rating, installation method, ambient temperature and number of bundled conductors. It returns the smallest AWG that passes every check, the standard breaker size, the usable ampacity and the voltage drop. <strong>Check Wire</strong> tests wire you already own. Tell it whether the number you entered is a load or an installed breaker rating, because the 125% continuous factor only applies to loads. <strong>Voltage Drop</strong> uses sliders so you can see the effect of length and current on any gauge.</p>
 
 <h2>Why This Matters</h2>
-<p>Undersized wire is a quiet fire hazard. When a conductor carries more than its rating, it heats up, insulation hardens and cracks, and connections loosen, often long before a breaker trips. Real examples show how easy it is to guess wrong. A 40 A continuous EV charger needs a 50 A breaker (40 × 1.25) and 6 AWG copper, not the 8 AWG that looks big enough. A 20 A table saw on 100 feet of 12 AWG at 120 V loses 2 × 12.9 × 20 × 100 ÷ 6,530 = 7.9 V, or 6.6%. The breaker never trips, but the motor runs hot and starts poorly.</p>
+<p>Undersized wire is a quiet fire hazard. When a conductor carries more than its rating, it heats up, insulation hardens and cracks, and connections loosen, often long before a breaker trips. A 40 A continuous EV charger needs a 50 A breaker (40 × 1.25) and 6 AWG copper, not the 8 AWG that looks big enough. A 20 A table saw on 100 feet of 12 AWG at 120 V loses 2 × 12.9 × 20 × 100 ÷ 6,530 = 7.9 V, or 6.6%. The breaker never trips, but the motor runs hot and starts poorly.</p>
 <p>Two rules catch people out. NEC 240.4(D) caps 14, 12 and 10 AWG copper at 15, 20 and 30 A breakers, so 14 AWG on a 20 A breaker is never right, even though 14 AWG at 90°C looks rated for 25 A. And NEC 110.14(C) limits you to the rating of the breaker and lug terminals, so premium 90°C wire does not buy extra capacity at the terminals. Electricians, DIYers, solar and RV installers and workshop builders all need ampacity and voltage drop right together.</p>
 
 <h2>How It's Calculated</h2>
@@ -250,14 +255,14 @@ h1{font-size:1.45rem}
 <li><strong>Design load:</strong> amps × 1.25 for continuous loads, otherwise amps.</li>
 <li><strong>Breaker size:</strong> round the design load <em>up</em> to the next standard size in NEC 240.6(A): 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100 A and so on.</li>
 <li><strong>Usable ampacity</strong> is the lowest of three limits: the table ampacity at your insulation rating multiplied by the ambient and bundling factors, the table ampacity at the terminal rating, and the 240.4(D) cap.</li>
-<li><strong>Pick the smallest AWG</strong> whose usable ampacity is at least the breaker size.</li>
-<li><strong>Voltage drop check:</strong> if drop exceeds 3%, step up to the first gauge that meets 3%.</li>
+<li><strong>Pick the smallest AWG</strong> whose usable ampacity is at least the breaker size. This is deliberately conservative, because NEC 240.4(B) would sometimes allow the next breaker size above the wire's rating.</li>
+<li><strong>Voltage drop check:</strong> if drop exceeds 3%, step up to the first gauge that meets 3%. If none does, the tool reports its largest size and says the drop is still too high.</li>
 </ol>
 <div class="formula">Single-phase: VD = (2 × K × I × L) ÷ CM<br>Three-phase: VD = (1.732 × K × I × L) ÷ CM<br>VD% = VD ÷ system voltage × 100</div>
-<p>K is 12.9 for copper and 21.2 for aluminum (ohm·cmil/ft). I is the load current, L is the one-way length in feet, and CM is the conductor's circular-mil area. Voltage drop uses the actual load, not the 125% figure. The "auto" terminal setting follows NEC 110.14(C): 60°C columns for circuits of 100 A or less, 75°C above that. Choose 75°C only if your breaker and equipment are marked for it.</p>
+<p>K is 12.9 for copper and 21.2 for aluminum (ohm·cmil/ft). I is the load current, L is the one-way length in feet, and CM is the conductor's circular-mil area. Voltage drop uses the actual load, not the 125% figure. The "auto" terminal setting follows NEC 110.14(C): the 60°C column for circuits of 100 A or less, 75°C above that. The code allows 75°C for some larger conductors on smaller circuits, but the tool stays on the safer 60°C side. Choose 75°C only if your breaker and equipment are marked for it.</p>
 
 <h2>Worked Example</h2>
-<p>A permanently wired 20 A continuous heater, 120 V single-phase, 60 ft from the panel. Copper 75°C (THWN) wire in conduit, auto terminals, 30°C ambient, three or fewer conductors. These are the tool's default inputs.</p>
+<p>A permanently wired 20 A continuous heater, 120 V single-phase, 60 ft from the panel. Copper 75°C (THWN) wire in conduit, auto terminals, 30°C ambient, three or fewer conductors. These are the tool's default Find Gauge inputs.</p>
 <ol>
 <li>Design load: 20 × 1.25 = 25 A. The standard breaker is 25 A.</li>
 <li>Terminals: the breaker is 100 A or less, so the 60°C column limits the terminals.</li>
@@ -274,8 +279,8 @@ h1{font-size:1.45rem}
 <li><strong>Read the breaker label.</strong> Unless the breaker and lugs are marked 75°C, treat them as 60°C when the circuit is 100 A or less.</li>
 <li><strong>NM-B cable is a 60°C product.</strong> Choose 60°C insulation for Romex, even though the conductors inside are rated 90°C.</li>
 <li><strong>Enter one-way length.</strong> The formula already doubles it for the return path.</li>
-<li><strong>Count bundled conductors.</strong> Four or more current-carrying conductors in one raceway reduce ampacity (80% for 4–6, 70% for 7–9). Hot attics and garages reduce it further.</li>
-<li><strong>Aluminum needs AL-rated lugs</strong> and anti-oxidant compound. This tool doesn't cover kcmil sizes above 4/0, parallel runs, motor circuits or other special cases.</li>
+<li><strong>Don't mix up load and breaker in Check Wire.</strong> A 20 A breaker entered as a "load" with the continuous box ticked would be treated as 25 A. Choose the right entry type first.</li>
+<li><strong>Count bundled conductors.</strong> Four or more current-carrying conductors in one raceway reduce ampacity (80% for 4–6, 70% for 7–9). Hot attics and garages reduce it further. This tool doesn't cover kcmil sizes above 4/0, parallel runs or motor circuits.</li>
 </ul>
 
 <h2>Frequently Asked Questions</h2>
@@ -289,19 +294,19 @@ h1{font-size:1.45rem}
 <p>Yes, select Aluminum. The calculator uses aluminum's higher resistivity (K = 21.2) and its own ampacity column in Table 310.16, which usually means going up about two sizes. Free-air aluminum values aren't included, so conduit values are used instead. Aluminum building wire below 12 AWG isn't recognized.</p></details>
 <details><summary>What is the NEC 240.4(D) small-conductor rule?</summary>
 <p>It limits overcurrent protection for 14, 12 and 10 AWG copper to 15, 20 and 30 A. For aluminum, 12 AWG is capped at 15 A and 10 AWG at 25 A. The tool applies these caps automatically, so it never pairs a small wire with an oversized breaker.</p></details>
-<details><summary>Why does the tool recommend bigger wire than the raw table, and why doesn't 90°C wire help?</summary>
-<p>The recommendation can rise above the raw table because of the 125% continuous factor, breaker rounding, derating for heat or bundling, and the 3% voltage-drop target. Terminal ratings are the reason 90°C wire doesn't help: the lowest of the wire, terminal and cap limits always governs. 90°C wire mainly helps by giving more headroom before derating drops you below the terminal limit.</p></details>
+<details><summary>Why doesn't 90°C wire let me use a smaller gauge?</summary>
+<p>The lowest of the wire, terminal and 240.4(D) limits always governs, and most breakers and lugs are only rated for 60°C or 75°C. 90°C wire mainly helps by giving more headroom before ambient heat or bundling derating drops you below the terminal limit.</p></details>
 </div>
 
 <section style="margin-top:2rem" aria-labelledby="rel-h">
 <h2 id="rel-h" style="font-size:1.15rem;margin-bottom:.8rem">Related Tools</h2>
 <div class="related">
 <a href="/welding-rod-wire-consumption-calculator/">Welding Rod &amp; Wire Consumption Calculator</a>
-<a href="/tuckpointing-cost-calculator/">Tuckpointing Cost Calculator</a>
-<a href="/slope-percent-to-degrees-inches-per-foot-calculator/">Slope Percent to Degrees &amp; Inches-per-Foot Calculator</a>
-<a href="/polymeric-sand-calculator/">Polymeric Sand Calculator</a>
-<a href="/feet-inches-to-decimal-feet-calculator/">Feet and Inches to Decimal Feet Calculator</a>
-<a href="/paver-quantity-calculator/">Paver Quantity Calculator</a>
+<a href="/tributary-area-calculator/">Tributary Area Calculator for Beams, Columns &amp; Footings</a>
+<a href="/roof-underlayment-calculator/">Roof Underlayment Calculator</a>
+<a href="/thinset-mortar-coverage-calculator/">Thinset Mortar Coverage Calculator</a>
+<a href="/wainscoting-calculator/">Wainscoting Calculator</a>
+<a href="/board-and-batten-wall-calculator/">Board and Batten Wall Calculator</a>
 </div>
 </section>
 </main>
@@ -312,12 +317,12 @@ h1{font-size:1.45rem}
 const $=id=>document.getElementById(id);
 $('yr').textContent=new Date().getFullYear();
 const TI={60:0,75:1,90:2};
-// n,cm, c=Table 310.16 Cu [60,75,90], f=Table 310.17 Cu, a=Table 310.16 Al
+// n, cm, g, c=Table 310.16 Cu [60,75,90], f=Table 310.17 Cu, a=Table 310.16 Al
 const T=[
 {n:'14 AWG',cm:4107,g:14,c:[15,20,25],f:[25,30,35],a:null},
 {n:'12 AWG',cm:6530,g:12,c:[20,25,30],f:[30,35,40],a:[15,20,25]},
 {n:'10 AWG',cm:10380,g:10,c:[30,35,40],f:[40,50,55],a:[25,30,35]},
-{n:'8 AWG',cm:16510,g:8,c:[40,50,55],f:[60,70,80],a:[35,40,45]},
+{n:'8 AWG',cm:16510,g:8,c:[40,50,55],f:[60,70,80],a:[30,40,45]},
 {n:'6 AWG',cm:26240,g:6,c:[55,65,75],f:[80,95,105],a:[40,50,55]},
 {n:'4 AWG',cm:41740,g:4,c:[70,85,95],f:[105,125,140],a:[55,65,75]},
 {n:'3 AWG',cm:52620,g:3,c:[85,100,115],f:[120,145,165],a:[65,75,85]},
@@ -354,7 +359,7 @@ const BUN=[
 const INS=[['60','60°C (TW, UF, NM-B cable)'],['75','75°C (THWN, THW, XHHW wet)'],['90','90°C (THHN, THWN-2, XHHW-2)']];
 const TERM=[['auto','Auto (60°C up to 100 A, 75°C above)'],['60','60°C terminals'],['75','75°C terminals (marked)'],['90','90°C terminals (rare)']];
 
-function opts(id,list,sel){$(id).innerHTML=list.map((o,i)=>`<option value="${o[0]}"${String(o[0])===String(sel)?' selected':''}>${o[1]}</option>`).join('')}
+function opts(id,list,sel){$(id).innerHTML=list.map(o=>`<option value="${o[0]}"${String(o[0])===String(sel)?' selected':''}>${o[1]}</option>`).join('')}
 ['findSys','vdSys'].forEach(id=>opts(id,Object.keys(SYS).map(k=>[k,SYS[k].t]),id==='findSys'?'120-1':'240-1'));
 ['find','chk'].forEach(p=>{
  opts(p+'Insul',INS,'75');opts(p+'Term',TERM,'auto');
@@ -401,6 +406,14 @@ function bar(p){
  return`<div class="vd"><div class="vd-top"><span>Voltage drop</span><strong>${fmt(p,2)}%</strong></div><div class="vd-track"><div class="vd-fill" style="width:${Math.min(p,10)*10}%;background:${c}"></div><i style="left:30%"></i><i style="left:50%"></i></div><div class="vd-leg">Tick marks show 3% (NEC recommendation) and 5%. Bar caps at 10%.</div></div>`;
 }
 function info(a){return'<div class="info-grid">'+a.map(x=>`<div class="info-box"><div class="info-label">${x[0]}</div><div class="info-value">${x[1]}</div></div>`).join('')+'</div>'}
+
+const DD={v:'— V',a:'— A',g:'— AWG',l:'— ft one-way',d:'Run a calculation to fill in your values'};
+function setDiag(d){
+ const x=Object.assign({},DD,d||{});
+ $('dV').textContent=x.v;$('dA').textContent=x.a;$('dG').textContent=x.g;$('dL').textContent=x.l;$('dD').textContent=x.d;
+ $('diagram').setAttribute('aria-label','Wire run from source to load: '+[x.v,x.g,x.a,x.l,x.d].join(', '));
+}
+
 let copyText='',shown='';
 function paint(label,value,unit,badge,cls,body,diag,tab){
  copyText=`${label}: ${value}\n${unit}\n${badge}\nEstimate only — verify with local code (NEC 310.16/310.17) and a licensed electrician.`;
@@ -409,11 +422,10 @@ function paint(label,value,unit,badge,cls,body,diag,tab){
 <p class="fine">Estimate only. Not engineering, permit or inspection approval. Local codes vary.</p></div>`;
  requestAnimationFrame(()=>{
   $('results').innerHTML=html;shown=tab;
-  if(diag){const m={dV:diag.v,dA:diag.a,dG:diag.g,dL:diag.l,dD:diag.d};for(const k in m)if(m[k]!=null)$(k).textContent=m[k];
-   $('diagram').setAttribute('aria-label','Wire run: '+(diag.v||'')+', '+(diag.g||'')+', '+(diag.a||'')+', '+(diag.l||''));}
+  setDiag(diag);
  });
 }
-function clearResults(){shown='';requestAnimationFrame(()=>{$('results').innerHTML=''})}
+function clearResults(){shown='';requestAnimationFrame(()=>{$('results').innerHTML='';setDiag(null)})}
 function clr(ids){ids.forEach(id=>{$(id).classList.remove('error');$(id).removeAttribute('aria-invalid');$('err-'+id).hidden=true})}
 function err(id,msg){const e=$(id);e.classList.add('error');e.setAttribute('aria-invalid','true');const m=$('err-'+id);m.textContent=msg;m.hidden=false;clearResults();e.focus();return false}
 function syncSlider(){
@@ -426,6 +438,11 @@ function onMat(p){
  ins.querySelector('option[value=free]').disabled=al;
  if(al&&ins.value==='free')ins.value='conduit';
  if(p==='chk'){const s=$('chkAWG');s.options[0].disabled=al;if(al&&s.value==='0')s.value='1'}
+}
+function onMode(){
+ const br=$('chkMode').value==='breaker';
+ $('chkAmpsL').textContent=br?'Breaker size (amps)':'Load current (amps)';
+ $('chkCont').disabled=br;
 }
 const TABS=['find','check','vdrop'];
 function switchTab(t){
@@ -452,7 +469,7 @@ function calcFind(){
  const sys=SYS[$('findSys').value],mat=$('findMat').value,cont=$('findCont').checked;
  let install=$('findInstall').value,note='';
  if(mat==='aluminum'&&install==='free'){install='conduit';note=' Free-air aluminum data not included, so conduit values were used.'}
- const need=cont?amps*1.25:amps,breaker=STD.find(s=>s>=need);
+ const need=Math.round((cont?amps*1.25:amps)*1e6)/1e6,breaker=STD.find(s=>s>=need);
  const o={temp:+$('findInsul').value,install,mat,amb:+$('findAmb').value,bun:+$('findBun').value,term:$('findTerm').value,circ:breaker};
  const none=()=>{paint('No suitable conductor found','—',`Design load ${fmt(need,1)} A${breaker?' (breaker '+breaker+' A)':''} exceeds what 14–4/0 AWG can carry under these conditions.${note}`,'✗ Outside tool range','badge-danger',
   info([['What to do','Parallel runs, kcmil sizes, less derating or a licensed electrician']]),null,'find')};
@@ -462,8 +479,12 @@ function calcFind(){
  if(idx<0)return none();
  let fin=-1;
  for(let j=idx;j<rows.length;j++){if(calcVD(rows[j].r.cm,amps,len,sys.ph,mat)/sys.v*100<=3){fin=j;break}}
- const up=fin>idx;
- if(fin<0)fin=rows.length-1;
+ let vdNote='';
+ if(fin<0){
+  fin=rows.length-1;
+  vdNote=fin>idx?' · upsized from '+rows[idx].r.n+' to the largest size this tool covers to cut voltage drop, but it still exceeds 3%'
+                :' · already the largest size this tool covers, and voltage drop still exceeds 3%';
+ }else if(fin>idx){vdNote=' · upsized from '+rows[idx].r.n+' for voltage drop'}
  const F=rows[fin],vd=calcVD(F.r.cm,amps,len,sys.ph,mat),p=vd/sys.v*100;
  let badge,cls;
  if(p<=3){badge='✓ Meets ampacity and 3% voltage-drop guidance';cls='badge-ok'}
@@ -479,30 +500,43 @@ function calcFind(){
    else if(q>3)st='<span class="s-warn">⚠ VD &gt;3%</span>';
    else st='<span class="s-ok">✓ OK</span>';
    return`<tr${i===fin?' class="hl"':''}><td>${x.r.n}</td><td class="num">${fa(x.b.eff)} A</td><td class="num">${fmt(v,2)}</td><td class="num">${fmt(q,2)}%</td><td>${st}</td></tr>`}).join(''));
- paint('Recommended wire gauge',F.r.n,`${mat==='aluminum'?'Aluminum':'Copper'} · ${breaker} A breaker · limited by ${governor(F.b)}${up?' · upsized from '+rows[idx].r.n+' for voltage drop':''}.${note}`,badge,cls,body,
+ paint('Recommended wire gauge',F.r.n,`${mat==='aluminum'?'Aluminum':'Copper'} · ${breaker} A breaker · limited by ${governor(F.b)}${vdNote}.${note}`,badge,cls,body,
   {v:sys.l,a:fmt(amps,1)+' A',g:F.r.n+' · '+(mat==='aluminum'?'Al':'Cu'),l:fmt(len,0)+' ft one-way',d:'Voltage drop: '+fmt(vd,2)+' V ('+fmt(p,2)+'%)'},'find');
 }
 
 function calcCheck(){
  clr(['chkAmps']);
- const amps=parseFloat($('chkAmps').value);
- if(!(amps>0)||amps>2000)return err('chkAmps','Enter a load or breaker size between 0.1 and 2,000 amps.');
- const row=T[+$('chkAWG').value],mat=$('chkMat').value,cont=$('chkCont').checked;
+ const mode=$('chkMode').value,amps=parseFloat($('chkAmps').value);
+ if(!(amps>0)||amps>600)return err('chkAmps','Enter an amount between 0.1 and 600 amps.');
+ const row=T[+$('chkAWG').value],mat=$('chkMat').value,load=mode==='load',cont=load&&$('chkCont').checked;
  let install=$('chkInstall').value,note='';
  if(mat==='aluminum'&&install==='free'){install='conduit';note=' Free-air aluminum data not included, so conduit values were used.'}
- const o={temp:+$('chkInsul').value,install,mat,amb:+$('chkAmb').value,bun:+$('chkBun').value,term:$('chkTerm').value,circ:amps};
+ let design,B;
+ if(load){
+  design=Math.round((cont?amps*1.25:amps)*1e6)/1e6;
+  B=STD.find(s=>s>=design);
+  if(!B)return err('chkAmps','With the 125% continuous factor this exceeds 600 A, the largest standard size covered. Enter a smaller load.');
+ }else{
+  design=amps;B=amps;
+  if(!STD.includes(amps))note+=' '+fmt(amps,1)+' A is not a standard NEC 240.6(A) breaker size, so it was checked as entered.';
+ }
+ const o={temp:+$('chkInsul').value,install,mat,amb:+$('chkAmb').value,bun:+$('chkBun').value,term:$('chkTerm').value,circ:B};
  const b=brk(row,o);
  if(!b||b.eff<=0){
   paint('No usable rating','—',(!b?'NEC does not recognize aluminum building wire smaller than 12 AWG.':'This insulation rating is not permitted at this ambient temperature.')+' Choose different inputs.','✗ Unsupported combination','badge-danger','',null,'check');return;
  }
- const design=cont?amps*1.25:amps,util=design/b.eff*100,head=b.eff-design;
- let badge,cls;
- if(util<=90){badge='✓ Adequately sized';cls='badge-ok'}
- else if(util<=100){badge='⚠ At the limit — consider the next size up';cls='badge-warn'}
- else{badge='✗ Overloaded — larger wire or smaller breaker needed';cls='badge-danger'}
- const body=info([['Usable ampacity',fa(b.eff)+' A'],['Design load',fmt(design,1)+' A'],['Utilization',fmt(util,1)+'%'],[head>=0?'Headroom':'Shortfall',fmt(Math.abs(head),1)+' A']])+bd(row,b,o);
- paint('Wire utilization',fmt(util,1)+'%',`${row.n} ${mat==='aluminum'?'aluminum':'copper'} · limited by ${governor(b)}.${cont?' Continuous load: 125% applied.':''}${note}`,badge,cls,body,
-  {g:row.n+' · '+(mat==='aluminum'?'Al':'Cu'),a:fmt(amps,1)+' A'},'check');
+ const eff=b.eff,util=B/eff*100,head=eff-B;
+ let badge,cls,extra='';
+ if(eff>=B){badge=load?'✓ Wire is adequate for this load and its required breaker':'✓ Wire is adequate for this breaker';cls='badge-ok'}
+ else if(load&&eff>=design){badge='✗ Below the required '+B+' A breaker — go up a wire size';cls='badge-danger';extra=' The wire carries the load itself, but not the next standard breaker size. NEC 240.4(B) may permit rounding up in some cases; this tool stays conservative.'}
+ else{badge=load?'✗ Overloaded — larger wire needed':'✗ Wire too small for this breaker — larger wire or smaller breaker needed';cls='badge-danger'}
+ const boxes=load
+  ?[['Design load'+(cont?' (×1.25)':''),fmt(design,1)+' A'],['Required breaker',B+' A']]
+  :[['Breaker entered',fmt(B,1)+' A'],['Max continuous load (80%)',fmt(B*.8,1)+' A']];
+ boxes.push(['Breaker ÷ usable ampacity',fmt(util,1)+'%'],[head>=0?'Headroom over breaker':'Shortfall vs breaker',fmt(Math.abs(head),1)+' A']);
+ const body=info(boxes)+bd(row,b,o);
+ paint(row.n+' '+(mat==='aluminum'?'aluminum':'copper')+' usable ampacity',fa(eff)+' A',`Limited by ${governor(b)}. Checked against ${load?'the required '+B+' A breaker for your '+(cont?'continuous ':'')+'load':'your '+fmt(B,1)+' A breaker'}.${extra}${note}`,badge,cls,body,
+  {v:'n/a',a:fmt(amps,1)+' A',g:row.n+' · '+(mat==='aluminum'?'Al':'Cu'),l:'length not used',d:'Ampacity check: '+fa(eff)+' A usable vs '+fmt(B,1)+' A '+(load?'required breaker':'breaker')},'check');
 }
 
 function calcVdrop(){
