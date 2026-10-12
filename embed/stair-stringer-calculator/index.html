@@ -4,8 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free Stair Stringer Calculator | Toolwick</title>
-<meta name="description" content="Free stair calculator for stringers: enter total rise and tread depth to get unit rise, cut angle, throat, stringer length and a cut schedule.">
+<meta name="description" content="Free stair calculator for stringers: enter total rise and tread depth to get unit rise, cut angles, throat, stringer length and a cut schedule.">
 <link rel="canonical" href="https://toolwick.com/stair-stringer-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Stair Stringer Calculator">
+<meta property="og:description" content="Free stair calculator for stringers: enter total rise and tread depth to get unit rise, cut angles, throat, stringer length and a cut schedule.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
@@ -29,7 +34,7 @@ label{font-size:.85rem;font-weight:500;color:#444}
 input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;min-height:44px;font-family:inherit}
 input:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px;border-color:#0077b6}
 input.error{border-color:#e74c3c}
-.error-msg{font-size:.82rem;color:#c0392b;min-height:0}
+.error-msg{font-size:.82rem;color:#c0392b}
 .unit-row{display:flex;gap:.5rem}
 .unit-row input{flex:1;min-width:0}
 .unit-row select{width:76px;flex-shrink:0;padding:12px 6px}
@@ -37,7 +42,7 @@ input.error{border-color:#e74c3c}
 .btn:hover{background:#006299}
 .btn-sm{background:#fff;color:#0077b6;border:1px solid #0077b6;padding:6px 14px;border-radius:6px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:44px;font-family:inherit}
 .btn-sm:hover{background:#eef7fb}
-.btn:focus-visible,.btn-sm:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.btn:focus-visible,.btn-sm:focus-visible,summary:focus-visible,a:focus-visible,.tbl-wrap:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
 .fine{font-size:.8rem;color:#666;margin-top:.8rem}
 #results:not(:empty){background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 1px 4px rgba(0,0,0,.07);margin-bottom:2rem}
 @media(max-width:480px){#results:not(:empty){padding:1.25rem}}
@@ -83,12 +88,7 @@ details p{padding:0 1rem 1rem;font-size:.92rem;color:#2b2b3d;margin:0}
 footer{border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:.85rem;color:#666;max-width:640px;margin:0 auto}
 footer a{display:inline-flex;align-items:center;min-height:44px;padding:0 .6rem}
 </style>
-<meta property="og:type" content="website">
 <meta property="og:url" content="https://toolwick.com/stair-stringer-calculator/">
-<meta property="og:title" content="Stair Stringer Calculator">
-<meta property="og:description" content="Free stair calculator for stringers: enter total rise and tread depth to get unit rise, cut angle, throat, stringer length and a cut schedule.">
-<meta property="og:site_name" content="Toolwick">
-<meta name="twitter:card" content="summary">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -101,11 +101,11 @@ footer a{display:inline-flex;align-items:center;min-height:44px;padding:0 .6rem}
 
 <main>
 <h1>Stair Stringer Calculator</h1>
-<p class="intro">Use this free stair calculator to work out unit rise, tread run, cut angle, throat and stringer length for deck, basement and interior stairs. It also checks your layout against common IRC limits and gives a cut schedule you can mark on the board.</p>
+<p class="intro">Use this free stair calculator to work out unit rise, tread run, cut angles, throat and stringer length for deck, basement and interior stairs. It also checks your layout against common IRC limits and gives a cut schedule you can mark on the board.</p>
 
 <div class="card">
   <div class="diagram">
-    <svg id="stairSvg" viewBox="0 0 640 312" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stair stringer cross-section showing total rise, total run, unit rise, unit run, cut angle and stringer length">
+    <svg id="stairSvg" viewBox="0 0 640 312" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stair stringer cross-section showing total rise, total run, unit rise, unit run, step angle and stringer length">
       <defs>
         <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9z" fill="#0077b6"/></marker>
       </defs>
@@ -113,32 +113,26 @@ footer a{display:inline-flex;align-items:center;min-height:44px;padding:0 .6rem}
       <line x1="110" y1="260" x2="595" y2="260" stroke="#e0e0e0" stroke-width="2"/>
       <polygon points="200,260 200,215 290,215 290,170 380,170 380,125 470,125 470,80 540,80 540,260" fill="#f8f9fa"/>
       <polyline points="200,260 200,215 290,215 290,170 380,170 380,125 470,125 470,80 540,80" fill="none" stroke="#0077b6" stroke-width="3" stroke-linejoin="round"/>
-      <!-- stringer length dimension (offset, parallel to A-B) -->
       <line x1="200" y1="260" x2="166.7" y2="210.1" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4,4"/>
       <line x1="470" y1="80" x2="436.7" y2="30.1" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4,4"/>
       <line x1="166.7" y1="210.1" x2="436.7" y2="30.1" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arw)" marker-end="url(#arw)"/>
       <text id="lblStringer" transform="translate(295,110) rotate(-33.69)" text-anchor="middle" font-size="16" font-weight="600" fill="#1a1a2e" font-family="sans-serif">Stringer length</text>
-      <!-- total run -->
       <line x1="200" y1="260" x2="200" y2="292" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4,4"/>
       <line x1="470" y1="260" x2="470" y2="292" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4,4"/>
       <line x1="200" y1="284" x2="470" y2="284" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arw)" marker-end="url(#arw)"/>
       <text id="lblRun" x="335" y="305" text-anchor="middle" font-size="16" font-weight="600" fill="#1a1a2e" font-family="sans-serif">Total run</text>
-      <!-- total rise -->
       <line x1="540" y1="80" x2="595" y2="80" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4,4"/>
       <line x1="585" y1="80" x2="585" y2="260" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arw)" marker-end="url(#arw)"/>
       <text id="lblRise" transform="translate(612,170) rotate(-90)" text-anchor="middle" font-size="16" font-weight="600" fill="#1a1a2e" font-family="sans-serif">Total rise</text>
-      <!-- unit rise -->
       <line x1="372" y1="125" x2="372" y2="170" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arw)" marker-end="url(#arw)"/>
       <text id="lblUnitRise" x="364" y="157" text-anchor="end" font-size="15" fill="#1a1a2e" font-family="sans-serif">Rise</text>
-      <!-- unit run -->
       <line x1="290" y1="182" x2="380" y2="182" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arw)" marker-end="url(#arw)"/>
       <text id="lblUnitRun" x="335" y="204" text-anchor="middle" font-size="15" fill="#1a1a2e" font-family="sans-serif">Run</text>
-      <!-- angle -->
       <line x1="200" y1="215" x2="290" y2="170" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="5,4"/>
       <path d="M234,215 A34,34 0 0,0 230.4,199.8" fill="none" stroke="#0077b6" stroke-width="1.5"/>
       <text id="lblAngle" x="240" y="210" font-size="14" font-weight="600" fill="#1a1a2e" font-family="sans-serif">θ</text>
     </svg>
-    <p>Schematic, not to scale. Labels update with your numbers.</p>
+    <p>Schematic, not to scale. Labels update with your numbers. θ is the slope of the nosing line from horizontal.</p>
   </div>
 
   <div class="form-grid">
@@ -198,23 +192,22 @@ footer a{display:inline-flex;align-items:center;min-height:44px;padding:0 .6rem}
 
 <div class="section">
   <h2>How to Use This Stair Calculator</h2>
-  <p>Enter the total rise (the vertical distance from the lower finished floor to the upper finished floor), the number of risers, and the tread depth you want. Add your tread thickness and stringer board width, then press Calculate. You get the unit rise, total run, cut angle, throat, stringer length, a cut schedule, and a comparison of nearby riser counts. Warnings flag anything outside common IRC limits.</p>
+  <p>Enter the total rise (the vertical distance from the lower finished floor to the upper finished floor), the number of risers, and the tread depth you want. Add your tread thickness and stringer board width, then press Calculate. You get the unit rise, total run, cut angles, throat, stringer length, a cut schedule, and a comparison of nearby riser counts. Warnings flag anything outside common IRC limits.</p>
 </div>
 
 <div class="section">
   <h2>Why This Matters</h2>
-  <p>Stairs are one of the few parts of a house where a quarter inch matters. People learn the height of a step in their legs, so a riser that is 3/8″ taller than its neighbours is a classic trip-and-fall spot. That is why the IRC limits the variation between the tallest and shortest riser in a flight to 3/8″.</p>
-  <p>Take a deck that sits 49″ above grade. Seven risers give exactly 7″ each, which is comfortable and compliant. Six risers would give 8.17″ each, over the 7¾″ residential maximum. Eight risers give 6.125″ each, legal but longer, which means more run and more lumber. A calculator lets you compare those options in seconds, before you buy a single 2×12.</p>
-  <p>The same numbers decide your lumber order, the saw angle, the footprint on the ground, and whether the stringer leaves enough solid wood at its thinnest point. Homeowners building a deck or basement stair, carpenters checking a layout, and inspectors sanity-checking a plan all need these figures. Get them wrong and you cut an expensive board that cannot be used.</p>
+  <p>Stairs are one of the few places in a house where a quarter inch matters. People learn step height in their legs, so a riser 3/8″ taller than its neighbours is a classic trip point. That is why the IRC limits the variation between the tallest and shortest riser in a flight to 3/8″.</p>
+  <p>Take a deck 49″ above grade. Seven risers give exactly 7″ each, which is comfortable and compliant. Six risers give 8.17″ each, over the 7¾″ residential maximum. Eight give 6.125″ each, legal but with more run and more lumber. A calculator compares those options in seconds, before you buy a single 2×12. The same numbers set your lumber order, saw angles, ground footprint, and whether enough solid wood remains under each notch.</p>
 </div>
 
 <div class="section">
   <h2>How It's Calculated</h2>
-  <p>A flight with N risers has N − 1 treads, because the top riser meets the upper floor or deck. All formulas below use inches.</p>
-  <div class="formula">Unit rise = Total rise ÷ N<br>Total run = Tread depth × (N − 1)<br>Stringer length = √(Total rise² + Total run²)<br>Cut angle = arctan(Unit rise ÷ Tread depth)<br>Throat = Board width − (Unit rise × Tread depth) ÷ √(Unit rise² + Tread depth²)<br>Bottom riser cut = Unit rise − Tread thickness</div>
-  <p>The cut angle is the angle of one step, not of the overall hypotenuse. This is the angle you set on a saw or framing square. The throat is the perpendicular distance from the inside corner of a notch to the bottom edge of the board. It is the thinnest strip of wood carrying the load. The bottom riser is cut shorter by one tread thickness, so the first finished step is the same height as the rest once treads are on.</p>
-  <p>The stock length adds at least 12″ (or one board width, if larger) to the stringer length for the plumb and seat cuts, then rounds up to the next standard length (8, 10, 12, 14, 16, 18, 20 or 24 ft). Stringer length is rounded up and throat is rounded down, so the displayed numbers err on the safe side.</p>
-  <p>Checks follow IRC 2021 R311.7 for one- and two-family homes: maximum riser 7¾″ (R311.7.5.1), minimum tread 10″ (R311.7.5.2), nosing required when treads are under 11″ (R311.7.5.3), and maximum 12 ft 7 in between landings (R311.7.3). The IBC (commercial) is stricter: 4″ to 7″ risers and 11″ treads. The 3½″ minimum throat is a widely used rule of thumb, not a code number. Local codes vary, so confirm with your building department.</p>
+  <p>A flight with N risers has N − 1 treads, because the top riser meets the upper floor or deck. All formulas use inches.</p>
+  <div class="formula">Unit rise = Total rise ÷ N<br>Total run = Tread depth × (N − 1)<br>Stringer length = √(Total rise² + Total run²)<br>Seat cut angle (to board edge) θ = arctan(Unit rise ÷ Tread depth)<br>Plumb cut angle (to board edge) = 90° − θ<br>Throat = Board width − (Unit rise × Tread depth) ÷ √(Unit rise² + Tread depth²)<br>Bottom riser cut = Unit rise − Tread thickness</div>
+  <p>The board edge tilts θ from horizontal. When the stringer is installed, the seat cut is level and the plumb cut is vertical. Measured against the board's edge, the seat cut makes θ and the plumb cut makes 90° − θ. The throat is the perpendicular distance from a notch's inside corner to the board's lower edge, the thinnest wood carrying the load. The bottom riser is cut shorter by one tread thickness so the first finished step matches the rest.</p>
+  <p>Stock length adds at least 12″ (or one board width, if larger) to the stringer length, then rounds up to the next standard length (8, 10, 12, 14, 16, 18, 20 or 24 ft). Length rounds up and throat rounds down, so the displayed numbers err on the safe side.</p>
+  <p>Checks follow IRC 2021 R311.7 for one- and two-family homes: maximum riser 7¾″ (R311.7.5.1), minimum tread 10″ (R311.7.5.2), nosing on solid-riser stairs when treads are under 11″ (R311.7.5.3), and maximum 151″ (12 ft 7 in) of rise between floors or landings (R311.7.3). The IBC for commercial stairs is stricter: 4″ to 7″ risers, 11″ treads, and 144″ between landings. The 3½″ minimum throat is a common rule of thumb, not a code number. Local codes vary.</p>
 </div>
 
 <div class="section">
@@ -223,8 +216,8 @@ footer a{display:inline-flex;align-items:center;min-height:44px;padding:0 .6rem}
   <ol>
     <li>Unit rise = 49 ÷ 7 = <strong>7.000″</strong>.</li>
     <li>Treads = 7 − 1 = 6, so total run = 6 × 11 = <strong>66″</strong>.</li>
-    <li>Stringer length = √(49² + 66²) = √6,757 = 82.20″. The tool displays <strong>82.21″</strong> because it rounds up.</li>
-    <li>Cut angle = arctan(7 ÷ 11) = <strong>32.5°</strong> from horizontal (57.5° from vertical).</li>
+    <li>Stringer length = √(49² + 66²) = √6,757 = 82.201″. The tool rounds up and shows <strong>82.21″</strong>.</li>
+    <li>θ = arctan(7 ÷ 11) = <strong>32.5°</strong>. The seat cut makes 32.5° with the board edge, and the plumb cut makes 90° − 32.5° = <strong>57.5°</strong> with the board edge.</li>
     <li>Step diagonal = √(7² + 11²) = 13.04″. Throat = 11.25 − (77 ÷ 13.04) = 11.25 − 5.91 = <strong>5.34″</strong>, well above 3½″.</li>
     <li>Bottom riser cut = 7.0 − 1.5 = <strong>5.5″</strong>.</li>
     <li>Stock needed = 82.20 + 12 = 94.20″ = 7.85 ft, so buy <strong>8 ft</strong> boards.</li>
@@ -235,38 +228,38 @@ footer a{display:inline-flex;align-items:center;min-height:44px;padding:0 .6rem}
 <div class="section">
   <h2>Tips &amp; Common Mistakes</h2>
   <ul>
-    <li><strong>Do not round the unit rise and step it off.</strong> A rise of 7.714″ marked as 7 11/16″ is 0.026″ short per step, which adds up to more than 1/4″ over 10 steps. Use the cumulative heights in the cut schedule or a stair gauge set once.</li>
-    <li><strong>Measure total rise to finished surfaces.</strong> Include the thickness of the upper decking or flooring and of the landing pad. A rise measured to the framing will be wrong by a full tread thickness.</li>
-    <li><strong>Remember the bottom riser adjustment.</strong> Without it, the first step is a tread thickness taller than the others, which is a common trip point.</li>
-    <li><strong>Check the throat before you cut.</strong> A big rise and a short tread leave little wood under the notch. Use wider stock, an engineered stringer, or add another riser.</li>
-    <li><strong>Mind the unsupported span and spacing.</strong> Long runs often need a mid-landing or support post. Stringers are usually spaced 16″ on center or closer for 5/4 decking, and a 36″ wide stair normally needs three. Check span tables for your lumber species and grade.</li>
-    <li><strong>Land the bottom on a firm pad.</strong> Wood stringers should not sit in soil. Use a concrete pad or approved footing, and treat all stringer cuts with preservative if the lumber is pressure-treated.</li>
+    <li><strong>Do not round the unit rise and step it off.</strong> A 7.714″ rise marked at 7 11/16″ is 0.027″ short per step, over 1/4″ across 10 steps. Use the cumulative heights in the cut schedule.</li>
+    <li><strong>Measure total rise to finished surfaces.</strong> Include upper decking or flooring and the landing pad. Measuring to the framing is off by a full tread thickness.</li>
+    <li><strong>Apply the bottom riser adjustment.</strong> Without it the first step is one tread thickness taller than the others.</li>
+    <li><strong>Check the throat before you cut.</strong> A tall rise with a short tread leaves little wood under the notch. Use wider stock, an engineered stringer, or add a riser.</li>
+    <li><strong>Mind span and spacing.</strong> Long runs often need a landing or support post. Stringers are usually 16″ on center or closer under 5/4 decking, and a 36″ stair normally gets three. Check span tables for your species and grade.</li>
+    <li><strong>Keep wood out of the soil.</strong> Land the bottom on a concrete pad or approved footing, and treat cut ends of pressure-treated lumber.</li>
   </ul>
 </div>
 
 <div class="section">
   <h2>Frequently Asked Questions</h2>
-  <details><summary>How many stringers do I need for a staircase?</summary><p>For a 36″ wide stair, three stringers (two outside, one in the middle) is the usual practice. Space them no more than 16″ on center with 5/4 decking, and closer if your treads are thinner or the load is heavy. Wider stairs need more, and your local code or span tables have the final word.</p></details>
-  <details><summary>What is the ideal rise and run for comfortable stairs?</summary><p>Most people find stairs comfortable when rise plus run is 17 to 18 inches, or when two times the rise plus the run is 24 to 25 inches. A 7″ rise with an 11″ run fits both rules. Steeper stairs save floor space but are harder to climb and descend.</p></details>
-  <details><summary>Why is total run one tread less than the number of risers?</summary><p>The top riser lands on the upper floor or deck, so it has no tread of its own. A stair with 7 risers therefore has 6 treads, and the total run is 6 times the tread depth. Counting 7 treads would make the stair and the stringer too long.</p></details>
+  <details><summary>How many stringers do I need for a staircase?</summary><p>For a 36″ wide stair, three stringers (two outside, one in the middle) is usual practice. Space them no more than 16″ on center with 5/4 decking, and closer for thinner treads or heavy loads. Your local code or span tables have the final word.</p></details>
+  <details><summary>What is the ideal rise and run for comfortable stairs?</summary><p>Most people find stairs comfortable when rise plus run is 17 to 18 inches, or when twice the rise plus the run is 24 to 25 inches. A 7″ rise with an 11″ run fits both rules. Steeper stairs save floor space but are harder to climb and descend.</p></details>
+  <details><summary>Why is total run one tread less than the number of risers?</summary><p>The top riser lands on the upper floor or deck, so it has no tread of its own. A stair with 7 risers has 6 treads, and total run is 6 times the tread depth. Counting 7 treads would make the stair and stringer too long.</p></details>
   <details><summary>What is a stringer throat, and how much do I need?</summary><p>The throat is the thinnest section of wood left under a notch, measured perpendicular to the board's edge. Many builders want at least 3½″ on a 2×12. That is a rule of thumb rather than a code figure, and it depends on lumber grade, spacing and span.</p></details>
-  <details><summary>Why is the bottom riser cut shorter than the others?</summary><p>The first tread sits on top of the stringer's bottom notch, while the stringer itself rests on the pad. Cutting the bottom riser shorter by one tread thickness makes the first finished step equal the others. The top of the stringer is usually laid out the same way against the deck framing.</p></details>
-  <details><summary>What angle do I set on my saw or framing square?</summary><p>The cut angle result is measured from horizontal for the seat cut. The plumb cut is 90° minus that angle. On a framing square, use the unit rise on one leg and the tread depth on the other, and mark along the outside edges.</p></details>
+  <details><summary>Why is the bottom riser cut shorter than the others?</summary><p>The stringer rests directly on the pad, but the first tread sits one tread thickness above the bottom notch. Cutting the bottom riser shorter by that thickness makes the first finished step equal the others. At the top there is no tread to subtract, because the deck or floor surface is the last step. The top is cut to suit how the stringer attaches to the header or framing, so dry-fit it before final cuts.</p></details>
+  <details><summary>What angle do I set on my saw or framing square?</summary><p>Against the board's edge, the seat cut makes the θ angle shown in the results and the plumb cut makes 90° minus θ. On a framing square, put the unit rise on one leg and the tread depth on the other, both touching the board's edge. The rise leg marks the plumb cut and the run leg marks the seat cut.</p></details>
 </div>
-
-<div class="safety" role="note">Results are planning estimates based on the IRC 2021 stair provisions and common rules of thumb. Building codes and conditions vary by location. Verify your design with your local building department, and use an engineer or licensed contractor where required. This tool does not provide engineering, permit or inspection approval.</div>
 
 <div class="section">
   <h2>Related Tools</h2>
   <div class="related">
-    <a href="/paver-quantity-calculator/">Paver Quantity Calculator</a>
-    <a href="/linear-feet-to-square-feet-calculator/">Linear Feet to Square Feet Calculator</a>
-    <a href="/siding-calculator/">Siding Calculator</a>
-    <a href="/watts-to-amps-calculator/">Watts to Amps Calculator</a>
-    <a href="/grout-calculator/">Grout Calculator</a>
-    <a href="/voltage-drop-calculator/">Voltage Drop Calculator</a>
+    <a href="/tributary-area-calculator/">Tributary Area Calculator for Beams, Columns &amp; Footings</a>
+    <a href="/roof-underlayment-calculator/">Roof Underlayment Calculator</a>
+    <a href="/thinset-mortar-coverage-calculator/">Thinset Mortar Coverage Calculator</a>
+    <a href="/wainscoting-calculator/">Wainscoting Calculator</a>
+    <a href="/board-and-batten-wall-calculator/">Board and Batten Wall Calculator</a>
+    <a href="/shiplap-calculator/">Shiplap Calculator</a>
   </div>
 </div>
+
+<div class="safety" role="note">Results are planning estimates based on the IRC 2021 stair provisions and common rules of thumb. Building codes and conditions vary by location. Verify your design with your local building department, and use an engineer or licensed contractor where required. This tool does not provide engineering, permit or inspection approval.</div>
 
 </main>
 
@@ -292,7 +285,8 @@ function setDiagram(v){
   var s=$('stairSvg');
   if(!v){
     $('lblStringer').textContent='Stringer length';$('lblRun').textContent='Total run';$('lblRise').textContent='Total rise';
-    $('lblUnitRise').textContent='Rise';$('lblUnitRun').textContent='Run';$('lblAngle').textContent='θ';return;
+    $('lblUnitRise').textContent='Rise';$('lblUnitRun').textContent='Run';$('lblAngle').textContent='θ';
+    s.setAttribute('aria-label','Stair stringer cross-section showing total rise, total run, unit rise, unit run, step angle and stringer length');return;
   }
   $('lblStringer').textContent='Stringer '+trim(v.len)+'″';
   $('lblRun').textContent='Total run '+trim(v.run)+'″';
@@ -300,7 +294,7 @@ function setDiagram(v){
   $('lblUnitRise').textContent='Rise '+trim(v.ur)+'″';
   $('lblUnitRun').textContent='Run '+trim(v.tr)+'″';
   $('lblAngle').textContent='θ '+fmt(v.ang,1)+'°';
-  s.setAttribute('aria-label','Stair stringer diagram: total rise '+trim(v.rise)+' inches, total run '+trim(v.run)+' inches, unit rise '+trim(v.ur)+' inches, tread '+trim(v.tr)+' inches, cut angle '+fmt(v.ang,1)+' degrees, stringer length '+trim(v.len)+' inches');
+  s.setAttribute('aria-label','Stair stringer diagram: total rise '+trim(v.rise)+' inches, total run '+trim(v.run)+' inches, unit rise '+trim(v.ur)+' inches, tread '+trim(v.tr)+' inches, step angle '+fmt(v.ang,1)+' degrees from horizontal, stringer length '+trim(v.len)+' inches');
 }
 
 function calculate(){
@@ -353,8 +347,9 @@ function calculate(){
   if(ur<4)al.push(['','Check: unit rise under 4″. The IRC sets no minimum riser, but the IBC requires 4″ and very short risers are a trip hazard.']);
   if(run<10)al.push(['red','Fail: tread depth '+fmt(run,2)+'″ is under the 10″ minimum in IRC R311.7.5.2.']);
   else if(run<11)al.push(['','Check: treads under 11″ need a 3/4″ to 1¼″ nosing on solid-riser stairs (IRC R311.7.5.3). The IBC requires an 11″ tread for commercial stairs.']);
-  if(throat<mt||throat<=0)al.push(['red','Fail: throat '+fmt(down(throat,2),2)+'″ is below your '+fmt(mt,2)+'″ minimum. 3½″ is a common rule of thumb, not a code number. Use wider stock or an engineered stringer, or add a riser.']);
-  if(rise>144)al.push(['','Check: total rise exceeds 12 ft. The IRC allows 12 ft 7 in (151″) and the IBC 12 ft between landings. A landing is needed.']);
+  if(throat<mt||throat<=0)al.push(['red','Fail: throat '+fmt(Math.max(0,down(throat,2)),2)+'″ is below your '+fmt(mt,2)+'″ minimum. 3½″ is a common rule of thumb, not a code number. Use wider stock or an engineered stringer, or add a riser.']);
+  if(rise>151+1e-9)al.push(['red','Fail: total rise '+fmt(rise,2)+'″ is over the 151″ (12 ft 7 in) maximum between floors or landings in IRC R311.7.3. Add an intermediate landing and split the stair into flights.']);
+  else if(rise>144+1e-9)al.push(['','Check: total rise '+fmt(rise,2)+'″ is within the IRC 151″ limit but over the IBC 144″ (12 ft) limit that applies to commercial stairs.']);
   if(totRun>72)al.push(['','Check: total run exceeds 72″. A single 2×12 stringer may not span that far unsupported, so check span tables or add a landing or support post.']);
   if(!stock)al.push(['','Check: required stock is over 24 ft. Use a splice detail, a landing, or an engineered stringer.']);
   if(sum>=17&&sum<=18)al.push(['green','OK: rise + run = '+fmt(sum,2)+'″, inside the 17–18″ comfort range.']);
@@ -368,9 +363,9 @@ function calculate(){
     [fmt(run,2)+'″','Unit run (tread depth)'],
     [fmt(rise,2)+'″','Total rise ('+n+' risers)'],
     [fmt(totRun,2)+'″','Total run ('+treads+' treads)'],
-    [fmt(ang,1)+'°','Cut angle from horizontal'],
-    [fmt(90-ang,1)+'°','Plumb cut from vertical'],
-    [fmt(down(throat,2),2)+'″','Throat (rounded down)'],
+    [fmt(ang,1)+'°','Seat cut angle to board edge'],
+    [fmt(90-ang,1)+'°','Plumb cut angle to board edge'],
+    [fmt(Math.max(0,down(throat,2)),2)+'″','Throat (rounded down)'],
     [fmt(bottom,2)+'″','Bottom riser cut'],
     [fmt(sum,2)+'″','Rise + run'],
     [stockTxt,'Minimum stock length']
@@ -393,22 +388,24 @@ function calculate(){
     else if(th<mt||th<=0)st='Throat too small ✗';
     else if(r>7+1e-9)st='OK (IRC only)';
     else st='OK';
-    cmp+='<tr'+(m===n?' class="cur"':'')+'><td>'+m+(m===n?' (yours)':'')+'</td><td class="n">'+fmt(up(r,3),3)+'</td><td class="n">'+fmt(r+run,2)+'</td><td class="n">'+fmt(down(th,2),2)+'</td><td>'+st+'</td></tr>';
+    cmp+='<tr'+(m===n?' class="cur"':'')+'><td>'+m+(m===n?' (yours)':'')+'</td><td class="n">'+fmt(up(r,3),3)+'</td><td class="n">'+fmt(r+run,2)+'</td><td class="n">'+fmt(Math.max(0,down(th,2)),2)+'</td><td>'+st+'</td></tr>';
   }
 
   clip=['Stair Stringer Calculator (toolwick.com)',
     'Total rise: '+fmt(rise,2)+' in | Risers: '+n+' | Treads: '+treads+' | Tread depth: '+fmt(run,2)+' in',
     'Unit rise: '+fmt(up(ur,3),3)+' in | Total run: '+fmt(totRun,2)+' in',
-    'Stringer length: '+fmt(lenShown,2)+' in | Cut angle: '+fmt(ang,1)+' deg | Throat: '+fmt(down(throat,2),2)+' in',
+    'Stringer length: '+fmt(lenShown,2)+' in | Throat: '+fmt(Math.max(0,down(throat,2)),2)+' in',
+    'Seat cut angle (to board edge): '+fmt(ang,1)+' deg | Plumb cut angle (to board edge): '+fmt(90-ang,1)+' deg',
     'Bottom riser cut: '+fmt(bottom,2)+' in | Min stock: '+stockTxt,
     'Planning estimate only. Verify with local code.'].join('\n');
 
   var html='<div class="fade"><div class="copy-row"><button type="button" class="btn-sm" id="copyBtn">Copy results</button></div>'+
-    '<div class="result-hero"><div class="big-num">'+fmt(lenShown,2)+'″</div><div class="big-label">Stringer length (bottom corner to top nosing, before trimming)</div><div class="alt">= '+ft+' ft '+fmt(inch,2)+' in · '+fmt(Math.ceil(len*25.4),0)+' mm</div></div>'+
+    '<div class="result-hero"><div class="big-num">'+fmt(lenShown,2)+'″</div><div class="big-label">Stringer length (bottom corner to top corner, before trimming)</div><div class="alt">= '+fmt(ft,0)+' ft '+fmt(inch,2)+' in · '+fmt(Math.ceil(len*25.4),0)+' mm</div></div>'+
     alertHtml+'<div class="result-grid">'+grid+'</div>'+
-    '<h3>Cut schedule (inches)</h3><div class="tbl-wrap"><table id="cutTable"><thead><tr><th>Step</th><th class="n">Finished tread height</th><th class="n">Notch height on stringer</th><th class="n">Cumul. run</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+showAll+
-    '<p class="note">Notch height = finished height minus tread thickness ('+fmt(thick,2)+'″). Run is measured from the face of the bottom riser, so the last row matches the total run above.</p>'+
-    '<h3>Compare nearby riser counts</h3><div class="tbl-wrap"><table><thead><tr><th>Risers</th><th class="n">Unit rise</th><th class="n">Rise + run</th><th class="n">Throat</th><th>Status</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'+
+    '<p class="note">Installed, the seat cut is level and the plumb cut is vertical. Measured against the board edge, the seat cut makes '+fmt(ang,1)+'° and the plumb cut makes '+fmt(90-ang,1)+'°.</p>'+
+    '<h3>Cut schedule (inches)</h3><div class="tbl-wrap" tabindex="0" role="region" aria-label="Cut schedule table"><table id="cutTable"><thead><tr><th>Step</th><th class="n">Finished tread height</th><th class="n">Notch height on stringer</th><th class="n">Cumul. run</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+showAll+
+    '<p class="note">Notch height = finished height minus tread thickness ('+fmt(thick,2)+'″). Run is measured from the face of the bottom riser to the end of each tread, so the last row matches the total run above.</p>'+
+    '<h3>Compare nearby riser counts</h3><div class="tbl-wrap" tabindex="0" role="region" aria-label="Riser comparison table"><table><thead><tr><th>Risers</th><th class="n">Unit rise</th><th class="n">Rise + run</th><th class="n">Throat</th><th>Status</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'+
     '<p class="note">Checks use IRC 2021 R311.7 limits and your minimum throat. Local codes vary. This is a planning estimate, not engineering, permit or inspection approval.</p></div>';
 
   setDiagram({len:lenShown,run:totRun,rise:rise,ur:ur,tr:run,ang:ang});
