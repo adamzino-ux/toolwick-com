@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tributary Area Calculator for Beams, Columns &amp; Footings</title>
+<meta name="description" content="Free tributary area calculator for beams, columns and footings. Find tributary width, floor load, column load and a recommended footing size.">
+<link rel="canonical" href="https://toolwick.com/tributary-area-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Tributary Area Calculator for Beams, Columns & Footings", "url": "https://toolwick.com/tributary-area-calculator/", "description": "Free tributary area calculator for beams, columns and footings. Find tributary width, floor load, column load and a recommended footing size.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Tributary Area Calculator for Beams, Columns & Footings", "item": "https://toolwick.com/tributary-area-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is tributary area?", "acceptedAnswer": {"@type": "Answer", "text": "Tributary area is the portion of a floor or roof whose load travels into a particular beam, column or footing. Its boundaries are usually halfway to the neighbouring supports. Multiply it by the pressure (psf) to get the load on that member."}}, {"@type": "Question", "name": "How do you calculate tributary area for a column?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply the two bay dimensions around the column: X × Y for an interior column, half of that for an edge column and a quarter for a corner column. For a 20 × 24 ft bay that is 480, 240 and 120 sq ft respectively."}}, {"@type": "Question", "name": "How do you find the tributary width of a beam?", "acceptedAnswer": {"@type": "Answer", "text": "Add the distances to the adjacent beams or walls on each side and divide by two. A beam with framing 12 ft away on both sides has a 12 ft tributary width. Over a 16 ft span that is 192 sq ft, or 660 plf and 5,280 lb at each end at 55 psf."}}, {"@type": "Question", "name": "What live load should I use?", "acceptedAnswer": {"@type": "Answer", "text": "Use the value required by your local code for the occupancy. Typical minimums are 40 psf for residential living areas, 30 psf for sleeping rooms and 20 psf for roofs. Choose a higher number if you are unsure, because it errs on the safe side."}}, {"@type": "Question", "name": "Is a rectangular tributary area accurate for two-way slabs?", "acceptedAnswer": {"@type": "Answer", "text": "Two-way slabs split load along 45° lines, giving triangular or trapezoidal shares for each supporting beam. Treating the load as rectangular strips overestimates beam load, which is the safe direction for a quick check. Column tributary areas stay X × Y either way."}}, {"@type": "Question", "name": "Why does the footing result add 10%?", "acceptedAnswer": {"@type": "Answer", "text": "Allowable soil bearing has to carry the footing's own weight and any soil above it, not just the column load. A 10% allowance is a common rough figure for spread footings. Your engineer may use a more exact value."}}, {"@type": "Question", "name": "Can I use these results for a permit?", "acceptedAnswer": {"@type": "Answer", "text": "No. This is a preliminary estimate for planning and sanity checks. Permit drawings and member sizes should come from a licensed engineer or be verified by your local building department, since codes and soil conditions vary."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.65 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff}
+.w{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #eee;padding:.4rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.8rem;line-height:1.2;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2.5rem 0 .75rem}
+p,li{margin:0 0 1rem}
+ul{padding-left:1.25rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 10px rgba(0,0,0,.06);margin:2rem 0}
+.tabs{display:flex;gap:6px;margin-bottom:1.5rem}
+.tab{flex:1;min-height:44px;padding:8px 6px;border:1px solid #ddd;background:#f8f9fa;color:#1a1a2e;border-radius:6px;font-weight:600;font-size:.95rem;font-family:inherit;cursor:pointer}
+.tab.on{background:#0077b6;color:#fff;border-color:#0077b6}
+svg#dia{display:block;width:100%;height:auto;border:1px solid #e0e0e0;border-radius:6px;background:#fff}
+.dg{display:none}
+.t-beam #dg-beam,.t-col #dg-col,.t-foot #dg-foot{display:inline}
+.dg text{font-size:15px;fill:#1a1a2e;font-family:inherit}
+.cap{font-size:.85rem;color:#555;margin:.5rem 0 1.5rem}
+.grp{display:none}
+.t-beam .g-beam,.t-col .g-col,.t-foot .g-foot{display:block}
+.f{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px;border-color:#0077b6}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+input.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin:.3rem 0 0}
+.err:empty{display:none}
+.hint{font-size:.82rem;color:#666;margin:.3rem 0 0}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.btn{display:block;width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;font-family:inherit;cursor:pointer}
+.btn:hover{background:#006299}
+button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #1a1a2e;outline-offset:2px}
+.res{opacity:0;transition:opacity .3s ease}
+.res.show{opacity:1}
+.res:not(:empty){margin-top:2rem}
+.key{text-align:center;background:#f8f9fa;border-radius:8px;padding:1.25rem 1rem}
+.key .num{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.15}
+.key .lbl{font-size:.92rem;color:#444}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin:1rem 0}
+.st{background:#f8f9fa;border:1px solid #eee;border-radius:6px;padding:.7rem .8rem}
+.st span{display:block;font-size:.8rem;color:#555}
+.st b{font-size:1.05rem}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;min-width:420px;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;font-weight:600}
+td{padding:10px 12px;border-bottom:1px solid #eee}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.n{text-align:right}
+.hl td{font-weight:600}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-radius:6px;padding:.75rem 1rem}
+.cprow{display:flex;align-items:center;gap:.75rem;margin-top:1rem}
+.copy{min-height:44px;padding:8px 16px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;font-size:.9rem;font-weight:600;font-family:inherit;cursor:pointer}
+.cpm{font-size:.9rem;color:#2d6a4f;font-weight:600}
+.ad-slot{min-height:0;margin:0}
+pre{background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;overflow-x:auto;white-space:pre-wrap;font:.88rem/1.6 Consolas,Menlo,monospace;margin:0 0 1rem}
+details{border-bottom:1px solid #e8e8e8}
+summary{min-height:44px;padding:10px 0;cursor:pointer;font-weight:600}
+details p{margin:0 0 1rem}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline}
+@media(max-width:640px){.row{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.5rem}.key .num{font-size:2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/tributary-area-calculator/">
+<meta property="og:title" content="Tributary Area Calculator for Beams, Columns &amp; Footings">
+<meta property="og:description" content="Free tributary area calculator for beams, columns and footings. Find tributary width, floor load, column load and a recommended footing size.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="w">
+<main>
+<h1>Tributary Area Calculator for Beams, Columns &amp; Footings</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This tributary area calculator shows how much floor or roof area a beam, column or footing is responsible for carrying. It then converts that area into service loads, factored loads and a suggested square footing size. Pick a member type, enter your spans and loads, and get preliminary numbers in seconds.</p>
+
+<div class="card t-beam" id="tool">
+<div class="tabs" role="tablist" aria-label="Member type">
+<button type="button" class="tab on" role="tab" aria-selected="true" aria-controls="panel" data-m="beam" id="tb-beam">Beam</button>
+<button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel" data-m="col" id="tb-col" tabindex="-1">Column</button>
+<button type="button" class="tab" role="tab" aria-selected="false" aria-controls="panel" data-m="foot" id="tb-foot" tabindex="-1">Footing</button>
+</div>
+
+<svg id="dia" viewBox="0 0 400 245" role="img" aria-label="Plan-view diagram: the shaded rectangle is the tributary area carried by the member, with dimension arrows for the span or bay sizes">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1a1a2e"/></marker></defs>
+<g id="dg-beam" class="dg"></g><g id="dg-col" class="dg"></g><g id="dg-foot" class="dg"></g>
+</svg>
+<p class="cap" id="cap">Plan view (looking down). The shaded area is the part of the floor or roof that loads the member. Press Calculate to update the diagram with your numbers.</p>
+
+<div id="panel" role="tabpanel">
+<div class="grp g-beam">
+<div class="row">
+<div class="f"><label for="sa">Side A: distance to next beam (ft)</label><input id="sa" type="number" inputmode="decimal" step="any" value="12" aria-describedby="e-sa"><p class="err" id="e-sa"></p></div>
+<div class="f"><label for="sb">Side B: distance to next beam (ft)</label><input id="sb" type="number" inputmode="decimal" step="any" value="12" aria-describedby="e-sb"><p class="err" id="e-sb"></p></div>
+</div>
+<p class="hint" style="margin:-.5rem 0 1.1rem">Use 0 on a side with no framing, such as an edge beam or a header at a wall.</p>
+<div class="f"><label for="ls">Beam span between supports (ft)</label><input id="ls" type="number" inputmode="decimal" step="any" value="16" aria-describedby="e-ls"><p class="err" id="e-ls"></p></div>
+</div>
+
+<div class="grp g-col g-foot">
+<div class="f"><label for="pos">Column position</label>
+<select id="pos"><option value="interior">Interior column (4 bays meet)</option><option value="edge">Edge column (2 bays meet)</option><option value="corner">Corner column (1 bay)</option></select>
+<p class="hint">Edge: the column sits on a building edge that runs along the X direction. See the diagram.</p></div>
+<div class="row">
+<div class="f"><label for="bx">Bay size X (ft)</label><input id="bx" type="number" inputmode="decimal" step="any" value="20" aria-describedby="e-bx"><p class="err" id="e-bx"></p></div>
+<div class="f"><label for="by">Bay size Y (ft)</label><input id="by" type="number" inputmode="decimal" step="any" value="24" aria-describedby="e-by"><p class="err" id="e-by"></p></div>
+</div>
+<div class="f"><label for="lv">Levels carried: <output id="lvv">2</output> (same loads on each level)</label>
+<input id="lv" type="range" min="1" max="10" step="1" value="2"><div class="ticks" aria-hidden="true"><span>1</span><span>5</span><span>10</span></div></div>
+</div>
+
+<div class="f"><label for="llp">Live load type (fills in the live load below)</label>
+<select id="llp"><option value="40">Residential living areas — 40 psf</option><option value="30">Residential sleeping rooms — 30 psf</option><option value="40">Decks — 40 psf</option><option value="60">Balconies — 60 psf</option><option value="50">Offices — 50 psf</option><option value="100">Corridors, lobbies, ground-floor retail — 100 psf</option><option value="20">Roof, minimum live load — 20 psf</option><option value="c">Custom value</option></select></div>
+<div class="row">
+<div class="f"><label for="dl">Dead load (psf)</label><input id="dl" type="number" inputmode="decimal" step="any" value="15" aria-describedby="e-dl"><p class="err" id="e-dl"></p></div>
+<div class="f"><label for="ll">Live load (psf)</label><input id="ll" type="number" inputmode="decimal" step="any" value="40" aria-describedby="e-ll"><p class="err" id="e-ll"></p></div>
+</div>
+
+<div class="grp g-foot">
+<div class="f"><label for="sp">Soil type (presumptive bearing, IRC Table R401.4.1)</label>
+<select id="sp"><option value="1500">Clay, sandy clay, silty clay, silt — 1,500 psf</option><option value="2000" selected>Sand, silty sand, clayey sand, silty or clayey gravel — 2,000 psf</option><option value="3000">Sandy gravel and gravel — 3,000 psf</option><option value="4000">Sedimentary and foliated rock — 4,000 psf</option><option value="12000">Crystalline bedrock — 12,000 psf</option><option value="c">Custom (e.g. from a soils report)</option></select></div>
+<div class="f"><label for="soil">Allowable soil bearing pressure (psf)</label><input id="soil" type="number" inputmode="decimal" step="any" value="2000" aria-describedby="e-soil"><p class="err" id="e-soil"></p></div>
+</div>
+</div>
+
+<button type="button" class="btn" id="go">Calculate</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div class="res" id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/tributary-area-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Tributary Area Calculator for Beams, Columns &amp;amp; Footings&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/tributary-area-calculator/&quot;&gt;Tributary Area Calculator for Beams, Columns &amp;amp; Footings&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/tributary-area-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Tributary Area Calculator</h2>
+<p>Choose Beam, Column or Footing at the top of the tool. For a beam, enter the span plus the distance to the next beam or wall on each side (use 0 on an edge); for a column or footing, enter the bay sizes, the column position and the number of levels carried. Then set the dead and live loads in psf and press Calculate to see the tributary area, service and factored loads and, for footings, a recommended size, all rounded up to the safe side.</p>
+
+<h2>Why This Matters</h2>
+<p>Every load path in a building ends at the ground, and tributary area is how you trace it. Before you can size a beam, a post or a footing, you need to know how many square feet of floor or roof that member actually carries. Guess too low and you build something undersized. Guess too high and you pay for steel and concrete you did not need.</p>
+<p>Consider a few real situations. A homeowner removing a bearing wall needs to know whether a new header carries 8 feet or 14 feet of floor. A deck builder spacing posts 10 feet apart, with joists spanning 12 feet, needs the load on each post and the footing size under it. A contractor framing a 20 × 24 ft bay in a two-story building needs the ground-floor column load, which stacks both levels. The arithmetic is always area times pressure: at a combined 55 psf, a 480 sq ft interior bay puts 26,400 lb on its column from a single level.</p>
+<p>Engineers do the same thing at the start of every design. Use this tool to sanity-check a plan, compare layouts, or prepare for a conversation with your engineer or building department.</p>
+
+<h2>How It's Calculated</h2>
+<p>All three modes start from the idea that load is shared halfway to the neighbouring supports. In the formulas below, DL is dead load, LL is live load (both in psf), A and B are the distances to the framing on each side of a beam, X and Y are the bay sizes, and n is the number of levels.</p>
+<pre>Beam:
+  Tributary width  wT = (A + B) / 2
+  Tributary area   AT = wT × span
+  Line load        w  = wT × (DL + LL)         [plf]
+  End reaction     R  = w × span / 2           [lb]
+  Maximum moment   M  = w × span² / 8          [lb-ft]</pre>
+<pre>Column:
+  Interior  AT = X × Y
+  Edge      AT = X × Y / 2
+  Corner    AT = X × Y / 4
+  Load      P  = AT × (DL + LL) × n</pre>
+<pre>Footing:
+  Design load   = 1.10 × P   (10% allowance for footing weight)
+  Required area = design load / allowable bearing q
+  Side          = √(required area), rounded UP to the next 3 in
+                  (never less than 12 in)</pre>
+<p>Service loads (DL + LL) are what you compare with allowable soil bearing and use for allowable stress design. The factored load, 1.2DL + 1.6LL, is the ASCE 7 load combination used for strength design. Live loads in the presets come from IRC Table R301.5 and ASCE 7 minimums, and soil values from IRC Table R401.4.1 (2021 edition). No live load reduction is applied, which is conservative. Every result is rounded up, never down, and local codes vary.</p>
+
+<h2>Worked Example</h2>
+<p>An interior column sits in a two-story building with 20 ft × 24 ft bays. Dead load is 15 psf, live load is 40 psf on both levels, and the soil is sand with 2,000 psf allowable bearing.</p>
+<ul>
+<li><strong>Tributary area:</strong> 20 × 24 = 480 sq ft (interior column, so the full bay).</li>
+<li><strong>Service load per level:</strong> 480 × (15 + 40) = 26,400 lb. Across 2 levels: 52,800 lb (14,400 lb dead + 38,400 lb live).</li>
+<li><strong>Factored load:</strong> 1.2 × 15 + 1.6 × 40 = 82 psf. 480 × 82 × 2 = 78,720 lb.</li>
+<li><strong>Footing design load:</strong> 52,800 × 1.10 = 58,080 lb.</li>
+<li><strong>Required area:</strong> 58,080 / 2,000 = 29.04 sq ft. The square root is 5.39 ft.</li>
+<li><strong>Recommended side:</strong> rounded up to the next 3 in gives 5.50 ft (5 ft 6 in). Provided area is 30.25 sq ft, so the actual bearing pressure is 1,920 psf, below the 2,000 psf limit.</li>
+</ul>
+<p>The Footing tab shows these same values with its default inputs.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure to the midpoint, not the wall.</strong> Tributary boundaries sit halfway between supports. If the spans on the two sides of a column differ, enter the average of the two.</li>
+<li><strong>Don't forget stacking.</strong> A ground-floor column carries every level above it plus the roof. Roofs usually have different dead and snow loads, so calculate them separately and add the results.</li>
+<li><strong>Use realistic dead loads.</strong> Light wood floors are often 10–15 psf, but tile, a concrete topping or heavy partitions can push that to 25–60 psf or more.</li>
+<li><strong>Add point loads separately.</strong> Posts, walls or equipment bearing on a beam are not part of the uniform tributary load. Add them to the reactions yourself.</li>
+<li><strong>Area is not a member size.</strong> Beam and header sizing also depends on deflection, shear, bearing length and connections. Footings also need thickness, reinforcement and a frost-depth check.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What is tributary area?</summary><p>Tributary area is the portion of a floor or roof whose load travels into a particular beam, column or footing. Its boundaries are usually halfway to the neighbouring supports. Multiply it by the pressure (psf) to get the load on that member.</p></details>
+<details><summary>How do you calculate tributary area for a column?</summary><p>Multiply the two bay dimensions around the column: X × Y for an interior column, half of that for an edge column and a quarter for a corner column. For a 20 × 24 ft bay that is 480, 240 and 120 sq ft respectively.</p></details>
+<details><summary>How do you find the tributary width of a beam?</summary><p>Add the distances to the adjacent beams or walls on each side and divide by two. A beam with framing 12 ft away on both sides has a 12 ft tributary width. Over a 16 ft span that is 192 sq ft, or 660 plf and 5,280 lb at each end at 55 psf.</p></details>
+<details><summary>What live load should I use?</summary><p>Use the value required by your local code for the occupancy. Typical minimums are 40 psf for residential living areas, 30 psf for sleeping rooms and 20 psf for roofs. Choose a higher number if you are unsure, because it errs on the safe side.</p></details>
+<details><summary>Is a rectangular tributary area accurate for two-way slabs?</summary><p>Two-way slabs split load along 45° lines, giving triangular or trapezoidal shares for each supporting beam. Treating the load as rectangular strips overestimates beam load, which is the safe direction for a quick check. Column tributary areas stay X × Y either way.</p></details>
+<details><summary>Why does the footing result add 10%?</summary><p>Allowable soil bearing has to carry the footing's own weight and any soil above it, not just the column load. A 10% allowance is a common rough figure for spread footings. Your engineer may use a more exact value.</p></details>
+<details><summary>Can I use these results for a permit?</summary><p>No. This is a preliminary estimate for planning and sanity checks. Permit drawings and member sizes should come from a licensed engineer or be verified by your local building department, since codes and soil conditions vary.</p></details>
+
+<h2>Related Tools</h2>
+<ul>
+<li><a href="/roof-underlayment-calculator/">Roof Underlayment Calculator</a></li>
+<li><a href="/thinset-mortar-coverage-calculator/">Thinset Mortar Coverage Calculator</a></li>
+<li><a href="/wainscoting-calculator/">Wainscoting Calculator</a></li>
+<li><a href="/board-and-batten-wall-calculator/">Board and Batten Wall Calculator</a></li>
+<li><a href="/shiplap-calculator/">Shiplap Calculator</a></li>
+<li><a href="/septic-drain-field-size-calculator/">Septic Drain Field Size Calculator</a></li>
+</ul>
+</main>
+<div class="ad-slot" id="ad-bottom"></div>
+<footer>
+<p><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</footer>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var C1='#0077b6',C2='#e0e0e0',C3='#1a1a2e',mode='beam',lastText='';
+var NOTE='Preliminary estimate only. It is not engineering, permit or inspection approval. Loads follow ASCE 7 (LRFD 1.2D + 1.6L) and IRC Table R301.5 live loads. All results are rounded up, and local codes vary. Have a licensed engineer or your building department confirm member sizes.';
+var POS={interior:'Interior (4 bays)',edge:'Edge (2 bays)',corner:'Corner (1 bay)'};
+function r(n){return Math.round(n*10)/10}
+function fm(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:d})}
+function fx(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function up(n,d){var m=Math.pow(10,d);return Math.ceil(n*m-1e-7)/m}
+function fi(ft){var i=Math.round(ft*12);return Math.floor(i/12)+' ft '+(i%12)+' in'}
+function T(x,y,s,o){o=o||{};return '<text x="'+r(x)+'" y="'+r(y)+'" text-anchor="'+(o.a||'middle')+'"'+(o.rot?' transform="rotate(-90 '+r(x)+' '+r(y)+')"':'')+(o.b?' font-weight="700"':'')+'>'+s+'</text>'}
+function LN(x1,y1,x2,y2,c,w,d,ar){return '<line x1="'+r(x1)+'" y1="'+r(y1)+'" x2="'+r(x2)+'" y2="'+r(y2)+'" stroke="'+c+'" stroke-width="'+w+'"'+(d?' stroke-dasharray="'+d+'"':'')+(ar?' marker-start="url(#ar)" marker-end="url(#ar)"':'')+'/>'}
+function RC(x,y,w,h,f,s,sw,d){return '<rect x="'+r(x)+'" y="'+r(y)+'" width="'+r(w)+'" height="'+r(h)+'" fill="'+f+'"'+(s?' stroke="'+s+'" stroke-width="'+sw+'"':'')+(d?' stroke-dasharray="'+d+'"':'')+'/>'}
+
+function drawBeam(A,B,S,aT){
+var ext=A+B,s=Math.min(300/S,148/ext),w=S*s,h=ext*s,ox=50+(300-w)/2,oy=48+(148-h)/2;
+var Y=function(y){return oy+(y+A)*s},tw=ext/2;
+var o=T(50,20,'Shaded = tributary area',{a:'start'});
+o+=RC(ox,Y(-A/2),w,tw*s,'rgba(0,119,182,.18)',C1,1.5,'5 3');
+if(A>0)o+=LN(ox,Y(-A),ox+w,Y(-A),C2,3,'7 5');
+if(B>0)o+=LN(ox,Y(B),ox+w,Y(B),C2,3,'7 5');
+o+=LN(ox,Y(0),ox+w,Y(0),C1,4)+RC(ox-5,Y(0)-5,10,10,C3)+RC(ox+w-5,Y(0)-5,10,10,C3);
+if(w>=90){if(B>0&&B/2*s>=24)o+=T(ox+w/2,Y(B/4)+5,fm(up(aT,1),1)+' sq ft',{b:1});else if(A>0&&A/2*s>=24)o+=T(ox+w/2,Y(-A/4)+5,fm(up(aT,1),1)+' sq ft',{b:1})}
+var yb=Y(B)+14;o+=LN(ox,yb,ox+w,yb,C3,1,0,1)+T(ox+w/2,yb+18,'Span = '+fm(S,2)+' ft');
+var lx=ox-14;o+=LN(lx,Y(-A/2),lx,Y(B/2),C3,1,0,1)+T(lx-4,(Y(-A/2)+Y(B/2))/2,'w = '+fm(tw,2)+' ft',{rot:1});
+return o}
+
+function drawCol(pos,X,Y,aT,f,foot){
+var x0=pos==='corner'?0:-X,y0=pos==='interior'?-Y:0,w=X-x0,h=Y-y0,s=Math.min(300/w,148/h),ox=50+(300-w*s)/2,oy=48+(148-h*s)/2;
+var PX=function(x){return ox+(x-x0)*s},PY=function(y){return oy+(y-y0)*s};
+var xs=pos==='corner'?[0,X]:[-X,0,X],ys=pos==='interior'?[-Y,0,Y]:[0,Y];
+var o=T(50,20,'Shaded = tributary area',{a:'start'});
+if(foot)o+=T(50,38,'Square = footing',{a:'start'});
+xs.forEach(function(x){o+=LN(PX(x),PY(y0),PX(x),PY(Y),C2,3)});
+ys.forEach(function(y){o+=LN(PX(x0),PY(y),PX(X),PY(y),C2,3)});
+var sx0=pos==='corner'?0:-X/2,sy0=pos==='interior'?-Y/2:0,sw=(X/2-sx0)*s,sh=(Y/2-sy0)*s;
+o+=RC(PX(sx0),PY(sy0),sw,sh,'rgba(0,119,182,.18)',C1,1.5,'5 3');
+xs.forEach(function(x){ys.forEach(function(y){o+=RC(PX(x)-4,PY(y)-4,8,8,C3)})});
+if(foot){var fs=Math.max(f*s,16);o+=RC(PX(0)-fs/2,PY(0)-fs/2,fs,fs,'rgba(26,26,46,.25)',C3,1.5)}
+o+=RC(PX(0)-7,PY(0)-7,14,14,C1,C3,1.5);
+if(sw>=90&&(pos==='interior'?sh/2:sh)>=26){var cy=pos==='interior'?Y/4:(sy0+Y/2)/2;o+=T(PX((sx0+X/2)/2),PY(cy)+5,fm(up(aT,1),1)+' sq ft',{b:1})}
+var yb=PY(Y)+14;o+=LN(PX(0),yb,PX(X),yb,C3,1,0,1)+T(PX(X/2),yb+18,'X = '+fm(X,2)+' ft');
+var xr=PX(X)+14;o+=LN(xr,PY(0),xr,PY(Y),C3,1,0,1)+T(xr+18,PY(Y/2),'Y = '+fm(Y,2)+' ft',{rot:1});
+return o}
+
+function setE(id,m){var e=$(id);e.classList.toggle('bad',!!m);e.setAttribute('aria-invalid',m?'true':'false');$('e-'+id).textContent=m||''}
+function chk(id,min,max,m){var s=$(id).value.trim(),v=Number(s),ok=s!==''&&isFinite(v)&&v>=min&&v<=max;setE(id,ok?'':m);return ok?v:null}
+function key(n,l){return '<div class="key"><div class="num">'+n+'</div><div class="lbl">'+l+'</div></div>'}
+function st(l,v){return '<div class="st"><span>'+l+'</span><b>'+v+'</b></div>'}
+var CP='<div class="cprow"><button type="button" class="copy" id="cp">Copy results</button><span class="cpm" id="cpm"></span></div>';
+function thead(a){return '<div class="tw"><table><thead><tr>'+a.map(function(x,i){return '<th'+(i?' class="n"':'')+'>'+x+'</th>'}).join('')+'</tr></thead><tbody>'}
+
+function doBeam(){
+var A=chk('sa',0,200,'Enter 0 to 200 ft (0 = no framing on this side).'),B=chk('sb',0,200,'Enter 0 to 200 ft (0 = no framing on this side).'),S=chk('ls',1,500,'Enter a span from 1 to 500 ft.'),D=chk('dl',0,5000,'Enter 0 to 5,000 psf.'),Lv=chk('ll',0,5000,'Enter 0 to 5,000 psf.');
+if([A,B,S,D,Lv].indexOf(null)>-1)return null;
+var bad=false;
+if(A+B<=0){setE('sb','Side A and side B cannot both be 0.');bad=true}
+if(D+Lv<=0){setE('ll','Dead plus live load must be greater than 0.');bad=true}
+if(bad)return null;
+var tw=(A+B)/2,at=tw*S,wd=tw*D,wl=tw*Lv,ws=wd+wl,fp=1.2*D+1.6*Lv,wu=tw*fp,M=ws*S*S/8;
+var rows=[['Dead load (D)',D,wd],['Live load (L)',Lv,wl],['Total service (D + L)',D+Lv,ws],['Factored (1.2D + 1.6L)',fp,wu]];
+var tr=rows.map(function(x,i){return '<tr'+(i>1?' class="hl"':'')+'><td>'+x[0]+'</td><td class="n">'+fm(up(x[1],2),2)+'</td><td class="n">'+fm(up(x[2],0),0)+'</td><td class="n">'+fm(up(x[2]*S/2,0),0)+'</td></tr>'}).join('');
+var html=key(fx(up(at,1),1)+' sq ft','Tributary area of the beam')+
+'<div class="stats">'+st('Tributary width',fx(up(tw,2),2)+' ft')+st('Service line load',fm(up(ws,0),0)+' plf')+st('Service end reaction',fm(up(ws*S/2,0),0)+' lb')+'</div>'+
+thead(['Load case','Pressure (psf)','Line load (plf)','End reaction (lb)'])+tr+'</tbody></table></div>'+
+'<p class="note">Simple-span maximum moment (service) = w·span²/8 = '+fm(up(M,0),0)+' lb-ft. '+NOTE+'</p>'+CP;
+var txt=['Tributary Area Calculator - Beam','Side A / Side B: '+fm(A,2)+' ft / '+fm(B,2)+' ft','Span: '+fm(S,2)+' ft','Dead / Live: '+fm(D,2)+' / '+fm(Lv,2)+' psf','Tributary width: '+fx(up(tw,2),2)+' ft','Tributary area: '+fx(up(at,1),1)+' sq ft','Service line load: '+fm(up(ws,0),0)+' plf','Service end reaction: '+fm(up(ws*S/2,0),0)+' lb','Factored end reaction (1.2D+1.6L): '+fm(up(wu*S/2,0),0)+' lb','Max service moment: '+fm(up(M,0),0)+' lb-ft','Preliminary only; not engineering or permit approval. Local codes vary.'].join('\n');
+return{html:html,text:txt,svg:drawBeam(A,B,S,at),cap:'Beam: tributary width '+fx(up(tw,2),2)+' ft × span '+fm(S,2)+' ft = '+fx(up(at,1),1)+' sq ft.'}}
+
+function doCol(foot){
+var X=chk('bx',1,500,'Enter a bay size from 1 to 500 ft.'),Y=chk('by',1,500,'Enter a bay size from 1 to 500 ft.'),D=chk('dl',0,5000,'Enter 0 to 5,000 psf.'),Lv=chk('ll',0,5000,'Enter 0 to 5,000 psf.'),q=1;
+if(foot)q=chk('soil',250,50000,'Enter 250 to 50,000 psf. Use your soils report value if you have one.');else setE('soil','');
+if([X,Y,D,Lv,q].indexOf(null)>-1)return null;
+if(D+Lv<=0){setE('ll','Dead plus live load must be greater than 0.');return null}
+var n=parseInt($('lv').value,10)||1,pos=$('pos').value,k=pos==='interior'?1:pos==='edge'?0.5:0.25;
+var at=X*Y*k,fp=1.2*D+1.6*Lv,Ts=at*(D+Lv)*n,Tu=at*fp*n;
+var rows=[['Dead load (D)',D,at*D],['Live load (L)',Lv,at*Lv],['Total service (D + L)',D+Lv,at*(D+Lv)],['Factored (1.2D + 1.6L)',fp,at*fp]];
+var tr=rows.map(function(x,i){return '<tr'+(i>1?' class="hl"':'')+'><td>'+x[0]+'</td><td class="n">'+fm(up(x[1],2),2)+'</td><td class="n">'+fm(up(x[2],0),0)+'</td><td class="n">'+fm(up(x[2]*n,0),0)+'</td></tr>'}).join('');
+var base=['Position: '+POS[pos],'Bays: '+fm(X,2)+' ft × '+fm(Y,2)+' ft','Levels: '+n,'Dead / Live: '+fm(D,2)+' / '+fm(Lv,2)+' psf','Tributary area: '+fx(up(at,1),1)+' sq ft','Service load: '+fm(up(Ts,0),0)+' lb','Factored load (1.2D+1.6L): '+fm(up(Tu,0),0)+' lb'];
+var html,txt,svg,cap;
+if(!foot){
+html=key(fx(up(at,1),1)+' sq ft','Tributary area of the column')+
+'<div class="stats">'+st('Position',POS[pos])+st('Levels carried',n)+st('Total service load',fm(up(Ts,0),0)+' lb')+'</div>'+
+thead(['Load case','Pressure (psf)','Per level (lb)','All levels (lb)'])+tr+'</tbody></table></div>'+
+'<p class="note">Total service load = '+fx(up(Ts/1000,2),2)+' kips; factored = '+fx(up(Tu/1000,2),2)+' kips. No live load reduction applied. '+NOTE+'</p>'+CP;
+txt=['Tributary Area Calculator - Column'].concat(base,['Preliminary only; not engineering or permit approval. Local codes vary.']).join('\n');
+svg=drawCol(pos,X,Y,at,0,false);cap=POS[pos]+' column: tributary area '+fx(up(at,1),1)+' sq ft.';
+}else{
+var P=Ts*1.10,areq=P/q,side=Math.sqrt(areq),sr=Math.max(1,Math.ceil(side*4-1e-9)/4),prov=sr*sr,pr=P/prov;
+var ft=[['Tributary area (sq ft)',fx(up(at,1),1)],['Service column load, all levels (lb)',fm(up(Ts,0),0)],['Design load incl. 10% footing weight (lb)',fm(up(P,0),0)],['Allowable soil bearing (psf)',fm(q,2)],['Required footing area (sq ft)',fx(up(areq,2),2)],['Calculated side (ft)',fx(up(side,2),2)],['Recommended side, rounded up to 3 in (ft)',fx(sr,2)],['Provided footing area (sq ft)',fx(up(prov,2),2)],['Resulting bearing pressure (psf)',fm(up(pr,0),0)]];
+html=key(fi(sr),'Recommended square footing ('+fm(sr*12,0)+' in × '+fm(sr*12,0)+' in)')+
+'<div class="stats">'+st('Tributary area',fx(up(at,1),1)+' sq ft')+st('Service column load',fm(up(Ts,0),0)+' lb')+st('Bearing pressure',fm(up(pr,0),0)+' psf')+'</div>'+
+thead(['Item','Value'])+ft.map(function(x){return '<tr><td>'+x[0]+'</td><td class="n">'+x[1]+'</td></tr>'}).join('')+'</tbody></table></div>'+
+'<p class="note">Size covers soil bearing only. Footing thickness, reinforcement, punching shear, frost depth and uplift need separate checks. Verify soil capacity with a geotechnical report. '+NOTE+'</p>'+CP;
+txt=['Tributary Area Calculator - Footing'].concat(base,['Soil bearing: '+fm(q,2)+' psf','Design load (+10%): '+fm(up(P,0),0)+' lb','Recommended square footing: '+fi(sr)+' ('+fm(sr*12,0)+' in)','Bearing pressure: '+fm(up(pr,0),0)+' psf','Preliminary only; not engineering or permit approval. Local codes vary.']).join('\n');
+svg=drawCol(pos,X,Y,at,sr,true);cap='Footing under a '+POS[pos].toLowerCase()+' column: '+fi(sr)+' square, drawn to scale.';}
+return{html:html,text:txt,svg:svg,cap:cap}}
+
+function calculate(){
+var res=$('results'),out=mode==='beam'?doBeam():doCol(mode==='foot');
+res.classList.remove('show');
+if(!out){res.innerHTML='';return}
+res.innerHTML=out.html;lastText=out.text;
+$('dg-'+mode).innerHTML=out.svg;$('cap').textContent=out.cap;
+requestAnimationFrame(function(){res.classList.add('show')})}
+
+function copy(t){if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t);
+return new Promise(function(ok,no){var a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();try{document.execCommand('copy')?ok():no()}catch(e){no()}document.body.removeChild(a)})}
+
+var tabs=[].slice.call(document.querySelectorAll('.tab'));
+tabs.forEach(function(b,i){
+b.addEventListener('click',function(){
+mode=b.dataset.m;$('tool').className='card t-'+mode;
+tabs.forEach(function(t){var on=t===b;t.classList.toggle('on',on);t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1});
+var res=$('results');res.classList.remove('show');res.innerHTML=''});
+b.addEventListener('keydown',function(e){var k=e.key;if(k==='ArrowRight'||k==='ArrowLeft'){var n=tabs[(i+(k==='ArrowRight'?1:tabs.length-1))%tabs.length];n.focus();n.click();e.preventDefault()}})});
+
+$('go').addEventListener('click',function(){requestAnimationFrame(calculate)});
+$('tool').addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.tagName==='INPUT'){e.preventDefault();requestAnimationFrame(calculate)}});
+$('results').addEventListener('click',function(e){if(e.target.id==='cp'){copy(lastText).then(function(){var m=$('cpm');m.textContent='Copied!';setTimeout(function(){var x=$('cpm');if(x)x.textContent=''},2000)},function(){$('cpm').textContent='Press Ctrl+C to copy'})}});
+$('llp').addEventListener('change',function(){if(this.value!=='c'){$('ll').value=this.value;setE('ll','')}});
+$('ll').addEventListener('input',function(){$('llp').value='c'});
+$('sp').addEventListener('change',function(){if(this.value!=='c'){$('soil').value=this.value;setE('soil','')}});
+$('soil').addEventListener('input',function(){$('sp').value='c'});
+$('lv').addEventListener('input',function(){$('lvv').textContent=this.value});
+
+$('dg-beam').innerHTML=drawBeam(12,12,16,192);
+$('dg-col').innerHTML=drawCol('interior',20,24,480,0,false);
+$('dg-foot').innerHTML=drawCol('interior',20,24,480,5.5,true);
+$('yr').textContent=new Date().getFullYear();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
