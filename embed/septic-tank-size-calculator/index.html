@@ -9,72 +9,81 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
-a{color:#0077b6;text-decoration:none}
-a:hover{text-decoration:underline}
-nav{border-bottom:1px solid #e0e0e0;padding:14px 1.5rem;background:#fff}
-nav a{font-weight:700;font-size:1.05rem;color:#1a1a2e}
+a{color:#0077b6;text-decoration:underline}
+nav.top{border-bottom:1px solid #e0e0e0;padding:14px 1.5rem;background:#fff}
+nav.top a{font-weight:700;font-size:1.1rem;color:#1a1a2e;text-decoration:none}
 .container{max-width:640px;margin:0 auto;padding:1.5rem}
-h1{font-size:1.6rem;font-weight:700;margin-bottom:.4rem;line-height:1.3}
-.subtitle{color:#555;font-size:.95rem;margin-bottom:1.5rem}
+h1{font-size:1.7rem;font-weight:700;margin-bottom:.5rem;line-height:1.3}
+.subtitle{color:#444;font-size:1rem;margin-bottom:2rem}
 .card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
 label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:5px}
-input,select{width:100%;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font-size:1rem;font-family:inherit;outline:none;transition:border-color .2s,box-shadow .2s;background:#fff;min-height:44px}
-input:focus,select:focus{border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,.15)}
-input.error,select.error{border-color:#e74c3c}
-.error-msg{color:#e74c3c;font-size:.8rem;margin-top:4px;display:none}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+input[type=number],select{width:100%;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e;min-height:44px}
+input[type=number]:focus,select:focus,input[type=range]:focus,input[type=checkbox]:focus{outline:2px solid #0077b6;outline-offset:2px}
+input.error{border-color:#e74c3c}
+.error-msg{color:#c0392b;font-size:.82rem;margin-top:4px;display:none}
 .error-msg.show{display:block}
-.form-group{margin-bottom:1.2rem}
+.form-group{margin-bottom:1.25rem}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-button.btn{background:#0077b6;color:#fff;border:none;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;transition:background .2s}
+.hint{font-size:.8rem;color:#666;margin-top:4px}
+.slider-row{display:flex;align-items:center;gap:12px;min-height:44px}
+.slider-row input[type=range]{flex:1;min-width:0;accent-color:#0077b6;height:28px}
+.slider-val{font-weight:700;color:#0077b6;min-width:70px;text-align:right;font-size:.95rem}
+.ticks{display:flex;justify-content:space-between;font-size:.75rem;color:#666;padding-right:82px}
+.check-row{display:flex;align-items:center;gap:12px;min-height:44px}
+.check-row input{width:22px;height:22px;accent-color:#0077b6;flex:none}
+.check-row label{margin:0;font-size:.95rem;color:#1a1a2e}
+button.btn{background:#0077b6;color:#fff;border:none;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;font-family:inherit}
 button.btn:hover{background:#006299}
-button.btn-sm{background:#0077b6;color:#fff;border:none;border-radius:4px;padding:6px 14px;font-size:.8rem;font-weight:600;cursor:pointer;min-height:32px;transition:background .2s}
-button.btn-sm:hover{background:#006299}
-.results{opacity:0;transition:opacity .3s ease;pointer-events:none}
-.results.visible{opacity:1;pointer-events:auto}
+button.btn:focus-visible,button.copy:focus-visible{outline:2px solid #1a1a2e;outline-offset:2px}
+button.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.85rem;font-weight:600;cursor:pointer;min-height:44px;font-family:inherit}
+button.copy:hover{background:#f0f8ff}
+.fade{animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .result-primary{text-align:center;margin-bottom:1.5rem;padding:1.2rem;background:#f0f8ff;border-radius:8px;border:1px solid #b3d9f0}
-.result-num{font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1}
-.result-unit{font-size:1rem;color:#555;margin-top:.3rem}
 .result-label{font-size:.9rem;color:#444;margin-bottom:.3rem}
+.result-num{font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1.1}
+.result-unit{font-size:1rem;color:#444;margin-top:.2rem}
+.driver{font-size:.85rem;color:#444;margin-top:.5rem}
+.warn{background:#fff8e1;border-left:4px solid #e0a800;padding:.8rem 1rem;border-radius:0 6px 6px 0;font-size:.9rem;color:#4a3b00;margin-bottom:1.25rem}
+.res-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:.7rem}
+.section-title{font-size:1rem;font-weight:700;margin:0}
+.table-wrap{overflow-x:auto;margin-bottom:1.5rem}
 table{width:100%;border-collapse:collapse;font-size:.9rem}
-th{background:#f0f0f0;text-align:left;padding:9px 12px;font-weight:600;font-size:.82rem;color:#333}
-th.num,td.num{text-align:right}
-td{padding:8px 12px;border-bottom:1px solid #f0f0f0}
-tr:nth-child(even) td{background:#fafafa}
-tr:last-child td{border-bottom:none}
-.table-wrap{overflow-x:auto}
-.section-title{font-size:1rem;font-weight:700;color:#1a1a2e;margin-bottom:.8rem}
-.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.78rem;font-weight:700}
-.badge-green{background:#d4edda;color:#155724}
-.badge-yellow{background:#fff3cd;color:#856404}
-.badge-red{background:#f8d7da;color:#721c24}
-.copy-row{display:flex;justify-content:flex-end;margin-top:.8rem}
-.diagram-wrap{margin-bottom:1.5rem;text-align:center}
-svg.diagram{width:100%;max-width:560px;height:auto}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;font-weight:600;font-size:.82rem;color:#333;border-bottom:1px solid #ddd}
+th.num,td.num{text-align:right;white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd) td{background:#fafafa}
+tbody tr:nth-child(even) td{background:#fff}
+.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.78rem;font-weight:700;white-space:nowrap}
+.b-green{background:#d4edda;color:#155724}
+.b-blue{background:#cfe8f7;color:#064a70}
+.b-red{background:#f8d7da;color:#721c24}
+.rec-box{background:#f8f9fa;border-left:4px solid #0077b6;border-radius:0 6px 6px 0;padding:.9rem 1.1rem;margin-bottom:1.5rem;font-size:.92rem}
+.diagram-wrap{margin-bottom:2rem;background:#f8f9fa;border-radius:8px;padding:1rem}
+svg.diagram{width:100%;height:auto;display:block}
+.safety{border-left:4px solid #e0a800;background:#fff8e1;font-size:.88rem;line-height:1.5;color:#4a3b00;padding:.8rem 1rem;margin-bottom:2rem;border-radius:0 6px 6px 0}
 .ad-slot{min-height:0;margin:0}
-.content-section h2{font-size:1.15rem;font-weight:700;margin:1.8rem 0 .6rem;color:#1a1a2e}
-.content-section p{margin-bottom:.9rem;color:#333;font-size:.95rem}
-.content-section ul{margin:.5rem 0 .9rem 1.2rem;color:#333;font-size:.95rem}
-.content-section ul li{margin-bottom:.4rem}
-details{margin-bottom:.7rem;border:1px solid #e0e0e0;border-radius:6px;padding:.7rem 1rem}
-summary{font-weight:600;cursor:pointer;font-size:.95rem;color:#1a1a2e}
-details p{margin-top:.6rem;font-size:.9rem;color:#444}
-.related-tools{background:#f8f9fa;border-radius:8px;padding:1.5rem;margin-bottom:2rem}
-.related-tools h2{font-size:1.05rem;font-weight:700;margin-bottom:1rem}
+.content h2{font-size:1.25rem;font-weight:700;margin:2.2rem 0 .7rem}
+.content p{margin-bottom:.9rem;color:#2a2a3e}
+.content ul,.content ol{margin:.5rem 0 1rem 1.3rem;color:#2a2a3e}
+.content li{margin-bottom:.5rem}
+.formula{font-family:ui-monospace,Menlo,Consolas,monospace;background:#f8f9fa;border:1px solid #e0e0e0;padding:.9rem 1rem;border-radius:6px;font-size:.85rem;line-height:1.7;margin-bottom:1rem;overflow-x:auto}
+details{margin-bottom:.7rem;border:1px solid #e0e0e0;border-radius:6px;padding:.4rem 1rem}
+summary{font-weight:600;cursor:pointer;min-height:44px;display:flex;align-items:center}
+summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+details p{margin:.2rem 0 .8rem;font-size:.93rem}
+.related{background:#f8f9fa;border-radius:8px;padding:1.5rem;margin:2rem 0}
+.related h2{font-size:1.1rem;margin:0 0 1rem}
 .related-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
-.related-grid a{background:#fff;border:1px solid #ddd;border-radius:6px;padding:.6rem .9rem;font-size:.85rem;color:#0077b6;font-weight:500;transition:border-color .2s}
-.related-grid a:hover{border-color:#0077b6;text-decoration:none}
-footer{border-top:1px solid #e0e0e0;padding:1.2rem 1.5rem;text-align:center;font-size:.82rem;color:#666}
-footer a{color:#555;margin:0 .5rem}
-.slider-row{display:flex;align-items:center;gap:12px}
-.slider-row input[type=range]{flex:1;min-height:auto;padding:0;border:none;box-shadow:none;accent-color:#0077b6}
-.slider-val{font-weight:700;color:#0077b6;min-width:36px;text-align:right;font-size:.95rem}
-.rec-box{background:#f8f9fa;border-left:4px solid #0077b6;border-radius:0 6px 6px 0;padding:.9rem 1.1rem;margin-top:1rem;font-size:.92rem}
+.related-grid a{display:flex;align-items:center;min-height:44px;background:#fff;border:1px solid #ddd;border-radius:6px;padding:.5rem .9rem;font-size:.88rem;font-weight:500}
+footer{border-top:1px solid #e0e0e0;padding:1.5rem 0 .5rem;text-align:center;font-size:.85rem;color:#666}
+footer a{color:#555;margin:0 .6rem;display:inline-block;min-height:32px}
 @media(max-width:640px){
-  .form-row{grid-template-columns:1fr}
-  .related-grid{grid-template-columns:1fr}
-  h1{font-size:1.3rem}
-  .result-num{font-size:2.2rem}
-  .card{padding:1.2rem}
+  .form-row,.related-grid{grid-template-columns:1fr}
+  h1{font-size:1.4rem}
+  .result-num{font-size:2.3rem}
+  .card{padding:1.25rem}
 }
 </style>
 <meta property="og:type" content="website">
@@ -91,219 +100,161 @@ footer a{color:#555;margin:0 .5rem}
 <base target="_blank">
 </head>
 <body>
-
+<nav class="top" aria-label="Site"><a href="/">Toolwick</a></nav>
 <div class="container">
   <h1>Septic Tank Size Calculator</h1>
-  <p class="subtitle">Find the right septic tank capacity for your home in seconds.</p>
+  <p class="subtitle">Use this septic tank size calculator to estimate the tank capacity, in gallons, that your home needs, based on bedrooms, occupants and daily water use.</p>
 
-  <!-- SVG DIAGRAM -->
   <div class="diagram-wrap">
-    <svg class="diagram" viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Septic tank cross-section diagram">
-      <!-- Ground line -->
-      <line x1="20" y1="40" x2="540" y2="40" stroke="#c8c8c8" stroke-width="1.5" stroke-dasharray="6,4"/>
-      <text x="22" y="33" font-size="11" fill="#888" font-family="sans-serif">Ground Level</text>
-      <!-- Tank body -->
-      <rect id="svg-tank" x="80" y="55" width="290" height="130" rx="12" ry="12" fill="#e8f4fd" stroke="#0077b6" stroke-width="2.5"/>
-      <!-- Inlet pipe -->
-      <rect x="30" y="95" width="55" height="16" rx="4" fill="#cce3f0" stroke="#0077b6" stroke-width="1.8"/>
-      <text x="55" y="88" font-size="10" fill="#0077b6" text-anchor="middle" font-family="sans-serif" font-weight="600">INLET</text>
-      <!-- Outlet pipe -->
-      <rect x="365" y="115" width="55" height="16" rx="4" fill="#cce3f0" stroke="#0077b6" stroke-width="1.8"/>
-      <text x="392" y="108" font-size="10" fill="#0077b6" text-anchor="middle" font-family="sans-serif" font-weight="600">OUTLET</text>
-      <!-- Scum layer -->
-      <rect x="82" y="57" width="286" height="28" rx="8" ry="4" fill="#f5c842" opacity=".35"/>
-      <text x="225" y="76" font-size="10" fill="#7a6000" text-anchor="middle" font-family="sans-serif">Scum Layer</text>
-      <!-- Effluent (liquid) zone -->
-      <rect x="82" y="86" width="286" height="68" fill="#aad4ea" opacity=".45"/>
-      <text x="225" y="126" font-size="11" fill="#005f8a" text-anchor="middle" font-family="sans-serif" font-weight="600">Liquid Effluent Zone</text>
-      <!-- Sludge layer -->
-      <rect x="82" y="154" width="286" height="28" rx="4" ry="8" fill="#8b6914" opacity=".28"/>
-      <text x="225" y="171" font-size="10" fill="#5a3e00" text-anchor="middle" font-family="sans-serif">Sludge Layer</text>
-      <!-- Tank lid -->
-      <ellipse cx="165" cy="55" rx="22" ry="8" fill="#b8d8ee" stroke="#0077b6" stroke-width="1.5"/>
-      <text x="165" y="51" font-size="9" fill="#0077b6" text-anchor="middle" font-family="sans-serif">Lid</text>
-      <!-- Width arrow -->
-      <line x1="80" y1="200" x2="370" y2="200" stroke="#1a1a2e" stroke-width="1.3" marker-end="url(#arr)" marker-start="url(#arrl)"/>
-      <text id="svg-width" x="225" y="214" font-size="11" fill="#1a1a2e" text-anchor="middle" font-family="sans-serif" font-weight="600">Tank Capacity</text>
-      <!-- Depth arrow -->
-      <line x1="460" y1="55" x2="460" y2="185" stroke="#1a1a2e" stroke-width="1.3" marker-end="url(#arr)" marker-start="url(#arrl)"/>
-      <text x="490" y="125" font-size="10" fill="#1a1a2e" text-anchor="middle" font-family="sans-serif" font-weight="600" transform="rotate(90,490,125)">Depth</text>
-      <!-- Leach field arrow -->
-      <line x1="420" y1="123" x2="500" y2="123" stroke="#0077b6" stroke-width="1.3" stroke-dasharray="4,3"/>
-      <rect x="500" y="108" width="38" height="28" rx="4" fill="#d4f0d4" stroke="#27ae60" stroke-width="1.5"/>
-      <text x="519" y="126" font-size="9" fill="#155724" text-anchor="middle" font-family="sans-serif" font-weight="600">Drain</text>
-      <text x="519" y="133" font-size="9" fill="#155724" text-anchor="middle" font-family="sans-serif">Field</text>
-      <!-- Defs -->
+    <svg class="diagram" viewBox="0 0 560 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgT">
+      <title id="svgT">Septic tank cross-section showing daily inflow, tank capacity and the outlet to the drain field</title>
       <defs>
-        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1a1a2e"/></marker>
-        <marker id="arrl" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse"><path d="M0,0 L0,6 L8,3 z" fill="#1a1a2e"/></marker>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto-start-reverse"><path d="M0,0 L0,6 L8,3 z" fill="#1a1a2e"/></marker>
       </defs>
+      <line x1="10" y1="40" x2="550" y2="40" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="6,4"/>
+      <text x="12" y="30" font-size="13" fill="#1a1a2e" font-family="sans-serif">Ground level</text>
+      <rect x="110" y="60" width="320" height="120" rx="10" fill="#f0f8ff" stroke="#0077b6" stroke-width="3"/>
+      <rect x="112" y="62" width="316" height="20" fill="#f5c842" opacity=".4"/>
+      <rect x="112" y="152" width="316" height="26" fill="#8b6914" opacity=".25"/>
+      <line x1="150" y1="60" x2="150" y2="125" stroke="#0077b6" stroke-width="2"/>
+      <line x1="390" y1="60" x2="390" y2="125" stroke="#0077b6" stroke-width="2"/>
+      <text x="270" y="77" font-size="12" fill="#1a1a2e" text-anchor="middle" font-family="sans-serif">Scum</text>
+      <text x="270" y="122" font-size="13" fill="#1a1a2e" text-anchor="middle" font-family="sans-serif" font-weight="600">Liquid zone</text>
+      <text x="270" y="170" font-size="12" fill="#1a1a2e" text-anchor="middle" font-family="sans-serif">Sludge</text>
+      <line x1="20" y1="95" x2="110" y2="95" stroke="#0077b6" stroke-width="6"/>
+      <line x1="430" y1="100" x2="540" y2="100" stroke="#0077b6" stroke-width="6"/>
+      <text x="65" y="62" font-size="13" fill="#1a1a2e" text-anchor="middle" font-family="sans-serif" font-weight="600">Inflow</text>
+      <text id="svg-flow" x="65" y="80" font-size="13" fill="#1a1a2e" text-anchor="middle" font-family="sans-serif">gal/day</text>
+      <text x="485" y="75" font-size="13" fill="#1a1a2e" text-anchor="middle" font-family="sans-serif" font-weight="600">To drain field</text>
+      <text x="485" y="130" font-size="12" fill="#1a1a2e" text-anchor="middle" font-family="sans-serif">(sized separately)</text>
+      <line x1="110" y1="198" x2="430" y2="198" stroke="#0077b6" stroke-width="1.6" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <text id="svg-cap" x="270" y="219" font-size="15" fill="#1a1a2e" text-anchor="middle" font-family="sans-serif" font-weight="700">Recommended: calculate to see</text>
+      <text id="svg-min" x="270" y="241" font-size="12" fill="#1a1a2e" text-anchor="middle" font-family="sans-serif">Liquid capacity = bedroom table or flow check, whichever is larger</text>
     </svg>
   </div>
 
-  <div class="card">
+  <div class="card" id="tool">
     <div class="form-row">
       <div class="form-group">
-        <label for="bedrooms">Number of Bedrooms</label>
+        <label for="bedrooms">Number of bedrooms</label>
         <select id="bedrooms">
-          <option value="1">1 Bedroom</option>
-          <option value="2">2 Bedrooms</option>
-          <option value="3" selected>3 Bedrooms</option>
-          <option value="4">4 Bedrooms</option>
-          <option value="5">5 Bedrooms</option>
-          <option value="6">6 Bedrooms</option>
-          <option value="7">7+ Bedrooms</option>
+          <option value="1">1 bedroom</option><option value="2">2 bedrooms</option><option value="3" selected>3 bedrooms</option><option value="4">4 bedrooms</option><option value="5">5 bedrooms</option><option value="6">6 bedrooms</option><option value="7">7 bedrooms</option><option value="8">8 bedrooms</option><option value="9">9 bedrooms</option><option value="10">10 bedrooms</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="occupants">Number of Occupants</label>
-        <input type="number" id="occupants" value="4" min="1" max="50" placeholder="e.g. 4">
-        <span class="error-msg" id="err-occupants">Enter a valid number (1–50).</span>
+        <label for="occupants">Number of occupants</label>
+        <input type="number" id="occupants" value="4" min="1" max="30" step="1" inputmode="numeric" aria-describedby="err-occupants">
+        <div class="error-msg" id="err-occupants" role="alert">Enter a whole number of people from 1 to 30.</div>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="dailywater">Daily Water Usage per Person (gallons)</label>
+      <label for="waterSlider">Daily water use per person (gallons)</label>
       <div class="slider-row">
         <input type="range" id="waterSlider" min="30" max="150" value="70" step="5">
-        <span class="slider-val" id="sliderDisplay">70</span>
+        <span class="slider-val" id="sliderDisplay" aria-hidden="true">70 gal</span>
       </div>
-      <input type="number" id="dailywater" value="70" min="10" max="300" placeholder="e.g. 70" style="margin-top:8px">
-      <span class="error-msg" id="err-water">Enter a value between 10 and 300.</span>
-      <div style="font-size:.78rem;color:#666;margin-top:4px">Average U.S. household: 50–100 gal/person/day</div>
+      <div class="ticks" aria-hidden="true"><span>30</span><span>90</span><span>150</span></div>
+      <label for="dailywater" class="sr-only">Daily water use per person, exact value in gallons</label>
+      <input type="number" id="dailywater" value="70" min="10" max="300" step="1" inputmode="numeric" style="margin-top:8px" aria-describedby="err-water hint-water">
+      <div class="error-msg" id="err-water" role="alert">Enter a value from 10 to 300 gallons per person per day.</div>
+      <div class="hint" id="hint-water">Typical U.S. use is roughly 50–100 gallons per person per day.</div>
     </div>
 
     <div class="form-row">
       <div class="form-group">
-        <label for="soiltype">Soil Absorption Type</label>
-        <select id="soiltype">
-          <option value="fast">Fast (sandy/gravel)</option>
-          <option value="normal" selected>Normal (loam)</option>
-          <option value="slow">Slow (clay/silt)</option>
+        <label for="localmin">Local minimum tank size</label>
+        <select id="localmin">
+          <option value="1000" selected>1,000 gal (common minimum)</option>
+          <option value="1250">1,250 gal</option>
+          <option value="1500">1,500 gal</option>
         </select>
+        <div class="hint">Ask your health department.</div>
       </div>
       <div class="form-group">
-        <label for="usage">Usage Pattern</label>
-        <select id="usage">
-          <option value="standard" selected>Standard (residential)</option>
-          <option value="high">High (home business/guests)</option>
-          <option value="low">Low (vacation home)</option>
+        <label for="mult">Liquid capacity vs. daily flow</label>
+        <select id="mult">
+          <option value="1.5">1.5× daily flow (lenient)</option>
+          <option value="2" selected>2× daily flow (typical)</option>
+          <option value="3">3× daily flow (conservative)</option>
         </select>
       </div>
     </div>
 
-    <button class="btn" id="calcBtn">Calculate Tank Size</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+    <div class="form-group check-row">
+      <input type="checkbox" id="disposal">
+      <label for="disposal">Home has a garbage disposal (adds 250 gal)</label>
+    </div>
+
+    <button class="btn" id="calcBtn" type="button">Calculate Tank Size</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
   </div>
 
-  <!-- RESULTS -->
-  <div class="results card" id="results">
-    <div class="result-primary">
-      <div class="result-label">Recommended Minimum Tank Size</div>
-      <div class="result-num" id="res-gallons">—</div>
-      <div class="result-unit">gallons</div>
-    </div>
-
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem;flex-wrap:wrap;gap:.5rem">
-      <span class="section-title" style="margin:0">Calculation Breakdown</span>
-      <button class="btn-sm" id="copyBtn">Copy Results</button>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Parameter</th>
-            <th class="num">Value</th>
-          </tr>
-        </thead>
-        <tbody id="breakdown-body"></tbody>
-      </table>
-    </div>
-
-    <div class="rec-box" id="rec-box"></div>
-
-    <div style="margin-top:1.2rem">
-      <div class="section-title">Standard Tank Sizes — Which Fits You?</div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Tank Size (gal)</th>
-              <th>Typical Use</th>
-              <th class="num">Suitable?</th>
-            </tr>
-          </thead>
-          <tbody id="sizes-body"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+  <div id="results" aria-live="polite" aria-atomic="true"></div>
 
   <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
 
-  <!-- CONTENT SECTION -->
-  <div class="content-section">
+  <div class="safety" role="note">This is a planning estimate based on common rules of thumb, not an engineering design, permit approval or code-compliance check. Septic rules vary by state and county, and a licensed designer or your local health department sets the required size for your site.</div>
+
+  <div class="content">
     <h2>How to Use This Septic Tank Size Calculator</h2>
-    <p>Enter the number of bedrooms, the number of people living in the home, and the estimated daily water usage per person. Adjust the soil type and usage pattern to match your property. Click <strong>Calculate Tank Size</strong> and you'll instantly see the recommended minimum tank capacity in gallons, plus a full breakdown of the sizing logic.</p>
+    <p>Choose the number of bedrooms and enter how many people live in the home, plus an estimate of daily water use per person. Then set your local minimum tank size (ask your county health department) and how much liquid capacity to hold relative to daily flow. Tick the garbage disposal box if you have one. The calculator returns a recommended tank size in gallons, rounded up to the next standard size, with a full breakdown and a table that shows what happens if you add a bedroom.</p>
+    <p>Soil type is deliberately not an input. Soil and percolation rates determine how large your drain field must be, not how large the tank must be. For that, use the <a href="/septic-drain-field-size-calculator/">Septic Drain Field Size Calculator</a>.</p>
 
     <h2>Why This Matters</h2>
-    <p>Choosing the wrong septic tank size is one of the most expensive mistakes a homeowner can make. An undersized tank fills with sludge too quickly, leading to system backups, sewage odors, drain field failures, and costly pump-outs every few months instead of every 3–5 years.</p>
-    <p>As a real-world example: a family of 5 in a 4-bedroom home using 80 gallons per person per day generates 400 gallons of wastewater daily. Most codes require at least 1,000–1,500 gallons for that household, but soil conditions and usage patterns can push that to 1,500–2,000 gallons. Installing a 750-gallon tank to save $400 upfront typically results in $1,200–$3,000 in repairs within 2–3 years.</p>
-    <p>This calculator is used by homeowners planning new construction, contractors sizing systems, real estate buyers evaluating properties, and permitting professionals verifying compliance with local standards.</p>
+    <p>A septic tank is buried, expensive to replace and rarely revisited, so the size you choose on day one stays with the house for decades. If the tank is too small, wastewater leaves it before solids have time to settle. Grease and solids then carry into the drain field, clog it, and can lead to slow drains, odors and a field replacement that often costs many times the price of the tank itself.</p>
+    <p>People use a septic tank size calculator in several situations: building a new home in the country, replacing a failed tank, buying a house and checking whether the existing tank matches the bedroom count, or planning a bedroom addition. A common example is a 4-bedroom house with a 1,000-gallon tank that was installed when the house had three bedrooms. Many codes would call for 1,250 gallons, so the finished basement bedroom could trigger an upgrade at permit time. Running the numbers before you plan the project avoids that surprise.</p>
+    <p>Real households also differ from the code assumptions. A family of seven with teenagers, or a home with guests and a home business, can use far more water than the bedroom count implies, so the flow check in this tool uses whichever is larger, your code-style estimate or your actual use.</p>
 
     <h2>How It's Calculated</h2>
-    <p>The EPA and most U.S. state codes use a two-factor method:</p>
+    <p>This tool uses a conservative rule-of-thumb method, not a formula published by the EPA. The EPA does not prescribe a single tank-sizing equation; sizing is set by state and local codes. Most of those codes are based on a bedroom table and a minimum liquid capacity relative to daily design flow. The steps are:</p>
+    <ol>
+      <li><strong>Bedroom table size.</strong> Commonly 1,000 gallons for up to 3 bedrooms, 1,250 for 4 bedrooms and 1,500 for 5–6 bedrooms. This tool adds 250 gallons for each bedroom beyond six.</li>
+      <li><strong>Design flow.</strong> The larger of (a) bedrooms × 150 gallons per day, a figure commonly used in design codes (some use 120), and (b) your own estimate, occupants × gallons per person per day.</li>
+      <li><strong>Flow-based capacity.</strong> Design flow × your chosen multiple (1.5×, 2× or 3×). Codes commonly require liquid capacity of roughly 1.5 to 3 times the daily design flow.</li>
+      <li><strong>Required capacity.</strong> The largest of the bedroom table size, the flow-based capacity and your local minimum, plus 250 gallons if there is a garbage disposal (a rule of thumb; some jurisdictions require more).</li>
+      <li><strong>Round up.</strong> The result is rounded up to the next standard tank size: 1,000, 1,250, 1,500, 2,000, 2,500 or 3,000 gallons. Above 3,000 gallons, it rounds up to the next 250 and you are told to expect an engineered design or multiple tanks.</li>
+    </ol>
+    <div class="formula">Design flow = max(bedrooms × 150, occupants × gal/person/day)<br>Flow capacity = design flow × multiple (1.5, 2 or 3)<br>Required = max(bedroom table, flow capacity, local minimum) + disposal (0 or 250)<br>Recommended = next standard size ≥ required</div>
+    <p>Note that true retention time is tank volume divided by daily flow. A 1,000-gallon tank receiving 450 gallons per day holds about 2.2 days of flow, which is why a 2× multiple is a sensible default.</p>
+
+    <h2>Worked Example</h2>
+    <p>A 4-bedroom home has 5 residents using about 80 gallons per person per day, has a garbage disposal, a 1,000-gallon local minimum and the 2× multiple.</p>
     <ul>
-      <li><strong>Bedroom-based minimum:</strong> Most codes require a base of 1,000 gallons for 1–2 bedrooms, adding 250 gallons per additional bedroom.</li>
-      <li><strong>Flow-based requirement:</strong> Daily flow = occupants × gallons per person per day. Tank must hold at least 1.5–2× the daily flow (liquid retention time).</li>
-      <li><strong>Final size:</strong> The larger of the two values is used, then adjusted for soil type and usage pattern.</li>
+      <li>Bedroom table size for 4 bedrooms: <strong>1,250 gal</strong></li>
+      <li>Code-style flow: 4 × 150 = 600 gal/day. Your use: 5 × 80 = 400 gal/day. Design flow used: <strong>600 gal/day</strong></li>
+      <li>Flow-based capacity: 600 × 2 = <strong>1,200 gal</strong></li>
+      <li>Largest of 1,250, 1,200 and 1,000 = 1,250 gal; add 250 for the disposal = <strong>1,500 gal</strong></li>
+      <li>Next standard size at or above 1,500 = <strong>1,500 gallons</strong></li>
     </ul>
-    <p><strong>Formula:</strong></p>
-    <p style="font-family:monospace;background:#f8f9fa;padding:.7rem 1rem;border-radius:6px;font-size:.88rem">
-      Daily Flow = Occupants × GPD per person<br>
-      Flow-based size = Daily Flow × Retention Factor (1.5–2.0)<br>
-      Bedroom-based size = 1,000 + (Bedrooms − 2) × 250 (min 1,000 gal)<br>
-      Recommended = max(Flow-based, Bedroom-based) × Usage Multiplier
-    </p>
+    <p>The bedroom table drives the result here. If the same family had 10 people at 100 gallons each, the flow would be 1,000 gal/day, the flow-based capacity 2,000 gal, and the recommendation would jump to 2,250, rounded to the 2,500-gallon size.</p>
 
     <h2>Tips &amp; Common Mistakes</h2>
     <ul>
-      <li><strong>Always check local codes first.</strong> Many counties have minimums higher than EPA guidelines — some require 1,500 gal for any home regardless of size.</li>
-      <li><strong>Size up, not down.</strong> A 1,500-gallon tank costs only $200–$400 more than a 1,000-gallon tank installed, but lasts dramatically longer between pump-outs.</li>
-      <li><strong>Don't forget garbage disposals.</strong> Homes with garbage disposals should add 250–500 gallons to their calculated size — food solids increase sludge accumulation significantly.</li>
-      <li><strong>Soil matters as much as tank size.</strong> Even a perfectly sized tank will fail if the drain field can't handle the effluent. Always pair this calculator with a percolation test.</li>
-      <li><strong>Future-proofing:</strong> If you plan to add bedrooms or have a growing family, size the tank for your 10-year projected household, not today's headcount.</li>
+      <li><strong>Count potential bedrooms.</strong> Dens, offices and finished basements that could be used as bedrooms are often counted by inspectors. Size for what the house could be.</li>
+      <li><strong>Confirm the local rule first.</strong> Some counties require 1,250 or 1,500 gallons as a minimum regardless of bedroom count. Enter that as your local minimum.</li>
+      <li><strong>Do not shrink the tank because the soil is good.</strong> Soil affects the drain field. Tank volume is driven by bedrooms and flow.</li>
+      <li><strong>Plan for the disposal.</strong> Ground food adds solids and speeds sludge buildup. Many pros suggest more capacity, and an effluent filter, if you use one regularly.</li>
+      <li><strong>Pump and inspect on schedule.</strong> Even a correctly sized tank fails if solids build up. The EPA suggests having a typical system inspected about every three years.</li>
     </ul>
 
     <h2>Frequently Asked Questions</h2>
-    <details>
-      <summary>What is the minimum septic tank size required by code?</summary>
-      <p>In most U.S. states, the minimum residential septic tank size is 1,000 gallons, though many jurisdictions mandate 1,250 or 1,500 gallons as a floor. Always verify with your local health department or permitting office before purchasing a tank.</p>
-    </details>
-    <details>
-      <summary>How often does a properly sized septic tank need to be pumped?</summary>
-      <p>A correctly sized tank for an average household typically needs pumping every 3–5 years. Oversized tanks can go 5–7 years; undersized tanks may need annual or more frequent service. The EPA recommends inspection every 3 years minimum.</p>
-    </details>
-    <details>
-      <summary>Does the number of bathrooms matter for sizing?</summary>
-      <p>Most codes use bedrooms (as a proxy for occupancy) rather than bathroom count. However, a home with 4 full bathrooms tends to have higher water usage habits, so increasing your gallons-per-person estimate is a smart adjustment when you have extra fixtures.</p>
-    </details>
-    <details>
-      <summary>Can I use this calculator for a commercial property?</summary>
-      <p>This calculator is designed for residential use. Commercial properties, restaurants, and offices are sized differently — typically using daily fixture unit counts or hourly peak-flow calculations. Contact a licensed engineer for commercial septic design.</p>
-    </details>
+    <details><summary>What is the minimum septic tank size required by code?</summary><p>In most U.S. jurisdictions the minimum for a new home is 1,000 gallons, though some counties set 1,250 or 1,500. Check with your local health department or permitting office before buying a tank.</p></details>
+    <details><summary>Is a 1,000-gallon tank enough for a 4-bedroom house?</summary><p>Often not. Many bedroom tables call for about 1,250 gallons at four bedrooms, and 1,000 gallons is typically the limit for three. Your local code makes the final call.</p></details>
+    <details><summary>Does soil type change the septic tank size?</summary><p>No. Soil absorption and percolation rate determine the size of the drain field, which is where treated liquid is released. The tank is sized from bedrooms and daily flow.</p></details>
+    <details><summary>How often does a septic tank need to be pumped?</summary><p>Many household tanks are pumped every 3 to 5 years, depending on size, number of people and habits. Have it inspected about every 3 years, and pump based on measured sludge and scum levels.</p></details>
+    <details><summary>Does a garbage disposal require a bigger tank?</summary><p>It adds solids, so some codes require extra capacity, and many designers suggest it. This tool adds 250 gallons as a conservative rule of thumb, but your local rule may differ.</p></details>
+    <details><summary>Can I use this for a commercial property?</summary><p>No. It is meant for single-family homes. Restaurants, offices and multi-unit buildings are sized by fixture units or measured peak flow, and they require a licensed designer.</p></details>
   </div>
 
-  <!-- RELATED TOOLS -->
-  <div class="related-tools">
+  <div class="related">
     <h2>Related Tools</h2>
     <div class="related-grid">
-      <a href="/conduit-fill-calculator/">Conduit Fill Calculator</a>
-      <a href="/excavation-earthwork-volume-calculator/">Excavation &amp; Earthwork Volume Calculator</a>
-      <a href="/roof-truss-span-spacing-calculator/">Truss Span &amp; Spacing Calculator</a>
-      <a href="/pipe-sizing-flow-rate-calculator/">Pipe Sizing &amp; Flow Rate Calculator</a>
-      <a href="/rebar-spacing-weight-calculator/">Rebar Spacing &amp; Weight Calculator</a>
-      <a href="/btu-heating-cooling-load-calculator/">BTU Heating &amp; Cooling Load Calculator</a>
+      <a href="/septic-drain-field-size-calculator/">Septic Drain Field Size Calculator</a>
+      <a href="/shower-wall-tile-calculator/">Shower Wall Tile Calculator</a>
+      <a href="/ice-and-water-shield-calculator/">Ice and Water Shield Calculator</a>
+      <a href="/tributary-area-calculator/">Tributary Area Calculator for Beams, Columns &amp; Footings</a>
+      <a href="/roof-underlayment-calculator/">Roof Underlayment Calculator</a>
+      <a href="/thinset-mortar-coverage-calculator/">Thinset Mortar Coverage Calculator</a>
     </div>
   </div>
 
@@ -311,182 +262,145 @@ footer a{color:#555;margin:0 .5rem}
 </div>
 
 <script>
-// Slider sync
-const waterSlider = document.getElementById('waterSlider');
-const dailywaterInput = document.getElementById('dailywater');
-const sliderDisplay = document.getElementById('sliderDisplay');
+(function(){
+var $=function(id){return document.getElementById(id)};
+var STD=[1000,1250,1500,2000,2500,3000];
+var last=null,timer=null;
 
-waterSlider.addEventListener('input', () => {
-  dailywaterInput.value = waterSlider.value;
-  sliderDisplay.textContent = waterSlider.value;
-});
-dailywaterInput.addEventListener('input', () => {
-  const v = parseInt(dailywaterInput.value);
-  if (!isNaN(v) && v >= 30 && v <= 150) {
-    waterSlider.value = v;
-    sliderDisplay.textContent = v;
-  }
-});
+function fmt(n,d){d=d||0;return Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
 
-// Enter key
-document.querySelectorAll('input, select').forEach(el => {
-  el.addEventListener('keydown', e => { if (e.key === 'Enter') triggerCalc(); });
+$('yr').textContent=new Date().getFullYear();
+
+var slider=$('waterSlider'),water=$('dailywater');
+slider.addEventListener('input',function(){water.value=slider.value;$('sliderDisplay').textContent=slider.value+' gal'});
+water.addEventListener('input',function(){
+  var v=parseFloat(water.value);
+  if(!isNaN(v)){slider.value=Math.min(150,Math.max(30,v));$('sliderDisplay').textContent=fmt(v)+' gal'}
 });
 
-document.getElementById('calcBtn').addEventListener('click', triggerCalc);
+function tableSize(b){return b<=3?1000:b===4?1250:b<=6?1500:1500+250*(b-6)}
 
-function triggerCalc() {
-  requestAnimationFrame(() => { calculate(); });
+function size(bed,occ,gpd,mult,localMin,disp){
+  var table=tableSize(bed),codeFlow=bed*150,userFlow=occ*gpd;
+  var design=Math.max(codeFlow,userFlow),flowCap=design*mult;
+  var base=Math.max(table,flowCap,localMin),add=disp?250:0,req=base+add,rec=null;
+  for(var i=0;i<STD.length;i++){if(STD[i]>=req){rec=STD[i];break}}
+  var over=false;
+  if(rec===null){rec=Math.ceil(req/250)*250;over=true}
+  var driver=(flowCap>table&&flowCap>localMin)?'daily flow':(localMin>table?'local minimum':'bedroom table');
+  return {table:table,codeFlow:codeFlow,userFlow:userFlow,design:design,flowCap:flowCap,base:base,add:add,req:req,rec:rec,over:over,driver:driver};
 }
 
-function fmt(n, dec) {
-  dec = dec === undefined ? 0 : dec;
-  return Number(n).toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+function resetSvg(){
+  $('svg-flow').textContent='gal/day';
+  $('svg-cap').textContent='Recommended: calculate to see';
+  $('svg-min').textContent='Liquid capacity = bedroom table or flow check, whichever is larger';
 }
 
-function clearErrors() {
-  document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
-  document.querySelectorAll('input.error, select.error').forEach(e => e.classList.remove('error'));
-}
+function calculate(){
+  var errO=$('err-occupants'),errW=$('err-water');
+  $('occupants').classList.remove('error');water.classList.remove('error');
+  errO.classList.remove('show');errW.classList.remove('show');
+  $('occupants').removeAttribute('aria-invalid');water.removeAttribute('aria-invalid');
 
-function showError(id, msgId) {
-  document.getElementById(id).classList.add('error');
-  document.getElementById(msgId).classList.add('show');
-}
+  var bed=parseInt($('bedrooms').value,10);
+  var occRaw=$('occupants').value.trim(),gpdRaw=water.value.trim();
+  var occ=Number(occRaw),gpd=Number(gpdRaw);
+  var mult=parseFloat($('mult').value),localMin=parseInt($('localmin').value,10),disp=$('disposal').checked;
+  var ok=true;
+  if(occRaw===''||!isFinite(occ)||!Number.isInteger(occ)||occ<1||occ>30){$('occupants').classList.add('error');$('occupants').setAttribute('aria-invalid','true');errO.classList.add('show');ok=false}
+  if(gpdRaw===''||!isFinite(gpd)||gpd<10||gpd>300){water.classList.add('error');water.setAttribute('aria-invalid','true');errW.classList.add('show');ok=false}
+  if(!ok){last=null;$('results').innerHTML='';resetSvg();return}
 
-function calculate() {
-  clearErrors();
-  let valid = true;
+  var r=size(bed,occ,gpd,mult,localMin,disp);
+  var multLabel=fmt(mult,mult%1?1:0)+'×';
 
-  const bedrooms = parseInt(document.getElementById('bedrooms').value);
-  const occupantsRaw = document.getElementById('occupants').value.trim();
-  const waterRaw = document.getElementById('dailywater').value.trim();
-  const soiltype = document.getElementById('soiltype').value;
-  const usage = document.getElementById('usage').value;
-
-  const occupants = parseFloat(occupantsRaw);
-  const gpd = parseFloat(waterRaw);
-
-  if (!occupantsRaw || isNaN(occupants) || occupants < 1 || occupants > 50) {
-    showError('occupants', 'err-occupants');
-    valid = false;
-  }
-  if (!waterRaw || isNaN(gpd) || gpd < 10 || gpd > 300) {
-    showError('dailywater', 'err-water');
-    valid = false;
-  }
-  if (!valid) return;
-
-  // Retention factor by soil
-  const retFactor = soiltype === 'fast' ? 1.5 : soiltype === 'slow' ? 2.0 : 1.75;
-
-  // Usage multiplier
-  const usageMult = usage === 'high' ? 1.2 : usage === 'low' ? 0.85 : 1.0;
-
-  // Bedroom-based minimum (EPA / typical code)
-  const bedroomBase = Math.max(1000, 1000 + (bedrooms - 2) * 250);
-
-  // Daily flow
-  const dailyFlow = occupants * gpd;
-
-  // Flow-based size
-  const flowBased = dailyFlow * retFactor;
-
-  // Base size = max of the two
-  const baseSize = Math.max(bedroomBase, flowBased);
-
-  // Adjusted size
-  const adjustedSize = baseSize * usageMult;
-
-  // Round up to nearest 250
-  const recommended = Math.ceil(adjustedSize / 250) * 250;
-
-  // Standard tank sizes
-  const standardSizes = [750, 1000, 1250, 1500, 2000, 2500, 3000];
-
-  // Build breakdown rows
-  const retLabel = soiltype === 'fast' ? '1.5× (fast soil)' : soiltype === 'slow' ? '2.0× (slow soil)' : '1.75× (normal soil)';
-  const usageLabel = usage === 'high' ? '1.20× (high usage)' : usage === 'low' ? '0.85× (low usage)' : '1.0× (standard)';
-
-  const breakdownRows = [
-    ['Bedrooms', bedrooms],
-    ['Occupants', occupants],
-    ['Daily water / person', fmt(gpd) + ' gal'],
-    ['Total daily flow', fmt(dailyFlow) + ' gal/day'],
-    ['Bedroom-based minimum', fmt(bedroomBase) + ' gal'],
-    ['Retention factor (soil)', retLabel],
-    ['Flow-based size', fmt(flowBased, 0) + ' gal'],
-    ['Base size (larger of above)', fmt(baseSize, 0) + ' gal'],
-    ['Usage pattern multiplier', usageLabel],
-    ['Adjusted size', fmt(adjustedSize, 0) + ' gal'],
-    ['Recommended (rounded up)', fmt(recommended) + ' gal'],
+  var rows=[
+    ['Bedrooms',fmt(bed)],
+    ['Bedroom table size',fmt(r.table)+' gal'],
+    ['Code-style flow ('+fmt(bed)+' × 150)',fmt(r.codeFlow)+' gal/day'],
+    ['Your estimated flow ('+fmt(occ)+' × '+fmt(gpd)+')',fmt(r.userFlow)+' gal/day'],
+    ['Design flow used (larger)',fmt(r.design)+' gal/day'],
+    ['Flow-based capacity (× '+multLabel+')',fmt(r.flowCap)+' gal'],
+    ['Local minimum',fmt(localMin)+' gal'],
+    ['Largest of the three',fmt(r.base)+' gal'],
+    ['Garbage disposal allowance',fmt(r.add)+' gal'],
+    ['Required capacity',fmt(r.req)+' gal'],
+    ['Recommended (next standard size)',fmt(r.rec)+' gal']
   ];
+  var b='';
+  for(var i=0;i<rows.length;i++){b+='<tr><td>'+rows[i][0]+'</td><td class="num">'+rows[i][1]+'</td></tr>'}
 
-  let bHTML = '';
-  breakdownRows.forEach(r => {
-    bHTML += `<tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`;
+  var typ=['Up to 3 bedrooms','4 bedrooms','5–6 bedrooms','7+ bedrooms or high flow','Large homes or high flow','Large homes, often engineered'];
+  var s='',marked=false;
+  for(var j=0;j<STD.length;j++){
+    var bd;
+    if(STD[j]<r.req){bd='<span class="badge b-red">Too small</span>'}
+    else if(!marked){bd='<span class="badge b-blue">Recommended</span>';marked=true}
+    else{bd='<span class="badge b-green">Larger</span>'}
+    s+='<tr><td><strong>'+fmt(STD[j])+'</strong></td><td>'+typ[j]+'</td><td class="num">'+bd+'</td></tr>';
+  }
+
+  var cmp='',lo=Math.max(1,bed-1),hi=Math.min(10,bed+2);
+  for(var k=lo;k<=hi;k++){
+    var q=size(k,occ,gpd,mult,localMin,disp);
+    cmp+='<tr><td>'+k+(k===bed?' (yours)':'')+'</td><td class="num">'+fmt(q.table)+' gal</td><td class="num"><strong>'+fmt(q.rec)+' gal</strong></td></tr>';
+  }
+
+  var drvTxt={'bedroom table':'the bedroom table','daily flow':'your daily flow','local minimum':'your local minimum'}[r.driver];
+  var warn=r.over?'<div class="warn"><strong>Above standard single-tank sizes.</strong> This load usually needs an engineered design or multiple tanks in series. Consult a licensed septic designer.</div>':'';
+  var rec='For a '+bed+'-bedroom home with '+fmt(occ)+' occupants using about '+fmt(r.userFlow)+' gal/day, plan for at least a <strong>'+fmt(r.rec)+'-gallon</strong> tank, driven by '+drvTxt+'. Retention time at your estimated flow is about '+fmt(r.rec/Math.max(r.design,1),1)+' days. Local code and your designer make the final decision.';
+
+  var html='<div class="card fade">'
+   +'<div class="result-primary"><div class="result-label">Recommended septic tank size</div><div class="result-num">'+fmt(r.rec)+'</div><div class="result-unit">gallons (liquid capacity)</div><div class="driver">Set by: '+drvTxt+'</div></div>'
+   +warn
+   +'<div class="res-head"><h2 class="section-title">Calculation breakdown</h2><button type="button" class="copy" id="copyBtn">Copy results</button></div>'
+   +'<div class="table-wrap" tabindex="0" role="region" aria-label="Calculation breakdown table"><table><thead><tr><th>Step</th><th class="num">Value</th></tr></thead><tbody>'+b+'</tbody></table></div>'
+   +'<div class="rec-box">'+rec+'</div>'
+   +'<h2 class="section-title" style="margin-bottom:.7rem">Standard tank sizes</h2>'
+   +'<div class="table-wrap" tabindex="0" role="region" aria-label="Standard tank sizes table"><table><thead><tr><th>Size (gal)</th><th>Typical use</th><th class="num">Status</th></tr></thead><tbody>'+s+'</tbody></table></div>'
+   +'<h2 class="section-title" style="margin-bottom:.7rem">What if the bedroom count changes?</h2>'
+   +'<div class="table-wrap" tabindex="0" role="region" aria-label="Bedroom comparison table"><table><thead><tr><th>Bedrooms</th><th class="num">Table size</th><th class="num">Recommended</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'
+   +'<p class="hint">Rule-of-thumb estimate. Not a permit approval or engineering design; local codes vary.</p>'
+   +'</div>';
+
+  var text='Septic Tank Size Calculator (toolwick.com)\nRecommended tank: '+fmt(r.rec)+' gallons\nSet by: '+drvTxt+'\n\n';
+  for(var m=0;m<rows.length;m++){text+=rows[m][0]+': '+rows[m][1]+'\n'}
+  text+='\nPlanning estimate only. Verify with your local health department.';
+  last=text;
+
+  requestAnimationFrame(function(){
+    $('results').innerHTML=html;
+    $('svg-flow').textContent=fmt(r.design)+' gal/day';
+    $('svg-cap').textContent='Recommended: '+fmt(r.rec)+' gallons';
+    $('svg-min').textContent='Required before rounding: '+fmt(r.req)+' gal ('+multLabel+' flow = '+fmt(r.flowCap)+' gal)';
   });
-
-  // Sizes table
-  let sHTML = '';
-  standardSizes.forEach(sz => {
-    let badgeHTML;
-    if (sz >= recommended) {
-      if (sz === recommended || sz === recommended + 250) {
-        badgeHTML = '<span class="badge badge-green">✓ Fits</span>';
-      } else {
-        badgeHTML = '<span class="badge badge-green">✓ Oversized</span>';
-      }
-    } else {
-      badgeHTML = '<span class="badge badge-red">✗ Too Small</span>';
-    }
-    let typical = '';
-    if (sz <= 1000) typical = '1–2 bed, 1–3 people';
-    else if (sz <= 1250) typical = '2–3 bed, 3–4 people';
-    else if (sz <= 1500) typical = '3–4 bed, 4–6 people';
-    else if (sz <= 2000) typical = '4–5 bed, 6–8 people';
-    else if (sz <= 2500) typical = '5–6 bed, 8–10 people';
-    else typical = 'Large home / commercial';
-    sHTML += `<tr><td><strong>${fmt(sz)}</strong></td><td>${typical}</td><td class="num">${badgeHTML}</td></tr>`;
-  });
-
-  // Recommendation text
-  const pumpFreq = recommended >= 1500 ? '4–6 years' : recommended >= 1000 ? '3–5 years' : '1–2 years';
-  const recText = `For your ${occupants}-person, ${bedrooms}-bedroom home with ${fmt(dailyFlow)} gallons/day of flow, a <strong>${fmt(recommended)}-gallon</strong> tank is recommended. Expected pump-out interval: approximately <strong>${pumpFreq}</strong> with normal use.`;
-
-  // Update SVG label
-  document.getElementById('svg-width').textContent = fmt(recommended) + ' gallons';
-
-  const resultContainer = document.getElementById('results');
-  requestAnimationFrame(() => {
-    document.getElementById('res-gallons').textContent = fmt(recommended);
-    document.getElementById('breakdown-body').innerHTML = bHTML;
-    document.getElementById('sizes-body').innerHTML = sHTML;
-    document.getElementById('rec-box').innerHTML = recText;
-    resultContainer.classList.add('visible');
-    resultContainer.scrollIntoView({behavior: 'smooth', block: 'nearest'});
-  });
-
-  // Store for copy
-  window._lastResult = {recommended, breakdownRows, occupants, bedrooms, dailyFlow};
 }
 
-// Copy button
-document.getElementById('copyBtn').addEventListener('click', () => {
-  if (!window._lastResult) return;
-  const r = window._lastResult;
-  let text = `Septic Tank Size Calculator — toolwick.com\n`;
-  text += `Recommended Tank: ${fmt(r.recommended)} gallons\n\n`;
-  text += `Breakdown:\n`;
-  r.breakdownRows.forEach(row => {
-    text += `  ${row[0]}: ${row[1]}\n`;
-  });
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('copyBtn');
-    btn.textContent = 'Copied!';
-    setTimeout(() => { btn.textContent = 'Copy Results'; }, 2000);
-  });
+function trigger(){requestAnimationFrame(calculate)}
+$('calcBtn').addEventListener('click',trigger);
+$('tool').addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&e.target.tagName!=='BUTTON'){e.preventDefault();trigger()}
 });
+
+function done(){
+  var btn=$('copyBtn');if(!btn)return;
+  btn.textContent='Copied!';
+  clearTimeout(timer);
+  timer=setTimeout(function(){var x=$('copyBtn');if(x)x.textContent='Copy results'},2000);
+}
+function fallback(t){
+  var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';
+  document.body.appendChild(a);a.select();
+  try{document.execCommand('copy')}catch(x){}
+  document.body.removeChild(a);done();
+}
+$('results').addEventListener('click',function(e){
+  if(!e.target.closest('#copyBtn')||!last)return;
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(last).then(done,function(){fallback(last)})}
+  else fallback(last);
+});
+})();
 </script>
 <script id="a11y-js">(function(){function run(){
 var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
