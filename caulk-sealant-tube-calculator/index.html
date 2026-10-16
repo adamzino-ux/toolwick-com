@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Caulk &amp; Sealant Tube Calculator | Toolwick</title>
+<meta name="description" content="Free caulk calculator: enter joint length, width and depth to see how many tubes of caulk or sealant you need, with a waste allowance.">
+<link rel="canonical" href="https://toolwick.com/caulk-sealant-tube-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Caulk & Sealant Tube Calculator", "url": "https://toolwick.com/caulk-sealant-tube-calculator/", "description": "Free caulk calculator: enter joint length, width and depth to see how many tubes of caulk or sealant you need, with a waste allowance.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Caulk & Sealant Tube Calculator", "item": "https://toolwick.com/caulk-sealant-tube-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many tubes of caulk do I need for a bathtub?", "acceptedAnswer": {"@type": "Answer", "text": "A standard 60-inch tub has about 10 feet of tub-to-wall joint, plus a few feet of vertical corners. One 10.1 fl oz cartridge usually covers it at a ¼ in bead, even with a waste allowance."}}, {"@type": "Question", "name": "How many linear feet does one tube of caulk cover?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on bead size. A 10.1 fl oz cartridge covers about 24 feet of a ¼ in × ¼ in joint but only about 6 feet of a ½ in × ½ in joint. The calculator shows coverage for your own settings."}}, {"@type": "Question", "name": "How much extra caulk should I buy?", "acceptedAnswer": {"@type": "Answer", "text": "Plan for 10 to 15% extra for tooling, nozzle priming, and the leftover in the cartridge. Use 20 to 30% for porous surfaces such as stucco or rough brick, or for jobs with many short runs and corners."}}, {"@type": "Question", "name": "What's the difference between caulk and sealant?", "acceptedAnswer": {"@type": "Answer", "text": "Caulk is generally a lower-movement product (such as acrylic latex) for filling small gaps. Sealant (silicone, polyurethane, hybrid polymers) is built to stay flexible in joints that expand and contract. Both come in the same cartridge sizes, so the volume math is identical."}}, {"@type": "Question", "name": "Does a triangular bead really use half as much?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. A fillet bead with equal legs fills half the area of the square around it, so the volume is half. Real beads are often slightly convex, which is why the waste allowance matters."}}, {"@type": "Question", "name": "Can I save a partly used tube?", "acceptedAnswer": {"@type": "Answer", "text": "Sometimes. Silicone and polyurethane tend to skin over in the nozzle, and a plug of cured material often blocks the next use. Latex caulk keeps better if the nozzle is sealed, but plan on finishing the cartridge within a few weeks."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:.5rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;display:inline-block;line-height:44px;font-size:1.1rem}
+h1{font-size:1.85rem;line-height:1.25;margin:1.5rem 0 .75rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2rem 0 .75rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.diagram{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:.5rem;margin:1.5rem 0 1rem}
+svg{width:100%;height:auto;display:block}
+svg text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;min-height:44px;background:#fff;color:#1a1a2e;font-family:inherit}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{padding:0;border:0;min-height:44px;accent-color:#0077b6}
+input.bad,select.bad{border-color:#e74c3c}
+.field{margin-bottom:1.1rem}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.msg{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.row{display:flex;gap:.5rem}
+.row select{width:6.5rem;flex:none}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+button{font-family:inherit;font-size:1rem;cursor:pointer;border-radius:6px;min-height:44px}
+.primary{width:100%;background:#0077b6;color:#fff;border:0;padding:12px 24px;font-weight:600}
+.primary:hover{background:#006299}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;padding:8px 16px;font-size:.9rem;margin-top:1rem}
+#results{margin-top:1.5rem}
+.fade{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}}
+.big{font-size:3rem;font-weight:800;color:#0077b6;line-height:1.1}
+.big span{font-size:1.2rem;font-weight:600;color:#1a1a2e}
+.sub{color:#444;margin:.25rem 0 1rem}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:.6rem .75rem;border-bottom:1px solid #ddd}
+td{padding:.6rem .75rem;border-bottom:1px solid #e8e8e8}
+tr:nth-child(odd) td{background:#fafafa}
+tr:nth-child(even) td{background:#fff}
+th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.sel td{font-weight:700}
+.note{background:#f8f9fa;border-left:4px solid #0077b6;padding:.75rem 1rem;font-size:.9rem;margin:1rem 0;color:#333}
+.warn{background:#fff8e6;border-left-color:#b45309}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:.6rem 0;min-height:44px}
+details p{margin:0 0 .75rem}
+li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0;margin:0}
+.rel li{margin:0;border-bottom:1px solid #eee}
+.rel a{display:block;padding:.7rem 0;min-height:44px}
+footer{border-top:1px solid #eee;margin-top:2rem;padding:1.5rem 0 2rem;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline}
+@media (max-width:640px){.two{grid-template-columns:1fr;gap:0}.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.6rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/caulk-sealant-tube-calculator/">
+<meta property="og:title" content="Caulk &amp; Sealant Tube Calculator">
+<meta property="og:description" content="Free caulk calculator: enter joint length, width and depth to see how many tubes of caulk or sealant you need, with a waste allowance.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Caulk & Sealant Tube Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This free caulk calculator tells you how many tubes of caulk or sealant to buy for a joint of any length. Enter the joint length, bead width and depth, pick a tube size, and get a rounded-up tube count with waste included.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 440 250" role="img" aria-label="Cross-section diagram of a sealant joint showing width and depth">
+<title>Sealant joint cross-section with width and depth dimensions</title>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#1a1a2e"/></marker></defs>
+<g id="gRect">
+<rect x="10" y="70" width="140" height="110" fill="#f8f9fa" stroke="#999"/>
+<rect x="250" y="70" width="90" height="110" fill="#f8f9fa" stroke="#999"/>
+<text x="80" y="130" text-anchor="middle" font-size="13" fill="#666">Substrate</text>
+<rect id="rod" x="150" y="110" width="100" height="36" rx="18" fill="#e0e0e0" stroke="#888"/>
+<text id="rodT" x="200" y="132" text-anchor="middle" font-size="12" fill="#1a1a2e">Backer rod</text>
+<rect id="seal" x="150" y="70" width="100" height="40" fill="#0077b6" fill-opacity=".25" stroke="#0077b6" stroke-width="2"/>
+<text id="sealT" x="200" y="94" text-anchor="middle" font-size="12" font-weight="700" fill="#0077b6">Sealant</text>
+<line x1="150" y1="40" x2="150" y2="70" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="250" y1="40" x2="250" y2="70" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="152" y1="52" x2="248" y2="52" stroke="#1a1a2e" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text id="tW" x="200" y="38" text-anchor="middle" font-size="15" font-weight="700" fill="#1a1a2e">Width</text>
+<line x1="250" y1="70" x2="362" y2="70" stroke="#999" stroke-dasharray="4 3"/>
+<line id="g2" x1="250" y1="110" x2="362" y2="110" stroke="#999" stroke-dasharray="4 3"/>
+<line id="dl" x1="358" y1="71" x2="358" y2="109" stroke="#1a1a2e" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text id="tD1" x="366" y="88" font-size="13" fill="#1a1a2e">Depth</text>
+<text id="tD2" x="366" y="104" font-size="15" font-weight="700" fill="#1a1a2e"></text>
+</g>
+<g id="gFillet" style="display:none">
+<rect x="10" y="170" width="420" height="40" fill="#f8f9fa" stroke="#999"/>
+<rect x="10" y="30" width="40" height="140" fill="#f8f9fa" stroke="#999"/>
+<text x="30" y="22" text-anchor="middle" font-size="12" fill="#666">Wall</text>
+<text x="330" y="195" text-anchor="middle" font-size="13" fill="#666">Floor / surface</text>
+<polygon id="tri" points="50,170 160,170 50,60" fill="#0077b6" fill-opacity=".25" stroke="#0077b6" stroke-width="2"/>
+<line id="fg" x1="30" y1="60" x2="50" y2="60" stroke="#999" stroke-dasharray="4 3"/>
+<line id="fv" x1="30" y1="61" x2="30" y2="169" stroke="#1a1a2e" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<line id="fh" x1="52" y1="190" x2="158" y2="190" stroke="#1a1a2e" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text id="fW" x="170" y="195" font-size="15" font-weight="700" fill="#1a1a2e"></text>
+<text id="fD" x="174" y="120" font-size="15" font-weight="700" fill="#1a1a2e"></text>
+</g>
+<text id="tSum" x="220" y="240" text-anchor="middle" font-size="16" font-weight="700" fill="#1a1a2e">Enter your joint and press Calculate</text>
+</svg>
+</div>
+
+<div class="card">
+<form id="f" novalidate>
+<div class="field">
+<label for="len">Total joint length</label>
+<div class="row">
+<input id="len" type="text" inputmode="decimal" value="60" aria-describedby="lenErr">
+<select id="lenU" aria-label="Length unit"><option value="ft">feet</option><option value="in">inches</option><option value="m">meters</option></select>
+</div>
+<div class="msg" id="lenErr"></div>
+</div>
+<div class="field">
+<label for="shape">Joint / bead shape</label>
+<select id="shape"><option value="rect">Rectangular joint (between two surfaces, backer rod)</option><option value="fillet">Triangular fillet bead (inside corner, trim)</option></select>
+</div>
+<div class="field">
+<label for="dimU">Width &amp; depth unit</label>
+<select id="dimU"><option value="in">inches</option><option value="mm">millimeters</option></select>
+</div>
+<div class="two">
+<div class="field">
+<label for="w">Joint width (fillet: horizontal leg)</label>
+<input id="w" type="text" inputmode="decimal" value="0.5" aria-describedby="wErr">
+<div class="msg" id="wErr"></div>
+</div>
+<div class="field">
+<label for="d">Joint depth (fillet: vertical leg)</label>
+<input id="d" type="text" inputmode="decimal" value="0.25" aria-describedby="dErr">
+<div class="msg" id="dErr"></div>
+</div>
+</div>
+<div class="hint" style="margin:-.5rem 0 1.1rem">Decimals or fractions work: 0.25 or 1/4.</div>
+<div class="field">
+<label for="tube">Tube / cartridge size</label>
+<select id="tube">
+<option value="0">2.8 fl oz squeeze tube</option>
+<option value="1">5.5 fl oz small tube</option>
+<option value="2" selected>10.1 fl oz standard cartridge</option>
+<option value="3">10.3 fl oz cartridge</option>
+<option value="4">20 fl oz sausage pack</option>
+<option value="5">28 fl oz large cartridge</option>
+</select>
+</div>
+<div class="field">
+<label for="waste">Waste allowance: <span id="wv">10</span>%</label>
+<input id="waste" type="range" min="0" max="30" step="5" value="10">
+<div class="ticks"><span>0%</span><span>15%</span><span>30%</span></div>
+</div>
+<div class="field">
+<label for="price">Price per tube (optional)</label>
+<input id="price" type="text" inputmode="decimal" placeholder="e.g. 7.50" aria-describedby="priceErr">
+<div class="msg" id="priceErr"></div>
+</div>
+<button type="submit" class="primary">Calculate tubes needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/caulk-sealant-tube-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Caulk &amp;amp; Sealant Tube Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/caulk-sealant-tube-calculator/&quot;&gt;Caulk &amp;amp; Sealant Tube Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/caulk-sealant-tube-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Caulk &amp; Sealant Tube Calculator</h2>
+<p>Enter the total length of all joints you plan to seal, then the width and depth of the bead or joint. Choose a rectangular joint for gaps between two surfaces, or a triangular fillet bead for inside corners and trim edges. The calculator returns the number of tubes to buy (always rounded up), the sealant volume, how many feet one tube covers, and a comparison across every common cartridge size.</p>
+
+<h2>Why This Matters</h2>
+<p>Running out of caulk halfway along a joint is more than an annoyance. A second tube from a different batch can differ slightly in color, and a bead that stops and restarts creates a weak spot where moisture can get in. Buying too much isn't free either: at $6 to $12 per cartridge, an oversized estimate on a whole-house re-caulk adds up, and opened silicone or polyurethane cartridges often skin over in the nozzle within days.</p>
+<p>The numbers surprise people. A standard 5-foot bathtub has roughly 10 feet of tub-to-wall joint, so one cartridge is plenty. Ten windows with 14 feet of perimeter each is 140 feet; at a ¼ in × ¼ in bead that's about six cartridges, but at a ½ in × ½ in bead it jumps to nearly 25. Bead size matters far more than most people expect because volume grows with both width and depth. Contractors, property managers, and DIYers use this kind of estimate to price bids, prepare shopping lists, and avoid last-minute hardware store trips.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator uses straightforward volume math:</p>
+<p><strong>Net volume (in³) = width × depth × length × shape factor</strong></p>
+<p>The shape factor is 1 for a rectangular joint and 0.5 for a triangular fillet bead, because a right triangle holds half the volume of the rectangle around it. Volume is converted to milliliters (1 in³ = 16.387 mL), then your waste allowance is added: <strong>Total mL = net mL × (1 + waste %)</strong>. Tube volume comes from the printed fluid ounces (1 fl oz = 29.5735 mL). Finally, <strong>Tubes = Total mL ÷ tube mL</strong>, rounded up to the next whole tube.</p>
+<p>Coverage per tube is rounded down so you never overestimate. Depth guidance follows the common industry rule of thumb that sealant depth should be about half the joint width, typically ¼ to ½ in, as discussed in ASTM C1193 (Standard Guide for Use of Joint Sealants). Product data sheets and local codes vary and take priority. This is a planning estimate, not engineering, permit, or inspection approval. Fire-rated joints and penetrations require a listed firestop system, not ordinary caulk.</p>
+
+<h2>Worked Example</h2>
+<p>You're sealing 60 feet of joints with a rectangular bead ½ in wide and ¼ in deep, using 10.1 fl oz cartridges and a 10% waste allowance.</p>
+<ol>
+<li>Length: 60 ft × 12 = 720 in.</li>
+<li>Net volume: 0.5 × 0.25 × 720 = 90 in³.</li>
+<li>Convert: 90 × 16.387 = 1,474.8 mL.</li>
+<li>Add 10% waste: 1,474.8 × 1.10 = 1,622.3 mL.</li>
+<li>Tube volume: 10.1 × 29.5735 = 298.7 mL.</li>
+<li>Tubes: 1,622.3 ÷ 298.7 = 5.43, rounded up to <strong>6 tubes</strong>.</li>
+</ol>
+<p>One tube covers about 12.1 feet before waste and about 11 feet after it. At $7.50 per tube, the job costs about $45.00. With 20 fl oz sausage packs you'd need 3.</p>
+<div class="tw"><table>
+<caption style="text-align:left;font-weight:600;padding:.25rem 0">Coverage of one 10.1 fl oz cartridge (before waste)</caption>
+<thead><tr><th>Joint size (in)</th><th class="n">Feet per tube</th></tr></thead>
+<tbody>
+<tr><td>1/8 × 1/8</td><td class="n">97.2</td></tr>
+<tr><td>1/4 × 1/4</td><td class="n">24.3</td></tr>
+<tr><td>1/2 × 1/4</td><td class="n">12.1</td></tr>
+<tr><td>3/8 × 3/8</td><td class="n">10.8</td></tr>
+<tr><td>1/2 × 1/2</td><td class="n">6.0</td></tr>
+</tbody></table></div>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the joint, not the room.</strong> Add up every run (tub edges, window perimeters, backsplash lines) and enter the total length.</li>
+<li><strong>Don't overfill deep joints.</strong> In a deep gap, push in backer rod so the sealant is about half as deep as it is wide. Extra depth wastes product and can cause bond failure.</li>
+<li><strong>Cut the nozzle small.</strong> A nozzle opening wider than the joint produces an oversized bead and uses far more caulk than planned.</li>
+<li><strong>Keep the waste allowance.</strong> Nozzle priming, tooling, and the unusable end of a cartridge typically cost 10 to 15%. Raise it for rough masonry, which soaks up more sealant.</li>
+<li><strong>Match the product to the job.</strong> Use a sealant rated for the substrate, moisture, and joint movement. Read the data sheet for cure time, ventilation, and temperature limits.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many tubes of caulk do I need for a bathtub?</summary><p>A standard 60-inch tub has about 10 feet of tub-to-wall joint, plus a few feet of vertical corners. One 10.1 fl oz cartridge usually covers it at a ¼ in bead, even with a waste allowance.</p></details>
+<details><summary>How many linear feet does one tube of caulk cover?</summary><p>It depends on bead size. A 10.1 fl oz cartridge covers about 24 feet of a ¼ in × ¼ in joint but only about 6 feet of a ½ in × ½ in joint. The calculator shows coverage for your own settings.</p></details>
+<details><summary>How much extra caulk should I buy?</summary><p>Plan for 10 to 15% extra for tooling, nozzle priming, and the leftover in the cartridge. Use 20 to 30% for porous surfaces such as stucco or rough brick, or for jobs with many short runs and corners.</p></details>
+<details><summary>What's the difference between caulk and sealant?</summary><p>Caulk is generally a lower-movement product (such as acrylic latex) for filling small gaps. Sealant (silicone, polyurethane, hybrid polymers) is built to stay flexible in joints that expand and contract. Both come in the same cartridge sizes, so the volume math is identical.</p></details>
+<details><summary>Does a triangular bead really use half as much?</summary><p>Yes. A fillet bead with equal legs fills half the area of the square around it, so the volume is half. Real beads are often slightly convex, which is why the waste allowance matters.</p></details>
+<details><summary>Can I save a partly used tube?</summary><p>Sometimes. Silicone and polyurethane tend to skin over in the nozzle, and a plug of cured material often blocks the next use. Latex caulk keeps better if the nozzle is sealed, but plan on finishing the cartridge within a few weeks.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/fiberglass-batt-insulation-calculator/">Fiberglass Batt Insulation Calculator</a></li>
+<li><a href="/roof-replacement-cost-calculator/">Roof Replacement Cost Calculator</a></li>
+<li><a href="/ridge-cap-shingle-calculator/">Ridge Cap Shingle Calculator</a></li>
+<li><a href="/joint-compound-drywall-tape-calculator/">Joint Compound &amp; Drywall Tape Calculator</a></li>
+<li><a href="/shower-wall-tile-calculator/">Shower Wall Tile Calculator</a></li>
+<li><a href="/ice-and-water-shield-calculator/">Ice and Water Shield Calculator</a></li>
+</ul>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<p><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</footer>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const OZ=29.5735296,IN3=16.387064;
+const TUBES=[[2.8,'2.8 fl oz squeeze tube'],[5.5,'5.5 fl oz small tube'],[10.1,'10.1 fl oz standard cartridge'],[10.3,'10.3 fl oz cartridge'],[20,'20 fl oz sausage pack'],[28,'28 fl oz large cartridge']];
+const SZ=[['1/8 × 1/8',.125,.125],['1/4 × 1/4',.25,.25],['3/8 × 3/8',.375,.375],['1/2 × 1/4',.5,.25],['1/2 × 1/2',.5,.5],['3/4 × 3/8',.75,.375]];
+const LU={ft:12,in:1,m:39.3701};
+let shown=false,summary='';
+const fmt=(n,d)=>n.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});
+const fv=(n,m)=>n.toLocaleString('en-US',{maximumFractionDigits:m});
+const fl=(n,d)=>fmt(Math.floor(n*Math.pow(10,d)+1e-9)/Math.pow(10,d),d);
+function parse(s){s=String(s).replace(/,/g,'').trim();if(!s)return NaN;let m;
+if(m=s.match(/^(\d+)\s+(\d+)\/(\d+)$/))return +m[3]?(+m[1]+m[2]/m[3]):NaN;
+if(m=s.match(/^(\d+)\/(\d+)$/))return +m[2]?(m[1]/m[2]):NaN;
+if(!/^[+-]?(\d+\.?\d*|\.\d+)(e[+-]?\d+)?$/i.test(s))return NaN;return Number(s);}
+function setErr(id,msg){const e=$(id),m=$(id+'Err');m.textContent=msg||'';e.classList.toggle('bad',!!msg);e.setAttribute('aria-invalid',msg?'true':'false');return !!msg;}
+function sa(id,o){const e=$(id);for(const k in o)e.setAttribute(k,o[k]);}
+function diagram(shape,wl,dl,wIn,dIn,sum){
+const r=dIn/wIn;
+$('gRect').style.display=shape==='rect'?'':'none';
+$('gFillet').style.display=shape==='fillet'?'':'none';
+if(shape==='fillet'){
+let wp=110,hp=110;if(r<=1)hp=Math.max(26,110*r);else wp=Math.max(26,110/r);
+const top=170-hp,rx=50+wp;
+sa('tri',{points:'50,170 '+rx+',170 50,'+top});
+sa('fg',{y1:top,y2:top});sa('fv',{y1:top+1});
+sa('fh',{x2:rx-2});
+sa('fW',{x:rx+12});$('fW').textContent='Width: '+wl;
+sa('fD',{x:rx+14,y:170-hp/2+4});$('fD').textContent='Depth: '+dl;
+}else{
+const dp=Math.min(60,Math.max(22,100*r)),y=70+dp;
+sa('seal',{height:dp});sa('rod',{y:y});sa('rodT',{y:y+22});sa('sealT',{y:70+dp/2+4});
+sa('g2',{y1:y,y2:y});sa('dl',{y2:y-1});
+sa('tD1',{y:70+dp/2-2});sa('tD2',{y:70+dp/2+14});
+$('tW').textContent='Width: '+wl;$('tD2').textContent=dl;
+}
+$('tSum').textContent=sum;
+}
+function calculate(){
+const lenV=parse($('len').value),wV=parse($('w').value),dV=parse($('d').value);
+const lu=$('lenU').value,du=$('dimU').value,shape=$('shape').value;
+const pRaw=$('price').value.trim(),price=pRaw===''?null:parse(pRaw);
+const res=$('results');
+const Lin=lenV*LU[lu],wIn=du==='mm'?wV/25.4:wV,dIn=du==='mm'?dV/25.4:dV;
+let bad=false;
+bad=setErr('len',!(lenV>0)?'Enter a joint length greater than 0 (numbers only, e.g. 60).':Lin>1200000?'Length is too large. Enter 100,000 ft (30,480 m) or less.':'')||bad;
+bad=setErr('w',!(wV>0)?'Enter a width greater than 0, e.g. 0.5 or 1/2.':wIn>3?'Width must be 3 in (76 mm) or less.':'')||bad;
+bad=setErr('d',!(dV>0)?'Enter a depth greater than 0, e.g. 0.25 or 1/4.':dIn>3?'Depth must be 3 in (76 mm) or less.':'')||bad;
+bad=setErr('price',price!==null&&!(price>=0&&price<=10000)?'Enter a price between 0 and 10,000, or leave blank.':'')||bad;
+if(bad){shown=false;res.innerHTML='';return;}
+const waste=+$('waste').value,fac=shape==='fillet'?.5:1;
+const tb=TUBES[+$('tube').value],tubeMl=tb[0]*OZ;
+const netIn3=wIn*dIn*Lin*fac,netMl=netIn3*IN3,wasteMl=netMl*waste/100,totMl=netMl+wasteMl;
+const exact=totMl/tubeMl,tubes=Math.max(1,Math.ceil(exact-1e-9));
+const covNet=(tubeMl/IN3)/(wIn*dIn*fac)/12,covW=covNet/(1+waste/100);
+const U={ft:'ft',in:'in',m:'m'}[lu];
+const wl=fv(wV,3)+' '+du,dl=fv(dV,3)+' '+du,lenL=fv(lenV,2)+' '+U;
+const shapeN=shape==='fillet'?'triangular fillet':'rectangular';
+const sumTxt=lenL+' of joint → '+fmt(tubes)+(tubes===1?' tube':' tubes');
+diagram(shape,wl,dl,wIn,dIn,sumTxt);
+let h='<div class="fade"><div class="big">'+fmt(tubes)+' <span>'+(tubes===1?'tube':'tubes')+'</span></div>';
+h+='<p class="sub">of '+tb[1]+' to buy (rounded up, '+waste+'% waste included)</p>';
+h+='<div class="tw"><table><thead><tr><th>Detail</th><th class="n">Value</th></tr></thead><tbody>';
+const row=(a,b)=>'<tr><td>'+a+'</td><td class="n">'+b+'</td></tr>';
+h+=row('Joint length',fmt(lenV>=100?Math.round(lenV*100)/100:lenV,2).replace(/\.?0+$/,'')+' '+U+(lu!=='ft'?' ('+fmt(Lin/12,1)+' ft)':''));
+h+=row('Joint size ('+shapeN+')',wl+' × '+dl);
+h+=row('Net sealant volume',fmt(netMl,0)+' mL ('+fmt(netIn3,1)+' in³)');
+h+=row('Waste allowance ('+waste+'%)','+'+fmt(wasteMl,0)+' mL');
+h+=row('Total volume to buy',fmt(totMl,0)+' mL ('+fmt(totMl/OZ,1)+' fl oz)');
+h+=row('Tube volume',fmt(tubeMl,0)+' mL');
+h+=row('Tubes (exact)',fmt(exact,2));
+h+=row('Coverage per tube (with waste)',fl(covW,1)+' ft ('+fl(covW*.3048,1)+' m)');
+if(price!==null)h+=row('Estimated cost ('+fmt(tubes)+' × $'+fmt(price,2)+')','$'+fmt(tubes*price,2));
+h+='</tbody></table></div>';
+const w=[];
+if(shape==='rect'){
+if(dIn>wIn)w.push('Depth is greater than width. Manufacturers usually recommend a depth of about half the width; check the product data sheet.');
+if(wIn>1)w.push('Joints wider than 1 in need backer rod and a sealant rated for that movement.');
+else if(dIn>.5)w.push('Depth over ½ in is rarely recommended. Use backer rod to limit sealant depth.');
+}else if(wIn>.5||dIn>.5)w.push('Fillet beads larger than ½ in can sag or cure slowly. Consider a product designed for thick beads.');
+w.forEach(x=>{h+='<div class="note warn">'+x+'</div>';});
+h+='<div class="tw"><table><thead><tr><th>Tube size (same job)</th><th class="n">mL</th><th class="n">Tubes</th></tr></thead><tbody>';
+TUBES.forEach((t,i)=>{const ml=t[0]*OZ,n=Math.max(1,Math.ceil(totMl/ml-1e-9));h+='<tr'+(i===+$('tube').value?' class="sel"':'')+'><td>'+t[1]+'</td><td class="n">'+fmt(ml,0)+'</td><td class="n">'+fmt(n)+'</td></tr>';});
+h+='</tbody></table></div>';
+h+='<div class="tw"><table><thead><tr><th>Joint size (in)</th><th class="n">Ft per tube</th><th class="n">m per tube</th></tr></thead><tbody>';
+SZ.forEach(s=>{const c=(tubeMl/IN3)/(s[1]*s[2]*fac*12)/(1+waste/100);h+='<tr><td>'+s[0]+'</td><td class="n">'+fl(c,1)+'</td><td class="n">'+fl(c*.3048,1)+'</td></tr>';});
+h+='</tbody></table></div>';
+h+='<div class="note">Planning estimate using common sealant guidance (depth about half of width, as in ASTM C1193). It is not engineering, code, or inspection approval. The product data sheet and local codes govern, and fire-rated joints need a listed firestop system.</div>';
+h+='<button type="button" class="copy" data-copy="1">Copy summary</button></div>';
+summary='Caulk calculator: '+fmt(tubes)+' × '+tb[1]+' for '+lenL+' of '+shapeN+' joint ('+wl+' wide × '+dl+' deep), '+waste+'% waste included. Total sealant '+fmt(totMl,0)+' mL. Estimate only; check the product data sheet.';
+shown=true;
+res.innerHTML=h;
+}
+$('f').addEventListener('submit',e=>{e.preventDefault();requestAnimationFrame(calculate);});
+$('f').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName==='SELECT'){e.preventDefault();requestAnimationFrame(calculate);}});
+$('waste').addEventListener('input',()=>{$('wv').textContent=$('waste').value;if(shown)requestAnimationFrame(calculate);});
+['lenU','shape','dimU','tube'].forEach(id=>$(id).addEventListener('change',()=>{if(shown)requestAnimationFrame(calculate);}));
+document.addEventListener('click',e=>{
+const b=e.target.closest('[data-copy]');if(!b)return;
+const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy summary';},2000);};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(summary).then(done,()=>{});}
+else{const t=document.createElement('textarea');t.value=summary;document.body.appendChild(t);t.select();try{document.execCommand('copy');done();}catch(x){}document.body.removeChild(t);}
+});
+$('yr').textContent=new Date().getFullYear();
+requestAnimationFrame(calculate);
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
