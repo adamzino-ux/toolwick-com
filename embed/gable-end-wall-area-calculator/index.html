@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Gable End Wall Area Calculator | Toolwick</title>
+<meta name="description" content="Free gable end wall area calculator. Enter width, roof pitch and wall height to get triangle and rectangle area, siding squares, and sheathing sheets.">
+<link rel="canonical" href="https://toolwick.com/gable-end-wall-area-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/gable-end-wall-area-calculator/">
+<meta property="og:title" content="Gable End Wall Area Calculator">
+<meta property="og:description" content="Free gable end wall area calculator. Enter width, roof pitch and wall height to get triangle and rectangle area, siding squares, and sheathing sheets.">
+<meta property="og:site_name" content="Toolwick">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.5rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.5rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.lb{font-size:14px;fill:#1a1a2e;paint-order:stroke;stroke:#fff;stroke-width:3px}
+.lb.a{fill:#0077b6;font-weight:600}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;font:inherit;padding:12px 16px;border:1px solid #ddd;border-radius:6px;background:#fff;color:#1a1a2e;min-height:44px}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin:.3rem 0 0}
+.err:empty{margin:0}
+.field{margin-bottom:1.25rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.hide{display:none}
+.ticks{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.25rem;font-size:.8rem;color:#666}
+button.main{width:100%;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-weight:600;cursor:pointer;min-height:44px}
+button.main:hover{background:#006299}
+button.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font:inherit;font-size:.85rem;cursor:pointer;min-height:44px;margin-top:1rem}
+button.copy:hover{background:#f0f8fc}
+.small{font-size:.8rem;color:#666;margin:.5rem 0 0;line-height:1.4}
+#results{margin-top:1.5rem}
+.fade{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.key .big{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.1}
+.key .sub{color:#444;font-size:.95rem;margin-top:.4rem}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right}
+tr.cur td{font-weight:700;color:#0077b6}
+h3{font-size:1rem;margin:1.25rem 0 .5rem}
+.note{font-size:.85rem;color:#555;border-left:3px solid #0077b6;padding-left:.75rem;margin:1rem 0 0}
+.ad-slot{min-height:0;margin:0}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:.75rem 0;min-height:44px}
+details p{margin:0 0 1rem}
+.formula{background:#f8f9fa;border-radius:6px;padding:1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9rem;overflow-x:auto}
+.related{display:grid;gap:.5rem;padding:0;list-style:none}
+.related li{margin:0}
+.related a{display:block;padding:12px 16px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;min-height:44px}
+.safety{margin:1.25rem 0;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{color:#666;margin-right:1rem;display:inline-block;min-height:44px;line-height:44px;text-decoration:underline}
+@media(max-width:640px){.row{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.6rem}.key .big{font-size:2rem}}
+</style>
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Gable End Wall Area Calculator</h1>
+<p>Use this gable end wall area calculator to find the square footage of the triangular peak and the wall below it, so you can order siding, house wrap and sheathing with confidence. Enter the width, roof pitch and wall height, then get area per end, a waste-adjusted order quantity and trim lengths.</p>
+
+<section class="card" aria-label="Gable end wall area calculator">
+<div class="diagram">
+<svg viewBox="20 0 400 290" role="img" aria-label="Gable end wall diagram showing width, rise, slope length and eave wall height">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 1L10 5L0 9z" fill="#0077b6"/></marker></defs>
+<rect id="dRect" x="110" y="170" width="200" height="60" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<polygon id="dTri" points="110,170 210,100 310,170" fill="#e6f3fa" stroke="#0077b6" stroke-width="2" stroke-linejoin="round"/>
+<line id="dGuide" x1="210" y1="100" x2="340" y2="100" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="310" y1="170" x2="340" y2="170" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line id="dRise" x1="332" y1="100" x2="332" y2="170" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tRise" class="lb a" x="340" y="130"><tspan x="340">Rise</tspan><tspan id="tRiseV" x="340" dy="1.15em">6.00 ft</tspan></text>
+<line id="dMid" x1="210" y1="170" x2="210" y2="100" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="90" y1="170" x2="90" y2="230" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="84" y1="170" x2="110" y2="170" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="84" y1="230" x2="110" y2="230" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text id="tEave" class="lb a" x="82" y="196" text-anchor="end"><tspan x="82">Wall</tspan><tspan id="tEaveV" x="82" dy="1.15em">8.00 ft</tspan></text>
+<line x1="110" y1="252" x2="310" y2="252" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="110" y1="232" x2="110" y2="258" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="310" y1="232" x2="310" y2="258" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text id="tW" class="lb a" x="210" y="276" text-anchor="middle">Width 24.00 ft</text>
+<text id="tSlope" class="lb" x="150" y="112" text-anchor="end">Slope 13.42 ft</text>
+<text id="tTri" class="lb" x="210" y="192" text-anchor="middle">Triangle 72.0 sq ft</text>
+<text id="tRect" class="lb" x="210" y="216" text-anchor="middle">Rectangle 192.0 sq ft</text>
+</svg>
+</div>
+
+<div class="field"><label for="unit">Units</label>
+<select id="unit"><option value="ft">Imperial (feet, sq ft)</option><option value="m">Metric (meters, m²)</option></select>
+<p class="small">Switching units converts the numbers you have already entered.</p></div>
+
+<div class="row">
+<div class="field"><label for="width">Gable width, eave to eave (<span class="ul">ft</span>)</label>
+<input id="width" type="number" inputmode="decimal" step="any" min="0" value="24" aria-describedby="e-width"><p class="err" id="e-width"></p></div>
+<div class="field"><label for="eave">Eave wall height below triangle (<span class="ul">ft</span>)</label>
+<input id="eave" type="number" inputmode="decimal" step="any" min="0" value="8" aria-describedby="e-eave"><p class="err" id="e-eave"></p></div>
+</div>
+
+<div class="field"><label for="mode">Gable height input</label>
+<select id="mode"><option value="pitch">Roof pitch (rise per 12 of run)</option><option value="rise">Known rise (peak height)</option></select></div>
+
+<div class="field" id="gPitch"><label for="pitch">Roof pitch: <span id="pv">6</span>:12</label>
+<input id="pitch" type="range" min="1" max="24" step="0.5" value="6">
+<div class="ticks" aria-hidden="true"><span>1:12</span><span>12:12 (45°)</span><span>24:12</span></div></div>
+
+<div class="field hide" id="gRise"><label for="rise">Rise from eave line to peak (<span class="ul">ft</span>)</label>
+<input id="rise" type="number" inputmode="decimal" step="any" min="0" value="6" aria-describedby="e-rise"><p class="err" id="e-rise"></p></div>
+
+<div class="row">
+<div class="field"><label for="open">Openings per end: windows, vents, doors (<span class="ua">sq ft</span>)</label>
+<input id="open" type="number" inputmode="decimal" step="any" min="0" value="15" aria-describedby="e-open"><p class="err" id="e-open"></p></div>
+<div class="field"><label for="ends">Number of gable ends</label>
+<select id="ends"><option value="1">1 end</option><option value="2" selected>2 ends</option></select></div>
+</div>
+
+<div class="field"><label for="waste">Waste allowance: <span id="wv">10</span>%</label>
+<input id="waste" type="range" min="0" max="30" step="1" value="10">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>15%</span><span>30%</span></div></div>
+
+<button class="main" id="calcBtn" type="button">Calculate Gable Wall Area</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<p class="small">Estimates only. See the code notes below the calculator.</p>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</section>
+
+<aside class="safety" role="note">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed engineer or contractor for structural work.</aside>
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Gable End Wall Area Calculator</h2>
+<p>Enter the outside width of the wall from eave to eave, then choose how you know the peak height: roof pitch (such as 6:12) or a measured rise. Add the height of the straight wall below the triangle, and subtract windows or vents. The calculator returns area per end, total net area, an order quantity with waste, siding squares, sheathing sheets, slope length and trim run.</p>
+<p>Set the eave wall height to 0 if you only need the triangular peak, for example when a lower wall is already sided. Use the waste slider for cuts: 10% suits plain siding, while 15% or more suits diagonal patterns.</p>
+
+<h2>Why This Matters</h2>
+<p>Gable ends are the most commonly miscounted part of an exterior. The triangle looks small from the ground, but on a 30-foot-wide house with an 8:12 pitch it is 150 square feet per end, or 300 square feet across two ends, before you add the rectangle beneath it. Order siding for the main walls only and you will run short by about three squares on a two-gable house, which means a second delivery, a possible dye-lot mismatch and a crew standing idle.</p>
+<p>Roofers, siding installers, painters and homeowners all need this number. Painters price by the square foot and need the true surface, including the peak that requires a taller ladder or scaffold. Insulation and house-wrap quantities follow the same area. Because pitches vary so much, a 24-foot width gives anywhere from 48 square feet of triangle at 4:12 to 144 at 12:12. The comparison table below the result shows that spread for your own width, which helps when you are weighing a steeper roof against the added cladding cost.</p>
+
+<h2>How It's Calculated</h2>
+<p>A gable end wall is a triangle sitting on a rectangle. Each piece has a simple area formula, and the calculator adds them, subtracts openings, applies waste, and rounds order quantities up.</p>
+<div class="formula">Rise = (Width ÷ 2) × (Pitch ÷ 12)<br>Triangle = ½ × Width × Rise<br>Rectangle = Width × Eave wall height<br>Net per end = Triangle + Rectangle − Openings<br>Order area = Net per end × Ends × (1 + Waste %)<br>Slope length = √((Width ÷ 2)² + Rise²)</div>
+<p>Pitch is the inches of rise for every 12 inches of horizontal run, so a 6:12 roof rises half a foot per foot of run. If you enter a known rise instead, the pitch is back-calculated as Rise ÷ (Width ÷ 2) × 12. Imperial results convert to siding squares (100 sq ft each, rounded up to the nearest tenth) and 4×8 sheathing sheets (32 sq ft each). Metric results use 1.22 × 2.44 m sheets (2.977 m²). Order quantities and trim lengths always round up, never down.</p>
+
+<h2>Worked Example</h2>
+<p>A gable end is 24 ft wide with a 6:12 pitch, an 8 ft eave wall, one 15 sq ft window per end, two ends, and 10% waste.</p>
+<ul>
+<li>Half-width = 12 ft, so rise = 12 × 6 ÷ 12 = 6 ft.</li>
+<li>Triangle = ½ × 24 × 6 = 72 sq ft.</li>
+<li>Rectangle = 24 × 8 = 192 sq ft, giving a gross area of 264 sq ft per end.</li>
+<li>Net per end = 264 − 15 = 249 sq ft; for two ends = 498 sq ft.</li>
+<li>With 10% waste: 498 × 1.10 = 547.8, rounded up to 548 sq ft, or 5.5 siding squares.</li>
+<li>Sheathing: 548 ÷ 32 = 17.1, rounded up to 18 sheets.</li>
+<li>Slope length = √(12² + 6²) = 13.42 ft per side, about 53.7 ft of rake edge across both sides of both ends.</li>
+</ul>
+<p>These match the default values in the calculator above.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the outside, not the inside.</strong> Siding wraps the framing, so use the outside wall width at the eave line.</li>
+<li><strong>Don't confuse rise with slope length.</strong> The area formula needs vertical rise. The slope length (along the rafter) is for trim, drip edge and rake boards.</li>
+<li><strong>Deduct openings carefully.</strong> Small vents barely matter, but leaving a large window out of the deduction inflates the order. Many installers deduct only openings over 10 sq ft to keep a safety margin.</li>
+<li><strong>Add extra waste for diagonal or patterned cladding.</strong> Triangles produce many angled cuts, so lap siding often wastes 10–15% and shingles or board-and-batten patterns can waste more.</li>
+<li><strong>Check overhangs separately.</strong> Rake overhangs and soffit returns are not included. Add their trim lengths on top of the rake total shown.</li>
+</ul>
+
+<h2>Code Notes &amp; Limits</h2>
+<p>This tool calculates geometric area only. Order quantities round up, which is the conservative side for material. It does not size framing, bracing, fasteners or wind-load connections. Gable end walls are tall, exposed wall sections, and framing and sheathing requirements are covered by the IRC wall provisions (Chapter 6) and local wind and seismic amendments. Codes vary by jurisdiction, so check with your building department. The results are not engineering, permit or inspection approval.</p>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How do you calculate the area of a gable end wall?</summary><p>Split it into a triangle and a rectangle. Triangle area is half the width times the rise, and rectangle area is width times the wall height below it. Add them, then subtract any windows or doors.</p></details>
+<details><summary>How do I find the gable height from roof pitch?</summary><p>Divide the width by two, then multiply by pitch over 12. A 30 ft wide gable with an 8:12 pitch has a rise of 15 × 8 ÷ 12 = 10 ft. If you can measure the peak directly, use the known-rise option instead.</p></details>
+<details><summary>How much siding do I need for a gable end?</summary><p>Take the net area, add 10–15% for waste, and divide by 100 to get squares. The calculator rounds up to the nearest tenth of a square, so round that up again to whole boxes or bundles of your product. Complex patterns or lots of angled cuts can push waste higher.</p></details>
+<details><summary>Does the area include the roof overhang?</summary><p>No. The calculator measures the wall surface only, from eave line to peak. Rake boards, fascia and soffit are separate trim items, though the rake length shown is a useful starting point for them.</p></details>
+<details><summary>What is the area of a triangle gable only?</summary><p>Set the eave wall height to 0. The result then covers only the triangular peak: ½ × width × rise. This is common when the lower wall is a different material or already finished.</p></details>
+<details><summary>Can I use this for a house with gables on one side only?</summary><p>Yes. Choose "1 end" in the number of gable ends menu. For a house with different widths or heights on each end, run the calculator once per end and add the results.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="related">
+<li><a href="/shower-wall-tile-calculator/">Shower Wall Tile Calculator</a></li>
+<li><a href="/tributary-area-calculator/">Tributary Area Calculator for Beams, Columns &amp; Footings</a></li>
+<li><a href="/board-and-batten-wall-calculator/">Board and Batten Wall Calculator</a></li>
+<li><a href="/knee-wall-stud-height-attic-storage-calculator/">Knee Wall Stud Height &amp; Attic Storage Calculator</a></li>
+<li><a href="/cinder-block-wall-calculator/">Cinder Block Wall Calculator</a></li>
+<li><a href="/masonry-wall-bond-pattern-generator/">Masonry Wall Bond Pattern Generator</a></li>
+</ul>
+</section>
+
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/gable-end-wall-area-calculator/">Toolwick</a></p>
+
+<script>
+const $=id=>document.getElementById(id);
+const f=(n,d=1)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const up=(x,d)=>Math.ceil(x*Math.pow(10,d)-1e-9)/Math.pow(10,d);
+let last='',cu='ft';
+$('yr').textContent=new Date().getFullYear();
+function units(){const m=$('unit').value==='m';return{m:m,l:m?'m':'ft',a:m?'m²':'sq ft'}}
+function num(id){const v=$(id).value.trim();return v===''?NaN:Number(v)}
+function setErr(id,m){$(id).classList.add('bad');$(id).setAttribute('aria-invalid','true');$('e-'+id).textContent=m}
+function clr(){document.querySelectorAll('.err').forEach(e=>e.textContent='');document.querySelectorAll('.bad').forEach(e=>{e.classList.remove('bad');e.removeAttribute('aria-invalid')})}
+function ftIn(x){const t=Math.ceil(x*12-1e-9),a=Math.floor(t/12);return a+' ft '+(t%12)+' in'}
+function fail(){last='';requestAnimationFrame(()=>{$('results').innerHTML=''})}
+function calc(){
+ clr();const u=units();let ok=true;
+ document.querySelectorAll('.ul').forEach(e=>e.textContent=u.l);
+ document.querySelectorAll('.ua').forEach(e=>e.textContent=u.a);
+ const w=num('width'),mode=$('mode').value,eave=num('eave'),op=num('open'),ends=+$('ends').value,waste=+$('waste').value;
+ const maxW=u.m?60:200,maxH=u.m?30:100;
+ if(!(w>0)){setErr('width','Enter a width greater than 0.');ok=false}
+ else if(w>maxW){setErr('width','Width looks too large. Enter '+maxW+' '+u.l+' or less.');ok=false}
+ let rise=NaN,p=NaN;
+ if(mode==='pitch'){p=+$('pitch').value;if(w>0)rise=w/2*p/12}
+ else{rise=num('rise');
+  if(!(rise>0)){setErr('rise','Enter a rise greater than 0.');ok=false}
+  else if(w>0&&rise>w){setErr('rise','Rise cannot exceed the width (that is steeper than 24:12).');ok=false}}
+ if(!(eave>=0)){setErr('eave','Enter 0 or more (use 0 for the triangle only).');ok=false}
+ else if(eave>maxH){setErr('eave','Wall height looks too large. Enter '+maxH+' '+u.l+' or less.');ok=false}
+ if(!(op>=0)){setErr('open','Enter 0 or more (use 0 for no openings).');ok=false}
+ if(!ok){fail();return}
+ const half=w/2;p=rise/half*12;
+ const tri=.5*w*rise,rect=w*eave,gross=tri+rect;
+ if(op>gross){setErr('open','Openings ('+f(op,1)+' '+u.a+') cannot exceed the gross wall area ('+f(gross,1)+' '+u.a+').');fail();return}
+ const net=gross-op,netT=net*ends,wasteA=netT*waste/100,order=up(netT*(1+waste/100),0);
+ const slope=Math.sqrt(half*half+rise*rise),slopeUp=up(slope,2),rake=up(slope*2*ends,1);
+ const ang=Math.atan(rise/half)*180/Math.PI;
+ const sheetA=u.m?1.22*2.44:32,sheets=Math.ceil(order/sheetA-1e-9),sq=up(order/100,1);
+ const fi=x=>u.m?'':' ('+ftIn(x)+')';
+ let rows=[['Triangle (gable) area per end',f(tri,1)+' '+u.a],['Rectangle area per end',f(rect,1)+' '+u.a],['Gross area per end',f(gross,1)+' '+u.a],['Openings deducted per end','−'+f(op,1)+' '+u.a],['Net area per end',f(net,1)+' '+u.a],['Net area, '+ends+(ends>1?' ends':' end'),f(netT,1)+' '+u.a],['Waste allowance ('+waste+'%)','+'+f(wasteA,1)+' '+u.a],['Order area (rounded up)',f(order,0)+' '+u.a]];
+ if(!u.m)rows.push(['Siding squares (100 sq ft, rounded up)',f(sq,1)]);
+ rows.push([u.m?'Sheathing sheets, 1.22 × 2.44 m (rounded up)':'Sheathing sheets, 4×8 (rounded up)',f(sheets,0)]);
+ rows.push(['Rise (eave line to peak)',f(rise,2)+' '+u.l+fi(rise)]);
+ rows.push(['Slope length, each side (rounded up)',f(slopeUp,2)+' '+u.l+fi(slopeUp)]);
+ rows.push(['Rake edge, all sides (rounded up)',f(rake,1)+' '+u.l]);
+ rows.push(['Roof pitch / angle',f(p,1)+':12 / '+f(ang,1)+'°']);
+ let t1='<div class="tw" tabindex="0" role="region" aria-label="Results table, scrollable"><table><thead><tr><th>Measurement</th><th class="n">Value</th></tr></thead><tbody>';
+ rows.forEach(r=>{t1+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>'});t1+='</tbody></table></div>';
+ let t2='<h3>Pitch comparison for your width</h3><div class="tw" tabindex="0" role="region" aria-label="Pitch comparison table, scrollable"><table><thead><tr><th>Pitch</th><th class="n">Rise ('+u.l+')</th><th class="n">Triangle ('+u.a+')</th><th class="n">Net / end ('+u.a+')</th></tr></thead><tbody>';
+ const cmp=(lab,pp,cur)=>{const r=half*pp/12,tr=.5*w*r;return '<tr'+(cur?' class="cur"':'')+'><td>'+lab+'</td><td class="n">'+f(r,2)+'</td><td class="n">'+f(tr,1)+'</td><td class="n">'+f(Math.max(tr+rect-op,0),1)+'</td></tr>'};
+ t2+=cmp('Your input ('+f(p,1)+':12)',p,true);
+ [3,4,6,8,10,12].forEach(x=>{t2+=cmp(x+':12',x,false)});t2+='</tbody></table></div>';
+ const html='<div class="fade"><div class="key"><div class="big">'+f(netT,1)+' '+u.a+'</div><div class="sub">Net gable end wall area ('+ends+(ends>1?' ends':' end')+')<br>Order about <strong>'+f(order,0)+' '+u.a+'</strong> including '+waste+'% waste</div></div>'+t1+t2+'<button class="copy" id="copyBtn" type="button">Copy results</button><p class="note">Area estimate only. Order quantities round up. This is not engineering, permit or inspection approval; framing, bracing and wind requirements follow your local code (IRC Chapter 6 or equivalent).</p></div>';
+ last='Gable end wall area ('+ends+' end'+(ends>1?'s':'')+')\nWidth: '+f(w,2)+' '+u.l+'; rise: '+f(rise,2)+' '+u.l+' ('+f(p,1)+':12); eave wall: '+f(eave,2)+' '+u.l+'\nTriangle per end: '+f(tri,1)+' '+u.a+'\nRectangle per end: '+f(rect,1)+' '+u.a+'\nOpenings per end: '+f(op,1)+' '+u.a+'\nNet total: '+f(netT,1)+' '+u.a+'\nOrder with '+waste+'% waste: '+f(order,0)+' '+u.a+(u.m?'':' ('+f(sq,1)+' squares)')+'\nSheathing sheets: '+f(sheets,0)+'\nRake edge total: '+f(rake,1)+' '+u.l+'\nToolwick Gable End Wall Area Calculator';
+ requestAnimationFrame(()=>{
+  $('results').innerHTML=html;
+  const rd=Math.min(100,Math.max(12,100*rise/half)),ay=170-rd,m=ay+rd/2;
+  $('dTri').setAttribute('points','110,170 210,'+ay+' 310,170');
+  $('dGuide').setAttribute('y1',ay);$('dGuide').setAttribute('y2',ay);
+  $('dMid').setAttribute('y2',ay);
+  $('dRise').setAttribute('y1',ay);
+  $('tRise').setAttribute('y',(ay+170)/2-4);
+  $('tRiseV').textContent=f(rise,2)+' '+u.l;
+  $('tSlope').setAttribute('y',m-8);
+  $('tSlope').textContent='Slope '+f(slope,2)+' '+u.l;
+  $('tW').textContent='Width '+f(w,2)+' '+u.l;
+  $('tEaveV').textContent=f(eave,2)+' '+u.l;
+  $('tTri').textContent='Triangle '+f(tri,1)+' '+u.a;
+  $('tRect').textContent='Rectangle '+f(rect,1)+' '+u.a;
+  $('dRect').setAttribute('stroke-dasharray',eave>0?'':'5 4');
+  $('dRect').setAttribute('opacity',eave>0?'1':'.5');
+  const cb=$('copyBtn');
+  cb.addEventListener('click',()=>{
+   const done=()=>{cb.textContent='Copied!';setTimeout(()=>{cb.textContent='Copy results'},2000)};
+   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(last).then(done,done)}
+   else{const ta=document.createElement('textarea');ta.value=last;document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(ta);done()}
+  });
+ });
+}
+const go=()=>requestAnimationFrame(calc);
+$('calcBtn').addEventListener('click',go);
+['width','eave','rise','open'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go()}}));
+$('ends').addEventListener('change',go);
+$('unit').addEventListener('change',()=>{
+ const n=$('unit').value;
+ if(n!==cu){
+  const k=n==='m'?0.3048:1/0.3048;
+  [['width',k],['eave',k],['rise',k],['open',k*k]].forEach(a=>{
+   const v=num(a[0]);
+   if(isFinite(v)){$(a[0]).value=n==='m'?Math.round(v*a[1]*1000)/1000:Math.round(v*a[1]*100)/100}
+  });
+  cu=n;
+ }
+ go();
+});
+$('mode').addEventListener('change',()=>{
+ const r=$('mode').value==='rise';
+ if(r){const w=num('width');if(w>0)$('rise').value=Math.round(w/2*(+$('pitch').value)/12*100)/100}
+ $('gRise').classList.toggle('hide',!r);$('gPitch').classList.toggle('hide',r);go();
+});
+$('pitch').addEventListener('input',()=>{$('pv').textContent=$('pitch').value;go()});
+$('waste').addEventListener('input',()=>{$('wv').textContent=$('waste').value;go()});
+calc();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
