@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free House Wrap Calculator | Toolwick</title>
+<meta name="description" content="Free house wrap calculator: estimate rolls of housewrap, seam tape, cap nails and flashing tape from your wall size, gables and roll size.">
+<link rel="canonical" href="https://toolwick.com/house-wrap-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #eee}
+nav a{display:inline-flex;align-items:center;min-height:44px;font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none}
+h1{font-size:1.8rem;line-height:1.25;margin:1.5rem 0 .75rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2.5rem 0 .75rem}
+h3{font-size:1.05rem;margin:1.25rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:20px;fill:#1a1a2e}
+.cap{font-size:.85rem;color:#666;margin:.25rem .5rem .25rem}
+.grp{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:#555;margin:1.5rem 0 .75rem;border-bottom:1px solid #eee;padding-bottom:.35rem}
+.grp:first-of-type{margin-top:0}
+.field{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+input.invalid{border-color:#e74c3c}
+.err{display:block;color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.err:empty{display:none}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.row{display:grid;gap:0 1rem}
+@media(min-width:641px){.r2{grid-template-columns:1fr 1fr}.r3{grid-template-columns:1fr 1fr 1fr}}
+.btn{width:100%;min-height:48px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:.5rem}
+.btn:hover{background:#006299}
+.results{opacity:0;transition:opacity .3s ease}
+.results.show{opacity:1;margin-top:2rem}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.5rem}
+.key .lbl{font-size:.85rem;color:#444;font-weight:500}
+.key .big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.15}
+.key .sub{font-size:.95rem;color:#444}
+.tw{overflow-x:auto;margin-bottom:1.5rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:.6rem .75rem;border-bottom:1px solid #ddd;font-weight:600}
+td{padding:.6rem .75rem;border-bottom:1px solid #eee;vertical-align:top}
+tbody tr:nth-child(odd) td{background:#fafafa}
+tbody tr:nth-child(even) td{background:#fff}
+tbody tr.sel td{background:#e8f4fb;font-weight:600}
+.n{text-align:right;white-space:nowrap}
+.copy{min-height:44px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.9rem;font-weight:600;cursor:pointer}
+.copy:hover{background:#f0f8fc}
+.note{font-size:.85rem;color:#666;margin-top:1rem}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;font-weight:600;padding:.75rem 0;min-height:44px}
+details p{margin:0 0 1rem}
+.formula{background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;margin:0 0 1rem;overflow-x:auto;white-space:pre}
+ul,ol{padding-left:1.25rem;margin:0 0 1rem}
+li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0}
+.rel li{margin:0}
+.rel a{display:block;padding:.6rem 0;min-height:44px;border-bottom:1px solid #eee}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2rem;font-size:.9rem;color:#666}
+footer a{color:#0077b6;margin-right:.75rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:640px){.card{padding:1.25rem}h1{font-size:1.55rem}.key .big{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/house-wrap-calculator/">
+<meta property="og:title" content="House Wrap Calculator">
+<meta property="og:description" content="Free house wrap calculator: estimate rolls of housewrap, seam tape, cap nails and flashing tape from your wall size, gables and roll size.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>House Wrap Calculator</h1>
+<p>Use this house wrap calculator to work out how many rolls of housewrap, seam tape, cap fasteners and window flashing tape you need to cover your walls and gable ends. Enter your dimensions and get a conservative, rounded-up shopping list in seconds.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="diagram" viewBox="0 0 560 320" role="img" aria-labelledby="svgT svgD">
+<title id="svgT">House wrap elevation diagram</title>
+<desc id="svgD">Gable-end wall with width, wall height, gable rise and roll width dimensions. Dashed lines show house wrap courses.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<text id="dInfo" x="280" y="28" text-anchor="middle">Perimeter — · — courses</text>
+<line x1="90" y1="260" x2="420" y2="260" stroke="#e0e0e0" stroke-width="3"/>
+<g id="gableG">
+<polygon points="120,140 255,72 390,140" fill="#f8f9fa" stroke="#0077b6" stroke-width="2"/>
+<line x1="255" y1="72" x2="414" y2="72" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="390" y1="140" x2="414" y2="140" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="414" y1="74" x2="414" y2="138" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dR" x="424" y="113">Rise</text>
+</g>
+<rect x="120" y="140" width="270" height="120" fill="#f8f9fa" stroke="#0077b6" stroke-width="2"/>
+<rect x="150" y="175" width="45" height="40" fill="#fff" stroke="#b5b5b5"/>
+<rect x="225" y="175" width="45" height="40" fill="#fff" stroke="#b5b5b5"/>
+<rect x="320" y="190" width="34" height="70" fill="#fff" stroke="#b5b5b5"/>
+<g id="courses" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="6 4" opacity=".7"></g>
+<line x1="94" y1="142" x2="94" y2="258" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="94" y1="140" x2="120" y2="140" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<text id="dH" x="86" y="206" text-anchor="end">H</text>
+<line id="rollG" x1="390" y1="140" x2="414" y2="140" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line id="rollA" x1="414" y1="142" x2="414" y2="258" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dRoll" x="424" y="206">Roll</text>
+<line x1="120" y1="260" x2="120" y2="290" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="390" y1="260" x2="390" y2="290" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="122" y1="285" x2="388" y2="285" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dW" x="255" y="310" text-anchor="middle">Width</text>
+</svg>
+<p class="cap">Gable-end elevation. Dashed blue lines are house wrap courses (2 in. horizontal laps); they update when you calculate.</p>
+</div>
+
+<form id="form" novalidate>
+<p class="grp">House dimensions</p>
+<div class="row r2">
+<div class="field"><label for="len">Length of house (ft)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="40" aria-describedby="lenErr"><span class="err" id="lenErr"></span></div>
+<div class="field"><label for="wid">Width, gable end (ft)</label><input id="wid" type="number" inputmode="decimal" step="any" min="0" value="28" aria-describedby="widErr"><span class="err" id="widErr"></span></div>
+</div>
+<div class="row r2">
+<div class="field"><label for="hgt">Wall height (ft)</label><input id="hgt" type="number" inputmode="decimal" step="any" min="0" value="9" aria-describedby="hgtErr hgtHint"><span class="err" id="hgtErr"></span><div class="hint" id="hgtHint">Bottom of rim joist to top plate. Add all stories.</div></div>
+<div class="field"><label for="rise">Gable rise (ft)</label><input id="rise" type="number" inputmode="decimal" step="any" min="0" value="7" aria-describedby="riseErr riseHint"><span class="err" id="riseErr"></span><div class="hint" id="riseHint">Roof rise at each gable end. Use 0 for hip roofs.</div></div>
+</div>
+
+<p class="grp">Openings (for flashing tape; not deducted from wrap)</p>
+<div class="row r3">
+<div class="field"><label for="wn">Number of windows</label><input id="wn" type="number" inputmode="numeric" step="1" min="0" value="8" aria-describedby="wnErr"><span class="err" id="wnErr"></span></div>
+<div class="field"><label for="ww">Avg window width (ft)</label><input id="ww" type="number" inputmode="decimal" step="any" min="0" value="3" aria-describedby="wwErr"><span class="err" id="wwErr"></span></div>
+<div class="field"><label for="wh">Avg window height (ft)</label><input id="wh" type="number" inputmode="decimal" step="any" min="0" value="5" aria-describedby="whErr"><span class="err" id="whErr"></span></div>
+</div>
+<div class="row r3">
+<div class="field"><label for="dn">Number of doors</label><input id="dn" type="number" inputmode="numeric" step="1" min="0" value="2" aria-describedby="dnErr"><span class="err" id="dnErr"></span></div>
+<div class="field"><label for="dw">Avg door width (ft)</label><input id="dw" type="number" inputmode="decimal" step="any" min="0" value="3" aria-describedby="dwErr"><span class="err" id="dwErr"></span></div>
+<div class="field"><label for="dh">Avg door height (ft)</label><input id="dh" type="number" inputmode="decimal" step="any" min="0" value="6.8" aria-describedby="dhErr"><span class="err" id="dhErr"></span></div>
+</div>
+
+<p class="grp">Roll and waste</p>
+<div class="field"><label for="roll">Roll size (width × length)</label>
+<select id="roll"><option value="3x100">3 ft × 100 ft (300 sq ft)</option><option value="4.5x100">4.5 ft × 100 ft (450 sq ft)</option><option value="9x100">9 ft × 100 ft (900 sq ft)</option><option value="9x150" selected>9 ft × 150 ft (1,350 sq ft)</option><option value="10x100">10 ft × 100 ft (1,000 sq ft)</option></select></div>
+<div class="field"><label for="waste">Extra waste allowance: <span id="wasteVal">10%</span></label>
+<input id="waste" type="range" min="0" max="20" step="1" value="10">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>10%</span><span>20%</span></div></div>
+<div class="field"><label for="price">Price per roll, optional ($)</label><input id="price" type="number" inputmode="decimal" step="any" min="0" placeholder="e.g. 180" aria-describedby="priceErr"><span class="err" id="priceErr"></span></div>
+<button class="btn" type="submit" id="calcBtn">Calculate House Wrap</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div class="results" id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This House Wrap Calculator</h2>
+<p>Enter the length and width of your house, the total wall height, and the rise of each gable end. Pick the roll size you plan to buy and set a waste allowance, then press Calculate. You get the number of rolls to buy (always rounded up), seam tape, cap nails or staples, window and door flashing tape, and a side-by-side comparison of every common roll size.</p>
+
+<h2>Why This Matters</h2>
+<p>House wrap is your wall's water-resistive barrier. It sheds bulk water that gets behind siding while letting vapor escape. Running out halfway up a wall is expensive: the crew stands idle, a second trip to the lumberyard eats an hour or two, and exposed OSB or plywood sheathing soaks up rain. Many products only tolerate a few months of UV exposure (commonly 3 to 9, so check your label), so leaving gaps is not a safe plan.</p>
+<p>Buying too much is not free either. A 9 ft × 150 ft roll often runs well over $150, and leftovers rarely get used. A typical 1,800 sq ft ranch has around 1,400 to 1,800 sq ft of wall surface including gables. Roll size changes the answer: on 9 ft walls a 9 ft roll wraps the whole height in one pass, while 3 ft rolls need four courses and many more laps. Homeowners planning a DIY re-side, builders pricing a bid, and siding contractors ordering for a crew all need a number they can trust before the truck is loaded.</p>
+
+<h2>How It's Calculated</h2>
+<p>Most installers run house wrap horizontally, starting at the bottom and lapping each upper course over the lower one so water sheds. This calculator follows that method and rounds every result up.</p>
+<div class="formula">Perimeter P = 2 × (Length + Width)
+Usable roll width = Roll width − 2 in.
+Wall courses n = 1 if Height ≤ Roll width
+              else 1 + ceil((Height − Roll width) / usable width)
+Wall linear ft = n × P
+Gable linear ft = 2 × sum of each course's widest width
+Needed ft = (Wall + Gable) × (1 + waste) × L / (L − 0.5 ft)
+Rolls = ceil(Needed ft / Roll length L)</div>
+<p>The 2 in. horizontal lap and 6 in. (0.5 ft) vertical lap follow the water-resistive barrier lap rules in IRC R703.2 (2018 and 2021 editions). Manufacturers often require the same or larger laps, so follow your product's instructions. Gable courses are counted at their widest point, because triangle offcuts are hard to reuse. Openings are <strong>not</strong> subtracted: wrap goes on continuously and is cut out afterward.</p>
+<p>Seam tape is the horizontal seam length plus one vertical seam per roll, plus 10%, in 164 ft rolls. Cap fasteners are estimated at one per 1.33 sq ft (about 16 in. by 12 in.), plus 10%, in boxes of 1,000. Flashing tape is the opening perimeters plus 25% for sill pans and corner overlaps, in 75 ft rolls. Local codes vary, and this tool is an estimating aid, not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>A 40 ft × 28 ft house with 9 ft walls, a 7 ft gable rise, 9 ft × 150 ft rolls, 10% waste, 8 windows (3 × 5 ft) and 2 doors (3 × 6.8 ft):</p>
+<ol>
+<li>Perimeter = 2 × (40 + 28) = <strong>136 ft</strong>. Walls = 136 × 9 = 1,224 sq ft; gables = 28 × 7 = 196 sq ft; total surface = <strong>1,420 sq ft</strong>.</li>
+<li>The 9 ft wall fits one 9 ft course, so wall wrap = 136 ft.</li>
+<li>The 7 ft rise fits in one course, and each gable needs 28 ft at its widest. Two gables = 56 ft.</li>
+<li>Subtotal = 192 ft. Add 10% = 211.2 ft. Allow for vertical laps (×150 ÷ 149.5) = <strong>211.9 ft</strong>, or 1,907.2 sq ft of material.</li>
+<li>211.9 ÷ 150 = 1.41, rounded up to <strong>2 rolls</strong>. (9 × 100 rolls would need 3.)</li>
+<li>Seam tape: 56 ft horizontal + 2 × 9 ft vertical = 74 ft, ×1.1 = about 82 ft, so <strong>1 roll</strong>.</li>
+<li>Cap fasteners: 1,420 ÷ 1.333 = 1,065, ×1.1 = 1,172, so <strong>2 boxes</strong>.</li>
+<li>Flashing tape: windows 8 × 16 ft = 128 ft, doors 2 × 19.6 ft = 39.2 ft, total 167.2 ft × 1.25 = 209 ft, so <strong>3 rolls</strong> of 75 ft.</li>
+</ol>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Don't deduct windows and doors.</strong> Cutting out openings leaves offcuts that are rarely usable, and the extra wrap around openings gets folded into the flashing.</li>
+<li><strong>Match the roll to your wall height.</strong> A 9 ft roll on an 8 ft wall wastes a foot, but it also covers the rim joist, which is often the better use.</li>
+<li><strong>Lap shingle-style.</strong> The upper course goes over the lower one, at least 2 in. horizontally and 6 in. at vertical joints, so water never runs behind a seam.</li>
+<li><strong>Flash openings before the siding.</strong> Sill pan first, then jambs, then head, with the wrap lapping over the head flashing. Follow the window maker's sequence.</li>
+<li><strong>Add extra for complex houses.</strong> Bump the waste slider to 15–20% for dormers, bump-outs, many corners or first-time DIY installs.</li>
+<li><strong>Use the right fasteners.</strong> Cap nails or cap staples into studs, and check your wrap's maximum spacing. Plain staples tear out in wind.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many square feet does a roll of house wrap cover?</summary><p>A 9 ft × 150 ft roll is 1,350 sq ft, a 9 ft × 100 ft roll is 900 sq ft, a 10 ft × 100 ft roll is 1,000 sq ft, and a 3 ft × 100 ft roll is 300 sq ft. Real coverage is lower once you subtract the laps and cut waste, so use the calculator rather than the printed number.</p></details>
+<details><summary>Do I subtract windows and doors when estimating house wrap?</summary><p>No. Wrap is installed continuously over openings and then cut out with an X or modified-I cut and folded into the rough opening. Subtracting openings is how most people end up short.</p></details>
+<details><summary>How much extra house wrap should I buy?</summary><p>10% is a sensible minimum for a simple rectangular house once laps are counted. Use 15–20% for houses with dormers, many corners or multiple stories, or if you're new to the job.</p></details>
+<details><summary>Do I have to tape house wrap seams?</summary><p>It depends on the product and the warranty. Many manufacturers require seam tape for their system to count as a sealed drainage plane. Code requires lapped joints, and the manufacturer's installation instructions are part of what an inspector checks, so read yours.</p></details>
+<details><summary>Should house wrap go on horizontally or vertically?</summary><p>Horizontal is standard, because each upper course laps over the lower one and sheds water naturally. Vertical installation is allowed by some manufacturers but needs specific lap and taping details, so check the instructions first.</p></details>
+<details><summary>Is house wrap the same as a vapor barrier?</summary><p>No. House wrap is a water-resistive barrier that blocks liquid water but lets water vapor pass through so walls can dry. A vapor retarder slows vapor and goes in a different place, depending on your climate zone and local code.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/gable-end-wall-area-calculator/">Gable End Wall Area Calculator</a></li>
+<li><a href="/contractor-hourly-rate-calculator/">Contractor Hourly Rate Calculator</a></li>
+<li><a href="/caulk-sealant-tube-calculator/">Caulk &amp; Sealant Tube Calculator</a></li>
+<li><a href="/fiberglass-batt-insulation-calculator/">Fiberglass Batt Insulation Calculator</a></li>
+<li><a href="/roof-replacement-cost-calculator/">Roof Replacement Cost Calculator</a></li>
+<li><a href="/ridge-cap-shingle-calculator/">Ridge Cap Shingle Calculator</a></li>
+</ul>
+</section>
+
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/house-wrap-calculator/">Toolwick</a></p>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const ROLLS={'3x100':[3,100],'4.5x100':[4.5,100],'9x100':[9,100],'9x150':[9,150],'10x100':[10,100]};
+const LAP=2/12;
+const fmt=(n,d)=>Number(n).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});
+const f2=n=>Number(Number(n).toFixed(2)).toLocaleString('en-US',{maximumFractionDigits:2});
+const cs=x=>Math.ceil(x-1e-9);
+const pl=(n,w)=>fmt(n)+' '+w+(n===1?'':'s');
+let summary='';
+
+function calc(rw,rl,P,h,Wd,rise,w){
+  const eff=rw-LAP;
+  const n=h<=rw?1:1+Math.ceil((h-rw)/eff);
+  let g=0;
+  if(rise>0){const gc=Math.ceil(rise/eff);for(let k=0;k<gc;k++){g+=Math.max(0,Wd*(1-k*eff/rise));}g*=2;}
+  const lin=n*P+g;
+  const need=lin*(1+w)*rl/(rl-0.5);
+  return{n:n,g:g,lin:lin,need:need,rolls:Math.max(1,Math.ceil(need/rl)),eff:eff};
+}
+
+function drawDiagram(Wd,H,R,rw,P,n,eff){
+  $('dW').textContent='Width '+f2(Wd)+' ft (gable end)';
+  $('dH').textContent='H '+f2(H)+' ft';
+  $('dR').textContent='Rise '+f2(R)+' ft';
+  $('dRoll').textContent='Roll '+f2(rw)+' ft';
+  $('dInfo').textContent='Perimeter '+f2(P)+' ft · '+n+' course'+(n===1?'':'s');
+  $('gableG').style.display=R>0?'':'none';
+  const px=Math.min(1,rw/H)*120;
+  const ty=260-px;
+  $('rollA').setAttribute('y1',ty+2);
+  $('rollG').setAttribute('y1',ty);$('rollG').setAttribute('y2',ty);
+  $('dRoll').setAttribute('y',260-px/2+7);
+  let s='';
+  for(let k=1;k<n&&k<=24;k++){const fr=k*eff/H;if(fr<1){const y=(260-fr*120).toFixed(1);s+='<line x1="120" y1="'+y+'" x2="390" y2="'+y+'"/>';}}
+  if(R>0){const gc=Math.ceil(R/eff);for(let k=1;k<gc&&k<=24;k++){const fr=k*eff/R;if(fr<1){const y=(140-fr*68).toFixed(1),hw=(1-fr)*135;s+='<line x1="'+(255-hw).toFixed(1)+'" y1="'+y+'" x2="'+(255+hw).toFixed(1)+'" y2="'+y+'"/>';}}}
+  $('courses').innerHTML=s;
+  $('svgD').textContent='Gable-end wall '+f2(Wd)+' ft wide and '+f2(H)+' ft tall with a '+f2(R)+' ft gable rise, covered in '+n+' course'+(n===1?'':'s')+' of '+f2(rw)+' ft wide house wrap.';
+}
+
+function calculate(){
+  const errs=[];
+  const f=(id,name,min,max,unit,o)=>{
+    o=o||{};const el=$(id);const raw=el.value.trim();let v=0,m='';
+    if(o.skip){v=0;}
+    else if(raw===''){if(o.opt){v=o.def||0;}else m='Enter '+name.toLowerCase()+'.';}
+    else{
+      v=Number(raw);
+      if(!isFinite(v))m='Enter a valid number.';
+      else if(v<min||v>max)m=name+' must be between '+fmt(min,min%1?1:0)+' and '+fmt(max)+(unit?' '+unit:'')+'.';
+      else if(o.int&&!Number.isInteger(v))m=name+' must be a whole number.';
+    }
+    el.classList.toggle('invalid',!!m);el.setAttribute('aria-invalid',m?'true':'false');$(id+'Err').textContent=m;
+    if(m)errs.push(el);return v;
+  };
+  const L=f('len','Length',1,1000,'ft');
+  const Wd=f('wid','Width',1,1000,'ft');
+  const H=f('hgt','Wall height',1,60,'ft');
+  const R=f('rise','Gable rise',0,40,'ft',{opt:1});
+  const wn=f('wn','Window count',0,200,'',{opt:1,int:1});
+  const ww=f('ww','Window width',0.5,20,'ft',{skip:wn===0});
+  const wh=f('wh','Window height',0.5,20,'ft',{skip:wn===0});
+  const dn=f('dn','Door count',0,50,'',{opt:1,int:1});
+  const dw=f('dw','Door width',0.5,20,'ft',{skip:dn===0});
+  const dh=f('dh','Door height',0.5,20,'ft',{skip:dn===0});
+  const price=f('price','Price',0,100000,'',{opt:1});
+  const res=$('results');
+  if(errs.length){res.classList.remove('show');res.innerHTML='';errs[0].focus();return;}
+
+  const key=$('roll').value;const rw=ROLLS[key][0],rl=ROLLS[key][1];
+  const w=Number($('waste').value)/100;
+  const P=2*(L+Wd);
+  const r=calc(rw,rl,P,H,Wd,R,w);
+  const wallA=P*H,gableA=Wd*R,surf=wallA+gableA;
+  const openA=wn*ww*wh+dn*dw*dh;
+  const horiz=Math.max(0,r.lin-P),vert=r.rolls*rw;
+  const tapeFt=cs((horiz+vert)*1.1),tapeRolls=Math.max(1,Math.ceil(tapeFt/164));
+  const nails=cs(surf*0.75*1.1),boxes=Math.ceil(nails/1000);
+  const flashFt=cs((wn*2*(ww+wh)+dn*2*(dw+dh))*1.25),flashRolls=Math.ceil(flashFt/75);
+  const matA=r.need*rw,buyLin=r.rolls*rl,buyA=buyLin*rw,leftA=buyA-matA;
+  const cost=price>0?r.rolls*price:0;
+  const rollTxt=f2(rw)+' ft × '+rl+' ft';
+
+  let h='<div class="key"><div class="lbl">Buy at least</div><div class="big">'+pl(r.rolls,'roll')+'</div><div class="sub">of '+rollTxt+' house wrap ('+fmt(rw*rl)+' sq ft each), rounded up</div>';
+  if(cost>0)h+='<div class="sub">Estimated wrap cost: <strong>$'+fmt(cost,2)+'</strong></div>';
+  h+='</div>';
+
+  h+='<h3>Materials list</h3><div class="tw"><table><thead><tr><th>Item</th><th class="n">Quantity</th><th>Basis</th></tr></thead><tbody>';
+  h+='<tr><td>House wrap</td><td class="n">'+pl(r.rolls,'roll')+'</td><td>'+fmt(r.need,1)+' ft needed with laps &amp; '+fmt(w*100)+'% waste</td></tr>';
+  h+='<tr><td>Seam tape</td><td class="n">'+pl(tapeRolls,'roll')+'</td><td>'+fmt(tapeFt)+' ft incl. 10%; 164 ft rolls</td></tr>';
+  h+='<tr><td>Cap nails / staples</td><td class="n">'+fmt(nails)+'</td><td>'+pl(boxes,'box')+' of 1,000</td></tr>';
+  if(flashFt>0)h+='<tr><td>Flashing tape</td><td class="n">'+pl(flashRolls,'roll')+'</td><td>'+fmt(flashFt)+' ft incl. 25%; 75 ft rolls</td></tr>';
+  h+='</tbody></table></div>';
+
+  h+='<h3>Measurements</h3><div class="tw"><table><tbody>';
+  const m=[['Perimeter',fmt(P,1)+' ft'],['Wall area',fmt(wallA,1)+' sq ft'],['Gable area (both ends)',fmt(gableA,1)+' sq ft'],['Total wall surface',fmt(surf,1)+' sq ft'],['Openings (not deducted)',fmt(openA,1)+' sq ft'],['Courses on main walls',fmt(r.n)],['Wrap needed (laps + waste)',fmt(r.need,1)+' ft / '+fmt(matA,1)+' sq ft'],['Wrap purchased',fmt(buyLin)+' ft / '+fmt(buyA)+' sq ft'],['Leftover after install',fmt(leftA,1)+' sq ft']];
+  m.forEach(x=>{h+='<tr><td>'+x[0]+'</td><td class="n">'+x[1]+'</td></tr>';});
+  h+='</tbody></table></div>';
+
+  h+='<h3>Compare roll sizes</h3><div class="tw"><table><thead><tr><th>Roll size</th><th class="n">Courses</th><th class="n">Rolls</th><th class="n">Sq ft bought</th></tr></thead><tbody>';
+  Object.keys(ROLLS).forEach(k=>{
+    const a=ROLLS[k][0],b=ROLLS[k][1];const c=calc(a,b,P,H,Wd,R,w);
+    h+='<tr'+(k===key?' class="sel"':'')+'><td>'+f2(a)+' × '+b+' ft'+(k===key?' (selected)':'')+'</td><td class="n">'+c.n+'</td><td class="n">'+fmt(c.rolls)+'</td><td class="n">'+fmt(c.rolls*a*b)+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<button type="button" class="copy" id="copyBtn">Copy results</button>';
+  h+='<p class="note">Estimates round up. Laps follow IRC R703.2 (2 in. horizontal, 6 in. vertical); manufacturer instructions and local codes vary and govern. This is not engineering, permit or inspection approval.</p>';
+
+  summary='House wrap estimate ('+f2(L)+' x '+f2(Wd)+' ft, '+f2(H)+' ft walls, '+f2(R)+' ft gable rise)\n'+
+    'House wrap: '+pl(r.rolls,'roll')+' of '+rollTxt+'\n'+
+    'Seam tape: '+pl(tapeRolls,'roll')+' (164 ft)\n'+
+    'Cap nails/staples: '+fmt(nails)+' ('+pl(boxes,'box')+')\n'+
+    (flashFt>0?'Flashing tape: '+fmt(flashFt)+' ft ('+pl(flashRolls,'roll')+' of 75 ft)\n':'')+
+    'Wall surface: '+fmt(surf,1)+' sq ft; waste '+fmt(w*100)+'%\n'+
+    (cost>0?'Wrap cost: $'+fmt(cost,2)+'\n':'')+
+    'Estimate only; follow manufacturer instructions and local code (IRC R703.2).';
+
+  drawDiagram(Wd,H,R,rw,P,r.n,r.eff);
+  res.innerHTML=h;
+  res.classList.add('show');
+}
+
+function copyText(t,btn){
+  const done=()=>{btn.textContent='Copied!';setTimeout(()=>{btn.textContent='Copy results';},2000);};
+  const fb=()=>{const ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);done();};
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done,fb);}else{fb();}
+}
+
+$('form').addEventListener('submit',function(e){e.preventDefault();requestAnimationFrame(calculate);});
+$('waste').addEventListener('input',function(){$('wasteVal').textContent=this.value+'%';});
+$('results').addEventListener('click',function(e){const b=e.target.closest('#copyBtn');if(b)copyText(summary,b);});
+$('yr').textContent=new Date().getFullYear();
+requestAnimationFrame(calculate);
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
