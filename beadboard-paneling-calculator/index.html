@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Beadboard Paneling Calculator | Toolwick</title>
+<meta name="description" content="Free beadboard paneling calculator: estimate 4×8 sheets or tongue-and-groove planks for wainscot or full walls, with openings, waste and trim.">
+<link rel="canonical" href="https://toolwick.com/beadboard-paneling-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Beadboard Paneling Calculator", "url": "https://toolwick.com/beadboard-paneling-calculator/", "description": "Free beadboard paneling calculator: estimate 4×8 sheets or tongue-and-groove planks for wainscot or full walls, with openings, waste and trim.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Beadboard Paneling Calculator", "item": "https://toolwick.com/beadboard-paneling-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many sheets of beadboard do I need for a 12×12 room?", "acceptedAnswer": {"@type": "Answer", "text": "A 12×12 room has 48 linear feet of wall. With 36-inch wainscot, one 32-inch door, no windows and 10% waste, this calculator returns 13 pieces, which is 7 sheets. Enter your own door and window sizes for a closer number."}}, {"@type": "Question", "name": "How high should beadboard wainscoting be?", "acceptedAnswer": {"@type": "Answer", "text": "The common range is 32 to 42 inches, roughly one-third of an 8-foot wall. In rooms with 9-foot ceilings, many people go to 42 or 48 inches. Pick a height that lines up with window sills or outlets where possible."}}, {"@type": "Question", "name": "Is it cheaper to use sheets or planks?", "acceptedAnswer": {"@type": "Answer", "text": "Sheets usually cost less per square foot and install faster, but visible seams may show on long walls. Planks give a more authentic look and cost more per square foot. The comparison table in the results shows how many of each you would need."}}, {"@type": "Question", "name": "How much waste should I add for beadboard?", "acceptedAnswer": {"@type": "Answer", "text": "Ten percent is a standard minimum for straight, simple walls. Use 15% for rooms with many outlets, angles or stairs, and up to 25% for complicated layouts or first-time installs."}}, {"@type": "Question", "name": "Do I need to subtract windows and doors?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, but only the portion that falls within the paneling zone. A window with a 36-inch sill needs no deduction for 36-inch wainscot. A door removes its full width up to the paneling height or the door height, whichever is smaller. This calculator handles both cases automatically."}}, {"@type": "Question", "name": "How much construction adhesive do I need for beadboard?", "acceptedAnswer": {"@type": "Answer", "text": "Plan on roughly one 10 oz tube for every 25 to 40 square feet of paneling. The tool uses 25 square feet per tube to avoid running short. Also plan to pin the panels with brad nails into studs at the top and bottom."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.5rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2rem 0 .6rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block;overflow:visible}
+.cap{font-size:.85rem;color:#666;margin:.4rem 0 0;text-align:center}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font-size:1rem;min-height:44px;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px;border-color:#0077b6}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;height:44px}
+input.invalid,select.invalid{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.25rem}
+.field{margin-bottom:1.1rem}
+.grid{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:520px){.grid{grid-template-columns:1fr 1fr}}
+fieldset{border:1px solid #e0e0e0;border-radius:8px;padding:1rem 1rem .2rem;margin:0 0 1.1rem;background:#f8f9fa;min-width:0}
+legend{font-weight:600;font-size:.9rem;padding:0 .4rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:-.4rem 0 1.25rem}
+.chip{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 14px;min-height:44px;font-size:.9rem;cursor:pointer;font-family:inherit}
+.chip:hover{background:#eaf6fc}
+.btn{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;font-family:inherit}
+.btn:hover{background:#006299}
+.btn:focus-visible,.chip:focus-visible,.copy:focus-visible,summary:focus-visible,a:focus-visible,.tw:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.hidden{display:none}
+#results:empty{display:none}
+#results{margin-top:1.5rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.key .n{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.key .s{color:#444;font-size:.95rem}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+td.r,th.r{text-align:right}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 14px;min-height:44px;font-size:.85rem;cursor:pointer;font-family:inherit}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;border-radius:4px;margin-top:1rem}
+.safety{margin:1.25rem 0;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.4rem 0}
+summary{cursor:pointer;font-weight:600;padding:.6rem 0;min-height:44px}
+details p{margin:.2rem 0 .8rem}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel{display:grid;grid-template-columns:1fr;gap:.5rem;padding:0;list-style:none}
+.rel li{margin:0}
+@media(min-width:520px){.rel{grid-template-columns:1fr 1fr}}
+.rel a{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:10px 14px;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+.terms{font-size:.8rem;color:#666;margin:.6rem 0 0}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.key .n{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/beadboard-paneling-calculator/">
+<meta property="og:title" content="Beadboard Paneling Calculator">
+<meta property="og:description" content="Free beadboard paneling calculator: estimate 4×8 sheets or tongue-and-groove planks for wainscot or full walls, with openings, waste and trim.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Beadboard Paneling Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>Use this beadboard paneling calculator to work out how many 4×8 sheets or tongue-and-groove planks you need for a wainscot or full-height wall, including door and window cutouts, waste, cap rail and construction adhesive.</p>
+
+<section class="card" aria-label="Beadboard paneling calculator">
+<div class="diagram">
+<svg viewBox="0 0 520 250" role="img" aria-labelledby="dgT">
+<title id="dgT">Wall elevation showing wall length, paneling height, door and window openings and cap rail</title>
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker>
+<pattern id="bb" width="12" height="10" patternUnits="userSpaceOnUse"><line x1="3" y1="0" x2="3" y2="10" stroke="#0077b6" stroke-width="1.2"/><line x1="9" y1="0" x2="9" y2="10" stroke="#0077b6" stroke-width="1" opacity=".35"/></pattern>
+</defs>
+<rect x="60" y="40" width="380" height="170" fill="none" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="6 4"/>
+<rect id="pR1" x="60" y="108" width="380" height="102" fill="#eaf6fc"/>
+<rect id="pR2" x="60" y="108" width="380" height="102" fill="url(#bb)"/>
+<rect id="cap" x="56" y="103" width="388" height="6" fill="#0077b6"/>
+<rect id="win" x="110" y="61" width="80" height="85" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<text id="winT" x="150" y="108" text-anchor="middle" font-size="12" fill="#1a1a2e">window</text>
+<rect id="door" x="320" y="68" width="56" height="142" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<text id="doorT" x="348" y="140" text-anchor="middle" font-size="12" fill="#1a1a2e">door</text>
+<line x1="40" y1="210" x2="450" y2="210" stroke="#1a1a2e" stroke-width="2"/>
+<line x1="60" y1="31" x2="440" y2="31" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="60" y1="26" x2="60" y2="40" stroke="#e0e0e0"/><line x1="440" y1="26" x2="440" y2="40" stroke="#e0e0e0"/>
+<text id="dTop" x="250" y="20" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a2e">24 ft wall length</text>
+<line id="gTop" x1="440" y1="108" x2="470" y2="108" stroke="#e0e0e0" stroke-dasharray="3 3"/>
+<line id="vDim" x1="462" y1="108" x2="462" y2="210" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dH" x="472" y="164" font-size="13" font-weight="600" fill="#1a1a2e">36 in</text>
+<text id="dNet" x="250" y="236" text-anchor="middle" font-size="14" fill="#1a1a2e">Enter your numbers and press Calculate</text>
+</svg>
+<p class="cap">Blue vertical lines show the beads. The solid blue strip is the cap rail. Labels update when you calculate.</p>
+</div>
+
+<div class="grid">
+<div class="field"><label for="len">Total wall length to panel (ft)</label><input id="len" type="number" inputmode="decimal" min="0" step="any" value="24" aria-describedby="e-len"><div class="err" id="e-len"></div></div>
+<div class="field"><label for="ht">Paneling height (in)</label><input id="ht" type="number" inputmode="decimal" min="0" step="any" value="36" aria-describedby="e-ht"><div class="err" id="e-ht"></div></div>
+</div>
+<div class="chips" role="group" aria-label="Common paneling heights">
+<button type="button" class="chip" data-h="32">32 in</button><button type="button" class="chip" data-h="36">36 in</button><button type="button" class="chip" data-h="42">42 in</button><button type="button" class="chip" data-h="48">48 in</button><button type="button" class="chip" data-h="96">96 in (full wall)</button>
+</div>
+
+<div class="grid">
+<div class="field"><label for="type">Panel type</label>
+<select id="type"><option value="sheet">4×8 beadboard sheet (48 × 96 in)</option><option value="p2.25">Tongue-and-groove plank, 2¼ in exposed</option><option value="p3.25">Tongue-and-groove plank, 3¼ in exposed</option><option value="p5.25">Tongue-and-groove plank, 5¼ in exposed</option></select></div>
+<div class="field hidden" id="plankBox"><label for="stockLen">Plank stock length</label>
+<select id="stockLen" aria-describedby="e-stockLen"><option value="96">8 ft (96 in)</option><option value="72">6 ft (72 in)</option><option value="48">4 ft (48 in)</option><option value="32">32 in</option></select><div class="err" id="e-stockLen"></div></div>
+</div>
+
+<fieldset><legend>Openings (optional)</legend>
+<div class="grid">
+<div class="field"><label for="doors">Number of doors</label><input id="doors" type="number" inputmode="numeric" min="0" step="1" value="1" aria-describedby="e-doors"><div class="err" id="e-doors"></div></div>
+<div class="field"><label for="doorW">Door width incl. casing (in)</label><input id="doorW" type="number" inputmode="decimal" min="0" step="any" value="32" aria-describedby="e-doorW"><div class="err" id="e-doorW"></div></div>
+<div class="field"><label for="doorH">Door height incl. casing (in)</label><input id="doorH" type="number" inputmode="decimal" min="0" step="any" value="80" aria-describedby="e-doorH"><div class="err" id="e-doorH"></div></div>
+<div class="field"><label for="wins">Number of windows</label><input id="wins" type="number" inputmode="numeric" min="0" step="1" value="0" aria-describedby="e-wins"><div class="err" id="e-wins"></div></div>
+<div class="field"><label for="winW">Window width (in)</label><input id="winW" type="number" inputmode="decimal" min="0" step="any" value="36" aria-describedby="e-winW"><div class="err" id="e-winW"></div></div>
+<div class="field"><label for="winS">Window sill height from floor (in)</label><input id="winS" type="number" inputmode="decimal" min="0" step="any" value="36" aria-describedby="e-winS"><div class="err" id="e-winS"></div></div>
+<div class="field"><label for="winH">Window height (in)</label><input id="winH" type="number" inputmode="decimal" min="0" step="any" value="48" aria-describedby="e-winH"><div class="err" id="e-winH"></div></div>
+</div></fieldset>
+
+<div class="field"><label for="waste">Waste allowance: <span id="wOut">10%</span></label>
+<input id="waste" type="range" min="5" max="25" step="1" value="10"><div class="ticks" aria-hidden="true"><span>5%</span><span>15%</span><span>25%</span></div></div>
+
+<div class="field"><label for="price">Price per sheet or plank, $ (optional)</label><input id="price" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 38.50" aria-describedby="e-price"><div class="err" id="e-price"></div></div>
+
+<button class="btn" id="calcBtn" type="button">Calculate Beadboard Needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<p class="terms">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div class="err" id="e-global" role="alert"></div>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</section>
+
+<aside class="safety" role="note">Estimates for planning only. Building codes, interior finish (flame-spread) requirements and moisture rules vary by location and by product. Check the manufacturer's instructions and your local building department before you buy or install. This tool is not engineering, permit or inspection approval.</aside>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/beadboard-paneling-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Beadboard Paneling Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/beadboard-paneling-calculator/&quot;&gt;Beadboard Paneling Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/beadboard-paneling-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<section>
+<h2>How to Use This Beadboard Paneling Calculator</h2>
+<p>Enter the total length of wall you plan to cover and the height of the paneling in inches. Wainscot is commonly 32 to 42 inches tall, while full-height paneling follows your ceiling. Choose 4×8 sheets or tongue-and-groove planks, add any doors and windows, and set a waste allowance. The calculator returns the number of sheets or planks to buy, net paneled area, cap rail length, adhesive tubes, an optional cost estimate, and a side-by-side comparison of every panel option.</p>
+
+<h2>Why This Matters</h2>
+<p>Beadboard looks simple, but ordering it wrong is expensive in both money and time. A typical dining room wainscot, 36 inches high around 44 linear feet of wall, needs roughly 130 square feet of coverage before openings. Planks are sold by the piece and sheets by the panel, so shoppers often under-buy by a few boards and then discover the next batch has a different bead profile or color. Beadboard is often sensitive to dye lot, and discontinued profiles are common.</p>
+<p>Over-buying hurts too. A 4×8 beadboard sheet runs roughly $30 to $60 depending on material (MDF, PVC or real wood veneer), and a full extra sheet is wasted money if you can plan the cuts. This tool is useful for homeowners finishing a bathroom, contractors quoting a mudroom or porch ceiling job, and landlords refreshing several units. It accounts for how stock actually gets cut: a 96-inch sheet gives two 36-inch wainscot pieces, but at 54 inches only one piece fits, leaving a 42-inch offcut that rarely matches anything else. Planning at that level is the difference between one trip to the store and three.</p>
+
+<h2>How It's Calculated</h2>
+<p>Beadboard grooves run vertically, so a sheet cannot be rotated to get more cuts. The calculator therefore works in "pieces" that are as tall as your paneling and as wide as the panel face (48 in for a sheet, the exposed width for a plank).</p>
+<ul>
+<li><strong>Gross area</strong> = wall length (ft) × 12 × paneling height (in).</li>
+<li><strong>Door deduction</strong> = doors × door width × the smaller of paneling height or door height.</li>
+<li><strong>Window deduction</strong> = windows × width × the part of the window between its sill and head that falls inside the paneling zone.</li>
+<li><strong>Net area</strong> = gross area − deductions.</li>
+<li><strong>Pieces needed</strong> = net area ÷ (piece width × paneling height) × (1 + waste), rounded up.</li>
+<li><strong>Pieces per stock length</strong> = stock length ÷ paneling height, rounded down.</li>
+<li><strong>Stock to buy</strong> = pieces needed ÷ pieces per stock length, rounded up.</li>
+<li><strong>Cap rail</strong> (wainscot only) = (wall length − door widths that reach the rail) × (1 + waste) ÷ 8 ft, rounded up. For heights of 90 in or more the wall is treated as full height and no cap rail is listed; use ceiling trim instead.</li>
+<li><strong>Adhesive</strong> is estimated at one 10 oz tube per 25 sq ft of net area, rounded up, which is deliberately on the generous side.</li>
+</ul>
+<p>Every figure rounds up, never down. The method is area-based, so it does not model every offcut around corners and openings; the waste allowance covers that, which is why complicated rooms need a higher percentage. These are rules of thumb for material ordering, not engineering, fire-code or inspection approval. Interior finish and flame-spread requirements, moisture rules for bathrooms, and manufacturer installation instructions vary by product and by local code, so confirm them before you buy.</p>
+
+<h2>Worked Example</h2>
+<p>Say you are adding 36-inch wainscot along 24 linear feet of wall with one 32-inch door, no windows, 4×8 sheets, and a 10% waste allowance. These are the tool's default inputs.</p>
+<ul>
+<li>Gross area: 24 × 12 × 36 = 10,368 sq in (72 sq ft).</li>
+<li>Door deduction: 32 × 36 = 1,152 sq in (8 sq ft). Net area: 9,216 sq in (64 sq ft).</li>
+<li>One piece is 48 × 36 = 1,728 sq in. 9,216 ÷ 1,728 = 5.33 pieces; × 1.10 = 5.87, rounded up to 6 pieces.</li>
+<li>Each sheet yields ⌊96 ÷ 36⌋ = 2 pieces, so 6 ÷ 2 = <strong>3 sheets</strong>.</li>
+<li>Cap rail: (24 − 2.67) × 1.10 = 23.5 ft, or <strong>3 eight-foot lengths</strong>. Adhesive: 64 ÷ 25 = 2.56, so <strong>3 tubes</strong>.</li>
+</ul>
+<p>With 3¼-inch planks in 8-ft lengths the same wall needs 87 cut pieces, which is 44 boards.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure each wall separately and add them.</strong> Enter the sum as total wall length. Don't estimate by room dimensions, since closets and bump-outs change the total.</li>
+<li><strong>Include casing in door widths.</strong> Paneling stops at the casing edge, so a 30-inch door with 3-inch casing is closer to 36 inches.</li>
+<li><strong>Raise waste to 15% or more</strong> for diagonal runs, out-of-square walls, outlets, or if you are new to cutting panels. Sheet and plank profiles also vary slightly by batch.</li>
+<li><strong>Buy everything from one lot</strong> and let the panels acclimate in the room for 48 hours before installing, especially real wood and MDF.</li>
+<li><strong>Mind the moisture.</strong> Use PVC or moisture-resistant beadboard in bathrooms, laundry rooms and exterior porch ceilings, and follow the manufacturer's expansion-gap guidance.</li>
+<li><strong>Always check actual panel sizes.</strong> Some "4×8" sheets are slightly smaller, and plank exposure varies by brand. Use the exposed face width from the package label.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many sheets of beadboard do I need for a 12×12 room?</summary><p>A 12×12 room has 48 linear feet of wall. With 36-inch wainscot, one 32-inch door, no windows and 10% waste, this calculator returns 13 pieces, which is 7 sheets. Enter your own door and window sizes for a closer number.</p></details>
+<details><summary>How high should beadboard wainscoting be?</summary><p>The common range is 32 to 42 inches, roughly one-third of an 8-foot wall. In rooms with 9-foot ceilings, many people go to 42 or 48 inches. Pick a height that lines up with window sills or outlets where possible.</p></details>
+<details><summary>Is it cheaper to use sheets or planks?</summary><p>Sheets usually cost less per square foot and install faster, but visible seams may show on long walls. Planks give a more authentic look and cost more per square foot. The comparison table in the results shows how many of each you would need.</p></details>
+<details><summary>How much waste should I add for beadboard?</summary><p>Ten percent is a standard minimum for straight, simple walls. Use 15% for rooms with many outlets, angles or stairs, and up to 25% for complicated layouts or first-time installs.</p></details>
+<details><summary>Do I need to subtract windows and doors?</summary><p>Yes, but only the portion that falls within the paneling zone. A window with a 36-inch sill needs no deduction for 36-inch wainscot. A door removes its full width up to the paneling height or the door height, whichever is smaller. This calculator handles both cases automatically.</p></details>
+<details><summary>How much construction adhesive do I need for beadboard?</summary><p>Plan on roughly one 10 oz tube for every 25 to 40 square feet of paneling. The tool uses 25 square feet per tube to avoid running short. Also plan to pin the panels with brad nails into studs at the top and bottom.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/house-wrap-calculator/">House Wrap Calculator</a></li>
+<li><a href="/gable-end-wall-area-calculator/">Gable End Wall Area Calculator</a></li>
+<li><a href="/contractor-hourly-rate-calculator/">Contractor Hourly Rate Calculator</a></li>
+<li><a href="/caulk-sealant-tube-calculator/">Caulk &amp; Sealant Tube Calculator</a></li>
+<li><a href="/fiberglass-batt-insulation-calculator/">Fiberglass Batt Insulation Calculator</a></li>
+<li><a href="/roof-replacement-cost-calculator/">Roof Replacement Cost Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer><div class="wrap"><a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a><p>© 2025 toolwick.com</p></div></footer>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var fmt=function(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var TYPES={sheet:{n:'4×8 sheet',w:48},'p2.25':{n:'2¼ in plank',w:2.25},'p3.25':{n:'3¼ in plank',w:3.25},'p5.25':{n:'5¼ in plank',w:5.25}};
+var IDS=['len','ht','stockLen','doors','doorW','doorH','wins','winW','winS','winH','price'];
+var S=170/96;
+var lastText='';
+
+function setErr(id,msg){var e=$('e-'+id),el=$(id);if(e)e.textContent=msg||'';if(el){el.classList.toggle('invalid',!!msg);el.setAttribute('aria-invalid',msg?'true':'false');}}
+function num(id,min,max,label,int,req){
+  var raw=$(id).value.trim();
+  if(raw===''){if(req===false)return null;setErr(id,'Enter '+label+'.');return NaN}
+  var n=Number(raw);
+  if(!isFinite(n)){setErr(id,'Enter a valid number for '+label+'.');return NaN}
+  if(n<min||n>max){setErr(id,label.charAt(0).toUpperCase()+label.slice(1)+' must be between '+fmt(min)+' and '+fmt(max)+'.');return NaN}
+  if(int&&!Number.isInteger(n)){setErr(id,'Use a whole number.');return NaN}
+  return n;
+}
+function pack(w,L,H,netIn,waste){
+  if(H>L)return null;
+  var per=Math.floor(L/H);
+  var pieces=Math.max(1,Math.ceil(netIn/(w*H)*(1+waste)-1e-9));
+  var stock=Math.ceil(pieces/per);
+  return {w:w,L:L,per:per,pieces:pieces,stock:stock,cov:stock*per*w*H/144};
+}
+function lenLabel(L){return(L>=48&&L%12===0)?(L/12)+'-ft':L+' in'}
+function fail(){
+  $('results').innerHTML='';
+  $('dNet').textContent='Fix the highlighted fields and press Calculate';
+}
+
+function calculate(){
+  IDS.forEach(function(i){setErr(i,'')});
+  $('e-global').textContent='';
+  var type=$('type').value,T=TYPES[type],sheet=type==='sheet';
+  var len=num('len',0.5,5000,'wall length',false);
+  var H=num('ht',4,144,'paneling height',false);
+  var doors=num('doors',0,50,'number of doors',true);
+  var wins=num('wins',0,50,'number of windows',true);
+  var doorW=0,doorH=0,winW=0,winS=0,winH=0;
+  if(doors>0){doorW=num('doorW',12,120,'door width',false);doorH=num('doorH',48,120,'door height',false);}
+  if(wins>0){winW=num('winW',6,144,'window width',false);winS=num('winS',0,120,'sill height',false);winH=num('winH',4,120,'window height',false);}
+  var price=num('price',0,100000,'price',false,false);
+  var waste=Number($('waste').value)/100;
+  var bad=[len,H,doors,wins,doorW,doorH,winW,winS,winH,price].some(function(v){return v!==null&&isNaN(v)});
+  if(bad){fail();return}
+  var L=sheet?96:Number($('stockLen').value);
+  if(H>L){
+    if(sheet)setErr('ht','A 4×8 sheet is 96 in tall. For taller paneling, choose planks.');
+    else setErr('stockLen','These planks are shorter than the paneling height. Choose a longer stock length.');
+    fail();return;
+  }
+  if(doors*doorW+wins*winW>len*12){
+    $('e-global').textContent='The doors and windows are wider than the wall. Reduce their counts or sizes, or increase the wall length.';
+    fail();return;
+  }
+  var gross=len*12*H;
+  var dArea=doors*doorW*Math.min(H,doorH);
+  var wArea=wins*winW*Math.max(0,Math.min(H,winS+winH)-winS);
+  var net=gross-dArea-wArea;
+  if(net<=0){$('e-global').textContent='The openings remove all of the paneled area. Reduce the door and window counts or sizes.';fail();return}
+  var r=pack(T.w,L,H,net,waste);
+  var netSf=net/144;
+  var capOn=H<90;
+  var linFt=Math.max(0,len-(H<=doorH?doors*doorW/12:0));
+  var capFt=linFt*(1+waste),capPcs=Math.ceil(capFt/8-1e-9);
+  var tubes=Math.ceil(netSf/25-1e-9);
+  var unit=sheet?(r.stock===1?'sheet':'sheets'):(r.stock===1?'plank':'planks');
+  var sub=sheet?'4×8 beadboard '+unit+' to buy':T.n+' '+unit+' ('+lenLabel(L)+' stock) to buy';
+  var rows=[
+   ['Wall length',fmt(len,1)+' ft'],
+   ['Paneling height',fmt(H,1)+' in'],
+   ['Gross wall area',fmt(gross/144,1)+' sq ft'],
+   ['Openings deducted',fmt((dArea+wArea)/144,1)+' sq ft'],
+   ['Net paneled area',fmt(netSf,1)+' sq ft'],
+   ['Waste allowance',fmt(waste*100)+'%'],
+   ['Pieces to cut (full height)',fmt(r.pieces)],
+   ['Pieces cut per '+(sheet?'sheet':fmt(L)+'-in plank'),fmt(r.per)],
+   ['Stock to buy',fmt(r.stock)+' '+unit],
+   ['Coverage purchased (before cuts)',fmt(r.cov,1)+' sq ft'],
+   ['Cap rail (with waste)',capOn?fmt(capFt,1)+' ft = '+fmt(capPcs)+' × 8-ft lengths':'Not needed for full-height walls (use ceiling trim)'],
+   ['Construction adhesive',fmt(tubes)+' × 10 oz tubes']
+  ];
+  if(price!==null)rows.push(['Estimated panel cost','$'+fmt(r.stock*price,2)]);
+  var tb='';rows.forEach(function(x){tb+='<tr><td>'+x[0]+'</td><td class="r">'+x[1]+'</td></tr>'});
+  var cmp='';
+  ['sheet','p2.25','p3.25','p5.25'].forEach(function(k){
+    var t=TYPES[k],LL=k==='sheet'?96:(sheet?96:L),p=pack(t.w,LL,H,net,waste);
+    var nm=t.n+' ('+LL+' in)'+(k===type?' ✓':'');
+    if(!p)cmp+='<tr><td>'+nm+'</td><td class="r" colspan="3">Stock shorter than height</td></tr>';
+    else cmp+='<tr><td>'+(k===type?'<strong>'+nm+'</strong>':nm)+'</td><td class="r">'+fmt(p.pieces)+'</td><td class="r">'+fmt(p.stock)+'</td><td class="r">'+fmt(p.cov,1)+'</td></tr>';
+  });
+  var html='<div class="res"><div class="key"><div class="n">'+fmt(r.stock)+'</div><div class="s">'+sub+'</div></div>'+
+   '<div class="tw" tabindex="0" role="region" aria-label="Materials table"><table><thead><tr><th>Item</th><th class="r">Amount</th></tr></thead><tbody>'+tb+'</tbody></table></div>'+
+   '<h3 style="font-size:1.1rem;margin:0 0 .6rem">Compare panel options</h3>'+
+   '<div class="tw" tabindex="0" role="region" aria-label="Panel comparison table"><table><thead><tr><th>Option</th><th class="r">Pieces</th><th class="r">To buy</th><th class="r">Sq ft</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'+
+   (sheet?'<p class="cap" style="text-align:left;margin-bottom:1rem">Plank options in this table assume 8-ft (96 in) stock.</p>':'')+
+   '<button type="button" class="copy" id="copyBtn">Copy results</button>'+
+   '<p class="note">Quantities round up and use rules of thumb for ordering only. Local codes, interior finish ratings and manufacturer instructions vary. Verify measurements and product sizes before you buy.</p></div>';
+  lastText='Beadboard estimate: '+fmt(r.stock)+' '+unit+' ('+T.n+')\n'+rows.map(function(x){return x[0]+': '+x[1]}).join('\n')+'\nCalculated at toolwick.com';
+
+  $('results').innerHTML=html;
+  var h=Math.min(H,96),top=210-h*S;
+  ['pR1','pR2'].forEach(function(i){var e=$(i);e.setAttribute('y',top.toFixed(1));e.setAttribute('height',(h*S).toFixed(1))});
+  $('cap').setAttribute('y',(top-5).toFixed(1));
+  $('cap').setAttribute('display',capOn?'inline':'none');
+  $('gTop').setAttribute('y1',top.toFixed(1));$('gTop').setAttribute('y2',top.toFixed(1));
+  $('vDim').setAttribute('y1',top.toFixed(1));
+  $('dH').setAttribute('y',((top+210)/2+5).toFixed(1));
+  $('dH').textContent=fmt(H,1)+' in';
+  $('dTop').textContent=fmt(len,1)+' ft wall length';
+  $('dNet').textContent='Net '+fmt(netSf,1)+' sq ft → '+fmt(r.stock)+' '+unit;
+  var dOn=doors>0;
+  var dh=Math.min(doorH,96);
+  $('door').setAttribute('display',dOn?'inline':'none');$('doorT').setAttribute('display',dOn?'inline':'none');
+  if(dOn){$('door').setAttribute('y',(210-dh*S).toFixed(1));$('door').setAttribute('height',(dh*S).toFixed(1));$('doorT').setAttribute('y',(210-dh*S/2).toFixed(1));}
+  var wOn=wins>0&&winS<96;
+  $('win').setAttribute('display',wOn?'inline':'none');$('winT').setAttribute('display',wOn?'inline':'none');
+  if(wOn){var wt=210-Math.min(winS+winH,96)*S,wb=210-winS*S;$('win').setAttribute('y',wt.toFixed(1));$('win').setAttribute('height',(wb-wt).toFixed(1));$('winT').setAttribute('y',((wt+wb)/2+4).toFixed(1));}
+}
+function run(){requestAnimationFrame(calculate)}
+
+$('calcBtn').addEventListener('click',run);
+IDS.concat(['type','waste','price']).forEach(function(i){$(i).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();run()}})});
+$('type').addEventListener('change',function(){$('plankBox').classList.toggle('hidden',this.value==='sheet')});
+$('waste').addEventListener('input',function(){$('wOut').textContent=this.value+'%';if($('results').innerHTML!=='')run()});
+document.querySelectorAll('.chip').forEach(function(b){b.addEventListener('click',function(){$('ht').value=b.getAttribute('data-h');run()})});
+$('results').addEventListener('click',function(e){
+  if(e.target.id!=='copyBtn')return;
+  var b=e.target;
+  function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+  function fb(){var t=document.createElement('textarea');t.value=lastText;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(t);done()}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,fb)}else fb();
+});
+run();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
