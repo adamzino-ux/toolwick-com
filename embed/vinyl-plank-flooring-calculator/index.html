@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Vinyl Plank Flooring Calculator | Toolwick</title>
+<meta name="description" content="Free vinyl plank flooring calculator: enter room size, waste and box coverage to get boxes, planks and cost, with a live room diagram.">
+<link rel="canonical" href="https://toolwick.com/vinyl-plank-flooring-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/vinyl-plank-flooring-calculator/">
+<meta property="og:title" content="Vinyl Plank Flooring Calculator">
+<meta property="og:description" content="Free vinyl plank flooring calculator: enter room size, waste and box coverage to get boxes, planks and cost, with a live room diagram.">
+<meta property="og:site_name" content="Toolwick">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:.5rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;margin:2.5rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.intro{color:#444}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.field{margin-bottom:1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible,.tw:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{padding:0;border:none;accent-color:#0077b6}
+input.err{border-color:#e74c3c}
+.msg{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.hint{color:#666;font-size:.85rem;margin-top:.3rem}
+.ticks{display:flex;justify-content:space-between;color:#666;font-size:.8rem}
+button{background:#0077b6;color:#fff;border:none;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;min-height:44px;width:100%;font-family:inherit}
+button:hover{background:#006299}
+button.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;padding:8px 16px;font-size:.85rem;font-weight:500;margin-top:1rem}
+button.copy:hover{background:#f0f8fc}
+#results{margin-top:2rem}
+#results:empty{margin-top:0}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.sub{color:#444;font-size:.95rem;margin-top:.4rem}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #eee}
+tr:nth-child(even) td{background:#fafafa}
+th.n,td.n{text-align:right}
+td.n{white-space:nowrap}
+tr.cur td{font-weight:700;color:#0077b6}
+.note{font-size:.85rem;color:#666}
+.ad-slot{min-height:0;margin:0}
+.flnote{margin:1.25rem 0;padding:.8rem 1rem;border-left:3px solid #0077b6;background:#f8f9fa;font-size:.88rem;line-height:1.5;color:#333}
+details{border-bottom:1px solid #e5e5e5;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .75rem;color:#333}
+.formula{background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;margin:0 0 1rem;overflow-x:auto}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0;display:grid;gap:.5rem}
+.rel li{margin:0}
+.rel a{display:block;padding:12px 16px;background:#f8f9fa;border-radius:6px;min-height:44px;font-weight:600}
+.rel span{display:block;font-weight:400;font-size:.85rem;color:#555;text-decoration:none}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2rem;color:#666;font-size:.9rem;text-align:center}
+footer a{color:#0077b6;text-decoration:underline;margin:0 .5rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.5rem}button.copy{width:100%}.big{font-size:2.2rem}}
+</style>
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<nav aria-label="Site"><a href="/">Toolwick</a></nav>
+<main>
+<h1>Vinyl Plank Flooring Calculator</h1>
+<p class="intro">Use this vinyl plank flooring calculator to find out how many boxes and planks you need for a room, including a waste allowance, and what the order will cost. Enter your room size and box coverage to get a rounded-up purchase quantity.</p>
+
+<div class="card">
+<div class="diagram">
+<svg viewBox="0 0 400 220" role="img" aria-label="Room diagram showing length, width, and area with waste for vinyl plank flooring">
+<defs>
+<pattern id="plankPattern" width="80" height="40" patternUnits="userSpaceOnUse"><rect width="80" height="40" fill="#eef6fb"/><path d="M0 0H80M0 20H80M0 0V20M40 20V40" stroke="#b9d9ea" stroke-width="1" fill="none"/></pattern>
+<marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L10 5L0 9z" fill="#0077b6"/></marker>
+</defs>
+<path d="M70 36V20M330 36V20M70 36H48M70 176H48" stroke="#e0e0e0" stroke-dasharray="3 3" fill="none"/>
+<rect x="70" y="36" width="260" height="140" fill="url(#plankPattern)" stroke="#0077b6" stroke-width="2"/>
+<rect x="76" y="42" width="248" height="128" fill="none" stroke="#0077b6" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="72" y1="26" x2="328" y2="26" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="52" y1="38" x2="52" y2="174" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="svgL" x="200" y="15" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a2e">Length: 14 ft</text>
+<text id="svgW" x="30" y="106" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a2e" transform="rotate(-90 30 106)">Width: 12 ft</text>
+<rect x="95" y="85" width="210" height="52" rx="6" fill="#fff" fill-opacity=".92" stroke="#e0e0e0"/>
+<text id="svgA1" x="200" y="107" text-anchor="middle" font-size="13" fill="#1a1a2e">188 sq ft + 10% waste</text>
+<text id="svgA2" x="200" y="127" text-anchor="middle" font-size="14" font-weight="700" fill="#0077b6">= 206.8 sq ft → 9 boxes</text>
+<text x="200" y="201" text-anchor="middle" font-size="12" fill="#1a1a2e">Staggered planks · dashed line = expansion gap at walls</text>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="field">
+<label for="unit">Measurement units</label>
+<select id="unit"><option value="ft">Feet / inches (sq ft)</option><option value="m">Meters / cm (m²)</option></select>
+</div>
+<div class="grid">
+<div class="field"><label for="len" id="lenL">Room length (ft)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="14" aria-describedby="lenErr"><div class="msg" id="lenErr"></div></div>
+<div class="field"><label for="wid" id="widL">Room width (ft)</label><input id="wid" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="widErr"><div class="msg" id="widErr"></div></div>
+</div>
+<div class="field"><label for="extra" id="extraL">Extra area: closets, hallways (sq ft, optional)</label><input id="extra" type="number" inputmode="decimal" step="any" min="0" value="20" aria-describedby="extraErr"><div class="msg" id="extraErr"></div></div>
+<div class="field">
+<label for="wp">Waste allowance: <span id="wv">10%</span></label>
+<input id="wp" type="range" min="0" max="25" step="1" value="10">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>25%</span></div>
+<div class="hint">Straight layouts: 5–10%. Diagonal or many cut-ups: 15% or more.</div>
+</div>
+<div class="grid">
+<div class="field"><label for="pwid" id="pwidL">Plank width (in)</label><input id="pwid" type="number" inputmode="decimal" step="any" min="0" value="7" aria-describedby="pwidErr"><div class="msg" id="pwidErr"></div></div>
+<div class="field"><label for="plen" id="plenL">Plank length (in)</label><input id="plen" type="number" inputmode="decimal" step="any" min="0" value="48" aria-describedby="plenErr"><div class="msg" id="plenErr"></div></div>
+</div>
+<div class="grid">
+<div class="field"><label for="cov" id="covL">Coverage per box (sq ft)</label><input id="cov" type="number" inputmode="decimal" step="any" min="0" value="23.64" aria-describedby="covErr"><div class="msg" id="covErr"></div></div>
+<div class="field"><label for="price">Price per box ($, optional)</label><input id="price" type="number" inputmode="decimal" step="any" min="0" value="54.99" aria-describedby="priceErr"><div class="msg" id="priceErr"></div></div>
+</div>
+<button type="submit" id="calc">Calculate Flooring Needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<p class="flnote">Planning estimate only. Box counts are always rounded up, never down. No building code sets how much flooring to buy, but your flooring manufacturer's installation guide (subfloor flatness, moisture limits, acclimation and expansion gaps) does, and local requirements vary. Follow those before you install.</p>
+
+<section>
+<h2>How to Use This Vinyl Plank Flooring Calculator</h2>
+<p>Choose feet or meters, then enter the length and width of the room. Add any extra area, such as a closet or hallway, in the second field. Set the waste slider, then enter the plank size and the coverage printed on the box. The price per box is optional. Press the button to see boxes to buy, planks needed, surplus flooring and total cost, plus a table comparing different waste percentages. Switching units converts your numbers without losing precision, so you can flip back and forth safely.</p>
+
+<h2>Why This Matters</h2>
+<p>Vinyl plank is one of the most popular DIY floors, and running short is the classic mistake. Flooring is sold by the box, and boxes from different production lots can vary slightly in shade and gloss. If you run out on the last row and the store has a new lot, the two sections may not match. That is why it pays to calculate the full order, with waste, before you buy.</p>
+<p>Waste is real. Every row ends with a cut, and the offcut often cannot start the next row because the joints must stay staggered, typically at least 6 inches apart. Doorway jambs, closets, vents and out-of-square walls add more cuts. A plain 12 × 14 foot room installed straight might need 5–7% extra. The same room laid diagonally can need 15%.</p>
+<p>Budget matters too. At about $55 per box, one extra box adds roughly $55, while a second trip, a lot mismatch or a delayed installation costs far more. Landlords, flippers and homeowners planning a weekend install all benefit from a quick, accurate quantity before they head to the store.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator uses straightforward area math and always rounds up, because you cannot buy part of a box.</p>
+<div class="formula">Base area = (length × width) + extra area<br>Area with waste = base area × (1 + waste % ÷ 100)<br>Boxes = ROUNDUP(area with waste ÷ coverage per box)<br>Planks = ROUNDUP(area with waste ÷ area of one plank)<br>Cost = boxes × price per box</div>
+<p>Plank area is width × length. In imperial mode, square inches are divided by 144 to get square feet. In metric mode, square centimeters are divided by 10,000 to get square meters. The surplus figure is the flooring you buy minus the room's base area, so it includes the waste allowance you expect to cut away. "Spare after waste" is what remains once that allowance is used, which is the amount truly available for future repairs. This is a planning estimate based on common rules of thumb, not an installation specification.</p>
+
+<h2>Worked Example</h2>
+<p>A living room measures 14 ft × 12 ft, and a hallway adds 20 sq ft. You choose 7 in × 48 in planks, boxes covering 23.64 sq ft, $54.99 per box, and 10% waste.</p>
+<ul>
+<li>Room area: 14 × 12 = 168 sq ft. Add the hallway: 168 + 20 = 188 sq ft.</li>
+<li>Waste: 188 × 1.10 = 206.8 sq ft.</li>
+<li>Boxes: 206.8 ÷ 23.64 = 8.75, rounded up to 9 boxes (212.76 sq ft purchased).</li>
+<li>Planks: one plank is 7 × 48 = 336 sq in = 2.333 sq ft, so 206.8 ÷ 2.333 = 88.6, rounded up to 89 planks.</li>
+<li>Cost: 9 × $54.99 = $494.91.</li>
+<li>Surplus: 212.76 − 188 = 24.76 sq ft, of which 18.8 sq ft is the 10% waste you expect to cut off. That leaves about 5.96 sq ft spare for repairs.</li>
+</ul>
+<p>At 15% waste the same job needs 10 boxes, which is why the comparison table is useful when your layout is complicated.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure at the widest points.</strong> Rooms are rarely square. Use the longest length and width, and break L-shaped rooms into rectangles, adding them with the extra area field.</li>
+<li><strong>Don't skip waste.</strong> Even a perfect rectangle needs at least 5%. Choose 10% for typical rooms and 15% for diagonal layouts or many obstacles.</li>
+<li><strong>Buy all boxes at once.</strong> Check that the lot numbers match, and keep one unopened box for future repairs if the budget allows.</li>
+<li><strong>Check the real box coverage.</strong> Coverage varies by product, from about 18 to over 30 sq ft per box. Use the number on the carton, not a guess.</li>
+<li><strong>Allow for the expansion gap.</strong> Vinyl plank floats and needs a gap at walls, commonly around ¼ inch, but follow your manufacturer. Baseboards or quarter-round cover it.</li>
+<li><strong>Acclimate and prep.</strong> Let the planks sit in the room as instructed, and make sure the subfloor is clean, dry and flat.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much extra vinyl plank flooring should I buy?</summary><p>Most installers recommend 5–10% extra for straight layouts and 10–15% for diagonal layouts or rooms with many angles. Round up to a whole box after adding the percentage. If a room has lots of cuts, lean toward the higher end.</p></details>
+<details><summary>How do I calculate how many boxes of vinyl plank I need?</summary><p>Multiply length by width to get the room area, add waste, then divide by the coverage per box on the carton. Always round up to the next whole box. This calculator does all of that for you and shows the surplus amount.</p></details>
+<details><summary>Do I need to include closets and hallways?</summary><p>Yes, if the same flooring runs into them. Measure each as a rectangle and enter the combined square footage in the extra area field. Continuous flooring looks better and avoids transition strips.</p></details>
+<details><summary>Should I subtract kitchen cabinets or islands?</summary><p>Generally you can subtract areas where flooring will never be installed, such as a permanent island or a built-in cabinet run. Many installers prefer not to subtract them, since the cuts around them add waste and the extra gives you a safety margin.</p></details>
+<details><summary>How many planks are in a box of vinyl plank flooring?</summary><p>It depends on plank size and box coverage, typically 6 to 24 planks per box. This calculator estimates total planks from plank dimensions, so compare it with the count printed on the box when you buy.</p></details>
+<details><summary>Is this calculator accurate for luxury vinyl tile or click-lock laminate?</summary><p>The area math is the same for luxury vinyl tile, click-lock vinyl and laminate planks. Enter the actual plank size and box coverage for your product. Installation requirements differ, so follow the manufacturer's instructions.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/tile-flooring-calculator/">Tile &amp; Flooring Coverage Calculator<span>Coverage math for tile and other floor materials.</span></a></li>
+<li><a href="/beadboard-paneling-calculator/">Beadboard Paneling Calculator<span>Estimate panels for walls to match your new floor.</span></a></li>
+<li><a href="/contractor-hourly-rate-calculator/">Contractor Hourly Rate Calculator<span>Work out labor costs if you hire an installer.</span></a></li>
+<li><a href="/house-wrap-calculator/">House Wrap Calculator<span>Material rolls needed for exterior wall projects.</span></a></li>
+<li><a href="/gable-end-wall-area-calculator/">Gable End Wall Area Calculator<span>Find the area of triangular gable walls.</span></a></li>
+<li><a href="/roofing-nails-per-square-calculator/">Roofing Nails Per Square Calculator<span>Fastener counts for roofing jobs.</span></a></li>
+</ul>
+</section>
+</main>
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/vinyl-plank-flooring-calculator/">Toolwick</a></p>
+</div>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var unit='ft',lastText='',hasResult=false;
+var KIND={len:'l',wid:'l',extra:'a',cov:'a',pwid:'p',plen:'p'};
+var canon={len:14,wid:12,extra:20,cov:23.64,pwid:7,plen:48},shown={};
+Object.keys(KIND).forEach(function(k){shown[k]=$(k).value});
+function fac(k){if(unit==='ft')return 1;var t=KIND[k];return t==='l'?0.3048:t==='a'?0.09290304:2.54}
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:d==null?2:d})}
+function money(n){return '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function val(id){var el=$(id),v=el.value.trim();if(v==='')return NaN;
+if(KIND[id]&&canon[id]!=null&&shown[id]===el.value)return canon[id]*fac(id);
+return Number(v)}
+function err(id,m){var f=$(id),e=$(id+'Err');if(m){f.classList.add('err');f.setAttribute('aria-invalid','true');e.textContent=m}else{f.classList.remove('err');f.removeAttribute('aria-invalid');e.textContent=''}return !m}
+function labels(){
+var f=unit==='ft';
+$('lenL').textContent='Room length ('+(f?'ft':'m')+')';
+$('widL').textContent='Room width ('+(f?'ft':'m')+')';
+$('extraL').textContent='Extra area: closets, hallways ('+(f?'sq ft':'m²')+', optional)';
+$('pwidL').textContent='Plank width ('+(f?'in':'cm')+')';
+$('plenL').textContent='Plank length ('+(f?'in':'cm')+')';
+$('covL').textContent='Coverage per box ('+(f?'sq ft':'m²')+')';
+}
+Object.keys(KIND).forEach(function(k){
+$(k).addEventListener('input',function(){
+var s=$(k).value.trim(),v=Number(s);
+if(s!==''&&isFinite(v))canon[k]=v/fac(k);else delete canon[k];
+shown[k]=null;
+});
+});
+$('unit').addEventListener('change',function(){
+var nu=$('unit').value;if(nu===unit)return;
+unit=nu;
+Object.keys(KIND).forEach(function(k){
+if(canon[k]!=null){var s=String(parseFloat((canon[k]*fac(k)).toFixed(4)));$(k).value=s;shown[k]=s}
+});
+labels();
+requestAnimationFrame(calculate);
+});
+$('wp').addEventListener('input',function(){
+$('wv').textContent=$('wp').value+'%';
+if(hasResult)requestAnimationFrame(calculate);
+});
+function boxesFor(base,w,cov){var a=base*(1+w/100);return {a:a,b:Math.ceil(a/cov-1e-9)}}
+function calculate(){
+var ok=true,L=val('len'),W=val('wid'),X=val('extra'),pw=val('pwid'),pl=val('plen'),cov=val('cov'),pr=val('price'),w=Number($('wp').value);
+ok=err('len',isNaN(L)?'Enter the room length.':L<=0?'Length must be greater than zero.':L>10000?'That length looks too large. Check your units.':'')&ok;
+ok=err('wid',isNaN(W)?'Enter the room width.':W<=0?'Width must be greater than zero.':W>10000?'That width looks too large. Check your units.':'')&ok;
+if(isNaN(X))X=0;
+ok=err('extra',X<0?'Extra area cannot be negative.':X>1e6?'That area looks too large.':'')&ok;
+ok=err('pwid',isNaN(pw)?'Enter the plank width.':pw<=0?'Plank width must be greater than zero.':'')&ok;
+ok=err('plen',isNaN(pl)?'Enter the plank length.':pl<=0?'Plank length must be greater than zero.':'')&ok;
+ok=err('cov',isNaN(cov)?'Enter the coverage printed on the box.':cov<=0?'Coverage must be greater than zero.':'')&ok;
+if(isNaN(pr))pr=0;
+ok=err('price',pr<0?'Price cannot be negative.':'')&ok;
+if(!ok){hasResult=false;$('results').innerHTML='';return}
+var f=unit==='ft',au=f?'sq ft':'m²',lu=f?'ft':'m';
+var base=L*W+X,r=boxesFor(base,w,cov),boxes=r.b,wa=r.a;
+var plankA=f?pw*pl/144:pw*pl/10000;
+var planks=Math.ceil(wa/plankA-1e-9);
+var perBox=cov/plankA;
+var bought=boxes*cov,surplus=bought-base,spare=Math.max(0,bought-wa),cost=boxes*pr;
+var ws=[5,10,15,20];if(ws.indexOf(w)<0){ws.push(w);ws.sort(function(a,b){return a-b})}
+var rows='';
+ws.forEach(function(x){var q=boxesFor(base,x,cov);rows+='<tr'+(x===w?' class="cur"':'')+'><td>'+x+'%'+(x===w?' (selected)':'')+'</td><td class="n">'+fmt(q.a)+'</td><td class="n">'+fmt(q.b,0)+'</td><td class="n">'+(pr>0?money(q.b*pr):'—')+'</td></tr>'});
+var html='<div class="res"><div class="key"><div class="big">'+fmt(boxes,0)+' box'+(boxes===1?'':'es')+'</div><div class="sub">Buy '+fmt(boxes,0)+' to cover the '+fmt(wa)+' '+au+' needed (waste included), about '+fmt(planks,0)+' planks</div></div>'
++'<div class="tw" tabindex="0" role="region" aria-label="Results table"><table><thead><tr><th>Item</th><th class="n">Value</th></tr></thead><tbody>'
++'<tr><td>Room area ('+fmt(L)+' × '+fmt(W)+' '+lu+')</td><td class="n">'+fmt(L*W)+' '+au+'</td></tr>'
++'<tr><td>Extra area</td><td class="n">'+fmt(X)+' '+au+'</td></tr>'
++'<tr><td>Base area</td><td class="n">'+fmt(base)+' '+au+'</td></tr>'
++'<tr><td>Waste allowance</td><td class="n">'+w+'%</td></tr>'
++'<tr><td>Area to cover with waste</td><td class="n">'+fmt(wa)+' '+au+'</td></tr>'
++'<tr><td>Coverage per box</td><td class="n">'+fmt(cov)+' '+au+'</td></tr>'
++'<tr><td>Boxes to buy (rounded up)</td><td class="n">'+fmt(boxes,0)+'</td></tr>'
++'<tr><td>Planks needed (approx.)</td><td class="n">'+fmt(planks,0)+'</td></tr>'
++'<tr><td>Planks per box (approx.)</td><td class="n">'+fmt(perBox,1)+'</td></tr>'
++'<tr><td>Flooring purchased</td><td class="n">'+fmt(bought)+' '+au+'</td></tr>'
++'<tr><td>Surplus vs. room area (includes waste)</td><td class="n">'+fmt(surplus)+' '+au+'</td></tr>'
++'<tr><td>Spare after waste allowance</td><td class="n">'+fmt(spare)+' '+au+'</td></tr>'
++(pr>0?'<tr><td>Estimated cost</td><td class="n">'+money(cost)+'</td></tr>':'')
++'</tbody></table></div>'
++'<h2 style="font-size:1.05rem;margin:1.5rem 0 .5rem">Waste comparison</h2><div class="tw" tabindex="0" role="region" aria-label="Waste comparison table"><table><thead><tr><th>Waste</th><th class="n">Area ('+au+')</th><th class="n">Boxes</th><th class="n">Cost</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
++'<button type="button" class="copy" id="copyBtn">Copy results</button>'
++'<p class="note" style="margin-top:1rem">Planning estimate only. Follow the manufacturer\'s installation instructions and local requirements. Boxes and planks are always rounded up.</p></div>';
+lastText='Vinyl plank flooring estimate\nRoom: '+fmt(L)+' x '+fmt(W)+' '+lu+' + '+fmt(X)+' '+au+' extra = '+fmt(base)+' '+au+'\nWaste: '+w+'% -> '+fmt(wa)+' '+au+'\nBoxes to buy: '+boxes+' ('+fmt(bought)+' '+au+')\nPlanks (approx.): '+planks+'\nSurplus vs. room area (includes waste): '+fmt(surplus)+' '+au+'\nSpare after waste allowance: '+fmt(spare)+' '+au+(pr>0?'\nEstimated cost: '+money(cost):'');
+requestAnimationFrame(function(){
+hasResult=true;
+$('results').innerHTML=html;
+$('svgL').textContent='Length: '+fmt(L)+' '+lu;
+$('svgW').textContent='Width: '+fmt(W)+' '+lu;
+$('svgA1').textContent=fmt(base)+' '+au+' + '+w+'% waste';
+$('svgA2').textContent='= '+fmt(wa)+' '+au+' → '+fmt(boxes,0)+' box'+(boxes===1?'':'es');
+});
+}
+$('f').addEventListener('submit',function(e){e.preventDefault();requestAnimationFrame(calculate)});
+$('results').addEventListener('click',function(e){
+if(e.target.id!=='copyBtn')return;
+var b=e.target;
+function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,function(){})}
+else{var t=document.createElement('textarea');t.value=lastText;document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(t)}
+});
+labels();calculate();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
