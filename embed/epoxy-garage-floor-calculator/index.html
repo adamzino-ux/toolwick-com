@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Epoxy Garage Floor Coverage Calculator | Toolwick</title>
+<meta name="description" content="Free epoxy garage floor calculator: enter your garage size to estimate gallons of epoxy, topcoat and decorative flakes, with waste included.">
+<link rel="canonical" href="https://toolwick.com/epoxy-garage-floor-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.65;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;font-size:1.1rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.75rem;line-height:1.25;margin:1.5rem 0 .75rem}
+h2{font-size:1.3rem;line-height:1.3;margin:2rem 0 .75rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.intro{color:#333}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;max-width:480px;height:auto;margin:0 auto}
+svg text{font:13px -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;fill:#1a1a2e}
+svg .cap{fill:#555;font-size:12px}
+.off{fill:none!important;stroke:#888!important;stroke-dasharray:4 3}
+.presets{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem}
+.presets p{width:100%;margin:0;font-size:.85rem;font-weight:500;color:#444}
+.row{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:640px){.row{grid-template-columns:1fr 1fr}}
+.field{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+input.invalid,select.invalid{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+button{font:inherit;cursor:pointer;min-height:44px;border-radius:6px}
+.btn{width:100%;background:#0077b6;color:#fff;border:0;padding:12px 24px;font-weight:600}
+.btn:hover{background:#006299}
+.ghost{flex:1 1 140px;background:#fff;color:#0077b6;border:1px solid #0077b6;padding:8px 12px;font-size:.9rem}
+.ghost:hover{background:#eef7fb}
+#results{margin-top:1.5rem}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.fade{animation:none}}
+.lbl{font-size:.85rem;font-weight:500;color:#444;margin:0}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.15;margin:.1rem 0 .25rem}
+.big small{font-size:1rem;font-weight:500;color:#555}
+.sub{color:#444;font-size:.95rem}
+.rh{font-weight:700;margin:1.5rem 0 .5rem}
+.tw{overflow-x:auto;margin-bottom:.5rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e0e0e0}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.n{text-align:right}
+.bar{display:flex;height:14px;border-radius:7px;overflow:hidden;background:#e0e0e0;margin:.5rem 0 .4rem}
+.bar i{display:block;height:100%}
+.b1{background:#0077b6}.b2{background:#7fc4e6}
+.leg{font-size:.85rem;color:#444}
+.leg b{display:inline-block;width:10px;height:10px;margin:0 4px 0 10px;border-radius:2px}
+.leg b:first-child{margin-left:0}
+.note{background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;font-size:.88rem;color:#444;margin:1rem 0 0;border-radius:0 6px 6px 0}
+.warn{border-left-color:#e67e22}
+.copy{margin-top:1rem;background:#fff;color:#0077b6;border:1px solid #0077b6;padding:8px 16px;font-size:.9rem}
+.ad-slot{min-height:0;margin:0}
+.content ul,.content ol{padding-left:1.25rem;margin:0 0 1rem}
+.content li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border-radius:6px;padding:1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;overflow-x:auto;margin:0 0 1rem;line-height:1.8}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;font-weight:600;padding:12px 0;min-height:44px}
+details p{color:#333}
+.related{list-style:none;padding:0!important}
+.related li a{display:block;padding:10px 0;min-height:44px}
+footer{border-top:1px solid #eee;margin-top:2rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem}
+@media(max-width:480px){.card{padding:1.25rem}.big{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/epoxy-garage-floor-calculator/">
+<meta property="og:title" content="Epoxy Garage Floor Coverage Calculator">
+<meta property="og:description" content="Free epoxy garage floor calculator: enter your garage size to estimate gallons of epoxy, topcoat and decorative flakes, with waste included.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Epoxy Garage Floor Coverage Calculator</h1>
+<p class="intro">Use this epoxy garage floor calculator to work out how many gallons of epoxy, clear topcoat and decorative flakes your garage slab needs. Enter your dimensions, pick a product type, and the tool adds allowances for porous concrete and waste, then rounds up so you don't run short mid-pour.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="dia" viewBox="0 0 480 360" role="img" aria-label="Diagram: top-down plan of the garage floor with length and width dimensions, and a cross-section of the epoxy layers over concrete">
+<defs>
+<marker id="ar" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto-start-reverse"><path d="M0,0 L7,3.5 L0,7 z" fill="#0077b6"/></marker>
+<pattern id="dots" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#e8f4fa"/><circle cx="2" cy="2" r="1.5" fill="#0077b6"/><circle cx="6" cy="6" r="1.5" fill="#1a1a2e"/></pattern>
+</defs>
+<rect id="dR" x="175" y="40" width="130" height="130" fill="#e8f4fa" stroke="#0077b6" stroke-width="2"/>
+<line id="dTa" x1="175" x2="175" y1="36" y2="18" stroke="#c8c8c8" stroke-dasharray="3 3"/>
+<line id="dTb" x1="305" x2="305" y1="36" y2="18" stroke="#c8c8c8" stroke-dasharray="3 3"/>
+<line id="dT" x1="175" x2="305" y1="24" y2="24" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line id="dLa" x1="171" x2="153" y1="40" y2="40" stroke="#c8c8c8" stroke-dasharray="3 3"/>
+<line id="dLb" x1="171" x2="153" y1="170" y2="170" stroke="#c8c8c8" stroke-dasharray="3 3"/>
+<line id="dL" x1="159" x2="159" y1="40" y2="170" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dTt" x="240" y="16" text-anchor="middle">Length 20 ft</text>
+<text id="dLt" x="147" y="105" text-anchor="middle" transform="rotate(-90 147 105)">Width 20 ft</text>
+<text id="dN" x="240" y="196" text-anchor="middle" font-weight="600">Net coating area: 400 sq ft</text>
+<text class="cap" x="240" y="214" text-anchor="middle">Plan view (top-down)</text>
+<text class="cap" x="60" y="248">Cross-section (not to scale)</text>
+<rect x="60" y="314" width="140" height="36" fill="#e0e0e0" stroke="#0077b6"/>
+<rect id="lBase" x="60" y="298" width="140" height="16" fill="#0077b6" stroke="#0077b6"/>
+<rect id="lFlk" x="60" y="284" width="140" height="14" fill="url(#dots)" stroke="#0077b6"/>
+<rect id="lTop" x="60" y="272" width="140" height="12" fill="#cdeaf7" stroke="#0077b6"/>
+<g stroke="#0077b6" fill="none" stroke-width="1"><polyline points="200,332 212,332"/><polyline points="200,306 212,306"/><polyline points="200,291 212,284"/><polyline points="200,278 212,262"/></g>
+<text x="218" y="336">Concrete slab (prepared)</text>
+<text id="sBase" x="218" y="310">Epoxy base · 1 coat</text>
+<text id="sFlk" x="218" y="288">Flakes · Full broadcast</text>
+<text id="sTop" x="218" y="266">Clear topcoat · 1 coat</text>
+</svg>
+</div>
+
+<div class="presets"><p>Quick garage sizes (feet):</p>
+<button type="button" class="ghost" data-l="12" data-w="22">1-car 12×22</button>
+<button type="button" class="ghost" data-l="20" data-w="20">2-car 20×20</button>
+<button type="button" class="ghost" data-l="24" data-w="24">Large 2-car 24×24</button>
+<button type="button" class="ghost" data-l="30" data-w="22">3-car 30×22</button></div>
+
+<form id="f" novalidate>
+<div class="row">
+<div class="field"><label for="len">Garage length (<span class="ul">ft</span>)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="20" aria-describedby="lenE"><div class="err" id="lenE"></div></div>
+<div class="field"><label for="wid">Garage width (<span class="ul">ft</span>)</label><input id="wid" type="number" inputmode="decimal" step="any" min="0" value="20" aria-describedby="widE"><div class="err" id="widE"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="unit">Measurement units</label><select id="unit"><option value="ft">Feet</option><option value="m">Meters</option></select></div>
+<div class="field"><label for="exl">Area not coated (<span class="ua">sq ft</span>, optional)</label><input id="exl" type="number" inputmode="decimal" step="any" min="0" placeholder="0" aria-describedby="exlE"><div class="err" id="exlE"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="type">Epoxy product type</label><select id="type"><option value="solids">100% solids epoxy</option><option value="solvent">Solvent-based epoxy</option><option value="water">Water-based epoxy</option><option value="custom">Custom (use my rate)</option></select></div>
+<div class="field"><label for="rate">Epoxy coverage (sq ft per gallon, per coat)</label><input id="rate" type="number" inputmode="decimal" step="any" min="0" value="150" aria-describedby="rateE rateH"><div class="err" id="rateE"></div><div class="hint" id="rateH">Check your product's data sheet.</div></div>
+</div>
+<div class="row">
+<div class="field"><label for="coats">Epoxy base coats</label><select id="coats"><option value="1" selected>1 coat</option><option value="2">2 coats</option><option value="3">3 coats</option><option value="4">4 coats</option></select></div>
+<div class="field"><label for="por">Concrete condition (first coat absorption)</label><select id="por"><option value="0">Smooth / sealed (+0%)</option><option value="0.1" selected>Average, ground (+10%)</option><option value="0.25">Rough / porous / old (+25%)</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="flk">Decorative flakes</label><select id="flk"><option value="none">None</option><option value="light">Light scatter (~1 lb per 20 sq ft)</option><option value="medium">Medium (~1 lb per 10 sq ft)</option><option value="full" selected>Full broadcast (~1 lb per 5 sq ft)</option></select></div>
+<div class="field"><label for="tc">Clear topcoat coats</label><select id="tc"><option value="0">None</option><option value="1" selected>1 coat</option><option value="2">2 coats</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="trate">Topcoat coverage (sq ft per gallon, per coat)</label><input id="trate" type="number" inputmode="decimal" step="any" min="0" value="250" aria-describedby="trateE"><div class="err" id="trateE"></div></div>
+</div>
+<div class="field"><label for="waste">Waste and overage: <span id="wv">10%</span></label><input id="waste" type="range" min="0" max="30" step="1" value="10"><div class="ticks" aria-hidden="true"><span>0%</span><span>15%</span><span>30%</span></div></div>
+<button type="submit" class="btn" id="go">Calculate epoxy needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<div class="content">
+<h2>How to Use This Epoxy Garage Floor Coverage Calculator</h2>
+<p>Enter your garage length and width in feet or meters, and subtract any area you won't coat, such as a built-in cabinet run. Choose a product type (or type in the coverage rate from your data sheet), the number of base coats, the condition of your concrete, any decorative flakes and the topcoat. Press Calculate to see gallons of epoxy and topcoat and pounds of flakes to buy, a layer-by-layer table, and a comparison of epoxy systems. The diagram above updates with your numbers.</p>
+
+<h2>Why This Matters</h2>
+<p>Epoxy is not cheap, and it is not forgiving. A 100% solids kit can cost $60 to $120 per gallon, so a typical 20×20 ft two-car garage easily runs several hundred dollars in material before flakes and topcoat. Once you mix part A and part B, you usually have 20 to 40 minutes of working time, which means you cannot pause the job to drive to the store. Come up one gallon short on a 400 sq ft floor and you end up with a visible lap line, a thin patch, or a second batch from a different lot that doesn't match.</p>
+<p>Overbuying hurts too: opened epoxy can't be stored, so every spare gallon is money in the bin. Homeowners planning a weekend project, contractors writing a bid, house flippers pricing a garage refresh, and shop owners coating a 1,200 sq ft work bay all need the same answer: how much, to the gallon, before ordering. Porous or old concrete soaks up the first coat, and every pour wastes some material in the bucket and on the roller, so a simple area divided by coverage figure is often short. This calculator builds those real-world allowances in.</p>
+
+<h2>How It's Calculated</h2>
+<p>Everything starts with the net area you will coat. Each layer is then divided by its coverage rate, the first epoxy coat is increased for absorption, and a waste percentage is added.</p>
+<div class="formula">Net area = (Length × Width) − Excluded area<br>Base epoxy (gal) = Net ÷ Rate × (Coats + Absorption) × (1 + Waste)<br>Topcoat (gal) = Net ÷ Topcoat rate × Topcoat coats × (1 + Waste)<br>Flakes (lb) = Net ÷ (sq ft per lb) × (1 + Waste)<br>Film thickness (mils) = 1,604 ÷ Coverage rate</div>
+<p>The 1,604 figure comes from the physics of liquid coatings: one US gallon spread at a thickness of 1 mil (0.001 in.) covers 1,604 sq ft. Absorption applies to the first coat only (0%, 10% or 25%) because once the pores are filled, later coats spread at the printed rate. Purchase quantities are always rounded up to whole gallons or pounds.</p>
+<p>No building code sets epoxy coverage. This tool follows the manufacturer-style rule of thumb above and typical published coverage ranges, which differ by product, so the manufacturer's data sheet always governs. Local VOC regulations may restrict some solvent-based products. The result is a material estimate, not engineering, inspection or warranty approval.</p>
+
+<h2>Worked Example</h2>
+<p>A 20 × 20 ft two-car garage with nothing excluded, 100% solids epoxy at 150 sq ft per gallon, one base coat, average ground concrete (+10%), full-broadcast flakes, one clear topcoat at 250 sq ft per gallon and 10% waste. These are the tool's default values.</p>
+<ol>
+<li>Net area: 20 × 20 = 400 sq ft.</li>
+<li>Base epoxy: 400 ÷ 150 = 2.667 gal per coat. Multiply by (1 + 0.10) for absorption = 2.933 gal. Add 10% waste: 3.227 gal, so buy <strong>4 gallons</strong> (about 15.1 L).</li>
+<li>Topcoat: 400 ÷ 250 = 1.6 gal. Add 10% waste: 1.76 gal, so buy <strong>2 gallons</strong> (about 7.6 L).</li>
+<li>Flakes: 400 ÷ 5 = 80 lb. Add 10% waste: 88 lb, so buy <strong>88 lb</strong>.</li>
+<li>Film thickness: 1,604 ÷ 150 ≈ 10.7 mils for the epoxy and 1,604 ÷ 250 ≈ 6.4 mils for the topcoat, before absorption.</li>
+</ol>
+<p>Switching the same floor to water-based epoxy at 250 sq ft per gallon needs 1.936 gal, so 2 gallons. That is cheaper per gallon, but it builds a much thinner film.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use the data sheet rate.</strong> Coverage for 100% solids products ranges roughly from 100 to 200 sq ft per gallon. Type in your product's rate and pick "Custom" if it differs from the presets.</li>
+<li><strong>Test for moisture first.</strong> A common rule of thumb is to tape an 18-inch square of clear plastic to the slab for 16 to 24 hours (the idea behind ASTM D4263). Condensation or a dark patch means moisture is coming through, and epoxy applied over it can peel.</li>
+<li><strong>Grind, don't just etch.</strong> Diamond grinding gives a more consistent profile than acid etching, and the profile affects how much the first coat absorbs.</li>
+<li><strong>Split odd shapes.</strong> For an L-shaped garage, run each rectangle separately and add the totals, or enter the notch as excluded area.</li>
+<li><strong>Don't skip the topcoat on flakes.</strong> A full-broadcast floor needs a clear topcoat to lock in the flakes and make the surface smooth and cleanable. Always ventilate, wear a respirator rated for the product, and stay inside the temperature window on the label.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much epoxy do I need for a 2-car garage?</summary><p>A typical two-car garage is 400 sq ft. With 100% solids epoxy, one coat, average concrete and 10% waste, you need about 3.2 gallons, so buy 4. Water-based epoxy needs less per coat but is thinner, so you may want two coats.</p></details>
+<details><summary>How many square feet does a gallon of epoxy cover?</summary><p>It depends on the type. Water-based epoxy often covers 200 to 300 sq ft per gallon, solvent-based roughly 150 to 250, and 100% solids around 100 to 200. Use the exact figure printed on your product's data sheet.</p></details>
+<details><summary>Do I need two coats of epoxy on a garage floor?</summary><p>Many 100% solids systems use one base coat plus flakes and a clear topcoat. Thinner water-based products generally need two coats for a durable film. Very porous concrete may also need an extra coat or a primer.</p></details>
+<details><summary>How much extra epoxy does porous concrete need?</summary><p>New or smooth concrete absorbs little, while old, rough or poorly ground slabs can absorb 25% more on the first coat. This calculator lets you add 0%, 10% or 25% to the first coat only, which is a conservative rule of thumb.</p></details>
+<details><summary>How many pounds of flakes do I need?</summary><p>For a full broadcast, plan on about 1 lb per 5 sq ft, so a 400 sq ft garage needs roughly 80 lb plus waste. Light scatter uses far less, around 1 lb per 20 sq ft. Coverage varies with flake size, so confirm with your supplier.</p></details>
+<details><summary>How long before I can drive on a new epoxy floor?</summary><p>Most systems allow foot traffic after 12 to 24 hours and light use within 2 to 3 days. Many manufacturers recommend about 5 to 7 days before parking vehicles. Cool temperatures extend these times, so follow the product label.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="related">
+<li><a href="/thinset-mortar-coverage-calculator/">Thinset Mortar Coverage Calculator</a></li>
+<li><a href="/stucco-mix-coverage-coat-thickness-calculator/">Stucco Mix Coverage &amp; Coat Thickness Calculator</a></li>
+<li><a href="/garage-slab-thickness-reinforcement-calculator/">Garage Concrete Slab Thickness &amp; Reinforcement Calculator</a></li>
+<li><a href="/hardwood-floor-board-count-waste-calculator/">Hardwood Floor Board Count &amp; Waste Calculator</a></li>
+<li><a href="/wallpaper-coverage-roll-calculator/">Wallpaper Coverage &amp; Roll Calculator</a></li>
+<li><a href="/blown-in-insulation-coverage-calculator/">Blown-In Insulation Coverage Calculator</a></li>
+</ul>
+</div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/epoxy-garage-floor-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var fmt=function(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var fmtT=function(n){return n.toLocaleString('en-US',{maximumFractionDigits:2})};
+var fa=function(n){return fmt(n,Math.abs(n-Math.round(n))<0.05?0:1)};
+var SQM=10.7639104,GL=3.785411784,MIL=1604;
+var FL={none:0,light:20,medium:10,full:5};
+var FN={none:'No flakes',light:'Flakes · Light scatter',medium:'Flakes · Medium',full:'Flakes · Full broadcast'};
+var TY=[{k:'solids',n:'100% solids epoxy',r:150},{k:'solvent',n:'Solvent-based epoxy',r:200},{k:'water',n:'Water-based epoxy',r:250}];
+var lastText='';
+var up=function(x){return Math.ceil(x-1e-9)};
+var num=function(id){var v=$(id).value.trim().replace(/,/g,'');return v===''?NaN:Number(v)};
+
+function upd(L,W,u,net,coats,tc,flk){
+ var s=Math.min(300/L,130/W),rw=Math.max(L*s,4),rh=Math.max(W*s,4),x0=240-rw/2,y0=105-rh/2,x1=x0+rw,y1=y0+rh;
+ var A=function(id,o){var e=$(id);for(var k in o)e.setAttribute(k,o[k])};
+ A('dR',{x:x0,y:y0,width:rw,height:rh});
+ A('dT',{x1:x0,x2:x1,y1:y0-16,y2:y0-16});
+ A('dTa',{x1:x0,x2:x0,y1:y0-4,y2:y0-22});A('dTb',{x1:x1,x2:x1,y1:y0-4,y2:y0-22});
+ A('dL',{x1:x0-16,x2:x0-16,y1:y0,y2:y1});
+ A('dLa',{x1:x0-4,x2:x0-22,y1:y0,y2:y0});A('dLb',{x1:x0-4,x2:x0-22,y1:y1,y2:y1});
+ A('dLt',{x:x0-28,y:105,transform:'rotate(-90 '+(x0-28)+' 105)'});
+ var ul=u==='m'?'m':'ft';
+ $('dTt').textContent='Length '+fmtT(L)+' '+ul;
+ $('dLt').textContent='Width '+fmtT(W)+' '+ul;
+ $('dN').textContent='Net coating area: '+fa(net)+' sq ft';
+ $('sBase').textContent='Epoxy base · '+coats+(coats>1?' coats':' coat');
+ $('sFlk').textContent=FN[flk];
+ $('sTop').textContent=tc>0?'Clear topcoat · '+tc+(tc>1?' coats':' coat'):'No topcoat';
+ $('lFlk').setAttribute('class',flk==='none'?'off':'');
+ $('lTop').setAttribute('class',tc>0?'':'off');
+}
+
+function units(){
+ var m=$('unit').value==='m';
+ document.querySelectorAll('.ul').forEach(function(e){e.textContent=m?'m':'ft'});
+ document.querySelectorAll('.ua').forEach(function(e){e.textContent=m?'sq m':'sq ft'});
+}
+
+function run(){
+ var u=$('unit').value,f=u==='m'?SQM:1,areaU=u==='m'?'sq m':'sq ft';
+ var L=num('len'),W=num('wid'),exRaw=$('exl').value.trim(),exv=exRaw===''?0:num('exl');
+ var rate=num('rate'),tcN=+$('tc').value,tr=tcN>0?num('trate'):250;
+ var e={},mx=1000;
+ if(isNaN(L))e.len='Enter the garage length.';else if(L<=0)e.len='Length must be greater than zero.';else if(L>mx)e.len='That looks too large. Enter a length up to 1,000.';
+ if(isNaN(W))e.wid='Enter the garage width.';else if(W<=0)e.wid='Width must be greater than zero.';else if(W>mx)e.wid='That looks too large. Enter a width up to 1,000.';
+ if(isNaN(exv))e.exl='Enter a number, or leave blank for none.';else if(exv<0)e.exl='Excluded area cannot be negative.';
+ if(isNaN(rate)||rate<50||rate>600)e.rate='Enter a coverage rate between 50 and 600 sq ft per gallon.';
+ if(tcN>0&&(isNaN(tr)||tr<50||tr>800))e.trate='Enter a topcoat rate between 50 and 800 sq ft per gallon.';
+ var gross=(L||0)*(W||0)*f,ex=(exv||0)*f;
+ if(!e.len&&!e.wid&&!e.exl&&ex>=gross)e.exl='Excluded area must be smaller than the floor area ('+fmt(gross/f,1)+' '+areaU+').';
+ var ids=['len','wid','exl','rate','trate'];
+ if(Object.keys(e).length){
+  requestAnimationFrame(function(){
+   ids.forEach(function(i){var b=$(i),m=e[i]||'';$(i+'E').textContent=m;b.classList.toggle('invalid',!!m);if(m)b.setAttribute('aria-invalid','true');else b.removeAttribute('aria-invalid')});
+   $('results').innerHTML='';
+   for(var i=0;i<ids.length;i++){if(e[ids[i]]){$(ids[i]).focus();break}}
+  });
+  return;
+ }
+ var net=gross-ex,coats=+$('coats').value,por=+$('por').value,waste=+$('waste').value/100,flk=$('flk').value,sel=$('type').value;
+ var baseRaw=net/rate*(coats+por),baseCalc=baseRaw*(1+waste),baseBuy=up(baseCalc);
+ var topRaw=tcN>0?net/tr*tcN:0,topCalc=topRaw*(1+waste),topBuy=tcN>0?up(topCalc):0;
+ var fl=FL[flk],flCalc=fl?net/fl*(1+waste):0,flBuy=fl?up(flCalc):0;
+ var dim=fmtT(L)+' × '+fmtT(W)+' '+u;
+ var netTxt=fa(net)+' sq ft ('+fmt(net/SQM,2)+' sq m)';
+ var h='<div class="fade"><p class="lbl">Base epoxy to buy</p><p class="big">'+fmt(baseBuy)+(baseBuy===1?' gallon':' gallons')+' <small>('+fmt(baseBuy*GL,1)+' L)</small></p>';
+ h+='<p class="sub">Calculated need: '+fmt(baseCalc,2)+' gal including '+fmt(waste*100)+'% waste, rounded up to whole gallons. Net coating area: '+netTxt+'.</p>';
+ h+='<p class="rh">Shopping list</p><div class="tw"><table><thead><tr><th>Material</th><th class="n">Calculated</th><th class="n">Buy (rounded up)</th></tr></thead><tbody>';
+ h+='<tr><td>Base epoxy ('+coats+(coats>1?' coats':' coat')+')</td><td class="n">'+fmt(baseCalc,2)+' gal</td><td class="n">'+fmt(baseBuy)+' gal</td></tr>';
+ h+=tcN>0?'<tr><td>Clear topcoat ('+tcN+(tcN>1?' coats':' coat')+')</td><td class="n">'+fmt(topCalc,2)+' gal</td><td class="n">'+fmt(topBuy)+' gal</td></tr>':'<tr><td>Clear topcoat</td><td class="n">—</td><td class="n">None</td></tr>';
+ h+=fl?'<tr><td>Decorative flakes</td><td class="n">'+fmt(flCalc,1)+' lb</td><td class="n">'+fmt(flBuy)+' lb</td></tr>':'<tr><td>Decorative flakes</td><td class="n">—</td><td class="n">None</td></tr>';
+ h+='</tbody></table></div>';
+ h+='<p class="rh">Gallons by layer (before waste)</p><div class="tw"><table><thead><tr><th>Layer</th><th class="n">Rate (sq ft/gal)</th><th class="n">Film (mils)</th><th class="n">Gallons</th></tr></thead><tbody>';
+ for(var i=1;i<=coats;i++){h+='<tr><td>Epoxy coat '+i+(i===1&&por>0?' (+'+fmt(por*100)+'% absorption)':'')+'</td><td class="n">'+fmt(rate,0)+'</td><td class="n">'+fmt(MIL/rate,1)+'</td><td class="n">'+fmt(net/rate*(i===1?1+por:1),2)+'</td></tr>'}
+ for(var j=1;j<=tcN;j++){h+='<tr><td>Clear topcoat '+j+'</td><td class="n">'+fmt(tr,0)+'</td><td class="n">'+fmt(MIL/tr,1)+'</td><td class="n">'+fmt(net/tr,2)+'</td></tr>'}
+ h+='</tbody></table></div>';
+ var tot=baseRaw+topRaw,pb=baseRaw/tot*100;
+ h+='<div class="bar" role="img" aria-label="Base epoxy '+fmt(pb)+' percent, topcoat '+fmt(100-pb)+' percent of liquid material"><i class="b1" style="width:'+pb+'%"></i><i class="b2" style="width:'+(100-pb)+'%"></i></div>';
+ h+='<div class="leg"><b class="b1"></b>Base epoxy '+fmt(pb)+'%'+(tcN>0?'<b class="b2"></b>Topcoat '+fmt(100-pb)+'%':'')+'</div>';
+ h+='<p class="rh">Compare epoxy systems (same area, coats and waste)</p><div class="tw"><table><thead><tr><th>System</th><th class="n">Rate</th><th class="n">Film (mils)</th><th class="n">Gallons to buy</th></tr></thead><tbody>';
+ TY.forEach(function(t){h+='<tr><td>'+t.n+(sel===t.k?' (selected)':'')+'</td><td class="n">'+t.r+'</td><td class="n">'+fmt(MIL/t.r,1)+'</td><td class="n">'+fmt(up(net/t.r*(coats+por)*(1+waste)))+'</td></tr>'});
+ h+='</tbody></table></div>';
+ if(net>1500)h+='<p class="note warn">That is a large floor (over 1,500 sq ft). Check your measurements and consider ordering from one batch lot and working in sections.</p>';
+ if(flk!=='none'&&tcN===0)h+='<p class="note warn">Flake floors normally need at least one clear topcoat to seal and smooth the flakes.</p>';
+ h+='<p class="note">Estimate only. Follow your product data sheet for coverage, pot life, temperature and moisture limits, ventilate and wear a respirator. Quantities are rounded up. This is not engineering, inspection or warranty approval, and local VOC rules vary.</p>';
+ h+='<button type="button" class="copy" id="copyBtn">Copy results</button></div>';
+ lastText='Epoxy garage floor estimate (Toolwick)\nFloor: '+dim+', net '+netTxt+'\nBase epoxy: buy '+fmt(baseBuy)+' gal (calculated '+fmt(baseCalc,2)+' gal; '+coats+' coat(s) at '+fmt(rate)+' sq ft/gal, +'+fmt(por*100)+'% absorption, +'+fmt(waste*100)+'% waste)\nTopcoat: '+(tcN>0?'buy '+fmt(topBuy)+' gal ('+tcN+' coat(s) at '+fmt(tr)+' sq ft/gal)':'none')+'\nFlakes: '+(fl?'buy '+fmt(flBuy)+' lb':'none');
+ requestAnimationFrame(function(){
+  ids.forEach(function(i){$(i+'E').textContent='';$(i).classList.remove('invalid');$(i).removeAttribute('aria-invalid')});
+  $('results').innerHTML=h;
+  upd(L,W,u,net,coats,tcN,flk);
+ });
+}
+
+function copy(btn){
+ var t=lastText;
+ var done=function(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy results'},2000)};
+ var fb=function(){var a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(a)};
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,fb)}else fb();
+}
+
+$('f').addEventListener('submit',function(ev){ev.preventDefault();requestAnimationFrame(run)});
+$('results').addEventListener('click',function(ev){if(ev.target&&ev.target.id==='copyBtn')copy(ev.target)});
+$('unit').addEventListener('change',units);
+$('waste').addEventListener('input',function(){$('wv').textContent=this.value+'%'});
+$('type').addEventListener('change',function(){var t=TY.filter(function(x){return x.k===$('type').value})[0];if(t)$('rate').value=t.r});
+$('rate').addEventListener('input',function(){var v=Number(this.value),m=TY.filter(function(x){return x.r===v})[0];$('type').value=m?m.k:'custom'});
+document.querySelectorAll('.ghost').forEach(function(b){b.addEventListener('click',function(){
+ $('unit').value='ft';units();$('len').value=b.getAttribute('data-l');$('wid').value=b.getAttribute('data-w');$('exl').value='';
+ requestAnimationFrame(run);
+})});
+$('yr').textContent=new Date().getFullYear();
+units();
+upd(20,20,'ft',400,1,1,'full');
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
