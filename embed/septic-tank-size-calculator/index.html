@@ -10,8 +10,6 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
 a{color:#0077b6;text-decoration:underline}
-nav.top{border-bottom:1px solid #e0e0e0;padding:14px 1.5rem;background:#fff}
-nav.top a{font-weight:700;font-size:1.1rem;color:#1a1a2e;text-decoration:none}
 .container{max-width:640px;margin:0 auto;padding:1.5rem}
 h1{font-size:1.7rem;font-weight:700;margin-bottom:.5rem;line-height:1.3}
 .subtitle{color:#444;font-size:1rem;margin-bottom:2rem}
@@ -100,7 +98,6 @@ footer a{color:#555;margin:0 .6rem;display:inline-block;min-height:32px}
 <base target="_blank">
 </head>
 <body>
-<nav class="top" aria-label="Site"><a href="/">Toolwick</a></nav>
 <div class="container">
   <h1>Septic Tank Size Calculator</h1>
   <p class="subtitle">Use this septic tank size calculator to estimate the tank capacity, in gallons, that your home needs, based on bedrooms, occupants and daily water use.</p>
@@ -215,7 +212,7 @@ footer a{color:#555;margin:0 .6rem;display:inline-block;min-height:32px}
       <li><strong>Round up.</strong> The result is rounded up to the next standard tank size: 1,000, 1,250, 1,500, 2,000, 2,500 or 3,000 gallons. Above 3,000 gallons, it rounds up to the next 250 and you are told to expect an engineered design or multiple tanks.</li>
     </ol>
     <div class="formula">Design flow = max(bedrooms × 150, occupants × gal/person/day)<br>Flow capacity = design flow × multiple (1.5, 2 or 3)<br>Required = max(bedroom table, flow capacity, local minimum) + disposal (0 or 250)<br>Recommended = next standard size ≥ required</div>
-    <p>Note that true retention time is tank volume divided by daily flow. A 1,000-gallon tank receiving 450 gallons per day holds about 2.2 days of flow, which is why a 2× multiple is a sensible default.</p>
+    <p>Note that true retention time is tank volume divided by daily flow. A 1,000-gallon tank receiving 450 gallons per day holds about 2.2 days of flow, which is why a 2× multiple is a sensible default. The result box reports retention time against the design flow, which is the larger of the code-style flow and your own estimate.</p>
 
     <h2>Worked Example</h2>
     <p>A 4-bedroom home has 5 residents using about 80 gallons per person per day, has a garbage disposal, a 1,000-gallon local minimum and the 2× multiple.</p>
@@ -225,8 +222,9 @@ footer a{color:#555;margin:0 .6rem;display:inline-block;min-height:32px}
       <li>Flow-based capacity: 600 × 2 = <strong>1,200 gal</strong></li>
       <li>Largest of 1,250, 1,200 and 1,000 = 1,250 gal; add 250 for the disposal = <strong>1,500 gal</strong></li>
       <li>Next standard size at or above 1,500 = <strong>1,500 gallons</strong></li>
+      <li>Retention time at the 600 gal/day design flow: 1,500 ÷ 600 = <strong>2.5 days</strong></li>
     </ul>
-    <p>The bedroom table drives the result here. If the same family had 10 people at 100 gallons each, the flow would be 1,000 gal/day, the flow-based capacity 2,000 gal, and the recommendation would jump to 2,250, rounded to the 2,500-gallon size.</p>
+    <p>The bedroom table drives the result here. If the same 4-bedroom home had 10 people at 100 gallons each, the flow would be 1,000 gal/day, the flow-based capacity 2,000 gal, and with the disposal the requirement would be 2,250 gal, rounded up to the 2,500-gallon size.</p>
 
     <h2>Tips &amp; Common Mistakes</h2>
     <ul>
@@ -250,11 +248,11 @@ footer a{color:#555;margin:0 .6rem;display:inline-block;min-height:32px}
     <h2>Related Tools</h2>
     <div class="related-grid">
       <a href="/septic-drain-field-size-calculator/">Septic Drain Field Size Calculator</a>
-      <a href="/shower-wall-tile-calculator/">Shower Wall Tile Calculator</a>
-      <a href="/ice-and-water-shield-calculator/">Ice and Water Shield Calculator</a>
-      <a href="/tributary-area-calculator/">Tributary Area Calculator for Beams, Columns &amp; Footings</a>
-      <a href="/roof-underlayment-calculator/">Roof Underlayment Calculator</a>
-      <a href="/thinset-mortar-coverage-calculator/">Thinset Mortar Coverage Calculator</a>
+      <a href="/epoxy-garage-floor-calculator/">Epoxy Garage Floor Coverage Calculator</a>
+      <a href="/self-leveling-underlayment-calculator/">Self-Leveling Underlayment Calculator</a>
+      <a href="/generator-size-calculator/">Generator Size Calculator (Standby &amp; Portable)</a>
+      <a href="/vinyl-plank-flooring-calculator/">Vinyl Plank Flooring Calculator</a>
+      <a href="/roofing-nails-per-square-calculator/">Roofing Nails Per Square Calculator</a>
     </div>
   </div>
 
@@ -349,7 +347,8 @@ function calculate(){
 
   var drvTxt={'bedroom table':'the bedroom table','daily flow':'your daily flow','local minimum':'your local minimum'}[r.driver];
   var warn=r.over?'<div class="warn"><strong>Above standard single-tank sizes.</strong> This load usually needs an engineered design or multiple tanks in series. Consult a licensed septic designer.</div>':'';
-  var rec='For a '+bed+'-bedroom home with '+fmt(occ)+' occupants using about '+fmt(r.userFlow)+' gal/day, plan for at least a <strong>'+fmt(r.rec)+'-gallon</strong> tank, driven by '+drvTxt+'. Retention time at your estimated flow is about '+fmt(r.rec/Math.max(r.design,1),1)+' days. Local code and your designer make the final decision.';
+  var ret=r.rec/Math.max(r.design,1);
+  var rec='For a '+bed+'-bedroom home with '+fmt(occ)+' occupants using about '+fmt(r.userFlow)+' gal/day, plan for at least a <strong>'+fmt(r.rec)+'-gallon</strong> tank, driven by '+drvTxt+'. At the design flow of '+fmt(r.design)+' gal/day (the larger of the code-style flow and your estimate), the tank holds about '+fmt(ret,1)+' days of flow. Local code and your designer make the final decision.';
 
   var html='<div class="card fade">'
    +'<div class="result-primary"><div class="result-label">Recommended septic tank size</div><div class="result-num">'+fmt(r.rec)+'</div><div class="result-unit">gallons (liquid capacity)</div><div class="driver">Set by: '+drvTxt+'</div></div>'
@@ -366,6 +365,7 @@ function calculate(){
 
   var text='Septic Tank Size Calculator (toolwick.com)\nRecommended tank: '+fmt(r.rec)+' gallons\nSet by: '+drvTxt+'\n\n';
   for(var m=0;m<rows.length;m++){text+=rows[m][0]+': '+rows[m][1]+'\n'}
+  text+='Retention time at design flow: '+fmt(ret,1)+' days\n';
   text+='\nPlanning estimate only. Verify with your local health department.';
   last=text;
 
