@@ -4,83 +4,73 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free Sump Pump Sizing Calculator | Toolwick</title>
-<meta name="description" content="Calculate the right sump pump size for your basement. Enter pit dimensions, water inflow rate, and head height to get GPH/GPM requirements instantly.">
+<meta name="description" content="Free sump pump sizing calculator: enter pit size, water rise rate and discharge head to find the GPM, GPH and HP your basement needs.">
 <link rel="canonical" href="https://toolwick.com/sump-pump-sizing-calculator/">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #1a1a2e; font-size: 16px; line-height: 1.6; }
-nav { border-bottom: 1px solid #e0e0e0; padding: 12px 1.5rem; }
-nav a { text-decoration: none; color: #0077b6; font-weight: 700; font-size: 1rem; }
-.container { max-width: 640px; margin: 0 auto; padding: 1.5rem; }
-h1 { font-size: 1.6rem; font-weight: 800; color: #1a1a2e; margin-bottom: 0.4rem; }
-.subtitle { color: #555; font-size: 0.95rem; margin-bottom: 1.5rem; }
-.card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 2rem; }
-.diagram-wrap { margin-bottom: 1.5rem; }
-.diagram-wrap svg { width: 100%; height: auto; display: block; }
-.form-group { margin-bottom: 1.2rem; }
-label { display: block; font-size: 0.85rem; font-weight: 500; color: #444; margin-bottom: 5px; }
-label .hint { font-weight: 400; color: #666; font-size: 0.78rem; }
-input[type="number"], select { width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.97rem; color: #1a1a2e; background: #fff; transition: box-shadow 0.2s, border-color 0.2s; min-height: 44px; }
-input[type="number"]:focus, select:focus { outline: none; border-color: #0077b6; box-shadow: 0 0 0 3px rgba(0,119,182,0.15); }
-input.error { border-color: #e74c3c; box-shadow: 0 0 0 3px rgba(231,76,60,0.12); }
-.error-msg { color: #e74c3c; font-size: 0.8rem; margin-top: 4px; display: none; }
-.error-msg.visible { display: block; }
-.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-input[type="range"] { width: 100%; accent-color: #0077b6; cursor: pointer; }
-.slider-val { font-weight: 700; color: #0077b6; font-size: 0.9rem; }
-button.calc-btn { width: 100%; background: #0077b6; color: #fff; border: none; border-radius: 6px; padding: 14px 24px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; min-height: 44px; margin-top: 0.5rem; }
-button.calc-btn:hover { background: #006299; }
-.results { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-.results.visible { opacity: 1; pointer-events: auto; }
-.result-hero { text-align: center; background: #f0f8ff; border: 1px solid #b3d9f5; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
-.result-hero .big-num { font-size: 2.8rem; font-weight: 900; color: #0077b6; line-height: 1; }
-.result-hero .big-label { font-size: 1rem; color: #555; margin-top: 4px; }
-.result-hero .sub-num { font-size: 1.1rem; color: #1a1a2e; font-weight: 600; margin-top: 8px; }
-.recommendation { background: #f8f9fa; border-left: 4px solid #0077b6; border-radius: 0 6px 6px 0; padding: 1rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.93rem; }
-.recommendation strong { color: #0077b6; }
-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-th { background: #f0f0f0; font-weight: 600; padding: 9px 12px; text-align: left; color: #444; }
-td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; }
-tr:nth-child(even) td { background: #fafafa; }
-td.num { text-align: right; font-variant-numeric: tabular-nums; }
-.table-wrap { overflow-x: auto; margin-bottom: 1.2rem; }
-.copy-btn { background: #f0f0f0; border: 1px solid #ddd; border-radius: 5px; padding: 6px 14px; font-size: 0.82rem; cursor: pointer; color: #444; transition: background 0.2s; min-height: 36px; }
-.copy-btn:hover { background: #e0e0e0; }
-.copy-btn.copied { background: #d4edda; border-color: #a8d5b5; color: #155724; }
-.result-actions { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
-.section-gap { margin-bottom: 2rem; }
-.content-section h2 { font-size: 1.2rem; font-weight: 700; color: #1a1a2e; margin: 1.8rem 0 0.6rem; }
-.content-section p, .content-section li { font-size: 0.93rem; color: #333; margin-bottom: 0.5rem; }
-.content-section ul { padding-left: 1.3rem; }
-.content-section ul li { margin-bottom: 0.4rem; }
-details { border: 1px solid #e0e0e0; border-radius: 6px; margin-bottom: 0.7rem; }
-summary { padding: 12px 16px; cursor: pointer; font-weight: 600; font-size: 0.92rem; color: #1a1a2e; user-select: none; }
-summary:hover { background: #f8f9fa; border-radius: 6px; }
-details[open] summary { border-bottom: 1px solid #e0e0e0; border-radius: 6px 6px 0 0; }
-details p { padding: 12px 16px; font-size: 0.9rem; color: #444; }
-.related-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.8rem; }
-.related-tools a { display: block; background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 10px 14px; font-size: 0.85rem; color: #0077b6; text-decoration: none; font-weight: 500; transition: background 0.2s; }
-.related-tools a:hover { background: #e8f4fc; }
-.ad-slot { min-height: 0; margin: 0; }
-footer { border-top: 1px solid #e0e0e0; padding: 1.5rem; text-align: center; font-size: 0.82rem; color: #666; }
-footer a { color: #0077b6; text-decoration: none; margin: 0 8px; }
-footer a:hover { text-decoration: underline; }
-.badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; margin-left: 8px; }
-.badge-ok { background: #d4edda; color: #155724; }
-.badge-warn { background: #fff3cd; color: #856404; }
-.badge-bad { background: #f8d7da; color: #721c24; }
-@media (max-width: 540px) {
-  .row-2 { grid-template-columns: 1fr; }
-  .related-tools { grid-template-columns: 1fr; }
-  h1 { font-size: 1.35rem; }
-  .result-hero .big-num { font-size: 2.2rem; }
-  .card { padding: 1.2rem; }
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
+nav.top{border-bottom:1px solid #e0e0e0;padding:12px 1.5rem}
+nav.top a{color:#0077b6;font-weight:700;text-decoration:none;font-size:1.05rem}
+.container{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.7rem;line-height:1.25;font-weight:800;margin-bottom:.6rem}
+.intro{color:#444;font-size:.98rem;margin-bottom:2rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
+.diagram{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;fill:#1a1a2e;font-weight:600}
+.fg{margin-bottom:1.2rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:6px}
+.hint{font-weight:400;color:#666}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+input[type=number],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;font-family:inherit}
+input[type=number]:focus-visible,select:focus-visible,input[type=range]:focus-visible,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.error{border-color:#e74c3c}
+.error-msg{display:none;color:#c0392b;font-size:.82rem;margin-top:5px}
+.error-msg.visible{display:block}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6;cursor:pointer;margin-bottom:4px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.btn{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+.note{font-size:.8rem;color:#666;margin-top:.9rem;line-height:1.45}
+.fade{animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.hero{text-align:center;background:#f0f8ff;border:1px solid #b3d9f5;border-radius:8px;padding:1.5rem 1rem;margin-bottom:1.5rem}
+.big{font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1.1}
+.big-l{color:#444;font-size:.95rem;margin-top:4px}
+.sub{font-weight:600;font-size:1.05rem;margin-top:10px}
+.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.78rem;font-weight:700;margin-left:6px}
+.badge-ok{background:#d4edda;color:#155724}.badge-warn{background:#fff3cd;color:#664d03}.badge-bad{background:#f8d7da;color:#721c24}
+.rec{background:#f8f9fa;border-left:4px solid #0077b6;border-radius:0 6px 6px 0;padding:1rem 1.2rem;margin-bottom:1.5rem;font-size:.93rem}
+.actions{display:flex;justify-content:flex-end;margin-bottom:1rem}
+.copy{min-height:44px;background:#f8f9fa;border:1px solid #ddd;border-radius:6px;padding:8px 16px;font-size:.85rem;color:#444;cursor:pointer;font-family:inherit}
+.copy:hover{background:#eee}
+h3.th{font-size:1rem;margin:1.2rem 0 .5rem}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{background:#f0f0f0;text-align:left;padding:9px 12px;font-weight:600;color:#333;border-bottom:1px solid #ddd}
+td{padding:9px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd) td{background:#fafafa}
+tbody tr:nth-child(even) td{background:#fff}
+th.n,td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ad-slot{min-height:0;margin:0}
+.content h2{font-size:1.25rem;margin:2rem 0 .6rem}
+.content p,.content li{font-size:.95rem;color:#2b2b3d;margin-bottom:.7rem}
+.content ul{padding-left:1.3rem}
+.content a,footer a{color:#0077b6;text-decoration:underline}
+.formula{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.8rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;margin-bottom:.8rem;overflow-x:auto}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:.7rem}
+summary{padding:12px 16px;min-height:44px;cursor:pointer;font-weight:600;font-size:.95rem}
+details p{padding:0 16px 8px}
+.related{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.related a{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:12px 14px;font-size:.88rem;font-weight:500;color:#0077b6;text-decoration:underline}
+footer{border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:.85rem;color:#666}
+footer p{margin-top:6px}
+@media(max-width:600px){.row2,.related{grid-template-columns:1fr}.card{padding:1.2rem}h1{font-size:1.4rem}.big{font-size:2.3rem}}
 </style>
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://toolwick.com/sump-pump-sizing-calculator/">
 <meta property="og:title" content="Sump Pump Sizing Calculator">
-<meta property="og:description" content="Calculate the right sump pump size for your basement. Enter pit dimensions, water inflow rate, and head height to get GPH/GPM requirements instantly.">
+<meta property="og:description" content="Free sump pump sizing calculator: enter pit size, water rise rate and discharge head to find the GPM, GPH and HP your basement needs.">
 <meta property="og:site_name" content="Toolwick">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -91,443 +81,276 @@ footer a:hover { text-decoration: underline; }
 <base target="_blank">
 </head>
 <body>
+<nav class="top"><a href="/">Toolwick</a></nav>
+<main class="container">
+<h1>Sump Pump Sizing Calculator</h1>
+<p class="intro">This sump pump sizing calculator turns your pit dimensions, measured water rise rate and discharge head into the pump flow (GPM and GPH) and horsepower class your basement needs. Results are rounded up, never down.</p>
 
-<div class="container">
-  <h1>Sump Pump Sizing Calculator</h1>
-  <p class="subtitle">Find the right pump capacity (GPH/GPM) for your pit dimensions, water inflow, and discharge head height.</p>
+<section class="card" aria-label="Sump pump sizing calculator">
+<div class="diagram">
+<svg viewBox="0 0 460 260" role="img" aria-labelledby="dgt" xmlns="http://www.w3.org/2000/svg">
+<title id="dgt">Cross-section of a sump pit showing diameter, depth, water rise rate, inflow and total head to the discharge outlet</title>
+<defs>
+<marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#1a1a2e"/></marker>
+<marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#0077b6"/></marker>
+</defs>
+<rect x="0" y="80" width="110" height="12" fill="#e0e0e0"/>
+<rect x="300" y="80" width="160" height="12" fill="#e0e0e0"/>
+<text x="4" y="73">Basement floor</text>
+<rect x="110" y="80" width="190" height="130" fill="none" stroke="#0077b6" stroke-width="3"/>
+<rect x="112" y="150" width="186" height="58" fill="#0077b6" opacity=".2"/>
+<line x1="110" y1="150" x2="300" y2="150" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text id="svg-rise" x="204" y="136" style="fill:#0077b6">Rise: 4.0 in/min</text>
+<rect x="170" y="178" width="44" height="30" rx="4" fill="#0077b6"/>
+<text x="192" y="198" text-anchor="middle" style="fill:#fff;font-size:11px">PUMP</text>
+<polyline points="192,178 192,30 336,30" fill="none" stroke="#0077b6" stroke-width="4" marker-end="url(#a2)"/>
+<text x="204" y="22">Discharge</text>
+<line x1="345" y1="30" x2="425" y2="30" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="216" y1="178" x2="425" y2="178" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="420" y1="32" x2="420" y2="176" stroke="#0077b6" stroke-width="1.5" marker-start="url(#a2)" marker-end="url(#a2)"/>
+<text id="svg-head" transform="translate(408 104) rotate(-90)" text-anchor="middle">Head: 10 ft</text>
+<line x1="380" y1="120" x2="306" y2="120" stroke="#0077b6" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#a2)"/>
+<text x="330" y="112">Inflow</text>
+<line x1="80" y1="82" x2="80" y2="208" stroke="#1a1a2e" stroke-width="1.5" marker-start="url(#a1)" marker-end="url(#a1)"/>
+<text id="svg-depth" transform="translate(66 145) rotate(-90)" text-anchor="middle">Depth: 24 in</text>
+<line x1="112" y1="230" x2="298" y2="230" stroke="#1a1a2e" stroke-width="1.5" marker-start="url(#a1)" marker-end="url(#a1)"/>
+<text id="svg-dia" x="205" y="251" text-anchor="middle">Dia: 18 in</text>
+</svg>
+</div>
 
-  <div class="card">
-    <!-- SVG DIAGRAM -->
-    <div class="diagram-wrap">
-      <svg viewBox="0 0 580 220" xmlns="http://www.w3.org/2000/svg" aria-label="Sump pump pit diagram">
-        <!-- Ground surface -->
-        <rect x="0" y="30" width="580" height="14" fill="#e8e0d0" rx="2"/>
-        <text x="10" y="24" fill="#1a1a2e" font-size="11" font-family="sans-serif" font-weight="600">Ground Level</text>
-        <!-- Hatch marks on ground -->
-        <line x1="0" y1="44" x2="580" y2="44" stroke="#c0b090" stroke-width="1"/>
+<div class="fg">
+<label for="pitShape">Pit shape</label>
+<select id="pitShape"><option value="round">Round (circular)</option><option value="rect">Rectangular / square</option></select>
+</div>
+<div id="roundBox" class="fg">
+<label for="pitDiameter">Pit diameter <span class="hint">(inches)</span></label>
+<input type="number" id="pitDiameter" value="18" min="6" max="120" step="0.5" inputmode="decimal" aria-describedby="err-pitDiameter">
+<div class="error-msg" id="err-pitDiameter"></div>
+</div>
+<div id="rectBox" class="row2" style="display:none">
+<div class="fg">
+<label for="pitLength">Pit length <span class="hint">(inches)</span></label>
+<input type="number" id="pitLength" value="18" min="6" max="120" step="0.5" inputmode="decimal" aria-describedby="err-pitLength">
+<div class="error-msg" id="err-pitLength"></div>
+</div>
+<div class="fg">
+<label for="pitWidth">Pit width <span class="hint">(inches)</span></label>
+<input type="number" id="pitWidth" value="18" min="6" max="120" step="0.5" inputmode="decimal" aria-describedby="err-pitWidth">
+<div class="error-msg" id="err-pitWidth"></div>
+</div>
+</div>
+<div class="row2">
+<div class="fg">
+<label for="pitDepth">Pit depth <span class="hint">(inches)</span></label>
+<input type="number" id="pitDepth" value="24" min="8" max="120" step="0.5" inputmode="decimal" aria-describedby="err-pitDepth">
+<div class="error-msg" id="err-pitDepth"></div>
+</div>
+<div class="fg">
+<label for="drawdown">Float on-to-off range <span class="hint">(inches)</span></label>
+<input type="number" id="drawdown" value="8" min="2" step="0.5" inputmode="decimal" aria-describedby="err-drawdown">
+<div class="error-msg" id="err-drawdown"></div>
+</div>
+</div>
+<div class="fg">
+<label for="riseRate">Water rise rate <span class="hint">(inches per minute, pump off, during a heavy storm)</span></label>
+<label for="riseSlider" class="sr-only">Water rise rate slider</label>
+<input type="range" id="riseSlider" min="0.5" max="20" step="0.5" value="4">
+<input type="number" id="riseRate" value="4" min="0.1" max="60" step="0.1" inputmode="decimal" aria-describedby="err-riseRate">
+<div class="error-msg" id="err-riseRate"></div>
+</div>
+<div class="row2">
+<div class="fg">
+<label for="headHeight">Total head <span class="hint">(feet: lift + friction)</span></label>
+<input type="number" id="headHeight" value="10" min="1" max="100" step="0.5" inputmode="decimal" aria-describedby="err-headHeight">
+<div class="error-msg" id="err-headHeight"></div>
+</div>
+<div class="fg">
+<label for="safety">Safety factor</label>
+<select id="safety">
+<option value="1.25">+25% — Minimum</option>
+<option value="1.5" selected>+50% — Recommended</option>
+<option value="2">+100% — Flood-prone / critical</option>
+</select>
+</div>
+</div>
+<button type="button" class="btn" id="calcBtn">Calculate Pump Size</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<p class="note">Planning estimate only, based on typical pump curves and common rules of thumb. It is not engineering, permit or inspection approval. Local plumbing and electrical codes vary, so confirm with your local building department and use a licensed plumber or electrician where required.</p>
+</section>
 
-        <!-- Pipe going up (discharge) -->
-        <rect x="390" y="44" width="16" height="140" fill="none" stroke="#0077b6" stroke-width="2.5"/>
-        <line x1="398" y1="44" x2="460" y2="44" stroke="#0077b6" stroke-width="2.5"/>
-        <polygon points="460,40 472,44 460,48" fill="#0077b6"/>
-        <!-- Discharge label -->
-        <text x="476" y="48" fill="#0077b6" font-size="11" font-family="sans-serif" font-weight="600">Discharge</text>
-        <!-- Total head arrow -->
-        <line x1="420" y1="44" x2="420" y2="184" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="5,3"/>
-        <polygon points="416,50 420,44 424,50" fill="#e74c3c"/>
-        <polygon points="416,178 420,184 424,178" fill="#e74c3c"/>
-        <text id="svg-head" x="428" y="118" fill="#e74c3c" font-size="11" font-family="sans-serif" font-weight="700">Head: —</text>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
 
-        <!-- Pit walls -->
-        <rect x="110" y="44" width="240" height="150" fill="#dce9f5" stroke="#0077b6" stroke-width="2.5" rx="3"/>
-        <!-- Pit bottom label -->
-        <text x="185" y="205" fill="#1a1a2e" font-size="11" font-family="sans-serif">Pit Floor</text>
-        <!-- Water level inside pit -->
-        <rect id="svg-water" x="112" y="120" width="236" height="72" fill="#6cbde8" opacity="0.45" rx="2"/>
-        <line id="svg-wline" x1="110" y1="120" x2="350" y2="120" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="6,3"/>
-        <text id="svg-water-label" x="355" y="124" fill="#0077b6" font-size="10" font-family="sans-serif">Water level</text>
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
 
-        <!-- Pit width arrow -->
-        <line x1="110" y1="212" x2="350" y2="212" stroke="#1a1a2e" stroke-width="1.5"/>
-        <polygon points="114,208 110,212 114,216" fill="#1a1a2e"/>
-        <polygon points="346,208 350,212 346,216" fill="#1a1a2e"/>
-        <text id="svg-width" x="195" y="210" fill="#1a1a2e" font-size="11" font-family="sans-serif" font-weight="700">Width: —</text>
+<div class="content">
+<h2>How to Use This Sump Pump Sizing Calculator</h2>
+<p>Enter your pit shape and dimensions, the distance your float switch travels between pump-on and pump-off, the water rise rate you measured with the pump unplugged, and your total discharge head. Pick a safety factor (+50% is the default) and press Calculate. You get the minimum flow in GPM and GPH, a recommended horsepower class, a comparison of five pump classes at your head, and an estimate of pump run time and discharge pipe size.</p>
 
-        <!-- Pit depth arrow -->
-        <line x1="72" y1="44" x2="72" y2="194" stroke="#1a1a2e" stroke-width="1.5"/>
-        <polygon points="68,50 72,44 76,50" fill="#1a1a2e"/>
-        <polygon points="68,188 72,194 76,188" fill="#1a1a2e"/>
-        <text id="svg-depth" x="10" y="124" fill="#1a1a2e" font-size="11" font-family="sans-serif" font-weight="700">Depth: —</text>
+<h2>Why This Matters</h2>
+<p>A sump pump rarely fails on a dry day. It fails in the one storm that sends water into the pit faster than the pump can move it. A 6 GPM pump facing a 9 GPM inflow loses ground every minute, and the pit overflows within a few minutes. Finished basements often carry $20,000–$50,000 of drywall, flooring and belongings, so sizing the pump correctly is cheap insurance.</p>
+<p>Many people shop by the headline GPH rating on the box. That number is measured at zero feet of head, where the pump lifts nothing. At 10–15 feet a "3,600 GPH" pump may deliver 2,000–2,500 GPH. Oversizing has its own cost: a pump far larger than the pit can empty it in seconds and short-cycle, which wears out the float switch and motor.</p>
+<p>The tool suits homeowners replacing a failed pump, buyers checking whether an existing pump is adequate, and builders planning a new pit. Typical residential storm inflow ranges from 2–10 GPM, but a high water table can push it past 30 GPM.</p>
 
-        <!-- Pump icon -->
-        <ellipse cx="230" cy="180" rx="20" ry="12" fill="#0077b6" opacity="0.85"/>
-        <rect x="220" y="158" width="20" height="22" fill="#0077b6" opacity="0.85" rx="3"/>
-        <text x="214" y="154" fill="#fff" font-size="9" font-family="sans-serif" font-weight="700">PUMP</text>
+<h2>How It's Calculated</h2>
+<p>The calculator follows common industry practice and generic manufacturer-style performance curves. It does not follow a code table. Plumbing codes (for example the sump and ejector provisions of IRC chapter 30) and the NEC cover installation, check valves, discharge location and the electrical circuit, and those rules vary by location.</p>
+<div class="formula">Area (in²) = π × (diameter ÷ 2)²  or  length × width<br>Gallons per inch = Area ÷ 231<br>Peak inflow (GPM) = Gallons per inch × rise rate (in/min)<br>Required flow (GPM) = Peak inflow × safety factor<br>Specified flow = Required flow rounded UP to a whole GPM<br>GPH = Specified GPM × 60</div>
+<p>One US gallon is 231 cubic inches. The safety factor is applied to the flow, not to pump efficiency. Efficiency affects electrical power draw, not how many gallons a pump must move to keep up with the inflow.</p>
+<p><strong>Head matters.</strong> The calculator rounds your head up to the next whole foot. It reads each pump class's typical flow at that head from a performance curve (for example a 1/3 HP class falls from about 43 GPM at 10 ft to 32 GPM at 15 ft and 19 GPM at 20 ft). The recommended pump is the smallest class whose flow at your head is at least 110% of the specified flow. The extra 10% allows for generic curves, wear and clogged intake screens. If no class qualifies, the tool says so instead of guessing.</p>
+<p>Run time per cycle = stroke volume ÷ (pump flow at head − inflow). The stroke volume is gallons per inch × your float range. The discharge pipe is the smallest of 1.5", 2" or 3" PVC (Schedule 40 inside diameters) that keeps velocity at or below 8 ft/s.</p>
+<p>These pump curves are typical, not data for any specific model. Always check the manufacturer's published curve at your head before buying.</p>
 
-        <!-- Inflow arrow -->
-        <line x1="60" y1="130" x2="108" y2="130" stroke="#2ca5e0" stroke-width="2" stroke-dasharray="5,3"/>
-        <polygon points="104,126 110,130 104,134" fill="#2ca5e0"/>
-        <text x="8" y="128" fill="#2ca5e0" font-size="10" font-family="sans-serif" font-weight="600">Inflow</text>
-      </svg>
-    </div>
+<h2>Worked Example</h2>
+<p>Take a 24-inch round pit, 30 inches deep, with an 8-inch float range. During a storm you measure an 8 in/min rise with the pump unplugged. Total head is 14 ft, and you choose the +50% safety factor.</p>
+<ul>
+<li>Area = π × 12² = 452.4 in², so gallons per inch = 452.4 ÷ 231 = 1.958 gal/in.</li>
+<li>Peak inflow = 1.958 × 8 = 15.67 GPM.</li>
+<li>Required flow = 15.67 × 1.5 = 23.50 GPM, rounded up to 24 GPM (1,440 GPH).</li>
+<li>At 14 ft, the 1/4 HP class gives about 15.6 GPM, which is too small. The 1/3 HP class gives about 34.2 GPM, above the 26.4 GPM needed (24 × 1.1), so the answer is 1/3 HP.</li>
+<li>Stroke volume = 1.958 × 8 = 15.67 gal. Fill time between cycles is 1.0 min, and run time is 15.67 ÷ (34.2 − 15.67) = 0.85 min, or about 51 seconds.</li>
+<li>Pipe: at 34.2 GPM, 1.5" PVC runs at about 5.4 ft/s, under the 8 ft/s limit, so 1.5" is enough.</li>
+</ul>
 
-    <!-- INPUTS -->
-    <div class="form-group">
-      <label>Pit Shape</label>
-      <select id="pitShape" onchange="toggleShape()">
-        <option value="round">Round (Circular)</option>
-        <option value="rect">Rectangular / Square</option>
-      </select>
-    </div>
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the rise rate in a real storm.</strong> Unplug the pump, mark the pit wall and time the rise. A dry-day measurement can understate peak inflow several times over.</li>
+<li><strong>Count the full head.</strong> Add the vertical lift to the outlet, then a conservative allowance of about 1 ft per 10 ft of horizontal pipe and around 2 ft for the check valve and fittings. Underestimating head is the most common sizing error.</li>
+<li><strong>Don't shop by the box GPH.</strong> Compare the manufacturer's curve at your head to the GPM shown in your results.</li>
+<li><strong>Add a backup.</strong> Storms often take out the power. A battery or water-powered backup pump, plus a high-water alarm, covers the failure mode that floods most basements.</li>
+<li><strong>Keep the outlet circuit code-compliant.</strong> Check the NEC and local rules for the receptacle, and don't discharge where local rules prohibit it, such as into the sanitary sewer.</li>
+</ul>
 
-    <div id="roundInputs">
-      <div class="form-group">
-        <label>Pit Diameter <span class="hint">(inches)</span></label>
-        <input type="number" id="pitDiameter" value="18" min="6" max="120" step="0.5" placeholder="18">
-        <div class="error-msg" id="errDiameter">Enter a valid diameter (6–120 inches).</div>
-      </div>
-    </div>
+<h2>Frequently Asked Questions</h2>
+<details><summary>What size sump pump do I need for my basement?</summary>
+<p>Most homes are well served by a 1/3 HP pump, which delivers roughly 40 GPM at 10 ft of head. Homes with high water tables, large drainage areas or long discharge runs often need 1/2 HP or more. The calculator gives a figure for your own pit and head.</p></details>
+<details><summary>How do I measure my sump pit's water rise rate?</summary>
+<p>During or right after a heavy rain, unplug the pump and time how far the water rises. Mark the pit wall with tape, time two or three minutes, and divide inches by minutes. Take the measurement during your worst storm and do not average it with dry days.</p></details>
+<details><summary>What is total head and how do I calculate it?</summary>
+<p>Total head is the vertical distance from the water in the pit to the discharge outlet, plus friction losses in the pipe and fittings. A quick conservative estimate is vertical lift + 1 ft per 10 ft of horizontal run + about 2 ft for the check valve and fittings.</p></details>
+<details><summary>Should I choose a 1/3 HP or 1/2 HP sump pump?</summary>
+<p>Choose by the pump curve rather than the horsepower label. If the 1/3 HP curve meets your required GPM at your head with a margin, it is enough and costs less to run. If it only barely meets it, or your storms are severe, step up to 1/2 HP.</p></details>
+<details><summary>Why is the GPH result lower than the rating on pump boxes?</summary>
+<p>Box ratings are measured at zero head. Your result is the flow the pump must deliver at your actual head, which is the number that counts when you compare pump curves.</p></details>
+<details><summary>Do I need a backup sump pump?</summary>
+<p>If your basement is finished, or the pit runs heavily in storms, yes. Power outages and pump failures tend to happen together with flooding. A backup pump sized for the same flow gives you redundancy, and a high-water alarm tells you when something is wrong.</p></details>
 
-    <div id="rectInputs" style="display:none;">
-      <div class="row-2">
-        <div class="form-group">
-          <label>Pit Length <span class="hint">(inches)</span></label>
-          <input type="number" id="pitLength" value="18" min="6" max="120" step="0.5" placeholder="18">
-          <div class="error-msg" id="errLength">Enter a valid length (6–120 in).</div>
-        </div>
-        <div class="form-group">
-          <label>Pit Width <span class="hint">(inches)</span></label>
-          <input type="number" id="pitWidth" value="18" min="6" max="120" step="0.5" placeholder="18">
-          <div class="error-msg" id="errWidth">Enter a valid width (6–120 in).</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Pit Depth <span class="hint">(inches)</span></label>
-      <input type="number" id="pitDepth" value="24" min="6" max="120" step="0.5" placeholder="24">
-      <div class="error-msg" id="errDepth">Enter a valid depth (6–120 inches).</div>
-    </div>
-
-    <div class="form-group">
-      <label>Water Rise Rate <span class="hint">(inches/minute — how fast water fills the empty pit)</span></label>
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-        <input type="range" id="riseSlider" min="0.5" max="20" step="0.5" value="4" oninput="syncSlider()" style="flex:1;min-width:140px;">
-        <span class="slider-val"><span id="riseVal">4.0</span> in/min</span>
-      </div>
-      <input type="number" id="riseRate" value="4" min="0.1" max="60" step="0.1" style="margin-top:8px;" placeholder="4">
-      <div class="error-msg" id="errRise">Enter a rise rate between 0.1 and 60 in/min.</div>
-    </div>
-
-    <div class="form-group">
-      <label>Total Head Height <span class="hint">(feet — vertical lift + friction losses)</span></label>
-      <input type="number" id="headHeight" value="10" min="1" max="100" step="0.5" placeholder="10">
-      <div class="error-msg" id="errHead">Enter head height between 1 and 100 feet.</div>
-    </div>
-
-    <div class="row-2">
-      <div class="form-group">
-        <label>Safety Factor <span class="hint">(%)</span></label>
-        <select id="safetyFactor">
-          <option value="1.1">10% — Light duty</option>
-          <option value="1.25" selected>25% — Standard</option>
-          <option value="1.5">50% — Heavy duty</option>
-          <option value="1.75">75% — Flood-prone</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Pump Efficiency <span class="hint">(%)</span></label>
-        <select id="pumpEff">
-          <option value="0.65">65% — Budget</option>
-          <option value="0.75" selected>75% — Standard</option>
-          <option value="0.85">85% — Premium</option>
-        </select>
-      </div>
-    </div>
-
-    <button class="calc-btn" id="calcBtn">Calculate Pump Size</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
-  </div>
-
-  <!-- RESULTS -->
-  <div class="results card" id="results">
-    <div class="result-actions">
-      <button class="copy-btn" id="copyBtn" onclick="copyResults()">Copy Results</button>
-    </div>
-    <div class="result-hero">
-      <div class="big-num" id="res-gph">—</div>
-      <div class="big-label">Gallons Per Hour (GPH) Required</div>
-      <div class="sub-num" id="res-gpm">— GPM &nbsp;|&nbsp; — HP recommended</div>
-    </div>
-    <div class="recommendation" id="res-rec"></div>
-    <div class="table-wrap">
-      <table id="res-table">
-        <thead>
-          <tr>
-            <th>Parameter</th>
-            <th class="num">Value</th>
-            <th>Unit</th>
-          </tr>
-        </thead>
-        <tbody id="res-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
-
-  <!-- CONTENT SECTION -->
-  <div class="content-section section-gap">
-
-    <h2>How to Use This Sump Pump Sizing Calculator</h2>
-    <p>Enter your sump pit's shape and dimensions (diameter or length/width, plus depth), then set how fast water rises in your pit during a storm event. Add the total head height — that's the vertical distance from your pump to where water exits, plus friction losses — and choose a safety factor. Hit <strong>Calculate Pump Size</strong> and you'll instantly see the minimum GPH, GPM, and recommended horsepower for your situation.</p>
-
-    <h2>Why This Matters</h2>
-    <p>An undersized sump pump is one of the leading causes of flooded basements. During a heavy rainstorm, groundwater can pour into a sump pit at 10–20 gallons per minute or more. If your pump can only move 8 GPM, it will run continuously, overheat, burn out — and your basement still floods.</p>
-    <p>Conversely, an oversized pump cycles on and off too quickly ("short cycling"), which wears out the motor and float switch prematurely. A 1/3 HP pump typically handles 35–40 GPM at 10 feet of head, while a 1/2 HP pump moves 45–60 GPM. Most average homes in moderate rainfall zones need a 1/3 HP unit rated at 2,000–3,000 GPH. Homes in flood-prone areas, with large drainage footprints (over 2,000 sq ft), or with long discharge runs exceeding 20 feet often need 1/2 HP or larger with a battery backup system. Getting this right the first time saves hundreds on cleanup and pump replacement.</p>
-
-    <h2>How It's Calculated</h2>
-    <p>The calculation follows this methodology:</p>
-    <p><strong>1. Pit Volume per Inch:</strong> For a round pit: V = π × (d/2)² × 1 (cubic inches per inch of depth). For rectangular: V = L × W × 1. Convert to gallons: 1 gallon = 231 cubic inches.</p>
-    <p><strong>2. Raw Inflow (GPM):</strong> = (Pit cross-section area in²) × (rise rate in/min) ÷ 231</p>
-    <p><strong>3. Required Pump Output (GPM):</strong> = Raw Inflow × Safety Factor ÷ Pump Efficiency</p>
-    <p><strong>4. GPH:</strong> = Required GPM × 60</p>
-    <p><strong>5. Horsepower Recommendation:</strong> Based on GPM and total head height using standard pump curves: &lt;20 GPM → 1/4 HP; 20–40 GPM → 1/3 HP; 40–60 GPM → 1/2 HP; 60–80 GPM → 3/4 HP; &gt;80 GPM → 1 HP+.</p>
-
-    <h2>Tips &amp; Common Mistakes</h2>
-    <ul>
-      <li><strong>Don't forget friction losses.</strong> Add roughly 1 foot of head for every 10 feet of horizontal pipe run to your vertical lift. A 20-foot vertical rise with 30 feet of horizontal run = ~23 feet total head.</li>
-      <li><strong>Use a 1.25× safety factor at minimum.</strong> Storms are unpredictable. Your worst-case inflow happens fast — always size up, not down.</li>
-      <li><strong>Install a backup pump.</strong> A battery-backup or water-powered backup pump can save your basement during power outages — exactly when flooding is worst.</li>
-      <li><strong>Pit size affects pump cycling.</strong> A larger pit stores more water, giving the pump time to rest between cycles. Aim for the pump to run no more than 3–4 minutes per cycle.</li>
-      <li><strong>Check the pump curve, not just the max rating.</strong> Manufacturers rate pumps at 0 feet of head. At 10 feet, a "3,600 GPH" pump may only move 2,200 GPH. Always check the curve at your actual head height.</li>
-    </ul>
-
-    <h2>Frequently Asked Questions</h2>
-    <details>
-      <summary>What size sump pump do most homes need?</summary>
-      <p>Most single-family homes in moderate climates need a 1/3 HP pump rated at 2,000–3,000 GPH at 10 feet of head. Homes with large drainage areas, high water tables, or frequent heavy rainfall often need 1/2 HP (3,000–4,500 GPH). Use this calculator to get a number specific to your pit and conditions.</p>
-    </details>
-    <details>
-      <summary>How do I measure the water rise rate in my pit?</summary>
-      <p>During or just after a heavy rain, unplug the pump and watch how many inches the water rises per minute. Mark the pit wall with tape and use a stopwatch. Even a 2–3 minute observation gives a good estimate. During extreme storms, rise rates of 8–15 in/min are common in high-water-table areas.</p>
-    </details>
-    <details>
-      <summary>What is "total head height" and how do I calculate it?</summary>
-      <p>Total head is the total resistance the pump must overcome. It equals: vertical lift from pump to discharge outlet + friction loss from pipe length (≈1 ft per 10 ft horizontal) + any fittings. For a typical basement with an 8-foot vertical run and 20 feet of horizontal pipe, total head ≈ 10 feet.</p>
-    </details>
-    <details>
-      <summary>Should I get a 1/3 HP or 1/2 HP sump pump?</summary>
-      <p>If this calculator recommends under 40 GPM, a quality 1/3 HP pump is usually sufficient and costs less to run. If your required GPM is 40–60, go with 1/2 HP. The key is buying a pump with a published performance curve that meets your GPM at your specific head height — not just the maximum rated GPH.</p>
-    </details>
-
-    <h2>Related Tools</h2>
-    <div class="related-tools">
-      <a href="/retaining-wall-block-calculator/">Retaining Wall Block Calculator</a>
-      <a href="/septic-tank-size-calculator/">Septic Tank Size Calculator</a>
-      <a href="/conduit-fill-calculator/">Conduit Fill Calculator</a>
-      <a href="/excavation-earthwork-volume-calculator/">Excavation &amp; Earthwork Volume Calculator</a>
-      <a href="/roof-truss-span-spacing-calculator/">Truss Span &amp; Spacing Calculator</a>
-      <a href="/pipe-sizing-flow-rate-calculator/">Pipe Sizing &amp; Flow Rate Calculator</a>
-    </div>
-  </div>
-
-  </div>
-
+<h2>Related Tools</h2>
+<div class="related">
+<a href="/epoxy-garage-floor-calculator/">Epoxy Garage Floor Coverage Calculator</a>
+<a href="/self-leveling-underlayment-calculator/">Self-Leveling Underlayment Calculator</a>
+<a href="/generator-size-calculator/">Generator Size Calculator (Standby &amp; Portable)</a>
+<a href="/vinyl-plank-flooring-calculator/">Vinyl Plank Flooring Calculator</a>
+<a href="/roofing-nails-per-square-calculator/">Roofing Nails Per Square Calculator</a>
+<a href="/beadboard-paneling-calculator/">Beadboard Paneling Calculator</a>
+</div>
+</div>
+</main>
 <p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/sump-pump-sizing-calculator/">Toolwick</a></p>
 
 <script>
-document.getElementById('yr').textContent = new Date().getFullYear();
+(function(){
+var $=function(i){return document.getElementById(i)};
+document.getElementById('yr').textContent=new Date().getFullYear();
+var PUMPS=[
+{n:'1/4 HP',b:'Light duty',c:'badge-ok',p:[[0,45],[5,36],[10,26],[15,13],[19,0]],t:'This is a light-duty class. Many installers prefer 1/3 HP as a basement minimum, so consider stepping up if the pit sees frequent heavy storms.'},
+{n:'1/3 HP',b:'Standard',c:'badge-ok',p:[[0,60],[5,53],[10,43],[15,32],[20,19],[25,5],[26,0]],t:'This is the common residential class. Pair it with a battery or water-powered backup pump.'},
+{n:'1/2 HP',b:'Heavy duty',c:'badge-warn',p:[[0,80],[10,62],[20,42],[25,30],[30,14],[33,0]],t:'This is a heavy-duty class. Use a vertical float switch, a quality check valve and a backup pump.'},
+{n:'3/4 HP',b:'Commercial',c:'badge-bad',p:[[0,95],[10,80],[20,62],[30,40],[35,22],[40,0]],t:'Demand is very high. Have a plumber check drainage (gutters, grading, perimeter drain) and consider two pumps for redundancy.'},
+{n:'1 HP',b:'Commercial',c:'badge-bad',p:[[0,115],[10,98],[20,80],[30,60],[40,35],[46,0]],t:'Demand is extreme. Get a professional assessment and use redundant pumps.'}
+];
+var PIPES=[['1.5"',1.610],['2"',2.067],['3"',3.068]];
+var lastText='';
+function fmt(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function f1(n){return n.toLocaleString('en-US',{maximumFractionDigits:1})}
+function flowAt(p,h){var a=p.p;if(h>=a[a.length-1][0])return 0;for(var i=1;i<a.length;i++){if(h<=a[i][0]){return a[i-1][1]+(a[i][1]-a[i-1][1])*(h-a[i-1][0])/(a[i][0]-a[i-1][0])}}return 0}
+function num(id){var v=$(id).value.trim();return v===''?NaN:Number(v)}
+function setErr(id,m){$(id).classList.add('error');$(id).setAttribute('aria-invalid','true');var e=$('err-'+id);e.textContent=m;e.classList.add('visible')}
+function clearErr(){document.querySelectorAll('.error-msg').forEach(function(e){e.classList.remove('visible');e.textContent=''});document.querySelectorAll('input.error').forEach(function(e){e.classList.remove('error');e.removeAttribute('aria-invalid')})}
+function row(a,b,c){return '<tr><td>'+a+'</td><td class="n">'+b+'</td><td>'+c+'</td></tr>'}
 
-function toggleShape() {
-  const shape = document.getElementById('pitShape').value;
-  document.getElementById('roundInputs').style.display = shape === 'round' ? '' : 'none';
-  document.getElementById('rectInputs').style.display = shape === 'rect' ? '' : 'none';
-}
+function calculate(){
+clearErr();
+var shape=$('pitShape').value,ok=true,first=null;
+function chk(id,min,max,label,unit){var v=num(id);if(!isFinite(v)||v<min||v>max){setErr(id,label+' must be a number from '+f1(min)+' to '+f1(max)+' '+unit+'.');if(!first)first=id;ok=false}return v}
+var a,b,area=0;
+if(shape==='round'){a=chk('pitDiameter',6,120,'Diameter','inches');b=a;if(isFinite(a))area=Math.PI*Math.pow(a/2,2)}
+else{a=chk('pitLength',6,120,'Length','inches');b=chk('pitWidth',6,120,'Width','inches');area=a*b}
+var depth=chk('pitDepth',8,120,'Depth','inches');
+var ddMax=isFinite(depth)&&depth>=8&&depth<=120?depth-4:116;
+var dd=chk('drawdown',2,ddMax,'Float range','inches (at least 4 inches less than pit depth)');
+var rise=chk('riseRate',0.1,60,'Rise rate','in/min');
+var head=chk('headHeight',1,100,'Total head','feet');
+var sf=Number($('safety').value);
+if(!ok){$('results').innerHTML='';var f=$(first);if(f)f.focus();return}
 
-function syncSlider() {
-  const v = parseFloat(document.getElementById('riseSlider').value);
-  document.getElementById('riseVal').textContent = v.toFixed(1);
-  document.getElementById('riseRate').value = v;
-}
-
-document.getElementById('riseRate').addEventListener('input', function() {
-  let v = parseFloat(this.value);
-  if (!isNaN(v) && v >= 0.5 && v <= 20) {
-    document.getElementById('riseSlider').value = v;
-    document.getElementById('riseVal').textContent = v.toFixed(1);
-  }
+var galIn=area/231,inflow=galIn*rise,req=inflow*sf;
+var spec=Math.ceil(Number(req.toFixed(6))),specGPH=spec*60;
+var hUsed=Math.ceil(head-1e-9);
+var rec=null,recFlow=0,rows2='';
+PUMPS.forEach(function(p){
+var f=flowAt(p,hUsed),st,cls;
+if(f>=spec*1.1){st='Meets need';cls='badge-ok'}else if(f>=spec){st='Marginal';cls='badge-warn'}else{st='Too small';cls='badge-bad'}
+if(!rec&&st==='Meets need'){rec=p;recFlow=f}
+rows2+='<tr><td>'+p.n+'</td><td class="n">'+fmt(f,1)+'</td><td class="n">'+fmt(f*60)+'</td><td><span class="badge '+cls+'" style="margin-left:0">'+st+'</span></td></tr>';
 });
+var stroke=galIn*dd,fillMin=stroke/inflow,runSec=null,cycle=null;
+if(rec){var rm=stroke/(recFlow-inflow);runSec=rm*60;cycle=fillMin+rm}
+var q=rec?recFlow:spec,pipe='3" or larger',vel=0.4085*q/(3.068*3.068);
+for(var i=0;i<PIPES.length;i++){var v=0.4085*q/(PIPES[i][1]*PIPES[i][1]);if(v<=8){pipe=PIPES[i][0];vel=v;break}}
+var adv;
+if(!rec){adv='A flow of <strong>'+spec+' GPM</strong> at <strong>'+hUsed+' ft</strong> of head is beyond what a single typical residential sump pump delivers with a safe margin. Re-check your inputs, then have a plumber review drainage (gutters, grading, perimeter drain) and consider two pumps in parallel or a commercial-duty unit.'}
+else{adv='Look for a <strong>'+rec.n+'</strong> submersible pump whose published curve delivers at least <strong>'+spec+' GPM ('+fmt(specGPH)+' GPH)</strong> at '+hUsed+' ft of head. A typical '+rec.n+' curve gives about '+fmt(recFlow,1)+' GPM there ('+fmt((recFlow/spec-1)*100)+'% above your need). '+rec.t;
+if(runSec<20)adv+=' Estimated run time is short (about '+fmt(runSec)+' s per cycle). Widen the float range or use a larger pit to reduce short-cycling.'}
 
-function fmt(n, dec) {
-  if (typeof dec === 'undefined') dec = 0;
-  return Number(n.toFixed(dec)).toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+var sub=rec?fmt(spec)+' GPM &nbsp;|&nbsp; '+rec.n+' recommended<span class="badge '+rec.c+'">'+rec.b+'</span>':fmt(spec)+' GPM &nbsp;|&nbsp; Professional sizing needed';
+var h='<div class="card fade"><div class="actions"><button type="button" class="copy" id="copyBtn">Copy results</button></div>'+
+'<div class="hero"><div class="big">'+fmt(specGPH)+' GPH</div><div class="big-l">Minimum pump flow at '+hUsed+' ft of head</div><div class="sub">'+sub+'</div></div>'+
+'<div class="rec"><strong>Recommendation:</strong> '+adv+'</div>'+
+'<h3 class="th">Sizing breakdown</h3><div class="tw" tabindex="0" role="region" aria-label="Sizing breakdown table"><table><thead><tr><th>Parameter</th><th class="n">Value</th><th>Unit</th></tr></thead><tbody>'+
+row('Pit cross-section area',fmt(area,1),'in²')+
+row('Gallons per inch of rise',fmt(galIn,3),'gal/in')+
+row('Total pit volume',fmt(area*depth/231,1),'gallons')+
+row('Measured rise rate',fmt(rise,1),'in/min')+
+row('Peak inflow',fmt(inflow,2),'GPM')+
+row('Safety factor','×'+fmt(sf,2),'—')+
+row('Required flow (unrounded)',fmt(req,2),'GPM')+
+row('<strong>Specified flow (rounded up)</strong>','<strong>'+fmt(spec)+'</strong>','<strong>GPM</strong>')+
+row('<strong>Specified flow</strong>','<strong>'+fmt(specGPH)+'</strong>','<strong>GPH</strong>')+
+row('Total head used (rounded up)',fmt(hUsed),'feet')+
+row('Stroke volume (float range)',fmt(stroke,1),'gallons')+
+row('Fill time at peak inflow',fmt(fillMin,2),'min')+
+row('Pump run time per cycle',runSec===null?'—':fmt(runSec),'seconds')+
+row('Cycles per hour at peak',cycle===null?'—':fmt(60/cycle,1),'cycles/h')+
+row('Minimum discharge pipe',pipe,'PVC Sch. 40')+
+row('Pipe velocity',fmt(vel,1),'ft/s (max 8)')+
+'</tbody></table></div>'+
+'<h3 class="th">Pump classes at '+hUsed+' ft of head (typical curves)</h3><div class="tw" tabindex="0" role="region" aria-label="Pump comparison table"><table><thead><tr><th>Pump class</th><th class="n">GPM at head</th><th class="n">GPH at head</th><th>Status</th></tr></thead><tbody>'+rows2+'</tbody></table></div>'+
+'<p class="note">Curves are generic, not manufacturer data. Always verify with the published curve for the exact model. Local codes vary; this is not an engineering, permit or inspection approval.</p></div>';
+
+lastText=['Sump Pump Sizing Results','Pit: '+(shape==='round'?f1(a)+' in dia':f1(a)+' x '+f1(b)+' in')+', '+f1(depth)+' in deep','Rise rate: '+f1(rise)+' in/min, head: '+hUsed+' ft, safety x'+sf,'Peak inflow: '+fmt(inflow,2)+' GPM','Specified flow: '+spec+' GPM ('+fmt(specGPH)+' GPH)','Recommended: '+(rec?rec.n+' (about '+fmt(recFlow,1)+' GPM at head)':'Professional sizing needed'),'Min discharge pipe: '+pipe,'Generated at toolwick.com (planning estimate only)'].join('\n');
+$('results').innerHTML=h;
+updateDiagram(shape,a,b,depth,rise,head);
+$('results').scrollIntoView({block:'nearest'});
 }
 
-function clearErrors() {
-  document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('visible'));
-  document.querySelectorAll('input.error').forEach(e => e.classList.remove('error'));
+function updateDiagram(shape,a,b,depth,rise,head){
+$('svg-dia').textContent=shape==='round'?'Dia: '+f1(a)+' in':f1(a)+' × '+f1(b)+' in';
+$('svg-depth').textContent='Depth: '+f1(depth)+' in';
+$('svg-rise').textContent='Rise: '+f1(rise)+' in/min';
+$('svg-head').textContent='Head: '+f1(head)+' ft';
 }
 
-function showError(fieldId, msgId) {
-  document.getElementById(fieldId).classList.add('error');
-  document.getElementById(msgId).classList.add('visible');
-}
-
-function hpRecommend(gpm, head) {
-  if (gpm <= 18) return '1/4 HP';
-  if (gpm <= 38) return '1/3 HP';
-  if (gpm <= 58) return '1/2 HP';
-  if (gpm <= 78) return '3/4 HP';
-  return '1 HP+';
-}
-
-function hpBadge(hp) {
-  if (hp === '1/4 HP') return '<span class="badge badge-ok">Light Duty</span>';
-  if (hp === '1/3 HP') return '<span class="badge badge-ok">Standard</span>';
-  if (hp === '1/2 HP') return '<span class="badge badge-warn">Heavy Duty</span>';
-  return '<span class="badge badge-bad">Commercial</span>';
-}
-
-function recommendText(gpm, head, hp, safety) {
-  let advice = '';
-  if (gpm < 20) advice = 'Your water inflow is light. A standard <strong>1/3 HP submersible pump</strong> (rated 2,000–3,000 GPH) will provide a comfortable margin. Consider a battery backup for outages.';
-  else if (gpm < 40) advice = 'Moderate inflow detected. A quality <strong>1/3 HP pump rated at 3,000+ GPH</strong> at your head height is recommended. Verify the pump curve at ' + fmt(head,1) + ' ft head.';
-  else if (gpm < 60) advice = 'High inflow — you need a <strong>1/2 HP pump (3,500–4,500 GPH)</strong>. Look for a cast iron impeller housing for durability. A battery or water-powered backup is strongly advised.';
-  else advice = 'Very high inflow. Consider a <strong>3/4 HP or 1 HP commercial-grade pump</strong> or a dual-pump system. Consult a plumber to also inspect your drainage tile system.';
-  return advice;
-}
-
-function updateDiagram(shape, dimA, dimB, depth, head) {
-  const wLabel = shape === 'round'
-    ? 'Dia: ' + fmt(dimA, 0) + '"'
-    : fmt(dimA, 0) + '" × ' + fmt(dimB, 0) + '"';
-  document.getElementById('svg-width').textContent = wLabel;
-  document.getElementById('svg-depth').textContent = 'Depth: ' + fmt(depth, 0) + '"';
-  document.getElementById('svg-head').textContent = 'Head: ' + fmt(head, 1) + " ft";
-
-  // Water level visual: show ~40% fill
-  const pitTop = 44, pitH = 150;
-  const waterTop = pitTop + pitH * 0.45;
-  document.getElementById('svg-water').setAttribute('y', waterTop);
-  document.getElementById('svg-water').setAttribute('height', pitTop + pitH - waterTop);
-  document.getElementById('svg-wline').setAttribute('y1', waterTop);
-  document.getElementById('svg-wline').setAttribute('y2', waterTop);
-  document.getElementById('svg-water-label').setAttribute('y', waterTop + 4);
-}
-
-function calculate() {
-  clearErrors();
-  const shape = document.getElementById('pitShape').value;
-  let valid = true;
-
-  const depth = parseFloat(document.getElementById('pitDepth').value);
-  const riseRate = parseFloat(document.getElementById('riseRate').value);
-  const head = parseFloat(document.getElementById('headHeight').value);
-  const safety = parseFloat(document.getElementById('safetyFactor').value);
-  const eff = parseFloat(document.getElementById('pumpEff').value);
-
-  let dimA = 0, dimB = 0, areaIn2 = 0;
-
-  if (shape === 'round') {
-    dimA = parseFloat(document.getElementById('pitDiameter').value);
-    if (isNaN(dimA) || dimA < 6 || dimA > 120) { showError('pitDiameter','errDiameter'); valid = false; }
-    else { areaIn2 = Math.PI * Math.pow(dimA / 2, 2); }
-    dimB = dimA;
-  } else {
-    dimA = parseFloat(document.getElementById('pitLength').value);
-    dimB = parseFloat(document.getElementById('pitWidth').value);
-    if (isNaN(dimA) || dimA < 6 || dimA > 120) { showError('pitLength','errLength'); valid = false; }
-    if (isNaN(dimB) || dimB < 6 || dimB > 120) { showError('pitWidth','errWidth'); valid = false; }
-    if (valid) areaIn2 = dimA * dimB;
-  }
-  if (isNaN(depth) || depth < 6 || depth > 120) { showError('pitDepth','errDepth'); valid = false; }
-  if (isNaN(riseRate) || riseRate < 0.1 || riseRate > 60) { showError('riseRate','errRise'); valid = false; }
-  if (isNaN(head) || head < 1 || head > 100) { showError('headHeight','errHead'); valid = false; }
-
-  if (!valid) return;
-
-  // Volume per inch of rise (gallons)
-  const galPerInch = areaIn2 / 231;
-
-  // Raw inflow GPM
-  const rawGPM = galPerInch * riseRate;
-
-  // Required pump GPM (with safety and efficiency)
-  const reqGPM = rawGPM * safety / eff;
-  const reqGPH = reqGPM * 60;
-
-  // Volume calculations
-  const totalVolGal = (areaIn2 * depth) / 231;
-  const usableVolGal = totalVolGal * 0.75; // ~75% usable stroke
-
-  // Cycle time (minutes between pump cycles assuming pump is 2× required flow)
-  const cycleTime = usableVolGal / rawGPM;
-
-  // HP recommendation
-  const hp = hpRecommend(reqGPM, head);
-
-  // Pipe size recommendation (based on GPM)
-  let pipeSize = '1.25"';
-  if (reqGPM > 25) pipeSize = '1.5"';
-  if (reqGPM > 50) pipeSize = '2"';
-
-  const recText = recommendText(reqGPM, head, hp, safety);
-
-  updateDiagram(shape, dimA, dimB, depth, head);
-
-  const tbodyRows = [
-    ['Pit Cross-Section Area', fmt(areaIn2, 1), 'in²'],
-    ['Pit Total Volume', fmt(totalVolGal, 1), 'gallons'],
-    ['Usable Stroke Volume', fmt(usableVolGal, 1), 'gallons'],
-    ['Gallons per Inch of Rise', fmt(galPerInch, 3), 'gal/in'],
-    ['Water Rise Rate', fmt(riseRate, 1), 'in/min'],
-    ['Raw Inflow Rate', fmt(rawGPM, 2), 'GPM'],
-    ['Safety Factor Applied', fmt((safety - 1) * 100, 0) + '%', '—'],
-    ['Pump Efficiency', fmt(eff * 100, 0) + '%', '—'],
-    ['<strong>Required Pump Output</strong>', '<strong>' + fmt(reqGPM, 1) + '</strong>', '<strong>GPM</strong>'],
-    ['<strong>Required Pump Output</strong>', '<strong>' + fmt(reqGPH, 0) + '</strong>', '<strong>GPH</strong>'],
-    ['Total Head Height', fmt(head, 1), 'feet'],
-    ['Recommended Horsepower', hp, '—'],
-    ['Recommended Discharge Pipe', pipeSize, 'diameter'],
-    ['Est. Pump Cycle Time', fmt(cycleTime, 1), 'min/cycle'],
-  ];
-
-  let tbodyHTML = '';
-  tbodyRows.forEach(function(r) {
-    tbodyHTML += '<tr><td>' + r[0] + '</td><td class="num">' + r[1] + '</td><td>' + r[2] + '</td></tr>';
-  });
-
-  requestAnimationFrame(function() {
-    document.getElementById('res-gph').textContent = fmt(reqGPH, 0);
-    document.getElementById('res-gpm').innerHTML = fmt(reqGPM, 1) + ' GPM &nbsp;|&nbsp; ' + hp + ' recommended ' + hpBadge(hp);
-    document.getElementById('res-rec').innerHTML = '💡 <strong>Recommendation:</strong> ' + recText;
-    document.getElementById('res-tbody').innerHTML = tbodyHTML;
-
-    // Store results for copy
-    window._lastResults = [
-      'Sump Pump Sizing Results',
-      '========================',
-      'Required Output: ' + fmt(reqGPH, 0) + ' GPH (' + fmt(reqGPM, 1) + ' GPM)',
-      'Recommended HP: ' + hp,
-      'Pit Area: ' + fmt(areaIn2, 1) + ' in²',
-      'Total Pit Volume: ' + fmt(totalVolGal, 1) + ' gal',
-      'Raw Inflow: ' + fmt(rawGPM, 2) + ' GPM',
-      'Total Head: ' + fmt(head, 1) + ' ft',
-      'Discharge Pipe: ' + pipeSize,
-      'Cycle Time: ~' + fmt(cycleTime, 1) + ' min',
-      'Generated at toolwick.com'
-    ].join('\n');
-
-    const resultsEl = document.getElementById('results');
-    resultsEl.classList.add('visible');
-    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
-}
-
-function copyResults() {
-  if (!window._lastResults) return;
-  navigator.clipboard.writeText(window._lastResults).then(function() {
-    const btn = document.getElementById('copyBtn');
-    btn.textContent = 'Copied!';
-    btn.classList.add('copied');
-    setTimeout(function() {
-      btn.textContent = 'Copy Results';
-      btn.classList.remove('copied');
-    }, 2000);
-  });
-}
-
-document.getElementById('calcBtn').addEventListener('click', function() {
-  requestAnimationFrame(function() { calculate(); });
+$('pitShape').addEventListener('change',function(){var r=this.value==='round';$('roundBox').style.display=r?'':'none';$('rectBox').style.display=r?'none':''});
+$('riseSlider').addEventListener('input',function(){$('riseRate').value=this.value});
+$('riseRate').addEventListener('input',function(){var v=Number(this.value);if(this.value!==''&&isFinite(v))$('riseSlider').value=Math.min(20,Math.max(0.5,v))});
+$('calcBtn').addEventListener('click',function(){requestAnimationFrame(calculate)});
+document.querySelectorAll('input,select').forEach(function(el){el.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();requestAnimationFrame(calculate)}})});
+$('results').addEventListener('click',function(e){
+if(e.target.id!=='copyBtn')return;
+var btn=e.target;
+function done(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy results'},2000)}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,function(){})}
+else{var t=document.createElement('textarea');t.value=lastText;document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(t)}
 });
-
-document.querySelectorAll('input[type="number"], select').forEach(function(el) {
-  el.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-      requestAnimationFrame(function() { calculate(); });
-    }
-  });
-});
+})();
 </script>
 <script id="a11y-js">(function(){function run(){
 var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
