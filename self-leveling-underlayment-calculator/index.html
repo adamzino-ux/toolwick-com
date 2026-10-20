@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Self-Leveling Underlayment Calculator | Toolwick</title>
+<meta name="description" content="Free self leveling underlayment calculator: enter room size and thickness to get bags needed, volume, water, weight and cost with waste included.">
+<link rel="canonical" href="https://toolwick.com/self-leveling-underlayment-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Self-Leveling Underlayment Calculator", "url": "https://toolwick.com/self-leveling-underlayment-calculator/", "description": "Free self leveling underlayment calculator: enter room size and thickness to get bags needed, volume, water, weight and cost with waste included.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Self-Leveling Underlayment Calculator", "item": "https://toolwick.com/self-leveling-underlayment-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much does a bag of self-leveling underlayment cover?", "acceptedAnswer": {"@type": "Answer", "text": "A typical 50 lb bag covers roughly 24 to 27 square feet at 1/4 inch deep, or about 54 square feet at 1/8 inch. Coverage drops in proportion as depth increases, so always confirm with your product's data sheet."}}, {"@type": "Question", "name": "How thick can I pour self-leveling underlayment?", "acceptedAnswer": {"@type": "Answer", "text": "Most products allow about 1/8 inch up to 1 to 1.5 inches in a single pour. Deeper areas may need a mix with added pea gravel or a second pour after the first has cured, as the manufacturer directs."}}, {"@type": "Question", "name": "How many bags of self leveler do I need for 500 square feet?", "acceptedAnswer": {"@type": "Answer", "text": "At 1/4 inch deep with 10% waste and 0.45 cu ft per bag, 500 sq ft needs about 26 bags. At 1/2 inch it needs about 51 bags. Enter 500 as the area (for example 25 × 20) to confirm for your own depth."}}, {"@type": "Question", "name": "Do I need primer before self-leveling underlayment?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, almost always. Primer controls how fast the substrate absorbs water and helps the SLU bond. Skipping it is one of the most common causes of pinholes, cracking and delamination."}}, {"@type": "Question", "name": "How long until I can walk on it or install flooring?", "acceptedAnswer": {"@type": "Answer", "text": "Many products are walkable in 2 to 4 hours, and some accept tile in the same day. Moisture-sensitive floors such as wood or vinyl often need 16 to 72 hours, so check the data sheet for your specific product and thickness."}}, {"@type": "Question", "name": "Why does the calculator add a waste allowance?", "acceptedAnswer": {"@type": "Answer", "text": "Real floors have deeper low spots than your average, some material stays in the bucket and mixer, and edges need dams. A 10% allowance is typical, and 15 to 20% is smart for badly uneven floors or first-time pours."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:1rem 0}
+nav a{font-weight:700;font-size:1.1rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.intro{color:#333}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram .cap{font-size:.8rem;color:#666;text-align:center;margin:0 0 .25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible,input[type=range]:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.err{border-color:#e74c3c}
+.emsg{color:#c0392b;font-size:.85rem;min-height:0;margin-top:.3rem}
+.field{margin-bottom:1.25rem}
+.row{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:641px){.row{grid-template-columns:1fr 1fr}}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6;margin:0}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+button.go{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+button.go:hover{background:#006299}
+#results{margin-top:1.5rem}
+.fadein{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.keybox{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.keybox .num{font-size:3rem;font-weight:800;color:#0077b6;line-height:1.1}
+.keybox .unit{font-size:1.2rem;font-weight:600;color:#1a1a2e}
+.keybox .sub{font-size:.9rem;color:#444;margin-top:.35rem}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+tr.me td{font-weight:700;color:#0077b6}
+.warn{border-left:4px solid #e67e22;background:#fff8f0;padding:.75rem 1rem;margin-bottom:1rem;font-size:.9rem;border-radius:0 6px 6px 0}
+.note{font-size:.82rem;color:#666}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;min-height:44px;font-size:.9rem;cursor:pointer;font-family:inherit;margin-right:.5rem}
+.ad-slot{min-height:0;margin:0}
+.content h3{font-size:1.05rem}
+.content ul{padding-left:1.25rem}
+.content li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;overflow-x:auto}
+details{border-bottom:1px solid #e0e0e0;padding:.5rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .75rem;color:#333}
+.related{list-style:none;padding:0;display:grid;gap:.5rem}
+.related a{display:block;padding:12px 16px;border:1px solid #e0e0e0;border-radius:6px;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+[hidden]{display:none!important}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.keybox .num{font-size:2.5rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/self-leveling-underlayment-calculator/">
+<meta property="og:title" content="Self-Leveling Underlayment Calculator">
+<meta property="og:description" content="Free self leveling underlayment calculator: enter room size and thickness to get bags needed, volume, water, weight and cost with waste included.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Self-Leveling Underlayment Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p class="intro">Use this self leveling underlayment calculator to find out how many bags of SLU you need for a room, based on floor size, pour thickness, product yield and a waste allowance. Results are rounded up so you don't run short mid-pour.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="diagram" viewBox="0 0 640 240" role="img" aria-labelledby="dgt dgd">
+<title id="dgt">Cross-section of a self-leveling underlayment pour</title>
+<desc id="dgd">A flat leveled layer of underlayment poured over an uneven subfloor between two walls, with the room length and average thickness dimensioned.</desc>
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#0077b6"/></marker>
+<pattern id="ht" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#f8f9fa"/><line x1="0" y1="0" x2="0" y2="8" stroke="#e0e0e0" stroke-width="2"/></pattern>
+</defs>
+<rect x="20" y="62" width="10" height="108" fill="#e0e0e0"/>
+<rect x="610" y="62" width="10" height="108" fill="#e0e0e0"/>
+<rect x="30" y="140" width="580" height="30" fill="#cfe8f5"/>
+<polygon points="30,160 130,166 220,153 310,164 400,157 500,167 610,156 610,205 30,205" fill="url(#ht)" stroke="#1a1a2e" stroke-width="1.5"/>
+<line x1="30" y1="140" x2="610" y2="140" stroke="#0077b6" stroke-width="3"/>
+<line x1="30" y1="40" x2="610" y2="40" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="30" y1="34" x2="30" y2="62" stroke="#bbb" stroke-dasharray="4 3"/>
+<line x1="610" y1="34" x2="610" y2="62" stroke="#bbb" stroke-dasharray="4 3"/>
+<text id="d-len" x="320" y="28" text-anchor="middle" font-size="15" font-weight="600" fill="#1a1a2e">Room length</text>
+<line x1="560" y1="140" x2="560" y2="162" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="520" y1="140" x2="580" y2="140" stroke="#1a1a2e" stroke-dasharray="3 3" stroke-width="1"/>
+<text id="d-thk" x="600" y="124" text-anchor="end" font-size="14" font-weight="600" fill="#1a1a2e">Avg. thickness</text>
+<text x="40" y="124" font-size="12" fill="#1a1a2e">Level surface</text>
+<text x="320" y="192" text-anchor="middle" font-size="12" fill="#1a1a2e" style="paint-order:stroke;stroke:#fff;stroke-width:4px">Uneven subfloor</text>
+<text id="d-sum" x="320" y="230" text-anchor="middle" font-size="14" fill="#1a1a2e">Enter dimensions and calculate</text>
+</svg>
+<p class="cap">Cross-section, not to scale. Labels update with your numbers.</p>
+</div>
+
+<form id="f" novalidate>
+<div class="field">
+<label for="units">Units</label>
+<select id="units"><option value="ft">Imperial (feet, inches)</option><option value="m">Metric (meters, millimeters)</option></select>
+</div>
+<div class="row">
+<div class="field">
+<label for="len">Room length (<span class="ul">ft</span>)</label>
+<input type="number" id="len" inputmode="decimal" step="any" min="0" value="12" aria-describedby="e-len">
+<div class="emsg" id="e-len"></div>
+</div>
+<div class="field">
+<label for="wid">Room width (<span class="ul">ft</span>)</label>
+<input type="number" id="wid" inputmode="decimal" step="any" min="0" value="10" aria-describedby="e-wid">
+<div class="emsg" id="e-wid"></div>
+</div>
+</div>
+<div class="field">
+<label for="thk">Average pour thickness (<span class="ut">in</span>)</label>
+<input type="number" id="thk" inputmode="decimal" step="any" min="0" value="0.25" aria-describedby="e-thk h-thk">
+<div class="hint" id="h-thk">For an uneven floor, average the shallowest and deepest spots.</div>
+<div class="emsg" id="e-thk"></div>
+</div>
+<div class="field">
+<label for="bag">Product bag size</label>
+<select id="bag">
+<option value="0.45|50|50 lb">50 lb bag, about 0.45 cu ft (typical)</option>
+<option value="0.36|40|40 lb">40 lb bag, about 0.36 cu ft</option>
+<option value="0.49|55|25 kg">25 kg (55 lb) bag, about 0.49 cu ft</option>
+<option value="custom">Custom yield from data sheet</option>
+</select>
+</div>
+<div class="field" id="cwrap" hidden>
+<label for="cy">Yield per bag (cu ft)</label>
+<input type="number" id="cy" inputmode="decimal" step="any" min="0" value="0.45" aria-describedby="e-cy h-cy">
+<div class="hint" id="h-cy">Data sheets list coverage: cu ft = sq ft covered × depth in inches ÷ 12.</div>
+<div class="emsg" id="e-cy"></div>
+</div>
+<div class="field">
+<label for="waste">Waste and low-spot allowance: <strong id="wv">10%</strong></label>
+<input type="range" id="waste" min="0" max="30" step="1" value="10">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>15%</span><span>30%</span></div>
+</div>
+<div class="field">
+<label for="price">Price per bag (optional, $)</label>
+<input type="number" id="price" inputmode="decimal" step="any" min="0" placeholder="e.g. 40" aria-describedby="e-price">
+<div class="emsg" id="e-price"></div>
+</div>
+<button type="submit" class="go">Calculate Bags Needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/self-leveling-underlayment-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Self-Leveling Underlayment Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/self-leveling-underlayment-calculator/&quot;&gt;Self-Leveling Underlayment Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/self-leveling-underlayment-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<section class="content">
+<h2>How to Use This Self-Leveling Underlayment Calculator</h2>
+<p>Enter the room length and width, then the average thickness you plan to pour. Pick your bag size, or choose "Custom" and type the yield from your product's data sheet. Set the waste slider (10% is a sensible default) and press Calculate. You get the number of bags to buy, total volume, estimated mixing water, material weight, optional cost, and a table showing how the bag count changes at other thicknesses.</p>
+
+<h2>Why This Matters</h2>
+<p>Self-leveling underlayment (SLU) is a cement- or gypsum-based liquid that flows out flat over a subfloor before tile, vinyl plank, laminate or hardwood goes down. It fixes dips and slopes that would otherwise telegraph through flooring, crack tile grout, or open up seams. Contractors and DIYers use it in kitchen remodels, basement conversions, and when joining a new room to an older one with a different floor height.</p>
+<p>Ordering the right amount matters more than with most materials. SLU has a short working time, often 15 to 20 minutes, and a pour that stops halfway leaves a visible cold joint. Running out means a second mix on a floor that is already setting. Buying too much is expensive too: a 12 × 10 ft room at 1/2 inch deep needs around 13 bags, and at $40 a bag, three spares is $120 you may not use. Thickness is the biggest swing factor. Doubling depth doubles the bags, so measuring your low spots with a straightedge and level before you shop pays off quickly.</p>
+<p>Weight is a hidden factor as well. Poured SLU adds roughly 9 lb per square foot for each inch of depth, so a thick pour over a large wood-framed floor is real extra dead load.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator uses a volume method, the standard rule of thumb for estimating SLU. No building code edition governs this estimate. The manufacturer's data sheet is the authority for yield, minimum and maximum depth, and mixing water.</p>
+<div class="formula">Area = length × width<br>Volume (cu ft) = area (sq ft) × thickness (in) ÷ 12<br>Volume with waste = volume × (1 + waste %)<br>Bags = volume with waste ÷ yield per bag, rounded UP</div>
+<p>The default yield is deliberately conservative: about 0.009 cu ft per pound of dry mix, so a 50 lb bag is 0.45 cu ft. Some products yield slightly more, but using the lower figure means you are less likely to run short. Bag counts always round up to the next whole bag. Water is estimated at 4.5 to 6 quarts per 50 lb bag, scaled for bag weight. Always follow the exact ratio printed on your bag, because too much water weakens the cured surface.</p>
+<p>Metric inputs are converted internally (1 m = 3.28084 ft, 25.4 mm = 1 in, 1 cu ft = 28.317 L), so both unit systems give the same answer.</p>
+
+<h2>Worked Example</h2>
+<p>A 12 ft × 10 ft bedroom needs a 1/4 inch average pour using 50 lb bags at 0.45 cu ft each, with 10% waste.</p>
+<ul>
+<li>Area: 12 × 10 = 120 sq ft</li>
+<li>Volume: 120 × 0.25 ÷ 12 = 2.5 cu ft</li>
+<li>With 10% waste: 2.5 × 1.10 = 2.75 cu ft</li>
+<li>Bags: 2.75 ÷ 0.45 = 6.11, rounded up to <strong>7 bags</strong></li>
+<li>Weight: 7 × 50 = 350 lb of dry mix</li>
+<li>Water: 7 × 4.5 to 6 qt = 31.5 to 42 qt, or about 7.9 to 10.5 gallons</li>
+</ul>
+<p>At $40 per bag, that is $280. If the same floor needed 1/2 inch, the answer jumps to 13 bags, which is why the comparison table is worth a look.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Prime first.</strong> Unprimed concrete or wood pulls water out of the mix, causing pinholes and weak bonding. Use the primer your SLU maker specifies.</li>
+<li><strong>Seal every gap and drain.</strong> Liquid SLU runs through cracks, pipe penetrations and gaps at walls. Foam, caulk and dams are cheap compared with a leak into the room below.</li>
+<li><strong>Respect depth limits.</strong> Most products need about 1/8 inch minimum and 1 to 1.5 inches maximum per pour. Deeper fills may need aggregate or multiple lifts. Check the data sheet.</li>
+<li><strong>Mix only what you can pour.</strong> Work with a helper, mix bag by bag in consistent water amounts, and keep a wet edge. Wear a dust mask while mixing, since dry powder contains fine silica.</li>
+<li><strong>Test moisture and check structure.</strong> Concrete slabs are often tested with in-situ RH probes (ASTM F2170). On wood floors, confirm the framing can carry the added weight and is stiff enough, because SLU is not a structural fix.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much does a bag of self-leveling underlayment cover?</summary><p>A typical 50 lb bag covers roughly 24 to 27 square feet at 1/4 inch deep, or about 54 square feet at 1/8 inch. Coverage drops in proportion as depth increases, so always confirm with your product's data sheet.</p></details>
+<details><summary>How thick can I pour self-leveling underlayment?</summary><p>Most products allow about 1/8 inch up to 1 to 1.5 inches in a single pour. Deeper areas may need a mix with added pea gravel or a second pour after the first has cured, as the manufacturer directs.</p></details>
+<details><summary>How many bags of self leveler do I need for 500 square feet?</summary><p>At 1/4 inch deep with 10% waste and 0.45 cu ft per bag, 500 sq ft needs about 26 bags. At 1/2 inch it needs about 51 bags. Enter 500 as the area (for example 25 × 20) to confirm for your own depth.</p></details>
+<details><summary>Do I need primer before self-leveling underlayment?</summary><p>Yes, almost always. Primer controls how fast the substrate absorbs water and helps the SLU bond. Skipping it is one of the most common causes of pinholes, cracking and delamination.</p></details>
+<details><summary>How long until I can walk on it or install flooring?</summary><p>Many products are walkable in 2 to 4 hours, and some accept tile in the same day. Moisture-sensitive floors such as wood or vinyl often need 16 to 72 hours, so check the data sheet for your specific product and thickness.</p></details>
+<details><summary>Why does the calculator add a waste allowance?</summary><p>Real floors have deeper low spots than your average, some material stays in the bucket and mixer, and edges need dams. A 10% allowance is typical, and 15 to 20% is smart for badly uneven floors or first-time pours.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="related">
+<li><a href="/roof-underlayment-calculator/">Roof Underlayment Calculator</a></li>
+<li><a href="/generator-size-calculator/">Generator Size Calculator (Standby &amp; Portable)</a></li>
+<li><a href="/vinyl-plank-flooring-calculator/">Vinyl Plank Flooring Calculator</a></li>
+<li><a href="/roofing-nails-per-square-calculator/">Roofing Nails Per Square Calculator</a></li>
+<li><a href="/beadboard-paneling-calculator/">Beadboard Paneling Calculator</a></li>
+<li><a href="/house-wrap-calculator/">House Wrap Calculator</a></li>
+</ul>
+</section>
+
+<div class="ad-slot" id="ad-bottom"></div>
+</main>
+<footer><div class="wrap">
+<p><a href="/about/">About</a> <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> <a href="/contact/">Contact</a></p>
+<p>© 2025 toolwick.com. Estimates only; always follow the manufacturer's data sheet and local requirements.</p>
+</div></footer>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+function fmt(n,d,min){return Number(n).toLocaleString('en-US',{minimumFractionDigits:min||0,maximumFractionDigits:d})}
+function num(id){var v=$(id).value.trim();return v===''?NaN:Number(v)}
+var hasResult=false,lastText='',prev='ft';
+var IDS=['len','wid','thk','cy','price'];
+function clearErrs(){IDS.forEach(function(i){$(i).classList.remove('err');$(i).removeAttribute('aria-invalid');$('e-'+i).textContent=''})}
+function setErr(id,msg){$(id).classList.add('err');$(id).setAttribute('aria-invalid','true');$('e-'+id).textContent=msg}
+function diagram(l,t,s){$('d-len').textContent=l;$('d-thk').textContent=t;$('d-sum').textContent=s}
+function calculate(){
+clearErrs();
+var m=$('units').value==='m',ok=true;
+var L=num('len'),W=num('wid'),T=num('thk');
+var ulab=m?'m':'ft',tlab=m?'mm':'in';
+var maxD=m?1500:5000;
+if(!(L>0)){setErr('len','Enter a length greater than 0.');ok=false}
+else if(L>maxD){setErr('len','Enter a length up to '+fmt(maxD,0)+' '+ulab+'.');ok=false}
+if(!(W>0)){setErr('wid','Enter a width greater than 0.');ok=false}
+else if(W>maxD){setErr('wid','Enter a width up to '+fmt(maxD,0)+' '+ulab+'.');ok=false}
+var tIn=m?T/25.4:T;
+if(!(T>0)){setErr('thk','Enter a thickness greater than 0.');ok=false}
+else if(tIn>6){setErr('thk','Over 6 in (150 mm) is outside the range for self-leveling products. Use a mortar bed or concrete.');ok=false}
+var cy,wt=null,bname='bags',bv=$('bag').value;
+if(bv==='custom'){cy=num('cy');if(!(cy>0)||cy>5){setErr('cy','Enter a yield between 0 and 5 cu ft per bag.');ok=false}}
+else{var p=bv.split('|');cy=parseFloat(p[0]);wt=parseFloat(p[1]);bname=p[2]+' bags'}
+var price=num('price'),hasPrice=$('price').value.trim()!=='';
+if(hasPrice&&!(price>=0)){setErr('price','Enter a price of 0 or more, or leave blank.');ok=false}
+if(!ok){hasResult=false;$('results').innerHTML='';diagram('Room length','Avg. thickness','Fix the highlighted fields and recalculate');return}
+var w=$('waste').value/100;
+var lf=m?L*3.28084:L,wf=m?W*3.28084:W;
+var area=lf*wf,vol=area*tIn/12,volW=vol*(1+w);
+var exact=volW/cy,bags=Math.max(1,Math.ceil(exact-1e-9));
+var areaM=area*0.092903,volL=vol*28.3168,volWL=volW*28.3168;
+var thkTxt=m?fmt(T,1)+' mm ('+fmt(tIn,3)+' in)':fmt(T,3)+' in ('+fmt(T*25.4,1)+' mm)';
+var rows=[
+['Floor area',fmt(area,1)+' sq ft ('+fmt(areaM,1)+' m²)'],
+['Average thickness',thkTxt],
+['Volume needed',fmt(vol,2,2)+' cu ft ('+fmt(volL,0)+' L)'],
+['Volume with '+fmt(w*100,0)+'% waste',fmt(volW,2,2)+' cu ft ('+fmt(volWL,0)+' L)'],
+['Bags (exact)',fmt(exact,2,2)],
+['Bags to buy (rounded up)',fmt(bags,0)]
+];
+var txt=['Self-leveling underlayment estimate','Area: '+fmt(area,1)+' sq ft','Thickness: '+thkTxt,'Volume with waste: '+fmt(volW,2,2)+' cu ft','Bags to buy: '+bags+' ('+bname+')'];
+if(wt){
+var tw=bags*wt,ql=bags*4.5*(wt/50),qh=bags*6*(wt/50);
+rows.push(['Dry material weight',fmt(tw,0)+' lb ('+fmt(tw*0.453592,0)+' kg)']);
+rows.push(['Mixing water (approx.)',fmt(ql/4,1)+' to '+fmt(qh/4,1)+' gal ('+fmt(ql/4*3.78541,0)+' to '+fmt(qh/4*3.78541,0)+' L)']);
+txt.push('Dry weight: '+fmt(tw,0)+' lb')}
+if(hasPrice){rows.push(['Estimated material cost','$'+fmt(bags*price,2,2)]);txt.push('Cost: $'+fmt(bags*price,2,2))}
+var warns='';
+if(tIn<0.125)warns+='<div class="warn">Under 1/8 in (3 mm) is below the minimum depth of most self-leveling products. Check your data sheet or use a skim-coat or patching product.</div>';
+if(tIn>1.5)warns+='<div class="warn">Over 1.5 in (38 mm) usually exceeds the single-pour limit. Ask the manufacturer about aggregate extension or multiple lifts.</div>';
+if(area>500)warns+='<div class="warn">Large floor: SLU sets in about 15 to 20 minutes. Plan a pump or a crew with continuous mixing so there are no cold joints.</div>';
+if(tIn>=0.5)warns+='<div class="warn">Added dead load is about '+fmt(tIn*9.3,1)+' lb per sq ft. On wood framing, confirm the structure can carry it.</div>';
+var th=[[0.125,'1/8 in (3 mm)'],[0.25,'1/4 in (6 mm)'],[0.375,'3/8 in (10 mm)'],[0.5,'1/2 in (13 mm)'],[0.75,'3/4 in (19 mm)'],[1,'1 in (25 mm)']];
+var cmp='<tr class="me"><td>Your pour: '+(m?fmt(T,1)+' mm':fmt(T,3)+' in')+'</td><td class="r">'+fmt(bags,0)+'</td></tr>';
+th.forEach(function(x){var b=Math.max(1,Math.ceil(area*x[0]/12*(1+w)/cy-1e-9));cmp+='<tr><td>'+x[1]+'</td><td class="r">'+fmt(b,0)+'</td></tr>'});
+var html='<div class="fadein"><div class="keybox"><div><span class="num">'+fmt(bags,0)+'</span> <span class="unit">'+bname+'</span></div><div class="sub">to cover '+fmt(area,1)+' sq ft at '+thkTxt.split(' (')[0]+' with '+fmt(w*100,0)+'% waste</div></div>'
++warns
++'<div class="tw"><table><thead><tr><th>Detail</th><th class="r">Value</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td class="r">'+r[1]+'</td></tr>'}).join('')+'</tbody></table></div>'
++'<h2 style="font-size:1.05rem;margin-top:1.5rem">Bags needed at other thicknesses</h2><div class="tw"><table><thead><tr><th>Thickness</th><th class="r">Bags</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'
++'<p><button type="button" class="copy" id="copyBtn">Copy results</button><span id="cmsg" class="note"></span></p>'
++'<p class="note">Estimate only, rounded up. Yield is a conservative rule of thumb (about 0.009 cu ft per lb of dry mix). Confirm yield, depth limits and water ratio on your product data sheet. Local codes and conditions vary. This is not an engineering, permit or inspection approval.</p></div>';
+lastText=txt.join('\n');
+hasResult=true;
+$('results').innerHTML=html;
+diagram('Room length: '+fmt(L,2)+' '+ulab,'Avg. thickness: '+(m?fmt(T,1):fmt(T,3))+' '+tlab,'Width '+fmt(W,2)+' '+ulab+' · Area '+fmt(area,1)+' sq ft · '+fmt(bags,0)+' bags');
+}
+function run(){requestAnimationFrame(calculate)}
+$('f').addEventListener('submit',function(e){e.preventDefault();run()});
+$('bag').addEventListener('change',function(){$('cwrap').hidden=$('bag').value!=='custom';if(hasResult)run()});
+$('waste').addEventListener('input',function(){$('wv').textContent=$('waste').value+'%';if(hasResult)run()});
+$('units').addEventListener('change',function(){
+var to=$('units').value;if(to===prev)return;
+var m=to==='m';
+function conv(id,f,d){var v=num(id);if(isFinite(v)&&v>0)$(id).value=+(v*f).toFixed(d)}
+conv('len',m?0.3048:1/0.3048,2);conv('wid',m?0.3048:1/0.3048,2);conv('thk',m?25.4:1/25.4,m?1:3);
+Array.prototype.forEach.call(document.querySelectorAll('.ul'),function(s){s.textContent=m?'m':'ft'});
+Array.prototype.forEach.call(document.querySelectorAll('.ut'),function(s){s.textContent=m?'mm':'in'});
+prev=to;run()});
+$('results').addEventListener('click',function(e){
+if(e.target.id!=='copyBtn')return;
+var done=function(){$('cmsg').textContent='Copied!';setTimeout(function(){var c=$('cmsg');if(c)c.textContent=''},2000)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,function(){})}
+else{var ta=document.createElement('textarea');ta.value=lastText;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(ta)}
+});
+run();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
