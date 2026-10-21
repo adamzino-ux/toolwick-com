@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Carpet Calculator | Toolwick</title>
+<meta name="description" content="Free carpet calculator: enter room size to get square yards of carpet, roll-width layout, pad and tack strip, with waste allowance built in.">
+<link rel="canonical" href="https://toolwick.com/carpet-calculator-square-yards/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0}
+nav a{display:inline-block;line-height:44px;font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none}
+h1{font-size:1.9rem;line-height:1.25;margin:1.5rem 0 .75rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2.5rem 0 .75rem}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;height:auto}
+.cap{font-size:.85rem;color:#555;margin:.5rem 0 0;text-align:center}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{padding:0;accent-color:#0077b6;border:0;min-height:44px}
+input.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;min-height:0;margin-top:.3rem}
+.field{margin-bottom:1.1rem}
+.row{display:grid;grid-template-columns:1fr;gap:0 1rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.btn{width:100%;min-height:48px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+.res{margin-top:1.5rem;background:#f8f9fa;border-radius:8px;padding:1.25rem}
+.res:empty{display:none}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.fade{animation:none}}
+.lbl{font-size:.85rem;font-weight:500;color:#444;margin:0}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.15}
+.sub{font-weight:600;margin:.25rem 0 .5rem}
+.note{font-size:.85rem;color:#555}
+.rh{font-weight:700;margin:1.25rem 0 .5rem}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.92rem;background:#fff}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e5e5e5}
+tbody tr:nth-child(odd) td{background:#fafafa}
+tbody tr:nth-child(even) td{background:#fff}
+.n{text-align:right;white-space:nowrap}
+.copy{margin-top:1rem;min-height:44px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit}
+.formula{background:#f8f9fa;border-left:4px solid #0077b6;padding:1rem;border-radius:4px;font-size:.95rem;overflow-x:auto}
+details{border-bottom:1px solid #e0e0e0}
+summary{min-height:44px;padding:.7rem 0;cursor:pointer;font-weight:600}
+details p{margin:0 0 1rem}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel li{margin-bottom:.15rem}.rel a{display:inline-block;padding:.35rem 0}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #e0e0e0;margin-top:2.5rem;padding:1.5rem 0 2rem;font-size:.9rem;color:#555}
+footer a{color:#0077b6;display:inline-block;padding:.5rem .25rem}
+@media(min-width:640px){.row{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/carpet-calculator-square-yards/">
+<meta property="og:title" content="Carpet Calculator">
+<meta property="og:description" content="Free carpet calculator: enter room size to get square yards of carpet, roll-width layout, pad and tack strip, with waste allowance built in.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Carpet Calculator (Square Yards)</h1>
+<p>Use this free carpet calculator to find how many square yards of carpet you need for a room. Enter the length and width, choose a roll width and waste allowance, and get a rounded-up order quantity plus carpet pad and tack strip estimates.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="svg" viewBox="0 0 420 230" role="img" aria-label="Top-down room diagram showing length, width and carpet roll strips">
+<title>Room layout with carpet roll strips</title>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="#0077b6"/></marker></defs>
+<g id="dg"></g>
+</svg>
+<p class="cap" id="dcap">Enter your room size and press Calculate to see your roll layout.</p>
+</div>
+
+<form id="f" novalidate>
+<div class="field"><label for="unit">Measurement unit</label>
+<select id="unit"><option value="ft">Feet (ft)</option><option value="m">Metres (m)</option></select></div>
+<div class="row">
+<div class="field"><label for="len">Room length (<span class="u">ft</span>)</label>
+<input id="len" type="number" inputmode="decimal" step="any" min="0" value="15" aria-describedby="e-len"><div class="err" id="e-len" role="alert"></div></div>
+<div class="field"><label for="wid">Room width (<span class="u">ft</span>)</label>
+<input id="wid" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="e-wid"><div class="err" id="e-wid" role="alert"></div></div>
+</div>
+<div class="field"><label for="waste">Waste allowance: <output id="wv">10%</output></label>
+<input id="waste" type="range" min="0" max="25" step="1" value="10">
+<div class="ticks"><span>0%</span><span>25%</span></div>
+<div class="hint">5–10% for plain rooms, 10–15% for patterns or odd shapes.</div></div>
+<div class="row">
+<div class="field"><label for="roll">Carpet roll width</label>
+<select id="roll"><option value="12">12 ft (3.66 m)</option><option value="13.1667">13 ft 2 in (4 m)</option><option value="15">15 ft (4.57 m)</option></select></div>
+<div class="field"><label for="stairs">Stair steps (optional)</label>
+<input id="stairs" type="number" inputmode="numeric" step="1" min="0" value="0" aria-describedby="e-stairs"><div class="err" id="e-stairs" role="alert"></div></div>
+</div>
+<div class="field"><label for="price">Price per square yard (optional, $)</label>
+<input id="price" type="number" inputmode="decimal" step="any" min="0" placeholder="e.g. 24" aria-describedby="e-price"><div class="err" id="e-price" role="alert"></div></div>
+<button type="submit" class="btn" id="calcBtn">Calculate Carpet Needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" class="res" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<h2>How to Use This Carpet Calculator</h2>
+<p>Pick feet or metres, then enter the room's length and width at the longest points. Set the waste slider, choose the roll width your supplier stocks, and add stair steps or a price per square yard if you want them included. Press Calculate to see the recommended order in square yards, a roll-width comparison, and the pad and tack strip you will need. For L-shaped rooms, run the calculator once per rectangle and add the totals.</p>
+
+<h2>Why This Matters</h2>
+<p>Carpet is sold by the square yard, but rooms are measured in square feet, and that mismatch causes more ordering mistakes than almost anything else in flooring. A 12 × 15 ft bedroom is 180 square feet, which is 20 square yards, yet shoppers often order 180 or guess based on a neighbour's room. Order too little and you may not be able to match the dye lot later, which means a visible seam or a full re-order. Order too much and at $20–$45 per square yard, three spare yards is $60–$135 wasted.</p>
+<p>Broadloom also comes in fixed widths, usually 12 ft. A room that is 12 ft 3 in wide needs two strips and a seam, even though it is only three inches over, so the roll layout often matters more than the raw area. This matters to homeowners getting quotes, landlords re-carpeting rentals between tenants, and DIYers who plan to lay carpet tiles or roll goods themselves. Knowing your number before you walk into the store lets you check an installer's quote and compare roll widths on price.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator runs two estimates and recommends the larger one, so the answer never errs on the short side.</p>
+<div class="formula">
+Area (sq ft) = length × width + stairs (5 sq ft per step)<br>
+Area-based sq yd = Area × (1 + waste %) ÷ 9<br>
+Strips = ⌈ room dimension ÷ roll width ⌉<br>
+Linear ft = strips × (strip length + 0.25 ft trim)<br>
+Roll-based sq yd = Linear ft × roll width ÷ 9<br>
+Order = larger of the two, rounded up to 0.1 sq yd
+</div>
+<p>The tool tests running strips along the length and along the width, and uses whichever needs less roll. Pad is room area plus 5%, rounded up. Tack strip is the room perimeter, rounded up to whole 4-ft lengths, with no deduction for doorways.</p>
+<p>These are common installer rules of thumb (9 sq ft per square yard, a 3-inch trim allowance, 5–15% waste), not a building code. Carpet quantity is not a code-sized item, but local rules on stair coverings or fire ratings may apply, so confirm with your installer. Pattern repeats, nap direction and unusual layouts can raise the real number. Treat the result as a planning estimate, not an installation quote or approval.</p>
+
+<h2>Worked Example</h2>
+<p>A living room measures 15 ft × 12 ft, with 10% waste, a 12 ft roll, no stairs and carpet at $24 per square yard.</p>
+<ul>
+<li>Room area: 15 × 12 = 180 sq ft.</li>
+<li>Waste: 180 × 1.10 = 198 sq ft ÷ 9 = 22.0 sq yd (area-based).</li>
+<li>Roll layout along the 15 ft length: ⌈12 ÷ 12⌉ = 1 strip, 15 + 0.25 = 15.25 linear ft × 12 ÷ 9 = 20.33 sq yd. Running across the width needs 2 strips and 24.5 linear ft, so the first layout wins.</li>
+<li>Recommended order: the larger figure, 22.0 sq yd (198 sq ft). Cost: 22.0 × $24 = $528.00.</li>
+<li>Pad: 180 × 1.05 = 189 sq ft = 21.0 sq yd. Tack strip: perimeter 54 ft ÷ 4 = 13.5, so 14 lengths.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the longest points.</strong> Include closets, alcoves and the area under door swings, not just the main rectangle.</li>
+<li><strong>Don't round down.</strong> Carpet is cut from a continuous roll, so a few inches short can mean a seam or a second dye lot.</li>
+<li><strong>Add extra for patterns.</strong> Large repeats, diagonal installs and directional pile can need 10–15% waste.</li>
+<li><strong>Keep seams out of traffic.</strong> Ask the installer to place seams away from doorways and hallways, even if it costs a little more roll.</li>
+<li><strong>Buy once, from one lot.</strong> Keep an offcut after installation for future repairs.</li>
+<li><strong>Confirm on site.</strong> Have the installer verify measurements before cutting.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How do I convert square feet to square yards for carpet?</summary><p>Divide the square feet by 9, because a square yard is 3 ft × 3 ft. A 180 sq ft room is 20 square yards before waste. Always add your waste allowance after converting, not before.</p></details>
+<details><summary>How much carpet do I need for a 12 × 12 room?</summary><p>The room is 144 sq ft, or 16 square yards. With 10% waste you need about 17.6 sq yd. On a 12 ft roll the room needs one strip of about 12.25 ft, so the area-with-waste figure is the one to order.</p></details>
+<details><summary>How much extra carpet should I buy?</summary><p>Most installers suggest 5–10% for simple rooms and 10–15% for patterned carpet, stairs, or rooms with many corners. If you are unsure, use the higher figure, since running short is the costlier mistake.</p></details>
+<details><summary>What is the standard carpet roll width?</summary><p>In North America, 12 ft is by far the most common, with 15 ft available for some products. Imported carpet is often 4 m (13 ft 2 in). Wider rolls can avoid seams in larger rooms, so compare them in the table above.</p></details>
+<details><summary>Do I need to buy carpet pad separately?</summary><p>Usually yes, unless the carpet has an attached backing cushion. Pad is sold by the square yard like carpet, and the calculator adds 5% for trimming. Tack strip is bought separately by the linear foot.</p></details>
+<details><summary>How much carpet do I need for stairs?</summary><p>Plan on roughly 5 sq ft per step for a standard 36-inch-wide stair with a tread and riser, and more for waterfall or bullnose styles. Stairs are cut into many small pieces, so keep the waste allowance at 10% or higher.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/epoxy-garage-floor-calculator/">Epoxy Garage Floor Coverage Calculator</a></li>
+<li><a href="/self-leveling-underlayment-calculator/">Self-Leveling Underlayment Calculator</a></li>
+<li><a href="/generator-size-calculator/">Generator Size Calculator (Standby &amp; Portable)</a></li>
+<li><a href="/vinyl-plank-flooring-calculator/">Vinyl Plank Flooring Calculator</a></li>
+<li><a href="/roofing-nails-per-square-calculator/">Roofing Nails Per Square Calculator</a></li>
+<li><a href="/beadboard-paneling-calculator/">Beadboard Paneling Calculator</a></li>
+</ul>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/carpet-calculator-square-yards/">Toolwick</a></p>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var EPS=1e-6,bad=[],lastText='';
+function f(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function g(n){return Number(n.toFixed(2)).toLocaleString('en-US',{maximumFractionDigits:2})}
+function up(x,p){return Math.ceil(x*p-EPS)/p}
+var ROLLS=[{v:12,t:'12 ft'},{v:13.1667,t:'13 ft 2 in'},{v:15,t:'15 ft'}];
+$('yr').textContent=new Date().getFullYear();
+
+function lay(Lf,Wf,rw){
+ var nA=Math.ceil(Wf/rw-EPS),lA=nA*(Lf+.25),nB=Math.ceil(Lf/rw-EPS),lB=nB*(Wf+.25),a=lA<=lB;
+ var lin=a?lA:lB;
+ return {dir:a?'L':'W',n:a?nA:nB,lin:lin,yd:lin*rw/9};
+}
+function plan(Lf,Wf,rw,st,wf){
+ var r=lay(Lf,Wf,rw);
+ r.areaYd=(Lf*Wf+st)*wf/9;
+ r.rollYd=r.yd+st*wf/9;
+ r.rec=up(Math.max(r.areaYd,r.rollYd),10);
+ r.basis=r.areaYd>=r.rollYd?'area':'roll';
+ return r;
+}
+function draw(Lf,Wf,rw,r,dl,dw){
+ var s=Math.min(280/Lf,150/Wf),w=Lf*s,h=Wf*s,x=200-w/2,y=20+(150-h)/2,h1=r.dir==='L',n=r.n,dim=h1?Wf:Lf,i,t='';
+ t+='<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="#eaf4fa" stroke="#0077b6" stroke-width="2.5"/>';
+ if(n<=12){
+  for(i=0;i<n;i++){
+   var st=i*rw,en=Math.min((i+1)*rw,dim),mid=(st+en)/2*s,th=(en-st)*s;
+   if(i>0){t+=h1?'<line x1="'+x+'" x2="'+(x+w)+'" y1="'+(y+st*s)+'" y2="'+(y+st*s)+'" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="6 4"/>':'<line y1="'+y+'" y2="'+(y+h)+'" x1="'+(x+st*s)+'" x2="'+(x+st*s)+'" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="6 4"/>'}
+   if(th>=16){t+='<text x="'+(h1?x+w/2:x+mid)+'" y="'+(h1?y+mid:y+h/2)+'" dy=".35em" text-anchor="middle" font-size="12" fill="#1a1a2e">'+(h1?'Strip '+(i+1):(i+1))+'</text>'}
+  }
+ }
+ var by=y+h+18,rx=x+w+18;
+ t+='<line x1="'+x+'" x2="'+x+'" y1="'+(y+h)+'" y2="'+(by+4)+'" stroke="#c8c8c8"/><line x1="'+(x+w)+'" x2="'+(x+w)+'" y1="'+(y+h)+'" y2="'+(by+4)+'" stroke="#c8c8c8"/>';
+ t+='<line x1="'+(x+w)+'" x2="'+(rx+4)+'" y1="'+y+'" y2="'+y+'" stroke="#c8c8c8"/><line x1="'+(x+w)+'" x2="'+(rx+4)+'" y1="'+(y+h)+'" y2="'+(y+h)+'" stroke="#c8c8c8"/>';
+ t+='<line x1="'+x+'" x2="'+(x+w)+'" y1="'+by+'" y2="'+by+'" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+ t+='<text x="200" y="'+(by+17)+'" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">Length '+dl+'</text>';
+ t+='<line y1="'+y+'" y2="'+(y+h)+'" x1="'+rx+'" x2="'+rx+'" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+ var tx=rx+16,ty=y+h/2;
+ t+='<text x="'+tx+'" y="'+ty+'" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e" transform="rotate(90 '+tx+' '+ty+')">Width '+dw+'</text>';
+ $('dg').innerHTML=t;
+}
+function err(id,m){var e=$(id);e.classList.add('bad');e.setAttribute('aria-invalid','true');$('e-'+id).textContent=m;bad.push(e)}
+function clr(){bad=[];['len','wid','stairs','price'].forEach(function(i){$(i).classList.remove('bad');$(i).removeAttribute('aria-invalid');$('e-'+i).textContent=''})}
+function row(a,b,c,bold){var o=bold?'<b>':'',e=bold?'</b>':'';return '<tr><td>'+o+a+e+'</td><td class="n">'+o+b+e+'</td><td class="n">'+o+c+e+'</td></tr>'}
+
+function calc(){
+ clr();
+ var u=$('unit').value,k=u==='m'?3.280839895:1,mx=500/k;
+ var L=parseFloat($('len').value),W=parseFloat($('wid').value);
+ if(!(L>0))err('len','Enter a room length greater than 0.');else if(L>mx)err('len','Too large for this tool. Enter '+f(mx,0)+' '+u+' or less.');
+ if(!(W>0))err('wid','Enter a room width greater than 0.');else if(W>mx)err('wid','Too large for this tool. Enter '+f(mx,0)+' '+u+' or less.');
+ var sr=$('stairs').value.trim(),steps=sr===''?0:Number(sr);
+ if(!isFinite(steps)||steps<0||steps>60||Math.floor(steps)!==steps)err('stairs','Enter a whole number of steps from 0 to 60.');
+ var pr=$('price').value.trim(),price=null;
+ if(pr!==''){price=Number(pr);if(!isFinite(price)||price<0||price>10000){err('price','Enter a price between 0 and 10,000 per square yard.');price=null}}
+ if(bad.length){$('results').innerHTML='';lastText='';bad[0].focus();return}
+
+ var Lf=L*k,Wf=W*k,rw=parseFloat($('roll').value),wp=+$('waste').value,wf=1+wp/100;
+ var room=Lf*Wf,st=steps*5,r=plan(Lf,Wf,rw,st,wf);
+ var areaTot=(room+st)*wf,wasteSf=(room+st)*wp/100,rec=r.rec,recSf=rec*9,recSm=rec*0.83612736;
+ var cost=price===null?null:rec*price;
+ var padSf=room*1.05,padYd=up(padSf/9,10),perim=2*(Lf+Wf),tack=Math.ceil(perim/4-EPS);
+ var rt=$('roll').options[$('roll').selectedIndex].text,dl=g(L)+' '+u,dw=g(W)+' '+u;
+ var basisTxt=r.basis==='area'?'the waste-allowance estimate':'the roll-layout estimate (strip trim and seams)';
+
+ var cmp='',best=1e9,i,p=[];
+ for(i=0;i<ROLLS.length;i++){p[i]=plan(Lf,Wf,ROLLS[i].v,st,wf);if(p[i].rec<best)best=p[i].rec}
+ for(i=0;i<ROLLS.length;i++){
+  var q=p[i],tag=(Math.abs(ROLLS[i].v-rw)<.01?' (selected)':'')+(q.rec===best?' – lowest':'');
+  cmp+='<tr><td>'+ROLLS[i].t+tag+'</td><td class="n">'+q.n+'</td><td class="n">'+f(up(q.lin,10),1)+'</td><td class="n">'+f(q.rec,1)+'</td>'+(price!==null?'<td class="n">$'+f(q.rec*price,2)+'</td>':'')+'</tr>';
+ }
+ var html='<div class="fade"><p class="lbl">Recommended carpet to order</p><div class="big">'+f(rec,1)+' sq yd</div>'
+ +'<p class="sub">≈ '+f(recSf,1)+' sq ft · '+f(recSm,2)+' sq m'+(cost!==null?' · $'+f(cost,2):'')+'</p>'
+ +'<p class="note">Based on '+basisTxt+', the larger of the two methods, rounded up to the next 0.1 sq yd. This is a material estimate, not an installer quote.</p>'
+ +'<p class="rh">Breakdown</p><div class="tw"><table><thead><tr><th>Item</th><th class="n">Sq ft</th><th class="n">Sq yd</th></tr></thead><tbody>'
+ +row('Room area ('+dl+' × '+dw+')',f(room,1),f(room/9,2))
+ +(steps>0?row('Stairs ('+steps+' × 5 sq ft)',f(st,1),f(st/9,2)):'')
+ +row('Waste allowance ('+wp+'%)',f(wasteSf,1),f(wasteSf/9,2))
+ +row('Area-based total',f(areaTot,1),f(r.areaYd,2))
+ +row('Roll-layout total ('+rt+' roll)',f(r.rollYd*9,1),f(r.rollYd,2))
+ +row('Recommended order',f(recSf,1),f(rec,1),true)
+ +'</tbody></table></div>'
+ +'<p class="rh">Roll width comparison</p><div class="tw"><table><thead><tr><th>Roll width</th><th class="n">Strips</th><th class="n">Linear ft</th><th class="n">Order sq yd</th>'+(price!==null?'<th class="n">Cost</th>':'')+'</tr></thead><tbody>'+cmp+'</tbody></table></div>'
+ +'<p class="rh">Also needed</p><div class="tw"><table><thead><tr><th>Item</th><th class="n">Quantity</th></tr></thead><tbody>'
+ +'<tr><td>Carpet pad (room area + 5%)</td><td class="n">'+f(padYd,1)+' sq yd</td></tr>'
+ +'<tr><td>Tack strip (perimeter '+f(perim,1)+' ft)</td><td class="n">'+tack+' × 4-ft lengths</td></tr></tbody></table></div>'
+ +'<button type="button" class="copy" id="copyBtn">Copy results</button></div>';
+
+ lastText='Carpet calculator results\nRoom: '+dl+' × '+dw+(steps?' + '+steps+' stair steps':'')+'\nWaste: '+wp+'%\nRoll width: '+rt+'\nRecommended order: '+f(rec,1)+' sq yd ('+f(recSf,1)+' sq ft)'+(cost!==null?'\nEstimated cost: $'+f(cost,2):'')+'\nCarpet pad: '+f(padYd,1)+' sq yd\nTack strip: '+tack+' x 4-ft lengths\nEstimate only; confirm with your installer.';
+ var cap=r.n+' strip'+(r.n>1?'s':'')+' of '+rt+' roll running along the '+(r.dir==='L'?'length':'width')+' ('+f(up(r.lin,10),1)+' linear ft). Dashed lines show seams.';
+ requestAnimationFrame(function(){
+  $('results').innerHTML=html;
+  draw(Lf,Wf,rw,r,dl,dw);
+  $('dcap').textContent=cap;
+  $('svg').setAttribute('aria-label','Room '+dl+' by '+dw+' with '+r.n+' carpet strip'+(r.n>1?'s':'')+' of '+rt+' roll');
+ });
+}
+function copyTxt(t,b){
+ function ok(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+ function fb(){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(a)}
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,fb)}else fb();
+}
+$('f').addEventListener('submit',function(e){e.preventDefault();calc()});
+$('results').addEventListener('click',function(e){var b=e.target.closest('#copyBtn');if(b&&lastText)copyTxt(lastText,b)});
+$('waste').addEventListener('input',function(){$('wv').textContent=this.value+'%'});
+$('unit').addEventListener('change',function(){var u=this.value;Array.prototype.forEach.call(document.querySelectorAll('.u'),function(s){s.textContent=u})});
+draw(15,12,12,lay(15,12,12),'15 ft','12 ft');
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
