@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Stair Carpet Calculator | Toolwick</title>
+<meta name="description" content="Free stair carpet calculator: enter risers, rise, run and width to get square yards, linear feet, pad and tack strip needed, waste included.">
+<link rel="canonical" href="https://toolwick.com/stair-carpet-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Stair Carpet Calculator", "url": "https://toolwick.com/stair-carpet-calculator/", "description": "Free stair carpet calculator: enter risers, rise, run and width to get square yards, linear feet, pad and tack strip needed, waste included.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Stair Carpet Calculator", "item": "https://toolwick.com/stair-carpet-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much carpet do I need for 13 stairs?", "acceptedAnswer": {"@type": "Answer", "text": "With a typical 7.5 in rise, 10 in run and 36 in width, plan on about 21 linear feet or roughly 7 square yards after 10% waste. If you buy broadloom off a 12 ft roll, you may be billed for about 28 square yards. Use the calculator for your exact dimensions."}}, {"@type": "Question", "name": "How do you measure stairs for carpet?", "acceptedAnswer": {"@type": "Answer", "text": "Measure the rise from tread to tread, the run from nosing to nosing, and the width wall to wall (or the runner width you want). Count the risers. Add the landings you plan to cover, then include 10–15% for waste."}}, {"@type": "Question", "name": "What is the difference between waterfall and cap-and-band?", "acceptedAnswer": {"@type": "Answer", "text": "Waterfall uses one continuous piece that flows over each nosing and down the next riser. Cap-and-band uses a separate piece for each tread and riser, which is more labor and about 2 in more carpet per step, but it lets you use remnants and choose a contrasting band."}}, {"@type": "Question", "name": "How much waste should I allow for stair carpet?", "acceptedAnswer": {"@type": "Answer", "text": "Ten percent is a sensible minimum for straight stairs with plain carpet. Use 15% or more for patterned carpet, winders, curved stairs or if you are installing it yourself for the first time."}}, {"@type": "Question", "name": "Do I need pad under stair carpet?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Pad protects the carpet from wear on the nosing and gives a firmer, safer feel. Use a dense, thin pad made for stairs, typically ⅜ in or less, and cut it the same width as the carpet."}}, {"@type": "Question", "name": "Is a runner cheaper than wall-to-wall stair carpet?", "acceptedAnswer": {"@type": "Answer", "text": "Usually, yes. A 27 in runner uses less than a full-width carpet and is often sold by the linear foot. You do give up the full-coverage look, and you will need to bind or finish the edges and add stair rods or clips if desired."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;height:auto}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;font-size:1rem;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.err,select.err{border-color:#e74c3c}
+.em{color:#c0392b;font-size:.85rem;min-height:0;margin-top:.3rem}
+.em:empty{display:none}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.f{margin-bottom:1.1rem}
+.hide{display:none}
+input[type=range]{padding:0;min-height:44px;accent-color:#0077b6;border:0}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-weight:600;min-height:44px;cursor:pointer;width:100%}
+button:hover{background:#006299}
+button.sm{width:auto;background:#fff;color:#0077b6;border:1px solid #0077b6;padding:8px 16px;font-size:.85rem;font-weight:500}
+button.sm:hover{background:#f0f7fb}
+#results{opacity:0;transition:opacity .3s ease;margin-top:1.5rem}
+#results.show{opacity:1}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.big{font-size:2.5rem;font-weight:800;color:#0077b6;line-height:1.1}
+.sub{color:#444;font-size:.95rem;margin-top:.4rem}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(even) td{background:#fafafa}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+th.n{text-align:right}
+h3{font-size:1rem;margin:1.25rem 0 .5rem}
+.xr{display:none}
+.all .xr{display:table-row}
+.warn{background:#fff8e6;border:1px solid #f0d890;color:#5c3d00;border-radius:6px;padding:.75rem 1rem;font-size:.9rem;margin-bottom:1rem}
+.note{font-size:.85rem;color:#555;margin-top:1rem}
+.acts{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.5rem}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .5rem}
+ul{padding-left:1.25rem}
+li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;margin:0 0 1rem;overflow-x:auto}
+.rel{display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1rem;padding:0;list-style:none}
+.rel li{margin:0}
+.rel a{display:flex;align-items:center;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:.75rem}
+@media(max-width:560px){
+.card{padding:1.1rem}
+.row{grid-template-columns:1fr}
+.rel{grid-template-columns:1fr}
+h1{font-size:1.5rem}
+.big{font-size:2.1rem}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/stair-carpet-calculator/">
+<meta property="og:title" content="Stair Carpet Calculator">
+<meta property="og:description" content="Free stair carpet calculator: enter risers, rise, run and width to get square yards, linear feet, pad and tack strip needed, waste included.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Stair Carpet Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This free stair carpet calculator tells you how many square yards and linear feet of carpet you need to cover a staircase, plus the pad and tack strip to buy with it. Enter your risers, rise, run and width, and waste is included automatically.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="dia" viewBox="0 0 360 215" role="img" aria-labelledby="dt">
+<title id="dt">Stair side view showing rise, run and the carpet path over each step</title>
+<defs><marker id="ar" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M0,0L6,3L0,6z" fill="#1a1a2e"/></marker></defs>
+<polygon points="50,175 50,139 130,139 130,103 210,103 210,67 310,67 310,175" fill="#fff" stroke="#e0e0e0" stroke-width="2"/>
+<line x1="20" y1="175" x2="335" y2="175" stroke="#1a1a2e" stroke-width="1.5"/>
+<polyline points="47,175 47,136 127,136 127,100 207,100 207,64 310,64" fill="none" stroke="#0077b6" stroke-width="4" stroke-linejoin="round"/>
+<line x1="105" y1="103" x2="130" y2="103" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="130" y1="103" x2="130" y2="84" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="105" y1="139" x2="105" y2="103" stroke="#1a1a2e" stroke-width="1" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="130" y1="88" x2="207" y2="88" stroke="#1a1a2e" stroke-width="1" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<g fill="#1a1a2e" font-size="13" font-family="-apple-system,Segoe UI,Roboto,sans-serif">
+<text id="d-rise" x="99" y="124" text-anchor="end">Rise 7.5 in</text>
+<text id="d-run" x="168" y="80" text-anchor="middle">Run 10 in</text>
+<text id="d-info" x="10" y="20" font-weight="600">13 risers · 12 treads · 36 in wide</text>
+<text id="d-sty" x="10" y="38">Waterfall · 1 in allowance per riser</text>
+<text id="d-per" x="58" y="198" fill="#0077b6" font-weight="600" font-size="12">Carpet path: 7.5 + 10 + 1 = 18.5 in per step</text>
+<text x="10" y="212" font-size="11" fill="#555">Diagram not to scale</text>
+</g>
+<line x1="14" y1="194" x2="50" y2="194" stroke="#0077b6" stroke-width="4"/>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="row">
+<div class="f"><label for="risers">Number of risers (steps)</label><input id="risers" type="number" inputmode="numeric" value="13" min="1" step="1"><div class="em" id="e-risers"></div></div>
+<div class="f"><label for="top">Top of staircase</label><select id="top"><option value="1">Meets upper floor (treads = risers − 1)</option><option value="0">Ends with a full tread (treads = risers)</option></select></div>
+</div>
+<div class="row">
+<div class="f"><label for="rise">Rise — riser height (in)</label><input id="rise" type="number" inputmode="decimal" value="7.5" step="any"><div class="em" id="e-rise"></div></div>
+<div class="f"><label for="run">Run — tread depth, nosing to nosing (in)</label><input id="run" type="number" inputmode="decimal" value="10" step="any"><div class="em" id="e-run"></div></div>
+</div>
+<div class="row">
+<div class="f"><label for="width">Stair width (in)</label><input id="width" type="number" inputmode="decimal" value="36" step="any"><div class="em" id="e-width"></div></div>
+<div class="f"><label for="allow">Nosing wrap &amp; tuck allowance per riser (in)</label><input id="allow" type="number" inputmode="decimal" value="1" step="any"><div class="em" id="e-allow"></div></div>
+</div>
+<div class="row">
+<div class="f"><label for="style">Installation style</label><select id="style"><option value="w">Waterfall (one continuous piece)</option><option value="c">Cap-and-band (separate tread &amp; riser pieces)</option></select></div>
+<div class="f"><label for="cover">Carpet layout</label><select id="cover"><option value="w">Wall-to-wall (full width)</option><option value="r">Runner (center strip)</option></select></div>
+</div>
+<div class="f hide" id="rw"><label for="runnerW">Runner width (in)</label><input id="runnerW" type="number" inputmode="decimal" value="27" step="any"><div class="em" id="e-runnerW"></div></div>
+<div class="row">
+<div class="f"><label for="landings">Landings to carpet</label><input id="landings" type="number" inputmode="numeric" value="0" min="0" step="1"><div class="em" id="e-landings"></div></div>
+<div class="f hide" id="ld"><label for="landD">Landing depth (in)</label><input id="landD" type="number" inputmode="decimal" value="36" step="any"><div class="em" id="e-landD"></div></div>
+</div>
+<div class="row">
+<div class="f"><label for="roll">Carpet roll width</label><select id="roll"><option value="144">12 ft (most common)</option><option value="162">13 ft 6 in</option><option value="180">15 ft</option></select></div>
+<div class="f"><label for="price">Carpet price per sq yd (optional, $)</label><input id="price" type="number" inputmode="decimal" placeholder="e.g. 25" step="any"><div class="em" id="e-price"></div></div>
+</div>
+<div class="f"><label for="waste" id="wl">Waste allowance: 10%</label><input id="waste" type="range" min="5" max="25" step="1" value="10"><div class="ticks"><span>5%</span><span>15%</span><span>25%</span></div><div class="hint">10–15% is typical. Choose more for patterned carpet or tricky winders.</div></div>
+<button type="submit" id="go">Calculate Stair Carpet</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/stair-carpet-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Stair Carpet Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/stair-carpet-calculator/&quot;&gt;Stair Carpet Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/stair-carpet-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<section>
+<h2>How to Use This Stair Carpet Calculator</h2>
+<p>Count the risers (the vertical faces) on your staircase, then measure one rise, one run (tread depth from nosing to nosing) and the stair width. Pick waterfall or cap-and-band, wall-to-wall or runner, and set the waste slider. The calculator returns carpet in square yards and linear feet, the amount billed from a standard roll, pad, tack strip and an optional cost estimate. Everything is rounded up so you do not come up short.</p>
+
+<h2>Why This Matters</h2>
+<p>Stair carpet is one of the easiest jobs to under-order. A typical 13-riser staircase is only about 6.4 square yards of actual surface, yet the carpet you pay for is often four times that, because broadloom is sold off a 12-foot-wide roll and a 36-inch staircase only uses a quarter of that width. Knowing the true linear footage lets you ask a retailer about remnants, bound runner stock or a cut from the edge of a roll before you commit.</p>
+<p>It also matters for pattern and nap. Stairs are cut as one long strip so the pile runs the same way down every step, and you cannot patch a short piece in later without it showing. If you order 20 feet and need 21, you may be buying a whole new dye lot. Homeowners recarpeting before a sale, landlords turning over a rental, and contractors quoting a remodel all need a number they can trust: enough carpet, enough pad, enough tack strip, and a realistic budget. A few minutes with this tool, plus a tape measure, usually saves a second trip to the store and a few hundred dollars in mistakes.</p>
+
+<h2>How It's Calculated</h2>
+<p>Carpet follows the profile of the stairs: up the riser, across the tread, over the nosing. The calculator adds those pieces together, applies your waste percentage, and rounds up to the next whole inch of length.</p>
+<div class="formula">Length (in) = risers × (rise + allowance + band extra) + treads × run + landings × landing depth<br>Length with waste = Length × (1 + waste %), rounded up<br>Area (sq yd) = length (ft) × width (ft) ÷ 9</div>
+<p>Treads equal risers minus one when the top riser meets the upper floor, because that last "tread" is the floor itself. Cap-and-band adds 2 inches per riser for the extra tuck on each separate piece. For wall-to-wall carpet the "billed" area is length × roll width ÷ 9, since the unused width of the roll is normally still charged. Tack strip assumes two width-long strips per riser plus 10%, and pad equals your carpet area.</p>
+<p>This is a planning rule of thumb, not an engineering, permit or inspection result. Riser and tread values are only compared with the common IRC R311.7.5 limits (7¾ in maximum rise, 10 in minimum run) as a heads-up. Local codes vary, so check yours before changing a staircase.</p>
+
+<h2>Worked Example</h2>
+<p>A straight staircase has 13 risers, a 7.5 in rise, a 10 in run, is 36 in wide, and meets the upper floor. We use a waterfall install, 1 in allowance, 10% waste and a 12 ft roll.</p>
+<ul>
+<li>Risers: 13 × (7.5 + 1) = 110.5 in</li>
+<li>Treads: 12 × 10 = 120 in, for a total of 230.5 in</li>
+<li>With 10% waste: 230.5 × 1.10 = 253.55, rounded up to 254 in, or 21.2 ft</li>
+<li>Area: 21.17 ft × 3 ft = 63.5 sq ft, or 7.1 sq yd of carpet and 7.1 sq yd of pad</li>
+<li>Billed from a 12 ft roll: 21.17 × 12 ÷ 9 = 28.3 sq yd, which is $707.50 at $25 per sq yd</li>
+<li>Tack strip: 13 × 2 × 3 ft = 78 ft, plus 10% = 86 ft, or 22 four-foot strips</li>
+</ul>
+<p>Switching to a 27 in runner drops the carpet to about 5.3 sq yd, which is why runners are popular on a budget.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure several steps.</strong> Older houses have uneven risers. Use the largest rise and run you find, or enter the average and raise the waste slider.</li>
+<li><strong>Count risers, not treads.</strong> The number of risers is the number of steps you climb. The top tread is usually the floor.</li>
+<li><strong>Include the carpet and pad thickness mentally.</strong> Together they can add about ½ in at each nosing, and uneven thickness is a trip hazard. Use a firm, low-profile pad rated for stairs.</li>
+<li><strong>Mind the pile direction.</strong> Pile should lean down the stairs. Tell the installer so the strip is cut and stretched the right way.</li>
+<li><strong>Ask about remnants.</strong> Because you pay for roll width, a remnant or bound runner can cost far less than a full cut. Confirm the dye lot if you add landings later.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much carpet do I need for 13 stairs?</summary><p>With a typical 7.5 in rise, 10 in run and 36 in width, plan on about 21 linear feet or roughly 7 square yards after 10% waste. If you buy broadloom off a 12 ft roll, you may be billed for about 28 square yards. Use the calculator for your exact dimensions.</p></details>
+<details><summary>How do you measure stairs for carpet?</summary><p>Measure the rise from tread to tread, the run from nosing to nosing, and the width wall to wall (or the runner width you want). Count the risers. Add the landings you plan to cover, then include 10–15% for waste.</p></details>
+<details><summary>What is the difference between waterfall and cap-and-band?</summary><p>Waterfall uses one continuous piece that flows over each nosing and down the next riser. Cap-and-band uses a separate piece for each tread and riser, which is more labor and about 2 in more carpet per step, but it lets you use remnants and choose a contrasting band.</p></details>
+<details><summary>How much waste should I allow for stair carpet?</summary><p>Ten percent is a sensible minimum for straight stairs with plain carpet. Use 15% or more for patterned carpet, winders, curved stairs or if you are installing it yourself for the first time.</p></details>
+<details><summary>Do I need pad under stair carpet?</summary><p>Yes. Pad protects the carpet from wear on the nosing and gives a firmer, safer feel. Use a dense, thin pad made for stairs, typically ⅜ in or less, and cut it the same width as the carpet.</p></details>
+<details><summary>Is a runner cheaper than wall-to-wall stair carpet?</summary><p>Usually, yes. A 27 in runner uses less than a full-width carpet and is often sold by the linear foot. You do give up the full-coverage look, and you will need to bind or finish the edges and add stair rods or clips if desired.</p></details>
+<p class="note">Results are estimates for planning and ordering only. They are not engineering, permit or code-inspection approval, and local building codes vary.</p>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/carpet-calculator-square-yards/">Carpet Calculator</a></li>
+<li><a href="/stair-stringer-calculator/">Stair Stringer Calculator</a></li>
+<li><a href="/epoxy-garage-floor-calculator/">Epoxy Garage Floor Coverage Calculator</a></li>
+<li><a href="/self-leveling-underlayment-calculator/">Self-Leveling Underlayment Calculator</a></li>
+<li><a href="/generator-size-calculator/">Generator Size Calculator (Standby &amp; Portable)</a></li>
+<li><a href="/vinyl-plank-flooring-calculator/">Vinyl Plank Flooring Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<div class="wrap"><nav class="cluster-nav" aria-label="More Framing &amp; Structure Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Framing &amp; Structure Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/stair-stringer-calculator/">Stair Stringer Calculator</a></li><li><a href="/board-and-batten-wall-calculator/">Board and Batten Wall Calculator</a></li><li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li><li><a href="/floor-joist-span-size-calculator/">Floor Joist Span &amp; Size Calculator</a></li><li><a href="/gable-end-wall-area-calculator/">Gable End Wall Area Calculator</a></li><li><a href="/header-beam-size-calculator/">Header Beam Size Calculator</a></li><li><a href="/knee-wall-stud-height-attic-storage-calculator/">Knee Wall Stud Height &amp; Attic Storage Calculator</a></li><li><a href="/lumber-board-foot-calculator/">Lumber &amp; Board Foot Calculator</a></li><li><a href="/framing-calculators/"><strong>All Framing &amp; Structure calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div></div>
+<footer><div class="wrap"><a href="/about/">About</a> <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> <a href="/contact/">Contact</a><p style="margin-top:.75rem">© <span id="yr">2025</span> toolwick.com</p></div></footer>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var f=function(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var g2=function(n){return n.toLocaleString('en-US',{maximumFractionDigits:2})};
+var cu=function(x,d){var m=Math.pow(10,d);return Math.ceil(x*m-1e-9)/m};
+var shown=false,lastText='';
+$('yr').textContent=new Date().getFullYear();
+
+function setErr(id,msg){var el=$(id);el.classList.toggle('err',!!msg);el.setAttribute('aria-invalid',msg?'true':'false');$('e-'+id).textContent=msg||''}
+function val(id,min,max,msg,int){
+ var el=$(id),v=el.value.trim()===''?NaN:Number(el.value);
+ var ok=isFinite(v)&&v>=min&&v<=max&&(!int||Number.isInteger(v));
+ setErr(id,ok?'':msg);return ok?v:null;
+}
+function read(){
+ var ok=true,p={};
+ function g(id,a,b,m,i){var v=val(id,a,b,m,i);if(v===null)ok=false;return v}
+ p.risers=g('risers',1,60,'Enter a whole number of risers from 1 to 60.',true);
+ p.rise=g('rise',3,12,'Rise must be between 3 and 12 inches.');
+ p.run=g('run',6,20,'Run must be between 6 and 20 inches.');
+ p.width=g('width',12,180,'Stair width must be between 12 and 180 inches.');
+ p.allow=g('allow',0,6,'Allowance must be between 0 and 6 inches.');
+ p.landings=g('landings',0,5,'Enter a whole number from 0 to 5.',true);
+ p.roll=Number($('roll').value);
+ p.runner=$('cover').value==='r';
+ p.top=$('top').value==='1';
+ p.cap=$('style').value==='c';
+ p.waste=Number($('waste').value);
+ if(p.landings>0){p.landD=g('landD',6,120,'Landing depth must be between 6 and 120 inches.')}else{p.landD=0;setErr('landD','')}
+ if(p.runner){
+  p.runnerW=g('runnerW',12,180,'Runner width must be between 12 and 180 inches.');
+  if(p.runnerW!==null&&p.width!==null&&p.runnerW>p.width){setErr('runnerW','Runner cannot be wider than the stairs.');ok=false}
+  if(p.runnerW!==null&&p.runnerW>p.roll){setErr('runnerW','Runner is wider than the selected roll.');ok=false}
+ }else{setErr('runnerW','')}
+ if(!p.runner&&p.width!==null&&p.width>p.roll){setErr('width','Stair width exceeds the '+g2(p.roll/12)+' ft roll. Choose a wider roll or plan a seam with your installer.');ok=false}
+ var pr=$('price').value.trim();
+ if(pr===''){p.price=null;setErr('price','')}else{p.price=g('price',0,1000,'Enter a price from 0 to 1,000 per sq yd.')}
+ p.cw=p.runner?p.runnerW:p.width;
+ return ok?p:null;
+}
+function compute(p,cap){
+ var nt=p.risers-(p.top?1:0),extra=cap?2:0;
+ var per=p.rise+p.allow+extra;
+ var base=p.risers*per+nt*p.run+p.landings*p.landD;
+ var lin=Math.ceil(base*(1+p.waste/100)-1e-9);
+ var linFt=lin/12,wFt=p.cw/12;
+ var sqft=linFt*wFt,sqyd=sqft/9;
+ return{nt:nt,extra:extra,per:per,base:base,lin:lin,linFt:linFt,wFt:wFt,sqft:sqft,sqyd:cu(sqyd,1),
+  net:base/12*wFt/9,billed:p.runner?cu(sqyd,1):cu(linFt*(p.roll/12)/9,1),
+  tack:cu(p.risers*2*wFt*1.1,0)};
+}
+function diagram(){
+ requestAnimationFrame(function(){
+  var r=parseFloat($('rise').value),u=parseFloat($('run').value),a=parseFloat($('allow').value),n=parseInt($('risers').value,10),w=parseFloat($('width').value);
+  var top=$('top').value==='1',cap=$('style').value==='c';
+  var okv=function(v){return isFinite(v)&&v>=0};
+  var t=okv(n)?n-(top?1:0):NaN;
+  $('d-rise').textContent='Rise '+(okv(r)?g2(r):'–')+' in';
+  $('d-run').textContent='Run '+(okv(u)?g2(u):'–')+' in';
+  $('d-info').textContent=(okv(n)?n:'–')+' risers · '+(okv(t)&&t>=0?t:'–')+' treads · '+(okv(w)?g2(w):'–')+' in wide';
+  $('d-sty').textContent=(cap?'Cap-and-band, +2 in':'Waterfall')+' · '+(okv(a)?g2(a):'–')+' in allowance per riser';
+  var tot=r+u+a+(cap?2:0);
+  $('d-per').textContent='Carpet path: '+(okv(r)?g2(r):'–')+' + '+(okv(u)?g2(u):'–')+' + '+(okv(a)?g2(a):'–')+(cap?' + 2':'')+' = '+(isFinite(tot)?g2(tot):'–')+' in per step';
+ });
+}
+function calculate(){
+ var p=read();
+ var res=$('results');
+ if(!p){shown=false;res.classList.remove('show');res.innerHTML='';diagram();return}
+ var c=compute(p,p.cap),alt=compute(p,!p.cap);
+ var wl=cu(c.linFt,1);
+ var h='<div class="key"><div class="big">'+f(c.sqyd,1)+' sq yd</div><div class="sub">of carpet with '+p.waste+'% waste<br>'+f(wl,1)+' linear ft × '+g2(p.cw)+' in wide</div></div>';
+ if(p.rise>7.75||p.run<10)h+='<div class="warn">Heads-up: your rise or run is outside the common IRC R311.7.5 limits (7¾ in max rise, 10 in min run). This calculator only estimates carpet and does not check code compliance. Local codes vary.</div>';
+ var rows=[
+  ['Style / layout',(p.cap?'Cap-and-band':'Waterfall')+' / '+(p.runner?'Runner':'Wall-to-wall'),1],
+  ['Risers / treads carpeted',p.risers+' / '+c.nt,1],
+  ['Carpet per step (rise + run + allowance)',f(c.per+p.run,2)+' in',0],
+  ['Carpet before waste',f(c.base/12,2)+' ft ('+f(c.net,2)+' sq yd)',0],
+  ['Carpet with waste (rounded up)',f(wl,1)+' linear ft',0],
+  ['Area with waste',f(c.sqft,1)+' sq ft',0],
+  [p.runner?'Runner stock to buy':'Billed from '+g2(p.roll/12)+' ft roll',p.runner?f(wl,1)+' linear ft ('+f(c.billed,1)+' sq yd)':f(c.billed,1)+' sq yd ('+f(wl,1)+' ft of roll)',0],
+  ['Carpet pad',f(c.sqyd,1)+' sq yd',0],
+  ['Tack strip (incl. 10%)',f(c.tack,0)+' ft ('+f(Math.ceil(c.tack/4),0)+' four-foot strips)',0]
+ ];
+ var cost=null;
+ if(p.price!==null){cost=c.billed*p.price;rows.push(['Estimated carpet cost ('+f(c.billed,1)+' sq yd × $'+f(p.price,2)+')','$'+f(cost,2),0])}
+ h+='<div class="tw"><table><thead><tr><th>Item</th><th class="n">Amount</th></tr></thead><tbody>';
+ rows.forEach(function(r){h+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>'});
+ h+='</tbody></table></div>';
+ h+='<h3>Compare installation styles</h3><div class="tw"><table><thead><tr><th>Style</th><th class="n">Linear ft</th><th class="n">Sq yd</th><th class="n">Billed sq yd</th></tr></thead><tbody>';
+ [[ 'Waterfall',p.cap?alt:c],['Cap-and-band',p.cap?c:alt]].forEach(function(s){h+='<tr><td>'+s[0]+'</td><td class="n">'+f(cu(s[1].linFt,1),1)+'</td><td class="n">'+f(s[1].sqyd,1)+'</td><td class="n">'+f(s[1].billed,1)+'</td></tr>'});
+ h+='</tbody></table></div>';
+ h+='<h3>Step-by-step carpet length (before waste)</h3><div class="tw"><table><thead><tr><th>Step</th><th class="n">This step (in)</th><th class="n">Running total (ft)</th></tr></thead><tbody>';
+ var cum=0,i,len,hid;
+ for(i=1;i<=p.risers;i++){
+  len=p.rise+p.allow+c.extra+(i<=c.nt?p.run:0);cum+=len;hid=i>10?' class="xr"':'';
+  h+='<tr'+hid+'><td>'+i+'</td><td class="n">'+f(len,2)+'</td><td class="n">'+f(cum/12,2)+'</td></tr>';
+ }
+ if(p.landings>0){cum+=p.landings*p.landD;h+='<tr'+(p.risers>10?' class="xr"':'')+'><td>'+p.landings+' landing'+(p.landings>1?'s':'')+'</td><td class="n">'+f(p.landings*p.landD,2)+'</td><td class="n">'+f(cum/12,2)+'</td></tr>'}
+ h+='<tr><td><strong>Total</strong></td><td class="n"><strong>'+f(c.base,2)+'</strong></td><td class="n"><strong>'+f(c.base/12,2)+'</strong></td></tr></tbody></table></div>';
+ h+='<div class="acts">';
+ if(p.risers+(p.landings>0?1:0)>10)h+='<button type="button" class="sm" id="showAll">Show all '+p.risers+' steps</button>';
+ h+='<button type="button" class="sm" id="copyBtn">Copy results</button></div>';
+ h+='<p class="note">All quantities are rounded up. Estimates only: confirm measurements with your installer. Not engineering, permit or inspection approval; local codes vary.</p>';
+ lastText='Stair carpet estimate\n'+rows.map(function(r){return r[0]+': '+r[1]}).join('\n')+'\nCarpet needed: '+f(c.sqyd,1)+' sq yd ('+f(wl,1)+' linear ft x '+g2(p.cw)+' in)';
+ shown=true;
+ res.classList.remove('show');
+ res.innerHTML=h;
+ requestAnimationFrame(function(){res.classList.add('show')});
+ diagram();
+}
+function run(){requestAnimationFrame(calculate)}
+$('f').addEventListener('submit',function(e){e.preventDefault();run()});
+$('waste').addEventListener('input',function(){
+ $('wl').textContent='Waste allowance: '+this.value+'%';
+ if(shown)run();
+});
+$('cover').addEventListener('change',function(){$('rw').classList.toggle('hide',this.value!=='r')});
+$('landings').addEventListener('input',function(){var v=parseInt(this.value,10);$('ld').classList.toggle('hide',!(v>0))});
+['risers','rise','run','width','allow','top','style'].forEach(function(id){$(id).addEventListener('input',diagram);$(id).addEventListener('change',diagram)});
+$('results').addEventListener('click',function(e){
+ var t=e.target;
+ if(t.id==='showAll'){var on=this.classList.toggle('all');t.textContent=on?'Show fewer steps':'Show all steps'}
+ if(t.id==='copyBtn'){
+  var done=function(){t.textContent='Copied!';setTimeout(function(){t.textContent='Copy results'},2000)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,done)}
+  else{var ta=document.createElement('textarea');ta.value=lastText;document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(ta);done()}
+ }
+});
+diagram();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
