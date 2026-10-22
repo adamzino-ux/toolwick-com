@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Flooring Installation Cost Calculator | Toolwick</title>
+<meta name="description" content="Free flooring installation cost calculator: estimate materials, labor, removal, prep and baseboard for carpet, vinyl, laminate, hardwood or tile.">
+<link rel="canonical" href="https://toolwick.com/flooring-installation-cost-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Flooring Installation Cost Calculator", "url": "https://toolwick.com/flooring-installation-cost-calculator/", "description": "Free flooring installation cost calculator: estimate materials, labor, removal, prep and baseboard for carpet, vinyl, laminate, hardwood or tile.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Flooring Installation Cost Calculator", "item": "https://toolwick.com/flooring-installation-cost-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much does it cost to install flooring per square foot?", "acceptedAnswer": {"@type": "Answer", "text": "Installed costs typically run from about $4 per square foot for basic carpet to $12 or more for hardwood, and $20 or more for natural stone. LVP and laminate usually land between $5 and $8 installed. Your region, room layout and subfloor condition move these numbers significantly."}}, {"@type": "Question", "name": "How much extra flooring should I buy for waste?", "acceptedAnswer": {"@type": "Answer", "text": "Plan on 5% to 10% extra for straight layouts in simple rooms and 15% or more for diagonal installs, tile, stone and rooms with many corners. The extra covers cuts, defects and future repairs, and the slider here lets you test different values."}}, {"@type": "Question", "name": "Is labor usually charged on the waste area too?", "acceptedAnswer": {"@type": "Answer", "text": "No. Installers normally charge on the installed floor area, so only the material line grows with the waste factor. Some contractors add a minimum job charge for very small rooms, so ask for it in writing."}}, {"@type": "Question", "name": "Is it cheaper to install flooring myself?", "acceptedAnswer": {"@type": "Answer", "text": "Doing it yourself removes the labor line, which is often 30% to 45% of the total, but you'll pay for tools, spend more time, and carry the risk of mistakes. Click-lock vinyl and laminate are the most DIY-friendly. Tile and hardwood nail-down jobs are harder to do well."}}, {"@type": "Question", "name": "Does this estimate include stairs, transitions or furniture moving?", "acceptedAnswer": {"@type": "Answer", "text": "No. The calculator covers the main room floor, removal, prep and optional baseboard. Stairs, thresholds, door undercutting, appliance moves and haul-away fees are usually quoted separately, so add them to your budget."}}, {"@type": "Question", "name": "Why is my contractor's quote higher than this estimate?", "acceptedAnswer": {"@type": "Answer", "text": "Quotes often include items that are hard to predict, such as subfloor repairs, difficult access, minimum job charges and material markups. Raise the contingency slider, switch the local labor setting to high-cost metro, or enter the contractor's per-square-foot rates to see how the total changes."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 1.5rem}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.15rem;display:inline-block;min-height:44px;line-height:44px;padding:0}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.8rem;line-height:1.25;margin:.5rem 0 1rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+p,li{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+#dg{width:100%;height:auto;display:block;margin:0 0 1.5rem;background:#f8f9fa;border-radius:8px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.fld{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;font:inherit;padding:12px 16px;border:1px solid #ddd;border-radius:6px;background:#fff;color:#1a1a2e;min-height:44px}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px;border-color:#0077b6}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;height:44px}
+input[type=checkbox]{width:22px;height:22px;min-height:0;padding:0;accent-color:#0077b6;flex:none}
+.chk{display:flex;align-items:center;gap:.75rem;min-height:44px;margin:0;font-size:.95rem;color:#1a1a2e;cursor:pointer}
+.tick{display:flex;justify-content:space-between;font-size:.8rem;color:#666;margin-top:-.4rem}
+.msg{display:none;color:#c0392b;font-size:.85rem;margin-top:.35rem}
+.err input,.err select{border-color:#e74c3c}
+.err .msg{display:block}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+button{font:inherit;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;min-height:44px;cursor:pointer;font-weight:600;width:100%}
+button:hover{background:#006299}
+#results{opacity:0;transition:opacity .3s ease}
+#results.show{opacity:1}
+.rs{margin-top:2rem}
+.big{text-align:center;background:#f8f9fa;border-radius:8px;padding:1.25rem 1rem;margin-bottom:1.25rem}
+.big .v{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.big .l{font-size:.9rem;color:#444;margin-top:.25rem}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem}
+.stat{background:#f8f9fa;border-radius:8px;padding:.75rem 1rem}
+.stat b{display:block;font-size:1.15rem;color:#1a1a2e}
+.stat span{font-size:.8rem;color:#555}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:420px}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.sel td{font-weight:700;color:#005a8a}
+tfoot td{font-weight:700;border-top:2px solid #0077b6;border-bottom:0}
+.bar{display:inline-block;width:48px;height:6px;background:#e8e8e8;border-radius:3px;vertical-align:middle;margin-left:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:#0077b6}
+h3{font-size:1rem;margin:1.25rem 0 .5rem}
+.cp{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;padding:8px 16px;font-size:.9rem}
+.cp:hover{background:#eef6fb}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0 0}
+.ad-slot{min-height:0;margin:0}
+details{background:#f8f9fa;border-radius:6px;margin-bottom:.6rem;padding:0 1rem}
+summary{cursor:pointer;font-weight:600;min-height:44px;padding:10px 0;list-style-position:inside}
+details p{margin:0 0 1rem}
+ul.rel{padding-left:1.2rem}
+ul.rel li{margin-bottom:.4rem}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.5rem;text-align:center;font-size:.9rem;color:#555}
+footer a{margin:0 .6rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:640px){.row{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.5rem}.big .v{font-size:2.2rem}.cp{width:100%}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/flooring-installation-cost-calculator/">
+<meta property="og:title" content="Flooring Installation Cost Calculator">
+<meta property="og:description" content="Free flooring installation cost calculator: estimate materials, labor, removal, prep and baseboard for carpet, vinyl, laminate, hardwood or tile.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<main class="wrap">
+<h1>Flooring Installation Cost Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>Use this flooring installation cost calculator to estimate what new floors will cost for your room: materials with waste, installer labor, old-floor removal, subfloor prep and baseboard. Every price is editable, so you can swap in the numbers from your own quotes.</p>
+
+<div class="card">
+<svg id="dg" viewBox="0 0 400 250" role="img" aria-labelledby="dgT dgD">
+<title id="dgT">Room floor plan with length and width dimensions</title>
+<desc id="dgD">Top-down view of a room showing length across the top, width down the left side, floor area, order quantity with waste, and estimated total cost.</desc>
+<defs>
+<pattern id="pl" width="40" height="28" patternUnits="userSpaceOnUse"><path d="M0 0H40M0 14H40M20 0V14M0 14V28M40 14V28" stroke="#e0e0e0" fill="none"/></pattern>
+<marker id="ar" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M0 0L6 3L0 6z" fill="#0077b6"/></marker>
+</defs>
+<rect x="70" y="50" width="260" height="140" fill="url(#pl)" stroke="#0077b6" stroke-width="2"/>
+<path d="M70 50V28M330 50V28M70 50H40M70 190H40" stroke="#bbb" stroke-dasharray="4 3" fill="none"/>
+<line x1="70" y1="32" x2="330" y2="32" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="44" y1="50" x2="44" y2="190" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dL" x="200" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a2e">Length 14 ft</text>
+<text id="dW" x="26" y="120" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a2e" transform="rotate(-90 26 120)">Width 12 ft</text>
+<rect x="100" y="84" width="200" height="72" rx="6" fill="#fff" fill-opacity=".92" stroke="#e0e0e0"/>
+<text id="dA" x="200" y="112" text-anchor="middle" font-size="20" font-weight="700" fill="#0077b6">168 sq ft</text>
+<text id="dO" x="200" y="136" text-anchor="middle" font-size="13" fill="#1a1a2e">Order: press Calculate</text>
+<text id="dP" x="200" y="212" text-anchor="middle" font-size="13" fill="#1a1a2e">Baseboard: perimeter 52 ft</text>
+<text id="dT" x="200" y="234" text-anchor="middle" font-size="14" font-weight="700" fill="#0077b6">Estimate: press Calculate</text>
+</svg>
+
+<form id="f" novalidate>
+<div class="row">
+<div class="fld"><label for="len">Room length (ft)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="14" aria-describedby="e_len"><div class="msg" id="e_len"></div></div>
+<div class="fld"><label for="wid">Room width (ft)</label><input id="wid" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="e_wid"><div class="msg" id="e_wid"></div></div>
+</div>
+<div class="fld"><label for="type">Flooring type</label>
+<select id="type">
+<option value="carpet">Carpet (with pad)</option>
+<option value="laminate">Laminate</option>
+<option value="lvp" selected>Luxury vinyl plank (LVP)</option>
+<option value="eng">Engineered hardwood</option>
+<option value="solid">Solid hardwood</option>
+<option value="tile">Porcelain / ceramic tile</option>
+<option value="stone">Natural stone tile</option>
+</select><div class="hint">Choosing a type loads typical U.S. prices and a waste factor. You can edit them below.</div></div>
+<div class="row">
+<div class="fld"><label for="mat">Material price ($ per sq ft)</label><input id="mat" type="number" inputmode="decimal" step="any" min="0" value="3.75" aria-describedby="e_mat"><div class="msg" id="e_mat"></div></div>
+<div class="fld"><label for="lab">Installation labor ($ per sq ft)</label><input id="lab" type="number" inputmode="decimal" step="any" min="0" value="2.50" aria-describedby="e_lab"><div class="msg" id="e_lab"></div></div>
+</div>
+<div class="fld"><label for="waste">Waste factor: <span id="wv">10</span>%</label><input id="waste" type="range" min="0" max="25" step="1" value="10"><div class="tick"><span>0%</span><span>25%</span></div></div>
+<div class="row">
+<div class="fld"><label for="rem">Old floor removal</label>
+<select id="rem"><option value="0">None (bare subfloor)</option><option value="0.75" selected>Carpet and pad ($0.75/sq ft)</option><option value="1.5">Vinyl or laminate ($1.50/sq ft)</option><option value="2.5">Hardwood ($2.50/sq ft)</option><option value="4.5">Tile ($4.50/sq ft)</option></select></div>
+<div class="fld"><label for="prep">Subfloor prep</label>
+<select id="prep"><option value="0">None needed</option><option value="0.75" selected>Underlayment ($0.75/sq ft)</option><option value="2.5">Leveling compound ($2.50/sq ft)</option><option value="4.5">Subfloor repair ($4.50/sq ft)</option></select></div>
+</div>
+<div class="fld"><label for="region">Local labor rates</label>
+<select id="region"><option value="0.85">Lower-cost area (labor, removal, prep −15%)</option><option value="1" selected>Average U.S. rates</option><option value="1.25">High-cost metro (labor, removal, prep +25%)</option></select></div>
+<div class="row">
+<div class="fld"><label class="chk" for="trimOn"><input id="trimOn" type="checkbox" checked> Replace baseboard around the room</label><div class="hint">Uses the room perimeter, 2 × (length + width), with no deduction for doors.</div></div>
+<div class="fld"><label for="trimP">Baseboard price ($ per linear ft, installed)</label><input id="trimP" type="number" inputmode="decimal" step="any" min="0" value="5" aria-describedby="e_trimP"><div class="msg" id="e_trimP"></div></div>
+</div>
+<div class="fld"><label for="cont">Contingency buffer: <span id="cv">10</span>%</label><input id="cont" type="range" min="0" max="25" step="1" value="10"><div class="tick"><span>0%</span><span>25%</span></div></div>
+<button type="submit" id="calc">Calculate flooring cost</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/flooring-installation-cost-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Flooring Installation Cost Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/flooring-installation-cost-calculator/&quot;&gt;Flooring Installation Cost Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/flooring-installation-cost-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Flooring Installation Cost Calculator</h2>
+<p>Enter your room's length and width in feet, then pick a flooring type. The tool loads typical material and labor prices per square foot, which you can overwrite with figures from a store receipt or contractor quote. Set a waste factor and a contingency buffer with the sliders, choose how the old floor will be removed and what subfloor prep is needed, and press Calculate. You get an estimated total (rounded up), a line-by-line breakdown, the quantity to order, and a side-by-side comparison of all seven flooring types for your room. Stairs are not included; try the <a href="/stair-carpet-calculator/">Stair Carpet Calculator</a> for those.</p>
+
+<h2>Why This Matters</h2>
+<p>Flooring is one of the easiest renovation budgets to get wrong, because the price on the shelf is only part of the bill. A homeowner who sees luxury vinyl plank at $3.75 per square foot may forget about $2.50 of labor, $0.75 for tearing out carpet, underlayment, trim, and the 10% of extra boards that end up as offcuts. On a 400 square foot main floor, choosing solid hardwood ($8.50 material plus $5.00 labor) instead of LVP ($3.75 plus $2.50) is a gap of roughly $2,900 before waste, removal or prep, and that is often more than the whole kitchen appliance budget.</p>
+<p>Landlords and flippers use estimates like this to compare turnover costs across several units. Realtors use them to advise sellers on whether new floors will pay back. DIYers use them to decide whether the labor line, often 30% to 45% of the total, is worth saving. Running the numbers before you shop prevents the two classic surprises: a quote that is 40% higher than you assumed, and a half-finished room because you ran out of material.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator multiplies your room area by each rate, then adds the lines together. Flooring cost is not set by a building code, so there is no code edition behind these numbers. They are market rules of thumb, and installation itself is governed by manufacturer instructions and local codes, which vary.</p>
+<ul>
+<li><b>Area</b> = length × width</li>
+<li><b>Order quantity</b> = area × (1 + waste %), rounded up to the next whole square foot</li>
+<li><b>Material</b> = order quantity × material price</li>
+<li><b>Labor</b> = area × labor price × local labor factor (installers bill on installed area, not on waste)</li>
+<li><b>Removal</b> and <b>prep</b> = area × rate × local labor factor</li>
+<li><b>Baseboard</b> = perimeter × price per linear foot, where perimeter = 2 × (length + width)</li>
+<li><b>Subtotal</b> = sum of all lines; <b>contingency</b> = subtotal × buffer %</li>
+<li><b>Total</b> = subtotal + contingency</li>
+</ul>
+<p>To err on the safe side, every dollar line and the order quantity are rounded up, never down. The "typical range" shown under the total runs from 15% below to 20% above the estimate, rounded to the nearest $10, because real quotes skew higher more often than lower. Use 5% to 10% waste for straight plank or carpet layouts and 15% or more for diagonal patterns, tile and stone.</p>
+
+<h2>Worked Example</h2>
+<p>Take the default inputs: a 14 ft × 12 ft bedroom, luxury vinyl plank at $3.75 material and $2.50 labor, 10% waste, carpet removal, underlayment, average U.S. labor rates, baseboard at $5 per linear foot and a 10% contingency.</p>
+<ol>
+<li>Area = 14 × 12 = <b>168 sq ft</b></li>
+<li>Order quantity = 168 × 1.10 = 184.8, rounded up to <b>185 sq ft</b></li>
+<li>Material = 185 × $3.75 = $693.75, rounded up to <b>$694</b></li>
+<li>Labor = 168 × $2.50 = <b>$420</b></li>
+<li>Removal = 168 × $0.75 = <b>$126</b>; underlayment = 168 × $0.75 = <b>$126</b></li>
+<li>Baseboard: perimeter = 2 × (14 + 12) = 52 ft; 52 × $5 = <b>$260</b></li>
+<li>Subtotal = 694 + 420 + 126 + 126 + 260 = <b>$1,626</b></li>
+<li>Contingency = $1,626 × 10% = $162.60, rounded up to <b>$163</b></li>
+<li>Total = <b>$1,789</b>, about $10.65 per sq ft, with a typical range of $1,520 to $2,150</li>
+</ol>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><b>Measure every area, including closets and alcoves.</b> Missing a 4 × 6 ft closet leaves you 24 sq ft short, and a second order may not match the dye lot.</li>
+<li><b>Don't skip subfloor checks.</b> Many manufacturers want floors flat to roughly 3/16 inch over 10 feet and dry. Leveling or moisture work can add $2 to $5 per square foot, so choose "Leveling compound" or "Subfloor repair" if you're unsure.</li>
+<li><b>Test before removing old resilient flooring in older homes.</b> Vinyl tile, sheet flooring and adhesives installed before the mid-1980s may contain asbestos. Have a sample tested by a certified lab before you disturb it.</li>
+<li><b>Get at least three written quotes</b> and compare them to this estimate line by line. Ask whether furniture moving, haul-away, transitions, thresholds and stair work are included, since this calculator does not price them.</li>
+<li><b>Keep the waste factor realistic.</b> Cutting it to 0% to save money often costs more when a few damaged planks force a reorder. If you also need the material quantity itself, see the <a href="/vinyl-plank-flooring-calculator/">Vinyl Plank Flooring Calculator</a>.</li>
+</ul>
+<p>This tool provides a budgeting estimate only. It is not a contractor bid, and it is not an engineering, permit or inspection approval. Confirm requirements with your local building department and the flooring manufacturer.</p>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much does it cost to install flooring per square foot?</summary><p>Installed costs typically run from about $4 per square foot for basic carpet to $12 or more for hardwood, and $20 or more for natural stone. LVP and laminate usually land between $5 and $8 installed. Your region, room layout and subfloor condition move these numbers significantly.</p></details>
+<details><summary>How much extra flooring should I buy for waste?</summary><p>Plan on 5% to 10% extra for straight layouts in simple rooms and 15% or more for diagonal installs, tile, stone and rooms with many corners. The extra covers cuts, defects and future repairs, and the slider here lets you test different values.</p></details>
+<details><summary>Is labor usually charged on the waste area too?</summary><p>No. Installers normally charge on the installed floor area, so only the material line grows with the waste factor. Some contractors add a minimum job charge for very small rooms, so ask for it in writing.</p></details>
+<details><summary>Is it cheaper to install flooring myself?</summary><p>Doing it yourself removes the labor line, which is often 30% to 45% of the total, but you'll pay for tools, spend more time, and carry the risk of mistakes. Click-lock vinyl and laminate are the most DIY-friendly. Tile and hardwood nail-down jobs are harder to do well.</p></details>
+<details><summary>Does this estimate include stairs, transitions or furniture moving?</summary><p>No. The calculator covers the main room floor, removal, prep and optional baseboard. Stairs, thresholds, door undercutting, appliance moves and haul-away fees are usually quoted separately, so add them to your budget.</p></details>
+<details><summary>Why is my contractor's quote higher than this estimate?</summary><p>Quotes often include items that are hard to predict, such as subfloor repairs, difficult access, minimum job charges and material markups. Raise the contingency slider, switch the local labor setting to high-cost metro, or enter the contractor's per-square-foot rates to see how the total changes.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/vinyl-plank-flooring-calculator/">Vinyl Plank Flooring Calculator</a></li>
+<li><a href="/drywall-installation-cost-calculator/">Drywall Installation Cost Calculator</a></li>
+<li><a href="/tile-flooring-calculator/">Tile &amp; Flooring Coverage Calculator</a></li>
+<li><a href="/stair-carpet-calculator/">Stair Carpet Calculator</a></li>
+<li><a href="/carpet-calculator-square-yards/">Carpet Calculator</a></li>
+<li><a href="/epoxy-garage-floor-calculator/">Epoxy Garage Floor Coverage Calculator</a></li>
+</ul>
+
+<nav class="cluster-nav" aria-label="More Drywall, Paint &amp; Finishes Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Drywall, Paint &amp; Finishes Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/drywall-installation-cost-calculator/">Drywall Installation Cost Calculator</a></li><li><a href="/tile-flooring-calculator/">Tile &amp; Flooring Coverage Calculator</a></li><li><a href="/vinyl-plank-flooring-calculator/">Vinyl Plank Flooring Calculator</a></li><li><a href="/baseboard-crown-molding-calculator/">Baseboard &amp; Crown Molding Material Calculator</a></li><li><a href="/bathroom-tile-layout-planner/">Bathroom Tile Layout Planner</a></li><li><a href="/ceiling-drywall-hanger-spacing-load-calculator/">Ceiling Drywall Hanger Spacing &amp; Load Calculator</a></li><li><a href="/ceiling-texture-spray-compressor-calculator/">Ceiling Texture Hopper Gun Air Compressor Calculator</a></li><li><a href="/drop-ceiling-grid-calculator/">Dropped Ceiling Grid Material Calculator</a></li><li><a href="/flooring-drywall-paint-calculators/"><strong>All Drywall, Paint &amp; Finishes calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+</main>
+<footer>
+<div><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></div>
+<div>© <span id="yr">2025</span> toolwick.com</div>
+</footer>
+
+<script>
+const g=id=>document.getElementById(id);
+const T={carpet:{n:'Carpet (with pad)',m:3,l:1.5,w:10},laminate:{n:'Laminate',m:2.5,l:2.5,w:10},lvp:{n:'Luxury vinyl plank',m:3.75,l:2.5,w:10},eng:{n:'Engineered hardwood',m:6.5,l:4,w:10},solid:{n:'Solid hardwood',m:8.5,l:5,w:10},tile:{n:'Porcelain / ceramic tile',m:4.5,l:8,w:15},stone:{n:'Natural stone tile',m:12,l:12,w:15}};
+const cl=x=>Math.ceil(+x.toFixed(6));
+const fmt=n=>n.toLocaleString('en-US',{maximumFractionDigits:2});
+const m0=n=>'$'+n.toLocaleString('en-US',{maximumFractionDigits:0});
+const m2=n=>'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const res=g('results');
+g('yr').textContent=new Date().getFullYear();
+g('waste').addEventListener('input',e=>g('wv').textContent=e.target.value);
+g('cont').addEventListener('input',e=>g('cv').textContent=e.target.value);
+g('type').addEventListener('change',e=>{const t=T[e.target.value];g('mat').value=t.m.toFixed(2);g('lab').value=t.l.toFixed(2);g('waste').value=t.w;g('wv').textContent=t.w});
+
+function bad(id,msg){const el=g(id);el.closest('.fld').classList.add('err');g('e_'+id).textContent=msg;el.setAttribute('aria-invalid','true')}
+function num(id,max,label,pos){
+  const s=g(id).value.trim(),n=Number(s);
+  if(s===''||!isFinite(n)){bad(id,'Enter '+label+'.');return null}
+  if(pos?n<=0:n<0){bad(id,pos?label.charAt(0).toUpperCase()+label.slice(1)+' must be greater than 0.':'Price cannot be negative.');return null}
+  if(n>max){bad(id,'That looks too large. Maximum is '+max+'.');return null}
+  return n;
+}
+function calc(p){
+  const order=cl(p.area*(100+p.waste)/100);
+  const mat=cl(order*p.mat),lab=cl(p.area*p.lab*p.region),rem=cl(p.area*p.rem*p.region),prep=cl(p.area*p.prep*p.region);
+  const perim=cl(2*(p.L+p.W)),trim=p.trimOn?cl(perim*p.trimP):0;
+  const sub=mat+lab+rem+prep+trim,cont=cl(sub*p.cont/100);
+  return{order,mat,lab,rem,prep,perim,trim,sub,cont,total:sub+cont};
+}
+function run(){
+  document.querySelectorAll('.fld.err').forEach(f=>f.classList.remove('err'));
+  document.querySelectorAll('[aria-invalid]').forEach(e=>e.removeAttribute('aria-invalid'));
+  const L=num('len',1000,'a room length',true),W=num('wid',1000,'a room width',true),
+  mat=num('mat',1000,'a material price'),lab=num('lab',1000,'a labor price'),trimP=num('trimP',1000,'a baseboard price');
+  if([L,W,mat,lab,trimP].includes(null)){
+    res.className='';res.innerHTML='';
+    const first=document.querySelector('[aria-invalid]');if(first)first.focus();return;
+  }
+  const key=g('type').value,area=L*W;
+  const p={L,W,area,waste:+g('waste').value,mat,lab,rem:+g('rem').value,prep:+g('prep').value,region:+g('region').value,trimOn:g('trimOn').checked,trimP,cont:+g('cont').value};
+  const r=calc(p),tot=r.total;
+  const lo=Math.floor(tot*0.85/10)*10,hi=Math.ceil(tot*1.2/10)*10;
+  const rg=p.region!==1?' × '+p.region:'';
+  const lines=[['Flooring material',fmt(r.order)+' sq ft × '+m2(mat),r.mat],['Installation labor',fmt(area)+' sq ft × '+m2(lab)+rg,r.lab]];
+  if(r.rem)lines.push(['Old floor removal',fmt(area)+' sq ft × '+m2(p.rem)+rg,r.rem]);
+  if(r.prep)lines.push(['Subfloor prep',fmt(area)+' sq ft × '+m2(p.prep)+rg,r.prep]);
+  if(r.trim)lines.push(['Baseboard',fmt(r.perim)+' lin ft × '+m2(trimP),r.trim]);
+  if(r.cont)lines.push(['Contingency ('+p.cont+'%)','of '+m0(r.sub)+' subtotal',r.cont]);
+  let rows='';
+  lines.forEach(x=>{const s=x[2]/tot*100;rows+='<tr><td>'+x[0]+'</td><td>'+x[1]+'</td><td class="n">'+m0(x[2])+'</td><td class="n">'+s.toFixed(1)+'%<span class="bar"><i style="width:'+s.toFixed(0)+'%"></i></span></td></tr>'});
+  let cmp='';
+  for(const k in T){
+    const t=T[k],sel=k===key,c=sel?r:calc(Object.assign({},p,{mat:t.m,lab:t.l}));
+    cmp+='<tr'+(sel?' class="sel"':'')+'><td>'+t.n+(sel?' (your prices)':'')+'</td><td class="n">'+m2(sel?mat:t.m)+'</td><td class="n">'+m2(sel?lab:t.l)+'</td><td class="n">'+m0(c.total)+'</td></tr>';
+  }
+  const labPct=Math.round(r.lab/tot*100);
+  const txt='Flooring installation cost estimate (toolwick.com)\nRoom: '+fmt(L)+' × '+fmt(W)+' ft = '+fmt(area)+' sq ft\nFlooring: '+T[key].n+'\nOrder quantity: '+fmt(r.order)+' sq ft ('+p.waste+'% waste)\n'+lines.map(x=>x[0]+': '+m0(x[2])).join('\n')+'\nTotal: '+m0(tot)+' (typical range '+m0(lo)+' to '+m0(hi)+')\nEstimate only, not a contractor bid.';
+  const html='<div class="rs"><div class="big"><div class="v">'+m0(tot)+'</div><div class="l">Estimated total installed cost (rounded up)</div><div class="l">Typical range: '+m0(lo)+' to '+m0(hi)+'</div></div>'+
+  '<div class="stats"><div class="stat"><b>'+fmt(area)+' sq ft</b><span>Room area</span></div><div class="stat"><b>'+fmt(r.order)+' sq ft</b><span>Order quantity incl. '+p.waste+'% waste</span></div><div class="stat"><b>'+m2(tot/area)+'</b><span>All-in cost per sq ft</span></div><div class="stat"><b>'+m0(r.lab)+' ('+labPct+'%)</b><span>Labor you could save by DIY</span></div></div>'+
+  '<h3>Cost breakdown</h3><div class="tw"><table><thead><tr><th>Item</th><th>Basis</th><th class="n">Cost</th><th class="n">Share</th></tr></thead><tbody>'+rows+'</tbody><tfoot><tr><td colspan="2">Total</td><td class="n">'+m0(tot)+'</td><td class="n">100%</td></tr></tfoot></table></div>'+
+  '<h3>Compare flooring types for this room</h3><div class="tw"><table><thead><tr><th>Flooring type</th><th class="n">Material /sq ft</th><th class="n">Labor /sq ft</th><th class="n">Est. total</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'+
+  '<button type="button" class="cp" id="copyBtn">Copy results</button>'+
+  '<p class="note">Budget estimate only, not a contractor bid or an engineering, permit or inspection approval. Dollar amounts and quantities are rounded up. Prices are typical U.S. ranges and vary by region and supplier. Local codes and manufacturer instructions apply to installation.</p></div>';
+  res.className='';res.innerHTML=html;res._txt=txt;
+  g('dL').textContent='Length '+fmt(L)+' ft';
+  g('dW').textContent='Width '+fmt(W)+' ft';
+  g('dA').textContent=fmt(area)+' sq ft';
+  g('dO').textContent='Order: '+fmt(r.order)+' sq ft (+'+p.waste+'%)';
+  g('dP').textContent=p.trimOn?'Baseboard: perimeter '+fmt(r.perim)+' ft':'Baseboard: not included';
+  g('dT').textContent='Estimate: '+m0(tot);
+  requestAnimationFrame(()=>res.classList.add('show'));
+}
+g('f').addEventListener('submit',e=>{e.preventDefault();requestAnimationFrame(run)});
+res.addEventListener('click',e=>{
+  const b=e.target.closest('#copyBtn');if(!b)return;
+  const t=res._txt,done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,()=>fb(t,done))}else fb(t,done);
+});
+function fb(t,done){const a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(a)}
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
