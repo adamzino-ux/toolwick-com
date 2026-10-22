@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Tile Installation Cost Calculator | Toolwick</title>
+<meta name="description" content="Free tile installation cost calculator: estimate tile, labor, thinset, grout and prep costs for any floor, with waste and layout options.">
+<link rel="canonical" href="https://toolwick.com/tile-installation-cost-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #eee;padding:.9rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2rem 0 .75rem}
+h3{font-size:1.05rem;margin:1.75rem 0 .6rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.lead{font-size:1.05rem;color:#333}
+.dg{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:.75rem;margin:1.5rem 0 0}
+.dg svg{display:block;width:100%;height:auto}
+.dg figcaption{font-size:.85rem;color:#666;text-align:center;margin-top:.4rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.card h2{margin-top:0}
+.grid{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}}
+.field{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;min-height:44px;padding:12px 16px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff;border:1px solid #ddd;border-radius:6px}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,input[type=range]:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.35rem}
+.err:empty{display:none}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6;margin:0}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666;margin-top:-.4rem}
+output{font-weight:700;color:#0077b6}
+.adv{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:0 1rem;margin:.5rem 0 1.25rem}
+.adv summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:600;font-size:.95rem}
+.adv[open] summary{margin-bottom:.5rem}
+.btn{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;min-height:44px;font-size:1rem;font-weight:600;font-family:inherit;cursor:pointer;width:100%}
+.btn:hover{background:#006299}
+.btn.sm{width:auto;background:#fff;color:#0077b6;border:1px solid #0077b6;font-size:.85rem;padding:8px 16px;font-weight:500}
+.btn.sm:hover{background:#f0f8fc}
+.results{opacity:0;transition:opacity .3s ease}
+.results.show{opacity:1}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;margin-top:1.75rem;text-align:center}
+.kl{font-size:.85rem;color:#444;font-weight:500}
+.kn{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.2;word-break:break-word}
+.ks{color:#444;font-size:.95rem}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right}
+td.n{white-space:nowrap;font-variant-numeric:tabular-nums}
+tr.tot td{font-weight:700;border-top:2px solid #0077b6}
+.bar{display:grid;grid-template-columns:6.5rem 1fr 3rem;gap:.6rem;align-items:center;font-size:.88rem;margin-bottom:.45rem}
+.bt{background:#e9ecef;border-radius:4px;height:14px;overflow:hidden}
+.bt i{display:block;height:100%;background:#0077b6}
+.bp{text-align:right;font-variant-numeric:tabular-nums}
+.note{font-size:.85rem;color:#555;margin-top:1.25rem}
+.errsum{color:#c0392b;font-weight:600;margin:1.5rem 0 0}
+.cw{margin-top:1rem;text-align:right}
+.ad-slot{min-height:0;margin:0}
+.ct h2{border-top:1px solid #eee;padding-top:1.75rem}
+.ct ul{padding-left:1.25rem;margin:0 0 1rem}
+.ct li{margin-bottom:.5rem}
+.fm{background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;margin:0 0 1rem;font-size:.95rem}
+details{border-bottom:1px solid #e0e0e0}
+details summary{min-height:44px;padding:.6rem 0;cursor:pointer;font-weight:600;list-style-position:inside}
+details p{margin:0 0 1rem;color:#333}
+.rel{display:grid;grid-template-columns:1fr;gap:.5rem;padding:0;list-style:none}
+.rel a{display:block;padding:12px 16px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;min-height:44px}
+footer{border-top:1px solid #eee;margin-top:2.5rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/tile-installation-cost-calculator/">
+<meta property="og:title" content="Tile Installation Cost Calculator">
+<meta property="og:description" content="Free tile installation cost calculator: estimate tile, labor, thinset, grout and prep costs for any floor, with waste and layout options.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Tile Installation Cost Calculator</h1>
+<p class="lead">This tile installation cost calculator estimates what a tile floor or wall project will cost once you add up the tile, labor, surface prep, thinset mortar, grout and a contingency buffer. Enter your room size and a few prices to get a total, a cost per square foot and a shopping list.</p>
+
+<figure class="dg">
+<svg id="dg" viewBox="0 0 480 275" role="img" aria-labelledby="dgt">
+<title id="dgt">Top-down tile layout diagram showing room length, width, area and tile size</title>
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L10 5L0 9z" fill="#0077b6"/></marker>
+<pattern id="tg" patternUnits="userSpaceOnUse" x="70" y="45" width="40" height="40"><rect id="tgr" width="40" height="40" fill="#fff" stroke="#c3ccd3" stroke-width="1"/></pattern>
+</defs>
+<line id="g1" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line id="g2" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line id="g3" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line id="g4" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<rect id="rm" fill="url(#tg)" stroke="#0077b6" stroke-width="3"/>
+<rect id="tl" fill="#0077b6" fill-opacity=".35" stroke="#0077b6" stroke-width="2"/>
+<line id="hd" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="hl" text-anchor="middle" font-size="18" font-weight="600" fill="#1a1a2e"></text>
+<line id="vd" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="vl" text-anchor="middle" font-size="18" font-weight="600" fill="#1a1a2e"></text>
+<rect id="cb" width="130" height="44" rx="6" fill="#fff" fill-opacity=".95" stroke="#0077b6" stroke-width="1.5"/>
+<text id="ca" text-anchor="middle" font-size="20" font-weight="700" fill="#1a1a2e"></text>
+<text id="cs" text-anchor="middle" font-size="14" fill="#444">room area</text>
+<text id="l1" x="240" y="246" text-anchor="middle" font-size="17" fill="#1a1a2e"></text>
+<text id="l2" x="240" y="267" text-anchor="middle" font-size="17" font-weight="600" fill="#0077b6"></text>
+</svg>
+<figcaption>Top-down view, not to scale. Labels update when you press Calculate.</figcaption>
+</figure>
+
+<div class="card">
+<h2>Estimate Your Tile Project</h2>
+<form id="f" novalidate>
+<div class="grid">
+<div class="field"><label for="len">Room length (ft)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="e-len"><div class="err" id="e-len"></div></div>
+<div class="field"><label for="wid">Room width (ft)</label><input id="wid" type="number" inputmode="decimal" step="any" min="0" value="10" aria-describedby="e-wid"><div class="err" id="e-wid"></div></div>
+</div>
+<div class="field"><label for="extra">Extra area, e.g. backsplash or shower walls (sq ft, optional)</label><input id="extra" type="number" inputmode="decimal" step="any" min="0" placeholder="0" aria-describedby="e-extra"><div class="err" id="e-extra"></div></div>
+<div class="grid">
+<div class="field"><label for="tile">Tile size</label><select id="tile">
+<option value="m2">2×2 in mosaic</option><option value="t4">4×4 in</option><option value="t12" selected>12×12 in</option><option value="t1224">12×24 in</option><option value="t24">24×24 in</option><option value="t2448">24×48 in large format</option></select></div>
+<div class="field"><label for="price">Tile price ($ per sq ft)</label><input id="price" type="number" inputmode="decimal" step="any" min="0" value="4" aria-describedby="e-price"><div class="err" id="e-price"></div></div>
+</div>
+<div class="field"><label for="layout">Layout pattern</label><select id="layout">
+<option value="straight" selected>Straight / grid (about 10% waste)</option><option value="diag">Diagonal (about 15% waste)</option><option value="herr">Herringbone or pattern (about 20% waste)</option></select></div>
+<div class="field"><label for="waste">Waste allowance: <output id="wo" for="waste">10%</output></label><input id="waste" type="range" min="5" max="25" step="1" value="10"><div class="ticks" aria-hidden="true"><span>5%</span><span>15%</span><span>25%</span></div></div>
+<div class="grid">
+<div class="field"><label for="labor">Labor ($ per sq ft)</label><input id="labor" type="number" inputmode="decimal" step="any" min="0" value="8" aria-describedby="e-labor"><div class="err" id="e-labor"></div></div>
+<div class="field"><label for="remove">Old flooring removal ($ per sq ft)</label><input id="remove" type="number" inputmode="decimal" step="any" min="0" value="1.5" aria-describedby="e-remove"><div class="err" id="e-remove"></div></div>
+</div>
+<div class="field"><label for="under">Underlayment / backer board ($ per sq ft)</label><input id="under" type="number" inputmode="decimal" step="any" min="0" value="2" aria-describedby="e-under"><div class="err" id="e-under"></div></div>
+<details class="adv" id="adv"><summary>Material prices and extras</summary>
+<div class="grid">
+<div class="field"><label for="tprice">Thinset price ($ per 50 lb bag)</label><input id="tprice" type="number" inputmode="decimal" step="any" min="0" value="30" aria-describedby="e-tprice"><div class="err" id="e-tprice"></div></div>
+<div class="field"><label for="gprice">Grout price ($ per 25 lb bag)</label><input id="gprice" type="number" inputmode="decimal" step="any" min="0" value="22" aria-describedby="e-gprice"><div class="err" id="e-gprice"></div></div>
+<div class="field"><label for="joint">Grout joint width</label><select id="joint"><option value="0.0625">1/16 in</option><option value="0.125" selected>1/8 in</option><option value="0.1875">3/16 in</option><option value="0.25">1/4 in</option></select></div>
+<div class="field"><label for="cont">Contingency (%)</label><input id="cont" type="number" inputmode="decimal" step="any" min="0" value="10" aria-describedby="e-cont"><div class="err" id="e-cont"></div></div>
+</div>
+</details>
+<button class="btn" type="submit" id="calcBtn">Calculate Tile Cost</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" class="results" aria-live="polite" aria-atomic="true"></div>
+<div class="cw" id="cw" hidden><button type="button" class="btn sm" id="copyBtn">Copy results</button></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<div class="ct">
+<h2>How to Use This Tile Installation Cost Calculator</h2>
+<p>Enter the room length and width in feet. If you are tiling a backsplash, shower walls or an odd-shaped space, leave the dimensions blank and type the total square footage into the extra area box, or add it on top of a floor. Choose a tile size, a layout pattern and your prices. The waste slider jumps to a typical value when you change the layout, but you can set it yourself. Press Calculate to see the total, an itemized table, a cost-share bar chart and a comparison of all three layouts. The diagram at the top redraws with your dimensions.</p>
+
+<h2>Why This Matters</h2>
+<p>Tile is one of the easiest home projects to under-budget. A homeowner sees tile at $4 per square foot, multiplies by 120 square feet and plans on $480. The real invoice is often four or five times that, because labor, demolition, underlayment, mortar, grout and waste all sit on top of the tile price. In a typical US market, setting labor alone can run $5 to $15 per square foot, and it climbs for mosaics, large-format slabs and diagonal or herringbone patterns.</p>
+<p>A realistic number matters whether you are collecting contractor bids, flipping a rental or deciding if a weekend DIY job is worth your time. It also protects you from the most annoying mistake: running short mid-project. Tile from a different production lot can differ in shade and size, so reordering a few boxes after the fact can leave a visible patch in the middle of the floor. Budgeting waste up front, and rounding every material quantity up, keeps you out of that trap. Treat the result as a planning figure to compare against written quotes, not as a quote itself.</p>
+
+<h2>How It's Calculated</h2>
+<p>Every step is simple arithmetic, and quantities are rounded up rather than down so you never end up short.</p>
+<div class="fm">
+Area = (length × width) + extra area<br>
+Tile to buy = area × (1 + waste %), rounded up to whole sq ft<br>
+Labor = area × labor rate × layout factor × size factor<br>
+Prep = area × (removal rate + underlayment rate)<br>
+Thinset bags = area ÷ coverage per 50 lb bag, rounded up<br>
+Grout (lb) = area × 144 × [(L + W) × joint × thickness ÷ (L × W)] × 0.064 × 1.25<br>
+Total = (all items) × (1 + contingency %)
+</div>
+<p>Layout factors raise labor for harder patterns: straight 1.00, diagonal 1.25, herringbone 1.50. Size factors reflect extra handling: 2×2 mosaic 1.30, 4×4 1.10, 12×12 and 12×24 1.00, 24×24 1.10, 24×48 large format 1.30. Your labor rate is treated as the price for a standard 12×12 straight lay. Thinset coverage per 50 lb bag is set on the conservative side: 95 sq ft for mosaics, 90 for 4×4, 70 for 12×12, 55 for 12×24, 50 for 24×24 and 40 for 24×48. Grout uses the joint volume per tile (tile length plus width, times joint width and tile thickness), a density of about 0.064 lb per cubic inch (roughly 110 lb per cubic foot), and a 25% allowance for waste and uneven substrates.</p>
+<p>These figures follow common rules of thumb and manufacturer coverage ranges, not a specific code. Industry guidance such as the TCNA Handbook and ANSI A108/A118 calls for substrates flat to about 1/4 in over 10 ft (1/8 in for tile with an edge of 15 in or more) and floor deflection of no more than L/360 for ceramic or L/720 for natural stone. Local codes and manufacturer instructions vary and always take priority. This calculator is a budgeting aid, not an engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>A 12 ft × 10 ft kitchen with 12×12 ceramic tile at $4.00 per sq ft, straight layout (10% waste), labor at $8.00, removal at $1.50, underlayment at $2.00, thinset at $30 per bag, grout at $22 per bag, 1/8 in joints and 10% contingency:</p>
+<ul>
+<li>Area: 12 × 10 = 120 sq ft. Tile to buy: 120 × 1.10 = 132 sq ft, so 132 × $4.00 = <strong>$528.00</strong>.</li>
+<li>Labor: 120 × $8.00 × 1.00 × 1.00 = <strong>$960.00</strong>.</li>
+<li>Removal: 120 × $1.50 = $180.00. Underlayment: 120 × $2.00 = $240.00.</li>
+<li>Thinset: 120 ÷ 70 = 1.71, rounded up to 2 bags = $60.00. Grout: about 10.8 lb needed, rounded up to 1 bag = $22.00.</li>
+<li>Subtotal: $1,990.00. Contingency at 10%: $199.00.</li>
+<li>Total: <strong>$2,189.00</strong>, or about $18.24 per sq ft installed.</li>
+</ul>
+<p>Switch the same room to a diagonal layout and the total rises to $2,479.40. Herringbone reaches $2,769.80, which is why the layout comparison table is worth a look before you commit to a pattern.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Buy from one dye lot.</strong> Check lot numbers on every box, and keep one or two extra boxes for future repairs.</li>
+<li><strong>Invest in the substrate.</strong> Flatness and stiffness decide whether tile cracks. Pay for leveling and proper backer board rather than skimping, especially under stone or large-format tile.</li>
+<li><strong>Compare bids line by line.</strong> Confirm whether demolition, haul-away, waterproofing, trim profiles, sealer and furniture moving are included.</li>
+<li><strong>Use the right trowel and back-butter large tile.</strong> Thin mortar coverage leaves hollow spots that crack. Large-format tile needs more thinset than the bag coverage suggests.</li>
+<li><strong>Cut safely.</strong> Dry-cutting tile makes respirable silica dust. Wet-cut when you can and wear a properly rated respirator.</li>
+<li><strong>Measure every nook.</strong> Include closets, alcoves and doorway thresholds, and subtract only permanent fixtures such as a tub.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much does tile installation cost per square foot?</summary><p>In many US markets, all-in installed cost lands roughly between $10 and $30 per square foot, depending on tile price, pattern, prep work and local labor rates. Labor alone is often $5 to $15 per square foot. Use your own local quotes in the calculator for the most accurate result.</p></details>
+<details><summary>How much extra tile should I buy for waste?</summary><p>Plan on about 10% for straight layouts, 15% for diagonal and 20% for herringbone or heavily patterned layouts. Small rooms with many cuts, or rooms with lots of corners, can justify going higher. Round up to whole boxes when you order.</p></details>
+<details><summary>Is it cheaper to install tile myself?</summary><p>You save the labor line, which is often 40% to 50% of the total, but you will need tools such as a wet saw, trowels, spacers and a leveling system. A first-time job also takes longer and carries more risk of waste and rework. Straight-lay floors with 12×12 tile are the most forgiving place to start.</p></details>
+<details><summary>Why does large-format tile cost more to install?</summary><p>Big tiles are heavy, must be set on a very flat substrate and need full mortar coverage, usually with back-buttering. Installers often use leveling clips and two-person lifts. That extra care is why this calculator applies a higher labor factor for 24×48 tile.</p></details>
+<details><summary>How much thinset and grout do I need?</summary><p>A 50 lb bag of thinset typically covers 40 to 95 square feet depending on tile size and trowel notch. Grout needs depend on joint width, tile size and thickness: small mosaics need far more than large tiles. The calculator rounds both up to whole bags.</p></details>
+<details><summary>Does this estimate include waterproofing, permits or plumbing?</summary><p>No. Shower waterproofing membranes, trim profiles, sealer, permits and plumbing or electrical changes are not itemized. Use the contingency field to cover them, and confirm requirements with your local building department.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/flooring-installation-cost-calculator/">Flooring Installation Cost Calculator</a></li>
+<li><a href="/shower-wall-tile-calculator/">Shower Wall Tile Calculator</a></li>
+<li><a href="/drywall-installation-cost-calculator/">Drywall Installation Cost Calculator</a></li>
+<li><a href="/bathroom-tile-layout-planner/">Bathroom Tile Layout Planner</a></li>
+<li><a href="/tile-flooring-calculator/">Tile &amp; Flooring Coverage Calculator</a></li>
+<li><a href="/stair-carpet-calculator/">Stair Carpet Calculator</a></li>
+</ul>
+</div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/tile-installation-cost-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const TILES={m2:{n:'2×2 mosaic',w:2,h:2,t:.25,cov:95,lab:1.3},t4:{n:'4×4',w:4,h:4,t:.25,cov:90,lab:1.1},t12:{n:'12×12',w:12,h:12,t:.375,cov:70,lab:1},t1224:{n:'12×24',w:12,h:24,t:.375,cov:55,lab:1},t24:{n:'24×24',w:24,h:24,t:.375,cov:50,lab:1.1},t2448:{n:'24×48 large format',w:24,h:48,t:.375,cov:40,lab:1.3}};
+const LAYS={straight:{n:'Straight / grid',waste:10,lab:1},diag:{n:'Diagonal',waste:15,lab:1.25},herr:{n:'Herringbone / pattern',waste:20,lab:1.5}};
+const fm=n=>n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fd=n=>'$'+fm(n);
+const fi=n=>n.toLocaleString('en-US',{maximumFractionDigits:2});
+const IDS=['len','wid','extra','price','labor','remove','under','tprice','gprice','cont'];
+const DEF=[['len','room length',{max:2000}],['wid','room width',{max:2000}],['extra','extra area',{max:100000}],['price','tile price',{req:1,max:1000}],['labor','labor rate',{req:1,max:500}],['remove','removal cost',{max:100}],['under','underlayment cost',{max:100}],['tprice','thinset price',{req:1,max:1000}],['gprice','grout price',{req:1,max:1000}],['cont','contingency',{max:50}]];
+let lastText='';
+
+function rd(id,name,o){
+  const raw=$(id).value.trim();
+  if(raw==='') return o.req?[null,'Enter the '+name+'.']:[0];
+  const v=Number(raw);
+  if(!isFinite(v)) return [null,'Enter a valid number.'];
+  if(v<0) return [null,'Value cannot be negative.'];
+  if(v>o.max) return [null,'Maximum allowed is '+fi(o.max)+'.'];
+  return [v];
+}
+
+function calc(p,lay,waste){
+  const T=TILES[p.tile],Ly=LAYS[lay],a=p.area;
+  const buy=Math.ceil(+(a*(100+waste)/100).toFixed(6));
+  const tile=buy*p.price,labor=a*p.labor*Ly.lab*T.lab,rem=a*p.remove,und=a*p.under;
+  const tb=Math.ceil(+(a/T.cov).toFixed(6));
+  const lbs=a*144*((T.w+T.h)*p.joint*T.t/(T.w*T.h))*0.064*1.25;
+  const gb=Math.max(1,Math.ceil(+(lbs/25).toFixed(6)));
+  const thin=tb*p.tprice,grout=gb*p.gprice;
+  const sub=tile+labor+rem+und+thin+grout,cont=sub*p.cont/100,total=sub+cont;
+  return {buy,tile,labor,rem,und,tb,thin,lbs,gb,grout,sub,cont,total,pp:total/a,fac:Ly.lab*T.lab};
+}
+
+function draw(o){
+  const T=TILES[o.tile],cx=240,cy=130,mw=340,mh=170;
+  let L=o.L,W=o.W;
+  if(!L||!W){L=Math.sqrt(o.area*1.6);W=o.area/L;}
+  const s=Math.min(mw/L,mh/W),rw=L*s,rh=W*s,rx=cx-rw/2,ry=cy-rh/2;
+  const tw=Math.min(Math.max(T.w/12*s,8),rw),th=Math.min(Math.max(T.h/12*s,8),rh);
+  const A=(id,at)=>{const e=$(id);for(const k in at)e.setAttribute(k,at[k]);return e;};
+  const pt=$('tg');pt.setAttribute('x',rx);pt.setAttribute('y',ry);pt.setAttribute('width',tw);pt.setAttribute('height',th);
+  A('tgr',{width:tw,height:th});
+  A('rm',{x:rx,y:ry,width:rw,height:rh});
+  A('tl',{x:rx,y:ry,width:tw,height:th});
+  A('g1',{x1:rx,x2:rx,y1:ry-18,y2:ry});A('g2',{x1:rx+rw,x2:rx+rw,y1:ry-18,y2:ry});
+  A('g3',{x1:rx-18,x2:rx,y1:ry,y2:ry});A('g4',{x1:rx-18,x2:rx,y1:ry+rh,y2:ry+rh});
+  A('hd',{x1:rx,x2:rx+rw,y1:ry-12,y2:ry-12});
+  A('vd',{x1:rx-12,x2:rx-12,y1:ry,y2:ry+rh});
+  const manual=!(o.L&&o.W);
+  A('hl',{x:cx,y:ry-20}).textContent=manual?'Area entered directly':'Length: '+fi(o.L)+' ft';
+  const vx=rx-20;
+  A('vl',{x:vx,y:cy,transform:'rotate(-90 '+vx+' '+cy+')'}).textContent=manual?'':'Width: '+fi(o.W)+' ft';
+  A('cb',{x:cx-65,y:cy-22});
+  A('ca',{x:cx,y:cy-2}).textContent=fi(o.area)+' sq ft';
+  A('cs',{x:cx,y:cy+15});
+  $('l1').textContent='Blue square = one '+T.n+' tile (inches)';
+  $('l2').textContent='Order '+fi(o.buy)+' sq ft of tile ('+o.waste+'% waste included)';
+}
+
+function show(html,ok){
+  const r=$('results');
+  r.classList.remove('show');
+  r.innerHTML=html;
+  $('cw').hidden=!ok;
+  requestAnimationFrame(()=>r.classList.add('show'));
+}
+
+function run(){
+  requestAnimationFrame(()=>{
+    const V={},errs={};
+    DEF.forEach(d=>{const x=rd(d[0],d[1],d[2]);if(x[1])errs[d[0]]=x[1];else V[d[0]]=x[0];});
+    const lb=$('len').value.trim()==='',wb=$('wid').value.trim()==='';
+    if(lb!==wb){
+      const id=lb?'len':'wid';
+      if(!errs[id])errs[id]='Enter both length and width, or leave both blank and use extra area.';
+    }else if(!lb){
+      if(!errs.len&&V.len<=0)errs.len='Length must be greater than 0.';
+      if(!errs.wid&&V.wid<=0)errs.wid='Width must be greater than 0.';
+    }
+    let area=0;
+    if(!errs.len&&!errs.wid&&!errs.extra){
+      area=(lb?0:V.len*V.wid)+V.extra;
+      if(area<=0)errs.len='Enter room length and width, or an extra area greater than 0.';
+      else if(area>100000)errs.extra='Total area is too large (maximum 100,000 sq ft).';
+    }
+    IDS.forEach(id=>{const m=errs[id];$(id).classList.toggle('bad',!!m);$(id).setAttribute('aria-invalid',m?'true':'false');$('e-'+id).textContent=m||'';});
+    const bad=IDS.filter(id=>errs[id]);
+    if(bad.length){
+      if(bad.some(id=>id==='tprice'||id==='gprice'||id==='cont'))$('adv').open=true;
+      show('<p class="errsum">Please fix the highlighted fields to see your estimate.</p>',false);
+      $(bad[0]).focus();
+      return;
+    }
+    const p={area,price:V.price,labor:V.labor,remove:V.remove,under:V.under,tprice:V.tprice,gprice:V.gprice,cont:V.cont,tile:$('tile').value,joint:+$('joint').value};
+    const lay=$('layout').value,waste=+$('waste').value;
+    const r=calc(p,lay,waste);
+    const rows=[];
+    const row=(a,b,c,cls)=>'<tr'+(cls?' class="'+cls+'"':'')+'><td>'+a+'</td><td class="n">'+b+'</td><td class="n">'+c+'</td></tr>';
+    rows.push(row('Tile (incl. '+waste+'% waste)',fi(r.buy)+' sq ft × '+fd(p.price),fd(r.tile)));
+    rows.push(row('Labor',fi(area)+' sq ft × '+fd(p.labor)+' × '+fm(r.fac),fd(r.labor)));
+    if(r.rem>0)rows.push(row('Old flooring removal',fi(area)+' sq ft × '+fd(p.remove),fd(r.rem)));
+    if(r.und>0)rows.push(row('Underlayment / backer board',fi(area)+' sq ft × '+fd(p.under),fd(r.und)));
+    rows.push(row('Thinset mortar',r.tb+' × 50 lb bag @ '+fd(p.tprice),fd(r.thin)));
+    rows.push(row('Grout',r.gb+' × 25 lb bag (≈ '+fm(r.lbs)+' lb needed)',fd(r.grout)));
+    rows.push(row('Subtotal','',fd(r.sub)));
+    rows.push(row('Contingency ('+fi(p.cont)+'%)','',fd(r.cont)));
+    rows.push(row('Estimated total','',fd(r.total),'tot'));
+    const grp=[['Tile',r.tile],['Labor',r.labor],['Prep',r.rem+r.und],['Mortar &amp; grout',r.thin+r.grout],['Contingency',r.cont]];
+    const bars=grp.map(g=>{const pc=r.total>0?g[1]/r.total*100:0;return '<div class="bar"><span>'+g[0]+'</span><span class="bt"><i style="width:'+pc.toFixed(1)+'%"></i></span><span class="bp">'+pc.toFixed(0)+'%</span></div>';}).join('');
+    const cmp=Object.keys(LAYS).map(k=>{const L=LAYS[k],c=calc(p,k,L.waste);return '<tr><td>'+L.n+(k===lay?' (selected)':'')+'</td><td class="n">'+L.waste+'%</td><td class="n">'+fi(c.buy)+' sq ft</td><td class="n">'+fd(c.total)+'</td><td class="n">'+fd(c.pp)+'</td></tr>';}).join('');
+    const html='<div class="key"><div class="kl">Estimated total cost</div><div class="kn">'+fd(r.total)+'</div><div class="ks">'+fd(r.pp)+' per sq ft · '+fi(area)+' sq ft installed</div></div>'
+    +'<h3>Cost breakdown</h3><div class="tw"><table><thead><tr><th>Item</th><th class="n">Quantity / basis</th><th class="n">Cost</th></tr></thead><tbody>'+rows.join('')+'</tbody></table></div>'
+    +'<h3>Where the money goes</h3>'+bars
+    +'<h3>Layout comparison</h3><div class="tw"><table><thead><tr><th>Layout</th><th class="n">Waste</th><th class="n">Tile to buy</th><th class="n">Total</th><th class="n">Per sq ft</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'
+    +'<p class="note">Comparison uses each layout\u2019s standard waste and labor factor with your other inputs. Tile, thinset and grout quantities are rounded up so the estimate errs toward buying slightly more. This is a budgeting estimate only, not an engineering, permit or inspection approval; local codes and manufacturer instructions govern.</p>';
+    lastText='Tile installation cost estimate\n'
+      +'Area: '+fi(area)+' sq ft | Tile: '+TILES[p.tile].n+' | Layout: '+LAYS[lay].n+' | Waste: '+waste+'%\n'
+      +'Tile to buy: '+fi(r.buy)+' sq ft = '+fd(r.tile)+'\n'
+      +'Labor: '+fd(r.labor)+'\n'
+      +'Prep (removal + underlayment): '+fd(r.rem+r.und)+'\n'
+      +'Thinset: '+r.tb+' bags = '+fd(r.thin)+'\n'
+      +'Grout: '+r.gb+' bags = '+fd(r.grout)+'\n'
+      +'Contingency ('+fi(p.cont)+'%): '+fd(r.cont)+'\n'
+      +'TOTAL: '+fd(r.total)+' ('+fd(r.pp)+' per sq ft)';
+    show(html,true);
+    draw({L:lb?0:V.len,W:lb?0:V.wid,area,buy:r.buy,waste,tile:p.tile});
+  });
+}
+
+function fb(t){const x=document.createElement('textarea');x.value=t;x.style.position='fixed';x.style.opacity='0';document.body.appendChild(x);x.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(x);}
+$('copyBtn').addEventListener('click',()=>{
+  const b=$('copyBtn');
+  const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results';},2000);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,()=>{fb(lastText);done();});}
+  else{fb(lastText);done();}
+});
+
+$('f').addEventListener('submit',e=>{e.preventDefault();run();});
+['waste','layout','tile','joint'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();run();}}));
+$('layout').addEventListener('change',()=>{const w=LAYS[$('layout').value].waste;$('waste').value=w;$('wo').textContent=w+'%';});
+$('waste').addEventListener('input',()=>{$('wo').textContent=$('waste').value+'%';});
+$('yr').textContent=new Date().getFullYear();
+draw({L:12,W:10,area:120,buy:132,waste:10,tile:'t12'});
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
