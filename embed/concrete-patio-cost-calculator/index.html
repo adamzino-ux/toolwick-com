@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Free Concrete Patio Cost Calculator | Toolwick</title>
+<meta name="description" content="Free concrete patio cost calculator: estimate concrete, gravel base, rebar, labor and finish costs by size and thickness. DIY vs pro pricing.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/concrete-patio-cost-calculator/">
+<style>
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #eee;padding:.9rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2.5rem 0 .75rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.lead{color:#333;margin-bottom:2rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.dia{margin:0 0 1.5rem;background:#f8f9fa;border-radius:8px;padding:.75rem}
+.dia svg{display:block;width:100%;max-width:460px;height:auto;margin:0 auto}
+.dia svg text{fill:#1a1a2e;font-size:14px;font-family:inherit}
+.dia svg .sh{font-size:12px;font-weight:700;letter-spacing:.05em}
+.dia figcaption{font-size:.8rem;color:#666;text-align:center;margin-top:.25rem}
+.f{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff;min-height:44px}
+input[type=range]{width:100%;height:44px;margin:0;accent-color:#0077b6}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.bad{border-color:#e74c3c}
+.errmsg{color:#c0392b;font-size:.85rem;margin-top:.35rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.hint{font-size:.8rem;color:#666;margin-top:.25rem}
+.chk{display:flex;align-items:center;gap:.6rem;min-height:44px}
+.chk input{width:22px;height:22px;accent-color:#0077b6;margin:0}
+.chk label{margin:0;font-size:.95rem}
+output{color:#0077b6;font-weight:700}
+.row{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:640px){.row{grid-template-columns:1fr 1fr}}
+details.adv{background:#f8f9fa;border-radius:8px;padding:.25rem 1rem;margin-bottom:1.5rem}
+details.adv summary{cursor:pointer;min-height:44px;line-height:44px;font-weight:600;font-size:.95rem}
+details.adv .g{padding:.5rem 0 .25rem}
+button.main{display:block;width:100%;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:48px;cursor:pointer;font-family:inherit}
+button.main:hover{background:#006299}
+#results{margin-top:1.5rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.big{background:#f8f9fa;border-radius:8px;padding:1.5rem;text-align:center;margin-bottom:1.25rem}
+.big .lbl{font-size:.9rem;color:#444;font-weight:500}
+.big .num{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.2;margin:.25rem 0}
+.big .sub{font-size:.9rem;color:#444}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem}
+.stats div{border:1px solid #e0e0e0;border-radius:6px;padding:.75rem}
+.stats b{display:block;font-size:1.05rem}
+.stats span{font-size:.8rem;color:#666}
+.rh{font-weight:700;margin:1.5rem 0 .5rem}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.r{text-align:right}
+th.r{text-align:right}
+tr.sel td{background:#e6f2f9;font-weight:600}
+tr.tot td{background:#e6f2f9;font-weight:700;font-size:1rem}
+.notes{padding-left:1.2rem;font-size:.9rem;color:#333}
+.notes li{margin-bottom:.4rem}
+.warn{color:#8a4b00}
+.cp{background:#fff;border:1px solid #bbb;color:#1a1a2e;border-radius:6px;padding:10px 16px;min-height:44px;font-size:.9rem;cursor:pointer;font-family:inherit;margin-top:1rem}
+.cp:hover{background:#f0f0f0}
+.ad-slot{min-height:0;margin:0}
+.content ul{padding-left:1.2rem}
+.content li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;margin:0 0 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;overflow-x:auto;white-space:pre}
+details.q{border-bottom:1px solid #e8e8e8;padding:.25rem 0}
+details.q summary{cursor:pointer;font-weight:600;min-height:44px;padding:.6rem 0}
+details.q p{color:#333}
+.rel{display:grid;gap:.5rem;padding:0;list-style:none}
+.rel a{display:block;padding:12px 16px;background:#f8f9fa;border-radius:6px;min-height:44px}
+footer{margin:3rem 0 0;padding:1.5rem 0 2.5rem;border-top:1px solid #eee;font-size:.9rem;color:#555;text-align:center}
+footer a{margin:0 .5rem}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.big .num{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/concrete-patio-cost-calculator/">
+<meta property="og:title" content="Concrete Patio Cost Calculator">
+<meta property="og:description" content="Free concrete patio cost calculator: estimate concrete, gravel base, rebar, labor and finish costs by size and thickness. DIY vs pro pricing.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Concrete Patio Cost Calculator</h1>
+<p class="lead">This free concrete patio cost calculator estimates what your slab will cost: concrete, gravel base, reinforcement, forms, finish, labor and contingency. Enter your patio size, choose DIY or professional pricing, and get a line-by-line budget in seconds.</p>
+
+<div class="card" id="tool">
+<figure class="dia">
+<svg id="dia" viewBox="0 0 360 376" role="img" aria-labelledby="dt">
+<title id="dt">Patio plan view with length and width, and slab cross-section showing slab thickness and gravel base depth</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0077b6"/></marker></defs>
+<text x="10" y="16" class="sh">PLAN VIEW</text>
+<rect id="prect" x="80" y="55" width="220" height="100" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/>
+<line id="dT" x1="80" x2="300" y1="43" y2="43" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tL" x="190" y="37" text-anchor="middle">12 ft</text>
+<line id="dL" x1="68" x2="68" y1="55" y2="155" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tW" x="60" y="105" text-anchor="middle" transform="rotate(-90 60 105)">12 ft</text>
+<text id="tA" x="190" y="173" text-anchor="middle">144 sq ft</text>
+<text x="10" y="206" class="sh">CROSS-SECTION</text>
+<line id="g1" x1="262" x2="278" y1="222" y2="222" stroke="#e0e0e0" stroke-dasharray="3 3"/>
+<line id="g2" x1="262" x2="278" y1="250" y2="250" stroke="#e0e0e0" stroke-dasharray="3 3"/>
+<line id="g3" x1="262" x2="278" y1="270" y2="270" stroke="#e0e0e0" stroke-dasharray="3 3"/>
+<rect id="sl" x="30" y="222" width="232" height="28" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/>
+<rect id="gr" x="30" y="250" width="232" height="20" fill="#e0e0e0" stroke="#bdbdbd"/>
+<rect id="so" x="30" y="270" width="232" height="24" fill="#f8f9fa" stroke="#e0e0e0"/>
+<text x="146" y="287" text-anchor="middle" style="font-size:12px">Compacted subgrade</text>
+<line id="rb" x1="40" x2="252" y1="236" y2="236" stroke="#0077b6" stroke-width="2" stroke-dasharray="6 4"/>
+<line id="dS" x1="272" x2="272" y1="222" y2="250" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tS" x="280" y="241">Slab 4 in</text>
+<line id="dG" x1="272" x2="272" y1="250" y2="270" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tG" x="280" y="264">Base 4 in</text>
+<text id="tR" x="180" y="366" text-anchor="middle" style="font-size:13px">Dashed line: wire mesh at mid-depth</text>
+</svg>
+<figcaption>Diagram updates as you change your measurements.</figcaption>
+</figure>
+
+<div class="row">
+<div class="f"><label for="L">Patio length (ft)</label><input id="L" type="number" inputmode="decimal" min="0" step="any" value="12" aria-describedby="e-L"><div class="errmsg" id="e-L" hidden></div></div>
+<div class="f"><label for="W">Patio width (ft)</label><input id="W" type="number" inputmode="decimal" min="0" step="any" value="12" aria-describedby="e-W"><div class="errmsg" id="e-W" hidden></div></div>
+</div>
+
+<div class="f"><label for="T">Slab thickness: <output id="tv">4 in</output></label><input id="T" type="range" min="3.5" max="8" step="0.5" value="4"><div class="ticks"><span>3.5 in</span><span>8 in</span></div><div class="hint">4 in suits foot traffic; use 5–6 in for vehicles, hot tubs or heavy loads.</div></div>
+<div class="f"><label for="B">Gravel base depth: <output id="bv">4 in</output></label><input id="B" type="range" min="0" max="8" step="1" value="4"><div class="ticks"><span>0 in</span><span>8 in</span></div></div>
+<div class="f"><label for="ws">Waste &amp; overage: <output id="wv">10%</output></label><input id="ws" type="range" min="0" max="20" step="1" value="10"><div class="ticks"><span>0%</span><span>20%</span></div></div>
+
+<div class="f"><label for="mode">Who is doing the work?</label><select id="mode"><option value="pro">Professional contractor (installed price)</option><option value="truck">DIY with ready-mix truck</option><option value="bags">DIY with bagged concrete</option></select></div>
+<div class="f"><label for="fin">Surface finish</label><select id="fin"><option value="broom">Standard broom finish</option><option value="color">Integral color</option><option value="agg">Exposed aggregate</option><option value="stamp">Stamped pattern</option></select></div>
+<div class="f"><label for="rf">Reinforcement</label><select id="rf"><option value="none">None</option><option value="mesh" selected>Welded wire mesh</option><option value="rebar">#3 rebar grid, 18 in on center</option></select></div>
+<div class="chk"><input type="checkbox" id="rem"><label for="rem">Remove an existing patio or slab first</label></div>
+
+<details class="adv" id="advd"><summary>Adjust unit prices &amp; contingency</summary><div class="g" id="adv"></div></details>
+
+<button class="main" id="go" type="button">Calculate Patio Cost</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<div class="content">
+<h2>How to Use This Concrete Patio Cost Calculator</h2>
+<p>Enter your patio's length and width in feet, then set the slab thickness, gravel base depth and waste allowance with the sliders. Pick who is doing the work, the surface finish and the reinforcement, and open “Adjust unit prices” to replace the default prices with numbers from your local ready-mix supplier and lumber yard. Press Calculate to see the total, the cost per square foot, the cubic yards to order, a line-by-line breakdown, and side-by-side comparisons of different thicknesses and finishes.</p>
+
+<h2>Why This Matters</h2>
+<p>A concrete patio is one of the best-value upgrades for a yard, and one of the easiest projects to misprice. Quotes for the same 12×12 slab can differ by a factor of two depending on the finish, whether an old patio must be broken out and hauled away, and whether the ready-mix truck charges a short-load fee. Small slabs suffer most. Under about 4 cubic yards, many plants add $75–$150, so a 12×12 patio costs more per square foot than a 20×20 one.</p>
+<p>A homeowner comparing bids needs a baseline to judge whether $2,400 for 144 square feet is fair (it is above the usual range for a plain finish). A DIYer needs to know whether bagged concrete makes sense: a 12×12×4 in slab with 10% waste takes about 88 bags of 80-lb mix, which is roughly 3.5 tons to mix by hand. Landscapers, landlords budgeting for a rental and anyone planning a grill station, hot-tub pad or seating area can use the same estimate to set a budget before collecting quotes.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator builds the price from the ground up and rounds quantities up, never down, so you are less likely to come up short:</p>
+<div class="formula">Area (sq ft)   = length × width
+Concrete (yd³) = area × (thickness ÷ 12) × (1 + waste %) ÷ 27
+                 rounded up to the next ¼ yd³
+Bags (80 lb)   = cubic feet ÷ 0.6, rounded up
+Gravel (yd³)   = area × (base ÷ 12) ÷ 27 × 1.15 compaction
+                 rounded up to the next ¼ yd³
+Mesh (sq ft)   = area × 1.10 for laps
+Rebar (ft)     = bars at 18 in both ways × 1.10 for laps
+Forms/supplies = perimeter × $2.50 + area × $0.25
+Pro total      = (materials + labor) × 1.15 overhead &amp; profit
+Final total    = subtotal × (1 + contingency %) + permits</div>
+<p>Finish upgrades, demolition and labor are priced per square foot, with DIY rates covering materials and rentals only. The thickness and finish comparison tables re-run the same math with one setting changed. Sizing follows common residential rules of thumb: IRC R506 (concrete floors on ground, 3.5 in minimum) and ACI 332 residential guidance. Control joints are suggested at no more than 2 × the slab thickness in feet, the conservative end of the usual 2–3× rule. Local codes, frost depth and soil conditions vary. This is a budgeting estimate and not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>A 12 ft × 12 ft patio, 4 in thick, on a 4 in gravel base, with wire mesh, a broom finish, 10% waste, professional installation and the default prices:</p>
+<ul>
+<li><strong>Area and perimeter:</strong> 12 × 12 = 144 sq ft; perimeter 48 ft.</li>
+<li><strong>Concrete:</strong> 144 × (4 ÷ 12) = 48 cu ft; × 1.10 = 52.8 cu ft = 1.956 yd³, so order 2.00 yd³ × $165 = $330.00. Under 4 yd³, so add the $125.00 short-load fee.</li>
+<li><strong>Gravel:</strong> 48 cu ft = 1.778 yd³ × 1.15 = 2.044, rounded up to 2.25 yd³ × $50 = $112.50.</li>
+<li><strong>Mesh:</strong> 144 × 1.10 = 159 sq ft × $0.40 = $63.60.</li>
+<li><strong>Forms and supplies:</strong> 48 × $2.50 + 144 × $0.25 = $156.00.</li>
+<li><strong>Labor:</strong> 144 × $4.50 = $648.00.</li>
+<li><strong>Totals:</strong> subtotal $1,435.10; plus 15% overhead and profit ($215.27) = $1,650.37; plus 10% contingency ($165.04) = <strong>$1,815.40</strong>, or about $12.61 per sq ft.</li>
+</ul>
+<p>Switch to DIY with a ready-mix truck and the same patio drops to roughly $866, because labor, markup and the finish premium disappear.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Don't skimp on the base.</strong> In clay or freeze-thaw soils, a compacted 4 in gravel base is commonly recommended for drainage, and it costs little compared with replacing a heaved slab.</li>
+<li><strong>Order a little extra.</strong> Uneven subgrade eats concrete, and running short mid-pour creates cold joints. A 5–10% overage is cheap insurance.</li>
+<li><strong>Plan for drainage.</strong> Slope the slab about ¼ in per foot away from the house, and call 811 before you dig.</li>
+<li><strong>Cut control joints on time.</strong> Make them about one-quarter of the slab depth, spaced no farther apart than the figure shown in your results, within 6–18 hours of finishing.</li>
+<li><strong>Compare quotes line by line.</strong> Check whether bids include demolition, grading, pump truck, sealer and permit fees. Odd shapes are best split into rectangles, estimated one at a time and added together.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details class="q"><summary>How much does a concrete patio cost per square foot?</summary><p>A plain broom-finish patio typically runs about $8–$15 per square foot installed, and $4–$7 for DIY with a ready-mix truck. Stamped or colored finishes, demolition and small project sizes push the number higher.</p></details>
+<details class="q"><summary>How thick should a concrete patio be?</summary><p>Four inches is the common standard for foot traffic, and residential codes such as IRC R506 set 3.5 inches as the floor for slabs on ground. Use 5–6 inches under vehicles, heavy planters, or hot tubs, and ask an engineer or your building department about concentrated loads.</p></details>
+<details class="q"><summary>How many yards of concrete do I need for a 12x12 patio?</summary><p>At 4 inches thick, a 12×12 patio needs 1.78 cubic yards before waste. With 10% overage, plan to order about 2 cubic yards, which is what this calculator rounds to.</p></details>
+<details class="q"><summary>Is it cheaper to pour a patio myself?</summary><p>Usually yes, by 50% or more, since labor is the largest line item. But finishing concrete is time-sensitive physical work, so for anything over about 2 cubic yards, use a ready-mix truck and recruit helpers rather than mixing bags.</p></details>
+<details class="q"><summary>Do I need a permit for a concrete patio?</summary><p>It depends on your jurisdiction. Many places exempt small ground-level slabs, but size limits, setbacks, drainage rules, and HOA approval can still apply, and covered or attached patios often need permits. Call your local building department before you pour.</p></details>
+<details class="q"><summary>Does a patio need rebar or wire mesh?</summary><p>Reinforcement does not prevent cracks, but it holds cracked sections together and helps with heavier loads. Many contractors use mesh or a #3 rebar grid at 18 inches on center in poor soils, climates with hard freezes, or when the slab will carry vehicles.</p></details>
+</div>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li>
+<li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a></li>
+<li><a href="/sonotube-round-column-concrete-calculator/">Sonotube &amp; Round Column Concrete Calculator</a></li>
+<li><a href="/garage-slab-thickness-reinforcement-calculator/">Garage Concrete Slab Thickness &amp; Reinforcement Calculator</a></li>
+<li><a href="/paver-patio-calculator/">Paver Patio Base &amp; Sand Calculator</a></li>
+<li><a href="/concrete-volume-calculator/">Concrete Volume Calculator</a></li>
+</ul>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/concrete-patio-cost-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const fmt=(n,d=0)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const usd=(n,d=0)=>'$'+fmt(n,d);
+const F={broom:['Broom finish',0,0],color:['Integral color',1.5,1],agg:['Exposed aggregate',3,1.5],stamp:['Stamped pattern',6,3]};
+const MODES={pro:'professional install',truck:'DIY, ready-mix truck',bags:'DIY, bagged mix'};
+const ALL='pro,truck,bags';
+const ADV=[
+['conc','Ready-mix concrete ($ per cubic yard, delivered)',165,50,600,'pro,truck'],
+['bag','Bagged concrete, 80 lb ($ per bag)',6.25,2,30,'bags'],
+['grav','Gravel base ($ per cubic yard, delivered)',50,10,200,ALL],
+['short','Short-load fee for orders under 4 yd³ ($)',125,0,600,'pro,truck'],
+['labor','Professional labor ($ per sq ft)',4.5,0.5,25,'pro'],
+['mesh','Welded wire mesh ($ per sq ft)',0.4,0.05,3,ALL],
+['rebar','#3 rebar ($ per linear ft)',0.65,0.1,5,ALL],
+['permit','Permit & other fees ($)',0,0,10000,ALL],
+['cont','Contingency (%)',10,0,50,ALL]
+];
+$('adv').innerHTML=ADV.map(a=>'<div class="f" data-m="'+a[5]+'"><label for="a-'+a[0]+'">'+a[1]+'</label><input id="a-'+a[0]+'" type="number" inputmode="decimal" step="any" value="'+a[2]+'" aria-describedby="e-a-'+a[0]+'"><div class="errmsg" id="e-a-'+a[0]+'" hidden></div></div>').join('');
+$('yr').textContent=new Date().getFullYear();
+let firstBad=null,last='';
+
+function syncMode(){const m=$('mode').value;document.querySelectorAll('#adv .f').forEach(f=>{f.hidden=f.dataset.m.split(',').indexOf(m)<0})}
+function setErr(id,msg){const el=$(id),er=$('e-'+id);el.classList.toggle('bad',!!msg);el.setAttribute('aria-invalid',msg?'true':'false');er.textContent=msg||'';er.hidden=!msg;if(msg&&!firstBad)firstBad=el}
+function val(id,min,max,ex,unit){
+ const el=$(id),f=el.closest('.f');
+ if(f&&f.hidden){setErr(id,'');return Number(el.value)||0}
+ const raw=el.value.trim(),v=Number(raw);let m='';
+ if(raw==='')m='Please enter a number.';
+ else if(!isFinite(v))m='Enter a valid number.';
+ else if(ex?v<=min:v<min)m=ex?'Enter a number greater than 0 (up to '+fmt(max)+(unit?' '+unit:'')+').':'Enter a number between '+fmt(min,min%1?2:0)+' and '+fmt(max)+'.';
+ else if(v>max)m=ex?'That is too large. The maximum is '+fmt(max)+(unit?' '+unit:'')+'; for bigger jobs get a contractor quote.':'Enter a number between '+fmt(min,min%1?2:0)+' and '+fmt(max)+'.';
+ setErr(id,m);return m?null:v;
+}
+function read(){
+ firstBad=null;
+ const p={mode:$('mode').value,finish:$('fin').value,reinf:$('rf').value,rem:$('rem').checked,T:+$('T').value,B:+$('B').value,ws:+$('ws').value};
+ p.L=val('L',0,200,true,'ft');p.W=val('W',0,200,true,'ft');
+ ADV.forEach(a=>{p[a[0]]=val('a-'+a[0],a[3],a[4],false,'')});
+ if(p.L&&p.W&&p.L*p.W>10000){setErr('W','That is over 10,000 sq ft. Please get a contractor quote for slabs this large.');p.W=null}
+ if(firstBad){if(firstBad.id.indexOf('a-')===0)$('advd').open=true;firstBad.focus();return null}
+ return p;
+}
+function calc(p){
+ const A=p.L*p.W,P=2*(p.L+p.W),pro=p.mode==='pro';
+ const cf=A*p.T/12*(1+p.ws/100),cy=cf/27,rows=[];let sub=0,qty,bags=0,cyO=0;
+ const add=(n,q,c)=>{rows.push([n,q,c]);sub+=c};
+ if(p.mode==='bags'){bags=Math.ceil(cf/0.6);qty=fmt(bags)+' bags';add('Bagged concrete (80 lb)',qty,bags*p.bag)}
+ else{cyO=Math.ceil(cy*4)/4;qty=fmt(cyO,2)+' yd³';add('Ready-mix concrete',qty,cyO*p.conc);if(cyO<4&&p.short>0)add('Short-load fee','Under 4 yd³',p.short)}
+ if(p.B>0){const g=Math.ceil(A*p.B/12/27*1.15*4)/4;add('Gravel base ('+p.B+' in, compacted)',fmt(g,2)+' yd³',g*p.grav)}
+ if(p.reinf==='mesh'){const m=Math.ceil(A*1.1);add('Welded wire mesh',fmt(m)+' sq ft',m*p.mesh)}
+ if(p.reinf==='rebar'){const lf=Math.ceil((Math.ceil(p.W/1.5)+1)*p.L*1.1+(Math.ceil(p.L/1.5)+1)*p.W*1.1);add('#3 rebar grid, 18 in o.c.',fmt(lf)+' ft',lf*p.rebar)}
+ add('Forms, stakes, joints & supplies','Perimeter '+fmt(P,P%1?1:0)+' ft',P*2.5+A*0.25);
+ const fr=pro?F[p.finish][1]:F[p.finish][2];
+ if(fr>0)add(F[p.finish][0]+' upgrade',fmt(A,A%1?1:0)+' sq ft',A*fr);
+ if(p.rem)add('Demolition & hauling',fmt(A,A%1?1:0)+' sq ft',A*(pro?3.5:1.5));
+ if(pro){add('Labor (place & finish)',fmt(A,A%1?1:0)+' sq ft',A*p.labor);add('Contractor overhead & profit','15%',sub*0.15)}
+ if(p.cont>0)add('Contingency','' +fmt(p.cont,p.cont%1?1:0)+'%',sub*p.cont/100);
+ if(p.permit>0)add('Permit & other fees','',p.permit);
+ return{A,P,cy,cyO,bags,rows,total:sub,perSf:sub/A,qty};
+}
+function build(p){
+ const c=calc(p),lo=c.total*0.85,hi=c.total*1.2,A=c.A;
+ const ar=fmt(A,A%1?1:0);
+ const tr=c.rows.map(r=>'<tr><td>'+r[0]+'</td><td class="r">'+r[1]+'</td><td class="r">'+usd(r[2],2)+'</td></tr>').join('');
+ const tc=[4,5,6].map(t=>{const x=calc(Object.assign({},p,{T:t}));return '<tr'+(t===p.T?' class="sel"':'')+'><td>'+t+' in'+(t===p.T?' (yours)':'')+'</td><td class="r">'+x.qty+'</td><td class="r">'+usd(x.total)+'</td><td class="r">'+usd(x.perSf,2)+'</td></tr>'}).join('');
+ const fc=Object.keys(F).map(k=>{const x=calc(Object.assign({},p,{finish:k}));return '<tr'+(k===p.finish?' class="sel"':'')+'><td>'+F[k][0]+(k===p.finish?' (yours)':'')+'</td><td class="r">'+usd(x.total)+'</td><td class="r">'+usd(x.perSf,2)+'</td></tr>'}).join('');
+ const js=2*p.T;
+ const n=[];
+ if(p.T<4)n.push('<li class="warn"><strong>Thin slab:</strong> under 4 in is below common patio practice (IRC R506 sets a 3.5 in minimum for slabs on ground). Choose 4 in or more, and 5–6 in for vehicles, hot tubs or heavy loads.</li>');
+ if(p.B===0)n.push('<li class="warn"><strong>No gravel base:</strong> in clay or freeze-thaw soils a compacted 4 in base is commonly recommended for drainage and frost protection.</li>');
+ if(p.mode==='bags'&&c.cy>2)n.push('<li class="warn"><strong>Lots of bags:</strong> '+fmt(c.bags)+' bags weigh about '+fmt(c.bags*80/2000,1)+' tons and are hard to mix and finish before the concrete sets. Consider a ready-mix truck.</li>');
+ if(p.mode!=='bags'&&c.cyO<4)n.push('<li>Orders under 4 yd³ often carry a short-load fee, which is included above. Ask your supplier for its minimum.</li>');
+ n.push('<li>Cut control joints about one-quarter of the slab depth, no more than <strong>'+fmt(js)+' ft</strong> apart (2 × thickness). Slope the surface about ¼ in per foot for drainage.</li>');
+ n.push('<li>Freeze-thaw climates typically call for air-entrained concrete of about 3,500–4,000 psi; confirm with your supplier and local code.</li>');
+ n.push('<li>Quantities are rounded up. Prices are editable estimates; the range shown is −15% / +20%. Sizing follows rule-of-thumb guidance (IRC R506, ACI 332); local codes vary. This is not engineering, permit or inspection approval.</li>');
+ last='Concrete patio cost estimate (toolwick.com)\nSize: '+fmt(p.L,2)+' x '+fmt(p.W,2)+' ft ('+ar+' sq ft), '+p.T+' in slab, '+p.B+' in gravel base\nWork: '+MODES[p.mode]+'\nConcrete to order: '+c.qty+' (incl. '+p.ws+'% waste)\nTotal: '+usd(c.total)+' ('+usd(c.perSf,2)+'/sq ft), range '+usd(lo)+' - '+usd(hi)+'\n\n'+c.rows.map(r=>r[0]+(r[1]?' ['+r[1]+']':'')+': '+usd(r[2],2)).join('\n');
+ return '<div class="res"><div class="big"><div class="lbl">Estimated total cost ('+MODES[p.mode]+')</div><div class="num">'+usd(c.total)+'</div><div class="sub">'+usd(c.perSf,2)+' per sq ft · typical range '+usd(lo)+' – '+usd(hi)+'</div></div>'
+ +'<div class="stats"><div><b>'+ar+' sq ft</b><span>Patio area</span></div><div><b>'+c.qty+'</b><span>Concrete to order</span></div><div><b>'+fmt(c.cy,2)+' yd³</b><span>Volume incl. waste</span></div><div><b>≤ '+fmt(js)+' ft</b><span>Control joint spacing</span></div></div>'
+ +'<div class="rh">Cost breakdown</div><div class="tw"><table><thead><tr><th>Item</th><th class="r">Quantity</th><th class="r">Cost</th></tr></thead><tbody>'+tr+'<tr class="tot"><td>Total</td><td></td><td class="r">'+usd(c.total,2)+'</td></tr></tbody></table></div>'
+ +'<div class="rh">Compare slab thickness</div><div class="tw"><table><thead><tr><th>Thickness</th><th class="r">Concrete</th><th class="r">Total</th><th class="r">Per sq ft</th></tr></thead><tbody>'+tc+'</tbody></table></div>'
+ +'<div class="rh">Compare finishes</div><div class="tw"><table><thead><tr><th>Finish</th><th class="r">Total</th><th class="r">Per sq ft</th></tr></thead><tbody>'+fc+'</tbody></table></div>'
+ +'<div class="rh">Notes</div><ul class="notes">'+n.join('')+'</ul><button type="button" class="cp" id="cp">Copy summary</button></div>';
+}
+function set(id,o){const e=$(id);for(const k in o)e.setAttribute(k,o[k])}
+function svg(){
+ const l=parseFloat($('L').value),w=parseFloat($('W').value),ok=l>0&&w>0;
+ const r=ok?Math.min(6,Math.max(0.25,l/w)):1.4;
+ let rw=220,rh=rw/r;if(rh>100){rh=100;rw=rh*r}
+ const x=190-rw/2,y=105-rh/2;
+ set('prect',{x:x,y:y,width:rw,height:rh});
+ set('dT',{x1:x,x2:x+rw,y1:y-12,y2:y-12});set('tL',{y:y-18});
+ set('dL',{x1:x-12,x2:x-12,y1:y,y2:y+rh});set('tW',{x:x-20,transform:'rotate(-90 '+(x-20)+' 105)'});
+ set('tA',{y:y+rh+18});
+ $('tL').textContent=ok?fmt(l,l%1?1:0)+' ft':'— ft';
+ $('tW').textContent=ok?fmt(w,w%1?1:0)+' ft':'— ft';
+ $('tA').textContent=ok?fmt(l*w,(l*w)%1?1:0)+' sq ft':'';
+ const T=+$('T').value,B=+$('B').value,st=222,sh=T*7,gh=B*5,rf=$('rf').value;
+ set('sl',{height:sh});set('gr',{y:st+sh,height:gh});set('so',{y:st+sh+gh});
+ set('rb',{y1:st+sh/2,y2:st+sh/2});$('rb').style.display=rf==='none'?'none':'';
+ $('rb').setAttribute('stroke-width',rf==='rebar'?3.5:1.5);
+ set('g2',{y1:st+sh,y2:st+sh});set('g3',{y1:st+sh+gh,y2:st+sh+gh});
+ set('dS',{y2:st+sh});set('tS',{y:st+sh/2+5});$('tS').textContent='Slab '+fmt(T,T%1?1:0)+' in';
+ set('dG',{y1:st+sh,y2:st+sh+gh});set('tG',{y:st+sh+gh/2+5});$('tG').textContent='Base '+B+' in';
+ ['dG','tG','g3'].forEach(i=>{$(i).style.display=B>0?'':'none'});
+ $('tR').textContent=rf==='none'?'No reinforcement shown':rf==='mesh'?'Dashed line: wire mesh at mid-depth':'Dashed line: #3 rebar grid, 18 in on center';
+}
+function labels(){$('tv').textContent=fmt(+$('T').value,$('T').value%1?1:0)+' in';$('bv').textContent=$('B').value+' in';$('wv').textContent=$('ws').value+'%'}
+function calculate(){
+ const p=read();
+ if(!p){$('results').innerHTML='';return}
+ const html=build(p);
+ $('results').innerHTML=html;
+ svg();
+}
+const run=()=>requestAnimationFrame(calculate);
+$('go').addEventListener('click',run);
+$('tool').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')){e.preventDefault();run()}});
+['T','B','ws'].forEach(i=>$(i).addEventListener('input',()=>{labels();svg()}));
+['L','W'].forEach(i=>$(i).addEventListener('input',svg));
+$('rf').addEventListener('change',svg);
+$('mode').addEventListener('change',syncMode);
+$('results').addEventListener('click',e=>{
+ if(e.target.id!=='cp')return;
+ const b=e.target;
+ const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy summary'},2000)};
+ const fb=()=>{const t=document.createElement('textarea');t.value=last;document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(_){}document.body.removeChild(t)};
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(last).then(done,fb);else fb();
+});
+syncMode();labels();svg();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
