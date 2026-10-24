@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Kitchen Remodel Cost Calculator | Toolwick</title>
+<meta name="description" content="Free kitchen remodel cost calculator: estimate your total by size, layout, finish level and region, with a line-by-line cost breakdown.">
+<link rel="canonical" href="https://toolwick.com/kitchen-remodel-cost-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Kitchen Remodel Cost Calculator", "url": "https://toolwick.com/kitchen-remodel-cost-calculator/", "description": "Free kitchen remodel cost calculator: estimate your total by size, layout, finish level and region, with a line-by-line cost breakdown.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Kitchen Remodel Cost Calculator", "item": "https://toolwick.com/kitchen-remodel-cost-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much does a kitchen remodel cost?", "acceptedAnswer": {"@type": "Answer", "text": "It depends heavily on size, finishes, and location. For a 140 sq ft kitchen, this calculator gives roughly $14,160 at budget level, $29,460 at mid-range, and $60,860 at high-end with 15% contingency. Your own numbers will vary with layout and local labor rates."}}, {"@type": "Question", "name": "What is the most expensive part of a kitchen remodel?", "acceptedAnswer": {"@type": "Answer", "text": "Cabinets and appliances are usually the two largest line items, often roughly 45–55% of the subtotal combined. Countertops, flooring, and electrical work follow. Labor is built into the installed prices used here."}}, {"@type": "Question", "name": "How much contingency should I add to a kitchen remodel budget?", "acceptedAnswer": {"@type": "Answer", "text": "Plan on 10–15% for newer homes and 15–20% for older homes or any project that opens walls or moves plumbing. If you never use it, that is money saved, but running out mid-project is far more costly."}}, {"@type": "Question", "name": "Do I need a permit to remodel my kitchen?", "acceptedAnswer": {"@type": "Answer", "text": "Most jurisdictions require permits for new electrical circuits, plumbing changes, gas line work, and structural changes. Swapping cabinets and counters in place often does not. Ask your local building department, since rules differ widely."}}, {"@type": "Question", "name": "How long does a kitchen remodel take?", "acceptedAnswer": {"@type": "Answer", "text": "A full remodel commonly takes 6–12 weeks of on-site work, plus lead time for cabinets and appliances. Cosmetic refreshes can finish in one to three weeks. Permit delays and backordered materials are the most common causes of overruns."}}, {"@type": "Question", "name": "Is it cheaper to keep the same kitchen layout?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Keeping sinks, gas lines, and appliances where they are avoids plumbing, electrical, and sometimes structural changes. The layout-change option adds $3,000 for minor moves and $9,000 for major ones as a planning allowance."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.15rem}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2rem 0 .75rem;line-height:1.3}
+.intro{color:#444;margin:0 0 2rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.diag{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diag svg{width:100%;height:auto;display:block}
+.lbl{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem;padding:0}
+fieldset{border:0;margin:0 0 1.25rem;padding:0;min-width:0}
+.field{margin-bottom:1.25rem}
+input[type=number],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;background:#fff;color:#1a1a2e;font-family:inherit}
+input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.invalid{border-color:#e74c3c!important}
+.err{color:#c0392b;font-size:.85rem;margin-top:.35rem}
+.err:empty{display:none}
+.hint{display:block;font-size:.8rem;color:#666;font-weight:400}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.seg{display:flex;gap:.5rem;flex-wrap:wrap}
+.seg label{flex:1 1 90px;position:relative;display:block}
+.seg input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
+.seg span{display:flex;align-items:center;justify-content:center;min-height:44px;border:1px solid #ddd;border-radius:6px;font-weight:500;padding:0 8px;text-align:center}
+.seg input:checked+span{background:#0077b6;color:#fff;border-color:#0077b6}
+.seg input:focus-visible+span{outline:2px solid #0077b6;outline-offset:2px}
+.chks{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.chk{display:flex;align-items:center;gap:.6rem;min-height:44px;font-size:.95rem;cursor:pointer}
+.chk input{width:20px;height:20px;margin:0;accent-color:#0077b6;flex:none}
+input[type=range]{width:100%;height:44px;accent-color:#0077b6;margin:0}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.btn{width:100%;min-height:48px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+#results{margin-top:2rem}
+.res.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.k{font-size:.85rem;color:#444;font-weight:500}
+.big{font-size:2.5rem;font-weight:800;color:#0077b6;line-height:1.15;margin:.2rem 0}
+.sub{margin:.25rem 0 1.25rem;color:#444;font-size:.95rem}
+.res h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;font-weight:600;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd) td{background:#fafafa}
+tbody tr:nth-child(even) td{background:#fff}
+.n{text-align:right;white-space:nowrap}
+tr.sel td{background:#eaf4fb!important;font-weight:700}
+tr.tot td{font-weight:700;border-top:2px solid #0077b6}
+.bar{display:inline-block;width:56px;height:8px;background:#e3ebf0;border-radius:4px;vertical-align:middle;margin-left:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:#0077b6}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;margin-top:1.25rem}
+#copyRow{margin-top:1rem}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;min-height:44px;padding:8px 18px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit}
+.copy:hover{background:#f0f7fb}
+.ad-slot{min-height:0;margin:0}
+.content p,.content li{color:#2a2a3e}
+.content ul{padding-left:1.25rem}
+.content li{margin-bottom:.5rem}
+code,.formula{background:#f8f9fa;border-radius:4px;padding:.1rem .35rem;font-size:.9em}
+.formula{display:block;padding:.75rem 1rem;margin:.5rem 0;overflow-x:auto}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:.6rem;background:#fff}
+summary{padding:12px 16px;min-height:44px;cursor:pointer;font-weight:600}
+details p{margin:0;padding:0 16px 14px}
+.content a,footer a{color:#0077b6;text-decoration:underline}
+footer{margin:3rem 0 2rem;padding-top:1.5rem;border-top:1px solid #eee;color:#666;font-size:.9rem;text-align:center}
+footer p{margin:.3rem 0}
+@media(max-width:480px){.row,.chks{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.1rem}}
+@media(prefers-reduced-motion:reduce){.res.fade{animation:none}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/kitchen-remodel-cost-calculator/">
+<meta property="og:title" content="Kitchen Remodel Cost Calculator">
+<meta property="og:description" content="Free kitchen remodel cost calculator: estimate your total by size, layout, finish level and region, with a line-by-line cost breakdown.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Kitchen Remodel Cost Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p class="intro">Use this kitchen remodel cost calculator to estimate what your project will cost based on kitchen size, layout, finish level, and where you live. You get a total, a cost per square foot, and a line-by-line breakdown, so you can see where the money goes before you call a contractor.</p>
+
+<div class="card">
+<div class="diag">
+<svg id="svg" viewBox="0 0 400 250" role="img" aria-label="Kitchen floor plan showing length, width, cabinet runs and optional island">
+<title>Kitchen floor plan diagram</title>
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="#0077b6"/></marker></defs>
+<g id="dg"></g>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="row">
+<div class="field"><label class="lbl" for="len">Kitchen length (ft)</label><input type="number" id="len" value="14" min="5" max="60" step="0.5" inputmode="decimal" aria-describedby="lenE"><div class="err" id="lenE"></div></div>
+<div class="field"><label class="lbl" for="wid">Kitchen width (ft)</label><input type="number" id="wid" value="10" min="5" max="60" step="0.5" inputmode="decimal" aria-describedby="widE"><div class="err" id="widE"></div></div>
+</div>
+<div class="field"><label class="lbl" for="lay">Cabinet layout</label>
+<select id="lay"><option value="single">Single wall (one cabinet run)</option><option value="galley">Galley (two parallel runs)</option><option value="l" selected>L-shape (two runs)</option><option value="u">U-shape (three runs)</option></select></div>
+<div class="field"><label class="chk" for="isle"><input type="checkbox" id="isle" aria-describedby="isleE"> <span>Add a 6 × 3 ft island<span class="hint">Needs a room at least 12 ft on its short side (14 ft for galley or U-shape).</span></span></label><div class="err" id="isleE"></div></div>
+
+<fieldset><legend class="lbl">Finish level</legend>
+<div class="seg">
+<label for="t0"><input type="radio" name="tier" id="t0" value="0"><span>Budget</span></label>
+<label for="t1"><input type="radio" name="tier" id="t1" value="1" checked><span>Mid-range</span></label>
+<label for="t2"><input type="radio" name="tier" id="t2" value="2"><span>High-end</span></label>
+</div></fieldset>
+
+<div class="field"><label class="lbl" for="chg">Layout changes</label>
+<select id="chg"><option value="0" selected>None — keep the existing layout</option><option value="3000">Minor — move the sink or one appliance</option><option value="9000">Major — move walls, gas lines or plumbing stacks</option></select></div>
+
+<div class="field"><label class="lbl" for="reg">Regional price level</label>
+<select id="reg"><option value="0.9">Lower-cost area (×0.90)</option><option value="1" selected>National average (×1.00)</option><option value="1.2">Higher-cost metro (×1.20)</option><option value="1.4">Highest-cost metro (×1.40)</option></select></div>
+
+<fieldset><legend class="lbl">Include in estimate</legend>
+<div class="chks">
+<label class="chk" for="ic_dem"><input type="checkbox" class="inc" data-k="dem" id="ic_dem" checked> Demolition &amp; disposal</label>
+<label class="chk" for="ic_cab"><input type="checkbox" class="inc" data-k="cab" id="ic_cab" checked> Cabinets</label>
+<label class="chk" for="ic_ctr"><input type="checkbox" class="inc" data-k="ctr" id="ic_ctr" checked> Countertops</label>
+<label class="chk" for="ic_app"><input type="checkbox" class="inc" data-k="app" id="ic_app" checked> Appliances</label>
+<label class="chk" for="ic_flr"><input type="checkbox" class="inc" data-k="flr" id="ic_flr" checked> Flooring</label>
+<label class="chk" for="ic_bks"><input type="checkbox" class="inc" data-k="bks" id="ic_bks" checked> Backsplash</label>
+<label class="chk" for="ic_plm"><input type="checkbox" class="inc" data-k="plm" id="ic_plm" checked> Sink &amp; plumbing</label>
+<label class="chk" for="ic_ele"><input type="checkbox" class="inc" data-k="ele" id="ic_ele" checked> Lighting &amp; electrical</label>
+<label class="chk" for="ic_pnt"><input type="checkbox" class="inc" data-k="pnt" id="ic_pnt" checked> Drywall &amp; paint</label>
+</div><div class="err" id="incE"></div></fieldset>
+
+<div class="field"><label class="lbl" for="cont">Contingency for surprises: <span id="contV">15%</span></label>
+<input type="range" id="cont" min="0" max="30" step="5" value="15">
+<div class="ticks"><span>0%</span><span>15%</span><span>30%</span></div></div>
+
+<button type="submit" class="btn">Calculate remodel cost</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<div id="copyRow" hidden><button type="button" class="copy" id="copyBtn">Copy summary</button></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/kitchen-remodel-cost-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Kitchen Remodel Cost Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/kitchen-remodel-cost-calculator/&quot;&gt;Kitchen Remodel Cost Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/kitchen-remodel-cost-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<div class="content">
+<h2>How to Use This Kitchen Remodel Cost Calculator</h2>
+<p>Enter your kitchen's length and width in feet, pick the cabinet layout that matches your plan, and choose a finish level: budget, mid-range, or high-end. Set your regional price level, tick the work you want included, and adjust the contingency slider. The calculator returns a total, a cost per square foot, a breakdown by category, and a side-by-side comparison of all three finish levels. The floor plan above redraws to scale with your dimensions.</p>
+
+<h2>Why This Matters</h2>
+<p>The kitchen is the most expensive room per square foot in most homes, and it is the room where budgets slip the most. A couple who plans for "about $20,000" often finds that cabinets alone can take $5,000 to $12,000, and a mid-range appliance package can add another $8,000. Knowing the likely split before you collect bids lets you decide where to splurge and where to save.</p>
+<p>This kind of estimate helps in several situations. Buying a house with a dated kitchen? Price the remodel into your offer. Torn between a cosmetic refresh and a full gut? Switch items on and off and compare. Already have quotes? Check whether a contractor's number is in a sensible range. A 140 sq ft kitchen lands near $29,460 at mid-range finishes in this model, about $14,160 at budget finishes, and above $60,000 at high-end finishes. Seeing that spread helps you set a realistic target.</p>
+
+<h2>How It's Calculated</h2>
+<p>The tool uses installed unit prices, meaning material plus typical labor, for each category. These are national-average planning figures. They are rules of thumb, not a bid. Each line is multiplied by your regional factor (appliances are not, since their prices barely vary by location).</p>
+<span class="formula">Cabinet run = 0.75 × wall length (single: L, galley: 2L, L-shape: L+W, U-shape: L+2W) + 6 ft if island</span>
+<span class="formula">Cabinets = run × $130 / $300 / $650 per linear ft (budget / mid / high)</span>
+<span class="formula">Countertops = (wall run × 2.1 sq ft + 18 sq ft if island) × $30 / $70 / $130</span>
+<span class="formula">Flooring = floor area × $6 / $12 / $22 · Backsplash = wall run × 1.5 sq ft × $15 / $25 / $45</span>
+<span class="formula">Electrical = area × $10 / $18 / $30 · Paint &amp; drywall = area × $3 / $5 / $8 · Demolition = area × $4 + $400</span>
+<p>Appliances ($3,500 / $8,000 / $18,000) and sink and plumbing ($800 / $1,800 / $3,800) are flat packages. Layout changes add $3,000 (minor) or $9,000 (major). Permits and design fees are 3%, 5%, or 8% of the subtotal (minimum $500). Contingency is applied on top of everything else.</p>
+<p><strong>Conservative rounding:</strong> every line item is rounded up to the next $10, and the cabinet run is rounded up to the next half foot, so the estimate never leans toward the cheap side.</p>
+<p><strong>What the tool does not model:</strong> the electrical and plumbing lines are flat allowances. The tool does not design or size circuits, pipes, or gas lines. For general context only, kitchen wiring in the U.S. is usually governed by Article 210 of the NEC (NFPA 70), which covers items such as small-appliance circuits, GFCI protection, and countertop receptacle spacing. Your electrician and local inspector decide what applies to your project. The island size check is a rough rule of thumb based on the NKBA guideline of 42-inch work aisles. Local codes and amendments vary, and this tool is not a permit, inspection, or engineering approval.</p>
+
+<h2>Worked Example</h2>
+<p>Take a 14 × 10 ft kitchen (140 sq ft) with an L-shape layout, no island, mid-range finishes, no layout changes, national-average pricing, all items included, and 15% contingency.</p>
+<ul>
+<li>Cabinet run: (14 + 10) × 0.75 = 18 linear ft. Cabinets: 18 × $300 = $5,400.</li>
+<li>Countertops: 18 × 2.1 = 37.8 sq ft × $70 = $2,646, rounded up to $2,650.</li>
+<li>Appliances $8,000; flooring 140 × $12 = $1,680; backsplash 27 sq ft × $25 = $675, rounded up to $680.</li>
+<li>Plumbing $1,800; electrical 140 × $18 = $2,520; paint $700; demolition 140 × $4 + $400 = $960.</li>
+<li>Subtotal: $24,390. Permits and design at 5%: $1,220. Running total: $25,610.</li>
+<li>Contingency at 15%: $3,850. <strong>Final estimate: $29,460, about $211 per sq ft.</strong></li>
+</ul>
+<p>The same room at budget finishes comes to $14,160 (the $500 permit minimum applies there) and at high-end finishes to $60,860. Cabinets and appliances together make up about 55% of the mid-range subtotal ($13,400 of $24,390).</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Don't skip the contingency.</strong> Opening walls often reveals outdated wiring, rot, or plumbing problems. Use 15–20% for houses built before 1980.</li>
+<li><strong>Keeping the layout is the biggest saver.</strong> Moving a sink, range, or gas line can add thousands before any finishes are chosen.</li>
+<li><strong>Order long-lead items early.</strong> Semi-custom and custom cabinets can take 8–16 weeks, and a late delivery stalls every trade after it.</li>
+<li><strong>Get itemized quotes.</strong> Compare at least three bids line by line against this breakdown, not just the bottom line.</li>
+<li><strong>Hire licensed trades for electrical, gas, and plumbing.</strong> These usually require permits and inspections, and mistakes here are safety hazards, not just cosmetic problems.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much does a kitchen remodel cost?</summary><p>It depends heavily on size, finishes, and location. For a 140 sq ft kitchen, this calculator gives roughly $14,160 at budget level, $29,460 at mid-range, and $60,860 at high-end with 15% contingency. Your own numbers will vary with layout and local labor rates.</p></details>
+<details><summary>What is the most expensive part of a kitchen remodel?</summary><p>Cabinets and appliances are usually the two largest line items, often roughly 45–55% of the subtotal combined. Countertops, flooring, and electrical work follow. Labor is built into the installed prices used here.</p></details>
+<details><summary>How much contingency should I add to a kitchen remodel budget?</summary><p>Plan on 10–15% for newer homes and 15–20% for older homes or any project that opens walls or moves plumbing. If you never use it, that is money saved, but running out mid-project is far more costly.</p></details>
+<details><summary>Do I need a permit to remodel my kitchen?</summary><p>Most jurisdictions require permits for new electrical circuits, plumbing changes, gas line work, and structural changes. Swapping cabinets and counters in place often does not. Ask your local building department, since rules differ widely.</p></details>
+<details><summary>How long does a kitchen remodel take?</summary><p>A full remodel commonly takes 6–12 weeks of on-site work, plus lead time for cabinets and appliances. Cosmetic refreshes can finish in one to three weeks. Permit delays and backordered materials are the most common causes of overruns.</p></details>
+<details><summary>Is it cheaper to keep the same kitchen layout?</summary><p>Yes. Keeping sinks, gas lines, and appliances where they are avoids plumbing, electrical, and sometimes structural changes. The layout-change option adds $3,000 for minor moves and $9,000 for major ones as a planning allowance.</p></details>
+
+<h2>Related Tools</h2>
+<ul>
+<li><a href="/cost-to-build-a-house-calculator/">Cost to Build a House Calculator</a></li>
+<li><a href="/interior-painting-cost-calculator/">Interior Painting Cost Calculator</a></li>
+<li><a href="/concrete-patio-cost-calculator/">Concrete Patio Cost Calculator</a></li>
+<li><a href="/tile-installation-cost-calculator/">Tile Installation Cost Calculator</a></li>
+<li><a href="/flooring-installation-cost-calculator/">Flooring Installation Cost Calculator</a></li>
+<li><a href="/stair-carpet-calculator/">Stair Carpet Calculator</a></li>
+</ul>
+</div>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<p><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> | <a href="/terms/">Terms</a> | <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></p>
+<p>© 2025 toolwick.com</p>
+</footer>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const C={cab:[130,300,650],ctr:[30,70,130],app:[3500,8000,18000],flr:[6,12,22],bks:[15,25,45],plm:[800,1800,3800],ele:[10,18,30],pnt:[3,5,8],des:[.03,.05,.08]};
+const TN=['Budget','Mid-range','High-end'];
+const LN={single:'Single wall',galley:'Galley',l:'L-shape',u:'U-shape'};
+const R=x=>Math.ceil(x/10-1e-9)*10;
+const $f=n=>'$'+Math.round(n).toLocaleString('en-US');
+const n1=n=>(Math.round(n*10)/10).toLocaleString('en-US');
+let shown=false,lastText='';
+
+function setErr(id,m){const e=$(id);e.classList.toggle('invalid',!!m);e.setAttribute('aria-invalid',m?'true':'false');$(id+'E').textContent=m||'';}
+
+function read(){
+  let ok=true;
+  const num=(id,name)=>{
+    const raw=$(id).value.trim(),v=raw===''?NaN:Number(raw);let m='';
+    if(!isFinite(v))m='Enter the kitchen '+name+' in feet.';
+    else if(v<5||v>60)m=name.charAt(0).toUpperCase()+name.slice(1)+' must be between 5 and 60 ft.';
+    setErr(id,m);if(m)ok=false;return v;
+  };
+  const L=num('len','length'),W=num('wid','width');
+  const layout=$('lay').value,island=$('isle').checked;
+  let Lg=0,Sh=0,im='';
+  if(ok){
+    Lg=Math.max(L,W);Sh=Math.min(L,W);
+    if(island){
+      const need=(layout==='galley'||layout==='u')?14:12;
+      if(Sh<need)im='An island needs at least '+need+' ft on the shorter side of the room to keep 42-in. walkways (yours is '+n1(Sh)+' ft). Uncheck the island or enlarge the room.';
+    }
+  }
+  setErr('isle',im);if(im)ok=false;
+  const inc={};let any=false;
+  document.querySelectorAll('.inc').forEach(c=>{inc[c.dataset.k]=c.checked;if(c.checked)any=true;});
+  $('incE').textContent=any?'':'Select at least one item to include.';
+  if(!any)ok=false;
+  if(!ok)return null;
+  return {Lg,Sh,area:Lg*Sh,layout,island,inc,tier:+document.querySelector('input[name=tier]:checked').value,lay:+$('chg').value,reg:+$('reg').value,cont:+$('cont').value};
+}
+
+function geo(p){
+  const run={single:p.Lg,galley:2*p.Lg,l:p.Lg+p.Sh,u:p.Lg+2*p.Sh}[p.layout];
+  const wall=Math.ceil(run*0.75*2)/2;
+  return {wall,cabLF:wall+(p.island?6:0),ctrSF:wall*2.1+(p.island?18:0),bksSF:wall*1.5};
+}
+
+function est(t,p,g){
+  const it=[],a=p.area;
+  const add=(k,n,v,ns)=>{if(p.inc[k])it.push([n,R(ns?v:v*p.reg)]);};
+  add('dem','Demolition & disposal',a*4+400);
+  add('cab','Cabinets (installed)',g.cabLF*C.cab[t]);
+  add('ctr','Countertops',g.ctrSF*C.ctr[t]);
+  add('app','Appliance package',C.app[t],1);
+  add('flr','Flooring',a*C.flr[t]);
+  add('bks','Backsplash',g.bksSF*C.bks[t]);
+  add('plm','Sink, faucet & plumbing',C.plm[t]);
+  add('ele','Electrical & lighting',a*C.ele[t]);
+  add('pnt','Drywall repair & paint',a*C.pnt[t]);
+  if(p.lay>0)it.push(['Layout changes',R(p.lay*p.reg)]);
+  const sub=it.reduce((s,x)=>s+x[1],0);
+  const des=R(Math.max(500,sub*C.des[t]));
+  it.push(['Permits & design fees',des]);
+  const con=R((sub+des)*p.cont/100);
+  it.push(['Contingency ('+p.cont+'%)',con]);
+  return {it,sub,des,con,total:sub+des+con};
+}
+
+function draw(p,g){
+  const Lg=p.Lg,Sh=p.Sh,s=Math.min(290/Lg,160/Sh),rw=Lg*s,rh=Sh*s,x0=185-rw/2,y0=119-rh/2,d=2*s;
+  const f=v=>v.toFixed(1);
+  const rect=(x,y,w,h,fill)=>'<rect x="'+f(x)+'" y="'+f(y)+'" width="'+f(w)+'" height="'+f(h)+'" fill="'+fill+'" stroke="#0077b6" stroke-width="1.5"/>';
+  let h='<rect x="'+f(x0)+'" y="'+f(y0)+'" width="'+f(rw)+'" height="'+f(rh)+'" fill="#fff" stroke="#0077b6" stroke-width="2.5"/>';
+  h+=rect(x0,y0,rw,d,'#e3f1f9');
+  if(p.layout==='galley')h+=rect(x0,y0+rh-d,rw,d,'#e3f1f9');
+  if(p.layout==='l'||p.layout==='u')h+=rect(x0,y0+d,d,rh-d,'#e3f1f9');
+  if(p.layout==='u')h+=rect(x0+rw-d,y0+d,d,rh-d,'#e3f1f9');
+  if(p.island){
+    const iw=6*s,ih=3*s;
+    h+=rect(185-iw/2,119-ih/2,iw,ih,'#cfe6f3');
+    if(iw>=46)h+='<text x="185" y="'+f(119+4)+'" text-anchor="middle" font-size="12" fill="#1a1a2e">Island</text>';
+  }
+  const gd='stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4 3"';
+  h+='<line x1="'+f(x0)+'" y1="'+f(y0)+'" x2="'+f(x0)+'" y2="'+f(y0-16)+'" '+gd+'/>';
+  h+='<line x1="'+f(x0+rw)+'" y1="'+f(y0)+'" x2="'+f(x0+rw)+'" y2="'+f(y0-16)+'" '+gd+'/>';
+  h+='<line x1="'+f(x0)+'" y1="'+f(y0-10)+'" x2="'+f(x0+rw)+'" y2="'+f(y0-10)+'" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  h+='<text x="185" y="'+f(y0-15)+'" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a2e">'+n1(Lg)+' ft</text>';
+  h+='<line x1="'+f(x0+rw)+'" y1="'+f(y0)+'" x2="'+f(x0+rw+16)+'" y2="'+f(y0)+'" '+gd+'/>';
+  h+='<line x1="'+f(x0+rw)+'" y1="'+f(y0+rh)+'" x2="'+f(x0+rw+16)+'" y2="'+f(y0+rh)+'" '+gd+'/>';
+  h+='<line x1="'+f(x0+rw+10)+'" y1="'+f(y0)+'" x2="'+f(x0+rw+10)+'" y2="'+f(y0+rh)+'" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  h+='<text x="'+f(x0+rw+16)+'" y="'+f(y0+rh/2+5)+'" font-size="14" font-weight="600" fill="#1a1a2e">'+n1(Sh)+' ft</text>';
+  h+='<text x="200" y="226" text-anchor="middle" font-size="13" fill="#1a1a2e">'+LN[p.layout]+' · '+n1(Lg)+' × '+n1(Sh)+' ft = '+n1(p.area)+' sq ft</text>';
+  h+='<text x="200" y="243" text-anchor="middle" font-size="13" fill="#1a1a2e">Cabinet run '+n1(g.cabLF)+' LF · Countertop '+n1(g.ctrSF)+' sq ft</text>';
+  $('dg').innerHTML=h;
+}
+
+function calc(){
+  const p=read();
+  if(!p){$('results').innerHTML='';$('copyRow').hidden=true;shown=false;return;}
+  const g=geo(p),all=[0,1,2].map(t=>est(t,p,g)),E=all[p.tier];
+  const per=Math.ceil(E.total/p.area);
+  let h='<div class="res'+(shown?'':' fade')+'">';
+  h+='<div class="k">Estimated total — '+TN[p.tier]+' finishes</div><div class="big">'+$f(E.total)+'</div>';
+  h+='<p class="sub">About '+$f(per)+' per sq ft for '+n1(p.area)+' sq ft. Includes '+p.cont+'% contingency ('+$f(E.con)+'). Before contingency: '+$f(E.sub+E.des)+'.</p>';
+  h+='<h3>Cost breakdown</h3><div class="tw"><table><thead><tr><th>Item</th><th class="n">Cost</th><th class="n">Share</th></tr></thead><tbody>';
+  E.it.forEach(r=>{const pc=r[1]/E.total*100;h+='<tr><td>'+r[0]+'</td><td class="n">'+$f(r[1])+'</td><td class="n">'+pc.toFixed(1)+'%<span class="bar"><i style="width:'+pc.toFixed(1)+'%"></i></span></td></tr>';});
+  h+='<tr class="tot"><td>Total</td><td class="n">'+$f(E.total)+'</td><td class="n">100%</td></tr></tbody></table></div>';
+  h+='<h3>Compare finish levels</h3><div class="tw"><table><thead><tr><th>Finish level</th><th class="n">Total</th><th class="n">Per sq ft</th></tr></thead><tbody>';
+  all.forEach((x,i)=>{h+='<tr'+(i===p.tier?' class="sel"':'')+'><td>'+TN[i]+(i===p.tier?' (selected)':'')+'</td><td class="n">'+$f(x.total)+'</td><td class="n">'+$f(Math.ceil(x.total/p.area))+'</td></tr>';});
+  h+='</tbody></table></div>';
+  h+='<p class="sub" style="margin-top:1rem">Quantities used: cabinet run '+n1(g.cabLF)+' linear ft, countertop '+n1(g.ctrSF)+' sq ft, backsplash '+n1(g.bksSF)+' sq ft.</p>';
+  h+='<div class="note">Planning estimate only, not a contractor quote, permit approval, or inspection. Line items are rounded up to the next $10. The electrical and plumbing lines are flat allowances, not circuit or pipe designs. That work must follow your local code (kitchen wiring is typically covered by NEC Article 210 in the U.S.) and usually requires a permit and a licensed trade; local codes vary.</div></div>';
+  lastText='Kitchen remodel estimate (Toolwick)\n'+n1(p.Lg)+' x '+n1(p.Sh)+' ft, '+LN[p.layout]+(p.island?' + island':'')+', '+TN[p.tier]+' finishes\n'+E.it.map(r=>r[0]+': '+$f(r[1])).join('\n')+'\nTotal: '+$f(E.total)+' (about '+$f(per)+' per sq ft)';
+  draw(p,g);
+  $('results').innerHTML=h;
+  $('copyRow').hidden=false;
+  shown=true;
+}
+
+const run=()=>requestAnimationFrame(calc);
+$('f').addEventListener('submit',e=>{e.preventDefault();run();});
+$('f').addEventListener('change',()=>{if(shown)run();});
+$('cont').addEventListener('input',()=>{$('contV').textContent=$('cont').value+'%';if(shown)run();});
+
+$('copyBtn').addEventListener('click',()=>{
+  const b=$('copyBtn');
+  const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy summary';},2000);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,fb);}else fb();
+  function fb(){const t=document.createElement('textarea');t.value=lastText;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+});
+
+requestAnimationFrame(()=>{const p=read();if(p)draw(p,geo(p));});
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
