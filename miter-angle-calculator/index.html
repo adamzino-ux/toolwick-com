@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Miter Angle Calculator | Toolwick</title>
+<meta name="description" content="Free miter angle calculator: find the exact miter saw setting for any corner, n-sided frame or crown molding, plus long-point cut lengths.">
+<link rel="canonical" href="https://toolwick.com/miter-angle-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Miter Angle Calculator", "url": "https://toolwick.com/miter-angle-calculator/", "description": "Free miter angle calculator: find the exact miter saw setting for any corner, n-sided frame or crown molding, plus long-point cut lengths.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Miter Angle Calculator", "item": "https://toolwick.com/miter-angle-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What angle do I set my miter saw for a 90-degree corner?", "acceptedAnswer": {"@type": "Answer", "text": "Set the saw to 45° on both boards. Two 45° cuts add up to the 90° corner. This only works if the corner really is square, so check it with an angle finder first."}}, {"@type": "Question", "name": "How do I find the miter angle for any corner?", "acceptedAnswer": {"@type": "Answer", "text": "Subtract the corner angle from 180° and divide by two. For a 135° corner that gives (180 − 135) ÷ 2 = 22.5°. Equivalent: 90° minus half the corner angle."}}, {"@type": "Question", "name": "What is the miter angle for an octagon?", "acceptedAnswer": {"@type": "Answer", "text": "22.5° on each end of every side. An octagon has 135° interior corners, and 180° ÷ 8 sides gives the 22.5° saw setting."}}, {"@type": "Question", "name": "What is the difference between miter and bevel angles?", "acceptedAnswer": {"@type": "Answer", "text": "A miter angle is the left or right swing of the saw table, while a bevel angle is the tilt of the blade. Flat trim only needs a miter. Crown molding laid flat on the saw needs both, which is why the Crown tab shows two numbers."}}, {"@type": "Question", "name": "Why do my miter joints still have gaps?", "acceptedAnswer": {"@type": "Answer", "text": "The usual causes are out-of-square walls, a saw scale that is slightly off, or boards that are not held flat against the fence. Measure the actual corner, enter it above, and test on scrap. Small gaps can be closed with glue and a nail set."}}, {"@type": "Question", "name": "Can I use this for structural work or building-code approval?", "acceptedAnswer": {"@type": "Answer", "text": "No. The results are geometry for cutting trim, frames and similar projects. Stair parts, rafters, handrails and other structural members must follow your local code and any engineer or inspector requirements."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.nav{border-bottom:1px solid #e0e0e0}
+.nav-in,.wrap,.foot-in{max-width:640px;margin:0 auto;padding:1rem 1.5rem}
+.nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+.wrap{padding-top:1.5rem;padding-bottom:1.5rem}
+h1{font-size:1.9rem;line-height:1.2;margin:.5rem 0 1rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2rem 0 .75rem}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.lead{color:#333;font-size:1.05rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-top:1.5rem}
+figure{margin:0 0 1.5rem;background:#f8f9fa;border-radius:8px;padding:.5rem}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:#666;text-align:center;padding:.25rem .5rem .5rem}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1.25rem}
+.tabs button{min-height:44px;padding:.5rem .25rem;border:1px solid #ddd;background:#f8f9fa;color:#1a1a2e;border-radius:6px;font:inherit;font-size:.9rem;font-weight:500;cursor:pointer;line-height:1.2}
+.tabs button[aria-pressed="true"]{background:#0077b6;border-color:#0077b6;color:#fff}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin:0 0 .35rem}
+input,select{width:100%;border:1px solid #ddd;border-radius:6px;padding:12px 16px;font:inherit;font-size:1rem;min-height:44px;background:#fff;color:#1a1a2e}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:0;border-color:#0077b6}
+input.bad{border-color:#e74c3c}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;margin:.5rem 0 0;min-height:44px}
+.em{color:#c0392b;font-size:.85rem;min-height:0;margin-top:.3rem}
+.field{margin-bottom:1rem}
+.panel{display:none}.panel.on{display:block}
+.hid{display:none!important}
+.row{display:grid;gap:1rem}
+@media(min-width:600px){.row{grid-template-columns:1fr 1fr 110px}}
+.hint{font-size:.85rem;color:#666;margin:.25rem 0 0}
+.btn{display:block;width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-weight:600;font-size:1rem;cursor:pointer;margin-top:.5rem}
+.btn:hover{background:#006299}
+.btn:focus-visible,.tabs button:focus-visible,.ghost:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.ghost{background:#fff;border:1px solid #0077b6;color:#0077b6;border-radius:6px;min-height:44px;padding:8px 16px;font:inherit;font-size:.9rem;cursor:pointer;margin-top:1rem;width:100%}
+#results{margin-top:1.5rem}
+.fade{animation:f .3s ease}
+@keyframes f{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.fade{animation:none}}
+.bigs{display:flex;flex-wrap:wrap;gap:1rem;background:#f8f9fa;border-radius:8px;padding:1.25rem;margin-bottom:1rem}
+.bg{flex:1 1 140px}
+.rl{display:block;font-size:.85rem;font-weight:500;color:#444}
+.big{display:block;font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.15}
+.sub{color:#333;font-size:.95rem}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}tbody tr:nth-child(even){background:#fff}
+.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.warn{background:#fff8e6;border:1px solid #f0d28a;color:#6b4200;border-radius:6px;padding:.75rem 1rem;font-size:.9rem;margin-bottom:.75rem}
+.note{font-size:.85rem;color:#666}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ad-slot{min-height:0;margin:0}
+.formula{background:#f8f9fa;border-left:4px solid #0077b6;padding:.75rem 1rem;font-family:Consolas,Menlo,monospace;font-size:.9rem;margin:0 0 1rem;overflow-x:auto}
+ul{padding-left:1.25rem;margin:0 0 1rem}li{margin-bottom:.5rem}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;font-weight:600;padding:.75rem 0;min-height:44px}
+details p{color:#333}
+.rel{list-style:none;padding:0;display:grid;gap:.5rem}
+.rel li{margin:0}
+.rel a{display:block;padding:12px 16px;background:#f8f9fa;border-radius:6px;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;background:#f8f9fa}
+.foot-in{font-size:.9rem;color:#666}
+.foot-in a{margin-right:.75rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/miter-angle-calculator/">
+<meta property="og:title" content="Miter Angle Calculator">
+<meta property="og:description" content="Free miter angle calculator: find the exact miter saw setting for any corner, n-sided frame or crown molding, plus long-point cut lengths.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<header class="nav"><div class="nav-in"><a href="/">Toolwick</a></div></header>
+<main class="wrap">
+<h1>Miter Angle Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p class="lead">Use this miter angle calculator to find the exact saw setting for picture frames, baseboard, trim, planters and crown molding. Enter a corner angle or a number of sides and get the miter and bevel angles, plus the long-point cut length for each board.</p>
+
+<section class="card" aria-label="Miter angle calculator">
+<figure>
+<svg id="diag" viewBox="0 0 400 252" role="img" aria-labelledby="dt dd">
+<title id="dt">Plan view of a mitered joint</title>
+<desc id="dd">Two boards meet at a corner with a dashed miter cut.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1a1a2e"/></marker></defs>
+<line x1="15" y1="140" x2="385" y2="140" stroke="#e0e0e0" stroke-width="2"/>
+<path id="b1" fill="#f4faff" stroke="#0077b6" stroke-width="2" stroke-linejoin="round" d=""/>
+<path id="b2" fill="#f4faff" stroke="#0077b6" stroke-width="2" stroke-linejoin="round" d=""/>
+<line id="sq" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>
+<line id="cut" stroke="#1a1a2e" stroke-width="2" stroke-dasharray="6 4"/>
+<path id="arcW" fill="none" stroke="#0077b6" stroke-width="2" d=""/>
+<path id="arcT" fill="none" stroke="#0077b6" stroke-width="2" d=""/>
+<line id="dim" stroke="#1a1a2e" stroke-width="1.2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dimT" font-size="13" fill="#1a1a2e" text-anchor="end">w</text>
+<text id="t1" x="200" y="226" font-size="14" fill="#1a1a2e" text-anchor="middle" font-weight="600"></text>
+<text id="t2" x="200" y="243" font-size="14" fill="#1a1a2e" text-anchor="middle"></text>
+</svg>
+<figcaption>Plan view. The dashed line is the miter cut; the blue arc is the corner angle; the small arc shows the saw setting away from a square cut.</figcaption>
+</figure>
+
+<div class="tabs" role="group" aria-label="Calculation type">
+<button type="button" data-m="corner" aria-pressed="true">Corner angle</button>
+<button type="button" data-m="polygon" aria-pressed="false">Polygon / frame</button>
+<button type="button" data-m="crown" aria-pressed="false">Crown molding</button>
+</div>
+
+<div id="p-corner" class="panel on">
+<div class="field">
+<label for="cAngle">Corner angle between the two boards (degrees)</label>
+<input id="cAngle" type="number" inputmode="decimal" step="any" value="90" aria-describedby="cAngleE">
+<div class="em" id="cAngleE"></div>
+<label class="sr" for="cRange">Corner angle slider</label>
+<input id="cRange" type="range" min="30" max="180" step="1" value="90">
+<p class="hint">Square corner = 90°. Measure real walls with an angle finder; few are exactly 90°.</p>
+</div>
+</div>
+
+<div id="p-polygon" class="panel">
+<div class="field">
+<label for="sides">Number of equal sides</label>
+<input id="sides" type="number" inputmode="numeric" step="1" value="8" aria-describedby="sidesE">
+<div class="em" id="sidesE"></div>
+<label class="sr" for="sRange">Number of sides slider</label>
+<input id="sRange" type="range" min="3" max="24" step="1" value="8">
+<p class="hint">4 = picture frame, 6 = hexagon, 8 = octagon.</p>
+</div>
+</div>
+
+<div id="p-crown" class="panel">
+<div class="field">
+<label for="wall">Wall corner angle (degrees)</label>
+<input id="wall" type="number" inputmode="decimal" step="any" value="90" aria-describedby="wallE">
+<div class="em" id="wallE"></div>
+<p class="hint">Use the angle between the two walls (under 180°) for inside or outside corners.</p>
+</div>
+<div class="field">
+<label for="spring">Crown spring angle (degrees)</label>
+<input id="spring" type="number" inputmode="decimal" step="any" value="38" aria-describedby="springE">
+<div class="em" id="springE"></div>
+<p class="hint">Angle between the back of the molding and the wall. Common: 38° (52/38 type) or 45°.</p>
+</div>
+</div>
+
+<div id="lenBox">
+<div class="row">
+<div class="field"><label for="bw">Board width (optional)</label><input id="bw" type="number" inputmode="decimal" step="any" min="0" aria-describedby="bwE"><div class="em" id="bwE"></div></div>
+<div class="field"><label for="bl">Inside / short-point length (optional)</label><input id="bl" type="number" inputmode="decimal" step="any" min="0" aria-describedby="blE"><div class="em" id="blE"></div></div>
+<div class="field"><label for="unit">Length unit</label><select id="unit"><option value="in">in</option><option value="mm">mm</option><option value="cm">cm</option></select></div>
+</div>
+<p class="hint">Add width and length to get the long-point length of each mitered board.</p>
+</div>
+
+<button type="button" class="btn" id="calcBtn">Calculate miter angle</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<button type="button" class="ghost hid" id="copyBtn">Copy results</button>
+</section>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/miter-angle-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Miter Angle Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/miter-angle-calculator/&quot;&gt;Miter Angle Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/miter-angle-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<section>
+<h2>How to Use This Miter Angle Calculator</h2>
+<p>Choose a tab: <strong>Corner angle</strong> for a single joint between two boards, <strong>Polygon / frame</strong> for any shape with equal sides, or <strong>Crown molding</strong> for compound miter and bevel cuts. Enter your numbers, optionally add the board width and inside length, and press Calculate. You get the saw setting, a breakdown table, and a long-point cut length rounded up so you can trim to a perfect fit.</p>
+
+<h2>Why This Matters</h2>
+<p>A one-degree error sounds trivial, but on a 3½-inch baseboard it opens a gap of about 0.06 inch at the face. Most of the time a miter gap comes from using the wrong number rather than a bad saw. The old "just set it to 45°" habit only works when the corner is exactly 90°, and plenty of real corners are 88° or 92°. In that case each board should be cut at 44° or 46°, and using 45° leaves a gap of roughly ⅛ inch.</p>
+<p>Frame builders, trim carpenters, deck and planter builders, and woodworkers making hexagonal or octagonal projects all run into this. A six-sided garden bed needs 30° cuts, an octagonal planter needs 22.5°, and a five-sided shadow box needs 36°. Crown molding is the hardest case because the profile leans away from the wall, so both the saw table (miter) and the blade (bevel) have to be set. Getting the numbers right before you cut saves expensive stock: a single mistaken 12-foot piece of poplar crown can cost more than a good angle finder.</p>
+
+<h2>How It's Calculated</h2>
+<p>All three modes are plain geometry, not a building-code table. The results follow the standard trade rule of thumb: <em>two boards meeting at a corner are each cut at half of the missing angle</em>. No code edition applies to the cut angles themselves, and local requirements vary for anything structural such as stair parts, rafters or handrails. This tool is a layout aid and is not engineering, permit or inspection approval.</p>
+<p><strong>Corner angle mode.</strong> With W as the angle between the two boards, the saw setting measured from a square (90°) cut is:</p>
+<div class="formula">saw setting θ = 90° − W ÷ 2</div>
+<p><strong>Polygon mode.</strong> For n equal sides the interior angle is (n − 2) × 180° ÷ n, which gives:</p>
+<div class="formula">W = (n − 2) × 180° ÷ n<br>θ = 180° ÷ n</div>
+<p><strong>Long-point length.</strong> If the board has width w, each mitered end adds w × tan θ to the length. For a board cut at both ends:</p>
+<div class="formula">long point = short point + 2 × w × tan θ</div>
+<p>The calculator rounds the long point <em>up</em> (to 1/16 in, 1 mm or 1 mm in cm) so a board is never cut short; trim it back during dry fitting.</p>
+<p><strong>Crown molding (laid flat on the saw).</strong> With wall angle W and spring angle S:</p>
+<div class="formula">tan(miter) = sin S ÷ tan(W ÷ 2)<br>sin(bevel) = cos S × cos(W ÷ 2)</div>
+<p>For a 90° corner this reproduces the familiar values: 31.6° miter and 33.9° bevel for 38° crown, and 35.3° miter and 30° bevel for 45° crown.</p>
+
+<h2>Common Polygon Miter Angles</h2>
+<div class="tw"><table>
+<thead><tr><th>Sides</th><th>Shape</th><th class="n">Corner angle</th><th class="n">Saw setting</th></tr></thead>
+<tbody>
+<tr><td>3</td><td>Triangle</td><td class="n">60°</td><td class="n">60°</td></tr>
+<tr><td>4</td><td>Square / frame</td><td class="n">90°</td><td class="n">45°</td></tr>
+<tr><td>5</td><td>Pentagon</td><td class="n">108°</td><td class="n">36°</td></tr>
+<tr><td>6</td><td>Hexagon</td><td class="n">120°</td><td class="n">30°</td></tr>
+<tr><td>8</td><td>Octagon</td><td class="n">135°</td><td class="n">22.5°</td></tr>
+<tr><td>10</td><td>Decagon</td><td class="n">144°</td><td class="n">18°</td></tr>
+<tr><td>12</td><td>Dodecagon</td><td class="n">150°</td><td class="n">15°</td></tr>
+</tbody></table></div>
+
+<h2>Worked Example</h2>
+<p>You are building an octagonal cedar planter from boards 3.5 in wide, and each side's inside (short-point) length is 10 in. In the Polygon tab, enter 8 sides, a width of 3.5 and a length of 10 in inches.</p>
+<ul>
+<li><strong>Corner angle:</strong> (8 − 2) × 180 ÷ 8 = 135°.</li>
+<li><strong>Saw setting:</strong> 180 ÷ 8 = 22.5° on each end of every board.</li>
+<li><strong>Offset per end:</strong> 3.5 × tan 22.5° = 3.5 × 0.41421 ≈ 1.45 in.</li>
+<li><strong>Long point:</strong> 10 + 2 × 1.4497 ≈ 12.899 in.</li>
+<li><strong>Rounded up to 1/16 in:</strong> 12 15/16 in (12.9375 in).</li>
+<li><strong>Total stock:</strong> 8 boards × 12.9375 in = 103.5 in before waste.</li>
+</ul>
+<p>The tool shows these same numbers in its breakdown table.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Don't confuse the corner angle with the saw setting.</strong> A 135° corner uses a 22.5° saw setting, not 135° or 67.5°.</li>
+<li><strong>Measure the real corner.</strong> Use an angle finder, then enter the true angle. If one wall is out of square, split the difference between the two boards.</li>
+<li><strong>Always cut a test joint on scrap.</strong> Saw scales and detents drift. Check the dry fit before cutting finished stock.</li>
+<li><strong>Cut long and sneak up.</strong> The long-point result is rounded up on purpose; trim in small steps rather than cutting short.</li>
+<li><strong>Verify crown spring angle.</strong> Place a piece against a square to measure it; guessing 38° versus 45° gives wrong compound angles.</li>
+<li><strong>Stay safe.</strong> Clamp the work, keep hands clear of the blade path and wear eye and ear protection. Settings above about 45–50° usually exceed a saw's range, so use a jig or another method.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What angle do I set my miter saw for a 90-degree corner?</summary><p>Set the saw to 45° on both boards. Two 45° cuts add up to the 90° corner. This only works if the corner really is square, so check it with an angle finder first.</p></details>
+<details><summary>How do I find the miter angle for any corner?</summary><p>Subtract the corner angle from 180° and divide by two. For a 135° corner that gives (180 − 135) ÷ 2 = 22.5°. Equivalent: 90° minus half the corner angle.</p></details>
+<details><summary>What is the miter angle for an octagon?</summary><p>22.5° on each end of every side. An octagon has 135° interior corners, and 180° ÷ 8 sides gives the 22.5° saw setting.</p></details>
+<details><summary>What is the difference between miter and bevel angles?</summary><p>A miter angle is the left or right swing of the saw table, while a bevel angle is the tilt of the blade. Flat trim only needs a miter. Crown molding laid flat on the saw needs both, which is why the Crown tab shows two numbers.</p></details>
+<details><summary>Why do my miter joints still have gaps?</summary><p>The usual causes are out-of-square walls, a saw scale that is slightly off, or boards that are not held flat against the fence. Measure the actual corner, enter it above, and test on scrap. Small gaps can be closed with glue and a nail set.</p></details>
+<details><summary>Can I use this for structural work or building-code approval?</summary><p>No. The results are geometry for cutting trim, frames and similar projects. Stair parts, rafters, handrails and other structural members must follow your local code and any engineer or inspector requirements.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/bathroom-remodel-cost-calculator/">Bathroom Remodel Cost Calculator</a></li>
+<li><a href="/kitchen-remodel-cost-calculator/">Kitchen Remodel Cost Calculator</a></li>
+<li><a href="/cost-to-build-a-house-calculator/">Cost to Build a House Calculator</a></li>
+<li><a href="/interior-painting-cost-calculator/">Interior Painting Cost Calculator</a></li>
+<li><a href="/concrete-patio-cost-calculator/">Concrete Patio Cost Calculator</a></li>
+<li><a href="/tile-installation-cost-calculator/">Tile Installation Cost Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer><div class="foot-in">
+<p><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</div></footer>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id),D=Math.PI/180;
+let mode='corner',last='';
+const fa=x=>(+x.toFixed(2)).toLocaleString('en-US',{maximumFractionDigits:2});
+const fn=x=>x.toLocaleString('en-US',{maximumFractionDigits:3});
+const num=id=>{const v=$(id).value.trim();return v===''?NaN:Number(v)};
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+$('yr').textContent=new Date().getFullYear();
+
+function setErr(id,m){$(id).classList.add('bad');$(id).setAttribute('aria-invalid','true');$(id+'E').textContent=m}
+function clr(){document.querySelectorAll('.bad').forEach(e=>{e.classList.remove('bad');e.removeAttribute('aria-invalid')});document.querySelectorAll('.em').forEach(e=>{e.textContent=''})}
+function hide(){$('results').innerHTML='';$('copyBtn').classList.add('hid');last=''}
+function fail(id,m){if(id)setErr(id,m);hide()}
+
+function roundUp(x,u){
+  if(u==='in'){const t=Math.ceil(x*16-1e-9),w=Math.floor(t/16),r=t%16,g=r?gcd(r,16):1;
+    return{v:t/16,s:((w||!r)?w:'')+(r?(w?' ':'')+(r/g)+'/'+(16/g):'')+' in'}}
+  if(u==='mm'){const v=Math.ceil(x-1e-9);return{v:v,s:fn(v)+' mm'}}
+  const v=Math.ceil(x*10-1e-9)/10;return{v:v,s:fn(v)+' cm'}
+}
+
+function lens(th,cnt){
+  const hw=$('bw').value.trim()!=='',hl=$('bl').value.trim()!=='',w=num('bw'),L=num('bl'),u=$('unit').value;
+  if(hw&&!(w>=0)){setErr('bw','Board width must be 0 or greater.');return null}
+  if(hl&&!(L>0)){setErr('bl','Length must be greater than 0.');return null}
+  if(hl&&!hw){setErr('bw','Enter the board width to get the long-point length.');return null}
+  if(!hw)return{rows:[],wt:'w'};
+  const off=w*Math.tan(th*D),rows=[['Offset at each end (w × tan θ)',fn(off)+' '+u]];
+  if(hl){const lg=L+2*off,ru=roundUp(lg,u);
+    rows.push(['Long-point length (exact)',fn(lg)+' '+u],['Long-point length, rounded up',ru.s]);
+    if(cnt>1)rows.push(['Total stock, '+cnt+' boards (rounded up)',fn(ru.v*cnt)+' '+u]);
+  }
+  return{rows:rows,wt:'w = '+fn(w)+' '+u};
+}
+
+function draw(W,wt,l1,l2){
+  const h=Math.min(90,Math.max(20,W/2))*D,s=Math.sin(h),c=Math.cos(h),A=[200,140],L=120,t=22;
+  const d1=[-s,-c],d2=[s,-c],n1=[-c,s],n2=[c,s];
+  const P=(p,v,k)=>[p[0]+v[0]*k,p[1]+v[1]*k];
+  const f=p=>p[0].toFixed(1)+' '+p[1].toFixed(1);
+  const E1=P(A,d1,L),E2=P(A,d2,L),O=[200,A[1]+t/s];
+  const g=(id,k,v)=>$(id).setAttribute(k,v);
+  g('b1','d','M'+f(A)+'L'+f(E1)+'L'+f(P(E1,n1,t))+'L'+f(O)+'Z');
+  g('b2','d','M'+f(A)+'L'+f(E2)+'L'+f(P(E2,n2,t))+'L'+f(O)+'Z');
+  g('cut','x1',A[0]);g('cut','y1',A[1]);g('cut','x2',O[0]);g('cut','y2',O[1].toFixed(1));
+  g('arcW','d','M'+f(P(A,d1,34))+'A34 34 0 0 1 '+f(P(A,d2,34)));
+  const q=P(A,n1,t);g('sq','x1',A[0]);g('sq','y1',A[1]);g('sq','x2',q[0].toFixed(1));g('sq','y2',q[1].toFixed(1));
+  g('arcT','d','M'+f(P(A,[0,1],16))+'A16 16 0 0 1 '+f(P(A,n1,16)));
+  const vis=mode==='crown'?'hidden':'visible';g('sq','visibility',vis);g('arcT','visibility',vis);
+  const M1=P(A,d1,.6*L),M2=P(M1,n1,t),T=P(M2,n1,12);
+  g('dim','x1',M1[0].toFixed(1));g('dim','y1',M1[1].toFixed(1));g('dim','x2',M2[0].toFixed(1));g('dim','y2',M2[1].toFixed(1));
+  g('dimT','x',T[0].toFixed(1));g('dimT','y',(T[1]+4).toFixed(1));$('dimT').textContent=wt;
+  const y1=O[1]+22;g('t1','y',y1.toFixed(1));g('t2','y',(y1+17).toFixed(1));
+  $('t1').textContent=l1;$('t2').textContent=l2;$('dd').textContent=l1+'. '+l2+'.';
+}
+
+function calc(){
+  clr();
+  let W,th,keys,rows,t1,t2,sub,cnt=1,warns=[],wt='w';
+  if(mode==='corner'){
+    W=num('cAngle');
+    if(!(W>0&&W<=180))return fail('cAngle','Enter a corner angle greater than 0° and no more than 180°.');
+    th=90-W/2;
+    rows=[['Corner angle between boards',fa(W)+'°'],['Saw setting (miter angle)',fa(th)+'°'],['Cut angle measured from the board edge',fa(W/2)+'°']];
+    t1='Corner angle = '+fa(W)+'°';t2='Saw setting = '+fa(th)+'° on each board';
+    sub='Cut both boards at this setting. Two cuts of '+fa(th)+'° form a '+fa(W)+'° corner.';
+  }else if(mode==='polygon'){
+    const n=num('sides');
+    if(!(Number.isInteger(n)&&n>=3&&n<=360))return fail('sides','Enter a whole number of sides from 3 to 360.');
+    cnt=n;W=(n-2)*180/n;th=180/n;
+    rows=[['Number of sides',fn(n)],['Corner (interior) angle',fa(W)+'°'],['Saw setting (miter angle)',fa(th)+'°'],['Boards needed',fn(n)],['Total miter cuts',fn(2*n)]];
+    t1=n+' sides · corner = '+fa(W)+'°';t2='Saw setting = '+fa(th)+'° on every end';
+    sub='Cut both ends of all '+n+' boards at '+fa(th)+'° (opposite directions on each end).';
+  }
+  if(mode!=='crown'){
+    const lr=lens(th,cnt);if(lr===null)return hide();
+    rows.splice(rows.length-(mode==='polygon'?2:0),0,['Nearest 0.5° on a saw scale',fa(Math.round(th*2)/2)+'°']);
+    rows=rows.concat(lr.rows);wt=lr.wt;
+    keys=[['Miter saw setting',fa(th)+'°']];
+    if(th>45)warns.push('This setting is above 45°. Many miter saws stop at 45–50°, so you may need a jig or to cut the board on edge.');
+    if(W===180)warns.push('A 180° corner is a straight joint, so no miter is needed (0° cut).');
+  }else{
+    W=num('wall');const S=num('spring');
+    if(!(W>0&&W<=180))return fail('wall','Enter a wall angle greater than 0° and no more than 180°.');
+    if(!(S>0&&S<90))return fail('spring','Enter a spring angle between 0° and 90° (most crown is 38° or 45°).');
+    const h=W/2*D,s=S*D,M=Math.atan2(Math.sin(s)*Math.cos(h),Math.sin(h))/D,B=Math.asin(Math.cos(s)*Math.cos(h))/D;
+    th=M;
+    keys=[['Miter angle (saw table)',fa(M)+'°'],['Bevel angle (blade tilt)',fa(B)+'°']];
+    rows=[['Wall corner angle',fa(W)+'°'],['Spring angle',fa(S)+'°'],['Miter angle (table swivel)',fa(M)+'°'],['Bevel angle (blade tilt)',fa(B)+'°'],['Miter, nearest 0.5°',fa(Math.round(M*2)/2)+'°'],['Bevel, nearest 0.5°',fa(Math.round(B*2)/2)+'°']];
+    t1='Wall corner = '+fa(W)+'° · spring = '+fa(S)+'°';t2='Miter '+fa(M)+'° · Bevel '+fa(B)+'° (laid flat)';
+    sub='Crown laid flat with its back face on the saw table. Swing and tilt directions reverse between left/right pieces and inside/outside corners, so test on scrap first.';
+    if(M>50||B>45)warns.push('These angles exceed the range of many saws (about 50° miter, 45° bevel). Check your saw\'s limits.');
+  }
+  const big=keys.map(k=>'<div class="bg"><span class="rl">'+k[0]+'</span><span class="big">'+k[1]+'</span></div>').join('');
+  const body=rows.map(r=>'<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>').join('');
+  const wh=warns.map(w=>'<div class="warn">'+w+'</div>').join('');
+  const html='<div class="fade"><div class="bigs">'+big+'</div><p class="sub">'+sub+'</p><div class="tw"><table><thead><tr><th>Measurement</th><th class="n">Value</th></tr></thead><tbody>'+body+'</tbody></table></div>'+wh+'<p class="note">Geometry only, not engineering, permit or inspection approval; local codes vary. Always test-cut on scrap and keep hands clear of the blade.</p></div>';
+  last='Miter Angle Calculator (toolwick.com)\n'+keys.map(k=>k[0]+': '+k[1]).join('\n')+'\n'+rows.map(r=>r[0]+': '+r[1]).join('\n');
+  $('results').innerHTML=html;$('copyBtn').classList.remove('hid');
+  draw(W,wt,t1,t2);
+}
+
+function go(){requestAnimationFrame(calc)}
+$('calcBtn').addEventListener('click',go);
+document.querySelector('.card').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')&&e.target.type!=='range'){e.preventDefault();go()}});
+
+document.querySelectorAll('[data-m]').forEach(b=>b.addEventListener('click',()=>{
+  mode=b.dataset.m;
+  document.querySelectorAll('[data-m]').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+mode));
+  $('lenBox').classList.toggle('hid',mode==='crown');
+  clr();hide();
+}));
+
+[['cAngle','cRange'],['sides','sRange']].forEach(p=>{
+  $(p[0]).addEventListener('input',()=>{$(p[1]).value=$(p[0]).value});
+  $(p[1]).addEventListener('input',()=>{$(p[0]).value=$(p[1]).value;go()});
+});
+
+function fallback(){const t=document.createElement('textarea');t.value=last;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);done()}
+function done(){const b=$('copyBtn');b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)}
+$('copyBtn').addEventListener('click',()=>{
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(last).then(done,fallback);else fallback();
+});
+
+draw(90,'w','Corner angle = 90°','Saw setting = 45° on each board');
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
