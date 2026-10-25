@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Bathroom Remodel Cost Calculator | Toolwick</title>
+<meta name="description" content="Free bathroom remodel cost calculator. Estimate your total by room size, finish level, fixtures, tile and location, with an itemized cost breakdown.">
+<link rel="canonical" href="https://toolwick.com/bathroom-remodel-cost-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.25rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.75rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 10px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.cap{font-size:.85rem;color:#666;margin:0 0 1.5rem}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6;margin:0}
+input[type=range]:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.ticks{display:flex;justify-content:space-between;font-size:.75rem;color:#666;margin-top:-6px}
+.inv{border-color:#e74c3c!important}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem;display:none}
+.err.on{display:block}
+fieldset{border:0;padding:0;margin:0 0 1.25rem}
+legend{font-size:.85rem;font-weight:500;color:#444;margin-bottom:.25rem;padding:0}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.chk{display:flex;align-items:center;gap:.6rem;min-height:44px;margin:0;font-size:.95rem;color:#1a1a2e;font-weight:400;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:#0077b6;flex:none;margin:0}
+.btn{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:44px;width:100%;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+#results:empty{display:none}
+#results{margin-top:2rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.bl{font-size:.85rem;color:#444;font-weight:500}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.15}
+.sub{color:#444;margin:.35rem 0 1rem}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;min-height:44px;font-size:.9rem;cursor:pointer;font-family:inherit}
+.copy:hover{background:#f0f8fc}
+.tw{overflow-x:auto;margin:.5rem 0 1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:380px}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;font-weight:600}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.num,td.num{text-align:right;white-space:nowrap}
+tfoot td{font-weight:700;background:#f0f0f0}
+tr.sel td{font-weight:700;color:#0077b6}
+.bar{display:inline-block;width:44px;height:8px;background:#e8eef2;border-radius:4px;margin-right:8px;vertical-align:middle;overflow:hidden}
+.bar i{display:block;height:100%;background:#0077b6}
+.note{background:#f8f9fa;border-left:4px solid #0077b6;padding:.75rem 1rem;font-size:.88rem;color:#444;margin:.75rem 0;border-radius:0 6px 6px 0}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e8e8e8;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:.7rem 0;min-height:44px}
+details p{margin:0 0 .9rem;color:#333}
+ul{padding-left:1.25rem}
+li{margin-bottom:.5rem}
+.rel{display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1rem;padding:0;list-style:none}
+.rel li{margin:0}
+.rel a{display:block;padding:10px 0;min-height:44px}
+footer{background:#f8f9fa;margin-top:3rem;padding:1.5rem 0;font-size:.9rem;color:#666;text-align:center}
+footer a{margin:0 .5rem;color:#0077b6}
+@media(max-width:640px){
+.row,.checks,.rel{grid-template-columns:1fr}
+.card{padding:1.25rem}
+h1{font-size:1.6rem}
+.big{font-size:2.2rem}
+}
+@media(prefers-reduced-motion:reduce){.res{animation:none}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/bathroom-remodel-cost-calculator/">
+<meta property="og:title" content="Bathroom Remodel Cost Calculator">
+<meta property="og:description" content="Free bathroom remodel cost calculator. Estimate your total by room size, finish level, fixtures, tile and location, with an itemized cost breakdown.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Bathroom Remodel Cost Calculator</h1>
+<p>Use this free bathroom remodel cost calculator to estimate what your project will cost based on room size, finish level, fixtures, tile, layout changes and where you live. You get an itemized breakdown, a realistic price range and a side-by-side comparison of budget, mid-range and high-end finishes.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="dia" viewBox="0 0 400 250" role="img" aria-label="Top-down bathroom floor plan diagram">
+<title>Bathroom floor plan with length and width dimensions</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0077b6"/></marker></defs>
+<g stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3">
+<line id="g1"/><line id="g2"/><line id="g3"/><line id="g4"/></g>
+<rect id="dRoom" fill="#f8f9fa" stroke="#0077b6" stroke-width="3"/>
+<rect id="dTub" fill="#fff" stroke="#0077b6" stroke-width="1.5" rx="6"/>
+<rect id="dVan" fill="#e6f2f9" stroke="#0077b6" stroke-width="1.5" rx="2"/>
+<rect id="dTank" fill="#fff" stroke="#0077b6" stroke-width="1.5" rx="2"/>
+<ellipse id="dBowl" fill="#fff" stroke="#0077b6" stroke-width="1.5"/>
+<line id="dTop" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line id="dRight" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<g fill="#1a1a2e" font-family="-apple-system,Segoe UI,Roboto,sans-serif" text-anchor="middle">
+<text id="dTopT" font-size="14" font-weight="600"></text>
+<text id="dRightT" font-size="14" font-weight="600"></text>
+<text id="dArea" font-size="16" font-weight="700" stroke="#f8f9fa" stroke-width="4" paint-order="stroke"></text>
+<text id="dInfo" x="200" y="238" font-size="12.5"></text></g>
+</svg>
+</div>
+<p class="cap">Illustrative layout: tub/shower top-left, vanity bottom-left, toilet bottom-right. Dimensions update when you calculate.</p>
+
+<form id="f" novalidate>
+<div class="row">
+<div class="field"><label for="len">Length (ft)</label><input type="number" id="len" inputmode="decimal" step="0.1" value="8" aria-describedby="eLen"><div class="err" id="eLen"></div></div>
+<div class="field"><label for="wid">Width (ft)</label><input type="number" id="wid" inputmode="decimal" step="0.1" value="5" aria-describedby="eWid"><div class="err" id="eWid"></div></div>
+<div class="field"><label for="hgt">Ceiling height (ft)</label><input type="number" id="hgt" inputmode="decimal" step="0.1" value="8" aria-describedby="eHgt"><div class="err" id="eHgt"></div></div>
+</div>
+<div class="field"><label for="tier">Finish level: <span id="tierV">Mid-range</span></label>
+<input type="range" id="tier" min="1" max="3" step="1" value="2" aria-valuetext="Mid-range">
+<div class="ticks" aria-hidden="true"><span>Budget</span><span>Mid</span><span>High-end</span></div></div>
+<div class="field"><label for="reg">Location (labor and material costs)</label>
+<select id="reg"><option value="0.85">Lower-cost area (rural, low labor rates)</option><option value="1" selected>National average</option><option value="1.25">Higher-cost metro area</option><option value="1.5">Highest-cost (major coastal city)</option></select></div>
+<div class="field"><label for="tub">Tub / shower</label>
+<select id="tub"><option value="none">Keep existing</option><option value="combo" selected>Replace tub/shower combo</option><option value="shower">New walk-in shower</option><option value="both">New tub plus separate shower</option></select></div>
+<div class="field"><label for="tile">Wall tile coverage</label>
+<select id="tile"><option value="none">None (paint only)</option><option value="surround" selected>Tub or shower surround (about 60 sq ft)</option><option value="wainscot">Half-height walls (about 4 ft high)</option><option value="full">Full-height tile on all walls</option></select></div>
+<div class="field"><label for="vanity">Vanity</label>
+<select id="vanity"><option value="0">Keep existing</option><option value="1" selected>Single-sink vanity</option><option value="2">Double-sink vanity</option></select></div>
+<div class="field"><label for="layout">Plumbing layout changes</label>
+<select id="layout"><option value="none" selected>Keep fixtures where they are</option><option value="minor">Move one or two fixtures</option><option value="full">Full new layout (new drains and vents)</option></select></div>
+<fieldset><legend>Include in the project</legend>
+<div class="checks">
+<label class="chk" for="wc"><input type="checkbox" id="wc" checked>New toilet</label>
+<label class="chk" for="floor"><input type="checkbox" id="floor" checked>New flooring</label>
+<label class="chk" for="elec"><input type="checkbox" id="elec" checked>Electrical and lighting</label>
+<label class="chk" for="fan"><input type="checkbox" id="fan" checked>Exhaust fan</label>
+<label class="chk" for="paint"><input type="checkbox" id="paint" checked>Paint and drywall repair</label>
+<label class="chk" for="acc"><input type="checkbox" id="acc" checked>Mirror and accessories</label>
+<label class="chk" for="permit"><input type="checkbox" id="permit" checked>Permit and inspection</label>
+<label class="chk" for="heat"><input type="checkbox" id="heat">Heated floor</label>
+<label class="chk" for="win"><input type="checkbox" id="win">New window</label>
+<label class="chk" for="door"><input type="checkbox" id="door">New door</label>
+</div></fieldset>
+<div class="field"><label for="cont">Contingency for surprises: <span id="contV">15%</span></label>
+<input type="range" id="cont" min="5" max="25" step="5" value="15" aria-valuetext="15 percent"></div>
+<button type="submit" class="btn" id="calcBtn">Calculate Remodel Cost</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<h2>How to Use This Bathroom Remodel Cost Calculator</h2>
+<p>Enter your bathroom's length, width and ceiling height in feet, then slide the finish level from budget to high-end. Choose your tub or shower, tile coverage, vanity and any plumbing changes, tick the extras you want, and press Calculate. You will see a total, a likely range, a cost per square foot, an itemized table and a three-way comparison of finish levels.</p>
+
+<h2>Why This Matters</h2>
+<p>A bathroom is the smallest room in most homes and often the most expensive per square foot to renovate. Plumbing, waterproofing, tile and electrical work are all packed into a few dozen square feet, and every trade has a minimum charge. That is why a 5×8 bathroom can cost $8,000 with basic finishes and $30,000 with custom tile and a frameless glass shower.</p>
+<p>Homeowners use an estimate like this before calling contractors, so quotes make sense when they arrive. If one bid comes in at $9,000 and another at $19,000 for the "same" job, you need to know which line items explain the gap. It also helps when deciding between a full gut and a cosmetic refresh, or when setting aside funds from a home equity line. Landlords and flippers use it to check whether an upgrade will pay back before they commit. Because the calculator separates demolition, fixtures, tile and permits, you can see where trimming one choice, such as a shower surround or a layout change, frees up real money.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator builds the budget from individual line items, each priced at a 2025 U.S. installed average (materials and labor) for the finish level you chose:</p>
+<ul>
+<li><strong>Area-based items:</strong> flooring, heated floor and demolition use floor area (length × width). Demolition adds a fixed haul-away charge.</li>
+<li><strong>Wall-based items:</strong> paint and drywall use wall area plus ceiling area. Wall area = 2 × (length + width) × ceiling height, minus 20 sq ft for a door and window. Full-height or half-height tile uses the same wall math.</li>
+<li><strong>Fixed items:</strong> toilet, vanity, tub or shower, fan, lighting, accessories and permit are priced per unit. A double vanity is 1.7× a single.</li>
+</ul>
+<p>The formula is: <strong>Total = (sum of line items × location multiplier) + contingency</strong>. Location multipliers are 0.85, 1.00, 1.25 and 1.50. Contingency is your chosen percentage of the subtotal. The range shown is −15% to +25% of the total, because overruns are more common than savings.</p>
+<p>Safety-minded rounding: every line item and the contingency are rounded <em>up</em> to the next dollar, and the range is rounded outward to the nearest $100. The tool prices work that model codes expect in a bathroom: GFCI protection (NEC 210.8), a 20-amp bathroom receptacle circuit (NEC 210.11(C)(3)), and ventilation by window or exhaust fan (IRC R303.3). Code editions and local amendments vary. This is a planning estimate only, not a bid, an engineering opinion, or permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>A 5 × 8 ft bathroom with an 8 ft ceiling, mid-range finishes, national average pricing, and the default options above (tub/shower replacement, surround tile, single vanity, 15% contingency):</p>
+<ol>
+<li>Floor area = 8 × 5 = 40 sq ft. Wall area = 2 × (8 + 5) × 8 − 20 = 188 sq ft.</li>
+<li>Demolition: $900 + 40 × $14 = $1,460. Flooring: 40 × $22 = $880.</li>
+<li>Vanity $1,900, toilet $700, tub/shower $3,200, surround tile 60 × $22 = $1,320.</li>
+<li>Electrical $1,400, fan $500, paint (188 + 40) × $3.20 = $730 (rounded up), accessories $500, permit $500.</li>
+<li>Subtotal = $13,090. Contingency 15% = $1,964 (rounded up).</li>
+<li><strong>Total = $15,054</strong>, about $377 per sq ft, with a range of $12,700 to $18,900.</li>
+</ol>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Don't skip contingency.</strong> Opening walls often reveals rot, outdated wiring or failed waterproofing. In homes built before 1980, use 20–25%.</li>
+<li><strong>Keep plumbing where it is.</strong> Moving a toilet drain or shower valve can add $1,500–$4,500 before any finish is chosen.</li>
+<li><strong>Don't cut ventilation or electrical to save money.</strong> A missing exhaust fan leads to mold and failed paint, and GFCI protection is a basic safety requirement.</li>
+<li><strong>Test older homes first.</strong> Homes built before 1978 may have lead paint and older flooring or tile adhesive may contain asbestos. Testing and abatement are not in this estimate.</li>
+<li><strong>Order long-lead items early.</strong> Custom vanities and glass can take 6–10 weeks, and delays add labor and rental costs.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much does a bathroom remodel cost on average?</summary><p>A mid-range full bathroom remodel in the U.S. typically runs $12,000 to $20,000. Cosmetic refreshes start near $5,000, while high-end projects with custom tile and glass often pass $30,000.</p></details>
+<details><summary>How much does it cost to remodel a small 5×8 bathroom?</summary><p>Most 40 sq ft bathrooms land between $9,000 and $18,000 depending on finishes and location. Small rooms cost more per square foot because fixtures and labor minimums don't shrink with the room.</p></details>
+<details><summary>What is the most expensive part of a bathroom remodel?</summary><p>The shower or tub area, including waterproofing, tile and glass, is usually the largest cost. Plumbing relocation and a double vanity are the next biggest budget swings.</p></details>
+<details><summary>How long does a bathroom remodel take?</summary><p>A standard remodel takes two to four weeks once materials are on site. Layout changes, custom tile or backordered fixtures can stretch it to six to ten weeks.</p></details>
+<details><summary>Do I need a permit to remodel a bathroom?</summary><p>Most jurisdictions require permits when you move plumbing, add circuits or change walls, but not for swapping a vanity or toilet. Rules vary, so call your local building department before starting.</p></details>
+<details><summary>How much contingency should I add?</summary><p>Plan for 10–15% on newer homes and 20–25% on older ones or any job with layout changes. Hidden water damage or outdated wiring is the usual reason budgets get used up.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/kitchen-remodel-cost-calculator/">Kitchen Remodel Cost Calculator</a></li>
+<li><a href="/bathroom-tile-layout-planner/">Bathroom Tile Layout Planner</a></li>
+<li><a href="/cost-to-build-a-house-calculator/">Cost to Build a House Calculator</a></li>
+<li><a href="/interior-painting-cost-calculator/">Interior Painting Cost Calculator</a></li>
+<li><a href="/concrete-patio-cost-calculator/">Concrete Patio Cost Calculator</a></li>
+<li><a href="/tile-installation-cost-calculator/">Tile Installation Cost Calculator</a></li>
+</ul>
+</div>
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/bathroom-remodel-cost-calculator/">Toolwick</a></p>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var fmt=function(n){return n.toLocaleString('en-US',{maximumFractionDigits:0})};
+var fm=function(n){return '$'+fmt(n)};
+var f1=function(n){return n.toLocaleString('en-US',{maximumFractionDigits:1})};
+var up=function(x){return Math.ceil(Math.round(x*1e6)/1e6)};
+var TN=['Budget','Mid-range','High-end'];
+var P={db:[600,900,1300],ds:[10,14,18],fl:[10,22,38],van:[650,1900,4800],wc:[350,700,1500],
+tub:{combo:[1800,3200,5500],shower:[2500,5000,10000],both:[5000,9500,18000]},
+tile:[12,22,40],lay:{minor:1500,full:4500},el:[700,1400,2800],fan:[250,500,1000],ht:[14,18,24],
+win:[600,1100,2400],door:[350,700,1400],pt:[2,3.2,5],acc:[200,500,1400],pm:[350,500,750]};
+var done=false,lastText='';
+function geom(o){var fa=o.L*o.W,per=2*(o.L+o.W);return{fa:fa,per:per,wa:Math.max(per*o.H-20,0)}}
+function tileArea(o,g){return o.tile==='surround'?60:o.tile==='wainscot'?Math.max(60,g.per*4-20):o.tile==='full'?Math.max(60,g.wa):0}
+function calcTier(t,o){
+var g=geom(o),m=o.reg,r=[];
+function add(n,v){if(v>0)r.push([n,up(v*m)])}
+add('Demolition & haul-away',P.db[t]+g.fa*P.ds[t]);
+if(o.floor)add('Flooring, installed',g.fa*P.fl[t]);
+if(o.vanity>0)add(o.vanity==2?'Double vanity, sinks & faucets':'Vanity, sink & faucet',P.van[t]*(o.vanity==2?1.7:1));
+if(o.wc)add('Toilet, installed',P.wc[t]);
+if(o.tub!=='none')add({combo:'Tub/shower combo',shower:'Walk-in shower',both:'Tub and separate shower'}[o.tub],P.tub[o.tub][t]);
+var ta=tileArea(o,g);if(ta>0)add('Wall tile ('+f1(ta)+' sq ft)',ta*P.tile[t]);
+if(o.layout!=='none')add(o.layout==='full'?'Full plumbing re-layout':'Move fixtures (plumbing)',P.lay[o.layout]);
+if(o.elec)add('Electrical & lighting (GFCI)',P.el[t]);
+if(o.fan)add('Exhaust fan',P.fan[t]);
+if(o.heat)add('Heated floor',g.fa*P.ht[t]);
+if(o.win)add('New window',P.win[t]);
+if(o.door)add('New door',P.door[t]);
+if(o.paint)add('Paint & drywall repair',(g.wa+g.fa)*P.pt[t]);
+if(o.acc)add('Mirror & accessories',P.acc[t]);
+if(o.permit)add('Permit & inspection',P.pm[t]);
+var sub=0;r.forEach(function(x){sub+=x[1]});
+var c=up(sub*o.pct/100);
+return{items:r,sub:sub,cont:c,total:sub+c};
+}
+function ud(L,W,H){
+var s=Math.min(260/L,150/W),w=L*s,h=W*s,x0=185-w/2,y0=120-h/2,x1=x0+w,y1=y0+h;
+function a(id,o){var e=$(id);for(var k in o)e.setAttribute(k,o[k])}
+a('dRoom',{x:x0,y:y0,width:w,height:h});
+var tw=Math.min(5,L*.55)*s,th=Math.min(2.5,W*.4)*s;
+a('dTub',{x:x0+4,y:y0+4,width:Math.max(tw-8,4),height:Math.max(th-4,4)});
+var vw=Math.min(4,L*.4)*s,vh=Math.min(1.8,W*.25)*s;
+a('dVan',{x:x0+4,y:y1-vh-4,width:Math.max(vw-4,4),height:vh});
+var ts=Math.min(1.5,L*.15,W*.22)*s,cy=y1-ts-6;
+a('dTank',{x:x1-.45*ts-4,y:cy-.4*ts,width:.45*ts,height:.8*ts});
+a('dBowl',{cx:x1-.45*ts-4-.5*ts+1,cy:cy,rx:.6*ts,ry:.4*ts});
+a('dTop',{x1:x0,x2:x1,y1:y0-14,y2:y0-14});
+a('g1',{x1:x0,x2:x0,y1:y0-2,y2:y0-18});a('g2',{x1:x1,x2:x1,y1:y0-2,y2:y0-18});
+a('dRight',{x1:x1+16,x2:x1+16,y1:y0,y2:y1});
+a('g3',{x1:x1+2,x2:x1+20,y1:y0,y2:y0});a('g4',{x1:x1+2,x2:x1+20,y1:y1,y2:y1});
+var tt=$('dTopT');a('dTopT',{x:(x0+x1)/2,y:y0-20});tt.textContent=f1(L)+' ft';
+var X=x1+32,Y=(y0+y1)/2;a('dRightT',{x:X,y:Y,transform:'rotate(-90 '+X+' '+Y+')'});$('dRightT').textContent=f1(W)+' ft';
+a('dArea',{x:(x0+x1)/2,y:(y0+y1)/2+6});$('dArea').textContent=f1(L*W)+' sq ft';
+var g=geom({L:L,W:W,H:H});
+$('dInfo').textContent='Walls ≈ '+fmt(g.wa)+' sq ft ('+f1(H)+' ft ceiling) · Perimeter '+f1(g.per)+' ft';
+$('dia').setAttribute('aria-label','Bathroom floor plan, '+f1(L)+' feet by '+f1(W)+' feet, '+f1(L*W)+' square feet');
+}
+function validate(){
+var e={},v={};
+[['len','Length'],['wid','Width'],['hgt','Ceiling height']].forEach(function(p){
+var raw=$(p[0]).value.trim(),n=parseFloat(raw),lo=p[0]==='hgt'?7:3,hi=p[0]==='hgt'?12:30;
+v[p[0]]=n;
+if(raw===''||isNaN(n))e[p[0]]='Enter the '+p[1].toLowerCase()+' in feet.';
+else if(n<=0)e[p[0]]=p[1]+' must be greater than zero.';
+else if(n<lo||n>hi)e[p[0]]=p[1]+' should be between '+lo+' and '+hi+' ft for a typical bathroom.';
+});
+return{e:e,v:v};
+}
+var EI={len:'eLen',wid:'eWid',hgt:'eHgt'};
+function readOpts(v){
+var o={L:v.len,W:v.wid,H:v.hgt,reg:parseFloat($('reg').value),pct:parseInt($('cont').value,10),tub:$('tub').value,tile:$('tile').value,vanity:parseInt($('vanity').value,10),layout:$('layout').value,tier:parseInt($('tier').value,10)-1};
+['wc','floor','elec','fan','paint','acc','permit','heat','win','door'].forEach(function(k){o[k]=$(k).checked});
+return o;
+}
+function calculate(){
+var r=validate(),first=null;
+for(var k in r.e){if(!first)first=k}
+if(first){requestAnimationFrame(function(){
+['len','wid','hgt'].forEach(function(k){var has=!!r.e[k];$(k).classList.toggle('inv',has);$(k).setAttribute('aria-invalid',has);$(EI[k]).textContent=r.e[k]||'';$(EI[k]).classList.toggle('on',has)});
+$('results').innerHTML='';lastText='';$(first).focus();});return}
+var o=readOpts(r.v),g=geom(o),R=[0,1,2].map(function(t){return calcTier(t,o)}),S=R[o.tier];
+var total=S.total,lo=Math.floor(total*.85/100)*100,hi=Math.ceil(total*1.25/100)*100,psf=Math.ceil(total/g.fa);
+var regName=$('reg').options[$('reg').selectedIndex].text;
+var rows=S.items.concat([['Contingency ('+o.pct+'%)',S.cont]]).map(function(x){
+var p=x[1]/total*100;
+return '<tr><td>'+x[0].replace(/&/g,'&amp;')+'</td><td class="num">'+fm(x[1])+'</td><td class="num"><span class="bar"><i style="width:'+p.toFixed(1)+'%"></i></span>'+f1(p)+'%</td></tr>';
+}).join('');
+var cmp=R.map(function(x,i){return '<tr'+(i===o.tier?' class="sel"':'')+'><td>'+TN[i]+(i===o.tier?' (selected)':'')+'</td><td class="num">'+fm(x.total)+'</td><td class="num">'+fm(Math.ceil(x.total/g.fa))+'</td></tr>'}).join('');
+var notes='<div class="note">This is a planning estimate in 2025 U.S. dollars, not a contractor bid, engineering advice, or permit or inspection approval. Every line is rounded up. Codes (for example NEC 210.8 GFCI protection and IRC R303.3 ventilation) and prices vary by location and edition.</div>';
+if(!o.elec||!o.fan)notes+='<div class="note">You excluded electrical work or an exhaust fan. Bathrooms still need GFCI-protected outlets and ventilation under model codes, so confirm with your local building department.</div>';
+if(o.layout!=='none')notes+='<div class="note">Moving drains, vents or supply lines normally requires a permit and inspection, and can uncover problems that affect the budget.</div>';
+notes+='<div class="note">Homes built before 1978 may contain lead paint, and older flooring or adhesives may contain asbestos. Testing and abatement are not included.</div>';
+var html='<div class="res"><div class="bl">Estimated total remodel cost</div><div class="big">'+fm(total)+'</div>'+
+'<p class="sub">Likely range '+fm(lo)+' to '+fm(hi)+' · '+fm(psf)+' per sq ft · '+TN[o.tier]+' finishes</p>'+
+'<button type="button" class="copy" id="copyBtn">Copy summary</button>'+
+'<h3>Cost breakdown</h3><div class="tw"><table><thead><tr><th>Item</th><th class="num">Cost</th><th class="num">Share</th></tr></thead><tbody>'+rows+'</tbody><tfoot><tr><td>Total</td><td class="num">'+fm(total)+'</td><td class="num">100%</td></tr></tfoot></table></div>'+
+'<h3>Compare finish levels</h3><div class="tw"><table><thead><tr><th>Finish level</th><th class="num">Estimate</th><th class="num">Per sq ft</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'+notes+'</div>';
+var lines=['Bathroom remodel estimate (toolwick.com)','Room: '+f1(o.L)+' x '+f1(o.W)+' ft ('+f1(g.fa)+' sq ft), '+f1(o.H)+' ft ceiling','Finish level: '+TN[o.tier]+' | Location: '+regName,'Total: '+fm(total)+' (range '+fm(lo)+' to '+fm(hi)+', '+fm(psf)+' per sq ft)',''];
+S.items.forEach(function(x){lines.push(x[0]+': '+fm(x[1]))});
+lines.push('Contingency ('+o.pct+'%): '+fm(S.cont));
+requestAnimationFrame(function(){
+['len','wid','hgt'].forEach(function(k){$(k).classList.remove('inv');$(k).setAttribute('aria-invalid','false');$(EI[k]).textContent='';$(EI[k]).classList.remove('on')});
+lastText=lines.join('\n');
+$('results').innerHTML=html;
+ud(o.L,o.W,o.H);
+done=true;
+});
+}
+function copyText(t,btn){
+function ok(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy summary'},2000)}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,fb)}else fb();
+function fb(){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(ta)}
+}
+$('results').addEventListener('click',function(e){if(e.target.id==='copyBtn')copyText(lastText,e.target)});
+$('f').addEventListener('submit',function(e){e.preventDefault();calculate()});
+function labels(){
+$('tierV').textContent=TN[$('tier').value-1];$('tier').setAttribute('aria-valuetext',TN[$('tier').value-1]);
+$('contV').textContent=$('cont').value+'%';$('cont').setAttribute('aria-valuetext',$('cont').value+' percent');
+}
+$('f').addEventListener('input',function(e){if(e.target.type==='range'){labels();if(done)calculate()}});
+$('f').addEventListener('change',function(e){if(done&&e.target.type!=='range')calculate()});
+$('yr').textContent=new Date().getFullYear();
+labels();ud(8,5,8);
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
