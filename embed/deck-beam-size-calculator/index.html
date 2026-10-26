@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Deck Beam Size Calculator | Toolwick</title>
+<meta name="description" content="Free deck beam size calculator: enter joist span, cantilever and post spacing to find the minimum built-up 2x beam and max post spacing.">
+<link rel="canonical" href="https://toolwick.com/deck-beam-size-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.2rem 0 .6rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.lead{color:#444;font-size:1.05rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 10px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram text{font-family:inherit;fill:#1a1a2e;font-size:13px;paint-order:stroke;stroke:#f8f9fa;stroke-width:4px;stroke-linejoin:round}
+.diagram .sm{font-size:11px;fill:#666}
+.field{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;padding:12px 16px;min-height:46px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input[type=number]:focus,select:focus,input[type=range]:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=number]:focus,select:focus{border-color:#0077b6}
+input[type=range]{width:100%;height:44px;margin:.2rem 0 0;accent-color:#0077b6}
+.bad{border-color:#e74c3c!important}
+.err{color:#c0392b;font-size:.85rem;min-height:0;margin-top:.3rem}
+.row{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:600px){.row{grid-template-columns:1fr 1fr}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;min-height:46px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;font-family:inherit}
+button:hover{background:#006299}
+button.ghost{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;min-height:44px;padding:8px 18px;font-size:.9rem;margin-top:1rem}
+button.ghost:hover{background:#f0f7fb}
+#results{margin-top:1.5rem}
+.fi{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.key small{display:block;color:#555;font-size:.85rem}
+.key .big{font-size:2.3rem;font-weight:800;color:#0077b6;line-height:1.2;margin:.2rem 0}
+.key .big.fail{color:#c0392b;font-size:1.6rem}
+.key .sub{color:#444;font-size:.95rem}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right}
+tr.rec td{font-weight:700}
+.note{border-left:4px solid #0077b6;background:#f8f9fa;padding:.9rem 1rem;font-size:.9rem;color:#333;margin-bottom:1rem;border-radius:0 6px 6px 0}
+.note.warn{border-left-color:#c0392b}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.8rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.4rem 0 .2rem;color:#333}
+ul{padding-left:1.2rem}li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0}.rel li{margin:0}.rel a{display:block;padding:.65rem 0;border-bottom:1px solid #e8e8e8;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+.content td,.content th{white-space:normal}
+@media(max-width:639px){.card{padding:1.25rem}h1{font-size:1.6rem}.key .big{font-size:2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/deck-beam-size-calculator/">
+<meta property="og:title" content="Deck Beam Size Calculator">
+<meta property="og:description" content="Free deck beam size calculator: enter joist span, cantilever and post spacing to find the minimum built-up 2x beam and max post spacing.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Deck Beam Size Calculator</h1>
+<p class="lead">This deck beam size calculator finds the smallest built-up 2x beam (2-ply or 3-ply 2x8, 2x10 or 2x12) that can carry your deck joists at your post spacing. Enter your joist span, cantilever and loads to see the maximum safe post spacing for every option.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="dgm" viewBox="0 0 360 310" role="img" aria-labelledby="dgmT">
+<title id="dgmT">Plan view of a deck showing house wall, ledger, joists, beam, posts, joist span, cantilever and post spacing</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1a1a2e"/></marker></defs>
+<rect x="60" y="12" width="270" height="24" fill="#fff" stroke="#1a1a2e" stroke-width="1.5"/>
+<text id="tTop" x="195" y="29" text-anchor="middle" style="stroke:none;font-size:12px">HOUSE WALL + LEDGER</text>
+<line x1="60" y1="40" x2="330" y2="40" stroke="#0077b6" stroke-width="4"/>
+<g stroke="#0077b6" stroke-width="1.5" opacity=".45"><line x1="80" y1="40" x2="80" y2="232"/><line x1="105" y1="40" x2="105" y2="232"/><line x1="130" y1="40" x2="130" y2="232"/><line x1="155" y1="40" x2="155" y2="232"/><line x1="180" y1="40" x2="180" y2="232"/><line x1="205" y1="40" x2="205" y2="232"/><line x1="230" y1="40" x2="230" y2="232"/><line x1="255" y1="40" x2="255" y2="232"/><line x1="280" y1="40" x2="280" y2="232"/><line x1="305" y1="40" x2="305" y2="232"/></g>
+<line x1="60" y1="232" x2="330" y2="232" stroke="#0077b6" stroke-width="3"/>
+<line x1="60" y1="190" x2="330" y2="190" stroke="#0077b6" stroke-width="7"/>
+<g fill="#fff" stroke="#1a1a2e" stroke-width="2"><rect x="108" y="182" width="16" height="16"/><rect x="190" y="182" width="16" height="16"/><rect x="272" y="182" width="16" height="16"/></g>
+<line x1="44" y1="40" x2="44" y2="190" stroke="#1a1a2e" stroke-width="1.2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="44" y1="190" x2="44" y2="232" stroke="#1a1a2e" stroke-width="1.2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text x="52" y="106">Joist span</text><text id="tJ" x="52" y="123" style="font-weight:700">12 ft</text>
+<text x="52" y="212">Cantilever</text><text id="tC" x="52" y="226" style="font-weight:700" dy="0">1 ft</text>
+<g stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"><line x1="116" y1="198" x2="116" y2="270"/><line x1="198" y1="198" x2="198" y2="270"/><line x1="280" y1="198" x2="280" y2="270"/></g>
+<line x1="116" y1="262" x2="198" y2="262" stroke="#1a1a2e" stroke-width="1.2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="198" y1="262" x2="280" y2="262" stroke="#1a1a2e" stroke-width="1.2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tS1" x="157" y="280" text-anchor="middle" style="font-weight:700">8 ft</text>
+<text id="tS2" x="239" y="280" text-anchor="middle" style="font-weight:700">8 ft</text>
+<text x="198" y="297" text-anchor="middle" class="sm" style="stroke:none">Post spacing · plan view, not to scale</text>
+<text id="tB" x="326" y="177" text-anchor="end" style="font-weight:700;fill:#0077b6">Beam</text>
+</svg>
+</div>
+
+<div class="field"><label for="deckType">Deck type</label>
+<select id="deckType"><option value="att">Attached to house (ledger on one side)</option><option value="free">Freestanding (joists between two beams)</option></select></div>
+
+<div class="row">
+<div class="field"><label for="jS">Joist span, ledger to beam (ft)</label>
+<input type="number" id="jS" value="10" step="0.5" min="4" max="24" inputmode="decimal" aria-describedby="e_jS">
+<label for="jR" class="sr">Joist span slider</label><input type="range" id="jR" min="4" max="20" step="0.5" value="10">
+<div class="err" id="e_jS"></div></div>
+<div class="field"><label for="cant">Joist cantilever past beam (ft)</label>
+<input type="number" id="cant" value="1" step="0.25" min="0" inputmode="decimal" aria-describedby="e_cant">
+<div class="err" id="e_cant"></div></div>
+</div>
+
+<div class="field"><label for="pS">Beam span between posts (ft)</label>
+<input type="number" id="pS" value="8" step="0.5" min="3" max="20" inputmode="decimal" aria-describedby="e_pS">
+<label for="pR" class="sr">Post spacing slider</label><input type="range" id="pR" min="3" max="20" step="0.5" value="8">
+<div class="err" id="e_pS"></div></div>
+
+<div class="row">
+<div class="field"><label for="spec">Lumber species (No. 2 grade)</label>
+<select id="spec"><option value="sp">Southern Pine</option><option value="df">Douglas Fir-Larch</option><option value="hf">Hem-Fir</option><option value="spf">Spruce-Pine-Fir (SPF)</option></select></div>
+<div class="field"><label for="ll">Live load</label>
+<select id="ll"><option value="40">40 psf — standard deck (IRC)</option><option value="50">50 psf — light snow area</option><option value="60">60 psf — heavy snow area</option><option value="70">70 psf — high snow / crowds</option><option value="100">100 psf — hot tub (engineer needed)</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="dl">Dead load</label>
+<select id="dl"><option value="10">10 psf — wood or composite decking</option><option value="15">15 psf — heavy composite / pergola</option><option value="20">20 psf — pavers or tile</option></select></div>
+<div class="field"><label for="inc">Lumber treatment</label>
+<select id="inc"><option value="1">Pressure-treated, incised (conservative)</option><option value="0">Not incised / untreated</option></select></div>
+</div>
+<button id="go" type="button">Calculate beam size</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section class="content">
+<h2>How to Use This Deck Beam Size Calculator</h2>
+<p>Pick whether your deck is attached to the house or freestanding, then enter the joist span (ledger to beam, or beam to beam), how far the joists cantilever past the beam, and the distance between posts along the beam. Choose your lumber species, live load, dead load and treatment. The calculator returns the smallest beam that passes, the maximum post spacing for all six built-up options, the line load on the beam and an estimated load on each post.</p>
+
+<h2>Why This Matters</h2>
+<p>The beam is the part of a deck you cannot see failing until it is too late. It collects the load from every joist and funnels it into a handful of posts and footings. An undersized beam sags over time, cracks finishes, loosens fasteners and, in the worst case, lets a loaded deck collapse. Most serious deck failures are traced to ledger connections, but overspanned or poorly supported beams are a close second.</p>
+<p>Consider a typical 12 × 16 ft deck with joists spanning 12 ft off the house. At 50 psf total load, the beam carries roughly 300 pounds for every foot of its length. Spaced 8 ft apart, each interior post sees about 3,000 pounds. A 2-ply 2x8 that looks fine on paper may only span about 5 to 6 ft with that load, so skipping the math can mean the wrong lumber and too few posts.</p>
+<p>Homeowners use a deck beam size calculator while planning a build, contractors use it to price lumber and posts before bidding, and inspectors and permit counters see the same question daily. It is also useful when you want fewer footings: a heavier beam lets you stretch post spacing and dig fewer holes.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator uses allowable stress design for No. 2 dimension lumber in wet service, in the style of the NDS and the load assumptions of 2021 IRC R301.5 and R507 (40 psf live, 10 psf dead). It does not copy the IRC R507.5 span tables; it computes each beam and uses deliberately conservative lumber values. Local codes and amendments vary.</p>
+<p><strong>Tributary width.</strong> For a deck attached to a ledger, the beam reaction per foot is <em>w × (L + c)² ÷ (2L)</em>, where L is the joist span and c the cantilever. For a freestanding deck it is <em>w × (L ÷ 2 + c)</em>. Multiply by total psf and add the beam's own weight (40 lb/ft³).</p>
+<p><strong>Three limits are checked, and the smallest governs:</strong></p>
+<ul>
+<li>Bending: <em>span = √(8 × Fb′ × S ÷ (12 × w))</em></li>
+<li>Shear: <em>span = 4 × Fv′ × A ÷ (3 × w)</em>, with no reduction at the supports</li>
+<li>Deflection: L/360 for live load and L/240 for total load, from <em>Δ = 5wL⁴ ÷ (384 × E × I)</em></li>
+</ul>
+<p>Design values are reduced for wet service (Fb × 0.85, Fv × 0.97, E × 0.90) and, by default, for incising (Fb and Fv × 0.80, E × 0.95). Each result is rounded down to the next whole inch. Beams are treated as simple spans, which is conservative for bending over multiple posts.</p>
+
+<h2>Worked Example</h2>
+<p>Attached deck, Southern Pine, 10 ft joist span, 1 ft cantilever, posts 8 ft apart, 40 psf live, 10 psf dead, incised lumber.</p>
+<table><thead><tr><th>Step</th><th class="n">Result</th></tr></thead><tbody>
+<tr><td>Tributary width (10 + 1)² ÷ 20</td><td class="n">6.05 ft</td></tr>
+<tr><td>Joist load 6.05 × 50 psf</td><td class="n">302.5 plf</td></tr>
+<tr><td>Add 2-ply 2x12 self weight</td><td class="n">311.9 plf</td></tr>
+<tr><td>2-ply 2x8 max span (bending)</td><td class="n">6′ 2″ — fails</td></tr>
+<tr><td>2-ply 2x10 / 3-ply 2x8</td><td class="n">about 7′ 6″ — fail</td></tr>
+<tr><td>2-ply 2x12 max span (bending)</td><td class="n">8′ 8″ — passes at 8′</td></tr>
+<tr><td>Estimated max post load 1.25 × 311.9 × 8</td><td class="n">3,119 lb</td></tr>
+</tbody></table>
+<p>The 2-ply 2x12 is the smallest option that clears 8 ft. Deflection and shear allow far longer spans, so bending decides. The 3,119 lb post load then feeds your footing size.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Do not notch posts to seat the beam</strong> without checking local rules. Resting the beam on top of the post with a cap connector is the strongest approach.</li>
+<li><strong>Splice beam plies over a post</strong>, never mid-span, and stagger the joints between plies.</li>
+<li><strong>Keep the cantilever within one-fourth of the joist span.</strong> Larger cantilevers need engineered framing, and the calculator will not accept them.</li>
+<li><strong>Use the grade stamp.</strong> If your lumber is No. 1, No. 2 or a lesser grade, size to the stamp, not the species. Select No. 2 values only if that is what you are buying.</li>
+<li><strong>Do not stretch a result.</strong> If the table says 8′ 8″, plan for 8′ or less, and use the next size up when the span is within 10% of the limit.</li>
+<li><strong>Remember the footing.</strong> A stronger beam concentrates more load per post, so recheck footing size and frost depth.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What size beam do I need for a 12x12 deck?</summary><p>It depends on the joist span and post spacing, not on the deck footprint alone. A 12 ft joist span on an attached deck puts about 300 plf on the beam, which usually calls for a 2-ply 2x12 or a 3-ply 2x10 with posts around 6 to 8 ft apart. Run the numbers above with your exact setup.</p></details>
+<details><summary>How far can a 2-ply 2x10 beam span?</summary><p>With a 10 ft joist span, 50 psf total load and incised Southern Pine, a 2-ply 2x10 reaches roughly 7 to 7.5 ft between posts. Shorter joist spans and denser species such as Douglas fir stretch that further. Use the options table to see your exact figure.</p></details>
+<details><summary>Is a 3-ply beam better than a 2-ply beam?</summary><p>A 3-ply beam is 50% stronger in bending and stiffer than a 2-ply of the same depth, and it also gives a wider bearing surface on a 6x6 post. It costs more lumber and needs more fasteners, so compare the next depth up (for example, 2-ply 2x12 versus 3-ply 2x10).</p></details>
+<details><summary>Can I use this deck beam size calculator for a hot tub?</summary><p>You can enter 100 psf, but a filled hot tub often weighs several thousand pounds on a small footprint. Point loads like that are not covered by a uniform-load beam check, so have an engineer design the framing beneath it.</p></details>
+<details><summary>Does the beam go under the joists or between them?</summary><p>A dropped beam sits under the joists and is the simplest to build and the strongest for a given size. A flush beam has joists hung from it, which gives a lower profile but requires joist hangers and a deeper beam. This calculator assumes a dropped beam supporting joists on top.</p></details>
+<details><summary>Is this result enough to get a permit?</summary><p>No. It is a planning estimate based on common design values, not engineering, permit or inspection approval. Your building department may require its own span tables, and an inspector has the final say.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/deck-railing-baluster-spacing-calculator/">Deck Railing &amp; Baluster Spacing Calculator</a></li>
+<li><a href="/deck-footing-frost-depth-calculator/">Deck Footing Size &amp; Frost Depth Calculator</a></li>
+<li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li>
+<li><a href="/header-beam-size-calculator/">Header Beam Size Calculator</a></li>
+<li><a href="/deck-material-cost-estimator/">Deck Material &amp; Cost Estimator</a></li>
+<li><a href="/miter-angle-calculator/">Miter Angle Calculator</a></li>
+</ul>
+</section>
+</main>
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/deck-beam-size-calculator/">Toolwick</a></p>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var SPC={sp:{n:'Southern Pine',fb:825,fv:175,e:1.3e6},df:{n:'Douglas Fir-Larch',fb:900,fv:180,e:1.6e6},hf:{n:'Hem-Fir',fb:850,fv:150,e:1.3e6},spf:{n:'SPF',fb:875,fv:135,e:1.4e6}};
+var CF={'7.25':1.2,'9.25':1.1,'11.25':1.0};
+var SZ=[{n:'2x8',d:7.25},{n:'2x10',d:9.25},{n:'2x12',d:11.25}];
+var shown=false,copyTxt='';
+$('yr').textContent=new Date().getFullYear();
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function fv(n){return n.toLocaleString('en-US',{maximumFractionDigits:2})}
+function fi(ft){var t=Math.floor(ft*12+1e-6);return Math.floor(t/12)+'\u2032 '+(t%12)+'\u2033'}
+function num(id){var v=$(id).value.trim();return v===''?NaN:Number(v)}
+function setErr(id,m){var el=$(id);el.classList.toggle('bad',!!m);el.setAttribute('aria-invalid',m?'true':'false');$('e_'+id).textContent=m||''}
+function analyze(ply,sz,T,LL,DL,sp,inc){
+var b=1.5*ply,d=sz.d,A=b*d,S=b*d*d/6,I=b*d*d*d/12;
+var sw=A/144*40,wLL=T*LL,w=T*(LL+DL)+sw;
+var ci=inc?0.8:1,ce=inc?0.95:1;
+var Fb=sp.fb*CF[d]*0.85*ci,Fv=sp.fv*0.97*ci,E=sp.e*0.9*ce;
+var lb=Math.sqrt(8*Fb*S/(12*w)),lv=4*Fv*A/(3*w);
+var ld=Math.cbrt(384*E*I*12/(5*360*wLL))/12,lt=Math.cbrt(384*E*I*12/(5*240*w))/12;
+var m=Math.min(lb,lv,ld,lt,20),g=m===lb?'Bending':m===lv?'Shear':'Deflection';
+if(m>=20&&lb>20&&lv>20&&ld>20&&lt>20)g='20 ft cap';
+return {name:ply+'-ply '+sz.n,A:A,w:w,mx:Math.floor(m*12)/12,gov:g};
+}
+function diagram(L,c,S,beam,free){
+if(L>0)$('tJ').textContent=fv(L)+' ft';
+if(c>=0)$('tC').textContent=fv(c)+' ft';
+if(S>0){$('tS1').textContent=fv(S)+' ft';$('tS2').textContent=fv(S)+' ft'}
+$('tB').textContent=beam?'Beam: '+beam:'Beam';
+$('tTop').textContent=free?'SECOND BEAM (FREESTANDING)':'HOUSE WALL + LEDGER';
+}
+function calc(){
+var L=num('jS'),c=num('cant'),S=num('pS'),ok=true;
+if(!(L>=4&&L<=24)){setErr('jS','Enter a joist span between 4 and 24 ft.');ok=false}else setErr('jS','');
+if(isNaN(c)||c<0){setErr('cant','Enter 0 or more (use 0 for no cantilever).');ok=false}
+else if(L>=4&&L<=24&&c>L/4+1e-9){setErr('cant','Cantilever cannot exceed 1/4 of the joist span ('+fmt(L/4,2)+' ft max).');ok=false}
+else if(c>6){setErr('cant','Cantilever over 6 ft is not supported by this tool.');ok=false}
+else setErr('cant','');
+if(!(S>=3&&S<=20)){setErr('pS','Enter a post spacing between 3 and 20 ft.');ok=false}else setErr('pS','');
+if(!ok){shown=false;$('results').innerHTML='';return}
+var free=$('deckType').value==='free',LL=+$('ll').value,DL=+$('dl').value,inc=$('inc').value==='1',sp=SPC[$('spec').value];
+var T=free?L/2+c:(L+c)*(L+c)/(2*L);
+var opts=[];
+[2,3].forEach(function(p){SZ.forEach(function(s){opts.push(analyze(p,s,T,LL,DL,sp,inc))})});
+opts.sort(function(a,b){return a.A-b.A});
+var rec=null;
+for(var i=0;i<opts.length;i++){if(S<=opts[i].mx+1e-9){rec=opts[i];break}}
+var best=opts.reduce(function(a,b){return b.mx>a.mx?b:a});
+var ref=rec||opts.filter(function(o){return o.name==='3-ply 2x12'})[0];
+var postLoad=Math.ceil(1.25*ref.w*S);
+var h='<div class="fi">';
+var txt;
+if(rec){
+var close=S>rec.mx*0.9;
+h+='<div class="key"><small>Minimum beam size</small><div class="big">'+rec.name+'</div><div class="sub">'+sp.n+' No. 2 · max post spacing '+fi(rec.mx)+' ('+fmt(rec.mx,2)+' ft) · you entered '+fi(S)+'</div></div>';
+txt='Deck beam: '+rec.name+' ('+sp.n+' No. 2). Max post spacing '+fi(rec.mx)+'; entered '+fi(S)+'. Joist span '+fv(L)+' ft, cantilever '+fv(c)+' ft, '+(LL+DL)+' psf total. Est. max post load '+fmt(postLoad,0)+' lb. Planning estimate only; verify with local code.';
+}else{
+h+='<div class="key"><small>Result</small><div class="big fail">No built-up 2x beam is enough</div><div class="sub">The best option (3-ply 2x12) spans only '+fi(best.mx)+'. Reduce post spacing to '+fi(best.mx)+' or less, add a post, or have an engineer specify an LVL or steel beam.</div></div>';
+txt='Deck beam: no built-up 2x beam passes at '+fi(S)+' post spacing. Best option '+best.name+' spans '+fi(best.mx)+'. Reduce spacing or consult an engineer.';
+}
+h+='<div class="tw"><table><thead><tr><th>Quantity</th><th class="n">Value</th></tr></thead><tbody>'
++'<tr><td>Beam tributary width</td><td class="n">'+fmt(T,2)+' ft</td></tr>'
++'<tr><td>Total design load</td><td class="n">'+fmt(LL+DL,0)+' psf</td></tr>'
++'<tr><td>Line load on beam'+(rec?'':' (3-ply 2x12)')+'</td><td class="n">'+fmt(ref.w,1)+' plf</td></tr>'
++'<tr><td>Est. max post load (rounded up)</td><td class="n">'+fmt(postLoad,0)+' lb</td></tr>'
++'</tbody></table></div>';
+h+='<div class="tw"><table><thead><tr><th>Beam (built-up)</th><th class="n">Max post spacing</th><th>Governs</th><th>At '+fi(S)+'</th></tr></thead><tbody>';
+opts.forEach(function(o){
+var p=S<=o.mx+1e-9;
+h+='<tr'+(rec&&o===rec?' class="rec"':'')+'><td>'+o.name+(rec&&o===rec?' (smallest)':'')+'</td><td class="n">'+fi(o.mx)+' <span style="color:#666">('+fmt(o.mx,2)+' ft)</span></td><td>'+o.gov+'</td><td>'+(p?'\u2713 OK':'\u2717 Too long')+'</td></tr>';
+});
+h+='</tbody></table></div>';
+if(rec&&close)h+='<div class="note warn">Your post spacing is within 10% of this beam\u2019s limit. Consider the next size up or one more post.</div>';
+if(LL>=100)h+='<div class="note warn">A 100 psf load usually means a hot tub or heavy point loads. Uniform-load results are not enough; have an engineer design this framing.</div>';
+h+='<div class="note">Estimate only, based on NDS-style allowable stress design with conservative No. 2 lumber values, wet service'+(inc?' and incising':'')+', beams treated as simple spans, and the load basis of IRC R301.5/R507. Results are rounded down to the inch. Local codes vary. This is not engineering, permit or inspection approval. Confirm with your building department.</div>';
+h+='<button type="button" class="ghost" id="copyBtn">Copy result</button></div>';
+copyTxt=txt;
+requestAnimationFrame(function(){
+$('results').innerHTML=h;shown=true;
+diagram(L,c,S,rec?rec.name:null,free);
+});
+}
+function copy(){
+var b=$('copyBtn');
+function done(){b.textContent='Copied!';setTimeout(function(){var x=$('copyBtn');if(x)x.textContent='Copy result'},2000)}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(copyTxt).then(done,function(){fb()})}else fb();
+function fb(){var t=document.createElement('textarea');t.value=copyTxt;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);done()}
+}
+function sync(n,r){
+$(n).addEventListener('input',function(){var v=num(n);if(!isNaN(v))$(r).value=Math.min(Math.max(v,+$(r).min),+$(r).max);liveDgm()});
+$(r).addEventListener('input',function(){$(n).value=$(r).value;setErr(n,'');liveDgm();if(shown)requestAnimationFrame(calc)});
+}
+function liveDgm(){diagram(num('jS'),num('cant'),num('pS'),null,$('deckType').value==='free');if(shown){shown=false;$('results').innerHTML=''}}
+sync('jS','jR');sync('pS','pR');
+$('cant').addEventListener('input',liveDgm);
+$('deckType').addEventListener('change',liveDgm);
+$('go').addEventListener('click',function(){requestAnimationFrame(calc)});
+document.querySelector('.card').addEventListener('keydown',function(e){
+if(e.key==='Enter'&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')){e.preventDefault();requestAnimationFrame(calc)}
+});
+$('results').addEventListener('click',function(e){if(e.target.id==='copyBtn')copy()});
+['spec','ll','dl','inc'].forEach(function(i){$(i).addEventListener('change',function(){if(shown){shown=false;$('results').innerHTML=''}})});
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
