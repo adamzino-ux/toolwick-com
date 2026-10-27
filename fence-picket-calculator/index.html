@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Free Fence Picket Calculator | Toolwick</title>
+<meta name="description" content="Free fence picket calculator: enter fence length, picket width and gap to get pickets to buy, rails, fasteners and cost, with waste built in.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/fence-picket-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Fence Picket Calculator", "url": "https://toolwick.com/fence-picket-calculator/", "description": "Free fence picket calculator: enter fence length, picket width and gap to get pickets to buy, rails, fasteners and cost, with waste built in.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Fence Picket Calculator", "item": "https://toolwick.com/fence-picket-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many pickets do I need per foot of fence?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on width and gap. 5.5-inch pickets with no gap need about 2.2 per foot (12 ÷ 5.5), and with a half-inch gap exactly 2 per foot. Narrow 3.5-inch pickets with a 1-inch gap need about 2.7 per foot."}}, {"@type": "Question", "name": "How many pickets are in a 100 ft fence?", "acceptedAnswer": {"@type": "Answer", "text": "With 5.5-inch pickets, a 100 ft run needs 219 with no gaps, 201 with a half-inch gap, and 185 with a one-inch gap, before waste. Subtract any gates and add 5–10% for cuts and defects."}}, {"@type": "Question", "name": "How much gap should I leave between fence pickets?", "acceptedAnswer": {"@type": "Answer", "text": "Privacy fences use 0 to ¼ inch. Decorative or semi-private fences often use ½ to 3½ inches. Keep gaps below 4 inches wherever pool-barrier or child-safety rules apply, and confirm local requirements."}}, {"@type": "Question", "name": "How does board-on-board change the picket count?", "acceptedAnswer": {"@type": "Answer", "text": "The overlap shrinks the pitch, so you need more pickets. With 5.5-inch pickets and a 1-inch overlap, a 100 ft run needs about 267, roughly 22% more than a butted fence. The payoff is a fully private fence that stays opaque as the wood shrinks."}}, {"@type": "Question", "name": "How much waste should I add when ordering pickets?", "acceptedAnswer": {"@type": "Answer", "text": "Ten percent is a safe default for a first-time builder. Experienced crews may use 5% on straight, high-grade stock. Add more if you have many angles, a sloped site or a lot of warped lumber."}}, {"@type": "Question", "name": "Is this calculator enough to get a permit or sign off the build?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is a material estimator that rounds up on counts. Fence height, setbacks, pool barriers, wind exposure and HOA rules vary by location, so check with your local building department before you build."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+a{color:#0077b6;text-decoration:underline}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a.brand{font-weight:700;font-size:1.1rem;text-decoration:none;color:#0077b6;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.2;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2rem 0 .75rem;line-height:1.3}
+h3{font-size:1.1rem;margin:1.5rem 0 .5rem}
+.intro{color:#333;margin:0 0 2rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram svg text{font-size:15px;fill:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+.diagram p{margin:.25rem .5rem;font-size:.85rem;color:#666}
+.row{display:grid;gap:0 1rem}
+@media(min-width:641px){.row.two{grid-template-columns:1fr 1fr}}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6;margin:0}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.field.err input[type=number],.field.err select{border-color:#e74c3c}
+.errmsg{display:block;color:#c0392b;font-size:.85rem;margin-top:.35rem}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.chk{display:flex;align-items:center;gap:.6rem;min-height:44px;margin-bottom:.75rem}
+.chk input{width:22px;height:22px;accent-color:#0077b6;margin:0}
+.chk label{margin:0;font-size:.95rem}
+button.btn{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:44px;width:100%;cursor:pointer;font-family:inherit}
+button.btn:hover{background:#006299}
+button.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.9rem;min-height:44px;cursor:pointer;font-family:inherit;margin-top:1rem}
+button.copy:hover{background:#f0f7fb}
+.results{opacity:0;transition:opacity .3s ease;margin-top:2rem}
+.results.show{opacity:1}
+.rbox{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.rbox .l{font-size:.85rem;color:#444;font-weight:500}
+.big{font-size:2.8rem;font-weight:700;color:#0077b6;line-height:1.1}
+.rbox p{margin:.4rem 0 0;color:#444;font-size:.95rem}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;font-weight:600}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right;white-space:nowrap}
+tr.tot td{font-weight:700;color:#0077b6}
+tr.cur td{font-weight:700}
+ul.warn{background:#fff8e6;border-left:4px solid #b7791f;margin:1rem 0;padding:.75rem 1rem .75rem 2rem;color:#4a3500;font-size:.92rem}
+.note{font-size:.85rem;color:#666}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;font-weight:600;padding:12px 0;min-height:44px}
+details p{margin:0 0 1rem}
+.formula{background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.95rem;overflow-x:auto}
+.related{list-style:none;padding:0;margin:0}
+.related li{padding:.35rem 0;min-height:44px}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2.5rem;text-align:center;color:#666;font-size:.9rem}
+footer a{color:#0077b6;display:inline-block;padding:10px 6px}
+@media(max-width:640px){.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.4rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/fence-picket-calculator/">
+<meta property="og:title" content="Fence Picket Calculator">
+<meta property="og:description" content="Free fence picket calculator: enter fence length, picket width and gap to get pickets to buy, rails, fasteners and cost, with waste built in.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<nav><a class="brand" href="/">Toolwick</a></nav>
+
+<h1>Fence Picket Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p class="intro">This fence picket calculator tells you exactly how many pickets to buy for a fence of any length. It handles gaps, privacy and board-on-board layouts, gates and a waste allowance, and also estimates rails, fasteners and cost.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="dg" viewBox="0 0 520 300" role="img" aria-labelledby="dgt">
+<title id="dgt">Fence elevation showing picket width, gap or overlap, post spacing and fence height</title>
+<g id="dgc"></g>
+</svg>
+<p>Elevation of one fence section. Pickets are enlarged to show detail and are not drawn to scale along the run.</p>
+</div>
+
+<form id="f" novalidate>
+<div class="row two">
+<div class="field" id="fld-len">
+<label for="len">Total fence length (ft)</label>
+<input type="number" id="len" inputmode="decimal" min="0" step="any" value="100" aria-describedby="err-len">
+<span class="errmsg" id="err-len"></span>
+</div>
+<div class="field" id="fld-pw">
+<label for="pw">Picket width (in)</label>
+<input type="number" id="pw" inputmode="decimal" min="1" max="12" step="any" value="5.5" aria-describedby="err-pw hint-pw">
+<span class="hint" id="hint-pw">Actual width: nominal 1×6 = 5.5 in, 1×4 = 3.5 in.</span>
+<span class="errmsg" id="err-pw"></span>
+</div>
+</div>
+
+<div class="field">
+<label for="style">Picket layout</label>
+<select id="style">
+<option value="gap" selected>Side-by-side (gap between pickets, 0 = privacy)</option>
+<option value="bob">Board-on-board (pickets overlap)</option>
+</select>
+</div>
+
+<div class="field" id="fld-gap">
+<label for="gap"><span id="gapName">Gap between pickets</span>: <span id="gapOut">0.5 in</span></label>
+<input type="range" id="gap" min="0" max="6" step="0.125" value="0.5" aria-describedby="err-gap">
+<div class="ticks" aria-hidden="true"><span id="t0">0 in</span><span id="t1">3 in</span><span id="t2">6 in</span></div>
+<span class="errmsg" id="err-gap"></span>
+</div>
+
+<div class="row two">
+<div class="field" id="fld-ht">
+<label for="ht">Fence height (ft)</label>
+<input type="number" id="ht" inputmode="decimal" min="1" max="12" step="any" value="6" aria-describedby="err-ht">
+<span class="errmsg" id="err-ht"></span>
+</div>
+<div class="field" id="fld-ps">
+<label for="ps">Post spacing (ft, center to center)</label>
+<input type="number" id="ps" inputmode="decimal" min="2" max="12" step="any" value="8" aria-describedby="err-ps">
+<span class="errmsg" id="err-ps"></span>
+</div>
+</div>
+
+<div class="row two">
+<div class="field" id="fld-gn">
+<label for="gn">Number of gates</label>
+<input type="number" id="gn" inputmode="numeric" min="0" step="1" value="1" aria-describedby="err-gn">
+<span class="errmsg" id="err-gn"></span>
+</div>
+<div class="field" id="fld-gw">
+<label for="gw">Width of each gate (ft)</label>
+<input type="number" id="gw" inputmode="decimal" min="2" max="20" step="any" value="4" aria-describedby="err-gw">
+<span class="errmsg" id="err-gw"></span>
+</div>
+</div>
+<div class="chk"><input type="checkbox" id="gp" checked><label for="gp">Gates will be covered with pickets</label></div>
+
+<div class="field">
+<label for="waste">Waste allowance: <span id="wOut">10%</span></label>
+<input type="range" id="waste" min="0" max="25" step="1" value="10">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>25%</span></div>
+</div>
+
+<div class="field" id="fld-price">
+<label for="price">Price per picket ($, optional)</label>
+<input type="number" id="price" inputmode="decimal" min="0" step="any" placeholder="e.g. 2.50" aria-describedby="err-price">
+<span class="errmsg" id="err-price"></span>
+</div>
+
+<button type="submit" class="btn">Calculate pickets</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div class="results" id="results" aria-live="polite" aria-atomic="true"></div>
+<div id="copyWrap" hidden><button type="button" class="copy" id="copyBtn">Copy results</button></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/fence-picket-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Fence Picket Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/fence-picket-calculator/&quot;&gt;Fence Picket Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/fence-picket-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Fence Picket Calculator</h2>
+<p>Enter the total length of fence, the actual width of one picket, and choose either a side-by-side layout (set the gap, or 0 for full privacy) or board-on-board (set the overlap). Add the fence height, post spacing and any gates, then press Calculate. You get the number of pickets to buy including waste, plus rails, fasteners, an optional cost and a table comparing other gap choices. The diagram redraws with your own numbers.</p>
+
+<h2>Why This Matters</h2>
+<p>Pickets are usually the biggest line item in a wood fence by piece count. A 100-foot run with 5.5-inch pickets takes 219 pickets with no gaps, 201 with a half-inch gap, and 185 with a one-inch gap. At $2.50 to $4 each, that 34-picket spread is $85 to $136. Lumber from different lots also varies in color and moisture, so running short and returning a month later often leaves a visibly mismatched strip of fence.</p>
+<p>Homeowners use a picket count to compare contractor quotes. DIYers use it to place a single lumber order, and landscapers use it to price jobs. It also matters for compliance. Many jurisdictions cap fence height, commonly around 4 ft in front yards and 6 ft in back yards. Pool barriers and child-safety rules commonly require openings smaller than 4 inches, which limits how wide your gap can be. Local rules and HOA covenants vary, so confirm them before you buy.</p>
+
+<h2>How It's Calculated</h2>
+<p>The first picket takes one full width. Each additional picket then adds one "pitch", the center-to-center distance between neighbors. The calculator rounds up so you are never one picket short.</p>
+<p class="formula">Pickets = ⌈(R − w) ÷ pitch⌉ + 1</p>
+<p>R is the run length in inches and w is the picket width. Pitch is w + gap for a side-by-side fence, or w − overlap for board-on-board. Gates use the same formula with each gate's width and are added only if you choose to picket them.</p>
+<p class="formula">Total to buy = ⌈(fence + gate pickets) × (1 + waste %)⌉</p>
+<p>Post sections equal the net run divided by post spacing, rounded up. Rails per section follow a common rule of thumb, not a code requirement: 2 rails up to 4 ft tall, 3 rails up to 6 ft, and 4 rails above that. Fasteners are pickets × rails × 2, one pair where each picket crosses each rail. If you spread the pickets evenly, the real gap becomes (R − n × w) ÷ (n − 1), where n is the picket count. The tool shows this fit under the results table.</p>
+
+<h2>Worked Example</h2>
+<p>These are the default values in the tool: a 100 ft fence, 5.5 in pickets, 0.5 in gap, 6 ft tall, posts 8 ft apart, one 4 ft picketed gate and 10% waste.</p>
+<ol>
+<li>Net fence run: 100 − 4 = 96 ft = 1,152 in.</li>
+<li>Pitch: 5.5 + 0.5 = 6 in.</li>
+<li>Fence pickets: (1,152 − 5.5) ÷ 6 = 191.08, rounded up to 192, plus 1 = <strong>193</strong>.</li>
+<li>Gate pickets: 4 ft = 48 in, so (48 − 5.5) ÷ 6 = 7.08, rounded up to 8, plus 1 = <strong>9</strong>.</li>
+<li>Subtotal 202. With 10% waste: 222.2, rounded up to <strong>223 pickets to buy</strong>.</li>
+<li>Sections: 96 ÷ 8 = 12. A 6 ft fence uses 3 rails, so 36 rail pieces.</li>
+<li>Fasteners: 223 × 3 × 2 = <strong>1,338</strong>.</li>
+<li>Even-spread gap: (1,152 − 5.5) ÷ 192 = 5.971 in pitch, minus 5.5 = about 0.47 in.</li>
+<li>At $2.50 per picket, 223 × $2.50 = $557.50.</li>
+</ol>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use actual widths, not nominal.</strong> A "1×6" picket is about 5.5 in wide, and dog-ear or cedar pickets can differ. Measure one from the stack.</li>
+<li><strong>Subtract gate openings from the run.</strong> Counting gates as fence and then adding gate pickets double-counts them. The tool handles this for you.</li>
+<li><strong>Keep gaps under 4 in if children or pools are involved.</strong> Many local rules use a 4-inch sphere test. Check with your building department.</li>
+<li><strong>Expect wet lumber to shrink.</strong> Pressure-treated pickets installed wet open up as they dry, so butt them tightly for privacy and allow a slightly higher waste figure.</li>
+<li><strong>Use corrosion-resistant fasteners.</strong> Hot-dip galvanized or stainless screws and nails suit treated lumber. Buy extra, since fasteners are cheap and trips are not.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many pickets do I need per foot of fence?</summary><p>It depends on width and gap. 5.5-inch pickets with no gap need about 2.2 per foot (12 ÷ 5.5), and with a half-inch gap exactly 2 per foot. Narrow 3.5-inch pickets with a 1-inch gap need about 2.7 per foot.</p></details>
+<details><summary>How many pickets are in a 100 ft fence?</summary><p>With 5.5-inch pickets, a 100 ft run needs 219 with no gaps, 201 with a half-inch gap, and 185 with a one-inch gap, before waste. Subtract any gates and add 5–10% for cuts and defects.</p></details>
+<details><summary>How much gap should I leave between fence pickets?</summary><p>Privacy fences use 0 to ¼ inch. Decorative or semi-private fences often use ½ to 3½ inches. Keep gaps below 4 inches wherever pool-barrier or child-safety rules apply, and confirm local requirements.</p></details>
+<details><summary>How does board-on-board change the picket count?</summary><p>The overlap shrinks the pitch, so you need more pickets. With 5.5-inch pickets and a 1-inch overlap, a 100 ft run needs about 267, roughly 22% more than a butted fence. The payoff is a fully private fence that stays opaque as the wood shrinks.</p></details>
+<details><summary>How much waste should I add when ordering pickets?</summary><p>Ten percent is a safe default for a first-time builder. Experienced crews may use 5% on straight, high-grade stock. Add more if you have many angles, a sloped site or a lot of warped lumber.</p></details>
+<details><summary>Is this calculator enough to get a permit or sign off the build?</summary><p>No. It is a material estimator that rounds up on counts. Fence height, setbacks, pool barriers, wind exposure and HOA rules vary by location, so check with your local building department before you build.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="related">
+<li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a></li>
+<li><a href="/fence-material-calculator/">Fence Material Calculator</a></li>
+<li><a href="/deck-stain-calculator/">Deck Stain Calculator</a></li>
+<li><a href="/joist-spacing-layout-calculator/">Joist Spacing &amp; Layout Calculator</a></li>
+<li><a href="/deck-beam-size-calculator/">Deck Beam Size Calculator</a></li>
+<li><a href="/miter-angle-calculator/">Miter Angle Calculator</a></li>
+</ul>
+
+<nav class="cluster-nav" aria-label="More Roofing &amp; Exterior Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Roofing &amp; Exterior Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/fence-material-calculator/">Fence Material Calculator</a></li><li><a href="/asphalt-shingle-calculator/">Asphalt Shingle Calculator</a></li><li><a href="/deck-material-cost-estimator/">Deck Material &amp; Cost Estimator</a></li><li><a href="/deck-railing-baluster-spacing-calculator/">Deck Railing &amp; Baluster Spacing Calculator</a></li><li><a href="/deck-stain-calculator/">Deck Stain Calculator</a></li><li><a href="/drip-edge-roof-trim-calculator/">Drip Edge &amp; Roof Trim Calculator</a></li><li><a href="/egress-window-size-well-calculator/">Egress Window Size &amp; Well Calculator</a></li><li><a href="/ridge-cap-shingle-calculator/">Ridge Cap Shingle Calculator</a></li><li><a href="/roofing-calculators/"><strong>All Roofing &amp; Exterior calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<p><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</footer>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const f=(n,d=0)=>Number(n).toLocaleString('en-US',{maximumFractionDigits:d});
+const money=n=>'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const res=$('results');
+let calculated=false,lastText='';
+$('yr').textContent=new Date().getFullYear();
+
+function num(id){const v=$(id).value.trim();return v===''?NaN:Number(v)}
+function count(R,w,p){if(R<=0)return 0;return Math.max(1,Math.ceil((R-w)/p-1e-9)+1)}
+function railsFor(h){return h<=4?2:(h<=6?3:4)}
+function withWaste(b,w){return Math.ceil(b*(100+w)/100-1e-9)}
+
+function clearErrs(){
+document.querySelectorAll('.field.err').forEach(e=>e.classList.remove('err'));
+document.querySelectorAll('.errmsg').forEach(e=>e.textContent='');
+document.querySelectorAll('[aria-invalid]').forEach(e=>e.removeAttribute('aria-invalid'));
+}
+function setErr(id,m){
+$('fld-'+id).classList.add('err');$('err-'+id).textContent=m;$(id).setAttribute('aria-invalid','true');
+}
+
+function setStyle(reset){
+const bob=$('style').value==='bob',g=$('gap');
+$('gapName').textContent=bob?'Overlap between pickets':'Gap between pickets';
+g.max=bob?3:6;
+if(reset)g.value=bob?1:0.5;
+$('t1').textContent=bob?'1.5 in':'3 in';
+$('t2').textContent=bob?'3 in':'6 in';
+updLabels();
+}
+function updLabels(){
+const g=+$('gap').value;
+$('gapOut').textContent=f(g,3)+' in';
+$('gap').setAttribute('aria-valuetext',f(g,3)+' inches');
+$('wOut').textContent=$('waste').value+'%';
+}
+
+function drawDiagram(pw,gv,bob,ht,ps,per,rails){
+const pitch=bob?pw-gv:pw+gv;
+const s=Math.min(290/(5*pitch+pw),18),x0=52,top=62,gnd=240;
+const T=(x,y,str,a)=>`<text x="${x}" y="${y}" text-anchor="${a||'middle'}">${str}</text>`;
+let g='<rect x="24" y="44" width="14" height="212" fill="#e0e0e0" stroke="#1a1a2e"/><rect x="420" y="44" width="14" height="212" fill="#e0e0e0" stroke="#1a1a2e"/>';
+({2:[100,200],3:[95,150,205],4:[90,130,170,210]})[rails].forEach(y=>{g+=`<rect x="38" y="${y-5}" width="382" height="10" fill="#cfcfcf" stroke="#1a1a2e" stroke-width=".6"/>`});
+(bob?[0,2,4,1,3,5]:[0,1,2,3,4,5]).forEach(i=>{
+g+=`<rect x="${(x0+i*pitch*s).toFixed(1)}" y="${top}" width="${(pw*s).toFixed(1)}" height="${gnd-top}" fill="${i%2?'#dcedf7':'#f4fafd'}" stroke="#0077b6" stroke-width="1.5"/>`});
+g+=`<line x1="8" y1="${gnd}" x2="512" y2="${gnd}" stroke="#1a1a2e" stroke-width="1.5"/>`;
+g+=`<text x="385" y="160" text-anchor="middle" style="font-size:26px">…</text>`;
+const xa=x0,xb=x0+pw*s;
+g+=`<line x1="${xa}" y1="50" x2="${xb.toFixed(1)}" y2="50" stroke="#0077b6" stroke-width="2"/><line x1="${xa}" y1="45" x2="${xa}" y2="55" stroke="#0077b6" stroke-width="2"/><line x1="${xb.toFixed(1)}" y1="45" x2="${xb.toFixed(1)}" y2="55" stroke="#0077b6" stroke-width="2"/>`;
+g+=T(((xa+xb)/2).toFixed(1),40,f(pw,2)+' in');
+const a=x0+pw*s,b=x0+pitch*s,xl=Math.min(a,b),xr=Math.max(a,b);
+g+=`<line x1="${xl.toFixed(1)}" y1="${gnd}" x2="${xl.toFixed(1)}" y2="278" stroke="#e0e0e0" stroke-dasharray="3 3"/><line x1="${xr.toFixed(1)}" y1="${gnd}" x2="${xr.toFixed(1)}" y2="278" stroke="#e0e0e0" stroke-dasharray="3 3"/>`;
+g+=`<line x1="${(xl-.5).toFixed(1)}" y1="272" x2="${(xr+.5).toFixed(1)}" y2="272" stroke="#0077b6" stroke-width="2"/><line x1="${xl.toFixed(1)}" y1="266" x2="${xl.toFixed(1)}" y2="278" stroke="#0077b6" stroke-width="2"/><line x1="${xr.toFixed(1)}" y1="266" x2="${xr.toFixed(1)}" y2="278" stroke="#0077b6" stroke-width="2"/>`;
+g+=T(Math.max(50,((xl+xr)/2)).toFixed(1),293,(bob?'overlap ':'gap ')+f(gv,3)+' in');
+g+=`<line x1="31" y1="24" x2="427" y2="24" stroke="#0077b6" stroke-width="2"/><line x1="31" y1="19" x2="31" y2="29" stroke="#0077b6" stroke-width="2"/><line x1="427" y1="19" x2="427" y2="29" stroke="#0077b6" stroke-width="2"/>`;
+g+=T(229,16,'post spacing '+f(ps,2)+' ft');
+g+=`<line x1="434" y1="${top}" x2="472" y2="${top}" stroke="#e0e0e0" stroke-dasharray="3 3"/><line x1="462" y1="${top}" x2="462" y2="${gnd}" stroke="#0077b6" stroke-width="2"/><line x1="456" y1="${top}" x2="468" y2="${top}" stroke="#0077b6" stroke-width="2"/><line x1="456" y1="${gnd}" x2="468" y2="${gnd}" stroke="#0077b6" stroke-width="2"/>`;
+g+=T(472,155,f(ht,2)+' ft','start');
+g+=T(512,293,'≈ '+f(per)+' pickets per '+f(ps,2)+' ft section','end');
+$('dgc').innerHTML=g;
+}
+
+function calc(){
+clearErrs();
+const bob=$('style').value==='bob';
+const len=num('len'),pw=num('pw'),ht=num('ht'),ps=num('ps'),gn=num('gn');
+let gw=num('gw');
+const gv=+$('gap').value,waste=+$('waste').value,gp=$('gp').checked,pr=$('price').value.trim();
+let ok=true;
+const bad=(id,m)=>{setErr(id,m);ok=false};
+if(!(len>0))bad('len','Enter a fence length greater than 0 ft.');
+else if(len>50000)bad('len','Enter a length of 50,000 ft or less.');
+if(!(pw>=1&&pw<=12))bad('pw','Enter a picket width between 1 and 12 inches.');
+else if(bob&&gv>pw/2+1e-9)bad('gap','Overlap cannot exceed half the picket width ('+f(pw/2,2)+' in). Slide it lower.');
+if(!(ht>=1&&ht<=12))bad('ht','Enter a fence height between 1 and 12 ft.');
+if(!(ps>=2&&ps<=12))bad('ps','Enter a post spacing between 2 and 12 ft.');
+if(!(Number.isInteger(gn)&&gn>=0&&gn<=100))bad('gn','Enter a whole number of gates from 0 to 100.');
+else if(gn>0){
+if(!(gw>=2&&gw<=20))bad('gw','Enter a gate width between 2 and 20 ft.');
+else if(len>0&&gn*gw>len+1e-9)bad('gn','Gates are wider than the whole fence run. Reduce the gate count or width.');
+}else gw=0;
+let pc=null;
+if(pr!==''){pc=Number(pr);if(!(pc>=0&&pc<=10000))bad('price','Enter a price of $0 or more, or leave it blank.')}
+if(!ok){res.classList.remove('show');res.innerHTML='';$('copyWrap').hidden=true;return}
+
+const netLen=len-gn*gw,Rin=netLen*12;
+const pitch=bob?pw-gv:pw+gv;
+const gateEach=(gp&&gn>0)?count(gw*12,pw,pitch):0;
+const fenceN=Rin>1e-9?count(Rin,pw,pitch):0;
+const gateN=gateEach*gn;
+const base=fenceN+gateN,total=withWaste(base,waste),extra=total-base;
+const sections=netLen>1e-9?Math.ceil(netLen/ps-1e-9):0;
+const rails=railsFor(ht),railPcs=sections*rails,fast=total*rails*2;
+const per=count(ps*12,pw,pitch);
+
+let fit='';
+if(fenceN>=2){
+const pe=(Rin-pw)/(fenceN-1),ge=pe-pw,lastW=Rin-(fenceN-1)*pitch;
+if(bob)fit='Spread evenly across the run, the overlap is about '+f(pw-pe,2)+' in per picket.';
+else if(ge>=-1e-9)fit='Spread evenly across the run, the gap is about '+f(Math.max(ge,0),2)+' in.';
+else if(lastW>0&&lastW<pw)fit='Pickets cannot spread evenly without touching, so plan to trim the last picket to about '+f(lastW,2)+' in wide.';
+else fit='Pickets cannot spread evenly at this gap. Trim the last picket or adjust the gap slightly.';
+}
+
+const warns=[];
+if(!bob&&gv>=4)warns.push('Gaps of 4 in or more can fail pool-barrier and child-safety rules, which commonly require that a 4-inch sphere cannot pass. Verify with your local building department.');
+if(ps>8)warns.push('Post spacing over 8 ft can let rails sag. Consider 6–8 ft spacing and confirm rail size.');
+if(ht>6)warns.push('Fences over 6 ft often need a permit or exceed local height limits. Check before building.');
+if(waste<5)warns.push('A waste allowance under 5% leaves no room for splits, warped boards or cutting mistakes.');
+
+const row=(l,v,c)=>`<tr${c?' class="'+c+'"':''}><td>${l}</td><td class="n">${v}</td></tr>`;
+let h=`<div class="rbox"><div class="l">Pickets to buy</div><div class="big">${f(total)}</div><p>${f(base)} needed + ${f(extra)} spare (${f(waste)}% waste, rounded up)</p></div>`;
+h+='<div class="tw"><table><thead><tr><th>Item</th><th class="n">Amount</th></tr></thead><tbody>';
+h+=row('Fence run (excluding gates)',f(netLen,2)+' ft');
+h+=row('Gate openings',gn>0?f(gn)+' × '+f(gw,2)+' ft':'None');
+h+=row('Picket spacing (center to center)',f(pitch,3)+' in');
+h+=row('Pickets for fence run',f(fenceN));
+h+=row('Pickets for gates',gn>0&&gp?f(gateN):'—');
+h+=row('Pickets needed before waste',f(base));
+h+=row('Waste allowance ('+f(waste)+'%)','+'+f(extra));
+h+=row('Total pickets to buy',f(total),'tot');
+h+=row('Post-to-post sections',f(sections));
+h+=row('Rails per section (rule of thumb)',f(rails));
+h+=row('Rail pieces (one per section per rail)',f(railPcs));
+h+=row('Fasteners (2 per picket per rail)',f(fast));
+if(pc!==null)h+=row('Estimated picket cost',money(total*pc),'tot');
+h+='</tbody></table></div>';
+if(fit)h+=`<p class="note">Layout fit: ${fit}</p>`;
+if(warns.length)h+='<ul class="warn">'+warns.map(w=>'<li>'+w+'</li>').join('')+'</ul>';
+
+const cmp=[['Privacy, no gap',pw],['¼ in gap',pw+.25],['½ in gap',pw+.5],['1 in gap',pw+1],['2 in gap',pw+2],['3½ in gap',pw+3.5]];
+if(pw/2>=1)cmp.push(['Board-on-board, 1 in overlap',pw-1]);
+if(pw/2>=1.5)cmp.push(['Board-on-board, 1½ in overlap',pw-1.5]);
+h+='<h3>Compare layouts</h3><div class="tw"><table><thead><tr><th>Layout</th><th class="n">Pickets</th><th class="n">With waste</th></tr></thead><tbody>';
+cmp.forEach(c=>{
+const b=(Rin>1e-9?count(Rin,pw,c[1]):0)+(gp&&gn>0?gn*count(gw*12,pw,c[1]):0);
+const cur=Math.abs(c[1]-pitch)<1e-9;
+h+=`<tr${cur?' class="cur"':''}><td>${c[0]}${cur?' (your setting)':''}</td><td class="n">${f(b)}</td><td class="n">${f(withWaste(b,waste))}</td></tr>`;
+});
+h+='</tbody></table></div>';
+h+='<p class="note">Estimate only. Counts and fasteners are rounded up. Rail counts are a common rule of thumb, not a code requirement. Fence height limits, setbacks, pool-barrier rules and HOA covenants vary by location. This is not engineering, permit or inspection approval.</p>';
+
+lastText=['Fence picket estimate (toolwick.com)',
+'Fence run: '+f(netLen,2)+' ft; gates: '+(gn>0?gn+' × '+f(gw,2)+' ft':'none'),
+'Picket width: '+f(pw,2)+' in; '+(bob?'overlap ':'gap ')+f(gv,3)+' in; pitch '+f(pitch,3)+' in',
+'Pickets (fence): '+f(fenceN)+'; gates: '+f(gateN)+'; before waste: '+f(base),
+'Total pickets to buy (+'+waste+'% waste): '+f(total),
+'Post sections: '+f(sections)+'; rails/section: '+rails+'; rail pieces: '+f(railPcs),
+'Fasteners: '+f(fast)+(pc!==null?'; cost: '+money(total*pc):'')].join('\n');
+
+requestAnimationFrame(()=>{
+res.classList.remove('show');
+res.innerHTML=h;
+drawDiagram(pw,gv,bob,ht,ps,per,rails);
+$('copyWrap').hidden=false;
+requestAnimationFrame(()=>res.classList.add('show'));
+});
+calculated=true;
+}
+
+function run(){requestAnimationFrame(calc)}
+$('f').addEventListener('submit',e=>{e.preventDefault();run()});
+$('style').addEventListener('change',()=>{setStyle(true);if(calculated)run()});
+$('gap').addEventListener('input',()=>{updLabels();if(calculated)run()});
+$('waste').addEventListener('input',()=>{updLabels();if(calculated)run()});
+$('gp').addEventListener('change',()=>{if(calculated)run()});
+
+$('copyBtn').addEventListener('click',()=>{
+const b=$('copyBtn');
+const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+const fb=()=>{const t=document.createElement('textarea');t.value=lastText;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(t)};
+if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(lastText).then(done,fb);else fb();
+});
+
+updLabels();
+run();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
