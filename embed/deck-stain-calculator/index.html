@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Deck Stain Calculator | Toolwick</title>
+<meta name="description" content="Free deck stain calculator: estimate how many gallons of stain you need for deck boards, railings and stairs, with coats, waste and cost.">
+<link rel="canonical" href="https://toolwick.com/deck-stain-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #eee}
+nav a{display:inline-flex;align-items:center;min-height:44px;font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none}
+h1{font-size:1.9rem;line-height:1.25;margin:1.5rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.25rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.intro{color:#333}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram text{fill:#1a1a2e;font-family:inherit}
+.field{margin-bottom:1.1rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px;background:transparent}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px}
+input.invalid,select.invalid{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666;padding:0 4px}
+.group{background:#f8f9fa;border-radius:8px;padding:1.25rem 1.25rem .25rem;margin-bottom:1.25rem}
+.group h3{margin:0 0 .9rem;font-size:.95rem}
+.btn{display:block;width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+.btn:focus-visible,.copy:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.results{opacity:0;transition:opacity .3s ease;margin-top:0}
+.results.show{opacity:1}
+.results:not(:empty){margin-top:2rem}
+.klabel{font-size:.85rem;font-weight:500;color:#444;text-transform:uppercase;letter-spacing:.04em}
+.key{font-size:2.6rem;line-height:1.15;font-weight:700;color:#0077b6}
+.sub{color:#333;margin:.5rem 0 1rem}
+.bar{display:flex;height:14px;border-radius:7px;overflow:hidden;background:#eee;margin:.5rem 0 .25rem}
+.bar span{display:block;height:100%}
+.legend{font-size:.8rem;color:#555;margin-bottom:1.25rem}
+.tw{overflow-x:auto;margin:.5rem 0 1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right}
+tr.sel td,tr.tot td{font-weight:700}
+.res-h{font-size:1rem;margin:1.25rem 0 .25rem}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;min-height:44px;padding:8px 16px;font-size:.9rem;cursor:pointer;font-family:inherit}
+.copy:hover{background:#f0f7fb}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;margin-top:1.25rem}
+.safety{font-size:.85rem;line-height:1.5;color:#4a3b00;background:#fff8e1;border-left:3px solid #e0a800;padding:.8rem 1rem;margin:0 0 2rem}
+.ad-slot{min-height:0;margin:0}
+ul{padding-left:1.25rem;margin:0 0 1rem}
+li{margin-bottom:.5rem}
+details{border-bottom:1px solid #e8e8e8}
+summary{cursor:pointer;font-weight:600;padding:12px 0;min-height:44px}
+details p{color:#333}
+.formula{background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;margin:0 0 1rem;font-size:.92rem}
+.related{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1rem}
+.related li{margin:0}
+.related a{display:flex;align-items:center;min-height:44px}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:640px){
+.row,.related{grid-template-columns:1fr}
+.card{padding:1.25rem}
+h1{font-size:1.6rem}
+.key{font-size:2.2rem}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/deck-stain-calculator/">
+<meta property="og:title" content="Deck Stain Calculator">
+<meta property="og:description" content="Free deck stain calculator: estimate how many gallons of stain you need for deck boards, railings and stairs, with coats, waste and cost.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<div class="wrap">
+<main>
+<h1>Deck Stain Calculator</h1>
+<p class="intro">This deck stain calculator estimates how many gallons of stain you need for your deck floor, railings and stairs. Enter your measurements, pick a stain type and number of coats, and get a rounded-up shopping quantity with an estimated cost.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="diagram" viewBox="0 0 400 260" role="img" aria-labelledby="dgT">
+<title id="dgT">Top-down deck diagram showing length, width, railing and stairs with your values</title>
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker>
+<pattern id="bd" width="10" height="9" patternUnits="userSpaceOnUse"><path d="M0 9H10" stroke="#e0e0e0" stroke-width="1"/></pattern>
+</defs>
+<rect id="gRail" fill="none" stroke="#0077b6" stroke-width="2" stroke-dasharray="6 4"/>
+<rect id="gDeck" fill="#f0f7fb" stroke="#0077b6" stroke-width="2.5"/>
+<rect id="gBd" fill="url(#bd)"/>
+<g id="gSt"></g>
+<line id="x1" stroke="#e0e0e0" stroke-dasharray="3 3"/><line id="x2" stroke="#e0e0e0" stroke-dasharray="3 3"/>
+<line id="x3" stroke="#e0e0e0" stroke-dasharray="3 3"/><line id="x4" stroke="#e0e0e0" stroke-dasharray="3 3"/>
+<line id="dT" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line id="dL" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tT" font-size="14" font-weight="600" text-anchor="middle"></text>
+<text id="tL" font-size="14" font-weight="600" text-anchor="end"></text>
+<text id="tD1" font-size="14" text-anchor="middle"></text>
+<text id="tD2" font-size="14" font-weight="700" text-anchor="middle"></text>
+<text id="tS" font-size="13" text-anchor="middle"></text>
+<g id="gLg"><line x1="16" y1="226" x2="42" y2="226" stroke="#0077b6" stroke-width="2" stroke-dasharray="6 4"/><text id="tR" x="48" y="231" font-size="13"></text></g>
+<text id="tSum" x="200" y="250" font-size="14" font-weight="700" text-anchor="middle"></text>
+</svg>
+</div>
+
+<div id="form">
+<div class="field">
+<label for="unit">Measurement units</label>
+<select id="unit"><option value="ft">Feet (ft)</option><option value="m">Meters (m)</option></select>
+</div>
+
+<div class="group">
+<h3>Deck floor</h3>
+<div class="row">
+<div class="field"><label for="len">Deck length (<span class="un">ft</span>)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="16" aria-describedby="e-len"><div class="err" id="e-len"></div></div>
+<div class="field"><label for="wid">Deck width (<span class="un">ft</span>)</label><input id="wid" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="e-wid"><div class="err" id="e-wid"></div></div>
+</div>
+</div>
+
+<div class="group">
+<h3>Railing (optional)</h3>
+<div class="row">
+<div class="field"><label for="rail">Total railing length (<span class="un">ft</span>)</label><input id="rail" type="number" inputmode="decimal" step="any" min="0" value="40" aria-describedby="e-rail"><div class="err" id="e-rail"></div></div>
+<div class="field"><label for="rh">Railing height (<span id="uh">in</span>)</label><input id="rh" type="number" inputmode="decimal" step="any" min="12" value="36" aria-describedby="e-rh"><div class="err" id="e-rh"></div></div>
+</div>
+<div class="field"><label for="rs">Railing style</label>
+<select id="rs"><option value="1">Solid or privacy panel</option><option value="0.75" selected>Standard balusters (about 4 in gaps)</option><option value="0.4">Cable or thin-rod infill (rails and posts only)</option></select></div>
+</div>
+
+<div class="group">
+<h3>Stairs (optional)</h3>
+<div class="row">
+<div class="field"><label for="steps">Number of steps</label><input id="steps" type="number" inputmode="numeric" step="1" min="0" value="4" aria-describedby="e-steps"><div class="err" id="e-steps"></div></div>
+<div class="field"><label for="sw">Stair width (<span class="un">ft</span>)</label><input id="sw" type="number" inputmode="decimal" step="any" min="0" value="4" aria-describedby="e-sw"><div class="err" id="e-sw"></div></div>
+</div>
+</div>
+
+<div class="row">
+<div class="field"><label for="type">Stain type</label>
+<select id="type"><option value="300">Transparent / toner (300 sq ft/gal)</option><option value="250" selected>Semi-transparent (250 sq ft/gal)</option><option value="200">Solid color (200 sq ft/gal)</option></select></div>
+<div class="field"><label for="cond">Wood condition</label>
+<select id="cond"><option value="1">New, smooth lumber</option><option value="0.85" selected>Previously stained or lightly weathered</option><option value="0.7">Old, rough or very weathered</option></select></div>
+</div>
+
+<div class="row">
+<div class="field"><label for="cov">Your own coverage, sq ft per gallon (optional)</label><input id="cov" type="number" inputmode="decimal" step="any" min="50" placeholder="Leave blank to use the settings above" aria-describedby="e-cov h-cov"><div class="err" id="e-cov"></div><div class="hint" id="h-cov">If filled in, this rate is used exactly as typed and the wood condition setting is ignored. Best for a rate measured on a test patch.</div></div>
+<div class="field"><label for="price">Price per gallon, $ (optional)</label><input id="price" type="number" inputmode="decimal" step="any" min="0" value="45" aria-describedby="e-price"><div class="err" id="e-price"></div></div>
+</div>
+
+<div class="field">
+<label for="coats">Number of coats: <span id="coatsV">2</span></label>
+<input id="coats" type="range" min="1" max="3" step="1" value="2">
+<div class="ticks" aria-hidden="true"><span>1</span><span>2</span><span>3</span></div>
+</div>
+<div class="field">
+<label for="waste">Waste and spill allowance: <span id="wasteV">10%</span></label>
+<input id="waste" type="range" min="0" max="20" step="5" value="10">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>10%</span><span>20%</span></div>
+</div>
+
+<button class="btn" id="calcBtn" type="button">Calculate Stain Needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</div>
+
+<div class="results" id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<p class="safety">Planning estimate only. Stain quantity is not governed by any building code, but railing height and other deck rules vary by location. Check your local building department, and always follow the instructions and safety data on your stain label.</p>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Deck Stain Calculator</h2>
+<p>Choose feet or meters, then enter your deck length and width. Add railing length and height and the number of stair steps if you plan to stain them. Pick your stain type, the condition of the wood and the number of coats. The calculator returns total surface area, the gallons you need including waste, a pail-and-can shopping suggestion, an estimated cost, and a side-by-side comparison of one, two and three coats. If you already know your real-world coverage from a test patch, type it into the coverage box and it will be used exactly as entered.</p>
+
+<h2>Why This Matters</h2>
+<p>Deck stain is one of the most expensive parts of deck maintenance, and guessing wrong costs real money. A quality semi-transparent stain runs $35 to $70 per gallon, so a 400 sq ft project that needs five gallons is a $175 to $350 purchase. Buy too little and you face a mid-project trip to the store, a possible color-batch mismatch, and lap marks where old and new coats meet. Buy too much and you are stuck with partial cans that rarely get reused.</p>
+<p>Homeowners usually measure only the deck floor and forget that railings, balusters, posts and stairs can add 50 to 100 percent more surface. A 16 × 12 ft deck has 192 sq ft of floor, but add 40 feet of baluster railing and a four-step staircase and the real surface is more than double. Contractors quoting a refinishing job and DIYers planning a weekend project need the same thing: a realistic gallon count before opening their wallet.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator adds the three surfaces together, converts them to a gallon requirement using an effective coverage rate, multiplies by coats, and adds a waste allowance.</p>
+<div class="formula">
+Deck area = length × width<br>
+Railing area = railing length × (height ÷ 12) × 2 sides × style factor<br>
+Stair area = steps × stair width × 1.54 ft (11 in tread + 7.5 in riser)<br>
+Effective coverage = your own rate as typed, or base coverage × wood condition factor<br>
+Gallons = total area × coats ÷ effective coverage × (1 + waste %)
+</div>
+<p>Base coverage is 300, 250 or 200 sq ft per gallon for transparent, semi-transparent and solid stains on new smooth wood. These sit inside the 150 to 350 sq ft per gallon range most manufacturers print on their labels. Weathered and rough-sawn boards absorb more, so the condition factor lowers coverage to 85% or 70%. If you type your own coverage rate, the condition factor is skipped so the rate is not discounted twice. The railing style factor (1.0, 0.75 or 0.4) approximates how much of a railing panel is actually wood. Railing height is entered in inches (or centimeters in metric mode). Many residential codes, such as IRC R312, call for guards at least 36 in high, but your local code may differ.</p>
+<p><strong>Simplifications:</strong> stair area counts treads and risers only. Stringers, the sides of steps, board edges and gaps between boards are not measured separately. They are covered by the waste allowance, so choose 15 to 20% if you plan to coat those surfaces thoroughly. The result is rounded up to whole 1-gallon cans, and every five cans are shown as one 5-gallon pail. No building code governs stain quantity, so your product label always takes priority.</p>
+
+<h2>Worked Example</h2>
+<p>Take a 16 × 12 ft deck with 40 ft of baluster railing at 36 in high and four steps 4 ft wide. The wood is previously stained, and you want two coats of semi-transparent stain.</p>
+<ul>
+<li>Deck floor: 16 × 12 = 192 sq ft</li>
+<li>Railing: 40 × 3 ft × 2 sides × 0.75 = 180 sq ft</li>
+<li>Stairs: 4 × 4 × 1.54 ≈ 24.7 sq ft</li>
+<li>Total surface: about 396.7 sq ft</li>
+<li>Effective coverage: 250 × 0.85 = 212.5 sq ft per gallon</li>
+<li>Two coats: 396.7 × 2 ÷ 212.5 = 3.73 gallons</li>
+<li>Add 10% waste: 4.11 gallons</li>
+</ul>
+<p>Four gallons would leave you short, and 4.11 gallons rounds up to five 1-gallon cans, which the tool shows as one 5-gallon pail. At $45 per gallon that is about $225. For comparison, one coat comes to 2.05 gallons (buy 3) and three coats to 6.16 gallons (buy 7, shown as one pail plus two cans).</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the railings.</strong> They are the most commonly forgotten surface and can add 100+ sq ft on a mid-size deck.</li>
+<li><strong>Do not assume the second coat is free.</strong> On penetrating stains, a second coat applied wet-on-wet often needs less product. This calculator assumes a full rate for every coat, which keeps you from running short.</li>
+<li><strong>Test a small area first.</strong> Real absorption varies by wood species, age and moisture. Stain a few boards, work out how many square feet a gallon would cover, and enter that in the coverage box. It is used exactly as typed, so the wood condition setting is ignored.</li>
+<li><strong>Buy everything at once.</strong> Stain tint varies from batch to batch. Mix all cans together in a large bucket (called boxing) so the color stays consistent.</li>
+<li><strong>Handle oily rags safely.</strong> Rags soaked in oil-based stain can heat up and ignite on their own. Lay them flat outdoors to dry, or seal them in a metal container filled with water.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many gallons of stain do I need for a 12x12 deck?</summary><p>A 12 × 12 deck has 144 sq ft of floor. At about 250 sq ft per gallon, one coat needs roughly 0.6 gallons and two coats about 1.2 gallons. Add railings and stairs and you will probably need 2 to 3 gallons.</p></details>
+<details><summary>How much does a gallon of deck stain cover?</summary><p>Most labels list 150 to 350 sq ft per gallon. Transparent stains stretch the furthest, while solid stains and rough, weathered wood use more product per square foot.</p></details>
+<details><summary>Do I need two coats of deck stain?</summary><p>It depends on the product. Many penetrating semi-transparent stains call for one generous coat or two wet-on-wet coats, while solid stains typically need two. Follow the directions on your can, and use the coats slider to compare quantities.</p></details>
+<details><summary>Should I include railings and stairs in my estimate?</summary><p>Yes. Railings, balusters, posts, treads and risers all absorb stain. The calculator measures stair treads and risers directly, and covers stringers and step sides through the waste allowance, so raise it if you plan to coat those thoroughly.</p></details>
+<details><summary>How much extra stain should I buy?</summary><p>A 10% allowance covers spills, brush loading and uneven absorption. Increase it to 15 or 20% for rough-sawn lumber, spray application, or decks with wide board gaps and lots of edges.</p></details>
+<details><summary>Does the calculator account for board edges and gaps?</summary><p>Not directly. The waste allowance and the wood condition factor absorb the extra surface, so choose a higher allowance if your boards have wide gaps or you plan to stain the edges thoroughly.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="related">
+<li><a href="/deck-beam-size-calculator/">Deck Beam Size Calculator</a></li>
+<li><a href="/deck-railing-baluster-spacing-calculator/">Deck Railing &amp; Baluster Spacing Calculator</a></li>
+<li><a href="/deck-footing-frost-depth-calculator/">Deck Footing Size &amp; Frost Depth Calculator</a></li>
+<li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li>
+<li><a href="/deck-material-cost-estimator/">Deck Material &amp; Cost Estimator</a></li>
+<li><a href="/joist-spacing-layout-calculator/">Joist Spacing &amp; Layout Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/deck-stain-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var fmt=function(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var money=function(n){return '$'+fmt(n,2)};
+var trim=function(n){return fmt(n,2).replace(/(\.\d*?)0+$/,'$1').replace(/\.$/,'')};
+var GAL=3.78541,SQM=0.092903,FT=3.28084,STEP=18.5/12,last='';
+$('yr').textContent=new Date().getFullYear();
+
+function setErr(id,msg){var i=$(id),e=$('e-'+id);if(msg){i.classList.add('invalid');i.setAttribute('aria-invalid','true');e.textContent=msg}else{i.classList.remove('invalid');i.removeAttribute('aria-invalid');e.textContent=''}}
+function val(id){var s=$(id).value.trim();return s===''?null:Number(s)}
+function A(id,o){var e=$(id);for(var k in o)e.setAttribute(k,o[k])}
+
+function buy(g){
+  g=Math.round(g*1e4)/1e4;
+  var p=Math.floor(g/5),c=Math.ceil(g-p*5-1e-9);
+  if(c<0)c=0;
+  if(c>=5){p++;c=0}
+  var parts=[];
+  if(p)parts.push(p+' \u00d7 5-gal pail'+(p>1?'s':''));
+  if(c)parts.push(c+' \u00d7 1-gal can'+(c>1?'s':''));
+  return {gal:p*5+c,text:parts.join(' + ')};
+}
+
+function draw(o){
+  var cx=210,y=58,s=Math.min(220/o.L,110/o.W);
+  var w=Math.max(110,o.L*s),h=Math.max(50,o.W*s),x=cx-w/2;
+  A('gDeck',{x:x,y:y,width:w,height:h});
+  A('gBd',{x:x,y:y,width:w,height:h});
+  A('gRail',{x:x-7,y:y-7,width:w+14,height:h+14,display:o.rail>0?'inline':'none'});
+  A('dT',{x1:x,x2:x+w,y1:y-22,y2:y-22});
+  A('dL',{x1:x-24,x2:x-24,y1:y,y2:y+h});
+  A('x1',{x1:x,x2:x,y1:y-4,y2:y-26});A('x2',{x1:x+w,x2:x+w,y1:y-4,y2:y-26});
+  A('x3',{x1:x-4,x2:x-28,y1:y,y2:y});A('x4',{x1:x-4,x2:x-28,y1:y+h,y2:y+h});
+  A('tT',{x:cx,y:y-30});A('tL',{x:x-31,y:y+h/2+5});
+  $('tT').textContent=o.lT;$('tL').textContent=o.wT;
+  A('tD1',{x:cx,y:y+h/2-2});A('tD2',{x:cx,y:y+h/2+16});
+  $('tD1').textContent='Deck floor';$('tD2').textContent=o.dA;
+  var st='';
+  if(o.steps>0){
+    var sw=Math.min(w,Math.max(40,o.sw/o.L*w)),sx=cx-sw/2,sy=y+h,n=Math.min(o.steps,6);
+    st='<rect x="'+sx+'" y="'+sy+'" width="'+sw+'" height="22" fill="#fff" stroke="#0077b6" stroke-width="2"/>';
+    for(var i=1;i<n;i++){var ly=sy+22*i/n;st+='<line x1="'+sx+'" x2="'+(sx+sw)+'" y1="'+ly+'" y2="'+ly+'" stroke="#0077b6" stroke-width="1"/>'}
+    A('tS',{x:cx,y:sy+38});$('tS').textContent=o.stT;
+  }else $('tS').textContent='';
+  $('gSt').innerHTML=st;
+  $('gLg').setAttribute('display',o.rail>0?'inline':'none');
+  $('tR').textContent=o.rT;
+  $('tSum').textContent=o.sum;
+}
+
+function clearRes(){var r=$('results');r.classList.remove('show');r.innerHTML=''}
+
+function calculate(){
+  var m=$('unit').value==='m',u=m?'m':'ft',f=m?FT:1,bad=[];
+  function chk(id,o){
+    var v=val(id),msg='';
+    if(v===null){if(o.req)msg='Enter a value.'}
+    else if(!isFinite(v))msg='Enter a valid number.';
+    else if(o.gt&&v<=0)msg='Must be greater than 0.';
+    else if(v<o.min)msg='Must be at least '+o.min+'.';
+    else if(v>o.max)msg='Must be '+fmt(o.max)+' or less.';
+    else if(o.int&&!Number.isInteger(v))msg='Enter a whole number.';
+    setErr(id,msg);if(msg)bad.push(id);return v;
+  }
+  var len=chk('len',{req:1,gt:1,min:0,max:m?150:500});
+  var wid=chk('wid',{req:1,gt:1,min:0,max:m?150:500});
+  var rail=chk('rail',{min:0,max:m?600:2000});
+  var rh=chk('rh',{min:m?30:12,max:m?185:72});
+  var steps=chk('steps',{min:0,max:40,int:1});
+  var sw=null;
+  if(steps>0)sw=chk('sw',{req:1,gt:1,min:0,max:m?6:20});else setErr('sw','');
+  var cov=chk('cov',{min:50,max:800});
+  var price=chk('price',{min:0,max:1000});
+  if(bad.length){clearRes();$(bad[0]).focus();return}
+
+  rail=rail||0;steps=steps||0;
+  var rhIn=rh===null?36:(m?rh/2.54:rh);
+  var lf=len*f,wf=wid*f,rf=rail*f,swf=(sw||0)*f;
+  var style=+$('rs').value,cond=+$('cond').value;
+  var base=cov||+$('type').value,eff=cov?cov:base*cond;
+  var coats=+$('coats').value,waste=+$('waste').value,wm=1+waste/100;
+  var aD=lf*wf,aR=rf*(rhIn/12)*2*style,aS=steps*swf*STEP,tot=aD+aR+aS;
+  var need=function(c,a){return a*c/eff*wm};
+  var g=need(coats,tot),b=buy(g);
+  var cost=price===null?null:b.gal*price;
+
+  var rows=[['Deck floor',aD,need(coats,aD)]];
+  if(aR>0)rows.push(['Railing',aR,need(coats,aR)]);
+  if(aS>0)rows.push(['Stairs',aS,need(coats,aS)]);
+  var t1='';
+  rows.forEach(function(r){t1+='<tr><td>'+r[0]+'</td><td class="n">'+fmt(r[1],1)+'</td><td class="n">'+fmt(r[2],2)+'</td></tr>'});
+  t1+='<tr class="tot"><td>Total</td><td class="n">'+fmt(tot,1)+'</td><td class="n">'+fmt(g,2)+'</td></tr>';
+
+  var t2='',cmp=[];
+  for(var c=1;c<=3;c++){
+    var gc=need(c,tot),bc=buy(gc);
+    cmp.push(c+' coat'+(c>1?'s':'')+': '+fmt(gc,2)+' gal, buy '+bc.gal+' gal'+(price!==null?' ('+money(bc.gal*price)+')':''));
+    t2+='<tr'+(c===coats?' class="sel"':'')+'><td>'+c+(c===coats?' (selected)':'')+'</td><td class="n">'+fmt(gc,2)+'</td><td class="n">'+bc.gal+'</td>'+(price!==null?'<td class="n">'+money(bc.gal*price)+'</td>':'')+'</tr>';
+  }
+  var colors=['#0077b6','#5aa9d0','#a6d0e4'],bar='',lg=[];
+  rows.forEach(function(r,i){var p=r[1]/tot*100;bar+='<span style="width:'+p+'%;background:'+colors[i]+'"></span>';lg.push(r[0]+' '+fmt(p,0)+'%')});
+
+  var covTxt=cov?fmt(eff,1)+' sq ft/gal (your own rate, wood condition factor not applied)':fmt(eff,1)+' sq ft/gal ('+fmt(base,0)+' base \u00d7 '+cond+' wood factor)';
+  var sqm=tot*SQM,gl=g*GAL;
+  var html='<div class="klabel">Stain to buy</div><div class="key">'+b.gal+' gallon'+(b.gal>1?'s':'')+'</div>'
+   +'<p class="sub">Suggested purchase: '+b.text+'. Calculated need: '+fmt(g,2)+' gal ('+fmt(gl,1)+' L) for '+coats+' coat'+(coats>1?'s':'')+' including '+waste+'% waste.'+(cost!==null?' Estimated cost at your per-gallon price: <strong>'+money(cost)+'</strong>.':'')+'</p>'
+   +'<div class="bar" aria-hidden="true">'+bar+'</div><div class="legend">Surface share: '+lg.join(' \u00b7 ')+'</div>'
+   +'<h3 class="res-h">Surface breakdown</h3><div class="tw"><table><thead><tr><th>Surface</th><th class="n">Area (sq ft)</th><th class="n">Gallons</th></tr></thead><tbody>'+t1+'</tbody></table></div>'
+   +'<h3 class="res-h">Compare coats</h3><div class="tw"><table><thead><tr><th>Coats</th><th class="n">Gallons needed</th><th class="n">Buy (gal)</th>'+(price!==null?'<th class="n">Est. cost</th>':'')+'</tr></thead><tbody>'+t2+'</tbody></table></div>'
+   +'<p class="hint">Total surface: '+fmt(tot,1)+' sq ft ('+fmt(sqm,1)+' m\u00b2). Coverage used: '+covTxt+'.</p>'
+   +'<button class="copy" id="copyBtn" type="button">Copy results</button>'
+   +'<p class="note">Planning estimate only, rounded up. Actual coverage depends on the product, wood and application method, so check your stain label. Stair area counts treads and risers only; stringers and step sides fall under the waste allowance. Dispose of oily rags safely: lay flat to dry or store in a water-filled metal container.</p>';
+
+  last='Deck Stain Calculator (toolwick.com)\nSurface: '+fmt(tot,1)+' sq ft (deck '+fmt(aD,1)+', railing '+fmt(aR,1)+', stairs '+fmt(aS,1)+')\nCoverage: '+fmt(eff,1)+' sq ft/gal, '+coats+' coat(s), '+waste+'% waste\nNeeded: '+fmt(g,2)+' gal ('+fmt(gl,1)+' L)\nBuy: '+b.gal+' gal ('+b.text+')'+(cost!==null?'\nEstimated cost: '+money(cost):'')+'\n'+cmp.join('\n');
+
+  var d={L:lf,W:wf,lT:trim(len)+' '+u,wT:trim(wid)+' '+u,dA:fmt(aD,0)+' sq ft',steps:steps,sw:swf,rail:rail,
+    stT:steps+' step'+(steps>1?'s':'')+', '+trim(sw||0)+' '+u+' wide',
+    rT:'Railing: '+trim(rail)+' '+u,sum:'Total '+fmt(tot,0)+' sq ft \u2192 buy '+b.gal+' gal'};
+  requestAnimationFrame(function(){
+    var r=$('results');
+    r.classList.remove('show');
+    r.innerHTML=html;
+    draw(d);
+    requestAnimationFrame(function(){r.classList.add('show')});
+  });
+}
+
+function fallback(done){var t=document.createElement('textarea');t.value=last;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);done()}
+$('results').addEventListener('click',function(e){
+  var btn=e.target.closest('#copyBtn');if(!btn)return;
+  var done=function(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy results'},2000)};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(last).then(done,function(){fallback(done)});else fallback(done);
+});
+$('unit').addEventListener('change',function(){
+  var m=this.value==='m',k=m?0.3048:1/0.3048;
+  ['len','wid','rail','sw'].forEach(function(id){var v=val(id);if(v!==null&&isFinite(v))$(id).value=Math.round(v*k*100)/100;setErr(id,'')});
+  var h=val('rh');
+  if(h!==null&&isFinite(h))$('rh').value=m?Math.round(h*2.54):Math.round(h/2.54*10)/10;
+  setErr('rh','');
+  $('rh').min=m?30:12;
+  $('uh').textContent=m?'cm':'in';
+  var us=document.querySelectorAll('.un');
+  for(var i=0;i<us.length;i++)us[i].textContent=m?'m':'ft';
+  clearRes();
+});
+$('calcBtn').addEventListener('click',function(){requestAnimationFrame(calculate)});
+$('form').addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.tagName!=='BUTTON'){e.preventDefault();requestAnimationFrame(calculate)}});
+$('coats').addEventListener('input',function(){$('coatsV').textContent=this.value});
+$('waste').addEventListener('input',function(){$('wasteV').textContent=this.value+'%'});
+draw({L:16,W:12,lT:'16 ft',wT:'12 ft',dA:'192 sq ft',steps:4,sw:4,rail:40,stT:'4 steps, 4 ft wide',rT:'Railing: 40 ft',sum:'Press Calculate to see your totals'});
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
