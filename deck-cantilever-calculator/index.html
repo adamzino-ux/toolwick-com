@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Deck Cantilever Calculator | Toolwick</title>
+<meta name="description" content="Free deck cantilever calculator: find the maximum joist or beam overhang using the IRC one-fourth rule, plus loads, joist length and lumber needed.">
+<link rel="canonical" href="https://toolwick.com/deck-cantilever-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Deck Cantilever Calculator", "url": "https://toolwick.com/deck-cantilever-calculator/", "description": "Free deck cantilever calculator: find the maximum joist or beam overhang using the IRC one-fourth rule, plus loads, joist length and lumber needed.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Deck Cantilever Calculator", "item": "https://toolwick.com/deck-cantilever-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How far can a deck cantilever past the beam?", "acceptedAnswer": {"@type": "Answer", "text": "Under the IRC, joists may overhang up to one-fourth of their actual backspan. A 12 ft backspan allows 3 ft; an 8 ft backspan allows 2 ft. Your local building department can set tighter limits."}}, {"@type": "Question", "name": "Can a deck beam cantilever past the posts?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The IRC permits a beam to extend past each end post by up to one-fourth of the beam span, which is the distance between posts. Use the \"Beam past the end posts\" option above to check it."}}, {"@type": "Question", "name": "What is a backspan?", "acceptedAnswer": {"@type": "Answer", "text": "The backspan is the length of joist (or beam) between its two supports, behind the overhang. For a ledger-attached deck it runs from the ledger to the beam. The overhang is the part that extends past the beam."}}, {"@type": "Question", "name": "Can I cantilever more than one-fourth of the span?", "acceptedAnswer": {"@type": "Answer", "text": "Not under the prescriptive code path. Longer overhangs need an engineer's design and a permit. This tool never goes beyond the one-fourth limit."}}, {"@type": "Question", "name": "Does a bigger joist allow a longer cantilever?", "acceptedAnswer": {"@type": "Answer", "text": "Not under the one-fourth rule. A 2×12 and a 2×8 have the same prescriptive limit. A larger joist stiffens the deck, but only an engineered design can justify a longer overhang."}}, {"@type": "Question", "name": "Can I put a railing post or stairs on the cantilever?", "acceptedAnswer": {"@type": "Answer", "text": "Railing posts can be mounted on a cantilever when blocked and fastened with approved hardware. Stairs and heavy concentrated loads should not sit on an overhang unless an engineer has designed it."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:3px solid #0077b6;padding:.4rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.5rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.lead{color:#333;font-size:1.05rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 10px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border:1px solid #e8e8e8;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram text{font-family:inherit}
+.fld{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px;border-color:#0077b6}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6;margin:0}
+input[type=range]:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.errmsg{display:none;color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.err .errmsg{display:block}
+.err input{border-color:#e74c3c}
+.jo{display:block}.bo{display:none}
+.beam .jo{display:none}.beam .bo{display:block}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.btn{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-weight:600}
+.btn:hover{background:#006299}
+button:focus-visible{outline:3px solid #1a1a2e;outline-offset:2px}
+.copyrow{margin-top:1rem}
+.copyrow[hidden]{display:none}
+.copy{min-height:44px;width:100%;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-weight:500}
+.rs{opacity:0;transition:opacity .3s ease;margin-top:1.75rem}
+.rs.show{opacity:1}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+.kl{font-size:.85rem;color:#444;font-weight:500}
+.kn{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.2;margin:.2rem 0}
+.ks{font-size:.9rem;color:#444}
+.st{padding:.9rem 1rem;border-radius:6px;border-left:4px solid;margin:0 0 1rem;font-size:.95rem}
+.st.ok{background:#eaf6ec;border-color:#1e7e34;color:#14532d}
+.st.bad{background:#fdecea;border-color:#c0392b;color:#7a1f16}
+.st.warn{background:#fff8e1;border-color:#b7791f;color:#5c4004}
+.rh{font-weight:700;margin:1.5rem 0 .5rem}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:.6rem .75rem;border-bottom:1px solid #ddd;font-weight:600}
+td{padding:.6rem .75rem;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.r,td.r{text-align:right;font-variant-numeric:tabular-nums}
+.note{font-size:.85rem;color:#555;margin-top:1rem}
+.fine{font-size:.8rem;color:#666;margin:.75rem 0 0}
+.safety{margin:1.25rem 0;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;padding:.65rem 0}
+summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+details p{margin:0 0 1rem}
+ul{padding-left:1.25rem}li{margin-bottom:.6rem}
+.rel{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.rel li{margin:0}
+.rel a{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.7rem .9rem;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px;text-decoration:underline}
+@media(max-width:560px){.card{padding:1.25rem}.grid{grid-template-columns:1fr}.rel{grid-template-columns:1fr}h1{font-size:1.6rem}.kn{font-size:2.2rem}}
+@media(prefers-reduced-motion:reduce){.rs{transition:none}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/deck-cantilever-calculator/">
+<meta property="og:title" content="Deck Cantilever Calculator">
+<meta property="og:description" content="Free deck cantilever calculator: find the maximum joist or beam overhang using the IRC one-fourth rule, plus loads, joist length and lumber needed.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<div class="wrap">
+<main>
+<h1>Deck Cantilever Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p class="lead">Use this deck cantilever calculator to find how far your deck joists or beam can overhang past their support under the common one-fourth rule from the International Residential Code. Enter your backspan, set the overhang you want, and get the limit, a clear within/exceeds result, joist lengths, lumber count and per-joist loads.</p>
+
+<div class="card" id="tool">
+<div class="diagram">
+<svg id="dsvg" viewBox="0 0 400 250" role="img" aria-label="Side view diagram of a deck cantilever showing backspan and overhang">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c0392b"/></marker>
+</defs>
+<g id="dg"></g>
+</svg>
+</div>
+
+<div class="fld">
+<label for="mode">What is cantilevering?</label>
+<select id="mode"><option value="joist">Joists past the beam (most common)</option><option value="beam">Beam past the end posts</option></select>
+</div>
+
+<div class="grid">
+<div class="fld">
+<label for="bf"><span id="bsl">Joist backspan (ledger to beam)</span> — feet</label>
+<input type="number" id="bf" inputmode="decimal" min="0" step="any" value="10" aria-describedby="e-bf">
+<div class="errmsg" id="e-bf"></div>
+</div>
+<div class="fld">
+<label for="bi">Plus extra inches</label>
+<input type="number" id="bi" inputmode="decimal" min="0" max="11.99" step="any" value="0" aria-describedby="e-bi">
+<div class="errmsg" id="e-bi"></div>
+</div>
+</div>
+
+<div class="fld">
+<label for="ov">Planned overhang: <output id="ovo" for="ov">2′ 0″</output></label>
+<input type="range" id="ov" min="0" max="72" step="1" value="24" aria-valuetext="2 feet 0 inches">
+<div class="ticks" aria-hidden="true"><span>0″</span><span>3′</span><span>6′</span></div>
+</div>
+
+<div class="grid">
+<div class="fld jo">
+<label for="sp">Joist spacing</label>
+<select id="sp"><option value="12">12 in on center</option><option value="16" selected>16 in on center</option><option value="19.2">19.2 in on center</option><option value="24">24 in on center</option></select>
+</div>
+<div class="fld jo">
+<label for="wd">Deck width along beam (feet)</label>
+<input type="number" id="wd" inputmode="decimal" min="1" step="any" value="16" aria-describedby="e-wd">
+<div class="errmsg" id="e-wd"></div>
+</div>
+<div class="fld jo">
+<label for="dl">Dead load (psf)</label>
+<input type="number" id="dl" inputmode="decimal" min="0" step="any" value="10" aria-describedby="e-dl">
+<div class="errmsg" id="e-dl"></div>
+</div>
+<div class="fld jo">
+<label for="ll">Live load (psf)</label>
+<input type="number" id="ll" inputmode="decimal" min="0" step="any" value="40" aria-describedby="e-ll">
+<div class="errmsg" id="e-ll"></div>
+<div class="hint">40 psf is the IRC minimum for decks.</div>
+</div>
+<div class="fld bo">
+<label for="ends">Cantilevered beam ends</label>
+<select id="ends"><option value="1">One end</option><option value="2">Both ends</option></select>
+</div>
+</div>
+
+<button type="button" class="btn" id="calc">Calculate Overhang</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<p class="fine">Estimates only. Not engineering, permit or inspection approval.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<div class="copyrow" id="copyRow" hidden><button type="button" class="copy" id="copy">Copy results</button></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/deck-cantilever-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Deck Cantilever Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/deck-cantilever-calculator/&quot;&gt;Deck Cantilever Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/deck-cantilever-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<aside class="safety" role="note">Estimates for planning only. Building codes and site conditions vary by location. Verify results with your local building department, and use a licensed engineer or contractor for structural work.</aside>
+
+<section>
+<h2>How to Use This Deck Cantilever Calculator</h2>
+<p>Choose whether joists or the beam is cantilevering. Enter the backspan: for joists, the distance from the ledger (or inside beam) to the beam that carries the overhang; for a cantilevered beam, the post-to-post span. Then drag the slider to the overhang you would like. The tool returns the maximum overhang, whether your plan is within the one-fourth rule, the minimum backspan you would need, joist or beam length, and the loads each joist puts on its supports. The diagram updates as you change the span or slider.</p>
+
+<h2>Why This Matters</h2>
+<p>A cantilever lets a deck extend past its last beam without extra posts, so you skip a row of footings, dodge tree roots, avoid deep frost-depth holes and hide the beam under the deck edge for a cleaner look. But a cantilever flips the structure: the overhanging end pushes down while the backspan tries to lift off its support. Push it too far and you get a bouncy edge, split joists, or a ledger that pulls away from the house.</p>
+<p>Real numbers show how fast it adds up. A 10 ft backspan allows 2 ft 6 in of overhang; a 12 ft backspan allows 3 ft. Builders often want 4 ft to fit a bistro table past the beam, which would need a 16 ft backspan. Homeowners planning a deck, contractors pricing a job, and inspectors checking a plan all need this number before any lumber is cut. Running it first also tells you if you need an extra beam instead.</p>
+
+<h2>How It's Calculated</h2>
+<p>This tool applies the one-fourth rule used in the prescriptive deck provisions of the International Residential Code (IRC): joist overhangs may not exceed one-fourth of the actual joist backspan, and beam overhangs past the end posts may not exceed one-fourth of the beam span. This is consistent with the DCA 6 prescriptive deck guide. Section numbers, tables and footnotes differ between code editions (in the 2018 and 2021 IRC, beams are in R507.5 and joists in R507.6), and local codes may be stricter or adopt a different edition. Check the edition your jurisdiction uses.</p>
+<p><strong>Maximum overhang = backspan ÷ 4</strong>, rounded down to the nearest 1/8 inch. <strong>Minimum backspan = overhang × 4</strong>, rounded up to the nearest 1/8 inch. Rounding always goes to the conservative side.</p>
+<p>For joist loads, the tool treats each joist as a beam over two supports. With backspan L, overhang c and load w (pounds per foot = psf × spacing in feet):</p>
+<p><strong>Ledger reaction = w × (L² − c²) ÷ (2L)</strong><br><strong>Beam reaction = w × (L + c) − ledger reaction</strong><br><strong>Moment at the beam = w × c² ÷ 2</strong></p>
+<p>The uplift check loads the overhang with dead plus live load while the backspan carries dead load only. If the ledger reaction turns negative, the backspan is trying to lift. The tool does not size joists or beams. Total joist span, species, grade and spacing still need to satisfy the joist span table in your adopted code.</p>
+
+<h2>Worked Example</h2>
+<p>A deck has a 10 ft 0 in joist backspan, 16 in spacing, 16 ft width, 10 psf dead load, 40 psf live load, and a planned 2 ft overhang.</p>
+<ul>
+<li>Maximum overhang: 120 in ÷ 4 = 30 in = 2′ 6″. The planned 24 in is 20% of the backspan, so it is within the rule.</li>
+<li>Minimum backspan for 24 in: 24 × 4 = 96 in = 8′ 0″.</li>
+<li>Total joist length: 10 ft + 2 ft = 12 ft, so a 12 ft board.</li>
+<li>Joist count: 16 ft × 12 ÷ 16 in = 12, plus 1 = 13 joists, or 156 linear feet.</li>
+<li>Line load: 50 psf × 1.333 ft = 66.7 lb/ft. Ledger reaction = 66.7 × (100 − 4) ÷ 20 = 320 lb. Beam reaction = 66.7 × 12 − 320 = 480 lb. Moment = 66.7 × 4 ÷ 2 = 133 ft-lb, shown rounded up to 134.</li>
+<li>Uplift check: (13.3 × 100 − 66.7 × 4) ÷ 20 = 53 lb still pressing down, so no uplift.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li>Measure the actual backspan between bearing points, not the overall deck depth. A 12 ft backspan with a 3 ft overhang is exactly at the limit (3 ÷ 12 = 25%) and makes a 15 ft deck. A 9 ft backspan allows only 2 ft 3 in, so a 3 ft overhang there is well over.</li>
+<li>Do not put a stair landing, hot tub or heavy planter on the overhang. The one-fourth rule assumes ordinary residential loads.</li>
+<li>Guard posts attached to cantilevered joist ends need blocking and proper hardware. Guards must resist a 200 lb concentrated load at the top.</li>
+<li>Keep the full joist length within the span table. A joist that is fine for 10 ft may not be rated for 12 ft total length.</li>
+<li>Do not use joist overhang numbers for a beam. A cantilevered beam carries the loads of many joists and needs its own check against the beam table in your code.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How far can a deck cantilever past the beam?</summary><p>Under the IRC, joists may overhang up to one-fourth of their actual backspan. A 12 ft backspan allows 3 ft; an 8 ft backspan allows 2 ft. Your local building department can set tighter limits.</p></details>
+<details><summary>Can a deck beam cantilever past the posts?</summary><p>Yes. The IRC permits a beam to extend past each end post by up to one-fourth of the beam span, which is the distance between posts. Use the "Beam past the end posts" option above to check it.</p></details>
+<details><summary>What is a backspan?</summary><p>The backspan is the length of joist (or beam) between its two supports, behind the overhang. For a ledger-attached deck it runs from the ledger to the beam. The overhang is the part that extends past the beam.</p></details>
+<details><summary>Can I cantilever more than one-fourth of the span?</summary><p>Not under the prescriptive code path. Longer overhangs need an engineer's design and a permit. This tool never goes beyond the one-fourth limit.</p></details>
+<details><summary>Does a bigger joist allow a longer cantilever?</summary><p>Not under the one-fourth rule. A 2×12 and a 2×8 have the same prescriptive limit. A larger joist stiffens the deck, but only an engineered design can justify a longer overhang.</p></details>
+<details><summary>Can I put a railing post or stairs on the cantilever?</summary><p>Railing posts can be mounted on a cantilever when blocked and fastened with approved hardware. Stairs and heavy concentrated loads should not sit on an overhang unless an engineer has designed it.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/deck-stain-calculator/">Deck Stain Calculator</a></li>
+<li><a href="/deck-beam-size-calculator/">Deck Beam Size Calculator</a></li>
+<li><a href="/deck-railing-baluster-spacing-calculator/">Deck Railing &amp; Baluster Spacing Calculator</a></li>
+<li><a href="/deck-footing-frost-depth-calculator/">Deck Footing Size &amp; Frost Depth Calculator</a></li>
+<li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li>
+<li><a href="/deck-material-cost-estimator/">Deck Material &amp; Cost Estimator</a></li>
+</ul>
+</section>
+</main>
+
+<nav class="cluster-nav" aria-label="More Roofing &amp; Exterior Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Roofing &amp; Exterior Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/deck-material-cost-estimator/">Deck Material &amp; Cost Estimator</a></li><li><a href="/deck-railing-baluster-spacing-calculator/">Deck Railing &amp; Baluster Spacing Calculator</a></li><li><a href="/deck-stain-calculator/">Deck Stain Calculator</a></li><li><a href="/asphalt-shingle-calculator/">Asphalt Shingle Calculator</a></li><li><a href="/drip-edge-roof-trim-calculator/">Drip Edge &amp; Roof Trim Calculator</a></li><li><a href="/egress-window-size-well-calculator/">Egress Window Size &amp; Well Calculator</a></li><li><a href="/fence-installation-cost-calculator/">Fence Installation Cost Calculator</a></li><li><a href="/fence-material-calculator/">Fence Material Calculator</a></li><li><a href="/roofing-calculators/"><strong>All Roofing &amp; Exterior calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<p><a href="/about/">About</a> <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> <a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com. For planning only. Not engineering, permit or inspection approval; always confirm with your local building department.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var FR=['','⅛','¼','⅜','½','⅝','¾','⅞'];
+var IDS=['bf','bi','wd','dl','ll'];
+var STD=[8,10,12,14,16,18,20,24];
+var shown=false,lastText='';
+function num(x,d){d=d||0;return x.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function up(x){return Math.ceil(x-1e-6)}
+function fmt(inch){
+var n=Math.round(inch*8)/8,neg=n<0;n=Math.abs(n);
+var ft=Math.floor(n/12),r=n-ft*12,w=Math.floor(r),e=Math.round((r-w)*8);
+if(e===8){w++;e=0}if(w===12){ft++;w=0}
+var s=(w>0?w:'')+FR[e];if(s==='')s='0';
+return(neg?'-':'')+(ft>0?ft+'′ ':'')+s+'″';
+}
+function val(id){var el=$(id);if(el.validity&&el.validity.badInput)return NaN;var s=el.value.trim();return s===''?null:Number(s)}
+function err(id,m){var el=$(id);el.setAttribute('aria-invalid','true');el.closest('.fld').classList.add('err');$('e-'+id).textContent=m}
+function clearErrs(){IDS.forEach(function(id){var el=$(id);el.removeAttribute('aria-invalid');el.closest('.fld').classList.remove('err');$('e-'+id).textContent=''})}
+function clearRes(){$('results').innerHTML='';$('copyRow').hidden=true;shown=false}
+function tbl(h1,h2,rows){
+return '<div class="tw"><table><thead><tr><th>'+h1+'</th><th class="r">'+h2+'</th></tr></thead><tbody>'+
+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td class="r">'+r[1]+'</td></tr>'}).join('')+'</tbody></table></div>';
+}
+var REF='<div class="tw"><table><thead><tr><th>Backspan</th><th class="r">Max overhang</th><th class="r">Inches</th></tr></thead><tbody>'+
+(function(){var s='';for(var f=6;f<=16;f++){s+='<tr><td>'+f+' ft</td><td class="r">'+fmt(f*3)+'</td><td class="r">'+num(f*3)+'</td></tr>'}return s})()+'</tbody></table></div>';
+
+function parseB(show){
+var bf=val('bf'),bi=val('bi'),bad=false;
+if(bf===null)bf=0;if(bi===null)bi=0;
+if(isNaN(bf)||bf<0){if(show)err('bf','Enter feet as a number, 0 or more.');bad=true}
+if(isNaN(bi)||bi<0||bi>=12){if(show)err('bi','Inches must be from 0 to 11.9.');bad=true}
+if(bad)return null;
+var B=bf*12+bi;
+if(B<=0){if(show)err('bf','Enter a span greater than zero.');return null}
+if(B>480){if(show)err('bf','Spans over 40 ft are outside this tool. Use an engineered design.');return null}
+return B;
+}
+
+function draw(beam,B,c,k,mx){
+var ok=c<=mx+1e-9,mk=ok?'ar':'arr',cw=0;
+if(c>0)cw=Math.min(Math.max(300*c/(B+k*c),62),k===2?90:130);
+var Lw=300-k*cw,x0=60,x1=x0+(k===2?cw:0),x2=x1+Lw,xe=x2+cw;
+var segs=[[x1,x2,beam?'Beam span':'Backspan',fmt(B),'ar']];
+if(c>0){segs.push([x2,xe,'Overhang',fmt(c),mk]);if(k===2)segs.push([x0,x1,'Overhang',fmt(c),mk])}
+var s='',pct=(c/B*100).toFixed(1);
+segs.forEach(function(g){
+var a=g[0],b=g[1],cl=g[4]==='arr'?'#c0392b':'#0077b6',cx=(a+b)/2;
+s+='<line x1="'+a+'" y1="64" x2="'+a+'" y2="112" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>'+
+'<line x1="'+b+'" y1="64" x2="'+b+'" y2="112" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>'+
+'<line x1="'+a+'" y1="72" x2="'+b+'" y2="72" stroke="'+cl+'" stroke-width="2" marker-start="url(#'+g[4]+')" marker-end="url(#'+g[4]+')"/>'+
+'<text x="'+cx+'" y="42" text-anchor="middle" font-size="12" fill="#1a1a2e">'+g[2]+'</text>'+
+'<text x="'+cx+'" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a2e">'+g[3]+'</text>';
+});
+s+='<text x="200" y="16" text-anchor="middle" font-size="13" font-weight="700" fill="'+(ok?'#1e7e34':'#c0392b')+'">'+(ok?'Within':'Exceeds')+' 1/4 rule: overhang is '+pct+'% of span (limit 25%)</text>';
+s+='<line x1="30" y1="224" x2="390" y2="224" stroke="#1a1a2e" stroke-width="1.5"/>';
+if(beam){
+s+='<rect x="60" y="112" width="300" height="18" fill="#cfe6f3" stroke="#0077b6" stroke-width="2"/>';
+[x1,x2].forEach(function(x){
+s+='<rect x="'+(x-5)+'" y="130" width="10" height="82" fill="#fff" stroke="#1a1a2e"/><rect x="'+(x-18)+'" y="212" width="36" height="12" fill="#e0e0e0" stroke="#1a1a2e"/><text x="'+x+'" y="240" text-anchor="middle" font-size="12" fill="#1a1a2e">Post</text>';
+});
+}else{
+s+='<rect x="40" y="96" width="20" height="128" fill="#e0e0e0" stroke="#1a1a2e"/><text x="50" y="240" text-anchor="middle" font-size="12" fill="#1a1a2e">House</text>';
+s+='<rect x="60" y="112" width="300" height="14" fill="#e6f2f9" stroke="#0077b6" stroke-width="2"/>';
+s+='<rect x="'+(x2-14)+'" y="126" width="28" height="16" fill="#0077b6"/><rect x="'+(x2-5)+'" y="142" width="10" height="70" fill="#fff" stroke="#1a1a2e"/><rect x="'+(x2-18)+'" y="212" width="36" height="12" fill="#e0e0e0" stroke="#1a1a2e"/><text x="'+x2+'" y="240" text-anchor="middle" font-size="12" fill="#1a1a2e">Beam + post</text>';
+}
+$('dg').innerHTML=s;
+$('dsvg').setAttribute('aria-label','Side view: '+(beam?'beam span ':'joist backspan ')+fmt(B)+', overhang '+fmt(c)+', maximum overhang '+fmt(mx)+'. '+(ok?'Within':'Exceeds')+' the one-fourth rule.');
+}
+
+function tryDiagram(){
+var B=parseB(false);if(B===null)return;
+var beam=$('mode').value==='beam',k=beam?Number($('ends').value):1;
+draw(beam,B,Number($('ov').value),k,Math.floor(B*2+1e-9)/8);
+}
+
+function calculate(){
+clearErrs();
+var wasShown=shown;
+var beam=$('mode').value==='beam',bad=false;
+var B=parseB(true);if(B===null)bad=true;
+var W=0,D=0,Lv=0,note40=false;
+if(!beam){
+W=val('wd');D=val('dl');Lv=val('ll');
+if(W===null||isNaN(W)||W<1||W>100){err('wd',W===null?'Enter the deck width in feet.':'Width must be between 1 and 100 ft.');bad=true}
+if(D===null||isNaN(D)||D<0||D>100){err('dl',D===null?'Enter a dead load (10 is typical).':'Dead load must be between 0 and 100 psf.');bad=true}
+if(Lv===null||isNaN(Lv)||Lv<0||Lv>250){err('ll',Lv===null?'Enter a live load (40 is the minimum).':'Live load must be between 0 and 250 psf.');bad=true}
+}
+if(bad){clearRes();return}
+if(!beam&&Lv<40){Lv=40;note40=true}
+var k=beam?Number($('ends').value):1;
+var c=Number($('ov').value);
+var mx=Math.floor(B*2+1e-9)/8;
+var within=c<=mx+1e-9;
+var minB=Math.ceil(c*32-1e-9)/8;
+var pct=c/B*100;
+var total=B+k*c;
+var stock=null;for(var i=0;i<STD.length;i++){if(STD[i]>=total/12-1e-9){stock=STD[i];break}}
+var nm=beam?'beam span':'joist backspan';
+var msgs=[],rows,loads='',cp=[];
+
+var status;
+if(c===0)status='<div class="st warn"><strong>No overhang entered.</strong> The maximum shown is the most you could add at this '+nm+'.</div>';
+else if(within)status='<div class="st ok"><strong>Within the 1/4 rule.</strong> Your '+fmt(c)+' overhang is '+num(pct,1)+'% of the '+nm+' (limit 25%), leaving '+fmt(mx-c)+' to spare.</div>';
+else status='<div class="st bad"><strong>Exceeds the 1/4 rule by '+fmt(c-mx)+'.</strong> Shorten the overhang to '+fmt(mx)+' or less, or lengthen the '+nm+' to at least '+fmt(minB)+'.</div>';
+
+var stockTxt=stock?stock+' ft':'Over 24 ft (not a standard length)';
+if(!stock)msgs.push('Total length is over 24 ft, longer than standard lumber. Reconsider the layout.');
+
+if(beam){
+rows=[['Beam span (post to post)',fmt(B)],['Planned overhang per end',fmt(c)],['Overhang as % of span',num(pct,1)+'% (limit 25%)'],['Maximum overhang per end',fmt(mx)],['Minimum span for planned overhang',fmt(minB)],['Cantilevered ends',String(k)],['Total beam length',fmt(total)],['Suggested stock length',stockTxt]];
+msgs.push('A cantilevered beam carries many joists. Confirm its size against the deck beam table in your adopted code for the actual span and tributary joist length.');
+}else{
+var sp=Number($('sp').value),s=sp/12,wdd=D*s,wt=(D+Lv)*s,Lf=B/12,cf=c/12;
+var RA=wt*(Lf*Lf-cf*cf)/(2*Lf),RB=wt*(Lf+cf)-RA,RAu=(wdd*Lf*Lf-wt*cf*cf)/(2*Lf),M=wt*cf*cf/2;
+var cnt=Math.ceil(W*12/sp-1e-9)+1;
+var lf=stock?cnt*stock:Math.ceil(cnt*total/12);
+rows=[['Joist backspan (ledger to beam)',fmt(B)],['Planned overhang',fmt(c)],['Overhang as % of backspan',num(pct,1)+'% (limit 25%)'],['Maximum overhang',fmt(mx)],['Minimum backspan for planned overhang',fmt(minB)],['Total joist length',fmt(total)],['Suggested stock length',stockTxt],['Joists needed (width ÷ spacing + 1)',num(cnt)],['Total joist lumber',num(lf)+' linear ft']];
+var rA=RA>=0?num(up(RA))+' lb down':'Uplift '+num(up(-RA))+' lb';
+var rU=RAu>=-1e-6?num(Math.floor(RAu+1e-6))+' lb down':'Uplift '+num(up(-RAu))+' lb';
+loads='<div class="rh">Load check per joist</div>'+tbl('Item','Value',[
+['Line load, dead + live',num(wt,1)+' lb/ft'],
+['Ledger reaction, full load',rA],
+['Beam reaction, full load',num(up(RB))+' lb'],
+['Ledger reaction, live load on overhang only',rU],
+['Bending moment at beam',num(up(M))+' ft-lb']]);
+if(RAu<-1e-6)msgs.push('Uplift: with the overhang loaded and the backspan lightly loaded, the joist tries to lift off the ledger by about '+num(up(-RAu))+' lb. Add hold-down hardware or shorten the overhang.');
+if(B>240)msgs.push('A joist backspan over 20 ft is unusual. Check the total joist span against the joist span table in your adopted code.');
+msgs.push('Joist size is not checked here. The full joist length, species, grade and spacing must meet the joist span table in your adopted code (IRC R507.6 in the 2018/2021 editions).');
+if(note40)msgs.push('Live load raised to 40 psf, the IRC minimum for residential decks.');
+cp=['Dead + live load: '+num(D)+' + '+num(Lv)+' psf at '+sp+' in spacing','Ledger reaction (full load): '+rA,'Beam reaction (full load): '+num(up(RB))+' lb per joist'];
+}
+var warns=msgs.map(function(m){return '<div class="st warn">'+m+'</div>'}).join('');
+var html='<div class="rs'+(wasShown?' show':'')+'" id="rs"><div class="key"><div class="kl">Maximum overhang (1/4 rule)</div><div class="kn">'+fmt(mx)+'</div><div class="ks">= 1/4 of '+fmt(B)+' '+nm+' = '+num(mx,2)+' in</div></div>'+status+warns+
+'<div class="rh">Summary</div>'+tbl('Item','Value',rows)+loads+
+'<div class="rh">Max overhang by backspan (1/4 rule)</div>'+REF+
+'<p class="note">Planning aid based on the one-fourth rule in the IRC deck provisions (R507 in the 2018/2021 editions; section numbers and footnotes vary by edition). Local codes vary. This is not engineering, permit or inspection approval.</p></div>';
+lastText='Deck cantilever calculation ('+(beam?'beam overhang':'joist overhang')+')\n'+rows.map(function(r){return r[0]+': '+r[1]}).join('\n')+(cp.length?'\n'+cp.join('\n'):'')+'\nBased on the IRC one-fourth rule for deck overhangs; code edition and local rules vary. Not engineering or permit approval.\ntoolwick.com/deck-cantilever-calculator/';
+requestAnimationFrame(function(){
+$('results').innerHTML=html;
+draw(beam,B,c,k,mx);
+$('copyRow').hidden=false;
+shown=true;
+requestAnimationFrame(function(){var r=$('rs');if(r)r.classList.add('show')});
+});
+}
+
+function setMode(){
+var b=$('mode').value==='beam';
+$('tool').classList.toggle('beam',b);
+$('bsl').textContent=b?'Beam span (post to post)':'Joist backspan (ledger to beam)';
+clearErrs();clearRes();tryDiagram();
+}
+function setOv(){
+var v=Number($('ov').value);
+$('ovo').textContent=fmt(v);
+$('ov').setAttribute('aria-valuetext',fmt(v).replace('′',' feet').replace('″',' inches'));
+}
+function onEdit(){clearErrs();clearRes();tryDiagram()}
+
+$('calc').addEventListener('click',calculate);
+$('tool').addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.tagName!=='BUTTON'){e.preventDefault();calculate()}});
+$('mode').addEventListener('change',setMode);
+$('ends').addEventListener('change',onEdit);
+$('sp').addEventListener('change',onEdit);
+IDS.forEach(function(id){$(id).addEventListener('input',onEdit)});
+$('ov').addEventListener('input',function(){setOv();if(shown)calculate();else tryDiagram()});
+$('copy').addEventListener('click',function(){
+var b=$('copy');
+function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+function fallback(){var t=document.createElement('textarea');t.value=lastText;t.setAttribute('readonly','');t.style.position='absolute';t.style.left='-9999px';document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);done()}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,fallback)}else fallback();
+});
+$('yr').textContent=new Date().getFullYear();
+setOv();tryDiagram();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
