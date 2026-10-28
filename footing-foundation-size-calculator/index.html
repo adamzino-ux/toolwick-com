@@ -4,630 +4,457 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free Footing &amp; Foundation Size Calculator | Toolwick</title>
-<meta name="description" content="Calculate the correct concrete footing and foundation size for any load. Enter soil bearing capacity, column load, and get footing dimensions instantly.">
+<meta name="description" content="Free concrete footing size calculator: enter load, soil bearing and depth to get footing width, thickness, concrete volume and rebar.">
 <link rel="canonical" href="https://toolwick.com/footing-foundation-size-calculator/">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Footing & Foundation Size Calculator", "url": "https://toolwick.com/footing-foundation-size-calculator/", "description": "Calculate the correct concrete footing and foundation size for any load. Enter soil bearing capacity, column load, and get footing dimensions instantly.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Footing & Foundation Size Calculator", "item": "https://toolwick.com/footing-foundation-size-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is soil bearing capacity and how do I find it?", "acceptedAnswer": {"@type": "Answer", "text": "Soil bearing capacity is the maximum load per unit area that soil can safely support without shearing or settling excessively. For preliminary design, use 1.5–2.0 ksf for soft clay, 2–3 ksf for medium sand, 4–6 ksf for dense gravel, and 8–12+ ksf for bedrock. A geotechnical engineer can perform soil borings and lab tests to determine the actual value — required for engineered structures."}}, {"@type": "Question", "name": "What's the minimum footing size for a residential deck post?", "acceptedAnswer": {"@type": "Answer", "text": "Most residential building codes require a minimum 12-inch diameter or 12×12 inch square footing for deck posts. However, the actual required size depends on the tributary area of the deck and soil conditions. A 10×10 ft deck section carrying 50 psf (live + dead load) exerts 5 kips on the post, requiring roughly a 1.7 ft × 1.7 ft footing on 2 ksf soil — so 24×24 inches is a safe standard deck post footing size."}}, {"@type": "Question", "name": "How thick should a concrete footing be?", "acceptedAnswer": {"@type": "Answer", "text": "ACI 318 requires spread footings to be at least 6 inches thick above the bottom reinforcement. As a practical rule, footing thickness = (footing width − column width) / 2, ensuring a 45° stress angle through the concrete. For most residential footings (12–24 in wide), 12 inches is common. Larger commercial footings may need 18–30 inches of thickness."}}, {"@type": "Question", "name": "Do I really need a structural engineer for a footing?", "acceptedAnswer": {"@type": "Answer", "text": "For simple residential projects like deck posts and small sheds, prescriptive code tables may suffice. However, any footing supporting a structural element of a building — including load-bearing walls, columns, or additions — should be designed by a licensed structural engineer in most jurisdictions. Using a calculator is great for preliminary planning and budgeting, but engineering review is required before construction."}}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Footing & Foundation Size Calculator", "url": "https://toolwick.com/footing-foundation-size-calculator/", "description": "Free concrete footing size calculator: enter load, soil bearing and depth to get footing width, thickness, concrete volume and rebar.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Footing & Foundation Size Calculator", "item": "https://toolwick.com/footing-foundation-size-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How big should a concrete footing be for a deck post?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on the load and soil. A post carrying 6,000 lb on 2,000 psf soil needs roughly a 24 in square footing. Use the Deck Footing Size & Frost Depth Calculator for deck-specific tributary loads."}}, {"@type": "Question", "name": "How thick should a footing be?", "acceptedAnswer": {"@type": "Answer", "text": "IRC R403.1 sets a 6 in minimum, but this calculator never goes below 8 in. For plain concrete the thickness must be at least the projection beyond the column or wall. Reinforced footings can be thinner, but a structural engineer should confirm shear."}}, {"@type": "Question", "name": "How deep should a footing be?", "acceptedAnswer": {"@type": "Answer", "text": "The bottom must sit at least 12 in below undisturbed ground and below your local frost depth, whichever is deeper. Frost depth ranges from nearly zero in the Deep South to 48 in or more in northern states, so check with your building department."}}, {"@type": "Question", "name": "What soil bearing capacity should I use?", "acceptedAnswer": {"@type": "Answer", "text": "Use the value from a soils report if you have one. Otherwise IRC R401.4.1 gives presumptive values: 1,500 psf for clay, 2,000 psf for sand, 3,000 psf for gravel and 4,000 psf for sedimentary rock. When unsure, choose the lower number."}}, {"@type": "Question", "name": "Does a footing need rebar?", "acceptedAnswer": {"@type": "Answer", "text": "Not always. Small plain-concrete wall footings that meet IRC projection limits can be unreinforced, but pads, tall projections and weak soil benefit from steel. This tool shows minimum rebar for reinforced footings and states when none is assumed."}}, {"@type": "Question", "name": "How much concrete or how many bags do I need?", "acceptedAnswer": {"@type": "Answer", "text": "The results show cubic yards, cubic feet with your waste allowance and the number of 80-lb bags. For other bag sizes, the Concrete Bags Per Cubic Yard Calculator converts the volume."}}]}]}</script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;line-height:1.6;font-size:16px}
-a{color:#0077b6;text-decoration:none}
-a:hover{text-decoration:underline;color:#006299}
-nav{border-bottom:1px solid #e0e0e0;padding:12px 1.5rem;background:#fff}
-nav a{font-weight:600;font-size:1rem;color:#1a1a2e}
-nav a:hover{color:#0077b6;text-decoration:none}
-.container{max-width:640px;margin:0 auto;padding:1.5rem}
-h1{font-size:1.6rem;font-weight:700;margin-bottom:0.4rem;color:#1a1a2e}
-.subtitle{color:#555;font-size:0.95rem;margin-bottom:1.5rem}
-.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:2rem}
-label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:5px;margin-top:1rem}
-label:first-child{margin-top:0}
-select,input[type="number"]{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;transition:border-color 0.2s,box-shadow 0.2s;-webkit-appearance:none}
-select:focus,input[type="number"]:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;line-height:1.6;font-size:16px}
+[hidden]{display:none!important}
+a{color:#0077b6;text-decoration:underline}
+a:hover{color:#006299}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.site-nav{border-bottom:1px solid #e0e0e0;padding:12px 1.5rem}
+.site-nav a{font-weight:700;font-size:1.1rem;color:#1a1a2e;text-decoration:none}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.6rem;line-height:1.25;margin:0 0 .6rem}
+.lead{color:#444;margin:0 0 1.5rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 1px 4px rgba(0,0,0,.07);margin-bottom:2rem}
+.diagram{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:.5rem;margin-bottom:2rem;text-align:center}
+.diagram svg{width:100%;height:auto;display:block}
+#diagram text{fill:#1a1a2e;font:600 14px -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
+#diagram .sm{font-size:12px}
+.diagram p{margin:.25rem 0 0;font-size:.8rem;color:#666}
+.st{font-size:1rem;font-weight:600;margin:1.75rem 0 0;border-left:3px solid #0077b6;padding-left:10px}
+.st:first-child{margin-top:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin:1rem 0 6px}
+input[type=number],select{display:block;width:100%;min-height:46px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input[type=range]{display:block;width:100%;min-height:44px;accent-color:#0077b6;margin:0}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px;border-color:#0077b6}
 input.error{border-color:#e74c3c}
-.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:4px;display:none}
+.error-msg{display:none;color:#c0392b;font-size:.82rem;margin-top:4px}
 .error-msg.show{display:block}
-.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.btn-primary{background:#0077b6;color:#fff;border:none;padding:13px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;margin-top:1.25rem;min-height:44px;transition:background 0.2s}
-.btn-primary:hover{background:#006299}
-.results{opacity:0;transition:opacity 0.3s ease;pointer-events:none}
-.results.show{opacity:1;pointer-events:all}
-.big-number{font-size:2.4rem;font-weight:700;color:#0077b6;line-height:1.1}
-.big-label{font-size:0.85rem;color:#555;margin-top:2px;margin-bottom:1rem}
-.key-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
-.metric-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1rem;text-align:center}
-.metric-val{font-size:1.4rem;font-weight:700;color:#0077b6}
-.metric-lbl{font-size:0.78rem;color:#555;margin-top:2px}
-table{width:100%;border-collapse:collapse;font-size:0.9rem}
-th{background:#f0f0f0;padding:9px 12px;text-align:left;font-weight:600;font-size:0.82rem;color:#444;border-bottom:2px solid #ddd}
-th.num{text-align:right}
-td{padding:9px 12px;border-bottom:1px solid #eee;color:#1a1a2e}
-td.num{text-align:right;font-variant-numeric:tabular-nums}
-tr:nth-child(even) td{background:#fafafa}
-.table-wrap{overflow-x:auto}
-.copy-btn{background:transparent;border:1px solid #0077b6;color:#0077b6;padding:6px 14px;border-radius:5px;font-size:0.8rem;cursor:pointer;margin-top:0.75rem;min-height:36px;transition:all 0.2s}
-.copy-btn:hover{background:#0077b6;color:#fff}
-.section-title{font-size:1rem;font-weight:600;color:#1a1a2e;margin-bottom:0.75rem;margin-top:1.25rem;border-left:3px solid #0077b6;padding-left:10px}
-.diagram-wrap{margin-bottom:1.5rem;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1rem;text-align:center}
-.diagram-wrap svg{max-width:100%;height:auto}
+.hint{font-size:.8rem;color:#666;margin-top:4px}
+.btn{display:block;width:100%;min-height:46px;margin-top:1.5rem;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;font-family:inherit;cursor:pointer}
+.btn:hover{background:#006299}
+#formErr{display:none;margin-top:1rem;padding:.8rem 1rem;border:1px solid #e74c3c;border-radius:6px;color:#8e2b20;background:#fdf1f0;font-size:.9rem}
+#formErr.show{display:block}
+#results{margin-top:2rem}
+#results:empty{margin:0}
+.fade-in{animation:fadeIn .3s ease both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.fade-in{animation:none}}
+.rt{font-size:1.1rem;margin:0 0 .5rem}
+.big{font-size:clamp(1.8rem,8vw,2.6rem);font-weight:700;color:#0077b6;line-height:1.15;overflow-wrap:anywhere}
+.bigsub{font-size:.88rem;color:#555;margin:.25rem 0 1.25rem}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+.tile{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:.9rem;text-align:center}
+.tv{font-size:1.2rem;font-weight:700;color:#0077b6;overflow-wrap:anywhere}
+.tl{font-size:.78rem;color:#555;margin-top:2px}
+.ubar{height:10px;background:#eee;border-radius:5px;overflow:hidden}
+.ubar span{display:block;height:100%;background:#0077b6}
+.utxt{font-size:.82rem;color:#555;margin:.35rem 0 1.25rem}
+h3{font-size:1rem;margin:1.5rem 0 .5rem}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#f0f0f0;text-align:left;font-size:.82rem;color:#333;padding:9px 12px;border-bottom:2px solid #ddd}
+td{padding:9px 12px;border-bottom:1px solid #eee}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
+.warn{background:#fff8e1;border:1px solid #f9a825;border-radius:6px;padding:.85rem 1rem;font-size:.85rem;color:#4a3b00;margin-top:1.25rem}
+.warn ul{margin:.25rem 0 .5rem;padding-left:1.2rem}
+.warn p{margin:.4rem 0 0}
+.copy{background:#fff;border:1px solid #0077b6;color:#0077b6;border-radius:6px;padding:8px 16px;min-height:44px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:1.25rem}
+.copy:hover{background:#e8f4fb}
+#copied{margin-left:.75rem;font-size:.85rem;color:#006299}
 .ad-slot{min-height:0;margin:0}
-.content-section h2{font-size:1.15rem;font-weight:700;color:#1a1a2e;margin:1.75rem 0 0.5rem}
-.content-section p{color:#333;margin-bottom:0.75rem;font-size:0.95rem}
-.content-section ul{padding-left:1.3rem;color:#333;font-size:0.95rem}
-.content-section ul li{margin-bottom:0.4rem}
-details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:0.6rem;padding:0}
-details summary{padding:12px 16px;font-weight:600;font-size:0.9rem;cursor:pointer;list-style:none;color:#1a1a2e}
-details summary::-webkit-details-marker{display:none}
-details summary::after{content:'＋';float:right;color:#0077b6}
-details[open] summary::after{content:'－'}
-details p{padding:0 16px 14px;color:#333;font-size:0.9rem}
-.related-tools{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-top:0.75rem}
-.related-tools a{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:10px 14px;font-size:0.85rem;color:#0077b6;display:block}
-.related-tools a:hover{background:#e8f4fb;text-decoration:none}
-footer{border-top:1px solid #e0e0e0;padding:1.25rem 1.5rem;text-align:center;font-size:0.82rem;color:#666;margin-top:2rem}
-footer a{color:#0077b6;margin:0 6px}
-.warning-box{background:#fff8e1;border:1px solid #f9a825;border-radius:6px;padding:0.85rem 1rem;font-size:0.85rem;color:#5a4000;margin-top:1rem}
-@media(max-width:640px){
-  .row-2{grid-template-columns:1fr}
-  .key-metrics{grid-template-columns:1fr 1fr}
-  .related-tools{grid-template-columns:1fr}
-  h1{font-size:1.35rem}
-  .big-number{font-size:2rem}
-  .card{padding:1.25rem}
+.content h2{font-size:1.2rem;margin:2.25rem 0 .6rem}
+.content p,.content li{font-size:.97rem;color:#2b2b3d}
+.content p{margin:0 0 .85rem}
+.content ul,.content ol{padding-left:1.3rem;margin:0 0 1rem}
+.content li{margin-bottom:.4rem}
+.formula{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.7rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86rem;overflow-x:auto;margin:0 0 .85rem}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:.6rem}
+summary{padding:12px 16px;min-height:44px;font-weight:600;font-size:.95rem;cursor:pointer}
+details p{padding:0 16px;margin:0 0 .9rem}
+.rel{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.rel li{margin:0}
+.rel a{display:flex;align-items:center;min-height:44px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:8px 12px;font-size:.88rem}
+footer{border-top:1px solid #e0e0e0;text-align:center;padding:1.5rem;font-size:.85rem;color:#666}
+footer p{margin:.25rem 0}
+footer a{margin:0 .4rem;color:#0077b6}
+@media (max-width:640px){
+.g2{grid-template-columns:1fr}
+.card{padding:1.25rem}
+.rel{grid-template-columns:1fr}
+h1{font-size:1.4rem}
+.tiles{gap:.6rem}
 }
 </style>
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://toolwick.com/footing-foundation-size-calculator/">
 <meta property="og:title" content="Footing &amp; Foundation Size Calculator">
-<meta property="og:description" content="Calculate the correct concrete footing and foundation size for any load. Enter soil bearing capacity, column load, and get footing dimensions instantly.">
+<meta property="og:description" content="Free concrete footing size calculator: enter load, soil bearing and depth to get footing width, thickness, concrete volume and rebar.">
 <meta property="og:site_name" content="Toolwick">
 <meta name="twitter:card" content="summary">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
-<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
 <style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
 </head>
 <body>
 <header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
-<div class="container">
-  <h1>Footing &amp; Foundation Size Calculator</h1>
+<nav class="site-nav" aria-label="Site"><a href="/">Toolwick</a></nav>
+<div class="wrap">
+<h1>Concrete Footing Size Calculator: Footing &amp; Foundation Size</h1>
 <p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
-  <p class="subtitle">Calculate footing dimensions, depth, concrete volume, and reinforcement for columns and walls.</p>
+<p class="lead">Use this concrete footing size calculator to size a square pad, rectangular pad or continuous wall footing from your load and soil bearing capacity, then see the thickness, concrete volume and minimum rebar.</p>
 
-  <!-- SVG DIAGRAM -->
-  <div class="diagram-wrap">
-    <svg id="footingDiagram" viewBox="0 0 580 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:580px">
-      <!-- Ground surface -->
-      <line x1="40" y1="80" x2="540" y2="80" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="6,4"/>
-      <text x="44" y="74" font-family="sans-serif" font-size="11" fill="#888">Ground Level</text>
-      <!-- Soil hatching -->
-      <rect x="40" y="80" width="500" height="140" fill="#f5f0e8" rx="2"/>
-      <line x1="40" y1="100" x2="90" y2="80" stroke="#d4c9b0" stroke-width="1"/>
-      <line x1="80" y1="100" x2="130" y2="80" stroke="#d4c9b0" stroke-width="1"/>
-      <line x1="120" y1="100" x2="170" y2="80" stroke="#d4c9b0" stroke-width="1"/>
-      <line x1="160" y1="100" x2="210" y2="80" stroke="#d4c9b0" stroke-width="1"/>
-      <line x1="200" y1="100" x2="250" y2="80" stroke="#d4c9b0" stroke-width="1"/>
-      <line x1="240" y1="100" x2="290" y2="80" stroke="#d4c9b0" stroke-width="1"/>
-      <line x1="280" y1="100" x2="330" y2="80" stroke="#d4c9b0" stroke-width="1"/>
-      <line x1="320" y1="100" x2="370" y2="80" stroke="#d4c9b0" stroke-width="1"/>
-      <line x1="360" y1="100" x2="410" y2="80" stroke="#d4c9b0" stroke-width="1"/>
-      <line x1="400" y1="100" x2="450" y2="80" stroke="#d4c9b0" stroke-width="1"/>
-      <line x1="440" y1="100" x2="490" y2="80" stroke="#d4c9b0" stroke-width="1"/>
-      <line x1="480" y1="100" x2="530" y2="80" stroke="#d4c9b0" stroke-width="1"/>
-      <!-- Column -->
-      <rect x="245" y="20" width="90" height="60" fill="#cfe8f3" stroke="#0077b6" stroke-width="2" rx="2"/>
-      <text x="290" y="55" font-family="sans-serif" font-size="12" fill="#0077b6" text-anchor="middle" font-weight="600">COLUMN</text>
-      <!-- Footing -->
-      <rect id="svgFooting" x="145" y="130" width="290" height="68" fill="#b8d9ea" stroke="#0077b6" stroke-width="2.5" rx="3"/>
-      <!-- Footing label -->
-      <text x="290" y="172" font-family="sans-serif" font-size="12" fill="#1a1a2e" text-anchor="middle" font-weight="600">CONCRETE FOOTING</text>
-      <!-- Width arrow -->
-      <line x1="145" y1="218" x2="435" y2="218" stroke="#0077b6" stroke-width="1.5"/>
-      <polygon points="145,218 153,214 153,222" fill="#0077b6"/>
-      <polygon points="435,218 427,214 427,222" fill="#0077b6"/>
-      <text id="svgWidth" x="290" y="234" font-family="sans-serif" font-size="12" fill="#1a1a2e" text-anchor="middle" font-weight="600">Width</text>
-      <!-- Depth arrow -->
-      <line x1="468" y1="80" x2="468" y2="198" stroke="#0077b6" stroke-width="1.5"/>
-      <polygon points="468,80 464,88 472,88" fill="#0077b6"/>
-      <polygon points="468,198 464,190 472,190" fill="#0077b6"/>
-      <text id="svgDepth" x="500" y="144" font-family="sans-serif" font-size="12" fill="#1a1a2e" text-anchor="middle" font-weight="600">Depth</text>
-      <!-- Thickness arrow -->
-      <line x1="60" y1="130" x2="60" y2="198" stroke="#0077b6" stroke-width="1.5"/>
-      <polygon points="60,130 56,138 64,138" fill="#0077b6"/>
-      <polygon points="60,198 56,190 64,190" fill="#0077b6"/>
-      <text id="svgThick" x="20" y="168" font-family="sans-serif" font-size="11" fill="#1a1a2e" text-anchor="middle" font-weight="600" transform="rotate(-90,20,168)">Thick</text>
-      <!-- Rebar lines inside footing -->
-      <line x1="165" y1="152" x2="415" y2="152" stroke="#7b3f00" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.6"/>
-      <line x1="165" y1="176" x2="415" y2="176" stroke="#7b3f00" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.6"/>
-      <text x="420" y="157" font-family="sans-serif" font-size="9" fill="#7b3f00" opacity="0.8">rebar</text>
-      <!-- Column dimension line -->
-      <line x1="245" y1="10" x2="335" y2="10" stroke="#888" stroke-width="1.2"/>
-      <polygon points="245,10 253,6 253,14" fill="#888"/>
-      <polygon points="335,10 327,6 327,14" fill="#888"/>
-      <text x="290" y="8" font-family="sans-serif" font-size="10" fill="#888" text-anchor="middle">Column width</text>
-    </svg>
-  </div>
+<div class="diagram">
+<svg id="diagram" viewBox="0 0 500 290" role="img" aria-labelledby="dgT dgD">
+<title id="dgT">Footing cross-section diagram</title>
+<desc id="dgD">Cross-section of a column or wall on a concrete footing set below grade, with footing width B, thickness T, depth D, column width c and load P dimensioned. Labels update with your results.</desc>
+<defs>
+<pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="10" stroke="#e0e0e0" stroke-width="2"/></pattern>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker>
+</defs>
+<rect x="10" y="100" width="480" height="180" fill="url(#hatch)"/>
+<line x1="10" y1="100" x2="490" y2="100" stroke="#1a1a2e" stroke-width="1.5"/>
+<text class="sm" x="14" y="92">GRADE</text>
+<rect id="dgFoot" x="150" y="146" width="200" height="44" fill="#d7ebf5" stroke="#0077b6" stroke-width="2.5"/>
+<rect id="dgCol" x="210" y="56" width="80" height="90" fill="#e6f2f8" stroke="#0077b6" stroke-width="2"/>
+<line id="dgRebar" x1="162" y1="182" x2="338" y2="182" stroke="#0077b6" stroke-width="2.5" stroke-dasharray="7 5"/>
+<text class="sm" x="250" y="166" text-anchor="middle">FOOTING</text>
+<text class="sm" id="dgC1" x="298" y="78">COLUMN</text>
+<text class="sm" id="dgC2" x="298" y="94">c</text>
+<line x1="250" y1="10" x2="250" y2="54" stroke="#0077b6" stroke-width="2" marker-end="url(#ar)"/>
+<text id="dgP" x="262" y="30">P</text>
+<line x1="90" y1="100" x2="90" y2="190" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="90" y1="190" x2="150" y2="190" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="4 3"/>
+<text class="sm" id="dgD1" x="84" y="150" text-anchor="end">D</text>
+<line x1="380" y1="146" x2="380" y2="190" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="350" y1="146" x2="384" y2="146" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="350" y1="190" x2="384" y2="190" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="4 3"/>
+<text class="sm" id="dgT1" x="390" y="172">T</text>
+<line x1="150" y1="190" x2="150" y2="226" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="350" y1="190" x2="350" y2="226" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="150" y1="220" x2="350" y2="220" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dgB" x="250" y="244" text-anchor="middle">B</text>
+<text class="sm" id="dgR" x="250" y="268" text-anchor="middle">Press Calculate to label the diagram</text>
+</svg>
+<p>Cross-section, not to scale. Labels update when you press Calculate.</p>
+</div>
 
-  <!-- TOOL CARD -->
-  <div class="card">
-    <div class="section-title">Project Settings</div>
-    <label for="footingType">Footing Type</label>
-    <select id="footingType">
-      <option value="square">Square Spread Footing (column)</option>
-      <option value="rect">Rectangular Spread Footing (column)</option>
-      <option value="wall">Continuous Wall Footing</option>
-      <option value="combined">Combined Footing (2 columns)</option>
-    </select>
+<div class="card">
+<div id="calc">
+<p class="st">1. Footing type and load</p>
+<label for="ftype">Footing type</label>
+<select id="ftype">
+<option value="square">Square pad (column, post or pier)</option>
+<option value="rect">Rectangular pad</option>
+<option value="wall">Continuous wall (strip) footing</option>
+</select>
+<div id="ratioWrap" hidden>
+<label for="ratio">Length-to-width ratio (L ÷ B)</label>
+<input type="number" id="ratio" value="1.5" step="0.1" min="1" max="4" inputmode="decimal" aria-describedby="ratioE">
+<div class="error-msg" id="ratioE"></div>
+</div>
+<div class="g2">
+<div>
+<label for="dead">Dead load (<span id="uDead">lb</span>)</label>
+<input type="number" id="dead" value="8000" min="0" step="any" inputmode="decimal" aria-describedby="deadE">
+<div class="error-msg" id="deadE"></div>
+</div>
+<div>
+<label for="live">Live load (<span id="uLive">lb</span>)</label>
+<input type="number" id="live" value="4000" min="0" step="any" inputmode="decimal" aria-describedby="liveE">
+<div class="error-msg" id="liveE"></div>
+</div>
+</div>
+<p class="hint">Use service (unfactored) loads: dead = permanent weight, live = occupants, furniture and snow.</p>
 
-    <label for="units">Unit System</label>
-    <select id="units">
-      <option value="imperial">Imperial (ft, in, kips, ksf)</option>
-      <option value="metric">Metric (m, mm, kN, kPa)</option>
-    </select>
+<p class="st">2. Soil, depth and size</p>
+<label for="soil">Soil type (presumptive bearing, IRC Table R401.4.1)</label>
+<select id="soil">
+<option value="1500">Clay, silt, sandy or silty clay: 1,500 psf</option>
+<option value="2000" selected>Sand, silty or clayey sand/gravel: 2,000 psf</option>
+<option value="3000">Sandy gravel and gravel: 3,000 psf</option>
+<option value="4000">Sedimentary and foliated rock: 4,000 psf</option>
+<option value="custom">Custom or from a soils report</option>
+</select>
+<label for="bear">Allowable soil bearing pressure (psf)</label>
+<input type="number" id="bear" value="2000" min="500" step="any" inputmode="decimal" aria-describedby="bearE">
+<div class="error-msg" id="bearE"></div>
+<div class="g2">
+<div>
+<label for="depth">Depth to bottom of footing (in)</label>
+<input type="number" id="depth" value="36" min="6" step="any" inputmode="decimal" aria-describedby="depthE">
+<div class="error-msg" id="depthE"></div>
+</div>
+<div>
+<label for="thick">Footing thickness you plan (in)</label>
+<input type="number" id="thick" value="12" min="6" step="any" inputmode="decimal" aria-describedby="thickE">
+<div class="error-msg" id="thickE"></div>
+</div>
+</div>
+<label for="colw" id="cLab">Column or post width (in)</label>
+<input type="number" id="colw" value="8" min="2" step="any" inputmode="decimal" aria-describedby="colwE">
+<div class="error-msg" id="colwE"></div>
 
-    <div class="section-title" style="margin-top:1.5rem">Loads &amp; Soil</div>
-    <div class="row-2">
-      <div>
-        <label id="loadLabel">Column Load (kips)</label>
-        <input type="number" id="columnLoad" value="80" min="0" step="1" placeholder="e.g. 80">
-        <div class="error-msg" id="loadErr">Please enter a positive load value.</div>
-      </div>
-      <div>
-        <label id="soilLabel">Soil Bearing Capacity (ksf)</label>
-        <input type="number" id="soilBearing" value="2" min="0.1" step="0.1" placeholder="e.g. 2">
-        <div class="error-msg" id="soilErr">Please enter a positive bearing capacity.</div>
-      </div>
-    </div>
+<p class="st">3. Reinforcement and quantity</p>
+<div class="g2">
+<div>
+<label for="reinf">Reinforcement</label>
+<select id="reinf"><option value="y" selected>Reinforced (rebar)</option><option value="n">Unreinforced (plain concrete)</option></select>
+</div>
+<div>
+<label for="bar">Rebar size</label>
+<select id="bar"><option value="4" selected>#4 (1/2 in)</option><option value="5">#5 (5/8 in)</option><option value="6">#6 (3/4 in)</option></select>
+</div>
+</div>
+<div id="qtyWrap">
+<label for="qty">Number of identical footings</label>
+<input type="number" id="qty" value="1" min="1" step="1" inputmode="numeric" aria-describedby="qtyE">
+<div class="error-msg" id="qtyE"></div>
+</div>
+<div id="lenWrap" hidden>
+<label for="len">Total wall footing length (ft)</label>
+<input type="number" id="len" value="40" min="1" step="any" inputmode="decimal" aria-describedby="lenE">
+<div class="error-msg" id="lenE"></div>
+</div>
+<label for="waste">Concrete waste allowance: <output id="wv">10%</output></label>
+<input type="range" id="waste" min="0" max="25" step="1" value="10">
 
-    <div class="row-2">
-      <div>
-        <label id="colWidthLabel">Column Width (in)</label>
-        <input type="number" id="colWidth" value="12" min="1" step="1" placeholder="e.g. 12">
-        <div class="error-msg" id="colErr">Please enter a positive column width.</div>
-      </div>
-      <div id="colLenGroup">
-        <label id="colLenLabel">Column Length (in) <span style="color:#666;font-weight:400">(rect only)</span></label>
-        <input type="number" id="colLength" value="16" min="1" step="1" placeholder="e.g. 16">
-      </div>
-    </div>
+<button type="button" class="btn" id="calcBtn">Calculate footing size</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="formErr" role="alert">Please fix the highlighted fields and try again.</div>
+</div>
 
-    <div id="wallLenGroup" style="display:none">
-      <label id="wallLenLabel">Wall Length / Run (ft)</label>
-      <input type="number" id="wallLength" value="20" min="1" step="1" placeholder="e.g. 20">
-      <div class="error-msg" id="wallLenErr">Enter positive wall length.</div>
-    </div>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<div id="copyWrap" hidden><button type="button" class="copy" id="copyBtn">Copy results</button><span id="copied" hidden>Copied!</span></div>
+</div>
 
-    <div id="col2Group" style="display:none">
-      <label id="col2Label">Second Column Load (kips)</label>
-      <input type="number" id="col2Load" value="60" min="0" step="1" placeholder="e.g. 60">
-      <div class="error-msg" id="col2Err">Please enter a positive load value.</div>
-    </div>
-
-    <div class="section-title" style="margin-top:1.5rem">Foundation Parameters</div>
-    <div class="row-2">
-      <div>
-        <label id="depthLabel">Embedment Depth (ft)</label>
-        <input type="number" id="embedDepth" value="3" min="0.5" step="0.25" placeholder="e.g. 3">
-        <div class="error-msg" id="depthErr">Depth must be at least 1 ft.</div>
-      </div>
-      <div>
-        <label id="thickLabel">Footing Thickness (in)</label>
-        <input type="number" id="footingThick" value="12" min="6" step="1" placeholder="e.g. 12">
-        <div class="error-msg" id="thickErr">Thickness must be at least 6 in.</div>
-      </div>
-    </div>
-
-    <div class="row-2">
-      <div>
-        <label>Concrete Unit Weight (pcf)</label>
-        <input type="number" id="concWeight" value="150" min="100" max="200" step="5" placeholder="150">
-      </div>
-      <div>
-        <label>Safety Factor</label>
-        <input type="number" id="safetyFactor" value="1.0" min="1" max="3" step="0.1" placeholder="1.0">
-      </div>
-    </div>
-
-    <button class="btn-primary" id="calcBtn" onclick="calculate()">Calculate Footing Size</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
-  </div>
-
-  <!-- RESULTS -->
-  <div class="results" id="resultsSection">
-    <div class="card">
-      <div class="section-title">Required Footing Size</div>
-      <div class="key-metrics" id="keyMetrics"></div>
-      <div class="section-title">Detailed Breakdown</div>
-      <div class="table-wrap"><table id="breakdownTable"></table></div>
-      <div class="section-title" style="margin-top:1.25rem">Reinforcement Estimate</div>
-      <div class="table-wrap"><table id="rebarTable"></table></div>
-      <div class="warning-box">⚠️ <strong>Engineering Disclaimer:</strong> These calculations are for preliminary estimation only. All footing designs must be reviewed and stamped by a licensed structural engineer before construction.</div>
-      <button class="copy-btn" onclick="copyResults()">Copy Results</button>
-      <span id="copiedMsg" style="color:#0077b6;font-size:0.8rem;margin-left:10px;display:none">Copied!</span>
-    </div>
-  </div>
-
-  <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
 <div class="ad-slot" id="ad-mid"></div>
 <section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/footing-foundation-size-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Footing &amp;amp; Foundation Size Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
 &lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/footing-foundation-size-calculator/&quot;&gt;Footing &amp;amp; Foundation Size Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/footing-foundation-size-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
 
-  <!-- CONTENT SECTION -->
-  <div class="content-section">
-    <h2>How to Use This Concrete Footing Size Calculator</h2>
-    <p>Select your footing type (square spread, rectangular, continuous wall, or combined), enter the column load, soil bearing capacity, embedment depth, and footing thickness. Hit <strong>Calculate</strong> and instantly get required footing dimensions, concrete volume, and a rebar estimate. Switch between Imperial and Metric units using the unit toggle.</p>
+<div class="content">
+<h2>How to Use This Footing &amp; Foundation Size Calculator</h2>
+<p>Choose the footing type (square pad, rectangular pad or continuous wall strip), then enter the dead and live load it must carry. Pick your soil type or type in an allowable bearing pressure from a soils report, and add the depth to the bottom of the footing, the thickness you want and the width of the column or wall above. Press Calculate to get the footing width, required thickness, concrete volume, bag count and minimum rebar, plus a table showing how the footing grows if the soil is weaker than expected.</p>
 
-    <h2>Why This Matters</h2>
-    <p>Undersized footings are one of the most common and dangerous structural failures in residential and commercial construction. A 10,000 sq ft warehouse with 80-kip column loads on soil with 2 ksf bearing capacity needs footings of at least 6.5 ft × 6.5 ft — a detail that's easy to get wrong without proper calculation.</p>
-    <p>Contractors, structural engineers, and DIYers all need to know footing sizes before ordering concrete. Overpaying for oversized footings wastes money; undersizing causes settlement, cracking, or catastrophic failure. A single family home's exterior corner post carrying 30 kips on soft soil (1 ksf) needs a 5.5-ft spread footing — far larger than many homeowners realize.</p>
-    <p>This tool is used for deck posts, load-bearing walls, garage columns, pole barns, and full basement foundations. It covers the most critical early-stage sizing question before detailed engineering drawings are prepared.</p>
+<h2>Why This Matters</h2>
+<p>A footing spreads a structural load over enough soil that the ground does not settle or fail. Too small and a deck post, porch column or garage pier sinks unevenly and cracks whatever sits on it. Too large and you pay for concrete, digging and rebar you did not need. A 6,000 lb post on 2,000 psf soil needs roughly a 24 in square pad, but the same post on 1,500 psf clay grows to about 28 in, and on 3,000 psf gravel it shrinks to about 20 in. A one-story wall carrying 1,500 to 2,500 lb per linear foot on 2,000 psf soil typically needs a strip footing 12 to 18 in wide.</p>
+<p>Homeowners use a concrete footing size calculator to plan a shed, carport, porch or addition before talking to a supplier. Contractors use it to order the right amount of concrete and steel. Because soil is the biggest unknown on most jobs, the comparison table is the most useful part: it shows the cost of being wrong about the ground before a single hole is dug.</p>
 
-    <h2>How It's Calculated</h2>
-    <p>The required footing area comes from the basic bearing pressure formula:</p>
-    <p><strong>A = P / q<sub>net</sub></strong></p>
-    <ul>
-      <li><strong>P</strong> = Total design load (column load + footing self-weight)</li>
-      <li><strong>q<sub>net</sub></strong> = Net allowable soil bearing pressure (ksf or kPa)</li>
-      <li><strong>A</strong> = Required base area (ft² or m²)</li>
-    </ul>
-    <p>The footing self-weight is estimated as: <em>Area × Thickness × Concrete unit weight</em>. Since this depends on area (unknown), a quick iterative approach is used — the calculator adds an estimated self-weight (~5–8% of column load) and solves for area. Side length for a square footing is √A, rounded up to the nearest inch. Concrete volume = Area × Thickness. Rebar count is estimated using ACI 318 minimum steel ratio (0.0018 × b × d) for temperature/shrinkage.</p>
+<h2>How It's Calculated</h2>
+<p>The calculator uses a service-load (allowable stress) method, the same approach behind the presumptive soil values in IRC Table R401.4.1.</p>
+<p><strong>1. Net bearing pressure.</strong> Concrete weighs about 150 lb per cubic foot and backfill about 100, so the footing and the soil above it use up part of the soil's capacity:</p>
+<div class="formula">q_net = q_allow − 150·T/12 − 100·(D − T)/12</div>
+<p><strong>2. Required area.</strong> Divide the load by the net pressure, then round each dimension up to the next even inch (minimum 12 in, and at least the column width plus 4 in):</p>
+<div class="formula">A = P / q_net → square: B = √A · rectangular: B = √(A/r), L = r·B · wall: B = P / q_net (per ft)</div>
+<p><strong>3. Thickness.</strong> The projection is p = (L − c) / 2. For plain concrete, IRC R403.1 limits the projection to the footing thickness, so T ≥ p. For reinforced footings this tool uses the conservative rule of thumb T ≥ p/2. Either way the minimum is 8 in. If your thickness is too small, the calculator raises it and re-runs the weight calculation until the answer is stable.</p>
+<p><strong>4. Rebar.</strong> Minimum steel is the ACI 318 shrinkage ratio for Grade 60 bars, in each direction, with 3 in of cover and bars no more than 18 in apart:</p>
+<div class="formula">As,min = 0.0018 · b · T → bars = max(2, ⌈As,min / Abar⌉, ⌈(b − 6)/18⌉ + 1)</div>
+<p><strong>5. Concrete.</strong> Pad volume is B × L × T ÷ 1,728 cubic feet. A wall footing is B × T ÷ 144 cubic feet per foot of length. Divide by 27 for cubic yards. One 80-lb bag yields about 0.6 cubic foot, and the bag count is rounded up.</p>
+<p>This follows IRC R401.4.1 presumptive bearing values, IRC R403.1 footing rules of thumb and ACI 318 minimum steel. Local codes vary. The results are a preliminary estimate, not engineering, permit or inspection approval.</p>
 
-    <h2>Tips &amp; Common Mistakes</h2>
-    <ul>
-      <li><strong>Don't ignore footing self-weight.</strong> A 6 ft × 6 ft × 1 ft footing weighs ~5,400 lbs — that load goes on the soil too.</li>
-      <li><strong>Know your soil.</strong> Default soil bearing of 2 ksf is conservative for firm sand/gravel. Soft clay can be as low as 1 ksf; bedrock can exceed 10 ksf. Always get a geotechnical report for large structures.</li>
-      <li><strong>Minimum embedment depth matters.</strong> In cold climates, footings must be below frost depth — typically 3–5 ft in northern states. Going shallower causes frost heave.</li>
-      <li><strong>Round up, not down.</strong> Always round footing dimensions up to the nearest whole inch. Never round down.</li>
-      <li><strong>Check local code.</strong> Many jurisdictions have minimum footing widths (e.g., 12 in for wall footings, 24 in for columns) regardless of calculation.</li>
-    </ul>
+<h2>Worked Example</h2>
+<p>The default inputs describe a square pad under a post carrying 8,000 lb dead and 4,000 lb live load, on 2,000 psf soil, with the bottom 36 in down, 12 in thick and an 8 in post.</p>
+<ol>
+<li>Total load P = 8,000 + 4,000 = 12,000 lb.</li>
+<li>Footing weight = 150 × 12 ÷ 12 = 150 psf. Soil above = 100 × (36 − 12) ÷ 12 = 200 psf.</li>
+<li>Net bearing = 2,000 − 150 − 200 = 1,650 psf.</li>
+<li>Required area = 12,000 ÷ 1,650 = 7.27 sq ft, so B = √7.27 = 2.70 ft = 32.4 in, rounded up to <strong>34 in square</strong>.</li>
+<li>Projection = (34 − 8) ÷ 2 = 13 in. Reinforced needs T ≥ 6.5 in and the 8 in minimum, so 12 in is fine.</li>
+<li>Actual pressure = 12,000 ÷ 8.03 + 150 + 200 = 1,845 psf, about 92% of the allowable 2,000 psf.</li>
+<li>Concrete = 34 × 34 × 12 ÷ 1,728 = 8.03 cu ft (0.30 cu yd). With 10% waste, 8.83 cu ft, or 15 bags of 80-lb mix.</li>
+<li>Rebar: As,min = 0.0018 × 34 × 12 = 0.73 sq in. With #4 bars (0.20 sq in), that is 4 bars each way at 9.3 in on center.</li>
+</ol>
 
-    <h2>Frequently Asked Questions</h2>
-    <details>
-      <summary>What is soil bearing capacity and how do I find it?</summary>
-      <p>Soil bearing capacity is the maximum load per unit area that soil can safely support without shearing or settling excessively. For preliminary design, use 1.5–2.0 ksf for soft clay, 2–3 ksf for medium sand, 4–6 ksf for dense gravel, and 8–12+ ksf for bedrock. A geotechnical engineer can perform soil borings and lab tests to determine the actual value — required for engineered structures.</p>
-    </details>
-    <details>
-      <summary>What's the minimum footing size for a residential deck post?</summary>
-      <p>Most residential building codes require a minimum 12-inch diameter or 12×12 inch square footing for deck posts. However, the actual required size depends on the tributary area of the deck and soil conditions. A 10×10 ft deck section carrying 50 psf (live + dead load) exerts 5 kips on the post, requiring roughly a 1.7 ft × 1.7 ft footing on 2 ksf soil — so 24×24 inches is a safe standard deck post footing size.</p>
-    </details>
-    <details>
-      <summary>How thick should a concrete footing be?</summary>
-      <p>ACI 318 requires spread footings to be at least 6 inches thick above the bottom reinforcement. As a practical rule, footing thickness = (footing width − column width) / 2, ensuring a 45° stress angle through the concrete. For most residential footings (12–24 in wide), 12 inches is common. Larger commercial footings may need 18–30 inches of thickness.</p>
-    </details>
-    <details>
-      <summary>Do I really need a structural engineer for a footing?</summary>
-      <p>For simple residential projects like deck posts and small sheds, prescriptive code tables may suffice. However, any footing supporting a structural element of a building — including load-bearing walls, columns, or additions — should be designed by a licensed structural engineer in most jurisdictions. Using a calculator is great for preliminary planning and budgeting, but engineering review is required before construction.</p>
-    </details>
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Do not guess the soil.</strong> Dig a test hole or get a soils report. Wet clay, fill and organic topsoil can carry far less than the table values, and 1,500 psf is the safer assumption when unsure.</li>
+<li><strong>Go below frost depth.</strong> The footing bottom must be at least 12 in below undisturbed ground and below your local frost line, or heaving can lift it every winter.</li>
+<li><strong>Count every load.</strong> Include snow, the weight of the posts and beams themselves, and any future additions, not just what you can see today.</li>
+<li><strong>Dig to firm, undisturbed soil.</strong> Never place a footing on loose fill or topsoil. Over-digging and backfilling loosely wastes the bearing capacity you calculated.</li>
+<li><strong>Order a little extra.</strong> Holes are never perfectly shaped. A 10% waste allowance is normal for hand-dug pads, and more if the sides are ragged.</li>
+</ul>
 
-    <h2>Related Tools</h2>
-    <div class="related-tools">
-      <a href="/paver-patio-calculator/">Paver Patio Base &amp; Sand Calculator</a>
-      <a href="/spray-foam-insulation-calculator/">Spray Foam Insulation Coverage Calculator</a>
-      <a href="/drop-ceiling-grid-calculator/">Dropped Ceiling Grid Material Calculator</a>
-      <a href="/sump-pump-sizing-calculator/">Sump Pump Sizing Calculator</a>
-      <a href="/retaining-wall-block-calculator/">Retaining Wall Block Calculator</a>
-      <a href="/septic-tank-size-calculator/">Septic Tank Size Calculator</a>
-    </div>
-  </div>
+<h2>Frequently Asked Questions</h2>
+<details><summary>How big should a concrete footing be for a deck post?</summary><p>It depends on the load and soil. A post carrying 6,000 lb on 2,000 psf soil needs roughly a 24 in square footing. Use the <a href="/deck-footing-frost-depth-calculator/">Deck Footing Size &amp; Frost Depth Calculator</a> for deck-specific tributary loads.</p></details>
+<details><summary>How thick should a footing be?</summary><p>IRC R403.1 sets a 6 in minimum, but this calculator never goes below 8 in. For plain concrete the thickness must be at least the projection beyond the column or wall. Reinforced footings can be thinner, but a structural engineer should confirm shear.</p></details>
+<details><summary>How deep should a footing be?</summary><p>The bottom must sit at least 12 in below undisturbed ground and below your local frost depth, whichever is deeper. Frost depth ranges from nearly zero in the Deep South to 48 in or more in northern states, so check with your building department.</p></details>
+<details><summary>What soil bearing capacity should I use?</summary><p>Use the value from a soils report if you have one. Otherwise IRC R401.4.1 gives presumptive values: 1,500 psf for clay, 2,000 psf for sand, 3,000 psf for gravel and 4,000 psf for sedimentary rock. When unsure, choose the lower number.</p></details>
+<details><summary>Does a footing need rebar?</summary><p>Not always. Small plain-concrete wall footings that meet IRC projection limits can be unreinforced, but pads, tall projections and weak soil benefit from steel. This tool shows minimum rebar for reinforced footings and states when none is assumed.</p></details>
+<details><summary>How much concrete or how many bags do I need?</summary><p>The results show cubic yards, cubic feet with your waste allowance and the number of 80-lb bags. For other bag sizes, the <a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a> converts the volume.</p></details>
 
-  <nav class="cluster-nav" aria-label="More Concrete, Masonry &amp; Foundations Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Concrete, Masonry &amp; Foundations Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/deck-footing-frost-depth-calculator/">Deck Footing Size &amp; Frost Depth Calculator</a></li><li><a href="/shed-foundation-floor-joist-calculator/">Shed Foundation &amp; Floor Joist Calculator</a></li><li><a href="/shower-pan-mortar-bed-calculator/">Bathtub &amp; Shower Pan Mortar Bed Calculator</a></li><li><a href="/brick-mortar-calculator/">Brick &amp; Mortar Calculator</a></li><li><a href="/cinder-block-wall-calculator/">Cinder Block Wall Calculator</a></li><li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li><li><a href="/concrete-patio-cost-calculator/">Concrete Patio Cost Calculator</a></li><li><a href="/concrete-volume-calculator/">Concrete Volume Calculator</a></li><li><a href="/concrete-calculators/"><strong>All Concrete, Masonry &amp; Foundations calculators →</strong></a></li></ul></nav>
-<div class="ad-slot" id="ad-bottom"></div>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/concrete-patio-cost-calculator/">Concrete Patio Cost Calculator</a></li>
+<li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li>
+<li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a></li>
+<li><a href="/deck-footing-frost-depth-calculator/">Deck Footing Size &amp; Frost Depth Calculator</a></li>
+<li><a href="/sonotube-round-column-concrete-calculator/">Sonotube &amp; Round Column Concrete Calculator</a></li>
+<li><a href="/garage-slab-thickness-reinforcement-calculator/">Garage Concrete Slab Thickness &amp; Reinforcement Calculator</a></li>
+</ul>
+</div>
 </div>
 
+<nav class="cluster-nav" aria-label="More Concrete, Masonry &amp; Foundations Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Concrete, Masonry &amp; Foundations Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/deck-footing-frost-depth-calculator/">Deck Footing Size &amp; Frost Depth Calculator</a></li><li><a href="/shed-foundation-floor-joist-calculator/">Shed Foundation &amp; Floor Joist Calculator</a></li><li><a href="/shower-pan-mortar-bed-calculator/">Bathtub &amp; Shower Pan Mortar Bed Calculator</a></li><li><a href="/brick-mortar-calculator/">Brick &amp; Mortar Calculator</a></li><li><a href="/cinder-block-wall-calculator/">Cinder Block Wall Calculator</a></li><li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li><li><a href="/concrete-patio-cost-calculator/">Concrete Patio Cost Calculator</a></li><li><a href="/concrete-volume-calculator/">Concrete Volume Calculator</a></li><li><a href="/concrete-calculators/"><strong>All Concrete, Masonry &amp; Foundations calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+
 <footer>
-  <a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a><br>
-  <span style="margin-top:6px;display:inline-block">© <span id="yr"></span> toolwick.com — Free Online Calculators</span>
+<p><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com</p>
 </footer>
 
 <script>
-document.getElementById('yr').textContent = new Date().getFullYear();
-
-// Unit labels
-const IMPERIAL = {
-  load:'Column Load (kips)', load2:'Second Column Load (kips)',
-  soil:'Soil Bearing Capacity (ksf)', colW:'Column Width (in)', colL:'Column Length (in)',
-  depth:'Embedment Depth (ft)', thick:'Footing Thickness (in)', wallLen:'Wall Length / Run (ft)',
-  loadUnit:'kips', soilUnit:'ksf', dimUnit:'in', ftUnit:'ft', volUnit:'yd³'
-};
-const METRIC = {
-  load:'Column Load (kN)', load2:'Second Column Load (kN)',
-  soil:'Soil Bearing Capacity (kPa)', colW:'Column Width (mm)', colL:'Column Length (mm)',
-  depth:'Embedment Depth (m)', thick:'Footing Thickness (mm)', wallLen:'Wall Length / Run (m)',
-  loadUnit:'kN', soilUnit:'kPa', dimUnit:'mm', ftUnit:'m', volUnit:'m³'
-};
-
-function getLabels(){
-  return document.getElementById('units').value === 'metric' ? METRIC : IMPERIAL;
+(function(){
+var $=function(i){return document.getElementById(i)};
+var fm=function(x,d){return Number(x).toLocaleString('en-US',{maximumFractionDigits:d==null?2:d})};
+var up2=function(x){return Math.ceil(x/2-1e-9)*2};
+var BA={4:.2,5:.31,6:.44};
+var ok=true,lastText='';
+function fi(i){var f=Math.floor(i/12+1e-9),r=Math.round((i-f*12)*10)/10;return f?f+' ft '+fm(r,1)+' in':fm(r,1)+' in'}
+function setE(id,bad,msg){var el=$(id),e=$(id+'E');el.classList.toggle('error',bad);el.setAttribute('aria-invalid',bad?'true':'false');e.textContent=bad?msg:'';e.classList.toggle('show',bad)}
+function v(id,mn,mx,msg,int){var x=parseFloat($(id).value),bad=isNaN(x)||x<mn||x>mx||(int&&x%1!==0);setE(id,bad,msg);if(bad)ok=false;return x}
+function bars(w,T,Ab){var n=Math.max(2,Math.ceil(0.0018*w*T/Ab-1e-9),Math.ceil((w-6)/18-1e-9)+1);return{n:n,s:(w-6)/(n-1)}}
+function solve(P,q,o){
+ var T=o.T,B=0,L=0,qn=0,pr=0,raised=false,w=o.type==='wall';
+ for(var i=0;i<40;i++){
+  qn=q-150*T/12-100*Math.max(o.D-T,0)/12;
+  if(qn<=0)return{err:1};
+  var min=Math.max(12,up2(o.c+4));
+  if(w){B=Math.max(min,up2(P/qn*12));L=0}
+  else{var r=o.type==='rect'?o.r:1,b=Math.sqrt(P/(qn*r))*12;B=Math.max(min,up2(b));L=Math.max(B,min,up2(r*b))}
+  pr=((w?B:L)-o.c)/2;
+  var tm=Math.max(8,o.reinf?Math.ceil(pr/2-1e-9):Math.ceil(pr-1e-9));
+  if(tm>T){T=tm;raised=true;continue}
+  break;
+ }
+ var area=w?B/12:B*L/144,sw=150*T/12,so=100*Math.max(o.D-T,0)/12,act=P/area+sw+so;
+ return{B:B,L:L,T:T,qn:qn,pr:pr,raised:raised,area:area,sw:sw,so:so,act:act,util:act/q,w:w}
 }
-
-function updateLabels(){
-  const L = getLabels();
-  document.getElementById('loadLabel').textContent = L.load;
-  document.getElementById('soilLabel').textContent = L.soil;
-  document.getElementById('colWidthLabel').textContent = L.colW;
-  document.getElementById('colLenLabel').innerHTML = L.colL + ' <span style="color:#666;font-weight:400">(rect only)</span>';
-  document.getElementById('depthLabel').textContent = L.depth;
-  document.getElementById('thickLabel').textContent = L.thick;
-  document.getElementById('wallLenLabel').textContent = L.wallLen;
-  document.getElementById('col2Label').textContent = L.load2;
+function cfUnit(s){return s.w?s.B*s.T/144:s.B*s.L*s.T/1728}
+function syncType(){
+ var t=$('ftype').value,w=t==='wall';
+ $('ratioWrap').hidden=t!=='rect';$('qtyWrap').hidden=w;$('lenWrap').hidden=!w;
+ $('uDead').textContent=w?'lb per linear ft':'lb';$('uLive').textContent=w?'lb per linear ft':'lb';
+ $('cLab').textContent=w?'Wall thickness (in)':'Column or post width (in)';
+ $('colw').value=w?($('colw').value==='8'?'8':$('colw').value):$('colw').value;
 }
-
-function updateVisibility(){
-  const type = document.getElementById('footingType').value;
-  document.getElementById('colLenGroup').style.display = (type === 'rect') ? '' : 'none';
-  document.getElementById('wallLenGroup').style.display = (type === 'wall') ? '' : 'none';
-  document.getElementById('col2Group').style.display = (type === 'combined') ? '' : 'none';
+function fail(){
+ $('results').innerHTML='';$('copyWrap').hidden=true;$('formErr').classList.add('show');
 }
-
-document.getElementById('footingType').addEventListener('change', updateVisibility);
-document.getElementById('units').addEventListener('change', () => { updateLabels(); updateVisibility(); });
-
-updateLabels();
-updateVisibility();
-
-// Keyboard enter
-document.querySelectorAll('input,select').forEach(el => {
-  el.addEventListener('keydown', e => { if(e.key === 'Enter') calculate(); });
+function calc(){
+ ok=true;$('formErr').classList.remove('show');
+ var t=$('ftype').value,w=t==='wall';
+ var dd=v('dead',0,1e7,'Enter a load from 0 to 10,000,000.');
+ var ll=v('live',0,1e7,'Enter a load from 0 to 10,000,000.');
+ if(ok&&dd+ll<=0){setE('dead',true,'Enter a load greater than zero (dead + live).');ok=false}
+ var q=v('bear',500,20000,'Enter a bearing pressure from 500 to 20,000 psf.');
+ var D=v('depth',6,240,'Enter a depth from 6 to 240 in.');
+ var T=v('thick',6,36,'Enter a thickness from 6 to 36 in.');
+ var c=v('colw',2,120,'Enter a width from 2 to 120 in.');
+ var r=1,N=1;
+ if(t==='rect')r=v('ratio',1,4,'Enter a ratio from 1 to 4.');else setE('ratio',false);
+ if(!w)N=v('qty',1,1000,'Enter a whole number from 1 to 1,000.',true);else setE('qty',false);
+ if(w)N=v('len',1,10000,'Enter a length from 1 to 10,000 ft.');else setE('len',false);
+ if(!ok){fail();return}
+ var o={type:t,r:r,c:c,D:D,T:T,reinf:$('reinf').value==='y'};
+ var P=dd+ll,s=solve(P,q,o);
+ if(s.err){setE('bear',true,'Bearing pressure is used up by the footing and soil weight. Raise the bearing value or reduce depth/thickness.');fail();return}
+ var bn=$('bar').value,Ab=BA[bn],waste=parseFloat($('waste').value)||0;
+ var cfU=cfUnit(s),totCf=cfU*N,ordCf=totCf*(1+waste/100),bags=Math.ceil(ordCf/0.6-1e-9);
+ var reb,rebShort,rebLen=0;
+ if(!o.reinf){reb='None: unreinforced concrete footing';rebShort='Unreinforced'}
+ else if(!w){
+  var a=bars(s.B,s.T,Ab),b=bars(s.L,s.T,Ab);
+  if(s.B===s.L){reb=a.n+' – #'+bn+' bars each way, '+fm(a.s,1)+' in on center';rebShort=a.n+' – #'+bn+' each way @ '+fm(a.s,1)+' in o.c.'}
+  else{reb=a.n+' – #'+bn+' running the long way ('+fm(a.s,1)+' in o.c.) and '+b.n+' – #'+bn+' running the short way ('+fm(b.s,1)+' in o.c.)';rebShort=a.n+' & '+b.n+' – #'+bn+' bars @ '+fm(a.s,1)+' / '+fm(b.s,1)+' in o.c.'}
+  rebLen=(a.n*(s.L-6)+b.n*(s.B-6))/12*N;
+ }else{
+  var nl=bars(s.B,s.T,Ab).n,st=Math.max(1,Math.min(18,Math.floor(Ab/(0.0018*s.T)-1e-9))),nt=Math.ceil(N*12/st)+1;
+  reb=nl+' – #'+bn+' continuous bars plus #'+bn+' crossbars every '+st+' in';
+  rebShort=nl+' – #'+bn+' long. + #'+bn+' @ '+st+' in';
+  rebLen=nl*N+nt*(s.B-6)/12;
+ }
+ var unit=w?' lb/ft':' lb',size=w?fm(s.B)+' in wide':fm(s.B)+' × '+fm(s.L)+' in';
+ var sub=w?'Continuous strip footing, '+fm(s.T,1)+' in thick ('+fi(s.B)+' wide)':fi(s.B)+' × '+fi(s.L)+', '+fm(s.T,1)+' in thick';
+ var tile=function(a,b){return '<div class="tile"><div class="tv">'+a+'</div><div class="tl">'+b+'</div></div>'};
+ var tiles='<div class="tiles">'+tile(fm(s.T,1)+' in','Footing thickness')
+  +tile(fm(totCf/27,2)+' cu yd','Concrete ('+fm(totCf,1)+' cu ft), no waste')
+  +tile(fm(ordCf/27,2)+' cu yd','Order volume with '+fm(waste)+'% waste')
+  +tile(fm(bags),'80-lb bags (0.6 cu ft each)')
+  +tile(o.reinf?'≈ '+fm(Math.ceil(rebLen))+' ft':'None','Total rebar length, before laps')
+  +tile(fm(s.area,2)+' sq ft',w?'Bearing area per linear ft':'Bearing area each')+'</div>';
+ var pct=Math.min(100,s.util*100);
+ var util='<div class="ubar" role="img" aria-label="Soil bearing used: '+fm(s.util*100,0)+' percent"><span style="width:'+pct+'%"></span></div><div class="utxt">Soil bearing used: '+fm(s.util*100,0)+'% of '+fm(q)+' psf allowable</div>';
+ var row=function(a,b){return '<tr><td>'+a+'</td><td class="num">'+b+'</td></tr>'};
+ var bt='<h3>Calculation breakdown</h3><div class="tw"><table><thead><tr><th>Item</th><th class="num">Value</th></tr></thead><tbody>'
+  +row('Service load (dead + live)',fm(P)+unit)
+  +row('Allowable soil bearing',fm(q)+' psf')
+  +row('Footing self-weight ('+fm(s.T,1)+' in)',fm(s.sw,0)+' psf')
+  +row('Soil above footing',fm(s.so,0)+' psf')
+  +row('Net bearing available',fm(s.qn,0)+' psf')
+  +row('Required bearing area',fm(P/s.qn,2)+(w?' sq ft/ft':' sq ft'))
+  +row('Provided area (rounded up)',fm(s.area,2)+(w?' sq ft/ft':' sq ft'))
+  +row('Actual soil pressure',fm(s.act,0)+' psf')
+  +row('Projection beyond '+(w?'wall':'column'),fm(s.pr,1)+' in')
+  +row('Concrete '+(w?'per linear ft':'per footing'),fm(cfU,2)+' cu ft')
+  +row('Minimum rebar',reb)
+  +'</tbody></table></div>';
+ var qs=[1500,2000,3000,4000];if(qs.indexOf(q)<0){qs.push(q);qs.sort(function(x,y){return x-y})}
+ var ct='<h3>Soil comparison, same load</h3><div class="tw"><table><thead><tr><th>Soil bearing</th><th class="num">Footing size</th><th class="num">Thick</th><th class="num">Concrete</th></tr></thead><tbody>';
+ for(var i=0;i<qs.length;i++){
+  var z=solve(P,qs[i],o);
+  if(z.err){ct+='<tr><td>'+fm(qs[i])+' psf</td><td class="num" colspan="3">Not workable</td></tr>';continue}
+  ct+='<tr><td>'+fm(qs[i])+' psf'+(qs[i]===q?' (yours)':'')+'</td><td class="num">'+(z.w?fm(z.B)+' in wide':fm(z.B)+' × '+fm(z.L)+' in')+'</td><td class="num">'+fm(z.T,1)+' in</td><td class="num">'+fm(cfUnit(z)*N/27,2)+' cu yd</td></tr>';
+ }
+ ct+='</tbody></table></div>';
+ var wl=[];
+ if(s.raised)wl.push('Thickness was raised from '+fm(T,1)+' in to '+fm(s.T,1)+' in to meet the 8 in minimum and the projection rule.');
+ if(D<12)wl.push('Footing bottom is less than 12 in below grade. IRC R403.1.4.1 requires at least 12 in below undisturbed ground, and below frost depth where frost applies.');
+ if(q>3000)wl.push('Bearing above 3,000 psf should be backed by a geotechnical report.');
+ if(s.util>0.95)wl.push('Soil pressure is within 5% of the limit. Consider a larger footing for margin.');
+ if((!w&&s.L>120)||(w&&s.B>48))wl.push('This footing is large. Have an engineer consider a combined footing or mat foundation.');
+ if(!o.reinf&&!w&&s.B>48)wl.push('Large unreinforced pads are not recommended. Switch to reinforced.');
+ var wh='<div class="warn"><strong>Check before you build</strong>'+(wl.length?'<ul><li>'+wl.join('</li><li>')+'</li></ul>':'')+'<p>Sizes are rounded up to the next even inch and bar counts up to the next whole bar. Based on IRC R401.4.1, IRC R403.1 and ACI 318 minimum steel (0.0018). Local codes vary. This is a preliminary estimate, not engineering, permit or inspection approval.</p></div>';
+ var html='<div class="fade-in"><h2 class="rt">Your footing size</h2><div class="big">'+size+'</div><p class="bigsub">'+sub+'</p>'+tiles+util+bt+ct+wh+'</div>';
+ lastText='Footing & Foundation Size Calculator (Toolwick)\nType: '+(w?'Continuous wall footing':t==='rect'?'Rectangular pad':'Square pad')+'\nLoad: '+fm(P)+unit+'; soil bearing '+fm(q)+' psf; bottom '+fm(D)+' in below grade\nFooting size: '+size+', '+fm(s.T,1)+' in thick\nSoil pressure used: '+fm(s.util*100,0)+'%\nConcrete: '+fm(totCf/27,2)+' cu yd ('+fm(ordCf/27,2)+' cu yd with '+fm(waste)+'% waste), '+fm(bags)+' x 80-lb bags\nRebar: '+reb+'\nPreliminary estimate only; local codes vary and this is not engineering or permit approval.';
+ requestAnimationFrame(function(){
+  $('results').innerHTML=html;$('copyWrap').hidden=false;$('copied').hidden=true;
+  var cw=Math.min(150,Math.max(30,c/s.B*200));
+  $('dgCol').setAttribute('x',250-cw/2);$('dgCol').setAttribute('width',cw);
+  $('dgC1').textContent=w?'WALL':'COLUMN';$('dgC1').setAttribute('x',250+cw/2+8);
+  $('dgC2').textContent=(w?'t':'c')+' = '+fm(c,1)+' in';$('dgC2').setAttribute('x',250+cw/2+8);
+  $('dgP').textContent=(w?'w':'P')+' = '+fm(P)+unit;
+  $('dgD1').textContent='D = '+fm(D,1)+' in';
+  $('dgT1').textContent='T = '+fm(s.T,1)+' in';
+  $('dgB').textContent=w?'B = '+fm(s.B)+' in':(s.B===s.L?'B = '+fm(s.B)+' in':'B = '+fm(s.B)+' in (L = '+fm(s.L)+' in)');
+  $('dgR').textContent='Rebar: '+rebShort;
+  $('dgRebar').setAttribute('opacity',o.reinf?'1':'0');
+ });
+}
+$('calcBtn').addEventListener('click',function(){requestAnimationFrame(calc)});
+var els=document.querySelectorAll('#calc input,#calc select');
+for(var i=0;i<els.length;i++)els[i].addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();requestAnimationFrame(calc)}});
+$('ftype').addEventListener('change',syncType);
+$('soil').addEventListener('change',function(){if(this.value!=='custom'){$('bear').value=this.value;setE('bear',false)}});
+$('bear').addEventListener('input',function(){$('soil').value=['1500','2000','3000','4000'].indexOf(this.value)>-1?this.value:'custom'});
+$('waste').addEventListener('input',function(){$('wv').textContent=this.value+'%'});
+$('copyBtn').addEventListener('click',function(){
+ var done=function(){var c=$('copied');c.hidden=false;setTimeout(function(){c.hidden=true},2000)};
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,function(){fb()})}else fb();
+ function fb(){var ta=document.createElement('textarea');ta.value=lastText;ta.setAttribute('aria-hidden','true');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(ta)}
 });
-
-function fmt(n, dec=2){
-  if(isNaN(n)) return '—';
-  return Number(n.toFixed(dec)).toLocaleString('en-US', {minimumFractionDigits:dec, maximumFractionDigits:dec});
-}
-
-function clearErrors(){
-  document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
-  document.querySelectorAll('input,select').forEach(e => e.classList.remove('error'));
-}
-
-function showError(inputId, msgId){
-  document.getElementById(inputId).classList.add('error');
-  document.getElementById(msgId).classList.add('show');
-}
-
-function calculate(){
-  clearErrors();
-  const isMetric = document.getElementById('units').value === 'metric';
-  const type = document.getElementById('footingType').value;
-
-  const colLoad = parseFloat(document.getElementById('columnLoad').value);
-  const soil = parseFloat(document.getElementById('soilBearing').value);
-  const colW_raw = parseFloat(document.getElementById('colWidth').value);
-  const colL_raw = parseFloat(document.getElementById('colLength').value);
-  const depth_raw = parseFloat(document.getElementById('embedDepth').value);
-  const thick_raw = parseFloat(document.getElementById('footingThick').value);
-  const concPCF = parseFloat(document.getElementById('concWeight').value) || 150;
-  const sf = parseFloat(document.getElementById('safetyFactor').value) || 1.0;
-
-  let valid = true;
-  if(isNaN(colLoad)||colLoad<=0){showError('columnLoad','loadErr');valid=false;}
-  if(isNaN(soil)||soil<=0){showError('soilBearing','soilErr');valid=false;}
-  if(isNaN(colW_raw)||colW_raw<=0){showError('colWidth','colErr');valid=false;}
-  if(isNaN(depth_raw)||depth_raw<0.5){showError('embedDepth','depthErr');valid=false;}
-  if(isNaN(thick_raw)||thick_raw<6){showError('footingThick','thickErr');valid=false;}
-
-  let wallLen_ft = 0;
-  if(type==='wall'){
-    wallLen_ft = parseFloat(document.getElementById('wallLength').value);
-    if(isNaN(wallLen_ft)||wallLen_ft<=0){showError('wallLength','wallLenErr');valid=false;}
-  }
-  let col2 = 0;
-  if(type==='combined'){
-    col2 = parseFloat(document.getElementById('col2Load').value);
-    if(isNaN(col2)||col2<=0){showError('col2Load','col2Err');valid=false;}
-  }
-  if(!valid) return;
-
-  // Convert all to imperial (ft, kips) internally
-  let P_kips, soilKsf, colW_ft, colL_ft, depth_ft, thick_ft, wallLen_ft2, col2_kips;
-
-  if(isMetric){
-    // kN → kips (1 kip = 4.44822 kN), kPa → ksf (1 ksf = 47.8803 kPa), mm → ft, m → ft
-    P_kips = colLoad / 4.44822;
-    soilKsf = soil / 47.8803;
-    colW_ft = colW_raw / 1000 * 3.28084;
-    colL_ft = colL_raw / 1000 * 3.28084;
-    depth_ft = depth_raw * 3.28084;
-    thick_ft = thick_raw / 1000 * 3.28084;
-    wallLen_ft2 = type==='wall' ? wallLen_ft * 3.28084 : 0;
-    col2_kips = col2 / 4.44822;
-  } else {
-    P_kips = colLoad;
-    soilKsf = soil;
-    colW_ft = colW_raw / 12;
-    colL_ft = colL_raw / 12;
-    depth_ft = depth_raw;
-    thick_ft = thick_raw / 12;
-    wallLen_ft2 = wallLen_ft;
-    col2_kips = col2;
-  }
-
-  const totalP = (type==='combined') ? (P_kips + col2_kips) : P_kips;
-  const netSoil = soilKsf / sf;
-
-  // Estimate self-weight iteratively (2 passes)
-  let footW=0, footL=0, reqArea=0, selfWt=0, footThickFt=thick_ft;
-
-  if(type==='square'){
-    let area = totalP / netSoil;
-    // Self-weight estimate
-    selfWt = area * footThickFt * (concPCF/1000);
-    area = (totalP + selfWt) / netSoil;
-    selfWt = area * footThickFt * (concPCF/1000);
-    area = (totalP + selfWt) / netSoil;
-    reqArea = area;
-    footW = Math.ceil(Math.sqrt(area) * 12) / 12; // round up to nearest inch in ft
-    footL = footW;
-  } else if(type==='rect'){
-    // Keep same aspect ratio as column
-    const colRatio = (colL_ft > 0 && colW_ft > 0) ? colL_ft / colW_ft : 1.5;
-    // A = W * L = W * ratio * W => W = sqrt(A/ratio)
-    let area = totalP / netSoil;
-    selfWt = area * footThickFt * (concPCF/1000);
-    area = (totalP + selfWt) / netSoil;
-    selfWt = area * footThickFt * (concPCF/1000);
-    area = (totalP + selfWt) / netSoil;
-    reqArea = area;
-    footW = Math.ceil(Math.sqrt(area / colRatio) * 12) / 12;
-    footL = Math.ceil(footW * colRatio * 12) / 12;
-    reqArea = footW * footL;
-  } else if(type==='wall'){
-    // Width per linear foot
-    const loadPerFt = P_kips / (isMetric ? (wallLen_ft * 3.28084) : wallLen_ft);
-    let wWidth = loadPerFt / netSoil;
-    selfWt = wWidth * footThickFt * (concPCF/1000);
-    wWidth = (loadPerFt + selfWt) / netSoil;
-    selfWt = wWidth * footThickFt * (concPCF/1000);
-    wWidth = (loadPerFt + selfWt) / netSoil;
-    footW = Math.ceil(wWidth * 12) / 12;
-    footL = isMetric ? wallLen_ft * 3.28084 : wallLen_ft;
-    reqArea = footW * footL;
-  } else if(type==='combined'){
-    // Combined: rectangular, length = column spacing + overhangs
-    let area = totalP / netSoil;
-    selfWt = area * footThickFt * (concPCF/1000);
-    area = (totalP + selfWt) / netSoil;
-    selfWt = area * footThickFt * (concPCF/1000);
-    area = (totalP + selfWt) / netSoil;
-    reqArea = area;
-    // Assume square-ish but length ≥ 1.5× width
-    footL = Math.ceil(Math.sqrt(area * 1.5) * 12) / 12;
-    footW = Math.ceil((area / footL) * 12) / 12;
-    reqArea = footW * footL;
-  }
-
-  selfWt = reqArea * footThickFt * (concPCF/1000);
-  const totalLoad = totalP + selfWt;
-  const actualPressure = totalLoad / reqArea;
-
-  // Volume in cubic yards
-  const volCuFt = reqArea * footThickFt;
-  const volCuYd = volCuFt / 27;
-
-  // Rebar estimate (ACI 318 temperature steel: As_min = 0.0018 * b * d)
-  const d_in = thick_raw > 6 ? (isMetric ? thick_raw/25.4 : thick_raw) - 3.5 : 3; // effective depth in inches
-  const bW_in = isMetric ? footW * 12 / 3.28084 * 100 / 2.54 : footW * 12;
-  const As_each = 0.0018 * bW_in * d_in; // in²
-  // #4 bar = 0.2 in², #5 = 0.31 in²
-  const barArea4 = 0.2, barArea5 = 0.31;
-  const n4 = Math.ceil(As_each / barArea4);
-  const n5 = Math.ceil(As_each / barArea5);
-  const spacing4_in = bW_in / Math.max(n4,1);
-  const spacing5_in = bW_in / Math.max(n5,1);
-
-  // Convert back to display units
-  let dispW, dispL, dispThick, dispDepth, dispArea, dispVol, dispPressure, dispSelf, dispTotal;
-  let dimSuffix, areaSuffix, volSuffix, pressureSuffix, loadSuffix;
-
-  if(isMetric){
-    dispW = footW / 3.28084 * 1000; // mm
-    dispL = (type==='wall' ? footL/3.28084 : footL/3.28084*1000); // m for wall, mm for others
-    dispThick = thick_raw; // mm
-    dispDepth = depth_raw; // m
-    dispArea = reqArea / (3.28084*3.28084); // m²
-    dispVol = volCuFt / 35.3147; // m³
-    dispPressure = actualPressure * 47.8803; // kPa
-    dispSelf = selfWt * 4.44822; // kN
-    dispTotal = totalLoad * 4.44822; // kN
-    dimSuffix='mm'; areaSuffix='m²'; volSuffix='m³'; pressureSuffix='kPa'; loadSuffix='kN';
-    if(type==='wall') dispL = footL/3.28084;
-  } else {
-    dispW = footW * 12; // in
-    dispL = (type==='wall') ? footL : footL * 12; // ft for wall, in for others
-    dispThick = thick_raw; // in
-    dispDepth = depth_raw; // ft
-    dispArea = reqArea; // ft²
-    dispVol = volCuYd; // yd³
-    dispPressure = actualPressure; // ksf
-    dispSelf = selfWt; // kips
-    dispTotal = totalLoad; // kips
-    dimSuffix='in'; areaSuffix='ft²'; volSuffix='yd³'; pressureSuffix='ksf'; loadSuffix='kips';
-  }
-
-  const footingLabel = type==='wall' ? 'Wall Footing Width' : 'Footing Width';
-  const footingLabel2 = type==='square' ? 'Footing Length (= Width)' : (type==='wall'?'Wall Length':'Footing Length');
-
-  // Build key metrics HTML
-  let km = `
-    <div class="metric-box"><div class="metric-val">${fmt(dispW,1)}"</div><div class="metric-lbl">${footingLabel}</div></div>
-    <div class="metric-box"><div class="metric-val">${fmt(dispL,type==='wall'?1:1)}"</div><div class="metric-lbl">${footingLabel2}</div></div>
-    <div class="metric-box"><div class="metric-val">${fmt(dispArea,2)} <small style="font-size:0.9rem">${areaSuffix}</small></div><div class="metric-lbl">Required Area</div></div>
-    <div class="metric-box"><div class="metric-val">${fmt(dispVol,2)} <small style="font-size:0.9rem">${volSuffix}</small></div><div class="metric-lbl">Concrete Volume</div></div>
-  `;
-  km = km.replace(/"/g, ' '+dimSuffix);
-
-  // Build breakdown table
-  const rows = [
-    ['Design Load', fmt(totalP*(isMetric?4.44822:1),2)+' '+loadSuffix, 'Applied column load(s)'],
-    ['Footing Self-Weight', fmt(dispSelf,2)+' '+loadSuffix, 'Estimated concrete weight'],
-    ['Total Load on Soil', fmt(dispTotal,2)+' '+loadSuffix, 'Column + self-weight'],
-    ['Allowable Soil Pressure', fmt(isMetric?soil/sf:soilKsf/sf,3)+' '+pressureSuffix, 'Bearing cap / safety factor ('+sf+')'],
-    ['Required Net Area', fmt(dispArea,3)+' '+areaSuffix, 'Total load / net pressure'],
-    ['Footing Width', fmt(dispW,1)+' '+dimSuffix, 'Rounded up to nearest '+dimSuffix],
-    ['Footing Length', type==='wall'?fmt(dispL,1)+' m (given)':fmt(dispL,1)+' '+dimSuffix, 'Rounded up to nearest '+dimSuffix],
-    ['Footing Thickness', fmt(dispThick,0)+' '+dimSuffix, 'As entered (verify ≥ ACI min)'],
-    ['Embedment Depth', fmt(dispDepth,2)+' '+(isMetric?'m':'ft'), 'Below finished grade'],
-    ['Actual Bearing Pressure', fmt(dispPressure,3)+' '+pressureSuffix, 'Must be ≤ allowable ('+fmt(isMetric?soil:soilKsf,2)+' '+pressureSuffix+')'],
-    ['Concrete Volume', fmt(dispVol,3)+' '+volSuffix, 'Footing area × thickness'],
-  ];
-
-  let bHtml = '<thead><tr><th>Parameter</th><th class="num">Value</th><th>Note</th></tr></thead><tbody>';
-  rows.forEach((r,i)=>{
-    bHtml += `<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td style="font-size:0.8rem;color:#666">${r[2]}</td></tr>`;
-  });
-  bHtml += '</tbody>';
-
-  // Build rebar table
-  const bW_disp = isMetric ? footW/3.28084*1000 : dispW;
-  let rHtml = '<thead><tr><th>Bar Size</th><th class="num">Bars Each Way</th><th class="num">Approx. Spacing</th><th class="num">Total As (in²)</th></tr></thead><tbody>';
-  rHtml += `<tr><td>#4 (½" dia)</td><td class="num">${n4}</td><td class="num">${fmt(spacing4_in,1)}" o.c.</td><td class="num">${fmt(n4*barArea4,2)}</td></tr>`;
-  rHtml += `<tr><td>#5 (⅝" dia)</td><td class="num">${n5}</td><td class="num">${fmt(spacing5_in,1)}" o.c.</td><td class="num">${fmt(n5*barArea5,2)}</td></tr>`;
-  rHtml += '</tbody>';
-
-  // Store for copy
-  window._resultText = `Footing Size Calculator Results\n`+
-    `Type: ${document.getElementById('footingType').options[document.getElementById('footingType').selectedIndex].text}\n`+
-    rows.map(r=>`${r[0]}: ${r[1]}`).join('\n')+
-    `\nRebar #4: ${n4} bars each way @ ${fmt(spacing4_in,1)}" o.c.\nRebar #5: ${n5} bars each way @ ${fmt(spacing5_in,1)}" o.c.`;
-
-  // Update SVG
-  const svgW = Math.min(fmt(dispW,0), 999);
-  const svgL = type==='wall' ? fmt(dispL,1)+' m' : fmt(dispL,0)+' '+dimSuffix;
-  document.getElementById('svgWidth').textContent = fmt(dispW,0)+' '+dimSuffix + (type!=='square'?' × '+svgL:'');
-  document.getElementById('svgDepth').textContent = fmt(dispDepth,2)+' '+(isMetric?'m':'ft');
-  document.getElementById('svgThick').textContent = fmt(dispThick,0)+' '+dimSuffix;
-
-  requestAnimationFrame(() => {
-    document.getElementById('keyMetrics').innerHTML = km;
-    document.getElementById('breakdownTable').innerHTML = bHtml;
-    document.getElementById('rebarTable').innerHTML = rHtml;
-    const rs = document.getElementById('resultsSection');
-    rs.classList.add('show');
-    rs.scrollIntoView({behavior:'smooth',block:'start'});
-  });
-}
-
-function copyResults(){
-  if(!window._resultText) return;
-  navigator.clipboard.writeText(window._resultText).then(()=>{
-    const msg = document.getElementById('copiedMsg');
-    msg.style.display='inline';
-    setTimeout(()=>msg.style.display='none', 2000);
-  }).catch(()=>{
-    const ta = document.createElement('textarea');
-    ta.value = window._resultText;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    const msg = document.getElementById('copiedMsg');
-    msg.style.display='inline';
-    setTimeout(()=>msg.style.display='none', 2000);
-  });
-}
-
-// Run once on load
-calculate();
+$('yr').textContent=new Date().getFullYear();
+syncType();
+})();
 </script>
 <script id="a11y-js">(function(){function run(){
 var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
