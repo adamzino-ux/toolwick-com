@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Fence Installation Cost Calculator | Toolwick</title>
+<meta name="description" content="Free fence installation cost calculator: estimate materials, posts, concrete, gates and labor for wood, vinyl, chain link, aluminum and more.">
+<link rel="canonical" href="https://toolwick.com/fence-installation-cost-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #e0e0e0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.5rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:1rem;margin:1.5rem 0 0}
+.diagram svg{width:100%;height:auto;display:block}
+#dia text{font-size:18px;fill:#1a1a2e;font-family:inherit}
+.diagram figcaption{font-size:.85rem;color:#666;margin-top:.5rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem 1rem}
+.full{grid-column:1/-1}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,input[type=range]:focus-visible,.tw:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.82rem;margin-top:.3rem}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666;margin-top:-.4rem}
+.chk{display:flex;align-items:center;gap:.6rem;min-height:44px}
+.chk input{width:22px;height:22px;accent-color:#0077b6;flex:none}
+.chk label{margin:0;font-size:.95rem}
+button.main{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+button.main:hover{background:#006299}
+.fine{font-size:.8rem;color:#666;margin:.5rem 0 0;line-height:1.4}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.res{animation:none}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-top:2rem}
+.key .lbl{font-size:.9rem;color:#444;font-weight:500}
+.big{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.2;margin:.2rem 0}
+.sub{font-size:.9rem;color:#444}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;font-weight:600;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.tot td{font-weight:700}
+tbody tr.sel{background:#e3f2fa;font-weight:600}
+.bar{height:6px;background:#e8e8e8;border-radius:3px;margin-top:4px;min-width:90px}
+.bar span{display:block;height:6px;background:#0077b6;border-radius:3px}
+.note{background:#fff8e6;border:1px solid #f0d78c;border-radius:6px;padding:.75rem 1rem;font-size:.88rem;margin:.75rem 0;color:#4a3b00}
+.safe{background:#f8f9fa;border-left:4px solid #0077b6;padding:.75rem 1rem;font-size:.88rem;margin:1rem 0;color:#333}
+.safety-notice{margin:1.25rem 0;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00}
+.copyrow{display:none;align-items:center;gap:.75rem;margin-top:1rem}
+.copyrow.on{display:flex}
+button.copy{min-height:44px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.9rem;cursor:pointer;font-family:inherit}
+button.copy:hover{background:#f0f8fc}
+#cst{font-size:.85rem;color:#444}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;min-height:44px;padding:10px 0;font-weight:600}
+details p{margin:0 0 1rem}
+ul,ol{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.rel li{margin:0}
+.rel a{display:block;padding:10px 12px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;min-height:44px}
+caption{text-align:left;font-size:.85rem;color:#444;padding-bottom:.4rem}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;margin-right:.75rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:640px){.grid,.rel{grid-template-columns:1fr}h1{font-size:1.55rem}.big{font-size:2.1rem}}
+@media(max-width:480px){.card{padding:1.25rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/fence-installation-cost-calculator/">
+<meta property="og:title" content="Fence Installation Cost Calculator">
+<meta property="og:description" content="Free fence installation cost calculator: estimate materials, posts, concrete, gates and labor for wood, vinyl, chain link, aluminum and more.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<nav aria-label="Main"><a href="/">Toolwick</a></nav>
+<main>
+<h1>Fence Installation Cost Calculator</h1>
+<p>Use this fence installation cost calculator to estimate the full price of a new fence: panels, posts, concrete, gates, labor, permit and a safety buffer. Enter your length and choose a material to see a line-by-line budget and a side-by-side comparison of seven fence types.</p>
+
+<figure class="diagram" style="margin-left:0;margin-right:0">
+<svg id="dia" viewBox="0 0 520 285" role="img" aria-label="Fence elevation diagram" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<g id="dg"></g>
+</svg>
+<figcaption>Side view: blue is the fence, grey is the concrete footing. Labels update with your numbers when you calculate.</figcaption>
+</figure>
+
+<div class="card">
+<form id="f" novalidate>
+<div class="grid">
+<div><label for="len">Total fence length (ft)</label><input type="number" id="len" value="100" min="1" step="any" inputmode="decimal" aria-describedby="lenErr"><div class="err" id="lenErr"></div></div>
+<div><label for="h">Fence height</label><select id="h"><option value="3">3 ft</option><option value="4">4 ft</option><option value="5">5 ft</option><option value="6" selected>6 ft (privacy)</option><option value="8">8 ft</option></select></div>
+<div><label for="mat">Fence material</label><select id="mat"><option value="pine" selected>Pressure-treated pine</option><option value="cedar">Cedar</option><option value="vinyl">Vinyl (PVC)</option><option value="chain">Chain link (galvanized)</option><option value="alum">Aluminum</option><option value="steel">Steel / wrought iron</option><option value="comp">Composite</option></select></div>
+<div><label for="sp">Post spacing (on center)</label><select id="sp"><option value="6">6 ft (stronger, more posts)</option><option value="8" selected>8 ft (standard)</option></select></div>
+<div><label for="corners">Corners / direction changes</label><input type="number" id="corners" value="2" min="0" step="1" inputmode="numeric" aria-describedby="cornersErr"><div class="err" id="cornersErr"></div></div>
+<div><label for="frost">Frost line depth</label><select id="frost"><option value="0">No frost (warm climate)</option><option value="2">Shallow, about 2 ft</option><option value="3" selected>Moderate, about 3 ft</option><option value="4">Deep, 4 ft or more</option></select></div>
+<div><label for="hole">Post hole diameter</label><select id="hole"><option value="8">8 in (narrow auger, less concrete)</option><option value="10" selected>10 in (standard)</option><option value="12">12 in (wind, gates, soft soil)</option></select></div>
+<div><label for="terr">Terrain and soil</label><select id="terr"><option value="flat" selected>Flat, easy digging</option><option value="slope">Sloped or some roots</option><option value="rock">Rocky or very hard soil</option></select></div>
+<div><label for="walk">Walk gates (4 ft wide)</label><input type="number" id="walk" value="0" min="0" step="1" inputmode="numeric" aria-describedby="walkErr"><div class="err" id="walkErr"></div></div>
+<div><label for="drive">Drive gates (12 ft wide)</label><input type="number" id="drive" value="0" min="0" step="1" inputmode="numeric" aria-describedby="driveErr"><div class="err" id="driveErr"></div></div>
+<div><label for="reg">Local price level</label><select id="reg"><option value="low">Lower-cost area</option><option value="avg" selected>Average</option><option value="high">High-cost metro area</option></select></div>
+<div><label for="mode">Who installs it?</label><select id="mode"><option value="pro" selected>Professional installer</option><option value="diy">DIY (materials + tool rental)</option></select></div>
+<div><label for="permit">Permit &amp; survey fees ($)</label><input type="number" id="permit" value="75" min="0" step="any" inputmode="decimal" aria-describedby="permitErr"><div class="err" id="permitErr"></div></div>
+<div><label for="tax">Sales tax on materials (%)</label><input type="number" id="tax" value="7" min="0" step="any" inputmode="decimal" aria-describedby="taxErr"><div class="err" id="taxErr"></div></div>
+<div class="chk full"><input type="checkbox" id="rem"><label for="rem">Remove and haul away an old fence</label></div>
+<div class="full"><label for="cont">Contingency buffer: <output id="contVal" for="cont">10%</output></label><input type="range" id="cont" min="0" max="25" step="1" value="10"><div class="ticks"><span>0%</span><span>25%</span></div></div>
+<div class="full"><button type="submit" class="main" id="go">Calculate fence cost</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p><p class="fine">Planning estimate only, not a quote.</p></div>
+</div>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<div class="copyrow" id="cr"><button type="button" class="copy" id="copyBtn">Copy results</button><span id="cst" role="status"></span></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Fence Installation Cost Calculator</h2>
+<p>Enter the total length of fence you plan to build, pick a height and material, then fill in the details that change the price: corners, gates, post hole size, soil, local price level and whether you hire a crew. Press Calculate to get a total installed cost, a cost per linear foot, a typical price range, your post and concrete counts, and a table comparing all seven materials using your exact inputs.</p>
+
+<h2>Why This Matters</h2>
+<p>A fence is one of the few home projects where a small planning mistake costs real money, because every extra foot multiplies across panels, posts, concrete and labor. A homeowner who budgets $2,000 for 100 feet of privacy fence from a hardware-store panel price is often surprised by a $3,500 to $4,500 quote once posts, concrete, gates, tax and labor are included. Knowing the full picture before you call contractors helps you spot quotes that are too high, or suspiciously low.</p>
+<p>The calculator helps in several situations. When comparing materials, the table shows that 6 ft vinyl runs roughly 55% to 60% more than pressure-treated pine for the same yard (about $5,800 versus $3,700 at the default settings), though vinyl needs no staining. When choosing between DIY and a pro, the labor line shows what you would save, typically 30% to 50% of the total, against the cost of tools, time and the risk of crooked posts. And if your yard has gates, sloped ground or rocky soil, you can see how each pushes the price up before it happens.</p>
+
+<h2>How It's Calculated</h2>
+<p>The estimate starts from the fence face area and a post count, then adds fixed items. Unit prices are approximate US averages and are adjusted by separate multipliers for materials and labor, listed below. Every step is shown so you can reproduce the result by hand.</p>
+<ul>
+<li><strong>Fence run</strong> = total length − gate widths (4 ft per walk gate, 12 ft per drive gate). <strong>Face area</strong> = run × height.</li>
+<li><strong>Panels</strong> = area × panel price per sq ft × materials multiplier.</li>
+<li><strong>Posts</strong>: line posts = ROUNDUP(run ÷ spacing) + 1 + corners; gate posts = 2 per gate. Post length = height + embedment. Post cost = price per ft × post length × materials multiplier × (line posts + 1.5 × gate posts), since gate posts are heavier.</li>
+<li><strong>Embedment</strong> is the largest of half the above-ground height (so at least one-third of the post is buried), your frost depth, or a 2 ft minimum, rounded up to the next 0.5 ft.</li>
+<li><strong>Concrete</strong>: assumes a round hole (8, 10 or 12 in, default 10) around a 3.5-inch square post, filled with concrete. Volume per hole = (π × (diameter ÷ 2)² − 3.5²) ÷ 144 × embedment, in cubic feet. Bags per hole = ROUNDUP(volume ÷ 0.375 cu ft per 50 lb bag). Cost = bags per hole × posts × $6.50 × materials multiplier.</li>
+<li><strong>Gates</strong>: material = gate width × gate price per ft × (0.5 + 0.5 × height ÷ 6) × materials multiplier, so a 3 ft gate costs less than a 6 ft one. Hardware adds $60 per walk gate and $180 per drive gate, also times the materials multiplier. Gate posts are counted under posts.</li>
+<li><strong>Labor</strong> (professional only) = (area × labor price per sq ft + $100 per walk gate + $250 per drive gate) × terrain factor × labor multiplier.</li>
+<li><strong>Old fence removal</strong>: professional = $4 per ft of total length × labor multiplier (no terrain factor); DIY = $1 per ft for disposal fees, not scaled.</li>
+<li><strong>DIY tool rental</strong> = flat $90 (post-hole auger and similar). Professional jobs have none.</li>
+<li><strong>Sales tax</strong> = tax rate × materials (panels + posts + concrete + gates). <strong>Permit &amp; survey</strong> is your flat entry and is not scaled.</li>
+<li><strong>Subtotal</strong> = materials + tax + labor + tool rental + removal + permit. <strong>Total</strong> = subtotal × (1 + contingency %). The typical range shown is 85% to 120% of the total.</li>
+</ul>
+<div class="tw" tabindex="0" role="region" aria-label="Unit prices table"><table>
+<caption>Unit prices used (average-price area, 6 ft reference height for gates)</caption>
+<thead><tr><th>Material</th><th class="n">Panels $/sq ft</th><th class="n">Labor $/sq ft</th><th class="n">Posts $/ft</th><th class="n">Gate $/ft wide</th></tr></thead>
+<tbody>
+<tr><td>Pressure-treated pine</td><td class="n">1.75</td><td class="n">2.25</td><td class="n">2.25</td><td class="n">38</td></tr>
+<tr><td>Cedar</td><td class="n">3.00</td><td class="n">2.50</td><td class="n">4.00</td><td class="n">60</td></tr>
+<tr><td>Vinyl</td><td class="n">3.50</td><td class="n">2.75</td><td class="n">5.50</td><td class="n">75</td></tr>
+<tr><td>Chain link</td><td class="n">1.00</td><td class="n">1.60</td><td class="n">1.60</td><td class="n">35</td></tr>
+<tr><td>Aluminum</td><td class="n">4.00</td><td class="n">3.00</td><td class="n">5.00</td><td class="n">85</td></tr>
+<tr><td>Steel / wrought iron</td><td class="n">6.00</td><td class="n">3.75</td><td class="n">5.50</td><td class="n">110</td></tr>
+<tr><td>Composite</td><td class="n">6.00</td><td class="n">3.25</td><td class="n">6.00</td><td class="n">110</td></tr>
+</tbody></table></div>
+<div class="tw" tabindex="0" role="region" aria-label="Multipliers table"><table>
+<caption>Multipliers</caption>
+<thead><tr><th>Setting</th><th class="n">Materials</th><th class="n">Labor</th><th class="n">Terrain</th></tr></thead>
+<tbody>
+<tr><td>Lower-cost area</td><td class="n">0.95</td><td class="n">0.85</td><td class="n">&ndash;</td></tr>
+<tr><td>Average</td><td class="n">1.00</td><td class="n">1.00</td><td class="n">&ndash;</td></tr>
+<tr><td>High-cost metro area</td><td class="n">1.10</td><td class="n">1.30</td><td class="n">&ndash;</td></tr>
+<tr><td>Flat, easy digging</td><td class="n">&ndash;</td><td class="n">&ndash;</td><td class="n">1.00</td></tr>
+<tr><td>Sloped or some roots</td><td class="n">&ndash;</td><td class="n">&ndash;</td><td class="n">1.15</td></tr>
+<tr><td>Rocky or very hard soil</td><td class="n">&ndash;</td><td class="n">&ndash;</td><td class="n">1.35</td></tr>
+</tbody></table></div>
+<p>Safety rounding: posts, concrete bags and embedment depth are always rounded up, never down. The one-third-buried and frost-depth rules are common rules of thumb, not a specific code section, and local codes vary. The concrete figure assumes every hole is filled with concrete and bags are bought whole for each hole, which is the cautious side. If you tamp gravel into the lower hole, use a narrower auger or buy exact bag counts, you may use fewer bags, so try the 8 in setting. This is a budgeting estimate, not engineering advice, permit approval or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>Take 100 ft of 6 ft pressure-treated pine privacy fence, 8 ft post spacing, 2 corners, a 3 ft frost line, 10 in holes, no gates, flat ground, average prices, professional install, a $75 permit, 7% sales tax and a 10% buffer (the calculator's default settings).</p>
+<ol>
+<li>Run = 100 ft, so face area = 100 × 6 = 600 sq ft.</li>
+<li>Line posts = ROUNDUP(100 ÷ 8) + 1 + 2 = 13 + 1 + 2 = 16 posts.</li>
+<li>Embedment = largest of 6 ÷ 2 = 3 ft, 3 ft frost and 2 ft minimum = 3 ft, so each post is 6 + 3 = 9 ft long.</li>
+<li>Each hole holds (π × 5² − 3.5²) ÷ 144 × 3 ≈ 1.38 cu ft of concrete, which is 3.68 bags, rounded up to 4 bags. 16 posts need 64 bags.</li>
+</ol>
+<div class="tw" tabindex="0" role="region" aria-label="Worked example table"><table>
+<thead><tr><th>Item</th><th>Calculation</th><th class="n">Cost</th></tr></thead>
+<tbody>
+<tr><td>Panels</td><td>600 sq ft × $1.75</td><td class="n">$1,050.00</td></tr>
+<tr><td>Posts</td><td>16 × 9 ft × $2.25</td><td class="n">$324.00</td></tr>
+<tr><td>Concrete</td><td>64 bags × $6.50</td><td class="n">$416.00</td></tr>
+<tr><td>Sales tax</td><td>7% × $1,790.00</td><td class="n">$125.30</td></tr>
+<tr><td>Labor</td><td>600 sq ft × $2.25</td><td class="n">$1,350.00</td></tr>
+<tr><td>Permit</td><td>Flat fee</td><td class="n">$75.00</td></tr>
+<tr><td>Subtotal</td><td></td><td class="n">$3,340.30</td></tr>
+<tr><td>Contingency</td><td>10% × $3,340.30</td><td class="n">$334.03</td></tr>
+<tr class="tot"><td>Total</td><td></td><td class="n">$3,674.33</td></tr>
+</tbody></table></div>
+<p>The calculator shows this as <strong>$3,674</strong>, or $36.74 per linear foot, with a typical range of $3,123 to $4,409. Switching to DIY drops the total to about $2,288, a saving of roughly 38%.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Locate your property line first.</strong> Paying for a survey (or finding your pins) costs far less than moving a fence that sits on a neighbor's land.</li>
+<li><strong>Call 811 before any digging.</strong> Post holes can hit buried gas, electric and water lines. The free locate service is required in most of the US.</li>
+<li><strong>Do not skimp on post depth.</strong> Posts fail at the ground line. Go deeper than the minimum in frost, wind or soft soil, and use 6 ft spacing if in doubt.</li>
+<li><strong>Count gates early.</strong> A gate costs several times more per foot than fence and needs bigger posts and better hardware, so decide where you need them before you get quotes.</li>
+<li><strong>Get three written quotes</strong> and compare them to this estimate line by line, checking that each includes post depth, concrete, haul-away and permit handling.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much does it cost to install a fence per linear foot?</summary><p>In this calculator, a 100 ft run of 6 ft fence at average prices with a professional install comes to about $26 per foot for chain link, $37 for pressure-treated pine, $50 for cedar, $58 for vinyl, $62 for aluminum, $80 for composite and $82 for steel. Shorter fences cost less and taller fences more, and gates, terrain and local prices all move the number.</p></details>
+<details><summary>Is it cheaper to install a fence yourself?</summary><p>Usually yes, often by 30% to 50% of the total, and by about 38% at the calculator's default settings, because labor is the biggest single line. You still pay for materials, tax, concrete and tool rental, and you take on the risk of leaning posts or code violations. Choose DIY in the calculator to see your savings.</p></details>
+<details><summary>How deep should fence posts be set?</summary><p>A common rule of thumb is to bury at least one-third of the post length and set it below your local frost line, whichever is deeper. This calculator also uses a 2 ft minimum, so a 6 ft fence typically gets a 9 ft post with 3 ft in the ground. Your building department can confirm the required depth where you live.</p></details>
+<details><summary>How many fence posts do I need?</summary><p>Divide the run by your post spacing, round up, then add one for the end and one for each corner. Each gate needs two sturdier posts of its own. The calculator rounds up so you do not come up short.</p></details>
+<details><summary>Do I need a permit to build a fence?</summary><p>Many cities and counties require one, especially for fences over 6 ft, front-yard fences, or pool enclosures. HOAs often have separate rules on style and height. Check with your local building or planning department and your HOA before you buy materials.</p></details>
+<details><summary>Why is my contractor's quote higher than this estimate?</summary><p>Quotes often include removal of an old fence, difficult soil, slopes, custom gates, minimum job charges or higher local labor rates. Try setting terrain to rocky, the price level to high, and adding removal to see whether the gap closes. Ask the contractor to itemize anything that still does not match.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/fence-picket-calculator/">Fence Picket Calculator</a></li>
+<li><a href="/tile-installation-cost-calculator/">Tile Installation Cost Calculator</a></li>
+<li><a href="/flooring-installation-cost-calculator/">Flooring Installation Cost Calculator</a></li>
+<li><a href="/drywall-installation-cost-calculator/">Drywall Installation Cost Calculator</a></li>
+<li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a></li>
+<li><a href="/fence-material-calculator/">Fence Material Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/fence-installation-cost-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const MAT={
+pine:{n:'Pressure-treated pine',m:1.75,l:2.25,p:2.25,g:38},
+cedar:{n:'Cedar',m:3,l:2.5,p:4,g:60},
+vinyl:{n:'Vinyl (PVC)',m:3.5,l:2.75,p:5.5,g:75},
+chain:{n:'Chain link',m:1,l:1.6,p:1.6,g:35},
+alum:{n:'Aluminum',m:4,l:3,p:5,g:85},
+steel:{n:'Steel / wrought iron',m:6,l:3.75,p:5.5,g:110},
+comp:{n:'Composite',m:6,l:3.25,p:6,g:110}};
+const REG={low:{m:.95,l:.85},avg:{m:1,l:1},high:{m:1.1,l:1.3}};
+const TERR={flat:1,slope:1.15,rock:1.35};
+const nf=(x,d=0)=>x.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const f0=x=>'$'+nf(Math.round(x));
+const f2=x=>'$'+nf(x,2);
+const ft=x=>nf(x,x%1?1:0)+' ft';
+const IDS=['len','corners','walk','drive','permit','tax'];
+let has=false,last='';
+
+function read(){
+const errs={},v={};
+const fld=(id,o)=>{
+const s=$(id).value.trim();let x;
+if(s===''){if(o.req){errs[id]='Please enter a value.';return}x=0}
+else{x=Number(s);if(!isFinite(x)){errs[id]='Enter a valid number.';return}}
+if(x<o.min){errs[id]=o.min>0?'Enter at least '+nf(o.min)+'.':'Enter 0 or more.';return}
+if(x>o.max){errs[id]='Enter '+nf(o.max)+' or less.';return}
+if(o.int&&!Number.isInteger(x)){errs[id]='Use a whole number.';return}
+v[id]=x};
+fld('len',{req:1,min:1,max:50000});
+fld('corners',{min:0,max:200,int:1});
+fld('walk',{min:0,max:50,int:1});
+fld('drive',{min:0,max:50,int:1});
+fld('permit',{min:0,max:100000});
+fld('tax',{min:0,max:25});
+if(!errs.len&&!errs.walk&&!errs.drive){
+const gw=v.walk*4+v.drive*12;
+if(gw>=v.len)errs.len='Gates ('+nf(gw)+' ft) take up the whole length. Increase the length or reduce gates.';
+}
+v.h=+$('h').value;v.sp=+$('sp').value;v.frost=+$('frost').value;v.hole=+$('hole').value;v.mat=$('mat').value;
+v.terr=$('terr').value;v.reg=$('reg').value;v.pro=$('mode').value==='pro';
+v.rem=$('rem').checked;v.cont=+$('cont').value;
+return{errs,v};
+}
+
+function showErrs(errs){
+IDS.forEach(id=>{const el=$(id),m=errs[id]||'';
+el.classList.toggle('bad',!!m);$(id+'Err').textContent=m;
+el.setAttribute('aria-invalid',m?'true':'false')});
+}
+
+function calc(k,i){
+const M=MAT[k],R=REG[i.reg],lm=R.l*TERR[i.terr];
+const gw=i.walk*4+i.drive*12,run=i.len-gw,area=run*i.h;
+const emb=Math.ceil(Math.max(i.h/2,i.frost,2)*2)/2,postLen=i.h+emb;
+const linePosts=Math.ceil(run/i.sp)+1+i.corners,gatePosts=2*(i.walk+i.drive),posts=linePosts+gatePosts;
+const vol=(Math.PI*Math.pow(i.hole/2,2)-12.25)/144*emb;
+const bagsPer=Math.ceil(vol/0.375),bags=bagsPer*posts;
+const panels=area*M.m*R.m;
+const postsC=M.p*postLen*R.m*(linePosts+gatePosts*1.5);
+const concrete=bags*6.5*R.m;
+const gf=0.5+0.5*i.h/6;
+const gates=(gw*M.g*gf+i.walk*60+i.drive*180)*R.m;
+const labor=i.pro?(area*M.l+i.walk*100+i.drive*250)*lm:0;
+const rental=i.pro?0:90;
+const removal=i.rem?i.len*(i.pro?4*R.l:1):0;
+const mats=panels+postsC+concrete+gates;
+const tax=mats*i.tax/100;
+const sub=mats+tax+labor+rental+removal+i.permit;
+const cont=sub*i.cont/100;
+const total=sub+cont;
+return{run,area,emb,postLen,linePosts,gatePosts,posts,bags,bagsPer,panels,postsC,concrete,gates,labor,rental,removal,permit:i.permit,tax,cont,total,perLF:total/i.len,lo:total*.85,hi:total*1.2};
+}
+
+function draw(i,o){
+const s=15,gy=165,hp=i.h*s,ep=o.emb*s,xs=[110,290,470];
+let g='<rect x="20" y="'+gy+'" width="480" height="80" fill="#f8f9fa"/>';
+for(let b=0;b<2;b++){
+const x1=xs[b]+6,x2=xs[b+1]-6;
+g+='<rect x="'+x1+'" y="'+(gy-hp+6)+'" width="'+(x2-x1)+'" height="'+(hp-12)+'" fill="#f8f9fa" stroke="#0077b6" stroke-width="1.5"/>';
+for(let x=x1+12;x<x2-4;x+=12)g+='<line x1="'+x+'" y1="'+(gy-hp+6)+'" x2="'+x+'" y2="'+(gy-6)+'" stroke="#0077b6" stroke-opacity=".35"/>';
+g+='<line x1="'+x1+'" y1="'+(gy-hp+14)+'" x2="'+x2+'" y2="'+(gy-hp+14)+'" stroke="#0077b6" stroke-width="2"/><line x1="'+x1+'" y1="'+(gy-14)+'" x2="'+x2+'" y2="'+(gy-14)+'" stroke="#0077b6" stroke-width="2"/>';
+}
+xs.forEach(x=>{
+g+='<rect x="'+(x-12)+'" y="'+gy+'" width="24" height="'+ep+'" fill="#e0e0e0" stroke="#1a1a2e" stroke-opacity=".4" stroke-dasharray="3 2"/>';
+g+='<rect x="'+(x-4)+'" y="'+(gy-hp)+'" width="8" height="'+(hp+ep)+'" fill="#fff" stroke="#0077b6" stroke-width="2"/>';
+});
+g+='<line x1="20" y1="'+gy+'" x2="500" y2="'+gy+'" stroke="#1a1a2e" stroke-width="2"/>';
+g+='<line x1="60" y1="'+(gy-hp)+'" x2="104" y2="'+(gy-hp)+'" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>';
+g+='<line x1="60" y1="'+(gy+ep)+'" x2="96" y2="'+(gy+ep)+'" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>';
+g+='<line x1="60" y1="'+(gy-hp)+'" x2="60" y2="'+gy+'" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+g+='<line x1="60" y1="'+gy+'" x2="60" y2="'+(gy+ep)+'" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+g+='<text x="52" y="'+(gy-hp/2+6)+'" text-anchor="end">'+ft(i.h)+'</text>';
+g+='<text x="52" y="'+(gy+ep/2+6)+'" text-anchor="end">'+ft(o.emb)+'</text>';
+const sy=gy-hp-14;
+g+='<line x1="110" y1="'+(gy-hp)+'" x2="110" y2="'+(sy-4)+'" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/><line x1="290" y1="'+(gy-hp)+'" x2="290" y2="'+(sy-4)+'" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>';
+g+='<line x1="110" y1="'+sy+'" x2="290" y2="'+sy+'" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+g+='<text x="200" y="'+(sy-8)+'" text-anchor="middle">'+ft(i.sp)+' on center</text>';
+g+='<text x="130" y="'+(gy+ep/2+6)+'">&#8592; concrete</text>';
+g+='<text x="260" y="274" text-anchor="middle">'+nf(i.len,i.len%1?1:0)+' ft run &#183; '+nf(o.posts)+' posts</text>';
+$('dg').innerHTML=g;
+$('dia').setAttribute('aria-label','Fence side view: '+ft(i.h)+' tall, posts '+ft(i.sp)+' apart, set '+ft(o.emb)+' deep in concrete. '+nf(o.posts)+' posts for '+nf(i.len)+' feet.');
+}
+
+function calculate(){
+const r=read();showErrs(r.errs);
+const bad=Object.keys(r.errs);
+if(bad.length){has=false;last='';$('results').innerHTML='';$('cr').classList.remove('on');$(bad[0]).focus();return}
+const v=r.v,o=calc(v.mat,v),M=MAT[v.mat];
+const rows=[['Fence panels / pickets / rails',o.panels],['Posts ('+nf(o.posts)+' total)',o.postsC],['Concrete ('+nf(o.bags)+' bags, 50 lb)',o.concrete]];
+if(o.gates>0)rows.push(['Gates &amp; hardware',o.gates]);
+rows.push(['Sales tax on materials',o.tax]);
+if(v.pro)rows.push(['Installation labor',o.labor]);else rows.push(['Tool rental (auger, etc.)',o.rental]);
+if(o.removal>0)rows.push([v.pro?'Old fence removal':'Old fence disposal fees',o.removal]);
+if(o.permit>0)rows.push(['Permit &amp; survey',o.permit]);
+if(o.cont>0)rows.push(['Contingency ('+v.cont+'%)',o.cont]);
+let bd='';
+rows.forEach(x=>{bd+='<tr><td>'+x[0]+'</td><td class="n">'+f2(x[1])+'</td><td class="n">'+nf(x[1]/o.total*100,1)+'%</td></tr>'});
+bd+='<tr class="tot"><td>Total</td><td class="n">'+f2(o.total)+'</td><td class="n">100%</td></tr>';
+const all=Object.keys(MAT).map(k=>({k,c:calc(k,v)}));
+const mx=Math.max(...all.map(a=>a.c.total));
+let cmp='';
+all.forEach(a=>{cmp+='<tr'+(a.k===v.mat?' class="sel"':'')+'><td>'+MAT[a.k].n+'<div class="bar"><span style="width:'+Math.round(a.c.total/mx*100)+'%"></span></div></td><td class="n">'+f0(a.c.total)+'</td><td class="n">'+f2(a.c.perLF)+'</td></tr>'});
+let notes='';
+if(v.h>6)notes+='<div class="note">Fences over 6 ft usually need a permit and often engineered footings. Confirm with your building department before ordering materials.</div>';
+if(v.sp===8&&v.h>=6)notes+='<div class="note">In high-wind areas or with solid privacy panels, 6 ft post spacing is the more conservative choice.</div>';
+if(v.terr==='rock')notes+='<div class="note">Rocky soil may need a rock bar or rented breaker, so hole-digging costs can exceed this estimate.</div>';
+notes+='<div class="note">Concrete assumes every hole is filled with concrete and whole bags are bought per hole. A narrower hole or a gravel base can lower this line.</div>';
+const tw=l=>'<div class="tw" tabindex="0" role="region" aria-label="'+l+'">';
+const html='<div class="res"><div class="key"><div class="lbl">Estimated total installed cost</div><div class="big">'+f0(o.total)+'</div><div class="sub">'+f2(o.perLF)+' per linear foot &middot; typical range '+f0(o.lo)+' &ndash; '+f0(o.hi)+'</div></div>'
++'<h3>Project summary</h3>'+tw('Project summary table')+'<table><tbody>'
++'<tr><td>Material</td><td class="n">'+M.n+'</td></tr>'
++'<tr><td>Fence run (excluding gates)</td><td class="n">'+nf(o.run,o.run%1?1:0)+' ft</td></tr>'
++'<tr><td>Fence face area</td><td class="n">'+nf(o.area)+' sq ft</td></tr>'
++'<tr><td>Line posts + gate posts</td><td class="n">'+nf(o.linePosts)+' + '+nf(o.gatePosts)+' = '+nf(o.posts)+'</td></tr>'
++'<tr><td>Post length / buried depth</td><td class="n">'+ft(o.postLen)+' / '+ft(o.emb)+'</td></tr>'
++'<tr><td>Concrete per hole ('+v.hole+' in hole)</td><td class="n">'+o.bagsPer+' &times; 50 lb bags</td></tr>'
++'</tbody></table></div>'
++'<h3>Cost breakdown</h3>'+tw('Cost breakdown table')+'<table><thead><tr><th>Item</th><th class="n">Cost</th><th class="n">Share</th></tr></thead><tbody>'+bd+'</tbody></table></div>'
++'<h3>Compare materials (same inputs)</h3>'+tw('Material comparison table')+'<table><thead><tr><th>Material</th><th class="n">Total</th><th class="n">Per ft</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'
++notes
++'<div class="safe"><strong>Safety rounding:</strong> posts and concrete bags are rounded up, and burial depth is the largest of half the above-ground height (at least one-third of the post buried), your frost depth or 2 ft, rounded up to the next 0.5 ft. These are common rules of thumb, not a specific code edition; local codes vary. This estimate is not engineering, permit or inspection approval. Call 811 before you dig.</div></div>';
+last='Fence installation cost estimate (Toolwick)\n'+nf(v.len)+' ft of '+ft(v.h)+' '+M.n+' fence, '+(v.pro?'professional install':'DIY')+'\nEstimated total: '+f0(o.total)+' ('+f2(o.perLF)+'/ft), range '+f0(o.lo)+' - '+f0(o.hi)+'\nPosts: '+o.posts+' ('+ft(o.postLen)+' long, '+ft(o.emb)+' buried), concrete: '+o.bags+' x 50 lb bags ('+v.hole+' in holes)\n'+rows.map(x=>x[0].replace(/&amp;/g,'&')+': '+f2(x[1])).join('\n')+'\nTotal: '+f2(o.total);
+has=true;
+requestAnimationFrame(()=>{
+$('results').innerHTML=html;
+draw(v,o);
+$('cr').classList.add('on');
+$('cst').textContent='';
+});
+}
+
+$('f').addEventListener('submit',e=>{e.preventDefault();requestAnimationFrame(calculate)});
+['h','mat','sp','frost','hole','terr','reg','mode','rem','cont'].forEach(id=>$(id).addEventListener('change',()=>{if(has)requestAnimationFrame(calculate)}));
+$('cont').addEventListener('input',()=>{$('contVal').textContent=$('cont').value+'%'});
+$('copyBtn').addEventListener('click',()=>{
+const done=()=>{$('cst').textContent='Copied!';setTimeout(()=>{$('cst').textContent=''},2000)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(last).then(done,()=>{})}
+else{const t=document.createElement('textarea');t.value=last;document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(t)}
+});
+$('yr').textContent=new Date().getFullYear();
+const r0=read();
+if(!Object.keys(r0.errs).length)draw(r0.v,calc(r0.v.mat,r0.v));
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
