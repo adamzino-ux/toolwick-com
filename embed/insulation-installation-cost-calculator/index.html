@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Insulation Installation Cost Calculator | Toolwick</title>
+<meta name="description" content="Free insulation cost calculator: estimate material, labor and total installed cost by area, R-value, insulation type and climate zone.">
+<link rel="canonical" href="https://toolwick.com/insulation-installation-cost-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;font-size:1.15rem;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.4rem;margin:2.5rem 0 .75rem;line-height:1.3}
+h3{font-size:1.1rem;margin:1.75rem 0 .6rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diag{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1rem;margin-bottom:2rem}
+.diag svg{width:100%;height:auto;display:block}
+.cap{font-size:.85rem;color:#666;margin:.5rem 0 0}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;font-size:1rem;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.bad{border-color:#e74c3c}
+.msg{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.row{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:520px){.row{grid-template-columns:1fr 1fr}}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;height:44px}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.rout{font-weight:700;color:#0077b6;font-size:1.1rem}
+.hint{font-size:.85rem;color:#666;margin:.4rem 0 0}
+.chk{display:flex;align-items:center;gap:.6rem;min-height:44px;margin-bottom:.25rem}
+.chk input{width:22px;height:22px;min-height:0;flex:none;padding:0;accent-color:#0077b6}
+.chk label{margin:0;font-size:.95rem;color:#1a1a2e}
+.btn{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;margin-top:.75rem}
+.btn:hover{background:#006299}
+.btn.sm{width:auto;background:#fff;color:#0077b6;border:1px solid #0077b6;padding:8px 16px;font-size:.9rem;font-weight:500;margin-top:1rem}
+.btn.sm:hover{background:#f0f8fc}
+#results{margin-top:1.5rem}
+.fade{animation:f .3s ease}
+@keyframes f{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+.key .l{font-size:.85rem;color:#444;font-weight:500}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.15}
+.key .s{font-size:.95rem;color:#444}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.5rem}
+.stats div{background:#f8f9fa;border-radius:6px;padding:.75rem}
+.stats b{display:block;font-size:1.15rem}
+.stats span{font-size:.8rem;color:#666}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:430px}
+th{background:#f0f0f0;text-align:left;padding:.6rem .75rem;border-bottom:1px solid #ddd}
+td{padding:.6rem .75rem;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(even) td{background:#fafafa}
+.n{text-align:right;white-space:nowrap}
+tr.hl td{font-weight:700;background:#e6f3fa!important}
+.bar{background:#e8e8e8;height:8px;border-radius:4px;min-width:60px}
+.bar span{display:block;height:8px;background:#0077b6;border-radius:4px}
+.notes{padding-left:1.2rem;font-size:.92rem}
+.notes li{margin-bottom:.5rem}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e8e8e8;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;padding:.6rem 0}
+details p{margin:0 0 1rem}
+ul.tips li{margin-bottom:.6rem}
+.rel{display:grid;gap:.5rem;padding:0;list-style:none}
+.rel a{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.7rem 1rem;min-height:44px}
+.fx{background:#f8f9fa;border-left:4px solid #0077b6;padding:.75rem 1rem;margin:0 0 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9rem;overflow-x:auto}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{display:inline-block;margin-right:1rem;min-height:44px;line-height:44px}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/insulation-installation-cost-calculator/">
+<meta property="og:title" content="Insulation Installation Cost Calculator">
+<meta property="og:description" content="Free insulation cost calculator: estimate material, labor and total installed cost by area, R-value, insulation type and climate zone.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Insulation Installation Cost Calculator</h1>
+<p>This insulation cost calculator estimates what it will cost to insulate an attic, wall, roof deck, crawl space or floor. Enter your square footage, climate zone and insulation type to see material, labor and total installed cost, plus the thickness you need to hit your target R-value.</p>
+
+<div class="diag">
+<svg id="svg" viewBox="0 0 600 312" role="img" aria-label="Cross-section diagram of an insulation layer between framing members">
+<defs>
+<pattern id="ht" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#e6f3fa"/><line x1="0" y1="0" x2="0" y2="10" stroke="#0077b6" stroke-width="2" opacity=".5"/></pattern>
+<marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker>
+</defs>
+<text id="dMat" x="10" y="26" font-size="20" font-weight="700" fill="#1a1a2e">Insulation layer cross-section</text>
+<text id="dR" x="10" y="52" font-size="18" fill="#1a1a2e">Enter values, then calculate</text>
+<g stroke="#e0e0e0" stroke-width="1.5"><line x1="84" y1="203" x2="400" y2="203"/><line x1="84" y1="171" x2="400" y2="171"/><line x1="84" y1="139" x2="400" y2="139"/><line x1="84" y1="107" x2="400" y2="107"/></g>
+<rect id="dFill" x="84" y="187" width="316" height="48" fill="url(#ht)"/>
+<rect x="60" y="75" width="24" height="160" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="400" y="75" width="24" height="160" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="40" y="235" width="404" height="12" fill="#e0e0e0"/>
+<line id="dExt" x1="424" y1="187" x2="465" y2="187" stroke="#0077b6" stroke-dasharray="5 4"/>
+<line x1="424" y1="235" x2="465" y2="235" stroke="#0077b6" stroke-dasharray="5 4"/>
+<line id="dLine" x1="455" y1="187" x2="455" y2="235" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dTxt" x="472" y="219" font-size="24" font-weight="700" fill="#1a1a2e">— in</text>
+<text x="242" y="272" font-size="17" text-anchor="middle" fill="#444">Framing + drywall / sheathing</text>
+<text id="dArea" x="10" y="302" font-size="20" font-weight="700" fill="#0077b6">Net area: — sq ft</text>
+</svg>
+<p class="cap">Diagram updates when you calculate. Gray guide lines are 4 in apart; drawing scale caps at 20 in.</p>
+</div>
+
+<div class="card">
+<form id="f" novalidate onsubmit="return false">
+<div class="field"><label for="app">Where is the insulation going?</label>
+<select id="app"><option value="attic">Attic floor</option><option value="wall">Exterior wall cavities</option><option value="roof">Roof deck / cathedral ceiling</option><option value="crawl">Crawl space or basement walls</option><option value="floor">Floor over unheated space</option></select></div>
+<div class="row">
+<div class="field"><label for="area">Total area (sq ft)</label><input id="area" type="number" inputmode="decimal" step="any" value="1200" aria-describedby="e-area"><div class="msg" id="e-area"></div></div>
+<div class="field"><label for="open">Openings to subtract (sq ft)</label><input id="open" type="number" inputmode="decimal" step="any" value="0" aria-describedby="e-open"><div class="msg" id="e-open"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="zone">Climate zone (IECC)</label>
+<select id="zone"><option value="1">Zone 1 – Hot (Miami)</option><option value="2">Zone 2 – Hot-humid (Houston, Phoenix)</option><option value="3" selected>Zone 3 – Warm (Atlanta, Dallas)</option><option value="4">Zone 4 – Mixed (Nashville, Philadelphia)</option><option value="5">Zone 5 – Cool (Chicago, Denver)</option><option value="6">Zone 6 – Cold (Minneapolis)</option><option value="7">Zone 7–8 – Very cold (Duluth, Fairbanks)</option></select></div>
+<div class="field"><label for="exist">Existing insulation R-value (0 if none)</label><input id="exist" type="number" inputmode="decimal" step="any" value="11" aria-describedby="e-exist"><div class="msg" id="e-exist"></div></div>
+</div>
+<div class="field"><label for="rv">Target total R-value: <span class="rout" id="rout">R-49</span></label>
+<input id="rv" type="range" min="5" max="60" step="1" value="49">
+<div class="ticks"><span>R-5</span><span>R-30</span><span>R-60</span></div>
+<p class="hint" id="rhint"></p></div>
+<div class="row">
+<div class="field"><label for="mat">Insulation type</label>
+<select id="mat"><option value="fg">Fiberglass batts</option><option value="fgb">Blown-in fiberglass</option><option value="cell" selected>Blown-in cellulose</option><option value="mw">Mineral wool batts</option><option value="oc">Open-cell spray foam</option><option value="cc">Closed-cell spray foam</option><option value="rg">Rigid foam board (XPS/polyiso)</option></select></div>
+<div class="field"><label for="inst">Who installs it?</label>
+<select id="inst"><option value="pro">Professional installer</option><option value="diy">DIY</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="reg">Local price level</label>
+<select id="reg"><option value="0.85">Lower-cost area (×0.85)</option><option value="1" selected>Average (×1.00)</option><option value="1.2">High-cost metro (×1.20)</option></select></div>
+<div class="field"><label for="waste">Waste / overage (%)</label><input id="waste" type="number" inputmode="decimal" step="any" value="10" aria-describedby="e-waste"><div class="msg" id="e-waste"></div></div>
+</div>
+<div class="chk"><input type="checkbox" id="rem"><label for="rem">Remove old insulation first</label></div>
+<div class="chk"><input type="checkbox" id="seal" checked><label for="seal">Include air sealing prep</label></div>
+<button type="button" class="btn" id="go">Calculate Insulation Cost</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<h2>How to Use This Insulation Installation Cost Calculator</h2>
+<p>Pick where the insulation goes, enter the area and subtract windows, doors or other openings. Choose your climate zone and the tool suggests a target R-value, which you can adjust with the slider. Enter any insulation already in place, then choose a material and whether you or a pro will install it. The result shows total cost, a likely price range, the thickness to install, the amount of material to order and a side-by-side comparison of every insulation type.</p>
+
+<h2>Why This Matters</h2>
+<p>Insulation is one of the few home upgrades that pays you back every month. The U.S. Department of Energy estimates that air sealing and adding insulation can cut heating and cooling bills by about 15 percent on average. Contractor quotes for the same attic can differ by $1,500 or more, because they bundle removal, air sealing, and material markup differently. Knowing a realistic number lets you tell a fair quote from an inflated one.</p>
+<p>The calculator suits several situations. A homeowner with a 1,200 sq ft attic at R-11 in Atlanta needs to know whether blown-in cellulose at roughly $2.50 per square foot beats fiberglass batts. A buyer budgeting for a 1950s ranch needs to compare closed-cell foam in 2x4 walls against dense-pack cellulose. A landlord insulating a floor over a crawl space wants the cheapest option that meets code. Because the tool also shows the depth each material needs, you can spot when a product will not fit your joists or studs before you buy it.</p>
+
+<h2>How It's Calculated</h2>
+<p>The tool works out the R-value you still need, converts it to a thickness for each material, then prices that thickness.</p>
+<div class="fx">Needed R = Target R − Existing R<br>Thickness (in) = Needed R ÷ R per inch, rounded UP to the next 0.5 in<br>Material = thickness × $/sq ft/in × net area × (1 + waste%) × price level<br>Labor = (base + per-inch rate × thickness) × application factor × net area × price level<br>Total = (material + labor + removal + air sealing) × 1.10 contingency</div>
+<p>Rounding thickness up means the installed R-value always meets or beats your target, never falls short. Application factors raise labor for harder work: walls ×1.3, roof decks ×1.4, crawl spaces ×1.2, floors ×1.15, attics ×1.0. DIY drops labor but adds $75 for rental and protective gear. DIY spray foam kits also cost about 1.6 times bulk rig pricing. Removal runs $1.50 per sq ft for pros and $0.40 DIY, and air sealing runs $0.60 for pros and $0.15 DIY. The likely range is 85% to 125% of the estimate. Suggested targets follow commonly cited values from 2021 IECC Table R402.1.3, using the higher figure where options exist. Local codes vary, so confirm with your building department.</p>
+<div class="tw"><table><thead><tr><th>Material</th><th class="n">R per inch</th><th class="n">Material $/sq ft/in</th><th class="n">Pro labor $/sq ft</th></tr></thead><tbody>
+<tr><td>Fiberglass batts</td><td class="n">3.2</td><td class="n">0.11</td><td class="n">0.40 + 0.05/in</td></tr>
+<tr><td>Blown-in fiberglass</td><td class="n">2.5</td><td class="n">0.07</td><td class="n">0.45 + 0.03/in</td></tr>
+<tr><td>Blown-in cellulose</td><td class="n">3.5</td><td class="n">0.08</td><td class="n">0.45 + 0.03/in</td></tr>
+<tr><td>Mineral wool batts</td><td class="n">3.8</td><td class="n">0.30</td><td class="n">0.50 + 0.05/in</td></tr>
+<tr><td>Open-cell spray foam</td><td class="n">3.7</td><td class="n">0.22</td><td class="n">0.25 + 0.20/in</td></tr>
+<tr><td>Closed-cell spray foam</td><td class="n">6.5</td><td class="n">0.55</td><td class="n">0.25 + 0.40/in</td></tr>
+<tr><td>Rigid foam board</td><td class="n">5.0</td><td class="n">0.85</td><td class="n">0.70 + 0.10/in</td></tr>
+</tbody></table></div>
+
+<h2>Worked Example</h2>
+<p>A homeowner in climate zone 3 has a 1,200 sq ft attic floor with R-11 insulation. The suggested target is R-49. They choose professionally installed blown-in cellulose, average local prices, 10% waste and air sealing. These are the tool's default inputs.</p>
+<ul>
+<li><b>Needed R:</b> 49 − 11 = 38.</li>
+<li><b>Thickness:</b> 38 ÷ 3.5 = 10.86 in, rounded up to 11.0 in. That adds R-38.5, for a final R-49.5.</li>
+<li><b>Material:</b> 11 × $0.08 × 1,200 × 1.10 = $1,161.60. You would order 1,210 cu ft.</li>
+<li><b>Labor:</b> ($0.45 + $0.03 × 11) × 1,200 = $936.00.</li>
+<li><b>Air sealing:</b> $0.60 × 1,200 = $720.00.</li>
+<li><b>Subtotal:</b> $2,817.60, plus 10% contingency of $281.76.</li>
+<li><b>Total:</b> $3,099, or about $2.58 per sq ft, with a likely range of $2,634 to $3,874.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul class="tips">
+<li><b>Air seal first.</b> Sealing gaps around wiring, plumbing and attic hatches before adding insulation often delivers more comfort per dollar than extra R-value.</li>
+<li><b>Check cavity depth.</b> A 2x4 wall holds 3.5 in and a 2x6 holds 5.5 in. If the result exceeds the depth, switch to a higher R-per-inch material or add continuous rigid foam.</li>
+<li><b>Don't compress batts.</b> Squashing R-30 into a shallow space reduces its real R-value, so buy for the depth you have.</li>
+<li><b>Keep vents and fixtures clear.</b> Maintain ventilation baffles at the eaves and keep insulation away from flues and non-IC-rated recessed lights.</li>
+<li><b>Get three quotes.</b> Ask each contractor to list removal, air sealing and R-value separately so you can compare them against this estimate.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much does it cost to insulate a house?</summary><p>Most projects run $1.50 to $4.00 per square foot installed. A 1,200 sq ft attic with blown-in insulation typically costs $1,800 to $3,900. Wall retrofits and spray foam cost more because the labor is harder.</p></details>
+<details><summary>What R-value do I need for my attic?</summary><p>The 2021 IECC calls for roughly R-30 in zone 1, R-49 in zones 2 and 3, and R-60 in zones 4 through 8. Your local code may differ, so check with your building department.</p></details>
+<details><summary>Is blown-in or batt insulation cheaper?</summary><p>For attic floors, blown-in cellulose and fiberglass are usually cheaper per R-value and fill gaps better. Batts can be cheaper for DIY work in standard-depth wall cavities. Use the comparison table to see both for your numbers.</p></details>
+<details><summary>Can I install insulation myself?</summary><p>Batts and attic loose-fill are common DIY jobs if you wear a respirator, goggles and gloves. Spray foam and dense-pack wall work are best left to professionals. Foam needs proper ventilation, and loose-fill in walls needs special equipment.</p></details>
+<details><summary>Why does the tool round the thickness up?</summary><p>Rounding up to the next half inch means the installed R-value meets or exceeds your target. It costs slightly more but keeps you on the safe side of code minimums.</p></details>
+<details><summary>Does spray foam need a fire barrier?</summary><p>Yes, in most cases. The IRC (section R316) generally requires foam plastics in living spaces to be covered by a thermal barrier such as half-inch drywall. Attics and crawl spaces can have different rules, so ask your inspector.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/basement-wall-insulation-calculator/">Basement Wall Insulation Calculator</a></li>
+<li><a href="/fence-installation-cost-calculator/">Fence Installation Cost Calculator</a></li>
+<li><a href="/tile-installation-cost-calculator/">Tile Installation Cost Calculator</a></li>
+<li><a href="/flooring-installation-cost-calculator/">Flooring Installation Cost Calculator</a></li>
+<li><a href="/fiberglass-batt-insulation-calculator/">Fiberglass Batt Insulation Calculator</a></li>
+<li><a href="/drywall-installation-cost-calculator/">Drywall Installation Cost Calculator</a></li>
+</ul>
+
+<p class="cap" style="margin-top:2rem">Estimates use typical U.S. pricing and are for planning only. This is not engineering advice, a permit or inspection approval, or a statement of code compliance. Local codes and prices vary.</p>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/insulation-installation-cost-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const fmt=(n,d=0)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const usd=(n,d=0)=>'$'+fmt(n,d);
+const M={
+fg:{n:'Fiberglass batts',r:3.2,m:.11,lb:.40,li:.05,u:'sq ft',dm:1},
+fgb:{n:'Blown-in fiberglass',r:2.5,m:.07,lb:.45,li:.03,u:'cu ft',dm:1},
+cell:{n:'Blown-in cellulose',r:3.5,m:.08,lb:.45,li:.03,u:'cu ft',dm:1},
+mw:{n:'Mineral wool batts',r:3.8,m:.30,lb:.50,li:.05,u:'sq ft',dm:1},
+oc:{n:'Open-cell spray foam',r:3.7,m:.22,lb:.25,li:.20,u:'board ft',dm:1.6},
+cc:{n:'Closed-cell spray foam',r:6.5,m:.55,lb:.25,li:.40,u:'board ft',dm:1.6},
+rg:{n:'Rigid foam board',r:5,m:.85,lb:.70,li:.10,u:'sq ft',dm:1}};
+const A={
+attic:{n:'attic floor',f:1,d:99,rec:[30,49,49,60,60,60,60]},
+wall:{n:'exterior wall',f:1.3,d:5.5,rec:[13,13,20,30,30,30,30]},
+roof:{n:'roof deck',f:1.4,d:9.25,rec:[30,49,49,60,60,60,60]},
+crawl:{n:'crawl space / basement wall',f:1.2,d:3.5,rec:[5,5,13,13,19,19,19]},
+floor:{n:'floor over unheated space',f:1.15,d:9.25,rec:[13,13,19,19,30,30,38]}};
+let summary='';
+function est(k,p){
+ const m=M[k],a=A[p.app];
+ const t=Math.max(1,Math.ceil(p.need/m.r*2-1e-9)/2);
+ const w=1+p.waste/100;
+ const mat=t*m.m*p.net*w*p.reg*(p.pro?1:m.dm);
+ const lab=p.pro?(m.lb+m.li*t)*a.f*p.net*p.reg:0;
+ const sup=p.pro?0:75;
+ const rem=p.removal?p.net*(p.pro?1.5:.4)*p.reg:0;
+ const seal=p.seal?p.net*(p.pro?.6:.15)*p.reg:0;
+ const sub=mat+lab+sup+rem+seal, cont=sub*.1;
+ const q=m.u==='sq ft'?p.net*w:m.u==='cu ft'?p.net*t/12*w:p.net*t*w;
+ return {k,m,t,ach:t*m.r,mat,lab,sup,rem,seal,cont,tot:sub+cont,qty:Math.ceil(q-1e-9),fit:t<=a.d};
+}
+function setRec(){
+ const a=A[$('app').value],z=+$('zone').value,r=a.rec[z-1];
+ $('rv').value=r;$('rout').textContent='R-'+r;
+ $('rhint').textContent='Suggested for climate zone '+z+', '+a.n+': R-'+r+' (2021 IECC, higher option used). Adjust if your local code differs.';
+}
+function draw(s,net,tgt,ex){
+ const h=Math.min(s.t,20)*8,y=235-h;
+ $('dFill').setAttribute('y',y);$('dFill').setAttribute('height',h);
+ $('dLine').setAttribute('y1',y);$('dExt').setAttribute('y1',y);$('dExt').setAttribute('y2',y);
+ $('dTxt').setAttribute('y',(y+235)/2+8);$('dTxt').textContent=fmt(s.t,1)+' in';
+ $('dMat').textContent=s.m.n;
+ $('dR').textContent='Target R-'+tgt+' · existing R-'+fmt(ex,0)+' · adding R-'+fmt(s.ach,1);
+ $('dArea').textContent='Net area: '+fmt(net)+' sq ft';
+ $('svg').setAttribute('aria-label','Cross-section: '+s.m.n+', '+fmt(s.t,1)+' inches thick, adding R-'+fmt(s.ach,1)+' over '+fmt(net)+' square feet');
+}
+function calc(){
+ const ids=['area','open','exist','waste'];
+ ids.forEach(i=>{$(i).classList.remove('bad');$(i).removeAttribute('aria-invalid');$('e-'+i).textContent=''});
+ let bad=null;
+ const E=(i,m)=>{$(i).classList.add('bad');$(i).setAttribute('aria-invalid','true');$('e-'+i).textContent=m;if(!bad)bad=i};
+ const num=(i,d)=>{const s=$(i).value.trim();return s===''?d:Number(s)};
+ const area=num('area',NaN),open=num('open',0),ex=num('exist',0),waste=num('waste',0);
+ if(!isFinite(area)||area<=0)E('area','Enter the area to insulate, greater than 0 sq ft.');
+ else if(area>500000)E('area','That is too large for this estimator (max 500,000 sq ft).');
+ if(!isFinite(open)||open<0)E('open','Openings must be 0 or more.');
+ else if(isFinite(area)&&open>=area)E('open','Openings must be smaller than the total area.');
+ if(!isFinite(ex)||ex<0||ex>60)E('exist','Enter an existing R-value between 0 and 60.');
+ if(!isFinite(waste)||waste<0||waste>50)E('waste','Waste must be between 0 and 50 percent.');
+ const tgt=+$('rv').value,need=tgt-ex;
+ if(!bad&&need<=0)E('exist','Existing R-value already meets the target. Raise the target or lower the existing value.');
+ if(bad){$('results').innerHTML='';$(bad).focus();return}
+ const net=Math.ceil(area-open);
+ const p={net,need,app:$('app').value,pro:$('inst').value==='pro',reg:+$('reg').value,waste,removal:$('rem').checked,seal:$('seal').checked};
+ const all=Object.keys(M).map(k=>est(k,p));
+ const s=all.find(x=>x.k===$('mat').value);
+ const low=s.tot*.85,high=s.tot*1.25,psf=s.tot/net,fin=ex+s.ach;
+ const rows=[['Insulation material',fmt(s.qty)+' '+s.m.u+' to order',s.mat]];
+ rows.push(p.pro?['Professional labor',fmt(net)+' sq ft, '+A[p.app].n,s.lab]:['DIY tools &amp; protective gear','Rental, respirator, supplies',s.sup]);
+ if(p.removal)rows.push(['Old insulation removal',fmt(net)+' sq ft',s.rem]);
+ if(p.seal)rows.push(['Air sealing prep',fmt(net)+' sq ft',s.seal]);
+ rows.push(['Contingency (10%)','Hidden issues, extras',s.cont]);
+ let bd='';
+ rows.forEach(r=>{bd+='<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="n">'+usd(r[2])+'</td><td><div class="bar"><span style="width:'+Math.round(r[2]/s.tot*100)+'%"></span></div></td></tr>'});
+ bd+='<tr class="hl"><td>Total</td><td></td><td class="n">'+usd(s.tot)+'</td><td></td></tr>';
+ let cmp='';
+ all.slice().sort((a,b)=>a.tot-b.tot).forEach(x=>{
+  cmp+='<tr'+(x.k===s.k?' class="hl"':'')+'><td>'+x.m.n+(x.fit?'':' <small>(exceeds cavity depth)</small>')+'</td><td class="n">'+fmt(x.t,1)+' in</td><td class="n">'+usd(x.tot/net,2)+'</td><td class="n">'+usd(x.tot)+'</td></tr>'});
+ const foam=s.k==='oc'||s.k==='cc'||s.k==='rg';
+ const loose=s.k==='fgb'||s.k==='cell';
+ const N=[];
+ if(!s.fit)N.push('<b>Does not fit:</b> '+fmt(s.t,1)+' in is deeper than a typical '+A[p.app].n+' cavity ('+A[p.app].d+' in). Choose a higher R-per-inch material or add continuous rigid foam.');
+ if(foam)N.push('Foam plastics generally need a thermal or ignition barrier (IRC R316). Confirm requirements with your local inspector.');
+ if(!p.pro&&(s.k==='oc'||s.k==='cc'))N.push('DIY spray foam is difficult: ratios, ventilation and curing must be right. Professional installation is strongly advised.');
+ if(loose&&p.app!=='attic')N.push('Loose-fill in enclosed cavities must be dense-packed with proper equipment. Hire a professional.');
+ if(p.app==='attic')N.push('Keep eave ventilation baffles open and maintain clearance around flues and non-IC-rated recessed lights.');
+ if(p.removal)N.push('Test suspected vermiculite or old insulation for asbestos before disturbing it.');
+ if(ex>0)N.push('Existing insulation is assumed dry, uncompressed and mold-free. Wet or compressed material delivers less R-value than labeled.');
+ N.push('Thickness is rounded up to the next 0.5 in so the installed R-value meets or exceeds your target ('+fmt(s.ach,1)+' added vs '+fmt(need,0)+' needed).');
+ N.push('Suggested targets follow 2021 IECC Table R402.1.3; local codes vary. This is a cost estimate, not a permit, inspection or code-compliance approval.');
+ summary='Insulation cost estimate\n'+s.m.n+', '+A[p.app].n+', '+(p.pro?'professional':'DIY')+' install\nNet area: '+fmt(net)+' sq ft\nTarget R-'+tgt+' (existing R-'+fmt(ex,0)+', adding R-'+fmt(s.ach,1)+')\nThickness: '+fmt(s.t,1)+' in\nTotal: '+usd(s.tot)+' (range '+usd(low)+' - '+usd(high)+'), '+usd(psf,2)+'/sq ft';
+ const html='<div class="fade"><div class="key"><div class="l">Estimated total installed cost</div><div class="big">'+usd(s.tot)+'</div><div class="s">Likely range '+usd(low)+' – '+usd(high)+' · '+usd(psf,2)+' per sq ft</div></div>'
+ +'<div class="stats"><div><b>'+fmt(net)+' sq ft</b><span>Net area</span></div><div><b>'+fmt(s.t,1)+' in</b><span>Thickness to install</span></div><div><b>R-'+fmt(fin,1)+'</b><span>Final R (existing + R-'+fmt(s.ach,1)+')</span></div><div><b>'+fmt(s.qty)+' '+s.m.u+'</b><span>Material to order</span></div></div>'
+ +'<h3>Cost breakdown</h3><div class="tw"><table><thead><tr><th>Item</th><th>Basis</th><th class="n">Cost</th><th>Share</th></tr></thead><tbody>'+bd+'</tbody></table></div>'
+ +'<h3>Compare insulation types</h3><div class="tw"><table><thead><tr><th>Material</th><th class="n">Thickness</th><th class="n">Per sq ft</th><th class="n">Total</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'
+ +'<h3>Notes &amp; safety</h3><ul class="notes"><li>'+N.join('</li><li>')+'</li></ul>'
+ +'<button type="button" class="btn sm" id="copy">Copy results</button></div>';
+ requestAnimationFrame(()=>{$('results').innerHTML=html;draw(s,net,tgt,ex)});
+}
+$('go').addEventListener('click',calc);
+$('f').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName!=='BUTTON'){e.preventDefault();calc()}});
+$('app').addEventListener('change',setRec);
+$('zone').addEventListener('change',setRec);
+$('rv').addEventListener('input',()=>{$('rout').textContent='R-'+$('rv').value});
+$('results').addEventListener('click',e=>{
+ if(e.target.id!=='copy')return;
+ const b=e.target,done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(summary).then(done,()=>{});
+ else{const t=document.createElement('textarea');t.value=summary;document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(t)}
+});
+$('yr').textContent=new Date().getFullYear();
+setRec();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
