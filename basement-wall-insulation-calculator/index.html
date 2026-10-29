@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Free Basement Wall Insulation Calculator | Toolwick</title>
+<meta name="description" content="Free basement wall insulation calculator: estimate foam board sheets, spray foam board feet, thickness and R-value for your foundation walls.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/basement-wall-insulation-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Basement Wall Insulation Calculator", "url": "https://toolwick.com/basement-wall-insulation-calculator/", "description": "Free basement wall insulation calculator: estimate foam board sheets, spray foam board feet, thickness and R-value for your foundation walls.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Basement Wall Insulation Calculator", "item": "https://toolwick.com/basement-wall-insulation-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What R-value do I need for basement walls?", "acceptedAnswer": {"@type": "Answer", "text": "Under the 2021 IECC, it's R-5 in zone 3, R-10 in zone 4 (not marine), and R-15 in zones 5–8, using continuous insulation. A framed wall with batts can meet R-13 to R-19 instead. Your local code may differ, so check before you buy."}}, {"@type": "Question", "name": "Should I insulate basement walls inside or outside?", "acceptedAnswer": {"@type": "Answer", "text": "Exterior insulation keeps the concrete warm and protects waterproofing, but it requires excavation, so it's mostly done in new construction. For existing homes, interior insulation is far cheaper and the usual choice. Both work when moisture is controlled."}}, {"@type": "Question", "name": "Is XPS or EPS better for basement walls?", "acceptedAnswer": {"@type": "Answer", "text": "XPS has a higher R-value per inch (about R-5 versus R-4), so it takes less thickness. EPS is cheaper per R-value and handles moisture well. Either works if seams are sealed, so compare the price per R in your area."}}, {"@type": "Question", "name": "Do I need a vapor barrier on a basement wall?", "acceptedAnswer": {"@type": "Answer", "text": "Taped rigid foam board acts as its own vapor retarder, so you generally don't add polyethylene sheeting on the wall. Plastic sheeting plus fiberglass can trap moisture between layers. Follow local code and your inspector's advice."}}, {"@type": "Question", "name": "Can I leave the foam board exposed?", "acceptedAnswer": {"@type": "Answer", "text": "Usually not in a finished or occupied space. Foam plastics burn and release toxic smoke, so codes typically require a ½ in gypsum thermal barrier or an approved equivalent. Unfinished storage areas may have different rules."}}, {"@type": "Question", "name": "How much does it cost to insulate basement walls?", "acceptedAnswer": {"@type": "Answer", "text": "Materials commonly run about $1.50–$4.00 per square foot for foam board, depending on thickness and local prices. Enter your own sheet or board-foot price in the calculator for a more accurate figure. Framing, drywall, labor, and tools are extra."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2.5rem 0 .75rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;height:auto}
+svg text{font:14px -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;fill:#1a1a2e}
+svg .b{font-weight:700;fill:#0077b6}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{padding:0;border:0;accent-color:#0077b6}
+.grid{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:560px){.grid{grid-template-columns:1fr 1fr}}
+.field{margin-bottom:1.1rem}
+.hide{display:none}
+.err input,.err select{border-color:#e74c3c}
+.msg{color:#c0392b;font-size:.85rem;margin:.3rem 0 0}
+.msg:empty{display:none}
+.hint{font-size:.8rem;color:#666;margin:.3rem 0 0}
+.ticks{display:flex;flex-wrap:wrap;justify-content:space-between;font-size:.8rem;color:#666}
+.btn{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+.res{background:#f8f9fa;border-radius:8px;padding:1.25rem;margin-top:1.5rem;animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.res{animation:none}}
+.big{font-size:2.4rem;font-weight:700;color:#0077b6;line-height:1.15}
+.sub{color:#444;margin-bottom:1rem}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;font-weight:600}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8;background:#fff}
+tr:nth-child(even) td{background:#fafafa}
+tr.sel td{background:#e6f3fa;font-weight:600}
+.n{text-align:right;white-space:nowrap}
+th.n{text-align:right}
+.cmp{min-width:520px}
+h3{font-size:1rem;margin:1.25rem 0 .25rem}
+.copy{min-height:44px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.9rem;cursor:pointer;font-family:inherit}
+.note{font-size:.85rem;color:#555;margin:1rem 0 0}
+.formula{background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;margin:0 0 1rem;overflow-x:auto}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;font-weight:600;padding:12px 0;min-height:44px}
+details p{margin:0 0 1rem}
+li{margin-bottom:.5rem}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:480px){.card{padding:1.25rem}.big{font-size:2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/basement-wall-insulation-calculator/">
+<meta property="og:title" content="Basement Wall Insulation Calculator">
+<meta property="og:description" content="Free basement wall insulation calculator: estimate foam board sheets, spray foam board feet, thickness and R-value for your foundation walls.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Basement Wall Insulation Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>Use this basement wall insulation calculator to work out how much foam board or spray foam your foundation walls need, how thick it must be to hit your target R-value, and what accessories to buy. Quantities are rounded up so you don't come up short.</p>
+
+<div class="card" id="tool">
+<div class="diagram">
+<svg viewBox="0 0 420 300" role="img" aria-label="Cross-section of a basement wall showing interior insulation, wall height and rim joist">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1a1a2e"/></marker></defs>
+<rect x="10" y="110" width="110" height="160" fill="#f8f9fa" stroke="#e0e0e0"/>
+<path d="M25 150l20 0M60 180l25 0M30 220l22 0M80 240l25 0M70 135l20 0" stroke="#e0e0e0" stroke-width="2"/>
+<text x="65" y="205" text-anchor="middle">Soil</text>
+<line x1="10" y1="110" x2="120" y2="110" stroke="#1a1a2e" stroke-dasharray="5 4"/>
+<text x="14" y="104" style="font-size:12px">Grade</text>
+<rect x="120" y="55" width="280" height="35" fill="#fff" stroke="#1a1a2e"/>
+<text x="285" y="78" text-anchor="middle" style="font-size:12px">Floor framing</text>
+<rect x="120" y="90" width="40" height="160" fill="#f0f0f0" stroke="#1a1a2e" stroke-width="1.5"/>
+<text transform="translate(146 170) rotate(-90)" text-anchor="middle" style="font-size:12px">Concrete wall</text>
+<rect x="120" y="250" width="280" height="20" fill="#e0e0e0" stroke="#1a1a2e"/>
+<text x="340" y="265" style="font-size:12px">Slab</text>
+<rect id="insR" x="160" y="55" width="16" height="35" fill="#cfe8f5" stroke="#0077b6" stroke-width="1.5"/>
+<rect id="insW" x="160" y="90" width="16" height="160" fill="#cfe8f5" stroke="#0077b6" stroke-width="1.5"/>
+<line id="rimArr" x1="140" y1="58" x2="140" y2="87" stroke="#1a1a2e" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text id="sRim" x="165" y="44" style="font-size:13px">Rim joist</text>
+<line x1="205" y1="90" x2="372" y2="90" stroke="#e0e0e0" stroke-dasharray="4 4"/>
+<line x1="205" y1="250" x2="372" y2="250" stroke="#e0e0e0" stroke-dasharray="4 4"/>
+<line x1="365" y1="92" x2="365" y2="248" stroke="#1a1a2e" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text x="357" y="166" text-anchor="end">Wall height</text>
+<text id="sH" x="357" y="184" text-anchor="end" class="b">8 ft</text>
+<line id="ld" x1="176" y1="140" x2="212" y2="140" stroke="#0077b6"/>
+<text id="s1" x="216" y="136" class="b">3.0 in XPS</text>
+<text id="s2" x="216" y="154">R-15.0 achieved</text>
+<text id="sSum" x="210" y="292" text-anchor="middle" style="font-size:13px"> </text>
+</svg>
+</div>
+
+<div class="field"><label for="mode">Enter basement size as</label>
+<select id="mode"><option value="rect">Length × width (rectangular)</option><option value="per">Total wall length (any shape)</option></select></div>
+<div class="grid" id="g-rect">
+<div class="field"><label for="len">Basement length (ft)</label><input id="len" type="number" inputmode="decimal" min="0" step="any" value="30" aria-describedby="m-len"><p class="msg" id="m-len"></p></div>
+<div class="field"><label for="wid">Basement width (ft)</label><input id="wid" type="number" inputmode="decimal" min="0" step="any" value="24" aria-describedby="m-wid"><p class="msg" id="m-wid"></p></div>
+</div>
+<div class="field hide" id="g-per"><label for="per">Total length of walls to insulate (ft)</label><input id="per" type="number" inputmode="decimal" min="0" step="any" value="108" aria-describedby="m-per"><p class="msg" id="m-per"></p></div>
+<div class="grid">
+<div class="field"><label for="hgt">Wall height to insulate (ft)</label><input id="hgt" type="number" inputmode="decimal" min="0" step="any" value="8" aria-describedby="m-hgt"><p class="msg" id="m-hgt"></p></div>
+<div class="field"><label for="rim">Rim joist height (in)</label><input id="rim" type="number" inputmode="decimal" min="0" step="any" value="9.25" aria-describedby="m-rim h-rim"><p class="hint" id="h-rim">9.25 in = 2×10 joists. Enter 0 to skip.</p><p class="msg" id="m-rim"></p></div>
+</div>
+<div class="field"><label for="opn">Windows and doors to subtract (sq ft)</label><input id="opn" type="number" inputmode="decimal" min="0" step="any" value="24" aria-describedby="m-opn"><p class="msg" id="m-opn"></p></div>
+<div class="grid">
+<div class="field"><label for="zone">Climate zone (target R-value)</label>
+<select id="zone"><option value="z12">Zones 1–2 — R-5 (code: none)</option><option value="z3">Zone 3 — R-5</option><option value="z4">Zone 4 (not marine) — R-10</option><option value="z58" selected>Zones 5–8 &amp; marine 4 — R-15</option><option value="custom">Custom target R-value</option></select></div>
+<div class="field hide" id="g-cr"><label for="cr">Custom target R-value</label><input id="cr" type="number" inputmode="decimal" min="0" step="any" value="12" aria-describedby="m-cr"><p class="msg" id="m-cr"></p></div>
+</div>
+<div class="grid">
+<div class="field"><label for="mat">Insulation material</label>
+<select id="mat"><option value="xps">XPS rigid foam board</option><option value="eps">EPS rigid foam board</option><option value="iso">Polyiso foil-faced board</option><option value="ccsf">Closed-cell spray foam</option></select></div>
+<div class="field"><label for="prc" id="prcL">Price per 4×8 sheet ($, optional)</label><input id="prc" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 48" aria-describedby="m-prc"><p class="msg" id="m-prc"></p></div>
+</div>
+<div class="field"><label for="waste">Waste allowance: <output id="wv" for="waste">10%</output></label><input id="waste" type="range" min="0" max="25" step="1" value="10">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>10%</span><span>25%</span></div></div>
+<button class="btn" id="calcBtn" type="button">Calculate Insulation</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/basement-wall-insulation-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Basement Wall Insulation Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/basement-wall-insulation-calculator/&quot;&gt;Basement Wall Insulation Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/basement-wall-insulation-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Basement Wall Insulation Calculator</h2>
+<p>Enter your basement's length and width, or the total length of wall you plan to cover if the room isn't a simple rectangle. Add the wall height, the rim joist height at the top of the wall, and the total area of windows and doors to leave out. Pick your climate zone to set a target R-value (or enter your own), choose a material, and press Calculate. You get the net area, the thickness to buy, the number of sheets or board feet, adhesive, tape, drywall, and a side-by-side comparison of all four materials.</p>
+
+<h2>Why This Matters</h2>
+<p>Bare concrete or block foundation walls are among the biggest sources of heat loss and condensation in a house. An uninsulated basement can account for 20–30% of a home's heating loss, and the cold surface is where humid summer air condenses and mold begins. Insulating the walls makes the space warmer, drier, and usable as a family room, office, or gym.</p>
+<p>Ordering by guesswork is expensive. A 30 × 24 ft basement with 8 ft walls has more than 860 square feet of wall before you count the rim joist, so one miscounted inch of thickness can swing the bill by hundreds of dollars. Running the numbers first also lets you compare materials fairly. A material with a lower R-value per inch needs more thickness, which eats into floor space and costs more per sheet. Contractors use the same method to quote jobs, and homeowners use it to check those quotes or to price a weekend DIY project before visiting the lumberyard.</p>
+
+<h2>How It's Calculated</h2>
+<div class="formula">Perimeter = 2 × (length + width)<br>Gross area = perimeter × wall height + perimeter × rim height ÷ 12<br>Net area = gross area − openings<br>Order area = net area × (1 + waste %)<br>Thickness = target R ÷ R per inch, rounded UP to the next ½ in<br>Sheets = order area ÷ 32 sq ft, rounded UP<br>Board feet = order area × thickness, rounded UP</div>
+<p>The tool uses conservative, aged R-values per inch: XPS 5.0, EPS 4.0, polyiso 5.6, and closed-cell spray foam 6.0. Because thickness is rounded up, the R-value you achieve is equal to or higher than your target. Adhesive assumes one tube per two sheets and seam tape assumes about 12 linear feet per sheet on 90 ft rolls. The drywall count adds 10% for cutting waste.</p>
+<p>Target R-values follow the 2021 IECC Table R402.1.3 basement wall requirements (also reflected in IRC N1102.1.3): R-5 for zone 3, R-10 for zone 4 except marine, and R-15 for zones 5–8 and marine 4, all continuous insulation. Zones 1–2 have no requirement, so the tool uses R-5 as a practical minimum. Codes are amended locally, so confirm with your building department. This calculator is a planning estimate, not an engineering, permit, or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>Take a 30 × 24 ft basement with 8 ft walls, 2×10 rim joists (9.25 in), and four windows totaling 24 sq ft in climate zone 5. The target is R-15, using XPS with 10% waste.</p>
+<ul>
+<li>Perimeter: 2 × (30 + 24) = 108 ft</li>
+<li>Wall area: 108 × 8 = 864 sq ft. Rim joist area: 108 × 9.25 ÷ 12 = 83.25 sq ft. Gross: 947.25 sq ft</li>
+<li>Net area: 947.25 − 24 = 923.25 sq ft</li>
+<li>With 10% waste: 1,015.58 sq ft</li>
+<li>Thickness: 15 ÷ 5.0 = 3.0 in, which gives exactly R-15</li>
+<li>Sheets: 1,015.58 ÷ 32 = 31.7, rounded up to <strong>32 sheets</strong></li>
+<li>Accessories: 16 adhesive tubes, 5 rolls of seam tape (384 ft ÷ 90 ft = 4.3), 32 sheets of ½ in drywall</li>
+<li>At $48 per sheet, material cost is 32 × $48 = $1,536.00</li>
+</ul>
+<p>For comparison, EPS needs 4.0 in (R-16), polyiso needs 3.0 in (R-16.8), and closed-cell spray foam needs 2.5 in, or about 2,539 board feet.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Fix moisture first.</strong> Foam over a leaking wall traps water. Tape a 2 ft square of plastic to the wall for 48 hours; if moisture collects underneath, solve drainage before insulating.</li>
+<li><strong>Avoid fiberglass batts touching concrete.</strong> They absorb moisture and lose performance. Use foam board against the wall, then frame in front if you want a stud cavity.</li>
+<li><strong>Cover foam plastic.</strong> Building codes (IRC R316.4) generally require a thermal barrier such as ½ in drywall over exposed foam in living spaces. Spray foam usually needs one too.</li>
+<li><strong>Seal every seam.</strong> Tape or foam the joints between boards and at the floor and rim joist. Air leaks reduce real-world performance more than a half-inch of thickness would.</li>
+<li><strong>Check the rim joist separately.</strong> It often has a higher code R-value than the foundation wall, and spray foam or cut-and-cobbled board is the usual fix.</li>
+<li><strong>Measure, don't assume 8 ft.</strong> Walls with stepped footings or a sloped lot can vary, so use the height you'll actually cover.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What R-value do I need for basement walls?</summary><p>Under the 2021 IECC, it's R-5 in zone 3, R-10 in zone 4 (not marine), and R-15 in zones 5–8, using continuous insulation. A framed wall with batts can meet R-13 to R-19 instead. Your local code may differ, so check before you buy.</p></details>
+<details><summary>Should I insulate basement walls inside or outside?</summary><p>Exterior insulation keeps the concrete warm and protects waterproofing, but it requires excavation, so it's mostly done in new construction. For existing homes, interior insulation is far cheaper and the usual choice. Both work when moisture is controlled.</p></details>
+<details><summary>Is XPS or EPS better for basement walls?</summary><p>XPS has a higher R-value per inch (about R-5 versus R-4), so it takes less thickness. EPS is cheaper per R-value and handles moisture well. Either works if seams are sealed, so compare the price per R in your area.</p></details>
+<details><summary>Do I need a vapor barrier on a basement wall?</summary><p>Taped rigid foam board acts as its own vapor retarder, so you generally don't add polyethylene sheeting on the wall. Plastic sheeting plus fiberglass can trap moisture between layers. Follow local code and your inspector's advice.</p></details>
+<details><summary>Can I leave the foam board exposed?</summary><p>Usually not in a finished or occupied space. Foam plastics burn and release toxic smoke, so codes typically require a ½ in gypsum thermal barrier or an approved equivalent. Unfinished storage areas may have different rules.</p></details>
+<details><summary>How much does it cost to insulate basement walls?</summary><p>Materials commonly run about $1.50–$4.00 per square foot for foam board, depending on thickness and local prices. Enter your own sheet or board-foot price in the calculator for a more accurate figure. Framing, drywall, labor, and tools are extra.</p></details>
+
+<h2>Related Tools</h2>
+<ul>
+<li><a href="/gable-end-wall-area-calculator/">Gable End Wall Area Calculator</a></li>
+<li><a href="/fiberglass-batt-insulation-calculator/">Fiberglass Batt Insulation Calculator</a></li>
+<li><a href="/shower-wall-tile-calculator/">Shower Wall Tile Calculator</a></li>
+<li><a href="/board-and-batten-wall-calculator/">Board and Batten Wall Calculator</a></li>
+<li><a href="/knee-wall-stud-height-attic-storage-calculator/">Knee Wall Stud Height &amp; Attic Storage Calculator</a></li>
+<li><a href="/cinder-block-wall-calculator/">Cinder Block Wall Calculator</a></li>
+</ul>
+</main>
+
+<div class="wrap"><nav class="cluster-nav" aria-label="More Framing &amp; Structure Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Framing &amp; Structure Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/board-and-batten-wall-calculator/">Board and Batten Wall Calculator</a></li><li><a href="/gable-end-wall-area-calculator/">Gable End Wall Area Calculator</a></li><li><a href="/knee-wall-stud-height-attic-storage-calculator/">Knee Wall Stud Height &amp; Attic Storage Calculator</a></li><li><a href="/shower-wall-tile-calculator/">Shower Wall Tile Calculator</a></li><li><a href="/deck-beam-size-calculator/">Deck Beam Size Calculator</a></li><li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li><li><a href="/floor-joist-span-size-calculator/">Floor Joist Span &amp; Size Calculator</a></li><li><a href="/header-beam-size-calculator/">Header Beam Size Calculator</a></li><li><a href="/framing-calculators/"><strong>All Framing &amp; Structure calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div></div>
+<footer><div class="wrap">
+<a href="/about/">About</a><a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</div></footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const M={xps:{n:'XPS rigid foam board',s:'XPS',r:5,u:'sheet'},eps:{n:'EPS rigid foam board',s:'EPS',r:4,u:'sheet'},iso:{n:'Polyiso foil-faced board',s:'Polyiso',r:5.6,u:'sheet'},ccsf:{n:'Closed-cell spray foam',s:'Spray foam',r:6,u:'bf'}};
+const Z={z12:5,z3:5,z4:10,z58:15};
+const fmt=(n,d=0)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fv=n=>n.toLocaleString('en-US',{maximumFractionDigits:2});
+const ceilHalf=x=>Math.ceil(x*2-1e-9)/2;
+const ceilN=x=>Math.ceil(x-1e-9);
+const num=id=>{const v=$(id).value.trim();return v===''?NaN:Number(v)};
+let lastText='';
+$('yr').textContent=new Date().getFullYear();
+
+function clearErr(){
+  document.querySelectorAll('.field').forEach(f=>f.classList.remove('err'));
+  document.querySelectorAll('.msg').forEach(m=>m.textContent='');
+  document.querySelectorAll('input').forEach(i=>i.removeAttribute('aria-invalid'));
+}
+function calculate(){
+  clearErr();
+  let ok=true;
+  const bad=(id,m)=>{const f=$(id).closest('.field');f.classList.add('err');f.querySelector('.msg').textContent=m;$(id).setAttribute('aria-invalid','true');ok=false};
+  const rng=(id,lo,hi,m)=>{const v=num(id);if(isNaN(v)||v<lo||v>hi)bad(id,m);return v};
+  let P;
+  if($('mode').value==='rect'){
+    const L=rng('len',1,500,'Enter a length between 1 and 500 ft.');
+    const W=rng('wid',1,500,'Enter a width between 1 and 500 ft.');
+    P=2*(L+W);
+  }else P=rng('per',4,2000,'Enter a total wall length between 4 and 2,000 ft.');
+  const H=rng('hgt',1,20,'Enter a wall height between 1 and 20 ft.');
+  const rim=rng('rim',0,24,'Enter a rim joist height from 0 to 24 in (0 = skip).');
+  let opn=0;
+  if($('opn').value.trim()!=='')opn=rng('opn',0,5000,'Enter openings of 0 sq ft or more (max 5,000).');
+  const zone=$('zone').value;
+  const target=zone==='custom'?rng('cr',1,60,'Enter a target R-value between 1 and 60.'):Z[zone];
+  let price=null;
+  if($('prc').value.trim()!=='')price=rng('prc',0,10000,'Enter a price of 0 or more.');
+  const gross=ok?P*H+P*rim/12:0;
+  if(ok&&opn>=gross){bad('opn','Openings must be smaller than the total wall area ('+fmt(gross,0)+' sq ft).')}
+  if(!ok){$('results').innerHTML='';return}
+
+  const wasteP=Number($('waste').value);
+  const wallA=P*H,rimA=P*rim/12,net=gross-opn,ordA=net*(1+wasteP/100);
+  const mk=$('mat').value,m=M[mk];
+  const tMin=target/m.r,t=ceilHalf(tMin),ach=t*m.r;
+  const sheets=ceilN(ordA/32),bf=ceilN(ordA*t);
+  const isSheet=m.u==='sheet';
+  const qty=isSheet?sheets:bf;
+  const qtyTxt=isSheet?fmt(sheets)+' sheet'+(sheets===1?'':'s'):fmt(bf)+' board feet';
+  const adh=isSheet?Math.ceil(sheets/2):0;
+  const tape=isSheet?ceilN(sheets*12/90):0;
+  const dry=ceilN(net*1.1/32);
+  const cost=price===null?null:qty*price;
+  const rows=[
+    ['Wall length',fmt(P,1)+' ft'],
+    ['Foundation wall area',fmt(wallA,1)+' sq ft'],
+    ['Rim joist area',fmt(rimA,1)+' sq ft'],
+    ['Openings deducted','−'+fmt(opn,1)+' sq ft'],
+    ['Net insulation area',fmt(net,1)+' sq ft'],
+    ['Order area (+'+wasteP+'% waste)',fmt(ordA,1)+' sq ft'],
+    ['Target R-value','R-'+fv(target)],
+    ['Thickness to buy',fmt(t,1)+' in'],
+    ['R-value achieved','R-'+fmt(ach,1)]
+  ];
+  if(isSheet){rows.push(['Construction adhesive (28 oz tubes)',fmt(adh)],['Foam seam tape (90 ft rolls)',fmt(tape)])}
+  rows.push(['½ in drywall, 4×8 sheets (thermal barrier)',fmt(dry)]);
+  if(cost!==null)rows.push(['Estimated insulation cost','$'+fmt(cost,2)]);
+  let tb='<div class="tw"><table><thead><tr><th>Item</th><th class="n">Amount</th></tr></thead><tbody>';
+  for(const r of rows)tb+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>';
+  tb+='</tbody></table></div>';
+  let cm='<div class="tw"><table class="cmp"><thead><tr><th>Material</th><th class="n">R / in</th><th class="n">Min. in</th><th class="n">Buy (in)</th><th class="n">R achieved</th><th class="n">Quantity</th></tr></thead><tbody>';
+  for(const k in M){
+    const x=M[k],tm=target/x.r,tt=ceilHalf(tm);
+    const q=x.u==='sheet'?fmt(ceilN(ordA/32))+' sheets':fmt(ceilN(ordA*tt))+' bd ft';
+    cm+='<tr'+(k===mk?' class="sel"':'')+'><td>'+x.n+(k===mk?' (your pick)':'')+'</td><td class="n">'+fmt(x.r,1)+'</td><td class="n">'+fmt(tm,2)+'</td><td class="n">'+fmt(tt,1)+'</td><td class="n">R-'+fmt(tt*x.r,1)+'</td><td class="n">'+q+'</td></tr>';
+  }
+  cm+='</tbody></table></div>';
+  const extra=t>3?'<p class="note">Thickness over 3 in is usually installed in two staggered layers with taped seams.</p>':'';
+  const html='<div class="res"><div class="big">'+qtyTxt+'</div><div class="sub">of '+fmt(t,1)+' in '+m.n+(isSheet?' (4×8 ft)':'')+' — R-'+fmt(ach,1)+' for '+fmt(net,0)+' sq ft of wall</div>'
+   +'<h3>Your project</h3>'+tb+'<h3>Material comparison (same target, same area)</h3>'+cm+extra
+   +'<button class="copy" id="copyBtn" type="button">Copy results</button>'
+   +'<p class="note">Rounded up on purpose. Targets follow 2021 IECC Table R402.1.3 basement wall values; local codes vary. Foam plastic generally needs a ½ in gypsum thermal barrier. This is a planning estimate, not an engineering, permit, or inspection approval.</p></div>';
+  lastText='Basement wall insulation estimate\n'+rows.map(r=>r[0]+': '+r[1]).join('\n')+'\nMaterial: '+m.n+', '+fmt(t,1)+' in -> '+qtyTxt;
+
+  requestAnimationFrame(()=>{
+    $('results').innerHTML=html;
+    const w=Math.min(40,Math.max(6,t*8));
+    $('insW').setAttribute('width',w);$('insR').setAttribute('width',w);
+    $('ld').setAttribute('x1',160+w);
+    const hasRim=rim>0;
+    $('insR').style.display=hasRim?'':'none';
+    $('rimArr').style.display=hasRim?'':'none';
+    $('sRim').textContent=hasRim?'Rim joist '+fv(rim)+' in':'Rim joist: not insulated';
+    $('sH').textContent=fv(H)+' ft';
+    $('s1').textContent=fmt(t,1)+' in '+m.s;
+    $('s2').textContent='R-'+fmt(ach,1)+' achieved';
+    $('sSum').textContent='Net area '+fmt(net,0)+' sq ft · walls '+fmt(P,0)+' ft';
+  });
+}
+function run(){requestAnimationFrame(calculate)}
+$('calcBtn').addEventListener('click',run);
+$('tool').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')){e.preventDefault();run()}});
+$('mode').addEventListener('change',()=>{const r=$('mode').value==='rect';$('g-rect').classList.toggle('hide',!r);$('g-per').classList.toggle('hide',r)});
+$('zone').addEventListener('change',()=>$('g-cr').classList.toggle('hide',$('zone').value!=='custom'));
+$('mat').addEventListener('change',()=>{$('prcL').textContent=M[$('mat').value].u==='sheet'?'Price per 4×8 sheet ($, optional)':'Price per board foot ($, optional)'});
+$('waste').addEventListener('input',()=>{$('wv').textContent=$('waste').value+'%'});
+$('results').addEventListener('click',e=>{
+  if(e.target.id!=='copyBtn')return;
+  const b=e.target,done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,done)}
+  else{const ta=document.createElement('textarea');ta.value=lastText;document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(ta);done()}
+});
+run();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
