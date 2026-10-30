@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Siding Installation Cost Calculator | Toolwick</title>
+<meta name="description" content="Free siding installation cost calculator: estimate materials, labor, removal, house wrap and trim for vinyl, fiber cement, wood and metal siding.">
+<link rel="canonical" href="https://toolwick.com/siding-installation-cost-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.5rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:1rem;margin-bottom:2rem;text-align:center}
+.diagram svg{width:100%;height:auto;max-width:440px;display:block;margin:0 auto}
+.diagram p{font-size:.85rem;color:#666;margin:.5rem 0 0}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff;min-height:48px}
+input:focus,select:focus,button:focus-visible,input[type=range]:focus-visible,input[type=checkbox]:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.invalid{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.hint{color:#666;font-size:.8rem;margin-top:.3rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+fieldset{border:0;padding:0;margin:0 0 1.25rem}
+legend{font-size:.85rem;font-weight:500;color:#444;padding:0;margin-bottom:.25rem}
+.chk{display:flex;align-items:center;gap:.75rem;min-height:44px;font-size:.95rem;color:#1a1a2e;font-weight:400;margin:0;cursor:pointer}
+.chk input{width:22px;height:22px;flex:none;accent-color:#0077b6}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.sec-t{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#444;margin:1.5rem 0 .75rem;padding-top:1rem;border-top:1px solid #eee}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;min-height:48px;width:100%;font-family:inherit}
+button:hover{background:#006299}
+button.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;min-height:44px;padding:8px 18px;font-size:.9rem;margin-top:1rem}
+button.copy:hover{background:#f0f8fc}
+#results{margin-top:2rem}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.sub{color:#444;margin:.25rem 0 .25rem}
+.range{font-weight:600;margin-bottom:1.25rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.5rem}
+.stat{background:#f8f9fa;border-radius:6px;padding:.75rem;text-align:center}
+.stat b{display:block;font-size:1.15rem;color:#1a1a2e}
+.stat span{font-size:.8rem;color:#555}
+.tw{overflow-x:auto;margin-bottom:1.5rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right;white-space:nowrap}
+tr.sel td,tr.tot td{font-weight:700}
+.tcap{font-size:.85rem;font-weight:600;color:#444;margin:0 0 .4rem}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;border-radius:0 6px 6px 0}
+.ad-slot{min-height:0;margin:0}
+.content ul,.content ol{padding-left:1.25rem;margin:0 0 1rem}
+.content li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border-radius:6px;padding:1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;overflow-x:auto;margin-bottom:1rem;line-height:1.7}
+details{border-bottom:1px solid #e8e8e8;padding:.75rem 0}
+summary{font-weight:600;cursor:pointer;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .5rem;color:#333}
+.rel{list-style:none;padding:0!important;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.rel a{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:12px 14px;min-height:44px}
+footer{margin-top:3rem;padding:1.5rem 0 2.5rem;border-top:1px solid #eee;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;display:inline-block;padding:10px 4px;min-height:44px}
+@media (max-width:640px){
+.row,.rel{grid-template-columns:1fr}
+.card{padding:1.25rem}
+.big{font-size:2.2rem}
+h1{font-size:1.55rem}
+.stats{grid-template-columns:1fr}
+button.copy{width:100%}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/siding-installation-cost-calculator/">
+<meta property="og:title" content="Siding Installation Cost Calculator">
+<meta property="og:description" content="Free siding installation cost calculator: estimate materials, labor, removal, house wrap and trim for vinyl, fiber cement, wood and metal siding.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Siding Installation Cost Calculator</h1>
+<p>This siding installation cost calculator estimates the full price of re-siding your house: siding materials, labor, old-siding removal, house wrap and trim. It covers vinyl, fiber cement, wood, engineered wood, steel and aluminum, with a budget-to-premium range and a side-by-side material comparison.</p>
+
+<div class="card">
+<div class="diagram">
+<svg viewBox="0 0 440 262" role="img" aria-labelledby="svgT">
+<title id="svgT">House elevation showing wall height, gable rise, perimeter and net siding area</title>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="#0077b6"/></marker></defs>
+<line x1="20" y1="215" x2="420" y2="215" stroke="#e0e0e0" stroke-width="2"/>
+<rect x="100" y="110" width="240" height="105" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<polygon points="100,110 220,45 340,110" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="125" y="135" width="45" height="35" fill="#f8f9fa" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="190" y="135" width="45" height="35" fill="#f8f9fa" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="275" y="155" width="35" height="60" fill="#f8f9fa" stroke="#0077b6" stroke-width="1.5"/>
+<g stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"><line x1="76" y1="110" x2="100" y2="110"/><line x1="76" y1="215" x2="100" y2="215"/><line x1="220" y1="45" x2="364" y2="45"/><line x1="340" y1="110" x2="364" y2="110"/><line x1="100" y1="215" x2="100" y2="242"/><line x1="340" y1="215" x2="340" y2="242"/></g>
+<g stroke="#0077b6" stroke-width="1.5"><line x1="80" y1="112" x2="80" y2="213" marker-start="url(#ar)" marker-end="url(#ar)"/><line x1="360" y1="47" x2="360" y2="108" marker-start="url(#ar)" marker-end="url(#ar)"/><line x1="102" y1="238" x2="338" y2="238" marker-start="url(#ar)" marker-end="url(#ar)"/></g>
+<g fill="#1a1a2e" font-size="13" font-family="-apple-system,Segoe UI,Roboto,sans-serif">
+<text x="72" y="158" text-anchor="end">Height</text><text id="dH" x="72" y="175" text-anchor="end" font-weight="700">9 ft</text>
+<text x="368" y="72">Gable rise</text><text id="dR" x="368" y="89" font-weight="700">7 ft</text>
+<text id="dP" x="220" y="256" text-anchor="middle" font-weight="700">Perimeter: 160 ft (all walls)</text>
+<text id="dA" x="220" y="22" text-anchor="middle" font-weight="700" fill="#0077b6" font-size="15">Net siding area: 1,381 sq ft</text>
+</g>
+</svg>
+<p>Diagram updates with your numbers when you calculate. Not to scale.</p>
+</div>
+
+<div class="row">
+<div class="field"><label for="per">Total wall perimeter (ft)</label><input type="number" id="per" inputmode="decimal" value="160" min="0" step="any" aria-describedby="e-per"><div class="err" id="e-per" hidden></div><div class="hint">Add the length of every exterior wall.</div></div>
+<div class="field"><label for="ht">Wall height, foundation to eave (ft)</label><input type="number" id="ht" inputmode="decimal" value="9" min="0" step="any" aria-describedby="e-ht"><div class="err" id="e-ht" hidden></div><div class="hint">About 9 ft per story.</div></div>
+</div>
+
+<div class="sec-t">Gables (triangular wall areas)</div>
+<div class="row">
+<div class="field"><label for="gn">Number of gables</label><input type="number" id="gn" inputmode="numeric" value="2" min="0" step="1" aria-describedby="e-gn"><div class="err" id="e-gn" hidden></div></div>
+<div class="field"><label for="gw">Gable base width (ft)</label><input type="number" id="gw" inputmode="decimal" value="28" min="0" step="any" aria-describedby="e-gw"><div class="err" id="e-gw" hidden></div></div>
+</div>
+<div class="field"><label for="gr">Gable rise, eave to peak (ft)</label><input type="number" id="gr" inputmode="decimal" value="7" min="0" step="any" aria-describedby="e-gr"><div class="err" id="e-gr" hidden></div></div>
+
+<div class="sec-t">Openings (not sided)</div>
+<div class="row">
+<div class="field"><label for="wn">Windows (≈15 sq ft each)</label><input type="number" id="wn" inputmode="numeric" value="10" min="0" step="1" aria-describedby="e-wn"><div class="err" id="e-wn" hidden></div></div>
+<div class="field"><label for="dn">Entry doors (≈21 sq ft each)</label><input type="number" id="dn" inputmode="numeric" value="2" min="0" step="1" aria-describedby="e-dn"><div class="err" id="e-dn" hidden></div></div>
+</div>
+<div class="field"><label for="gd">Garage doors (≈63 sq ft each; count a double door as 2)</label><input type="number" id="gd" inputmode="numeric" value="1" min="0" step="1" aria-describedby="e-gd"><div class="err" id="e-gd" hidden></div></div>
+
+<div class="sec-t">Siding choices</div>
+<div class="row">
+<div class="field"><label for="mat">Siding material</label><select id="mat"><option value="vinyl">Vinyl</option><option value="fc">Fiber cement</option><option value="wood">Wood (cedar / lap)</option><option value="eng">Engineered wood</option><option value="steel">Steel</option><option value="alum">Aluminum</option></select></div>
+<div class="field"><label for="tier">Quality tier</label><select id="tier"><option value="0">Budget</option><option value="1" selected>Standard</option><option value="2">Premium</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="st">Number of stories</label><select id="st"><option value="1">1 story</option><option value="1.15">2 stories (+15% labor)</option><option value="1.3">3 stories (+30% labor)</option></select></div>
+<div class="field"><label for="reg">Local labor &amp; material pricing</label><select id="reg"><option value="0.9">Lower-cost area (×0.90)</option><option value="1" selected>Average (×1.00)</option><option value="1.25">Higher-cost metro (×1.25)</option></select></div>
+</div>
+<div class="field"><label for="waste">Waste &amp; overage allowance: <output id="wv">10%</output></label><input type="range" id="waste" min="5" max="20" step="1" value="10"><div class="ticks"><span>5%</span><span>10%</span><span>20%</span></div></div>
+
+<fieldset><legend>Include in estimate</legend>
+<label class="chk" for="rem"><input type="checkbox" id="rem" checked> Remove &amp; dispose of old siding</label>
+<label class="chk" for="wrap"><input type="checkbox" id="wrap" checked> House wrap / water-resistive barrier</label>
+<label class="chk" for="trim"><input type="checkbox" id="trim" checked> Trim, corners &amp; J-channel</label>
+</fieldset>
+<div class="field"><label for="pm">Permit &amp; inspection fees ($)</label><input type="number" id="pm" inputmode="decimal" value="250" min="0" step="any" aria-describedby="e-pm"><div class="err" id="e-pm" hidden></div></div>
+
+<button type="button" id="calcBtn">Calculate Siding Cost</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<div class="content">
+<h2>How to Use This Siding Installation Cost Calculator</h2>
+<p>Enter your total wall perimeter and wall height, then add any gables and the number of windows and doors so the tool can subtract openings. Pick a siding material, a quality tier, the number of stories and your local price level, and choose which extras to include. The calculator returns a total, a cost per square foot, the number of squares to order, a line-item breakdown, and a comparison of every siding type.</p>
+
+<h2>Why This Matters</h2>
+<p>Re-siding is one of the biggest exterior projects a homeowner takes on, and quotes can vary by $10,000 or more for the same house. A typical 1,400 sq ft wall area costs about $7,700 with budget vinyl but over $16,000 with premium fiber cement or cedar. Without your own estimate, it is hard to tell whether a contractor's number is reasonable or padded.</p>
+<p>Siding is also bought by the square (100 sq ft), so ordering too little means a second delivery with possible dye-lot mismatches, while ordering too much ties up cash. If you are selling, an insurance claim after hail or wind damage may only cover part of the wall, so knowing the real quantity matters. Budgeting early also lets you decide whether to bundle siding with new windows, insulation or a roof replacement while scaffolding is already up. Use the result as a planning figure, then collect at least three written, line-item bids.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator works out the net wall area first, then prices each part of the job per square foot or per linear foot.</p>
+<div class="formula">Gross wall = perimeter × height<br>Gable area = gables × (base × rise ÷ 2)<br>Openings = windows×15 + doors×21 + garage doors×63<br>Net area = gross wall + gable area − openings<br>Order area = net × (1 + waste %), rounded UP to whole squares<br>Materials = order area × material rate<br>Labor = net area × labor rate × region × story factor<br>Trim (lin ft) = 4×height + windows×16 + doors×17 + garage×23<br>Total = materials + labor + removal + wrap + trim + permit</div>
+<p>Rates come from typical U.S. installed price ranges: vinyl about $3.50–$8 per sq ft installed, fiber cement $6–$12, wood $8–$17, engineered wood $5–$10, steel $6–$14 and aluminum $6–$11.50. Budget, Standard and Premium use the low, middle and high end. Removal runs $0.75–$1.50, house wrap $0.35–$0.75 and trim $3–$6 per linear foot. The region setting scales everything except siding material. Quantities round up to whole squares so you never under-order.</p>
+<p>The wall covering and water-resistive barrier follow the general approach of the International Residential Code (IRC Chapter 7, R703), under which siding is installed per the manufacturer's instructions over a weather-resistant barrier. Adopted editions and local amendments vary, so confirm with your building department. This tool is a cost estimator, not an engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>Take the default inputs: a 160 ft perimeter, 9 ft walls, two gables (28 ft wide, 7 ft rise), 10 windows, 2 doors and 1 garage door, with Standard vinyl, one story, average pricing and 10% waste.</p>
+<ol>
+<li>Gross wall: 160 × 9 = 1,440 sq ft. Gables: 2 × (28 × 7 ÷ 2) = 196 sq ft.</li>
+<li>Openings: 10×15 + 2×21 + 63 = 255 sq ft. Net area: 1,440 + 196 − 255 = <strong>1,381 sq ft</strong>.</li>
+<li>Order area: 1,381 × 1.10 = 1,519.1 sq ft, rounded up to <strong>16 squares</strong> (1,600 sq ft).</li>
+<li>Materials: 1,600 × $2.50 = $4,000. Labor: 1,381 × $3.00 = $4,143.</li>
+<li>Removal: 1,381 × $1.00 = $1,381. House wrap: 1,381 × $0.50 = $691.</li>
+<li>Trim: 36 + 160 + 34 + 23 = 253 linear ft × $4.00 = $1,012. Permit: $250.</li>
+<li>Total: <strong>$11,477</strong>, or about $8.31 per sq ft of wall. Budget and Premium tiers give roughly $7,690 and $16,800.</li>
+</ol>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure every wall, including the gables.</strong> Skipping gable triangles is the most common reason owners under-order by 5–10%.</li>
+<li><strong>Don't assume the old siding hides sound sheathing.</strong> Rot, mold or failed flashing behind it can add several hundred to thousands of dollars, so budget a repair allowance.</li>
+<li><strong>Test before removing homes built before 1978.</strong> Old paint may contain lead, and some older cement-based siding contains asbestos. Use certified professionals if testing is positive.</li>
+<li><strong>Compare installed price, not material price.</strong> Fiber cement and wood need specialized cutting and usually paint, which this estimate excludes.</li>
+<li><strong>Ask for a line-item bid</strong> covering wrap, flashing, trim, disposal and warranty, and confirm the install follows the manufacturer's fastening and clearance rules, which many warranties require.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much does siding installation cost per square foot?</summary><p>Most projects land between about $4 and $12 per square foot of wall installed, depending on material. Vinyl sits at the low end, fiber cement and engineered wood in the middle, and cedar or premium metal at the top. Labor is usually 40–60% of the total.</p></details>
+<details><summary>How much does it cost to side a 2,000 sq ft house?</summary><p>A 2,000 sq ft floor plan typically has roughly 1,500–2,500 sq ft of wall to cover once gables and openings are counted. At $4–$12 per sq ft installed, that is about $6,000 to $30,000. Enter your actual perimeter and height above for a tighter figure.</p></details>
+<details><summary>Is vinyl or fiber cement siding cheaper?</summary><p>Vinyl is normally cheaper, often $2–$4 less per square foot installed. Fiber cement costs more but resists fire, rot and insects and holds paint longer. Run both in the comparison table to see the difference for your house.</p></details>
+<details><summary>How much extra siding should I order for waste?</summary><p>Plan on 10% for a simple rectangular house and 15% or more for many gables, bump-outs or diagonal patterns. This calculator also rounds up to the next full square so you do not come up short. Keep a few leftover pieces for future repairs.</p></details>
+<details><summary>Does the estimate include removing old siding?</summary><p>Yes, if the removal box is checked, at $0.75–$1.50 per square foot depending on tier. Uncheck it for new construction or when installing over existing siding where your local code and manufacturer allow it. Hazardous materials such as asbestos or lead paint need special handling and cost more.</p></details>
+<details><summary>What is not included in this siding cost estimate?</summary><p>Painting or staining, gutters, soffit and fascia, window replacement, sheathing repair, insulation upgrades and scaffolding beyond the story factor are not included. Prices are national averages and vary by season, supplier and contractor. Treat the result as a planning range, not a quote.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/insulation-installation-cost-calculator/">Insulation Installation Cost Calculator</a></li>
+<li><a href="/fence-installation-cost-calculator/">Fence Installation Cost Calculator</a></li>
+<li><a href="/tile-installation-cost-calculator/">Tile Installation Cost Calculator</a></li>
+<li><a href="/flooring-installation-cost-calculator/">Flooring Installation Cost Calculator</a></li>
+<li><a href="/drywall-installation-cost-calculator/">Drywall Installation Cost Calculator</a></li>
+<li><a href="/siding-calculator/">Siding Calculator</a></li>
+</ul>
+</div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/siding-installation-cost-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const r=Math.round;
+const f0=n=>n.toLocaleString('en-US',{maximumFractionDigits:0});
+const f1=n=>n.toLocaleString('en-US',{maximumFractionDigits:1});
+const usd=n=>'$'+f0(n);
+const usd2=n=>'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const MATS={
+vinyl:{n:'Vinyl',m:[1.5,2.5,4],l:[2,3,4]},
+fc:{n:'Fiber cement',m:[2.5,3.75,5.5],l:[3.5,5,6.5]},
+wood:{n:'Wood (cedar / lap)',m:[4,6,9],l:[4,5.5,8]},
+eng:{n:'Engineered wood',m:[2,3,4.5],l:[3,4,5.5]},
+steel:{n:'Steel',m:[3,5,8],l:[3,4.5,6]},
+alum:{n:'Aluminum',m:[3,4,6],l:[3,4,5.5]}
+};
+const REM=[0.75,1,1.5],WRB=[0.35,0.5,0.75],TRM=[3,4,6],TN=['Budget','Standard','Premium'];
+let errs=[],lastText='';
+function bad(id,msg){errs.push(id);const e=$('e-'+id);e.textContent=msg;e.hidden=false;$(id).classList.add('invalid');$(id).setAttribute('aria-invalid','true');return NaN}
+function clearErr(){['per','ht','gn','gw','gr','wn','dn','gd','pm'].forEach(i=>{const el=$(i);el.classList.remove('invalid');el.removeAttribute('aria-invalid');const e=$('e-'+i);e.textContent='';e.hidden=true})}
+function rd(id,o){
+const raw=$(id).value.trim();
+if(raw===''){return o.req?bad(id,'Please enter a value.'):0}
+const v=Number(raw);
+if(!isFinite(v))return bad(id,'Enter a valid number.');
+if(o.int&&!Number.isInteger(v))return bad(id,'Enter a whole number (0 or more).');
+if(v<0||(o.gt&&v<=0)||v>o.max)return bad(id,o.msg);
+return v;
+}
+function price(p,key,t){
+const M=MATS[key];
+const mat=r(p.orderSqft*M.m[t]),lab=r(p.net*M.l[t]*p.reg*p.st);
+const rem=p.rem?r(p.net*REM[t]*p.reg*p.st):0;
+const wrap=p.wrap?r(p.net*WRB[t]*p.reg):0;
+const trim=p.trim?r(p.trimLf*TRM[t]*p.reg):0;
+return{mat,lab,rem,wrap,trim,permit:p.pm,total:mat+lab+rem+wrap+trim+p.pm};
+}
+function calculate(){
+clearErr();errs=[];
+const per=rd('per',{req:1,gt:1,max:5000,msg:'Enter a perimeter greater than 0, up to 5,000 ft.'});
+const ht=rd('ht',{req:1,gt:1,max:60,msg:'Enter a wall height greater than 0, up to 60 ft.'});
+const gn=rd('gn',{int:1,max:10,msg:'Enter a whole number from 0 to 10.'});
+let gw=0,gr=0;
+if(gn>0){
+gw=rd('gw',{req:1,gt:1,max:100,msg:'Enter a gable width greater than 0, up to 100 ft.'});
+gr=rd('gr',{req:1,gt:1,max:50,msg:'Enter a gable rise greater than 0, up to 50 ft.'});
+}
+const wn=rd('wn',{int:1,max:200,msg:'Enter a whole number from 0 to 200.'});
+const dn=rd('dn',{int:1,max:50,msg:'Enter a whole number from 0 to 50.'});
+const gd=rd('gd',{int:1,max:20,msg:'Enter a whole number from 0 to 20.'});
+const pm=rd('pm',{max:100000,msg:'Enter a fee from $0 to $100,000.'});
+let net=0,gross=0,gab=0,open=0;
+if(!errs.length){
+gross=per*ht;gab=gn*(gw*gr/2);open=wn*15+dn*21+gd*63;net=gross+gab-open;
+if(net<1)bad('wn','Openings are larger than the wall area. Check your perimeter, height and opening counts.');
+}
+const res=$('results');
+if(errs.length){res.innerHTML='';const el=$(errs[0]);el.focus();return}
+const waste=Number($('waste').value)/100;
+const squares=Math.ceil(net*(1+waste)/100);
+const p={net,orderSqft:squares*100,reg:Number($('reg').value),st:Number($('st').value),rem:$('rem').checked,wrap:$('wrap').checked,trim:$('trim').checked,pm,
+trimLf:Math.ceil(4*ht+wn*16+dn*17+gd*23)};
+const key=$('mat').value,t=Number($('tier').value),M=MATS[key];
+const c=price(p,key,t);
+const lo=price(p,key,0).total,hi=price(p,key,2).total;
+const psf=c.total/net;
+let rows='<tr><td>Siding material ('+f0(squares)+' squares incl. waste)</td><td class="n">'+usd(c.mat)+'</td></tr><tr><td>Installation labor ('+f0(net)+' sq ft)</td><td class="n">'+usd(c.lab)+'</td></tr>';
+if(p.rem)rows+='<tr><td>Old siding removal &amp; disposal</td><td class="n">'+usd(c.rem)+'</td></tr>';
+if(p.wrap)rows+='<tr><td>House wrap / water-resistive barrier</td><td class="n">'+usd(c.wrap)+'</td></tr>';
+if(p.trim)rows+='<tr><td>Trim, corners &amp; J-channel ('+f0(p.trimLf)+' lin ft)</td><td class="n">'+usd(c.trim)+'</td></tr>';
+if(c.permit>0)rows+='<tr><td>Permit &amp; inspection fees</td><td class="n">'+usd(c.permit)+'</td></tr>';
+rows+='<tr class="tot"><td>Total estimate</td><td class="n">'+usd(c.total)+'</td></tr>';
+let trows='',mrows='',mtxt='';
+for(let i=0;i<3;i++){const x=price(p,key,i);trows+='<tr'+(i===t?' class="sel"':'')+'><td>'+TN[i]+'</td><td class="n">'+usd(x.total)+'</td><td class="n">'+usd2(x.total/net)+'</td></tr>'}
+for(const k in MATS){const x=price(p,k,t);mrows+='<tr'+(k===key?' class="sel"':'')+'><td>'+MATS[k].n+'</td><td class="n">'+usd(x.total)+'</td><td class="n">'+usd2(x.total/net)+'</td></tr>'}
+lastText='Siding installation cost estimate ('+M.n+', '+TN[t]+')\nTotal: '+usd(c.total)+' (range '+usd(lo)+' - '+usd(hi)+')\nNet wall area: '+f0(net)+' sq ft; order '+f0(squares)+' squares\nCost per sq ft: '+usd2(psf)+'\nMaterials '+usd(c.mat)+', labor '+usd(c.lab)+', removal '+usd(c.rem)+', wrap '+usd(c.wrap)+', trim '+usd(c.trim)+', permit '+usd(c.permit)+'\nEstimate only. Calculated at toolwick.com';
+const html='<div class="fade"><div class="big">'+usd(c.total)+'</div><div class="sub">Estimated total for '+M.n.toLowerCase()+' siding, '+TN[t].toLowerCase()+' tier</div><div class="range">Likely range: '+usd(lo)+' – '+usd(hi)+' (Budget to Premium)</div>'+
+'<div class="stats"><div class="stat"><b>'+f0(net)+'</b><span>Net wall area (sq ft)</span></div><div class="stat"><b>'+f0(squares)+'</b><span>Squares to order</span></div><div class="stat"><b>'+usd2(psf)+'</b><span>Cost per sq ft of wall</span></div></div>'+
+'<p class="tcap">Cost breakdown</p><div class="tw"><table><thead><tr><th>Item</th><th class="n">Cost</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+'<p class="tcap">Quality tiers for '+M.n.toLowerCase()+'</p><div class="tw"><table><thead><tr><th>Tier</th><th class="n">Total</th><th class="n">Per sq ft</th></tr></thead><tbody>'+trows+'</tbody></table></div>'+
+'<p class="tcap">All materials compared ('+TN[t].toLowerCase()+' tier, same extras)</p><div class="tw"><table><thead><tr><th>Material</th><th class="n">Total</th><th class="n">Per sq ft</th></tr></thead><tbody>'+mrows+'</tbody></table></div>'+
+'<div class="note">Gross wall '+f0(gross)+' + gables '+f0(gab)+' − openings '+f0(open)+' = '+f0(net)+' sq ft. Quantities are rounded up to whole squares. Prices are national planning averages, not a quote. Siding must be installed per the manufacturer\'s instructions and local code (see IRC R703); codes vary, and this tool is not a permit or inspection approval.</div>'+
+'<button type="button" class="copy" id="copyBtn">Copy results</button></div>';
+res.innerHTML=html;
+$('dH').textContent=f1(ht)+' ft';
+$('dR').textContent=gn>0?f1(gr)+' ft':'none';
+$('dP').textContent='Perimeter: '+f1(per)+' ft (all walls)';
+$('dA').textContent='Net siding area: '+f0(net)+' sq ft';
+}
+function copyText(txt,btn){
+const done=()=>{btn.textContent='Copied!';setTimeout(()=>{btn.textContent='Copy results'},2000)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,()=>{})}
+else{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(ta)}
+}
+$('results').addEventListener('click',e=>{if(e.target.id==='copyBtn')copyText(lastText,e.target)});
+$('calcBtn').addEventListener('click',()=>{requestAnimationFrame(calculate)});
+document.querySelectorAll('input,select').forEach(el=>{el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();requestAnimationFrame(calculate)}})});
+$('waste').addEventListener('input',e=>{$('wv').textContent=e.target.value+'%'});
+$('yr').textContent=new Date().getFullYear();
+requestAnimationFrame(calculate);
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
