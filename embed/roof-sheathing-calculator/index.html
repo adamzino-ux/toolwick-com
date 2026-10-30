@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Roof Sheathing Calculator | Toolwick</title>
+<meta name="description" content="Free roof sheathing calculator: enter roof size, pitch and overhang to get the number of OSB or plywood sheets, thickness, nails and weight.">
+<link rel="canonical" href="https://toolwick.com/roof-sheathing-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 1.5rem}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.8rem;line-height:1.25;margin:.5rem 0 1rem}
+h2{font-size:1.35rem;margin:2rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+figure{margin:0 0 1.5rem;background:#f8f9fa;border-radius:8px;padding:.75rem}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:.8rem;color:#666;text-align:center;margin-top:.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;font-size:1rem;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,input[type=range]:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.invalid{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.82rem;min-height:0;margin-top:.25rem}
+.f{margin-bottom:1.1rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;height:44px}
+.ticks{display:flex;justify-content:space-between;font-size:.75rem;color:#666;margin-top:-.25rem}
+.lv{color:#0077b6;font-weight:700}
+.btn{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-weight:600;min-height:44px;width:100%;cursor:pointer}
+.btn:hover{background:#006299}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;min-height:44px;font:inherit;font-size:.9rem;cursor:pointer;margin-top:1rem}
+.copy:hover{background:#f0f8fc}
+#results{margin-top:1.5rem}
+.res{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.res{animation:none}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+.big{font-size:3rem;font-weight:800;color:#0077b6;line-height:1.1;display:block}
+.unit{font-size:1rem;color:#444}
+.sub{font-size:.9rem;color:#444;text-align:center}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right;white-space:nowrap}
+tr.hl td{font-weight:700;color:#0077b6}
+.note{font-size:.82rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;border-radius:0 6px 6px 0}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .5rem}
+.rel{padding-left:1.2rem}
+.rel li{margin-bottom:.4rem}
+code,.fm{background:#f8f9fa;padding:.75rem 1rem;border-radius:6px;display:block;font-family:Menlo,Consolas,monospace;font-size:.85rem;overflow-x:auto;margin:0 0 1rem;white-space:pre-wrap}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.5rem;text-align:center;font-size:.88rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;margin:0 .5rem}
+@media(max-width:640px){.row{grid-template-columns:1fr;gap:0}.card{padding:1.25rem}h1{font-size:1.5rem}.big{font-size:2.5rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/roof-sheathing-calculator/">
+<meta property="og:title" content="Roof Sheathing Calculator">
+<meta property="og:description" content="Free roof sheathing calculator: enter roof size, pitch and overhang to get the number of OSB or plywood sheets, thickness, nails and weight.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<main class="wrap">
+<h1>Roof Sheathing Calculator</h1>
+<p>This roof sheathing calculator estimates how many sheets of OSB or plywood you need to deck a roof, based on its footprint, pitch and overhang. It also recommends a panel thickness and estimates nails, weight and material cost.</p>
+
+<div class="card" id="tool">
+<figure>
+<svg viewBox="0 0 460 280" role="img" aria-label="Gable roof cross-section showing span, rise, pitch, overhang and slope length" font-family="-apple-system,Segoe UI,Roboto,sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#0077b6"/></marker></defs>
+<line x1="70" y1="200" x2="70" y2="262" stroke="#e0e0e0" stroke-width="1.5"/>
+<line x1="330" y1="200" x2="330" y2="262" stroke="#e0e0e0" stroke-width="1.5"/>
+<path d="M70 200V240H330V200" fill="none" stroke="#1a1a2e" stroke-width="2"/>
+<line id="g-gt" x1="200" y1="50" x2="362" y2="50" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="330" y1="200" x2="368" y2="200" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line id="g-v" x1="200" y1="50" x2="200" y2="200" stroke="#0077b6" stroke-width="1.2" stroke-dasharray="5 4"/>
+<polyline id="g-roof" points="44,230 200,50 356,230" fill="none" stroke="#0077b6" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<line id="g-rise" x1="362" y1="50" x2="362" y2="200" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="g-riset" x="370" y="130" font-size="13" fill="#1a1a2e">Rise</text>
+<path id="g-arc" d="M110 200A40 40 0 0 0 100 170" fill="none" stroke="#1a1a2e" stroke-width="1.3"/>
+<text id="g-ang" x="114" y="220" font-size="12" fill="#1a1a2e">0°</text>
+<line id="g-ov" x1="44" y1="240" x2="70" y2="240" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="g-ov1" x="4" y="256" font-size="12" fill="#1a1a2e">Overhang</text>
+<text id="g-ov2" x="4" y="270" font-size="12" fill="#1a1a2e">12 in</text>
+<line x1="70" y1="258" x2="330" y2="258" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="g-span" x="200" y="274" font-size="13" text-anchor="middle" fill="#1a1a2e">Span</text>
+<text id="g-pitch" x="8" y="18" font-size="13" font-weight="700" fill="#1a1a2e">Pitch</text>
+<text id="g-slope" x="8" y="36" font-size="13" fill="#1a1a2e">Slope length</text>
+</svg>
+<figcaption>Gable cross-section. The thick blue line is the roof sheathing; slope length includes the overhang.</figcaption>
+</figure>
+
+<div class="f"><label for="shape">Roof shape</label>
+<select id="shape"><option value="10">Gable</option><option value="10">Shed / single slope</option><option value="15">Hip</option><option value="20">Complex (valleys, dormers)</option></select></div>
+
+<div class="row">
+<div class="f"><label for="len">Building length (ft)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="40" aria-describedby="len-e"><div class="err" id="len-e"></div></div>
+<div class="f"><label for="wid">Building width / span (ft)</label><input id="wid" type="number" inputmode="decimal" step="any" min="0" value="28" aria-describedby="wid-e"><div class="err" id="wid-e"></div></div>
+</div>
+<div class="row">
+<div class="f"><label for="ovh">Overhang, all sides (in)</label><input id="ovh" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="ovh-e"><div class="err" id="ovh-e"></div></div>
+<div class="f"><label for="extra">Extra area: dormers, porches (sq ft)</label><input id="extra" type="number" inputmode="decimal" step="any" min="0" value="0" aria-describedby="extra-e"><div class="err" id="extra-e"></div></div>
+</div>
+
+<div class="f"><label for="pitch">Roof pitch: <span class="lv" id="pv">6/12</span></label>
+<input id="pitch" type="range" min="0" max="18" step="0.5" value="6">
+<div class="ticks"><span>Flat</span><span>9/12</span><span>18/12</span></div></div>
+
+<div class="f"><label for="waste">Waste allowance: <span class="lv" id="wv">10%</span></label>
+<input id="waste" type="range" min="0" max="25" step="1" value="10">
+<div class="ticks"><span>0%</span><span>12%</span><span>25%</span></div></div>
+
+<div class="row">
+<div class="f"><label for="panel">Panel size</label>
+<select id="panel"><option value="32">4×8 ft (32 sq ft)</option><option value="36">4×9 ft (36 sq ft)</option><option value="40">4×10 ft (40 sq ft)</option></select></div>
+<div class="f"><label for="spacing">Rafter / truss spacing</label>
+<select id="spacing"><option value="12">12 in o.c.</option><option value="16" selected>16 in o.c.</option><option value="19.2">19.2 in o.c.</option><option value="24">24 in o.c.</option></select></div>
+</div>
+<div class="row">
+<div class="f"><label for="load">Snow load / roofing weight</label>
+<select id="load"><option value="0">Normal (light snow, shingles)</option><option value="1">Heavy (snow over 30 psf, tile, slate)</option></select></div>
+<div class="f"><label for="price">Price per sheet, optional ($)</label><input id="price" type="number" inputmode="decimal" step="any" min="0" placeholder="e.g. 28" aria-describedby="price-e"><div class="err" id="price-e"></div></div>
+</div>
+<button class="btn" id="calcBtn" type="button">Calculate Sheathing</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Roof Sheathing Calculator</h2>
+<p>Enter the building length and width (the footprint, not the sloped roof), the overhang, and the pitch as inches of rise per 12 inches of run. Choose your panel size, rafter or truss spacing and a waste allowance, then press Calculate. You get the number of sheets to buy, a recommended panel thickness, roof area, a nail estimate, total weight and an optional material cost.</p>
+
+<h2>Why This Matters</h2>
+<p>Roof sheathing is the structural deck that ties rafters or trusses together, carries roofers and snow, and gives shingles something to grip. It is one of the first big material orders on a new build or re-roof, and mistakes cost money either way. Order one sheet short and a crew stands idle while you drive to the lumberyard. Order ten extra 7/16" OSB sheets at $28 each and you have wasted $280.</p>
+<p>Homeowners tearing off a 1,400 sq ft roof often find rotted decking and need to replace 10–20% of it, so knowing the full-redeck sheet count lets them price the worst case. Contractors use the same number to plan deliveries, because a 50-sheet load of 7/16" OSB weighs over 2,000 pounds. Pitch matters more than most people expect: a 6/12 roof has about 12% more surface than its footprint, and a 12/12 roof about 41% more. Thickness matters too. Panels must span the gap between supports without sagging, and heavy snow or tile roofing calls for a thicker panel.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator follows five steps:</p>
+<div class="fm">Plan area = (Length + 2 × Overhang) × (Width + 2 × Overhang)
+Slope factor = √(1 + (Pitch ÷ 12)²)
+Roof area = Plan area × Slope factor
+Total = Roof area + Extra area
+Sheets = ROUNDUP( Total × (1 + Waste %) ÷ Panel area )</div>
+<p>The slope factor comes from the Pythagorean theorem. On a 6/12 roof, every 12 in of horizontal run rises 6 in, so the sloped distance is √(12² + 6²) = 13.42 in, or 1.118 times the run. The same factor applies to gable, shed and hip roofs when every plane has the same pitch. A hip roof has the same surface area as a gable roof with the same footprint, though it needs more waste because of angled cuts. Valleys, dormers and mixed pitches should be added through the extra-area field.</p>
+<p>Thickness uses the span ratings in IRC R503.2 (Table R503.2.1.1(1)) as a rule of thumb: 16 in or less gets 7/16" (24/16 rating), 19.2 in gets 15/32" (32/16), and 24 in gets 19/32" (40/20). Heavy snow or tile steps up one size, and the tool always rounds to the thicker panel. Nails assume 8d common nails at 6 in on panel edges and 12 in in the field (IRC Table R602.3(1)), plus 10% extra, at about 106 nails per pound. Weight uses approximate OSB values of 1.4 to 2.3 lb per sq ft. All counts round up. Local codes, wind and snow loads, and manufacturer instructions vary, so confirm with your building department. This is a planning estimate, not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>A gable house measures 40 ft × 28 ft with a 12 in overhang, a 6/12 pitch, 10% waste, 4×8 panels, rafters at 16 in o.c. and $28 per sheet.</p>
+<ol>
+<li>Plan area = (40 + 2) × (28 + 2) = 42 × 30 = <strong>1,260 sq ft</strong>.</li>
+<li>Slope factor = √(1 + 0.5²) = <strong>1.118</strong>.</li>
+<li>Roof area = 1,260 × 1.118 = <strong>1,408.7 sq ft</strong>.</li>
+<li>With 10% waste: 1,408.7 × 1.10 = 1,549.6 sq ft.</li>
+<li>Sheets = 1,549.6 ÷ 32 = 48.4, rounded up to <strong>49 sheets</strong>.</li>
+<li>Thickness: 16 in o.c. with normal loads gives 7/16" (24/16). Weight is 49 × 44.8 lb = 2,196 lb.</li>
+<li>Nails: 68 per sheet × 49 × 1.10 = 3,666 nails, about 35 lb of 8d common.</li>
+<li>Cost: 49 × $28 = <strong>$1,372</strong>.</li>
+</ol>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the footprint, not the slope.</strong> The calculator applies the pitch factor for you. Entering sloped dimensions counts the slope twice.</li>
+<li><strong>Lay panels across the rafters</strong> with the long edge perpendicular to the supports. Stagger end joints and leave a 1/8 in gap at edges and ends for expansion.</li>
+<li><strong>Use H-clips or blocking</strong> at 19.2 in and 24 in spacing so unsupported long edges do not sag or ridge under shingles.</li>
+<li><strong>Add waste for complexity.</strong> Use 10% for simple gables and 15–20% for hips, valleys and dormers. Offcuts rarely fit elsewhere on steep roofs.</li>
+<li><strong>On a re-roof, price the worst case.</strong> Probe the old deck for soft spots and rot before ordering.</li>
+<li><strong>Keep panels dry.</strong> Stack them flat off the ground and covered, because soaked OSB edges swell and telegraph through shingles.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many sheets of plywood do I need for a 1,500 sq ft roof?</summary><p>If 1,500 sq ft is the sloped roof area, add 10% waste to get 1,650 sq ft. Divide by 32 sq ft per 4×8 sheet to get 51.6, so buy 52 sheets. If 1,500 sq ft is your floor footprint, multiply by the slope factor first.</p></details>
+<details><summary>What thickness of roof sheathing do I need for 16 in rafters?</summary><p>The IRC span-rating tables allow 7/16" panels rated 24/16 at 16 in spacing. Many builders choose 1/2" (15/32") for a stiffer deck. Heavy snow, tile or local rules may require more, so check with your building department.</p></details>
+<details><summary>Is OSB or plywood better for roof sheathing?</summary><p>Both are code-approved when span-rated and used with the same spacing. OSB costs less and is very consistent. Plywood dries faster and its edges swell less if it gets wet before roofing goes on.</p></details>
+<details><summary>How much waste should I allow for roof sheathing?</summary><p>Plan on about 10% for a simple gable or shed roof and 15% for a hip roof. Use 20% or more for roofs with valleys and dormers. Round up to whole sheets, because partial sheets are not sold.</p></details>
+<details><summary>Do I need a gap between roof sheathing panels?</summary><p>Yes. Leave about 1/8 in at panel edges and ends so the wood can expand with humidity. Tight joints can buckle, which shows through the shingles.</p></details>
+<details><summary>How do I convert footprint to roof area?</summary><p>Multiply the footprint, including overhangs, by the slope factor, which is √(1 + (rise ÷ 12)²). Common factors are 1.054 for 4/12, 1.118 for 6/12, 1.202 for 8/12 and 1.414 for 12/12.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/roof-replacement-cost-calculator/">Roof Replacement Cost Calculator</a></li>
+<li><a href="/roof-underlayment-calculator/">Roof Underlayment Calculator</a></li>
+<li><a href="/drip-edge-roof-trim-calculator/">Drip Edge &amp; Roof Trim Calculator</a></li>
+<li><a href="/roof-attic-ventilation-calculator/">Roof Attic Ventilation Calculator</a></li>
+<li><a href="/roof-pitch-rafter-calculator/">Roof Pitch &amp; Rafter Length Calculator</a></li>
+<li><a href="/insulation-installation-cost-calculator/">Insulation Installation Cost Calculator</a></li>
+</ul>
+</section>
+</main>
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/roof-sheathing-calculator/">Toolwick</a></p>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var fmt=function(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var THK=[['7/16" (24/16 rating)',1.4],['15/32" (32/16 rating)',1.55],['19/32" (40/20 rating)',1.9],['23/32" (48/24 rating)',2.3]];
+var PN={32:'4×8 ft',36:'4×9 ft',40:'4×10 ft'};
+var done=false,lastText='';
+$('yr').textContent=new Date().getFullYear();
+function num(id){var v=$(id).value.trim();return v===''?NaN:Number(v)}
+function clr(){document.querySelectorAll('.err').forEach(function(e){e.textContent=''});document.querySelectorAll('input.invalid').forEach(function(e){e.classList.remove('invalid');e.removeAttribute('aria-invalid')})}
+function bad(id,m){$(id).classList.add('invalid');$(id).setAttribute('aria-invalid','true');$(id+'-e').textContent=m}
+function pt(p){return (p%1===0?p:p.toFixed(1))+'/12'}
+function read(){
+clr();var ok=true;
+var len=num('len'),wid=num('wid'),ovh=num('ovh'),extra=num('extra'),price=num('price');
+if(!(len>0&&len<=500)){bad('len','Enter a length between 1 and 500 ft.');ok=false}
+if(!(wid>0&&wid<=500)){bad('wid','Enter a width between 1 and 500 ft.');ok=false}
+if(!(ovh>=0&&ovh<=48)){bad('ovh','Enter an overhang from 0 to 48 in.');ok=false}
+if($('extra').value.trim()==='')extra=0;
+if(!(extra>=0&&extra<=100000)){bad('extra','Enter 0 or a positive area up to 100,000 sq ft.');ok=false}
+if($('price').value.trim()==='')price=0;
+if(!(price>=0&&price<=1000)){bad('price','Enter a price from $0 to $1,000 per sheet.');ok=false}
+return ok?{len:len,wid:wid,ovh:ovh,extra:extra,price:price}:null}
+function diagram(){
+var wid=num('wid'),ovh=num('ovh'),p=+$('pitch').value;
+if(!(wid>0))wid=0;if(!(ovh>=0))ovh=0;
+var rp=Math.min(150,130*p/12),k=rp/130,py=200-rp,ox=ovh>0?26:0,ty=200+ox*k;
+var sf=Math.sqrt(1+Math.pow(p/12,2)),sl=(wid/2+ovh/12)*sf,rise=wid/2*p/12,th=Math.atan(k);
+function s(id,a,v){$(id).setAttribute(a,v)}
+s('g-roof','points',(70-ox)+','+ty+' 200,'+py+' '+(330+ox)+','+ty);
+s('g-gt','y1',py);s('g-gt','y2',py);s('g-v','y1',py);
+var showR=rp>=3;
+['g-gt','g-v','g-rise','g-riset'].forEach(function(i){$(i).style.display=showR?'':'none'});
+s('g-rise','y1',py);$('g-riset').setAttribute('y',(py+200)/2+4);
+$('g-riset').textContent='Rise '+fmt(rise,1)+' ft';
+$('g-arc').style.display=showR?'':'none';$('g-ang').style.display=showR?'':'none';
+s('g-arc','d','M110 200A40 40 0 0 0 '+(70+40*Math.cos(th)).toFixed(1)+' '+(200-40*Math.sin(th)).toFixed(1));
+$('g-ang').textContent=(Math.atan(p/12)*180/Math.PI).toFixed(1)+'°';
+['g-ov','g-ov1','g-ov2'].forEach(function(i){$(i).style.display=ox?'':'none'});
+s('g-ov','x1',70-ox);$('g-ov2').textContent=fmt(ovh,1)+' in';
+$('g-span').textContent='Span '+fmt(wid,1)+' ft';
+$('g-pitch').textContent='Pitch '+pt(p)+(p>0?' ('+(Math.atan(p/12)*180/Math.PI).toFixed(1)+'°)':' (flat)');
+$('g-slope').textContent='Slope length '+fmt(sl,1)+' ft'}
+function calc(){
+var d=read();
+if(!d){$('results').innerHTML='';done=false;lastText='';return}
+var p=+$('pitch').value,w=+$('waste').value,sa=+$('panel').value,sp=+$('spacing').value,heavy=$('load').value==='1';
+var o=d.ovh/12,sf=Math.sqrt(1+Math.pow(p/12,2)),ang=Math.atan(p/12)*180/Math.PI;
+var plan=(d.len+2*o)*(d.wid+2*o),roof=plan*sf,total=roof+d.extra,tw=total*(1+w/100);
+var cnt=function(n,s){return Math.ceil(total*(1+n/100)/s-1e-9)};
+var sheets=cnt(w,sa);
+var ti=Math.min(3,(sp<=16?0:sp<=19.2?1:2)+(heavy?1:0));
+var Lin=3*sa,per=Math.ceil(2*(48+Lin)/6)+(Math.ceil(Lin/sp)-1)*4;
+var nails=Math.ceil(sheets*per*1.1),lbs=Math.ceil(nails/106);
+var wt=Math.ceil(sheets*sa*THK[ti][1]);
+var sl=(d.wid/2+o)*sf,cost=sheets*d.price;
+var rows=[['Footprint incl. overhang',fmt(plan,1)+' sq ft'],
+['Pitch / slope factor',pt(p)+' → ×'+sf.toFixed(3)+' ('+ang.toFixed(1)+'°)'],
+['Roof surface area',fmt(roof,1)+' sq ft'],
+['Extra area',fmt(d.extra,1)+' sq ft'],
+['Total with '+w+'% waste',fmt(tw,1)+' sq ft'],
+['Panel size',PN[sa]+' ('+sa+' sq ft each)'],
+['Sheets to buy (rounded up)',fmt(sheets)],
+['Slope length incl. overhang',fmt(sl,1)+' ft'],
+['Recommended thickness',THK[ti][0]],
+['Estimated weight (OSB)',fmt(wt)+' lb'],
+['Nails, '+fmt(per)+' per sheet +10%',fmt(nails)+' (≈'+fmt(lbs)+' lb 8d common)']];
+if(d.price>0)rows.push(['Material cost','$'+fmt(cost,2)]);
+var t1='<div class="tw"><table><thead><tr><th>Item</th><th class="n">Value</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>'}).join('')+'</tbody></table></div>';
+var ws=[0,5,10,15,20];if(ws.indexOf(w)<0){ws.push(w);ws.sort(function(a,b){return a-b})}
+var t2='<h3>Sheets by waste allowance</h3><div class="tw"><table><thead><tr><th>Waste</th><th class="n">Area (sq ft)</th><th class="n">Sheets</th></tr></thead><tbody>'+ws.map(function(n){return '<tr'+(n===w?' class="hl"':'')+'><td>'+n+'%'+(n===0?' (not advised)':'')+'</td><td class="n">'+fmt(total*(1+n/100),1)+'</td><td class="n">'+fmt(cnt(n,sa))+'</td></tr>'}).join('')+'</tbody></table></div>';
+var t3='<h3>Sheets by panel size (at '+w+'% waste)</h3><div class="tw"><table><thead><tr><th>Panel</th><th class="n">Area each</th><th class="n">Sheets</th></tr></thead><tbody>'+[32,36,40].map(function(s){return '<tr'+(s===sa?' class="hl"':'')+'><td>'+PN[s]+'</td><td class="n">'+s+' sq ft</td><td class="n">'+fmt(cnt(w,s))+'</td></tr>'}).join('')+'</tbody></table></div>';
+var warn='';
+if(p>=9)warn+='<br>Steep roof: plan fall protection and toe boards, and consider smaller crews per slope.';
+if(w<5)warn+='<br>A waste allowance under 5% is risky; cuts and damaged sheets almost always need extra panels.';
+if(sp>=19.2)warn+='<br>At '+sp+' in spacing, use H-clips or edge blocking between rafters.';
+var nt='<p class="note"><strong>Planning estimate.</strong> Thickness follows IRC R503.2 span-rating rules of thumb and nailing follows IRC Table R602.3(1) (8d common, 6 in edges, 12 in field). All counts are rounded up. Local codes, snow and wind loads, and manufacturer instructions vary, and this is not engineering, permit or inspection approval.'+warn+'</p>';
+lastText='Roof sheathing estimate: '+fmt(sheets)+' sheets of '+PN[sa]+' ('+THK[ti][0]+'), roof area '+fmt(roof,1)+' sq ft, '+w+'% waste, pitch '+pt(p)+', ~'+fmt(nails)+' nails ('+fmt(lbs)+' lb), ~'+fmt(wt)+' lb'+(d.price>0?', cost $'+fmt(cost,2):'')+'. Planning estimate only; verify with local code.';
+var html='<div class="res"><div class="key"><span class="big">'+fmt(sheets)+'</span><span class="unit">sheets of '+PN[sa]+' sheathing</span></div><p class="sub">'+fmt(roof,1)+' sq ft of roof · '+w+'% waste · '+THK[ti][0]+' recommended</p>'+t1+t2+t3+nt+'<button class="copy" id="copyBtn" type="button">Copy results</button></div>';
+requestAnimationFrame(function(){$('results').innerHTML=html;diagram();done=true})}
+function go(){requestAnimationFrame(calc)}
+$('calcBtn').addEventListener('click',go);
+document.querySelectorAll('#tool input,#tool select').forEach(function(el){el.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();go()}})});
+function lbl(){$('pv').textContent=pt(+$('pitch').value);$('wv').textContent=$('waste').value+'%'}
+$('pitch').addEventListener('input',function(){lbl();diagram();if(done)go()});
+$('waste').addEventListener('input',function(){lbl();if(done)go()});
+$('wid').addEventListener('input',diagram);$('ovh').addEventListener('input',diagram);
+$('shape').addEventListener('change',function(){$('waste').value=$('shape').value;lbl();if(done)go()});
+['panel','spacing','load'].forEach(function(i){$(i).addEventListener('change',function(){if(done)go()})});
+$('results').addEventListener('click',function(e){
+if(e.target.id!=='copyBtn')return;
+var b=e.target;
+function ok(){b.textContent='Copied!';setTimeout(function(){if($('copyBtn'))$('copyBtn').textContent='Copy results'},2000)}
+function fb(){var t=document.createElement('textarea');t.value=lastText;document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(x){}document.body.removeChild(t)}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(ok,fb)}else fb()});
+lbl();diagram();calc();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
