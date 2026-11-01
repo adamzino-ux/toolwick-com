@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Flooring Underlayment Calculator | Toolwick</title>
+<meta name="description" content="Free flooring underlayment calculator: enter room size and waste to get the rolls or sheets needed, seam tape, fasteners and a cost estimate.">
+<link rel="canonical" href="https://toolwick.com/flooring-underlayment-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/flooring-underlayment-calculator/">
+<meta property="og:title" content="Flooring Underlayment Calculator">
+<meta property="og:description" content="Free flooring underlayment calculator: enter room size and waste to get the rolls or sheets needed, seam tape, fasteners and a cost estimate.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.5rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.row{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:640px){.row{grid-template-columns:1fr 1fr}}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px;border-color:#0077b6}
+input[type=range]{padding:0;border:0;accent-color:#0077b6}
+input.err,select.err{border-color:#e74c3c}
+.em{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.ticks{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.25rem;font-size:.8rem;color:#666}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.hidden{display:none}
+button.go{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+button.go:hover{background:#006299}
+button.go:focus-visible,button.cp:focus-visible{outline:3px solid #1a1a2e;outline-offset:2px}
+button.cp{min-height:44px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.9rem;cursor:pointer;font-family:inherit;margin-top:1rem}
+.small{font-size:.8rem;color:#666;margin:.6rem 0 0}
+#results{margin-top:1.5rem}
+.fade{opacity:0;transition:opacity .3s ease}
+.fade.in{opacity:1}
+.big{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.big .num{font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1.1}
+.big .unit{font-size:1.2rem;font-weight:700;color:#0077b6}
+.big p{margin:.25rem 0 0;color:#444}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e5e5e5}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr.sel td{font-weight:700;color:#0077b6}
+.note{background:#fff8e6;border:1px solid #f0d58a;border-radius:6px;padding:.9rem 1rem;font-size:.88rem;color:#4a3b00;margin-top:1rem}
+h3.sub{font-size:1rem;margin:1.5rem 0 .5rem}
+.ad-slot{min-height:0;margin:0}
+.safety{margin:0 0 2rem;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00}
+details{border-bottom:1px solid #e0e0e0;padding:.5rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .75rem}
+ul{padding-left:1.25rem}
+li{margin-bottom:.5rem}
+.rel{display:grid;gap:.5rem;padding:0;list-style:none}
+.rel li{margin:0}
+.rel a{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:12px 16px;min-height:44px}
+.formula{background:#f8f9fa;border-left:4px solid #0077b6;padding:.9rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;margin:0 0 1rem;overflow-x:auto}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;display:inline-block;min-height:44px;line-height:44px;margin-right:1rem}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.5rem}.big .num{font-size:2.3rem}}
+</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Flooring Underlayment Calculator</h1>
+<p>Use this flooring underlayment calculator to find out how many rolls or sheets of underlayment your room needs, including a waste allowance, a roll-length layout check, seam tape, fasteners and an optional cost estimate. Quantities are always rounded up.</p>
+
+<section class="card" aria-label="Flooring underlayment calculator">
+<div class="diagram">
+<svg id="svg" viewBox="0 0 400 230" role="img" aria-label="Plan view of a room showing underlayment strips">
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto-start-reverse"><path d="M0,0 L7,3.5 L0,7z" fill="#0077b6"/></marker></defs>
+<g id="plan"></g>
+</svg>
+</div>
+
+<div class="row">
+<div class="field"><label for="unit">Measurement unit</label>
+<select id="unit"><option value="ft">Feet (ft)</option><option value="m">Meters (m)</option></select></div>
+<div class="field"><label for="type">Underlayment type</label>
+<select id="type">
+<option value="foam100">Foam roll – 100 sq ft (3.33 × 30 ft)</option>
+<option value="foam200">Foam roll – 200 sq ft (6 × 33.3 ft)</option>
+<option value="cork100">Cork roll – 100 sq ft (4 × 25 ft)</option>
+<option value="ply">Plywood sheet – 4×8 ft (32 sq ft)</option>
+<option value="cement">Cement board – 3×5 ft (15 sq ft)</option>
+<option value="custom">Custom coverage</option>
+</select></div>
+</div>
+
+<div class="row">
+<div class="field"><label for="len" id="lenL">Room length (ft)</label>
+<input id="len" type="number" inputmode="decimal" min="0" step="any" value="15" aria-describedby="lenE">
+<div class="em" id="lenE"></div></div>
+<div class="field"><label for="wid" id="widL">Room width (ft)</label>
+<input id="wid" type="number" inputmode="decimal" min="0" step="any" value="12" aria-describedby="widE">
+<div class="em" id="widE"></div></div>
+</div>
+
+<div class="row">
+<div class="field"><label for="extra" id="extraL">Additional area – closets, hallways (sq ft)</label>
+<input id="extra" type="number" inputmode="decimal" min="0" step="any" placeholder="0" aria-describedby="extraE">
+<div class="em" id="extraE"></div></div>
+<div class="field"><label for="price">Price per roll/sheet (optional, $)</label>
+<input id="price" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 48" aria-describedby="priceE">
+<div class="em" id="priceE"></div></div>
+</div>
+
+<div class="field hidden" id="covBox"><label for="cov">Coverage per unit (sq ft)</label>
+<input id="cov" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 100" aria-describedby="covE">
+<div class="em" id="covE"></div></div>
+
+<div class="field"><label for="waste">Waste allowance: <strong id="wv">10%</strong></label>
+<input id="waste" type="range" min="5" max="20" step="1" value="10">
+<div class="ticks" aria-hidden="true"><span>5%</span><span>10–15% typical</span><span>20%</span></div>
+<div class="hint">Use 10% for simple rooms; 15% or more for diagonals, odd shapes or sheet goods.</div></div>
+
+<button class="go" id="calcBtn" type="button">Calculate Underlayment</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<p class="small">Estimates only. Follow your flooring and underlayment manufacturer's instructions.</p>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</section>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<aside class="safety" role="note">Estimates for planning only. Building codes, product sizes and site conditions vary by location. Confirm product type, thickness and fastening with the manufacturer and your local building department. This tool is not engineering, permit or inspection approval.</aside>
+
+<section>
+<h2>How to Use This Flooring Underlayment Calculator</h2>
+<p>Pick feet or meters, choose the underlayment product you plan to buy, then enter the room's length and width. Add any closets or hallways in the "additional area" box, slide the waste allowance to suit the room's shape, and press Calculate. If your product is not listed, choose "Custom coverage" and type the square footage printed on the package.</p>
+<p>The result shows how many rolls or sheets to buy, the total coverage you will own, seam tape for roll products, a fastener count for plywood and cement board, and an optional cost. A comparison table shows the same room across every product type, and the diagram above redraws to show how strips or panels lay across your floor.</p>
+
+<h2>Why This Matters</h2>
+<p>Underlayment is cheap compared with the floor on top of it, which makes running short an expensive mistake. A 15 × 12 ft bedroom needs 180 square feet of coverage. Buy a single 100 sq ft roll by accident and you are driving back to the store mid-installation, hoping the next roll comes from the same batch. Over-buying is almost as irritating, because opened rolls of foam and cork are rarely returnable.</p>
+<p>Different products also pack differently. A 4×8 plywood sheet covers 32 sq ft, but awkward rooms force cuts that leave unusable offcuts, so sheet goods need more waste than rolls. Cement board comes in 3×5 sheets of 15 sq ft, so even a small bathroom of 45 sq ft means several sheets plus screws. Roll length matters too: a long hallway or a 40 ft great room cannot always be covered from one continuous strip, and leftover pieces are not always long enough to reuse. Contractors, DIY renovators, landlords flipping units and anyone pricing a laminate, vinyl plank or engineered wood job benefit from getting the underlayment count right before ordering.</p>
+<p>The right underlayment also affects warranties, sound control in apartments, and moisture protection over concrete. This tool handles quantity only. Always confirm the product type and thickness your flooring manufacturer requires, and check any building or HOA rules for sound ratings before buying.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator works in square feet internally and converts meters using 1 m² = 10.7639 sq ft. Waste is applied to the total floor area, and the result is divided by the coverage per unit and always rounded up.</p>
+<div class="formula">Floor area = length × width + additional area<br>Area to cover = floor area × (1 + waste %)<br>Units by area = ROUNDUP(area to cover ÷ coverage per unit)</div>
+<p>For roll products there is a second, layout-based check. Strips run along the room's longer side. Strips = ROUNDUP(shorter side ÷ roll width). If the longer side fits within one roll length, the calculator counts how many full-length strips fit per roll (rounding down) and divides. If the room is longer than a roll, strips are joined, so total strip length is divided by the roll length. Additional area is added as extra linear footage. The final recommendation is whichever is larger, the area-based count or the layout-based count. This matters in long, narrow rooms, where offcuts are too short to reuse.</p>
+<p>Seam tape = seams × longer side, scaled up for any additional area, padded 10% and rounded up to 100 ft tape rolls. For plywood and cement board, fasteners follow a common rule of thumb of an 8-inch grid, about 2.25 per sq ft of the area to cover, rounded up to the next 50. Roll sizes are typical retail sizes and vary by brand. Panel manufacturers publish their own fastening schedules, and those always override this estimate. The layout check assumes rolls are butted edge to edge, not overlapped, and that strips run parallel to the long wall. Doorways, stair openings and odd-shaped rooms may need more.</p>
+
+<h2>Worked Example</h2>
+<p>A bedroom is 15 ft × 12 ft with no closets, a 10% waste allowance, foam rolls of 100 sq ft (3.33 ft wide, 30 ft long), and a price of $48 per roll.</p>
+<ul>
+<li>Floor area: 15 × 12 = 180.00 sq ft</li>
+<li>Area to cover with waste: 180 × 1.10 = 198.00 sq ft</li>
+<li>Rolls by area: 198 ÷ 100 = 1.98, rounded up to 2</li>
+<li>Strips: 12 ÷ 3.33 = 3.6, so 4 strips of 15 ft each, giving 3 seams. A 30 ft roll yields 2 strips, so 4 strips need 2 rolls. The layout check agrees: <strong>2 rolls</strong> (200 sq ft purchased, 20 sq ft over the floor area)</li>
+<li>Seam tape: 3 × 15 = 45 ft, plus 10% = 49.5 ft, so 1 tape roll</li>
+<li>Cost: 2 × $48 = $96.00 before tax and tape</li>
+</ul>
+<p>Switch the product to 4×8 plywood and the same room needs 198 ÷ 32 = 6.19, rounded up to 7 sheets, and about 450 fasteners (198 × 2.25 = 445.5, rounded up to the next 50).</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Check what your flooring requires.</strong> Some floating floors have attached padding, and adding a second layer can void the warranty or cause joint failure.</li>
+<li><strong>Don't forget closets and hallways.</strong> They are the most common reason people come up short. Add them in the additional area field.</li>
+<li><strong>Use more waste for sheet goods.</strong> Plywood and cement board leave offcuts; 15% is a safer start than 10%.</li>
+<li><strong>Watch roll length in long rooms.</strong> If your room is longer than a roll, plan where the butt joints fall and stagger them from row to row.</li>
+<li><strong>Test for moisture on concrete.</strong> Foam underlayment without an attached vapor barrier will not stop moisture; follow the flooring maker's instructions.</li>
+<li><strong>Never overlap rolls unless told to.</strong> Most foam underlayment is butted and taped. Overlaps create ridges that telegraph through the floor.</li>
+<li><strong>Always verify package coverage and dimensions.</strong> Sizes vary by brand. Use Custom coverage if yours differs.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much underlayment do I need for a 200 sq ft room?</summary><p>With a 10% waste allowance you need 220 sq ft of coverage. That means three 100 sq ft rolls (300 sq ft) or two 200 sq ft rolls (400 sq ft). The calculator rounds up so you do not run short, and the comparison table shows the surplus for each option.</p></details>
+<details><summary>Do I need underlayment under laminate or vinyl plank?</summary><p>Usually yes for laminate, unless it has a pad attached. Many vinyl plank products have a built-in backing and some manufacturers forbid extra underlayment. Check your installation guide first.</p></details>
+<details><summary>How much waste should I add to underlayment?</summary><p>Ten percent works for square or rectangular rooms covered with rolls. Use 15% or more for sheet goods, diagonal layouts or rooms with many corners and doorways.</p></details>
+<details><summary>Is seam tape always needed?</summary><p>Most foam and cork roll products are butted edge to edge and sealed with tape, which prevents shifting and moisture or adhesive creeping through. Plywood and cement board use fasteners instead, and some products have self-adhesive strips built in.</p></details>
+<details><summary>Can I use this calculator for self-leveling or roof underlayment?</summary><p>No. Those are different products with different coverage math, such as depth and bag yield or roof squares. Use the dedicated calculators linked below.</p></details>
+<details><summary>Does this tool replace manufacturer or code requirements?</summary><p>No. It estimates quantities only. Product type, thickness, fastener schedules and sound or moisture requirements come from the manufacturer and local building rules, which vary. It is not an inspection or permit approval.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/laminate-flooring-calculator/">Laminate Flooring Calculator</a></li>
+<li><a href="/flooring-installation-cost-calculator/">Flooring Installation Cost Calculator</a></li>
+<li><a href="/self-leveling-underlayment-calculator/">Self-Leveling Underlayment Calculator</a></li>
+<li><a href="/vinyl-plank-flooring-calculator/">Vinyl Plank Flooring Calculator</a></li>
+<li><a href="/roof-underlayment-calculator/">Roof Underlayment Calculator</a></li>
+<li><a href="/tile-flooring-calculator/">Tile &amp; Flooring Coverage Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/flooring-underlayment-calculator/">Toolwick</a></p>
+
+<script>
+var $=function(i){return document.getElementById(i)};
+var FT2=10.7639;
+var T={
+foam100:{n:'Foam roll – 100 sq ft',cov:100,w:3.33,rl:30,u:'roll',tape:1,fast:0},
+foam200:{n:'Foam roll – 200 sq ft',cov:200,w:6,rl:100/3,u:'roll',tape:1,fast:0},
+cork100:{n:'Cork roll – 100 sq ft',cov:100,w:4,rl:25,u:'roll',tape:1,fast:0},
+ply:{n:'Plywood sheet – 4×8 ft',cov:32,w:4,rl:0,u:'sheet',tape:0,fast:1},
+cement:{n:'Cement board – 3×5 ft',cov:15,w:3,rl:0,u:'sheet',tape:0,fast:1}
+};
+T.foam200.rl=200/6;
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function fv(n){return n.toLocaleString('en-US',{maximumFractionDigits:2})}
+function num(id){var v=$(id).value.trim();return v===''?NaN:Number(v)}
+var first=null;
+function err(id,msg){$(id).classList.add('err');$(id).setAttribute('aria-invalid','true');$(id+'E').textContent=msg;if(!first)first=id}
+function clearErr(){first=null;['len','wid','extra','price','cov'].forEach(function(i){$(i).classList.remove('err');$(i).removeAttribute('aria-invalid');$(i+'E').textContent=''})}
+function pl(n,u){return n===1?u:u+'s'}
+function layoutRolls(t,Lft,Wft,exA){
+ if(!t.tape||!t.rl)return 0;
+ var Lm=Math.max(Lft,Wft),Sm=Math.min(Lft,Wft),strips=Math.ceil(Sm/t.w-1e-9),exLin=exA/t.w,r;
+ if(Lm<=t.rl){var per=Math.max(1,Math.floor(t.rl/Lm+1e-9));r=Math.ceil(strips/per-1e-9)+(exLin>0?Math.ceil(exLin/t.rl-1e-9):0)}
+ else r=Math.ceil((strips*Lm+exLin)/t.rl-1e-9);
+ return Math.max(1,r);
+}
+
+function drawPlan(L,W,Ld,Wd,t,areaTxt,m){
+ var sc=Math.min(260/L,120/W),w=Math.max(L*sc,40),h=Math.max(W*sc,40);
+ var x=200-w/2,y=100-h/2,s='';
+ s+='<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/>';
+ var horiz=L>=W,across=horiz?W:L,strips=0,seams=0;
+ if(t.w>0){
+  strips=Math.ceil(across/t.w-1e-9);seams=Math.max(0,strips-1);
+  var sp=t.w*sc;
+  if(sp>=3){for(var i=1;i*t.w<across-1e-6&&i<80;i++){
+   if(horiz){var yy=y+i*sp;s+='<line x1="'+x+'" y1="'+yy+'" x2="'+(x+w)+'" y2="'+yy+'" stroke="#0077b6" stroke-width="1" stroke-dasharray="5 3"/>'}
+   else{var xx=x+i*sp;s+='<line x1="'+xx+'" y1="'+y+'" x2="'+xx+'" y2="'+(y+h)+'" stroke="#0077b6" stroke-width="1" stroke-dasharray="5 3"/>'}}}
+ }
+ s+='<line x1="'+x+'" y1="'+(y-4)+'" x2="'+x+'" y2="'+(y-22)+'" stroke="#e0e0e0" stroke-dasharray="3 3"/>';
+ s+='<line x1="'+(x+w)+'" y1="'+(y-4)+'" x2="'+(x+w)+'" y2="'+(y-22)+'" stroke="#e0e0e0" stroke-dasharray="3 3"/>';
+ s+='<line x1="'+(x-4)+'" y1="'+y+'" x2="'+(x-22)+'" y2="'+y+'" stroke="#e0e0e0" stroke-dasharray="3 3"/>';
+ s+='<line x1="'+(x-4)+'" y1="'+(y+h)+'" x2="'+(x-22)+'" y2="'+(y+h)+'" stroke="#e0e0e0" stroke-dasharray="3 3"/>';
+ s+='<line x1="'+x+'" y1="'+(y-16)+'" x2="'+(x+w)+'" y2="'+(y-16)+'" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+ s+='<line x1="'+(x-16)+'" y1="'+y+'" x2="'+(x-16)+'" y2="'+(y+h)+'" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+ var u=m?' m':' ft';
+ s+='<text x="200" y="'+(y-22)+'" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">Length '+Ld+u+'</text>';
+ s+='<text transform="translate('+(x-22)+',100) rotate(-90)" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">Width '+Wd+u+'</text>';
+ s+='<rect x="148" y="86" width="104" height="28" rx="6" fill="#fff" stroke="#0077b6"/>';
+ s+='<text x="200" y="105" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">'+areaTxt+'</text>';
+ var cap=t.tape?strips+' strips · '+seams+' taped '+pl(seams,'seam'):(t.w>0?strips+' panel '+pl(strips,'row')+' across (stagger seams)':'Cover the full floor area');
+ s+='<text x="200" y="212" text-anchor="middle" font-size="12" fill="#1a1a2e">'+cap+'</text>';
+ $('plan').innerHTML=s;
+ $('svg').setAttribute('aria-label','Plan view of a '+Ld+' by '+Wd+u+' room, '+cap);
+}
+
+function calc(){
+ var m=$('unit').value==='m',lk=m?3.28084:1,ak=m?FT2:1;
+ clearErr();
+ var Li=num('len'),Wi=num('wid'),exRaw=$('extra').value.trim(),ex=exRaw===''?0:num('extra');
+ var prRaw=$('price').value.trim(),pr=num('price'),tk=$('type').value,t,cv=NaN;
+ if(!(Li>0))err('len','Enter a room length greater than 0.');
+ else if(Li*lk>1000)err('len','That length looks too large. Enter 1,000 ft (300 m) or less.');
+ if(!(Wi>0))err('wid','Enter a room width greater than 0.');
+ else if(Wi*lk>1000)err('wid','That width looks too large. Enter 1,000 ft (300 m) or less.');
+ if(!(ex>=0))err('extra','Enter 0 or a positive number.');
+ else if(ex*ak>50000)err('extra','That area looks too large. Enter 50,000 sq ft (4,600 m²) or less.');
+ if(prRaw!==''&&(!(pr>=0)||pr>100000))err('price','Enter a price between 0 and 100,000, or leave blank.');
+ if(tk==='custom'){cv=num('cov');if(!(cv>0))err('cov','Enter the coverage per unit, greater than 0.');else if(cv>10000)err('cov','Coverage per unit must be 10,000 sq ft or less.')}
+ if(first){$('results').innerHTML='';$(first).focus();return}
+ t=tk==='custom'?{n:'Custom product',cov:cv,w:0,rl:0,u:'unit',tape:0,fast:0}:T[tk];
+ var Lft=Li*lk,Wft=Wi*lk,roomA=Lft*Wft,exA=ex*ak,total=roomA+exA,waste=+$('waste').value/100;
+ var buy=total*(1+waste),areaUnits=Math.max(1,Math.ceil(buy/t.cov-1e-9));
+ var layUnits=layoutRolls(t,Lft,Wft,exA),units=Math.max(areaUnits,layUnits),bought=units*t.cov,sur=bought-total;
+ var A=function(a){return m?fmt(a/FT2,2)+' m² ('+fmt(a,2)+' sq ft)':fmt(a,2)+' sq ft ('+fmt(a/FT2,2)+' m²)'};
+ var rows='',txt=[];
+ function add(k,v){rows+='<tr><td>'+k+'</td><td class="n">'+v+'</td></tr>';txt.push(k+': '+v)}
+ add('Room area',A(roomA));
+ if(exA>0)add('Additional area',A(exA));
+ add('Total floor area',A(total));
+ add('Waste allowance',Math.round(waste*100)+'%');
+ add('Area to cover (with waste)',A(buy));
+ add('Coverage per '+t.u,fmt(t.cov,2)+' sq ft');
+ if(layUnits>0){add('Rolls by area',fmt(areaUnits,0));add('Rolls by layout (roll length check)',fmt(layUnits,0))}
+ add('Total coverage purchased',fmt(bought,2)+' sq ft');
+ add('Surplus over floor area',fmt(sur,2)+' sq ft');
+ if(t.tape){
+  var Lm=Math.max(Lft,Wft),Sm=Math.min(Lft,Wft),strips=Math.ceil(Sm/t.w-1e-9),seams=Math.max(0,strips-1);
+  if(seams>0){var tf=seams*Lm*(total/roomA)*1.1,tr=Math.ceil(tf/100-1e-9);
+   add('Seam tape needed',fmt(tf,1)+' ft ('+fmt(tf*.3048,1)+' m)');add('Seam tape rolls (100 ft)',fmt(tr,0))}
+  else add('Seam tape','Not needed (single strip width)');
+ }
+ if(t.fast){var fc=Math.ceil(buy*2.25/50-1e-9)*50;add('Fasteners (8 in grid, rounded up)',fmt(fc,0))}
+ if(prRaw!==''){add('Estimated cost','$'+fmt(units*pr,2))}
+ var cmp='';
+ Object.keys(T).forEach(function(k){var c=T[k],u=Math.max(1,Math.ceil(buy/c.cov-1e-9),layoutRolls(c,Lft,Wft,exA));
+  cmp+='<tr'+(k===tk?' class="sel"':'')+'><td>'+c.n+'</td><td class="n">'+fmt(u,0)+'</td><td class="n">'+fmt(u*c.cov-total,1)+'</td></tr>'});
+ var unitTxt=pl(units,t.u);
+ var layNote=layUnits>areaUnits?'<p class="hint">The room\'s length means offcuts are too short to reuse, so the layout check needs more rolls than area alone.</p>':'';
+ var copy='Flooring underlayment estimate ('+t.n+'): '+units+' '+unitTxt+'\n'+txt.join('\n')+'\nQuantities only; follow manufacturer instructions. Toolwick.com';
+ var html='<div class="res fade"><div class="big"><span class="num">'+fmt(units,0)+'</span> <span class="unit">'+unitTxt+'</span><p>of '+t.n+' to buy (rounded up)</p></div>'+layNote
+ +'<div class="tw"><table><thead><tr><th>Item</th><th class="n">Amount</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+ +'<h3 class="sub">Compare underlayment types for this room</h3><div class="tw"><table><thead><tr><th>Product</th><th class="n">Units</th><th class="n">Surplus (sq ft)</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'
+ +'<div class="note"><strong>Quantities only.</strong> Results are rounded up and based on common rules of thumb: typical retail roll sizes, strips running along the longer wall with butted seams, about 2.25 fasteners per sq ft on an 8-inch grid, and seam tape on 100 ft rolls. Your flooring or panel manufacturer\'s instructions and local codes vary and take priority. This is not engineering, permit or inspection approval.</div>'
+ +'<button class="cp" id="cpBtn" type="button">Copy results</button></div>';
+ var area=m?fmt(roomA/FT2,1)+' m²':fmt(roomA,1)+' sq ft';
+ requestAnimationFrame(function(){
+  $('results').innerHTML=html;
+  drawPlan(Lft,Wft,fv(Li),fv(Wi),t,area,m);
+  var r=$('results').firstChild;
+  requestAnimationFrame(function(){r.classList.add('in')});
+  $('cpBtn').addEventListener('click',function(){
+   var b=this;
+   function ok(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+   function fb(){var ta=document.createElement('textarea');ta.value=copy;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(ta)}
+   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(copy).then(ok,fb)}else fb();
+  });
+ });
+}
+$('calcBtn').addEventListener('click',function(){requestAnimationFrame(calc)});
+document.querySelector('.card').addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.tagName==='INPUT'){e.preventDefault();requestAnimationFrame(calc)}});
+$('waste').addEventListener('input',function(){$('wv').textContent=this.value+'%'});
+$('type').addEventListener('change',function(){$('covBox').classList.toggle('hidden',this.value!=='custom')});
+$('unit').addEventListener('change',function(){
+ var m=this.value==='m',u=m?'m':'ft';
+ $('lenL').textContent='Room length ('+u+')';$('widL').textContent='Room width ('+u+')';
+ $('extraL').textContent='Additional area – closets, hallways ('+(m?'m²':'sq ft')+')';
+});
+$('yr').textContent=new Date().getFullYear();
+drawPlan(15,12,'15','12',T.foam100,'180.0 sq ft',false);
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
