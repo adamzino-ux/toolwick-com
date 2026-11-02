@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Composite Decking Calculator | Toolwick</title>
+<meta name="description" content="Free composite decking calculator: estimate boards, hidden clips, screws and joists for any deck size, including waste and diagonal layouts.">
+<link rel="canonical" href="https://toolwick.com/composite-decking-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Composite Decking Calculator", "url": "https://toolwick.com/composite-decking-calculator/", "description": "Free composite decking calculator: estimate boards, hidden clips, screws and joists for any deck size, including waste and diagonal layouts.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Composite Decking Calculator", "item": "https://toolwick.com/composite-decking-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many composite deck boards do I need for a 12x12 deck?", "acceptedAnswer": {"@type": "Answer", "text": "With the default settings (5.5 in boards, a 3/16 in gap, a straight layout and 10% waste) a 12×12 deck needs 26 rows, which rounds up to about 29 boards. That works with either 12 ft or 16 ft boards, though 12 ft boards waste nothing on length."}}, {"@type": "Question", "name": "What waste factor should I use for composite decking?", "acceptedAnswer": {"@type": "Answer", "text": "Use about 10% for a straight layout and 15% for a 45° diagonal layout. Add more if the deck has many corners, a picture-frame border, curves or several levels, because each one creates extra cut-offs."}}, {"@type": "Question", "name": "What gap should I leave between composite boards?", "acceptedAnswer": {"@type": "Answer", "text": "Follow the manufacturer's installation guide. Many grooved boards used with hidden clips space themselves at about 3/16 in, and some products call for wider gaps in cold weather because the boards expand when they warm up. End-to-end gaps are usually 1/8 to 1/4 in."}}, {"@type": "Question", "name": "What joist spacing do I need for composite decking?", "acceptedAnswer": {"@type": "Answer", "text": "Sixteen inches on center is a common maximum for straight-laid residential decking, and 12 inches is typical for 45° layouts or heavy use. A few products are rated for wider spacing. Your board's evaluation report and local code have the final say."}}, {"@type": "Question", "name": "Should I use hidden clips or face screws?", "acceptedAnswer": {"@type": "Answer", "text": "Hidden clips give a cleaner surface with no visible fasteners and set the gap for you, but they cost more and take longer to install. Face screws are cheaper and fast, and many builders use them on stairs and the border boards. This tool counts either one."}}, {"@type": "Question", "name": "Does this calculator include framing, railings or footings?", "acceptedAnswer": {"@type": "Answer", "text": "No. It estimates decking boards, fasteners and the joist count only. Footings, beams, joist sizes, the ledger and railings must be designed to your local code, and you should ask the building department or a licensed professional for those."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 1.5rem}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.9rem;line-height:1.2;margin:.5rem 0 1rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:0 0 2rem}
+.diagram{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:.5rem;margin:0 0 2rem}
+.diagram svg{display:block;width:100%;height:auto}
+svg text{font-size:13px;fill:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+.grid{display:grid;grid-template-columns:1fr;gap:1.25rem}
+.f label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+input,select{width:100%;min-height:44px;font:inherit;font-size:1rem;padding:12px 16px;border:1px solid #ddd;border-radius:6px;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:1px}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+input.bad,select.bad{border-color:#e74c3c}
+.err{display:none;color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.err.on{display:block}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+button{font:inherit;font-weight:600;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;min-height:44px;cursor:pointer;width:100%}
+button:hover{background:#006299}
+button.ghost{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;padding:8px 16px;font-size:.85rem;font-weight:500}
+button.ghost:hover{background:#f0f7fb}
+#go{margin-top:1.5rem}
+#res{margin-top:1.5rem}
+.res-in{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.res-in{animation:none}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+.big{display:block;font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.key small{color:#444;font-size:.95rem}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e5e5e5}
+tr:nth-child(even) td{background:#fafafa}
+th.num,td.num{text-align:right}
+.warn{background:#fff8e1;border-left:4px solid #f39c12;padding:.75rem 1rem;margin:0 0 .75rem;font-size:.9rem;border-radius:0 6px 6px 0}
+.note{font-size:.82rem;color:#555;margin-top:1rem}
+#copyRow{margin-top:.5rem}
+details{border-bottom:1px solid #e5e5e5;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .5rem}
+li{margin-bottom:.5rem}
+.ad-slot{min-height:0;margin:0}
+.rel{list-style:none;padding:0;display:grid;gap:.5rem}
+.rel a{display:block;padding:12px 16px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;min-height:44px}
+footer{border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:.9rem;color:#555}
+footer a{margin:0 .5rem}
+@media(min-width:641px){.grid{grid-template-columns:1fr 1fr}.full{grid-column:1/-1}button{width:100%}}
+@media(max-width:400px){.card{padding:1.25rem}h1{font-size:1.6rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/composite-decking-calculator/">
+<meta property="og:title" content="Composite Decking Calculator">
+<meta property="og:description" content="Free composite decking calculator: estimate boards, hidden clips, screws and joists for any deck size, including waste and diagonal layouts.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<main class="wrap">
+<h1>Composite Decking Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>Use this composite decking calculator to work out how many boards, hidden clips or screws, and joists your deck needs, with waste built in and every number rounded up so you do not come up short.</p>
+
+<div class="diagram">
+<svg id="dgm" viewBox="0 0 440 270" role="img" aria-label="Top view of a deck showing length, width, board rows and joists">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="#0077b6"/></marker></defs>
+<g id="dyn"></g>
+</svg>
+</div>
+
+<section class="card" aria-label="Composite decking calculator">
+<div class="grid">
+<div class="f"><label for="len">Deck length (ft)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="16" aria-describedby="h-len e-len"><div class="hint" id="h-len">Boards run this way (parallel to the house).</div><div class="err" id="e-len"></div></div>
+<div class="f"><label for="wid">Deck width (ft)</label><input id="wid" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="h-wid e-wid"><div class="hint" id="h-wid">Distance out from the house; joists span this.</div><div class="err" id="e-wid"></div></div>
+<div class="f"><label for="bw">Board width (actual)</label><select id="bw"><option value="3.5">3.5 in (4 in nominal)</option><option value="5.5" selected>5.5 in (6 in nominal)</option><option value="7.25">7.25 in (8 in nominal)</option></select></div>
+<div class="f"><label for="bl">Board length</label><select id="bl"><option value="12">12 ft</option><option value="16" selected>16 ft</option><option value="20">20 ft</option></select></div>
+<div class="f"><label for="sp">Joist spacing (on center)</label><select id="sp"><option value="12">12 in</option><option value="16" selected>16 in</option><option value="24">24 in</option></select></div>
+<div class="f"><label for="lay">Board layout</label><select id="lay"><option value="s" selected>Straight (perpendicular to joists)</option><option value="d">Diagonal (45°)</option></select></div>
+<div class="f full"><label for="gap">Gap between boards: <strong id="gapv">3/16 in</strong></label><input id="gap" type="range" min="2" max="6" step="1" value="3"><div class="ticks" aria-hidden="true"><span>1/8 in</span><span>1/4 in</span><span>3/8 in</span></div></div>
+<div class="f"><label for="waste">Waste allowance (%)</label><input id="waste" type="number" inputmode="decimal" step="any" min="0" max="50" value="10" aria-describedby="e-waste"><div class="err" id="e-waste"></div></div>
+<div class="f"><label for="fast">Fastening method</label><select id="fast"><option value="c" selected>Hidden clips (1 per crossing)</option><option value="s">Face screws (2 per crossing)</option></select></div>
+<div class="f full"><label for="price">Price per board ($, optional)</label><input id="price" type="number" inputmode="decimal" step="any" min="0" placeholder="e.g. 60" aria-describedby="e-price"><div class="err" id="e-price"></div></div>
+</div>
+<button id="go" type="button">Calculate Decking</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="res" aria-live="polite" aria-atomic="true"></div>
+<div id="copyRow" hidden><button id="copy" class="ghost" type="button">Copy results</button></div>
+</section>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/composite-decking-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Composite Decking Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/composite-decking-calculator/&quot;&gt;Composite Decking Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/composite-decking-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<section>
+<h2>How to Use This Composite Decking Calculator</h2>
+<p>Enter the deck length (the direction the boards run) and the deck width (the distance out from the house), then choose your board width, board length, joist spacing, layout and board gap. Press Calculate to see the boards to buy, a fastener count, a joist count and a comparison of 12, 16 and 20 ft boards. Add a price per board if you want a quick materials cost.</p>
+
+<h2>Why This Matters</h2>
+<p>Composite decking is not cheap. A single 16-ft, 5.5-inch board commonly runs $50 to $120 depending on brand and product line, so a 200 sq ft deck can easily cost $1,500 to $3,600 in boards alone. Ordering by square footage and rounding to the nearest board is how many homeowners end up short. Come up one board short on a Friday and you may wait a week for the next delivery. Boards from a different production lot can also differ slightly in color, and that shows on a finished surface.</p>
+<p>Order too many and you pay restocking fees or keep leftovers you cannot return. Contractors use a decking estimate to bid jobs, DIYers use it to set a budget before committing, and people replacing a tired pressure-treated deck use it to see whether composite fits. Layout matters as much as area. Laying boards at 45 degrees typically adds about 5 percent more waste than a straight layout, and buying 20-ft boards for a 16-ft-long deck wastes 4 feet of every board. A good estimate also counts the hidden parts, fasteners and joists, so the whole materials list is on the table before you start.</p>
+
+<h2>How It's Calculated</h2>
+<p>Every board covers its own width plus one gap, so the calculator starts with the <strong>board pitch</strong>:</p>
+<ul>
+<li><strong>Pitch</strong> = board width + gap (for example 5.5 + 0.1875 = 5.6875 in).</li>
+<li><strong>Rows</strong> = round up of (deck width in inches + gap) ÷ pitch.</li>
+<li><strong>Straight layout:</strong> each row needs floor(length ÷ board length) full boards plus a remainder piece. Remainder pieces are cut from shared boards, allowing 1/8 in per saw cut. Boards = (full boards + remainder boards) × (1 + waste), rounded up.</li>
+<li><strong>Diagonal layout:</strong> linear feet = deck area × 12 ÷ pitch. Boards = linear feet × (1 + waste) ÷ board length, rounded up.</li>
+<li><strong>Joists</strong> = round up of (length × 12 ÷ spacing) + 1.</li>
+<li><strong>Crossings</strong> (where a board meets a joist) = rows × joists. Fasteners = crossings × 1 (clips) or 2 (screws) × 1.10 spare, rounded up.</li>
+</ul>
+<p><strong>Code and limits.</strong> Deck framing and decking in the U.S. generally follow IRC Section R507 together with the board manufacturer's installation instructions and ICC-ES evaluation report, which set the maximum joist spacing for each product. This tool rounds everything up, defaults to 16 in on center, and warns when you choose 24 in spacing, or anything wider than 12 in with a 45° layout. It does not size joists, beams, footings, ledger attachment or railings, and it is not engineering, permit or inspection approval. Local codes vary, so confirm requirements with your building department.</p>
+
+<h2>Worked Example</h2>
+<p>A 16 ft × 12 ft deck with 5.5 in boards, a 3/16 in gap, 16 ft boards, joists at 16 in on center, a straight layout, 10% waste, hidden clips and a $60 board price:</p>
+<ol>
+<li>Area = 16 × 12 = <strong>192 sq ft</strong>.</li>
+<li>Pitch = 5.5 + 0.1875 = 5.6875 in.</li>
+<li>Rows = (144 + 0.1875) ÷ 5.6875 = 25.35, rounded up to <strong>26 rows</strong>.</li>
+<li>The deck is exactly one board long, so each row takes one 16 ft board: 26 boards.</li>
+<li>Add 10% waste: 26 × 1.10 = 28.6, rounded up to <strong>29 boards</strong>. At $60 each that is $1,740.</li>
+<li>Joists = (192 ÷ 16) + 1 = <strong>13</strong>, each spanning 12 ft.</li>
+<li>Crossings = 26 × 13 = 338. With 10% spare: 338 × 1.10 = 371.8, rounded up to <strong>372 clips</strong> and 372 screws.</li>
+</ol>
+<p>The comparison table agrees: 12 ft boards would need 43 boards (516 linear ft) and 20 ft boards 29 boards (580 linear ft), so 16 ft boards use the least material.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Match board length to deck length.</strong> A deck that is 16 ft long fits 16 ft boards with no waste. Boards bought a foot too long waste a foot on every row.</li>
+<li><strong>Do not use 24 in joist spacing by default.</strong> Many composite products require 16 in or less, and 12 in for 45° layouts. Check the installation guide for your exact board.</li>
+<li><strong>Plan butt joints.</strong> When the deck is longer than one board, the ends of two boards must land on separate joist faces. Double the joists or add blocking, and stagger the seams.</li>
+<li><strong>Buy all boards at once.</strong> Color can vary between production lots, so order everything, plus the spare percentage, in a single purchase.</li>
+<li><strong>Remember what is not counted.</strong> Fascia, picture-frame borders, stair treads, railings, flashing, footings and framing lumber are extra.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many composite deck boards do I need for a 12x12 deck?</summary><p>With the default settings (5.5 in boards, a 3/16 in gap, a straight layout and 10% waste) a 12×12 deck needs 26 rows, which rounds up to about 29 boards. That works with either 12 ft or 16 ft boards, though 12 ft boards waste nothing on length.</p></details>
+<details><summary>What waste factor should I use for composite decking?</summary><p>Use about 10% for a straight layout and 15% for a 45° diagonal layout. Add more if the deck has many corners, a picture-frame border, curves or several levels, because each one creates extra cut-offs.</p></details>
+<details><summary>What gap should I leave between composite boards?</summary><p>Follow the manufacturer's installation guide. Many grooved boards used with hidden clips space themselves at about 3/16 in, and some products call for wider gaps in cold weather because the boards expand when they warm up. End-to-end gaps are usually 1/8 to 1/4 in.</p></details>
+<details><summary>What joist spacing do I need for composite decking?</summary><p>Sixteen inches on center is a common maximum for straight-laid residential decking, and 12 inches is typical for 45° layouts or heavy use. A few products are rated for wider spacing. Your board's evaluation report and local code have the final say.</p></details>
+<details><summary>Should I use hidden clips or face screws?</summary><p>Hidden clips give a cleaner surface with no visible fasteners and set the gap for you, but they cost more and take longer to install. Face screws are cheaper and fast, and many builders use them on stairs and the border boards. This tool counts either one.</p></details>
+<details><summary>Does this calculator include framing, railings or footings?</summary><p>No. It estimates decking boards, fasteners and the joist count only. Footings, beams, joist sizes, the ledger and railings must be designed to your local code, and you should ask the building department or a licensed professional for those.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/cement-backer-board-calculator/">Cement Backer Board Calculator</a></li>
+<li><a href="/flooring-underlayment-calculator/">Flooring Underlayment Calculator</a></li>
+<li><a href="/laminate-flooring-calculator/">Laminate Flooring Calculator</a></li>
+<li><a href="/roof-flashing-calculator/">Step and Wall Flashing Calculator</a></li>
+<li><a href="/siding-installation-cost-calculator/">Siding Installation Cost Calculator</a></li>
+<li><a href="/roof-sheathing-calculator/">Roof Sheathing Calculator</a></li>
+</ul>
+</section>
+
+<div class="ad-slot" id="ad-bottom"></div>
+</main>
+<footer>
+<p><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</footer>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var fmt=function(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var cl=function(x){return Math.ceil(x-1e-9)};
+var tidy=function(x){return String(parseFloat(x.toFixed(2)))};
+var GL={2:'1/8',3:'3/16',4:'1/4',5:'5/16',6:'3/8'};
+var wasteTouched=false,lastText='';
+$('yr').textContent=new Date().getFullYear();
+
+function setErr(id,msg){
+  var e=$('e-'+id),i=$(id);
+  e.textContent=msg||'';e.classList.toggle('on',!!msg);
+  i.classList.toggle('bad',!!msg);i.setAttribute('aria-invalid',msg?'true':'false');
+}
+function chk(id,o){
+  var raw=$(id).value.trim();
+  if(raw===''){
+    if(o.req){setErr(id,'Enter a value for '+o.label.toLowerCase()+'.');return null}
+    setErr(id,'');return 0;
+  }
+  var n=Number(raw);
+  if(!isFinite(n)){setErr(id,'Enter a valid number.');return null}
+  if(o.minEx?n<=o.min:n<o.min){setErr(id,o.label+' must be '+(o.minEx?'greater than ':'at least ')+o.min+o.unit+'.');return null}
+  if(n>o.max){setErr(id,o.label+' cannot be more than '+fmt(o.max)+o.unit+'. Please check the number.');return null}
+  setErr(id,'');return n;
+}
+function params(){
+  var L=chk('len',{req:1,label:'Deck length',min:0,minEx:1,max:500,unit:' ft'});
+  var W=chk('wid',{req:1,label:'Deck width',min:0,minEx:1,max:500,unit:' ft'});
+  var wa=chk('waste',{req:1,label:'Waste allowance',min:0,max:50,unit:'%'});
+  var pr=chk('price',{label:'Price',min:0,max:10000,unit:' dollars'});
+  if(L===null||W===null||wa===null||pr===null)return null;
+  return {L:L,W:W,waste:wa/100,wp:wa,price:pr,bw:+$('bw').value,bl:+$('bl').value,sp:+$('sp').value,
+    diag:$('lay').value==='d',gap:$('gap').value/16,clips:$('fast').value==='c'};
+}
+function boards(p,len,rows,pitch,area){
+  if(p.diag)return cl(area*12/pitch*(1+p.waste)/len);
+  var Li=p.L*12,lenIn=len*12,full=Math.floor((Li+1e-9)/lenIn),r=Li-full*lenIn;
+  if(r<0.01)r=0;
+  var base=rows*full;
+  if(r>0){var per=Math.max(1,Math.floor((lenIn+0.125)/(r+0.125)));base+=cl(rows/per)}
+  return cl(base*(1+p.waste));
+}
+function model(p){
+  var pitch=p.bw+p.gap,area=p.L*p.W,rows=cl((p.W*12+p.gap)/pitch),joists=cl(p.L*12/p.sp)+1;
+  var cross=p.diag?cl(area*144/(p.sp*pitch)):rows*joists;
+  var fast=cl(cross*(p.clips?1:2)*1.1);
+  var N=boards(p,p.bl,rows,pitch,area);
+  var opts=[12,16,20].map(function(l){var n=boards(p,l,rows,pitch,area);return {len:l,n:n,lin:n*l}});
+  var best=opts[0];
+  opts.forEach(function(o){if(o.lin<=best.lin)best=o});
+  return {pitch:pitch,area:area,rows:rows,joists:joists,cross:cross,fast:fast,N:N,opts:opts,best:best};
+}
+function draw(p,m){
+  var X0=50,Y0=50,MW=280,MH=135,f=function(v){return v.toFixed(1)};
+  var s=Math.min(MW/p.L,MH/p.W),dw=p.L*s,dh=p.W*s,x=X0+(MW-dw)/2,y=Y0+(MH-dh)/2,i,h='';
+  h+='<defs><clipPath id="dc"><rect x="'+f(x)+'" y="'+f(y)+'" width="'+f(dw)+'" height="'+f(dh)+'"/></clipPath></defs>';
+  h+='<rect x="'+f(x-6)+'" y="'+f(y-11)+'" width="'+f(dw+12)+'" height="9" fill="#e0e0e0"/>';
+  h+='<text x="'+f(x+dw/2)+'" y="'+f(y-17)+'" text-anchor="middle">House wall</text>';
+  h+='<rect x="'+f(x)+'" y="'+f(y)+'" width="'+f(dw)+'" height="'+f(dh)+'" fill="rgba(0,119,182,.07)"/>';
+  var jc=Math.min(m.joists,40);
+  for(i=0;i<jc;i++){var jx=x+dw*i/(jc-1);h+='<line x1="'+f(jx)+'" y1="'+f(y)+'" x2="'+f(jx)+'" y2="'+f(y+dh)+'" stroke="#666" stroke-width="1" stroke-dasharray="4 3"/>'}
+  h+='<g clip-path="url(#dc)" stroke="#0077b6" stroke-width="1" opacity=".6">';
+  if(p.diag){
+    var st=Math.max(5,m.pitch/12*s*Math.SQRT2);
+    for(var k=-dh;k<dw;k+=st)h+='<line x1="'+f(x+k)+'" y1="'+f(y)+'" x2="'+f(x+k+dh)+'" y2="'+f(y+dh)+'"/>';
+  }else{
+    var bc=Math.min(m.rows,36);
+    for(i=1;i<bc;i++){var by=y+dh*i/bc;h+='<line x1="'+f(x)+'" y1="'+f(by)+'" x2="'+f(x+dw)+'" y2="'+f(by)+'"/>'}
+  }
+  h+='</g>';
+  h+='<rect x="'+f(x)+'" y="'+f(y)+'" width="'+f(dw)+'" height="'+f(dh)+'" fill="none" stroke="#0077b6" stroke-width="2.5"/>';
+  var yb=y+dh+20,xr=x+dw+20;
+  h+='<g stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="3 3"><line x1="'+f(x)+'" y1="'+f(y+dh)+'" x2="'+f(x)+'" y2="'+f(yb+5)+'"/><line x1="'+f(x+dw)+'" y1="'+f(y+dh)+'" x2="'+f(x+dw)+'" y2="'+f(yb+5)+'"/>';
+  h+='<line x1="'+f(x+dw)+'" y1="'+f(y)+'" x2="'+f(xr+5)+'" y2="'+f(y)+'"/><line x1="'+f(x+dw)+'" y1="'+f(y+dh)+'" x2="'+f(xr+5)+'" y2="'+f(y+dh)+'"/></g>';
+  h+='<line x1="'+f(x)+'" y1="'+f(yb)+'" x2="'+f(x+dw)+'" y2="'+f(yb)+'" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  h+='<line x1="'+f(xr)+'" y1="'+f(y)+'" x2="'+f(xr)+'" y2="'+f(y+dh)+'" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  h+='<text x="'+f(x+dw/2)+'" y="'+f(yb+17)+'" text-anchor="middle" font-weight="700">'+tidy(p.L)+' ft (boards run this way)</text>';
+  h+='<text x="'+f(xr+9)+'" y="'+f(y+dh/2)+'" font-weight="700">'+tidy(p.W)+' ft</text>';
+  h+='<text x="'+f(xr+9)+'" y="'+f(y+dh/2+15)+'">joist span</text>';
+  h+='<text x="'+f(x+dw/2)+'" y="'+f(yb+35)+'" text-anchor="middle">'+(p.diag?'45° boards':fmt(m.rows)+' rows')+' · '+fmt(m.joists)+' joists @ '+p.sp+' in OC</text>';
+  h+='<line x1="50" y1="259" x2="72" y2="259" stroke="#0077b6" stroke-width="2"/><text x="78" y="263">Deck boards</text>';
+  h+='<line x1="190" y1="259" x2="212" y2="259" stroke="#666" stroke-width="1.5" stroke-dasharray="4 3"/><text x="218" y="263">Joists</text>';
+  $('dyn').innerHTML=h;
+  $('dgm').setAttribute('aria-label','Top view of a '+tidy(p.L)+' by '+tidy(p.W)+' foot deck with '+(p.diag?'45 degree boards':m.rows+' board rows')+' and '+m.joists+' joists at '+p.sp+' inches on center');
+}
+function row(a,b){return '<tr><td>'+a+'</td><td class="num">'+b+'</td></tr>'}
+function calculate(){
+  var p=params();
+  if(!p){$('res').innerHTML='';$('copyRow').hidden=true;lastText='';return}
+  var m=model(p),cost=m.N*p.price,w=[],h,t=[];
+  if(p.sp===24)w.push('24 in joist spacing is not permitted for many composite boards. Most require 16 in on center or less. Check your product\'s installation guide, or choose 16 in.');
+  if(p.diag&&p.sp>12)w.push('Boards laid at 45° commonly require joists at 12 in on center. Check the manufacturer\'s instructions before using wider spacing.');
+  if(!p.diag&&p.L>p.bl)w.push('Your deck is longer than one board, so board ends will meet. Butt joints need double joists or blocking so each end has full support. Stagger the seams.');
+  var fl=p.clips?'Hidden clips (incl. 10% spare)':'Face screws (incl. 10% spare)';
+  h='<div class="res-in"><div class="key"><span class="big">'+fmt(m.N)+'</span><small>'+p.bl+' ft boards to buy ('+fmt(m.N*p.bl)+' linear ft)</small></div>';
+  h+='<p>This covers your '+fmt(m.area,1)+' sq ft deck with '+fmt(p.wp,p.wp%1?1:0)+'% waste included. All values are rounded up.</p>';
+  w.forEach(function(x){h+='<div class="warn">'+x+'</div>'});
+  h+='<h3>Materials list</h3><div class="tw"><table><thead><tr><th>Item</th><th class="num">Amount</th></tr></thead><tbody>';
+  h+=row('Deck area',fmt(m.area,1)+' sq ft');
+  h+=row('Board pitch (width + gap)',fmt(m.pitch,4)+' in');
+  h+=row('Board rows',p.diag?'45° (area method)':fmt(m.rows));
+  h+=row('Boards to buy ('+p.bl+' ft)',fmt(m.N));
+  h+=row(fl,fmt(m.fast));
+  if(p.clips)h+=row('Screws for clips',fmt(m.fast));
+  h+=row('Joists at '+p.sp+' in OC',fmt(m.joists)+' × '+tidy(p.W)+' ft');
+  if(p.price>0)h+=row('Estimated board cost','$'+fmt(cost,2));
+  h+='</tbody></table></div>';
+  h+='<h3>Board length comparison</h3><div class="tw"><table><thead><tr><th>Board length</th><th class="num">Boards</th><th class="num">Linear ft</th>'+(p.price>0?'<th class="num">Cost</th>':'')+'</tr></thead><tbody>';
+  m.opts.forEach(function(o){
+    var tag=(o.len===p.bl?' (selected)':'')+(o===m.best?' (least material)':'');
+    h+='<tr><td>'+o.len+' ft'+tag+'</td><td class="num">'+fmt(o.n)+'</td><td class="num">'+fmt(o.lin)+'</td>'+(p.price>0?'<td class="num">$'+fmt(o.n*p.price,2)+'</td>':'')+'</tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<p class="note">Estimate only, based on common practice and IRC R507 principles. Always follow your board manufacturer\'s joist spacing, gap and fastener instructions. Local codes vary. This is not engineering, permit or inspection approval, and it does not size framing, footings or railings.</p></div>';
+  t.push('Composite decking estimate: '+tidy(p.L)+' x '+tidy(p.W)+' ft ('+fmt(m.area,1)+' sq ft)');
+  t.push('Boards: '+fmt(m.N)+' x '+p.bl+' ft ('+p.bw+' in wide, '+GL[$('gap').value]+' in gap, '+(p.diag?'45 deg':'straight')+', '+p.wp+'% waste)');
+  t.push(fl+': '+fmt(m.fast));
+  t.push('Joists: '+fmt(m.joists)+' at '+p.sp+' in OC, '+tidy(p.W)+' ft span');
+  if(p.price>0)t.push('Estimated board cost: $'+fmt(cost,2));
+  t.push('Verify spacing and fasteners with the manufacturer and local code.');
+  lastText=t.join('\n');
+  $('res').innerHTML=h;$('copyRow').hidden=false;
+  draw(p,m);
+}
+function run(){requestAnimationFrame(calculate)}
+$('go').addEventListener('click',run);
+document.querySelectorAll('input,select').forEach(function(e){
+  e.addEventListener('keydown',function(ev){if(ev.key==='Enter'){ev.preventDefault();run()}});
+});
+$('gap').addEventListener('input',function(){$('gapv').textContent=GL[$('gap').value]+' in'});
+$('waste').addEventListener('input',function(){wasteTouched=true});
+$('lay').addEventListener('change',function(){if(!wasteTouched)$('waste').value=$('lay').value==='d'?15:10});
+$('copy').addEventListener('click',function(){
+  var b=$('copy');
+  function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,fallback)}else fallback();
+  function fallback(){
+    var ta=document.createElement('textarea');ta.value=lastText;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}
+    document.body.removeChild(ta);done();
+  }
+});
+var p0=params();if(p0)draw(p0,model(p0));
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
