@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Deck Screws Calculator | Toolwick</title>
+<meta name="description" content="Free deck screw calculator: estimate how many deck screws, pounds and boxes you need from deck size, board width, joist spacing and waste.">
+<link rel="canonical" href="https://toolwick.com/deck-screws-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Deck Screws Calculator", "url": "https://toolwick.com/deck-screws-calculator/", "description": "Free deck screw calculator: estimate how many deck screws, pounds and boxes you need from deck size, board width, joist spacing and waste.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Deck Screws Calculator", "item": "https://toolwick.com/deck-screws-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many screws do I need per square foot of deck?", "acceptedAnswer": {"@type": "Answer", "text": "With 5.5 in boards, a 1/8 in gap, 16 in joist spacing and 2 screws per crossing, you need about 3.2 screws per square foot. With a 10% allowance that rises to roughly 3.5. Narrower boards or 12 in spacing push this noticeably higher."}}, {"@type": "Question", "name": "What size screw should I use for 5/4 decking?", "acceptedAnswer": {"@type": "Answer", "text": "A #8 or #10 screw that is 2-1/2 to 3 in long is the usual choice for 1 in thick boards. That gives roughly 1-1/2 to 2 in of joist penetration, which holds well. Always follow the board manufacturer's fastening instructions."}}, {"@type": "Question", "name": "What length screw do I need for 2×6 decking?", "acceptedAnswer": {"@type": "Answer", "text": "Two-by lumber is 1-1/2 in thick, so a 3 in screw only reaches 1-1/2 in into the joist. A 3-1/2 in screw gives you 2 in of bite. A 2-1/2 in screw falls short and the calculator will warn you."}}, {"@type": "Question", "name": "How many screws are in a pound?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on gauge and length. A #8 × 2-1/2 in screw runs around 90 to 105 per pound, while a #10 × 3 in runs about 55 to 65. This calculator uses the lower figure so you buy a little extra. Check the count on your box label."}}, {"@type": "Question", "name": "Should I use 2 or 3 screws per board at each joist?", "acceptedAnswer": {"@type": "Answer", "text": "Two face screws per crossing is standard for boards up to about 6 in wide. Use three for 8 in boards or boards that tend to cup. If you use hidden fasteners, choose 1 and follow the clip maker's screw instructions."}}, {"@type": "Question", "name": "Can I use deck screws to attach the ledger board?", "acceptedAnswer": {"@type": "Answer", "text": "No. Ledger boards carry the deck's vertical load and need lag screws, through-bolts or structural screws specifically tested for that use, installed to the pattern in your local code. Deck screws are designed only for decking and are not a substitute."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #e0e0e0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.15rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.85rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram text{fill:#1a1a2e;font-family:inherit}
+.row{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:641px){.row{grid-template-columns:1fr 1fr}}
+.field{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus,summary:focus,a:focus{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{width:100%;height:44px;margin:0;accent-color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666;margin-top:-.25rem}
+.bad{border:1px solid #e74c3c!important}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.btn{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-weight:600;cursor:pointer;margin-top:.5rem}
+.btn:hover{background:#006299}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;min-height:44px;font:inherit;font-size:.9rem;cursor:pointer;margin-top:1rem}
+.copy:hover{background:#f0f7fb}
+#results{margin-top:1.5rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.res{animation:none}}
+.bl{font-size:.9rem;color:#444;font-weight:500}
+.big{font-size:3rem;font-weight:800;color:#0077b6;line-height:1.1}
+.sub{font-size:1.05rem;margin:.25rem 0 1rem}
+.warn{background:#fff8e1;border-left:4px solid #b7791f;color:#4a3500;padding:.75rem 1rem;border-radius:4px;margin-bottom:.75rem;font-size:.92rem}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e6e6e6}
+tr:nth-child(even) td{background:#fafafa}
+th.n,td.n{text-align:right;white-space:nowrap}
+tr.cur td{background:#e8f4fa;font-weight:600}
+h3{font-size:1rem;margin:1.5rem 0 .25rem}
+.note{font-size:.85rem;color:#555}
+.content{background:#fff}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:.6rem 0;min-height:44px}
+details p{margin:0 0 .8rem}
+ul{padding-left:1.25rem;margin:0 0 1rem}
+li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;overflow-x:auto}
+.related{background:#f8f9fa;border-radius:8px;padding:1.25rem 1.5rem;margin:2rem 0}
+.related ul{margin:0}
+.related a{display:inline-block;min-height:32px;padding:4px 0}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #e0e0e0;padding:1.5rem 0 2rem;margin-top:2rem;font-size:.9rem;color:#555}
+footer a{color:#0077b6;text-decoration:underline;display:inline-block;min-height:32px;padding:4px 6px}
+@media(max-width:640px){.card{padding:1.25rem}.big{font-size:2.5rem}h1{font-size:1.6rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/deck-screws-calculator/">
+<meta property="og:title" content="Deck Screws Calculator">
+<meta property="og:description" content="Free deck screw calculator: estimate how many deck screws, pounds and boxes you need from deck size, board width, joist spacing and waste.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Deck Screws Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This deck screw calculator estimates how many screws, how many pounds and how many boxes you need to fasten deck boards, based on deck size, board width, joist spacing and a waste allowance. Numbers are always rounded up so you do not run short.</p>
+
+<div class="card">
+<div class="diagram">
+<svg viewBox="0 0 640 305" role="img" aria-labelledby="dt">
+<title id="dt">Diagram: plan view of deck boards over joists with screws at each crossing, and a cross-section showing screw length and joist penetration</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<text x="20" y="14" font-size="12" font-weight="600" id="dPlan">Plan view: 2 screws per crossing</text>
+<g stroke="#0077b6" fill="#eef6fb" stroke-width="1.5">
+<rect x="36" y="48" width="264" height="40"/><rect x="36" y="92" width="264" height="40"/><rect x="36" y="136" width="264" height="40"/><rect x="36" y="180" width="264" height="40"/>
+</g>
+<g fill="none" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="5 3">
+<rect x="64" y="36" width="14" height="200"/><rect x="164" y="36" width="14" height="200"/><rect x="264" y="36" width="14" height="200"/>
+</g>
+<text x="71" y="31" font-size="11" text-anchor="middle">Joist</text>
+<g id="screws" fill="#1a1a2e"></g>
+<g stroke="#e0e0e0" stroke-dasharray="3 3"><line x1="71" y1="236" x2="71" y2="268"/><line x1="171" y1="236" x2="171" y2="268"/><line x1="300" y1="48" x2="318" y2="48"/><line x1="300" y1="88" x2="318" y2="88"/></g>
+<line x1="71" y1="262" x2="171" y2="262" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text x="121" y="281" font-size="12" text-anchor="middle" id="dSp">16 in o.c.</text>
+<line x1="312" y1="49" x2="312" y2="87" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text x="322" y="72" font-size="12" id="dBw">Board 5.5 in</text>
+<text x="322" y="100" font-size="11" id="dGap">gap 1/8 in</text>
+<text x="20" y="299" font-size="12" id="dDeck">Deck: 16 × 12 ft (schematic, not to scale)</text>
+
+<text x="400" y="14" font-size="12" font-weight="600">Cross-section at a joist</text>
+<rect id="xJoist" x="498" y="150" width="45" height="110" fill="#eef6fb" stroke="#0077b6" stroke-width="1.5"/>
+<rect id="xBoard" x="470" y="120" width="100" height="30" fill="#fff" stroke="#0077b6" stroke-width="1.5"/>
+<line id="xScrew" x1="520.5" y1="120" x2="520.5" y2="195" stroke="#1a1a2e" stroke-width="3"/>
+<rect id="xHead" x="514" y="120" width="13" height="3" fill="#1a1a2e"/>
+<text x="520" y="95" font-size="11" text-anchor="middle">Deck board</text>
+<text x="520" y="276" font-size="11" text-anchor="middle">Joist</text>
+<g stroke="#e0e0e0" stroke-dasharray="3 3"><line id="gA" x1="455" y1="120" x2="470" y2="120"/><line id="gB" x1="455" y1="195" x2="520" y2="195"/><line x1="570" y1="150" x2="592" y2="150"/></g>
+<line id="dL" x1="455" y1="121" x2="455" y2="194" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tL" x="449" y="162" font-size="12" text-anchor="end">2-1/2 in</text>
+<line id="dT" x1="585" y1="121" x2="585" y2="149" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tT" x="592" y="139" font-size="12">1 in</text>
+<line id="dP" x1="560" y1="151" x2="560" y2="194" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tP" x="567" y="176" font-size="12">1.5 in</text>
+<text x="400" y="299" font-size="12" id="dCap">Screw 2-1/2 in, 1.5 in into joist</text>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="row">
+<div class="field"><label for="len">Deck length (ft)</label><input type="number" id="len" value="16" min="0" step="any" inputmode="decimal" aria-describedby="e-len"><div class="err" id="e-len"></div></div>
+<div class="field"><label for="wid">Deck width (ft)</label><input type="number" id="wid" value="12" min="0" step="any" inputmode="decimal" aria-describedby="e-wid"><div class="err" id="e-wid"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="bw">Deck board width</label><select id="bw"><option value="3.5">3.5 in (2×4 / 5/4×4)</option><option value="5.5" selected>5.5 in (2×6 / 5/4×6)</option><option value="7.25">7.25 in (2×8)</option></select></div>
+<div class="field"><label for="th">Decking thickness</label><select id="th"><option value="1" selected>1 in (5/4 lumber, most composite)</option><option value="1.5">1.5 in (2× lumber)</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="sp">Joist spacing (on center)</label><select id="sp"><option value="12">12 in</option><option value="16" selected>16 in</option><option value="24">24 in</option></select></div>
+<div class="field"><label for="gap">Gap between boards</label><select id="gap"><option value="0.125" selected>1/8 in</option><option value="0.1875">3/16 in</option><option value="0.25">1/4 in</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="ss">Screw size</label><select id="ss"><option value="8-2.5">#8 × 2-1/2 in (~90 per lb)</option><option value="8-3">#8 × 3 in (~75 per lb)</option><option value="10-3" selected>#10 × 3 in (~55 per lb)</option><option value="10-3.5">#10 × 3-1/2 in (~45 per lb)</option></select></div>
+<div class="field"><label for="spc">Screws per board at each joist</label><select id="spc"><option value="1">1 (hidden clip fastener)</option><option value="2" selected>2 (face screws)</option><option value="3">3 (wide or cupping boards)</option></select></div>
+</div>
+<div class="field"><label for="waste">Waste &amp; cuts allowance: <output id="wv">10%</output></label><input type="range" id="waste" min="5" max="25" step="1" value="10"><div class="ticks" aria-hidden="true"><span>5%</span><span>15%</span><span>25%</span></div></div>
+<div class="row">
+<div class="field"><label for="box">Box size you will buy</label><select id="box"><option value="1">1 lb</option><option value="5" selected>5 lb</option><option value="25">25 lb</option><option value="50">50 lb</option></select></div>
+<div class="field"><label for="price">Price per box (optional, $)</label><input type="number" id="price" min="0" step="any" inputmode="decimal" placeholder="e.g. 29.98" aria-describedby="e-price"><div class="err" id="e-price"></div></div>
+</div>
+<button type="submit" class="btn" id="calcBtn">Calculate Screws</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/deck-screws-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Deck Screws Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/deck-screws-calculator/&quot;&gt;Deck Screws Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/deck-screws-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<div class="content">
+<h2>How to Use This Deck Screws Calculator</h2>
+<p>Enter your deck length and width in feet, pick the board width and thickness, then choose joist spacing, screw size and how many screws go in each board at each joist. Press Calculate to see the total screws, the weight to buy, the number of boxes and a comparison of 12, 16 and 24 inch joist spacing. The diagram above updates to show your screw pattern and how deep the screw reaches into the joist.</p>
+
+<h2>Why This Matters</h2>
+<p>Deck screws look like a trivial line item until you are standing in the store with a half-built deck and the wrong box. A 16 × 12 ft deck with 2×6 boards at 16 in joist spacing needs roughly 700 to 750 screws. That is about 14 lb of #10 × 3 in screws, which is several boxes, and the price difference between a 1 lb retail box and a 25 lb contractor box can be more than double per screw. Running out mid-project also means a second trip, and screws from a different lot can differ in head color or coating, which shows on a finished surface.</p>
+<p>Getting the screw length right matters more than the count. A screw that only reaches 1 in into the joist can back out as boards swell and shrink through the seasons, leaving a heads-up hazard for bare feet. Homeowners planning a weekend project, contractors writing a quote and anyone comparing face screws to hidden clips all need a quick, repeatable count. Closer joist spacing, wider boards and picture-frame borders change the total, so this tool lets you test each scenario before you buy.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator assumes boards run across the joists, with joists spaced along the deck length. It counts every place a board crosses a joist, multiplies by your screws per crossing, adds the waste allowance, and rounds up at each step.</p>
+<div class="formula">boards = ceil( width × 12 ÷ (board width + gap) )<br>joists = ceil( length × 12 ÷ spacing ) + 1<br>screws = ceil( boards × joists × screws per crossing × (1 + waste%) )<br>pounds = ceil( screws ÷ screws per lb )<br>boxes = ceil( pounds ÷ box size )</div>
+<p>Screws per pound use conservative, slightly low averages for each size, so the weight is rounded toward buying more. Actual counts vary by brand and coating, so check the count printed on your box. The penetration check subtracts the board thickness from the screw length and flags anything under 1-1/2 in. The joist spacing warning follows the IRC R507.7 wood decking table (5/4 boards up to 16 in on center, 2× boards up to 24 in when laid square to joists). Composite and PVC decking follow the manufacturer's span rating. Local codes vary, and this is an estimating aid, not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>A 16 ft × 12 ft deck, 5/4 × 6 boards (5.5 in wide, 1 in thick), 1/8 in gap, joists 16 in on center, #10 × 3 in screws (about 55 per lb), 2 screws per crossing, 10% waste and 5 lb boxes:</p>
+<ul>
+<li><strong>Boards across the width:</strong> 12 ft × 12 = 144 in ÷ (5.5 + 0.125) = 25.6, rounded up to 26 boards.</li>
+<li><strong>Joists along the length:</strong> 16 × 12 = 192 in ÷ 16 = 12 spaces, plus 1 = 13 joists.</li>
+<li><strong>Crossings:</strong> 26 × 13 = 338. At 2 screws each that is 676 screws.</li>
+<li><strong>Waste:</strong> 676 × 1.10 = 743.6, rounded up to 744 screws.</li>
+<li><strong>Weight:</strong> 744 ÷ 55 = 13.5, rounded up to 14 lb.</li>
+<li><strong>Boxes:</strong> 14 ÷ 5 = 2.8, rounded up to 3 boxes (15 lb).</li>
+<li><strong>Penetration:</strong> 3 in screw − 1 in board = 2 in into the joist, which clears the 1-1/2 in minimum.</li>
+</ul>
+<p>For comparison, the same deck at 12 in spacing needs about 973 screws, and at 24 in about 515. The 24 in figure only applies to decking rated for that span.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Match screw length to the decking.</strong> For 1 in boards, 2-1/2 to 3 in screws work. For 1-1/2 in (2×) boards, use 3 in or longer so at least 1-1/2 in reaches the joist.</li>
+<li><strong>Use screws rated for your lumber.</strong> Pressure-treated wood needs a coated or stainless screw approved for it. Cedar, redwood and ocean-side decks usually call for stainless steel to avoid staining and corrosion.</li>
+<li><strong>Raise the waste allowance for complex layouts.</strong> Diagonal boards, picture-frame borders, curves and many butt joints use more screws. Use 15% to 20% instead of 10%.</li>
+<li><strong>Do not use deck screws for structural connections.</strong> Ledger attachment, joist hangers, beam connections and guard posts need structural screws or bolts and the hardware maker's fastener. See the ledger tool below.</li>
+<li><strong>Pre-drill near board ends.</strong> Drilling within about 1 in of an end, especially on dense hardwood or composite, prevents splitting and wastes fewer boards and screws.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many screws do I need per square foot of deck?</summary><p>With 5.5 in boards, a 1/8 in gap, 16 in joist spacing and 2 screws per crossing, you need about 3.2 screws per square foot. With a 10% allowance that rises to roughly 3.5. Narrower boards or 12 in spacing push this noticeably higher.</p></details>
+<details><summary>What size screw should I use for 5/4 decking?</summary><p>A #8 or #10 screw that is 2-1/2 to 3 in long is the usual choice for 1 in thick boards. That gives roughly 1-1/2 to 2 in of joist penetration, which holds well. Always follow the board manufacturer's fastening instructions.</p></details>
+<details><summary>What length screw do I need for 2×6 decking?</summary><p>Two-by lumber is 1-1/2 in thick, so a 3 in screw only reaches 1-1/2 in into the joist. A 3-1/2 in screw gives you 2 in of bite. A 2-1/2 in screw falls short and the calculator will warn you.</p></details>
+<details><summary>How many screws are in a pound?</summary><p>It depends on gauge and length. A #8 × 2-1/2 in screw runs around 90 to 105 per pound, while a #10 × 3 in runs about 55 to 65. This calculator uses the lower figure so you buy a little extra. Check the count on your box label.</p></details>
+<details><summary>Should I use 2 or 3 screws per board at each joist?</summary><p>Two face screws per crossing is standard for boards up to about 6 in wide. Use three for 8 in boards or boards that tend to cup. If you use hidden fasteners, choose 1 and follow the clip maker's screw instructions.</p></details>
+<details><summary>Can I use deck screws to attach the ledger board?</summary><p>No. Ledger boards carry the deck's vertical load and need lag screws, through-bolts or structural screws specifically tested for that use, installed to the pattern in your local code. Deck screws are designed only for decking and are not a substitute.</p></details>
+
+<div class="related">
+<h2 style="margin-top:0">Related Tools</h2>
+<ul>
+<li><a href="/deck-cantilever-calculator/">Deck Cantilever Calculator</a></li>
+<li><a href="/deck-stain-calculator/">Deck Stain Calculator</a></li>
+<li><a href="/deck-beam-size-calculator/">Deck Beam Size Calculator</a></li>
+<li><a href="/deck-railing-baluster-spacing-calculator/">Deck Railing &amp; Baluster Spacing Calculator</a></li>
+<li><a href="/deck-footing-frost-depth-calculator/">Deck Footing Size &amp; Frost Depth Calculator</a></li>
+<li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li>
+</ul>
+</div>
+</div>
+
+<nav class="cluster-nav" aria-label="More Roofing &amp; Exterior Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Roofing &amp; Exterior Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/deck-cantilever-calculator/">Deck Cantilever Calculator</a></li><li><a href="/deck-material-cost-estimator/">Deck Material &amp; Cost Estimator</a></li><li><a href="/deck-railing-baluster-spacing-calculator/">Deck Railing &amp; Baluster Spacing Calculator</a></li><li><a href="/deck-stain-calculator/">Deck Stain Calculator</a></li><li><a href="/asphalt-shingle-calculator/">Asphalt Shingle Calculator</a></li><li><a href="/drip-edge-roof-trim-calculator/">Drip Edge &amp; Roof Trim Calculator</a></li><li><a href="/egress-window-size-well-calculator/">Egress Window Size &amp; Well Calculator</a></li><li><a href="/fence-installation-cost-calculator/">Fence Installation Cost Calculator</a></li><li><a href="/roofing-calculators/"><strong>All Roofing &amp; Exterior calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a>
+<div style="margin-top:.5rem">© <span id="yr">2025</span> toolwick.com</div>
+</footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const fmt=(n,d=0)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const p=n=>String(+Number(n).toFixed(2));
+const SCREWS={'8-2.5':{n:'#8 × 2-1/2 in',l:'2-1/2',len:2.5,lb:90},'8-3':{n:'#8 × 3 in',l:'3',len:3,lb:75},'10-3':{n:'#10 × 3 in',l:'3',len:3,lb:55},'10-3.5':{n:'#10 × 3-1/2 in',l:'3-1/2',len:3.5,lb:45}};
+const GAPS={'0.125':'1/8','0.1875':'3/16','0.25':'1/4'};
+let summary='';
+$('yr').textContent=new Date().getFullYear();
+$('waste').addEventListener('input',()=>{$('wv').textContent=$('waste').value+'%'});
+
+function est(L,W,bw,gap,sp,spc,waste,perlb){
+ const boards=Math.ceil(W*12/(bw+gap)-1e-9);
+ const joists=Math.ceil(L*12/sp-1e-9)+1;
+ const cross=boards*joists,base=cross*spc;
+ const total=Math.ceil(base*(1+waste/100)-1e-9);
+ const lbs=Math.ceil(total/perlb-1e-9);
+ return{boards,joists,cross,base,total,lbs};
+}
+function setErr(id,m){$('e-'+id).textContent=m;$(id).classList.add('bad');$(id).setAttribute('aria-invalid','true');}
+function clearErr(){document.querySelectorAll('.err').forEach(e=>e.textContent='');document.querySelectorAll('.bad').forEach(i=>{i.classList.remove('bad');i.removeAttribute('aria-invalid')});}
+
+function draw(){
+ const spc=+$('spc').value,sp=$('sp').value,bw=$('bw').value,th=+$('th').value,gap=GAPS[$('gap').value],S=SCREWS[$('ss').value];
+ const off={1:[20],2:[10,30],3:[8,20,32]}[spc];
+ let h='';
+ [71,171,271].forEach(x=>[48,92,136,180].forEach(y=>off.forEach(o=>{h+='<circle cx="'+x+'" cy="'+(y+o)+'" r="3"/>'})));
+ $('screws').innerHTML=h;
+ $('dPlan').textContent='Plan view: '+spc+' screw'+(spc>1?'s':'')+' per crossing';
+ $('dSp').textContent=sp+' in o.c.';
+ $('dBw').textContent='Board '+bw+' in';
+ $('dGap').textContent='gap '+gap+' in';
+ const Lv=$('len').value||'–',Wv=$('wid').value||'–';
+ $('dDeck').textContent='Deck: '+Lv+' × '+Wv+' ft (schematic, not to scale)';
+ const y1=150-th*30,y2=y1+S.len*30,pen=S.len-th,low=pen<1.5;
+ $('xBoard').setAttribute('y',y1);$('xBoard').setAttribute('height',th*30);
+ $('xScrew').setAttribute('y1',y1);$('xScrew').setAttribute('y2',y2);
+ $('xHead').setAttribute('y',y1);
+ $('gA').setAttribute('y1',y1);$('gA').setAttribute('y2',y1);
+ $('gB').setAttribute('y1',y2);$('gB').setAttribute('y2',y2);
+ $('dL').setAttribute('y1',y1+1);$('dL').setAttribute('y2',y2-1);
+ $('tL').setAttribute('y',(y1+y2)/2+4);$('tL').textContent=S.l+' in';
+ $('dT').setAttribute('y1',y1+1);$('dT').setAttribute('y2',149);
+ $('tT').setAttribute('y',(y1+150)/2+4);$('tT').textContent=p(th)+' in';
+ $('dP').setAttribute('y2',y2-1);
+ $('tP').setAttribute('y',(150+y2)/2+4);$('tP').textContent=p(pen)+' in';
+ $('tP').style.fill=low?'#c0392b':'#1a1a2e';
+ $('dCap').textContent='Screw '+S.l+' in, '+p(pen)+' in into joist'+(low?' (short)':'');
+}
+
+function calculate(){
+ clearErr();
+ const L=$('len').value.trim()===''?NaN:Number($('len').value);
+ const W=$('wid').value.trim()===''?NaN:Number($('wid').value);
+ const pv=$('price').value.trim();
+ const price=pv===''?null:Number(pv);
+ let bad=false;
+ if(!isFinite(L)||L<=0){setErr('len','Enter a deck length greater than 0 ft.');bad=true}
+ else if(L>500){setErr('len','Length looks too large. Enter 500 ft or less.');bad=true}
+ if(!isFinite(W)||W<=0){setErr('wid','Enter a deck width greater than 0 ft.');bad=true}
+ else if(W>500){setErr('wid','Width looks too large. Enter 500 ft or less.');bad=true}
+ if(price!==null&&(!isFinite(price)||price<0)){setErr('price','Enter a price of 0 or more, or leave blank.');bad=true}
+ if(bad){$('results').innerHTML='';return}
+ const bw=+$('bw').value,th=+$('th').value,sp=+$('sp').value,gap=+$('gap').value,spc=+$('spc').value,waste=+$('waste').value,boxlb=+$('box').value;
+ const S=SCREWS[$('ss').value];
+ const r=est(L,W,bw,gap,sp,spc,waste,S.lb);
+ const boxes=Math.ceil(r.lbs/boxlb-1e-9);
+ const area=L*W,pen=S.len-th;
+ const warns=[];
+ if(pen<1.5)warns.push('A '+S.n+' screw only reaches '+p(pen)+' in into the joist through '+p(th)+' in decking. Aim for at least 1-1/2 in of penetration: use a screw at least '+p(th+1.5)+' in long.');
+ if(sp===24&&th===1)warns.push('Wood 5/4 decking is generally limited to 16 in joist spacing when laid square to the joists (IRC R507.7). 24 in applies to 2× decking or products rated for it. Check your decking manufacturer and local code.');
+ let h='<div class="res"><div class="bl">Screws to buy (includes '+waste+'% waste)</div><div class="big">'+fmt(r.total)+'</div>';
+ h+='<div class="sub">≈ '+fmt(r.lbs)+' lb of '+S.n+' screws · '+fmt(boxes)+' × '+boxlb+' lb box'+(boxes>1?'es':'')+'</div>';
+ warns.forEach(w=>{h+='<div class="warn">⚠ '+w+'</div>'});
+ h+='<div class="tw"><table><thead><tr><th>Item</th><th class="n">Value</th></tr></thead><tbody>';
+ const rows=[['Deck area',fmt(area,1)+' sq ft'],['Boards across width',fmt(r.boards)],['Joists along length',fmt(r.joists)],['Board-to-joist crossings',fmt(r.cross)],['Screws per crossing',fmt(spc)],['Base screws',fmt(r.base)],['Waste allowance ('+waste+'%)','+'+fmt(r.total-r.base)],['Total screws',fmt(r.total)],['Screws per 100 sq ft',fmt(r.total/area*100)],['Weight needed (rounded up)',fmt(r.lbs)+' lb'],['Boxes ('+boxlb+' lb each)',fmt(boxes)+' ('+fmt(boxes*boxlb)+' lb)'],['Joist penetration',p(pen)+' in']];
+ if(price!==null)rows.push(['Estimated cost','$'+fmt(boxes*price,2)]);
+ rows.forEach(x=>{h+='<tr><td>'+x[0]+'</td><td class="n">'+x[1]+'</td></tr>'});
+ h+='</tbody></table></div><h3>Compare joist spacing</h3><div class="tw"><table><thead><tr><th>Spacing</th><th class="n">Joists</th><th class="n">Screws</th><th class="n">Weight (lb)</th></tr></thead><tbody>';
+ [12,16,24].forEach(s=>{const e=est(L,W,bw,gap,s,spc,waste,S.lb);h+='<tr'+(s===sp?' class="cur"':'')+'><td>'+s+' in o.c.</td><td class="n">'+fmt(e.joists)+'</td><td class="n">'+fmt(e.total)+'</td><td class="n">'+fmt(e.lbs)+'</td></tr>'});
+ h+='</tbody></table></div><p class="note">Estimate for fastening deck boards only, rounded up. Structural connections (ledger, joist hangers, guard posts) need structural fasteners, never deck screws. Joist spacing check follows the IRC R507.7 wood decking table; local codes vary and this is not engineering, permit or inspection approval. Screws per pound are approximate, so verify against your box label.</p>';
+ h+='<button type="button" class="copy" onclick="copyRes(this)">Copy results</button></div>';
+ summary='Deck screws estimate: '+fmt(L,1)+' × '+fmt(W,1)+' ft deck, '+p(bw)+' in boards, '+sp+' in o.c. joists, '+spc+' screw(s) per crossing, '+waste+'% waste. Total '+fmt(r.total)+' screws (≈ '+fmt(r.lbs)+' lb of '+S.n+'), '+fmt(boxes)+' × '+boxlb+' lb box'+(boxes>1?'es':'')+'. Estimate only; verify with local code and manufacturer instructions.';
+ $('results').innerHTML=h;
+ draw();
+}
+function copyRes(btn){
+ const done=()=>{btn.textContent='Copied!';setTimeout(()=>{btn.textContent='Copy results'},2000)};
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(summary).then(done,fb)}else fb();
+ function fb(){const t=document.createElement('textarea');t.value=summary;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);done()}
+}
+$('f').addEventListener('submit',e=>{e.preventDefault();requestAnimationFrame(calculate)});
+document.querySelectorAll('#f select,#f input[type=range]').forEach(s=>s.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();requestAnimationFrame(calculate)}}));
+draw();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
