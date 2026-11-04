@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Fence Gate Calculator | Toolwick</title>
+<meta name="description" content="Free fence gate calculator: get gate leaf width, frame cut list, diagonal brace, hinges, post size and concrete bags for single or double gates.">
+<link rel="canonical" href="https://toolwick.com/fence-gate-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.85rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none}
+h1{font-size:1.9rem;line-height:1.2;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.2rem 0 .6rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.lead{font-size:1.05rem;color:#333}
+.diagram{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:.5rem;margin:1.5rem 0}
+.diagram svg{display:block;width:100%;height:auto}
+.cap{font-size:.85rem;color:#555;margin:.25rem .5rem .4rem;text-align:center}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1rem}
+.field[hidden]{display:none}
+.full{grid-column:1/-1}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.3rem}
+input,select{font:inherit;width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;background:#fff;color:#1a1a2e}
+select{padding:12px 10px}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.bad,select.bad{border-color:#e74c3c}
+.row{display:flex;gap:.5rem}
+.row input{flex:1;min-width:0}
+.row select{width:84px;flex:none}
+.err{color:#c0392b;font-size:.85rem;margin-top:.25rem;min-height:0}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+.rl{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.hint{font-size:.8rem;color:#666;margin-top:.25rem}
+button{font:inherit;cursor:pointer}
+.btn{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;min-height:44px;width:100%;font-weight:600;margin-top:1.5rem}
+.btn:hover{background:#006299}
+#results:empty{display:none}
+#results{margin-top:2rem}
+.rb{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.rb{animation:none}}
+.kpi{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.5rem}
+.big{font-size:2.6rem;font-weight:700;color:#0077b6;line-height:1.1}
+.kl{color:#444;font-size:.95rem;margin-top:.3rem}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(odd) td{background:#fafafa}
+tr:nth-child(even) td{background:#fff}
+.n{text-align:right}
+td.n{font-variant-numeric:tabular-nums}
+.m{color:#666;font-size:.82rem;white-space:nowrap}
+.warn{background:#fff8e6;border:1px solid #f0d58a;border-radius:6px;padding:.75rem 1rem .75rem 2rem;font-size:.92rem;margin:1.25rem 0 0}
+.warn li{margin:.3rem 0}
+.note{font-size:.85rem;color:#555;margin:1rem 0 0}
+.errsum{color:#c0392b;font-weight:500;margin:0}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;min-height:44px;font-size:.9rem;margin-top:1rem}
+.copy:hover{background:#f0f8fc}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;font-weight:600;padding:12px 0;min-height:44px}
+details p{margin:0 0 1rem}
+.content li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;font-size:.92rem;margin:0 0 1rem}
+.rel{display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1.5rem;padding-left:1.2rem}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{margin-right:1rem}
+@media(max-width:640px){
+.grid,.rel{grid-template-columns:1fr}
+.card{padding:1.25rem}
+h1{font-size:1.6rem}
+.big{font-size:2.2rem}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/fence-gate-calculator/">
+<meta property="og:title" content="Fence Gate Calculator">
+<meta property="og:description" content="Free fence gate calculator: get gate leaf width, frame cut list, diagonal brace, hinges, post size and concrete bags for single or double gates.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Fence Gate Calculator</h1>
+<p class="lead">This fence gate calculator turns your measured opening into a buildable plan: exact gate leaf width, frame cut list, diagonal brace length, hinge count, post size and concrete bags for a single or double wood gate.</p>
+
+<div class="diagram">
+<div id="diagram"></div>
+<p class="cap" id="cap"></p>
+</div>
+
+<div class="card">
+<form id="f" novalidate>
+<div class="grid">
+<div class="field">
+<label for="open">Opening width (between posts)</label>
+<div class="row"><input id="open" type="number" step="any" inputmode="decimal" value="4" aria-describedby="openE"><select id="openU" aria-label="Opening width unit"><option value="ft">ft</option><option value="in">in</option><option value="cm">cm</option><option value="m">m</option></select></div>
+<div class="err" id="openE"></div>
+</div>
+<div class="field">
+<label for="ht">Gate height (top to ground)</label>
+<div class="row"><input id="ht" type="number" step="any" inputmode="decimal" value="6" aria-describedby="htE"><select id="htU" aria-label="Gate height unit"><option value="ft">ft</option><option value="in">in</option><option value="cm">cm</option><option value="m">m</option></select></div>
+<div class="err" id="htE"></div>
+</div>
+<div class="field">
+<label for="type">Gate type</label>
+<select id="type"><option value="1">Single swing (1 leaf)</option><option value="2">Double swing (2 leaves)</option></select>
+</div>
+<div class="field">
+<label for="infill">Infill</label>
+<select id="infill"><option value="p">Vertical pickets</option><option value="n">Frame only (no infill)</option></select>
+</div>
+<div class="field full">
+<label for="clr">Ground clearance under gate: <span id="clrV">2 in</span></label>
+<input id="clr" type="range" min="0" max="6" step="0.25" value="2">
+<div class="rl"><span>0 in</span><span>6 in</span></div>
+</div>
+<div class="field">
+<label for="hg">Hinge-side gap (in)</label>
+<input id="hg" type="number" step="any" inputmode="decimal" value="0.5" aria-describedby="hgE">
+<div class="err" id="hgE"></div>
+</div>
+<div class="field">
+<label for="lg">Latch-side gap (in)</label>
+<input id="lg" type="number" step="any" inputmode="decimal" value="0.75" aria-describedby="lgE">
+<div class="err" id="lgE"></div>
+</div>
+<div class="field" id="cgW" hidden>
+<label for="cg">Center gap, double gate (in)</label>
+<input id="cg" type="number" step="any" inputmode="decimal" value="1" aria-describedby="cgE">
+<div class="err" id="cgE"></div>
+</div>
+<div class="field pk">
+<label for="pw">Picket width (in)</label>
+<input id="pw" type="number" step="any" inputmode="decimal" value="5.5" aria-describedby="pwE">
+<div class="err" id="pwE"></div>
+</div>
+<div class="field pk">
+<label for="pg">Target picket gap (in)</label>
+<input id="pg" type="number" step="any" inputmode="decimal" value="0.5" aria-describedby="pgE">
+<div class="err" id="pgE"></div>
+</div>
+<div class="field full">
+<label for="fd">Local frost depth (in)</label>
+<input id="fd" type="number" step="any" inputmode="decimal" value="0" aria-describedby="fdE">
+<div class="hint">Enter 0 if unsure. The calculator never digs shallower than 36 in.</div>
+<div class="err" id="fdE"></div>
+</div>
+</div>
+<button class="btn" type="submit" id="calcBtn">Calculate Gate</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+</div>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<div class="content">
+<h2>How to Use This Fence Gate Calculator</h2>
+<p>Measure the clear opening between the two gate posts (not post center to center) and enter it with your height. Pick single or double swing, then adjust the clearances if your hardware needs different gaps. The calculator returns the width of each leaf, a cut list for a 2×4 frame, the diagonal brace length, hinge and latch counts, post size, hole size and concrete bags. The diagram above redraws with your numbers every time you calculate.</p>
+
+<h2>Why This Matters</h2>
+<p>The gate is the one moving part of a fence, and it is where most fences fail first. A 4 ft wide, 6 ft tall wood gate easily weighs 60 to 80 lb, and all of that hangs from one post by a lever arm of nearly four feet. Without a properly oriented diagonal brace and a post that is large and deep enough, the latch corner drops about half an inch within a season and the gate starts dragging.</p>
+<p>Small measuring mistakes cost real money too. Forget the 1¼ in of hinge and latch clearance on a 48 in opening and you build a 48 in gate that binds the first humid week. Order lumber from a rough guess and you make a second trip for two more boards. Homeowners building a garden or side-yard gate, contractors quoting a job, and landscapers replacing a sagging gate all need the same thing: reliable dimensions before the first cut. If the gate is part of a pool barrier, stricter rules apply, so check with your building department first.</p>
+
+<h2>How It's Calculated</h2>
+<p>All sizes follow common builder rules of thumb for residential wood gates. They are not a code table and not engineering. Each safety-relevant number is rounded toward the stronger or longer side.</p>
+<div class="formula">Leaf width = (Opening − hinge gap − latch gap − center gap) ÷ leaves, rounded down to 1/16 in<br>Leaf height = Gate height − ground clearance<br>Rail length = Leaf width − 7 in (two 3½ in stiles)<br>Brace stock length = √(rail length² + inner height²) + 3½ in, rounded up</div>
+<p>The frame uses 2×4s laid flat (3½ in wide). Leaves 48 in tall or less get two rails; taller leaves get three. The brace runs from the bottom hinge corner up to the top latch corner so it works in compression, and it is cut long so you can trim it to fit.</p>
+<p>Picket count is (leaf width + gap) ÷ (picket width + gap), rounded up, then reduced only if the real gap would fall under ¼ in. Hinge count is 2 up to 48 in tall, 3 up to 84 in and 4 above, never fewer than 3 if the leaf is wider than 48 in. Hinge strap length is about one third of the leaf width.</p>
+<p>Gate posts are 4×4 only when the leaf is 36 in wide or less and 48 in tall or less; anything bigger gets 6×6. Hole depth is the largest of 36 in, half the above-ground post height (so at least one third of the post is buried), or your frost depth (the idea behind IRC R403.1.4.1), rounded up to the next 6 in. Hole diameter is three times the post width, rounded up to an even inch. Concrete volume per hole is (π × r² − post area) × depth, plus 10% extra, divided by 0.60 ft³ per 80 lb bag (0.45 ft³ per 60 lb bag), rounded up. Local codes vary.</p>
+
+<h2>Worked Example</h2>
+<p>A 4 ft opening, 6 ft tall single gate, 2 in ground clearance, ½ in hinge gap, ¾ in latch gap, 5½ in pickets with a ½ in target gap, and no frost depth entered:</p>
+<ul>
+<li><strong>Leaf width:</strong> (48 − 0.5 − 0.75) ÷ 1 = 46 3/4 in. Leaf height: 72 − 2 = 70 in, so the frame gets 3 rails.</li>
+<li><strong>Inner frame:</strong> 46.75 − 7 = 39 3/4 in wide and 70 − 7 = 63 in tall. Diagonal = √(39.75² + 63²) ≈ 74.5 in; adding 3½ in and rounding up gives a 78 in brace at about 58°.</li>
+<li><strong>Cut list:</strong> 2 stiles at 70 in, 3 rails at 39 3/4 in, 1 brace at 78 in. Packed with saw kerf, that is 5 boards of 2×4×8 ft.</li>
+<li><strong>Pickets:</strong> (46.75 + 0.5) ÷ 6 = 7.9, so 8 pickets, each 70 in long, with an actual gap of about 0.39 in.</li>
+<li><strong>Hardware:</strong> the 70 in leaf needs 3 hinges with 16 in straps and one latch. Frame screws come to 25 and picket screws to 53, both including 10% extra.</li>
+<li><strong>Posts:</strong> the leaf is wider than 36 in, so 6×6. Above-ground height is 72 + 2 = 74 in, half is 37, so the hole is 42 in deep and 18 in across. Post length is at least 10 ft, post centers sit 53 1/2 in apart, and two holes need about 12 ft³ of concrete, or 20 bags of 80 lb.</li>
+</ul>
+<p>Switching the same opening to a double gate gives two leaves of 22 7/8 in each, which is far easier on the hinges.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li>Measure the opening at the top, middle and bottom. Use the smallest number, because posts are rarely perfectly plumb.</li>
+<li>Install the brace from the bottom hinge corner to the top latch corner. Reversing it puts the brace in tension and the gate will still sag.</li>
+<li>Do not skimp on the hinge post. A strong gate on a 4×4 set 24 in deep in loose soil will lean, no matter how well the frame is built.</li>
+<li>Over about 48 in wide, consider a double gate, an anti-sag cable kit or a wheel. Wide wood leaves rarely stay square.</li>
+<li>Leave the clearance. Wood swells in wet weather, and a gate cut to exactly the opening will bind. Allow extra if the ground slopes across the swing.</li>
+<li>Buy one or two extra pickets and a few extra screws. A split board costs less than a return trip.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How wide should a fence gate be?</summary><p>A walk-through gate is usually 36 to 48 in wide, which is comfortable for people and wheelbarrows. Mower and garden-cart access needs about 48 to 60 in. Beyond 60 in, a double gate is the better choice.</p></details>
+<details><summary>How much smaller than the opening should the gate be?</summary><p>Plan on about ½ in on the hinge side and ¾ in on the latch side, so roughly 1¼ in total for a single gate. Add about 1 in between leaves on a double gate. Always check the hinge and latch manufacturer's required gaps.</p></details>
+<details><summary>What size posts do I need for a gate?</summary><p>As a rule of thumb, use 4×4 posts only for gates up to 36 in wide and 48 in tall. Larger or heavier gates need 6×6 posts or steel posts. The hinge post carries most of the load, so give it the biggest, deepest footing.</p></details>
+<details><summary>How deep should gate posts be set?</summary><p>At least a third of the post's total length should be underground, with a minimum of about 36 in and below your local frost line. This calculator rounds that up to the next 6 in. Your building department can tell you the required frost depth.</p></details>
+<details><summary>How do I stop a wooden gate from sagging?</summary><p>Use a diagonal brace that runs from the bottom hinge corner to the top latch corner, plus strong hinges on a solid post. For wide gates, add an anti-sag cable with a turnbuckle or a support wheel. Re-tighten the hinge screws every year.</p></details>
+<details><summary>Does this calculator work for pool gates or driveway gates?</summary><p>No. Pool barrier gates must be self-closing and self-latching under rules such as IRC Appendix V, and driveway gates are much heavier. Use this tool for ordinary garden and yard wood gates, and confirm requirements with your local building department.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/chain-link-fence-calculator/">Chain Link Fence Calculator</a></li>
+<li><a href="/fence-installation-cost-calculator/">Fence Installation Cost Calculator</a></li>
+<li><a href="/fence-picket-calculator/">Fence Picket Calculator</a></li>
+<li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a></li>
+<li><a href="/fence-material-calculator/">Fence Material Calculator</a></li>
+<li><a href="/deck-post-size-calculator/">Deck Post Size Calculator</a></li>
+</ul>
+</div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/fence-gate-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var UN={ft:12,'in':1,cm:1/2.54,m:39.3701};
+var nf=function(x,d){d=d||0;return Number(x).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+function frac(x){var t=Math.round(x*16),w=Math.floor(t/16),r=t%16;if(!r)return nf(w)+'"';var a=r,b=16;while(a%2===0&&b>1){a/=2;b/=2}return (w?nf(w)+' ':'')+a+'/'+b+'"'}
+var cm=function(x){return nf(x*2.54,1)};
+var last='';
+
+function read(){
+ var n=function(id){var v=$(id).value.trim();return v===''?NaN:Number(v)};
+ return{open:n('open')*UN[$('openU').value],Hh:n('ht')*UN[$('htU').value],L:$('type').value==='2'?2:1,g:n('clr'),hg:n('hg'),lg:n('lg'),cg:n('cg'),pick:$('infill').value==='p',pw:n('pw'),pg:n('pg'),fd:n('fd')};
+}
+function leafW(i,L){var c=isNaN(i.cg)?0:i.cg;return Math.floor(((i.open-i.hg-i.lg-(L===2?c:0))/L)*16)/16}
+function validate(i){
+ var e={};
+ var chk=function(k,v,lo,hi,m){if(!(v>=lo&&v<=hi))e[k]=m};
+ chk('open',i.open,12,240,'Enter an opening between 12 in (1 ft) and 240 in (20 ft).');
+ chk('ht',i.Hh,24,120,'Enter a gate height between 24 in (2 ft) and 120 in (10 ft).');
+ chk('hg',i.hg,0,4,'Hinge gap must be between 0 and 4 in.');
+ chk('lg',i.lg,0,4,'Latch gap must be between 0 and 4 in.');
+ if(i.L===2)chk('cg',i.cg,0,6,'Center gap must be between 0 and 6 in.');
+ chk('fd',i.fd,0,96,'Frost depth must be between 0 and 96 in.');
+ if(i.pick){chk('pw',i.pw,1,12,'Picket width must be between 1 and 12 in.');chk('pg',i.pg,0,6,'Picket gap must be between 0 and 6 in.')}
+ if(!e.open&&!e.hg&&!e.lg&&!e.cg){
+  var W=leafW(i,i.L);
+  if(W<12)e.open='The gaps leave under 12 in per leaf. Use a wider opening or smaller gaps.';
+  else if(W>120)e.open='A single leaf over 10 ft is not practical. Choose a double gate or a smaller opening.';
+  else if(i.pick&&!e.pw&&i.pw>W)e.pw='Picket is wider than the gate leaf.';
+ }
+ if(!e.ht&&i.Hh-i.g<18)e.ht='Gate must be at least 18 in taller than the ground clearance.';
+ return e;
+}
+function compute(i){
+ var L=i.L,W=leafW(i,L),H=i.Hh-i.g,R=H>48?3:2,Wi=W-7,Hi=H-7;
+ var diag=Math.hypot(Wi,Hi),brace=Math.ceil((diag+3.5)*16)/16,ang=Math.atan2(Hi,Wi)*180/Math.PI;
+ var n=0,pgap=0;
+ if(i.pick){n=Math.ceil((W+i.pg)/(i.pw+i.pg));while(n>1&&(W-n*i.pw)/(n-1)<0.25)n--;pgap=n>1?(W-n*i.pw)/(n-1):0}
+ var hn=H<=48?2:H<=84?3:4;if(W>48&&hn<3)hn=3;
+ var hl=Math.max(8,Math.ceil(W/6)*2);
+ var big=!(W<=36&&H<=48),pwid=big?5.5:3.5,pname=big?'6×6':'4×4';
+ var above=i.Hh+2,depth=Math.ceil(Math.max(36,above/2,i.fd)/6)*6,dia=Math.ceil(pwid*3/2)*2;
+ var vol=(Math.PI*dia*dia/4-pwid*pwid)*depth/1728*2*1.1;
+ var b80=Math.ceil(vol/0.6),b60=Math.ceil(vol/0.45),plen=Math.ceil((above+depth)/12);
+ var rows=[['Stiles (vertical)',2*L,H],['Rails (between stiles)',R*L,Wi],['Diagonal brace (cut long, trim to fit)',L,brace]];
+ var pcs=[];rows.forEach(function(r){for(var k=0;k<r[1];k++)pcs.push(r[2])});
+ var longest=Math.max.apply(null,pcs);
+ var stock=[96,120,144,192].filter(function(s){return s>=longest+0.125})[0]||192;
+ pcs.sort(function(a,b){return b-a});
+ var bins=[];pcs.forEach(function(p){var s=p+0.125,bi=-1;for(var k=0;k<bins.length;k++){if(bins[k]+s<=stock){bi=k;break}}if(bi<0)bins.push(s);else bins[bi]+=s});
+ var fs=Math.ceil((R*6+4)*L*1.1),ps=i.pick?Math.ceil(n*R*2*L*1.1):0;
+ var alt=leafW(i,3-L);
+ var w=[];
+ if(W>72)w.push('Leaves wider than 72 in. are not practical in wood. Split the opening into a double gate or use a welded steel or aluminum frame.');
+ else if(W>48)w.push('Leaf is wider than 48 in. Use the brace, add an anti-sag cable or support wheel, and consider a double gate.');
+ if(i.Hh>72)w.push('Gates over 72 in. tall may exceed local fence height limits (6 ft is a common cap) and catch more wind. Check local rules before building.');
+ if(big&&(W>60||H>72))w.push('This gate is at the limit of wood-post rules of thumb. Use steel posts or get an engineered footing design.');
+ if(i.g<1)w.push('Under 1 in. of ground clearance can bind on uneven ground, snow or frost heave.');
+ if(i.pick&&i.pg>3.5)w.push('A picket gap over 3.5 in. may let small children or pets through.');
+ if(i.pick&&n>1&&Math.abs(pgap-i.pg)>0.02)w.push('Picket spacing was adjusted to '+nf(pgap,2)+' in. so pickets fit the leaf evenly.');
+ return{L:L,W:W,H:H,R:R,Wi:Wi,Hi:Hi,brace:brace,ang:ang,n:n,pgap:pgap,pl:H,hn:hn,hl:hl,pname:pname,pwid:pwid,above:above,depth:depth,dia:dia,b80:b80,b60:b60,plen:plen,rows:rows,stock:stock,boards:bins.length,fs:fs,ps:ps,alt:alt,w:w,open:i.open,Hh:i.Hh,g:i.g,hg:i.hg,lg:i.lg,cg:i.cg,pick:i.pick,vol:vol};
+}
+function draw(d){
+ var L=d.L,a0=98,a1=502,gt=95,gb=230,s=14,mid=(gt+gb)/2;
+ var lv=L===1?[[a0,a1,0]]:[[a0,296,0],[304,a1,1]];
+ var T=function(x,y,t,sz,ex){return '<text x="'+x+'" y="'+y+'" text-anchor="middle" font-size="'+(sz||19)+'" fill="#1a1a2e"'+(ex||'')+'>'+t+'</text>'};
+ var ar=' marker-start="url(#ar)" marker-end="url(#ar)"';
+ var g='<svg viewBox="0 0 600 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Front view of a fence gate showing the opening, leaf width and height" font-family="-apple-system,Segoe UI,Roboto,sans-serif"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1a1a2e"/></marker></defs>';
+ g+='<rect x="20" y="250" width="560" height="12" fill="#f0f0f0"/><line x1="20" y1="250" x2="580" y2="250" stroke="#1a1a2e" stroke-width="2"/>';
+ g+='<g stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"><line x1="36" y1="'+gt+'" x2="98" y2="'+gt+'"/><line x1="36" y1="'+gb+'" x2="98" y2="'+gb+'"/><line x1="90" y1="250" x2="90" y2="282"/><line x1="510" y1="250" x2="510" y2="282"/></g>';
+ g+='<rect x="60" y="50" width="30" height="200" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/><rect x="510" y="50" width="30" height="200" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/>';
+ lv.forEach(function(p){
+  var a=p[0],b=p[1],hr=p[2];
+  g+='<rect x="'+a+'" y="'+gt+'" width="'+(b-a)+'" height="'+(gb-gt)+'" fill="#fff" stroke="#0077b6" stroke-width="3"/>';
+  g+='<rect x="'+(a+s)+'" y="'+(gt+s)+'" width="'+(b-a-2*s)+'" height="'+(gb-gt-2*s)+'" fill="none" stroke="#0077b6" stroke-width="1.5"/>';
+  if(d.R===3)g+='<rect x="'+(a+s)+'" y="'+(mid-s/2)+'" width="'+(b-a-2*s)+'" height="'+s+'" fill="none" stroke="#0077b6" stroke-width="1.5"/>';
+  g+='<line x1="'+(hr?b-s:a+s)+'" y1="'+(gb-s)+'" x2="'+(hr?a+s:b-s)+'" y2="'+(gt+s)+'" stroke="#0077b6" stroke-width="4"/>';
+  var hx=hr?b-s:a;
+  g+='<rect x="'+hx+'" y="'+(gt+22)+'" width="'+s+'" height="10" fill="#1a1a2e"/><rect x="'+hx+'" y="'+(gb-32)+'" width="'+s+'" height="10" fill="#1a1a2e"/>';
+  g+='<circle cx="'+(hr?a+7:b-7)+'" cy="'+mid+'" r="5" fill="#1a1a2e"/>';
+  g+='<line x1="'+a+'" y1="74" x2="'+b+'" y2="74" stroke="#1a1a2e" stroke-width="1.5"'+ar+'/>'+T((a+b)/2,66,'Leaf '+frac(d.W));
+ });
+ g+='<line x1="40" y1="'+gt+'" x2="40" y2="'+gb+'" stroke="#1a1a2e" stroke-width="1.5"'+ar+'/>'+T(24,mid,'Height '+frac(d.H),17,' transform="rotate(-90 24 '+mid+')"');
+ g+='<line x1="90" y1="272" x2="510" y2="272" stroke="#1a1a2e" stroke-width="1.5"'+ar+'/>'+T(300,300,'Opening between posts: '+frac(d.open),19);
+ g+='</svg>';
+ $('diagram').innerHTML=g;
+ $('cap').textContent='Front view, not to scale. Gaps: hinge '+frac(d.hg)+', latch '+frac(d.lg)+(L===2?', center '+frac(d.cg):'')+'. Ground clearance '+frac(d.g)+'. Blue diagonal = brace; dark blocks = hinges; dot = latch.';
+}
+var row=function(a,b){return '<tr><td>'+a+'</td><td class="n">'+b+'</td></tr>'};
+var vm=function(x){return frac(x)+' <span class="m">('+cm(x)+' cm)</span>'};
+function render(d){
+ var typ=d.L===1?'Single swing (1 leaf)':'Double swing (2 leaves)';
+ var h='<div class="rb"><div class="kpi"><div class="big">'+frac(d.W)+'</div><div class="kl">Width of each gate leaf'+(d.L===2?' (build 2)':'')+' &middot; '+cm(d.W)+' cm</div></div>';
+ h+='<h3>Gate summary</h3><div class="tw"><table><thead><tr><th>Measurement</th><th class="n">Value</th></tr></thead><tbody>';
+ h+=row('Gate type',typ)+row('Opening between posts',vm(d.open))+row('Post center to center',vm(d.open+d.pwid))+row('Leaf height (frame)',vm(d.H))+row('Gate top above ground',vm(d.Hh))+row('Inner frame (W × H)',frac(d.Wi)+' × '+frac(d.Hi))+row('Brace angle from horizontal',nf(d.ang,0)+'°');
+ h+=row('If you chose '+(d.L===1?'a double':'a single')+' gate',isNaN(d.alt)||d.alt<=0?'n/a':frac(d.alt)+' per leaf');
+ h+='</tbody></table></div>';
+ h+='<h3>Frame cut list (2×4, laid flat)</h3><div class="tw"><table><thead><tr><th>Piece</th><th class="n">Qty</th><th class="n">Length</th><th class="n">cm</th></tr></thead><tbody>';
+ d.rows.forEach(function(r){h+='<tr><td>'+r[0]+'</td><td class="n">'+nf(r[1])+'</td><td class="n">'+frac(r[2])+'</td><td class="n">'+cm(r[2])+'</td></tr>'});
+ h+='</tbody></table></div>';
+ h+='<h3>Hardware, posts &amp; materials</h3><div class="tw"><table><thead><tr><th>Item</th><th class="n">Amount</th></tr></thead><tbody>';
+ h+=row('2×4 boards to buy',nf(d.boards)+' × '+(d.stock/12)+' ft')+row('Hinges',nf(d.hn)+' per leaf ('+nf(d.hn*d.L)+' total), straps ≥ '+nf(d.hl)+' in')+row('Latch',d.L===2?'1 latch + 1 drop rod':'1 latch');
+ if(d.pick)h+=row('Pickets',nf(d.n*d.L)+' × '+frac(d.pl)+' <span class="m">(gap '+nf(d.pgap,2)+' in)</span>');
+ h+=row('Frame screws (3 in)',nf(d.fs));
+ if(d.pick)h+=row('Picket screws (2 in)',nf(d.ps));
+ h+=row('Gate post size (minimum)',d.pname+' <span class="m">(actual '+d.pwid+' in)</span>')+row('Post length (minimum)',nf(d.plen)+' ft')+row('Hole (2 holes)',nf(d.dia)+' in dia × '+nf(d.depth)+' in deep')+row('Concrete, incl. 10% extra',nf(d.b80)+' × 80 lb bags <span class="m">(or '+nf(d.b60)+' × 60 lb)</span>');
+ h+='</tbody></table></div>';
+ if(d.w.length)h+='<ul class="warn">'+d.w.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>';
+ h+='<p class="note">Rule-of-thumb sizing for residential wood gates, rounded to the safer side (leaf width down; brace, posts, depth, bags and screws up). This is not engineering, permit or inspection approval. Frost depth, fence height and pool-barrier rules (e.g. IRC R403.1.4.1, IRC Appendix V) vary by locality, so confirm with your building department.</p>';
+ h+='<button type="button" class="copy" id="copyBtn">Copy results</button></div>';
+ last=['Fence Gate Calculator (toolwick.com)',typ,'Opening: '+frac(d.open)+', gate height: '+frac(d.Hh),'Leaf width: '+frac(d.W)+' each, leaf height: '+frac(d.H),'Cut list: '+d.rows.map(function(r){return r[1]+' x '+frac(r[2])}).join(', '),'2x4 boards: '+d.boards+' x '+(d.stock/12)+' ft','Hinges: '+d.hn*d.L+' (straps >= '+d.hl+' in), brace angle '+nf(d.ang,0)+' deg',d.pick?'Pickets: '+d.n*d.L+' x '+frac(d.pl):'No infill','Posts: '+d.pname+', '+d.plen+' ft min, holes '+d.dia+' in x '+d.depth+' in','Concrete: '+d.b80+' x 80 lb bags','Rule-of-thumb only; verify with local code.'].join('\n');
+ return h;
+}
+function calculate(){
+ var i=read(),e=validate(i),res=$('results');
+ requestAnimationFrame(function(){
+  ['open','ht','hg','lg','cg','pw','pg','fd'].forEach(function(k){
+   var el=$(k),er=$(k+'E');er.textContent=e[k]||'';el.classList.toggle('bad',!!e[k]);
+   if(e[k])el.setAttribute('aria-invalid','true');else el.removeAttribute('aria-invalid');
+  });
+  if(Object.keys(e).length){res.dataset.has='';res.innerHTML='<p class="errsum">Please fix the highlighted fields. Results are cleared until the inputs are valid.</p>';return}
+  var d=compute(i);
+  draw(d);
+  res.dataset.has='1';
+  res.innerHTML=render(d);
+ });
+}
+function sync(){
+ $('cgW').hidden=$('type').value!=='2';
+ var p=$('infill').value!=='p';
+ Array.prototype.forEach.call(document.querySelectorAll('.pk'),function(x){x.hidden=p});
+}
+$('f').addEventListener('submit',function(ev){ev.preventDefault();calculate()});
+$('type').addEventListener('change',sync);
+$('infill').addEventListener('change',sync);
+$('clr').addEventListener('input',function(){$('clrV').textContent=nf(this.value,2).replace(/\.?0+$/,'')+' in'});
+$('clr').addEventListener('change',function(){if($('results').dataset.has)calculate()});
+$('results').addEventListener('click',function(ev){
+ if(ev.target.id!=='copyBtn')return;
+ var b=ev.target;
+ var done=function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)};
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(last).then(done,function(){fb()})}else fb();
+ function fb(){var t=document.createElement('textarea');t.value=last;t.setAttribute('readonly','');t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(t);done()}
+});
+$('yr').textContent=new Date().getFullYear();
+sync();
+var i0=read();
+if(!Object.keys(validate(i0)).length)draw(compute(i0));
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
