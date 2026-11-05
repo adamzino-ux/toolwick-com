@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Deck Skirting Calculator | Toolwick</title>
+<meta name="description" content="Free deck skirting calculator: enter deck size, height and material to get boards or lattice panels, framing, screws, ventilation check and cost.">
+<link rel="canonical" href="https://toolwick.com/deck-skirting-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:1rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 1rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+label,legend{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+fieldset{border:0;padding:0;margin:0 0 1.25rem}
+input[type=number],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;min-height:44px;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,input[type=range]:focus-visible,input[type=checkbox]:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.field{margin-bottom:1.25rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.err{border-color:#e74c3c!important}
+.errmsg{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.errmsg:empty{display:none}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.checks label{display:flex;align-items:center;gap:.6rem;min-height:44px;margin:0;padding:0 12px;border:1px solid #ddd;border-radius:6px;font-size:.95rem;color:#1a1a2e;cursor:pointer}
+.checks input{width:20px;height:20px;margin:0;accent-color:#0077b6}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.wv{font-weight:700;color:#0077b6}
+.btn{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;font-family:inherit}
+.btn:hover{background:#006299}
+.hidden{display:none}
+#results{margin-top:1.5rem}
+.fade{animation:fd .3s ease}
+@keyframes fd{from{opacity:0}to{opacity:1}}
+.big{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.15}
+.bigl{font-size:.95rem;color:#444;margin-bottom:1rem}
+.box{background:#f8f9fa;border-radius:8px;padding:1rem 1.25rem;margin:1rem 0;font-size:.92rem}
+.box ul{margin:.25rem 0 0;padding-left:1.2rem}
+.box.warn{border-left:4px solid #e67e22}
+.box.ok{border-left:4px solid #27ae60}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.num{text-align:right;white-space:nowrap}
+th.num{text-align:right}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.9rem;cursor:pointer;min-height:44px;font-family:inherit}
+.copy:hover{background:#f0f8fc}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .5rem}
+.rel{list-style:none;padding:0;display:grid;gap:.5rem}
+.rel a{display:block;padding:12px 16px;background:#f8f9fa;border-radius:6px;min-height:44px}
+.formula{background:#f8f9fa;border-radius:6px;padding:1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;overflow-x:auto;line-height:1.7}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{margin-right:1rem}
+@media(max-width:639px){.row{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.5rem}.big{font-size:2rem}.checks{grid-template-columns:1fr 1fr}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/deck-skirting-calculator/">
+<meta property="og:title" content="Deck Skirting Calculator">
+<meta property="og:description" content="Free deck skirting calculator: enter deck size, height and material to get boards or lattice panels, framing, screws, ventilation check and cost.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Deck Skirting Calculator</h1>
+<p>Use this deck skirting calculator to work out how many boards or lattice panels you need to close in the space under your deck, plus the 2x4 framing, screws, ventilation check and estimated cost.</p>
+
+<div class="card">
+<div class="diagram">
+<svg viewBox="0 0 540 270" role="img" aria-labelledby="dgT dgD">
+<title id="dgT">Deck skirting side elevation</title>
+<desc id="dgD">Side view of a deck showing deck height above ground, the skirt height, and the clearance gap between the bottom of the skirt and the soil.</desc>
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker>
+<pattern id="pv" width="9" height="10" patternUnits="userSpaceOnUse"><path d="M1 0V10" stroke="#0077b6" stroke-opacity=".45"/></pattern>
+<pattern id="ph" width="10" height="11" patternUnits="userSpaceOnUse"><path d="M0 1H10" stroke="#0077b6" stroke-opacity=".45"/></pattern>
+<pattern id="pl" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M0 0L12 12M12 0L0 12" stroke="#0077b6" stroke-opacity=".4"/></pattern>
+</defs>
+<line x1="20" y1="215" x2="520" y2="215" stroke="#1a1a2e" stroke-width="2"/>
+<line x1="20" y1="222" x2="520" y2="222" stroke="#e0e0e0" stroke-dasharray="6 4"/>
+<text x="24" y="240" font-size="13" fill="#1a1a2e">Ground</text>
+<rect id="p1" x="130" y="80" width="8" height="135" fill="none" stroke="#c8c8c8" stroke-width="2" stroke-dasharray="5 3"/>
+<rect id="p2" x="402" y="80" width="8" height="135" fill="none" stroke="#c8c8c8" stroke-width="2" stroke-dasharray="5 3"/>
+<rect id="dk" x="110" y="70" width="320" height="10" fill="#f0f0f0" stroke="#1a1a2e" stroke-width="1.5"/>
+<text id="tDeck" x="270" y="62" font-size="13" text-anchor="middle" fill="#1a1a2e">Decking (underside = start of skirt)</text>
+<rect id="sk" x="118" y="80" width="304" height="115" fill="url(#pv)" stroke="#0077b6" stroke-width="2"/>
+<line id="gd1" x1="95" y1="80" x2="112" y2="80" stroke="#c8c8c8" stroke-dasharray="3 3"/>
+<line id="dimH" x1="90" y1="80" x2="90" y2="215" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tH" x="76" y="150" font-size="15" font-weight="600" text-anchor="middle" fill="#1a1a2e" transform="rotate(-90 76 150)">H = 36 in</text>
+<line id="dimS" x1="270" y1="82" x2="270" y2="193" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<rect id="sbg" x="215" y="126" width="110" height="24" rx="4" fill="#fff" stroke="#e0e0e0"/>
+<text id="tS" x="270" y="143" font-size="15" font-weight="600" text-anchor="middle" fill="#1a1a2e">Skirt 34 in</text>
+<line id="gd2" x1="422" y1="195" x2="478" y2="195" stroke="#c8c8c8" stroke-dasharray="3 3"/>
+<line id="dimG" x1="470" y1="195" x2="470" y2="215" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tG" x="480" y="209" font-size="15" font-weight="600" fill="#1a1a2e">Gap 2 in</text>
+<text id="tC" x="270" y="262" font-size="14" text-anchor="middle" fill="#1a1a2e">Net skirt run: 37 ft</text>
+</svg>
+</div>
+
+<fieldset>
+<legend>Sides to skirt</legend>
+<div class="checks">
+<label for="sf"><input type="checkbox" id="sf" checked> Front (length)</label>
+<label for="sb"><input type="checkbox" id="sb"> Back (length)</label>
+<label for="sl"><input type="checkbox" id="sl" checked> Left (width)</label>
+<label for="sr"><input type="checkbox" id="sr" checked> Right (width)</label>
+</div>
+<div class="errmsg" id="sides-err" role="alert"></div>
+<div class="hint">Leave out any side attached to the house.</div>
+</fieldset>
+
+<div class="row">
+<div class="field"><label for="dl">Deck length (ft)</label><input type="number" id="dl" value="16" min="0" step="any" inputmode="decimal" aria-describedby="dl-err"><div class="errmsg" id="dl-err" role="alert"></div></div>
+<div class="field"><label for="dw">Deck width (ft)</label><input type="number" id="dw" value="12" min="0" step="any" inputmode="decimal" aria-describedby="dw-err"><div class="errmsg" id="dw-err" role="alert"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="dh">Ground to underside of decking (in)</label><input type="number" id="dh" value="36" min="0" step="any" inputmode="decimal" aria-describedby="dh-err"><div class="errmsg" id="dh-err" role="alert"></div></div>
+<div class="field"><label for="cl">Ground clearance under skirt (in)</label><input type="number" id="cl" value="2" min="0" step="any" inputmode="decimal" aria-describedby="cl-err"><div class="errmsg" id="cl-err" role="alert"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="op">Access opening width (ft)</label><input type="number" id="op" value="3" min="0" step="any" inputmode="decimal" aria-describedby="op-err"><div class="errmsg" id="op-err" role="alert"></div></div>
+<div class="field"><label for="os">Opening is on the</label><select id="os" aria-describedby="os-err"><option value="f">Front side</option><option value="b">Back side</option><option value="l">Left side</option><option value="r">Right side</option></select><div class="errmsg" id="os-err" role="alert"></div></div>
+</div>
+
+<div class="field"><label for="mat">Skirting style</label>
+<select id="mat"><option value="v">Vertical boards / slats</option><option value="h">Horizontal boards</option><option value="l">Lattice panels</option></select></div>
+
+<div id="bd">
+<div class="row">
+<div class="field"><label for="bw">Board width (actual)</label><select id="bw"><option value="3.5">3.5 in (1×4)</option><option value="5.5" selected>5.5 in (1×6 / 5/4×6)</option><option value="7.25">7.25 in (1×8)</option><option value="9.25">9.25 in (1×10)</option></select></div>
+<div class="field"><label for="gp">Gap between boards (in)</label><input type="number" id="gp" value="0.25" min="0" step="any" inputmode="decimal" aria-describedby="gp-err"><div class="errmsg" id="gp-err" role="alert"></div></div>
+</div>
+<div class="field"><label for="stock">Board length you will buy</label><select id="stock" aria-describedby="stock-err"><option value="6">6 ft</option><option value="8" selected>8 ft</option><option value="10">10 ft</option><option value="12">12 ft</option><option value="16">16 ft</option></select><div class="errmsg" id="stock-err" role="alert"></div></div>
+</div>
+
+<div id="ld" class="field hidden"><label for="panel">Lattice panel size</label><select id="panel"><option value="4x8" selected>4 ft tall × 8 ft wide</option><option value="2x8">2 ft tall × 8 ft wide</option><option value="4x4">4 ft tall × 4 ft wide</option></select></div>
+
+<div class="row">
+<div class="field"><label for="sp">Framing stud spacing</label><select id="sp"><option value="16" selected>16 in on center</option><option value="24">24 in on center</option></select></div>
+<div class="field"><label for="pr">Price per board / panel ($, optional)</label><input type="number" id="pr" min="0" step="any" inputmode="decimal" placeholder="e.g. 14.50" aria-describedby="pr-err"><div class="errmsg" id="pr-err" role="alert"></div></div>
+</div>
+
+<div class="field"><label for="ws">Waste allowance: <span class="wv" id="wv">10%</span></label>
+<input type="range" id="ws" min="5" max="25" step="1" value="10">
+<div class="ticks"><span>5%</span><span>15%</span><span>25%</span></div></div>
+
+<button class="btn" id="calcBtn" type="button">Calculate Skirting</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Deck Skirting Calculator</h2>
+<p>Enter your deck's length and width, tick the sides you plan to close in, and enter the height from the ground to the underside of the decking. Choose vertical boards, horizontal boards or lattice panels, set the board size or panel size and add an access opening if you want one. The results list the boards or panels to buy, 2x4 framing pieces, screws, the net skirt area, a ventilation check and an optional cost estimate.</p>
+
+<h2>Why This Matters</h2>
+<p>Skirting is the finishing layer that turns a raised platform into a deck that looks built-in. It also keeps raccoons, skunks and groundhogs from nesting underneath, stops wind-blown leaves and trash from collecting, and gives you a hidden space for mowers, planters and winter storage. Done badly, it traps moisture, rots the bottom edge and blocks the airflow that keeps joists dry.</p>
+<p>Ordering is where most people go wrong. A 16 × 12 ft deck sitting 36 inches off the ground, skirted on three sides, needs roughly 105 square feet of cladding. That is about 44 eight-foot boards, and short one box of boards from a different lumber lot and the color will not match. Running out of 2x4 studs mid-project means another trip with the truck. Deck skirting is also one of the first places builders cut corners on clearance. Wood that touches soil wicks moisture and fails years early, so a deliberate 2-inch gap matters. Use the calculator before you shop so you buy once, cut once and leave the ventilation you need.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator measures the run of each skirted side, subtracts any access opening, then sizes the cladding and framing from the skirt height. Everything is rounded up, never down.</p>
+<div class="formula">Skirt height = deck height − ground clearance<br>
+Net run = sum of skirted sides − opening width<br>
+Vertical boards per run = ⌈ run (in) ÷ (board width + gap) ⌉<br>
+Horizontal rows = ⌈ (skirt height + gap) ÷ (board width + gap) ⌉<br>
+Lattice panels = ⌈ run ÷ panel width ⌉ × ⌈ skirt height ÷ panel height ⌉<br>
+Studs per run = ⌈ run (in) ÷ spacing ⌉ + 1<br>
+Boards to buy = ⌈ cut pieces × (1 + waste) ÷ pieces per stock board ⌉</div>
+<p>Any side with an opening is split into two runs, one on each side of the door, so the framing and cladding are counted separately for each. Rails are 2x4s running along the top and bottom (plus a middle rail when the skirt is taller than 48 inches). Screws are counted at two per board at each rail or stud crossing. Lattice screws are counted every 8 inches around each panel's perimeter.</p>
+<p>The ventilation check compares the open area of your skirt with a rule of thumb of 1 square foot of open area per 150 square feet of deck. This borrows from the crawl-space ventilation language in IRC R408.1. Decks are not crawl spaces, and local codes vary. Lattice is assumed to be 40% open, which is conservative. For wood near the ground, the calculator assumes pressure-treated, ground-contact-rated lumber as described in IRC R317.1.</p>
+
+<h2>Worked Example</h2>
+<p>A 16 × 12 ft deck sits 36 inches above grade. You skirt the front, left and right sides, leave a 3 ft access door in the front, use 5.5 in vertical boards with a 0.25 in gap, buy 8-ft boards, space studs at 16 in and allow 10% waste.</p>
+<ul>
+<li>Skirt height: 36 − 2 = 34 in.</li>
+<li>Runs: the front becomes two 6.5 ft runs, plus 12 ft on each side, so the net run is 37 ft.</li>
+<li>Boards: 14 + 14 + 26 + 26 = 80 boards, or 88 with waste.</li>
+<li>Each 8-ft board yields 2 pieces of 34 in (96 ÷ 34 = 2.8, rounded down), so you buy 44 boards.</li>
+<li>Framing: 6 + 6 + 10 + 10 = 32 studs, or 16 eight-foot 2x4s. Two rails over 37 ft is 74 ft, or 11 eight-foot pieces with waste.</li>
+<li>Screws: 88 × 2 rails × 2 = 352 for the cladding and 128 for the framing.</li>
+<li>Area: 37 × 34 ÷ 12 ≈ 104.8 sq ft. Open area is about 4.6 sq ft against a recommended 1.3 sq ft, so ventilation passes.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Keep 1–2 inches off the soil.</strong> Even treated lumber lasts longer when it can dry, and soil grades rise as mulch and leaves build up.</li>
+<li><strong>Do not seal the space airtight.</strong> Trapped humidity rots joists. Keep gaps between boards, or use lattice for at least some of the skirt.</li>
+<li><strong>Always include an access door.</strong> You will need to retrieve balls, reach plumbing or electrical lines and check for pests. Latch it so animals cannot push it open.</li>
+<li><strong>Buy all boards in one go.</strong> Color and moisture content vary between lots, especially with pressure-treated pine and composite.</li>
+<li><strong>Measure the actual grade, not the nominal height.</strong> Ground often slopes. Measure at several points, use the largest skirt height, and scribe or step the bottom edge to follow the slope.</li>
+</ul>
+<p>In wildfire-prone regions, enclosing the underside may be restricted or require ember-resistant vents and noncombustible materials. Check with your local building department before you close it in.</p>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How high should deck skirting be off the ground?</summary><p>Leave about 1 to 2 inches between the bottom of the skirt and the soil. This keeps wood from wicking ground moisture and allows for mulch or gravel to build up over time. The calculator defaults to 2 inches.</p></details>
+<details><summary>How much ventilation does the space under a deck need?</summary><p>A common rule of thumb is 1 square foot of open area per 150 square feet of deck, borrowed from crawl-space guidance in IRC R408.1. Gaps between boards or lattice openings count toward that area. Your local code or climate may require more.</p></details>
+<details><summary>Should I use vertical or horizontal boards?</summary><p>Vertical boards are quicker to install on 2x4 rails and shed water well. Horizontal boards look more like a fence or siding and need studs at 16 inches on center. Both work, and the calculator handles either.</p></details>
+<details><summary>How much waste should I allow?</summary><p>Ten percent suits most straight runs. Go to 15% or more if you have many short runs, angled corners or a sloped grade, or if you want to pick out only the straightest boards.</p></details>
+<details><summary>Do I need a permit to add deck skirting?</summary><p>Many areas do not require a permit for non-structural skirting on an existing deck, but some do, especially with enclosed framing or in wildfire zones. A quick call to your building department gives you a definite answer. This calculator is a materials estimate, not a code approval.</p></details>
+<details><summary>Should I skirt the side attached to the house?</summary><p>No. The house wall already closes that side. Skirt only the exposed edges, and do not attach skirt framing to the ledger board or any structural part of the deck.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/deck-post-size-calculator/">Deck Post Size Calculator</a></li>
+<li><a href="/deck-screws-calculator/">Deck Screws Calculator</a></li>
+<li><a href="/deck-cantilever-calculator/">Deck Cantilever Calculator</a></li>
+<li><a href="/deck-stain-calculator/">Deck Stain Calculator</a></li>
+<li><a href="/deck-beam-size-calculator/">Deck Beam Size Calculator</a></li>
+<li><a href="/deck-railing-baluster-spacing-calculator/">Deck Railing &amp; Baluster Spacing Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<div class="wrap"></div>
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/deck-skirting-calculator/">Toolwick</a></p>
+
+<script>
+const $=id=>document.getElementById(id);
+const fmt=(n,d=0)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const cl=x=>Math.ceil(x-1e-9);
+let summary='';
+$('yr').textContent=new Date().getFullYear();
+
+function setErr(id,msg){
+  const i=$(id),e=$(id+'-err');
+  if(!i||!e)return;
+  if(msg){i.classList.add('err');i.setAttribute('aria-invalid','true');e.textContent=msg;}
+  else{i.classList.remove('err');i.removeAttribute('aria-invalid');e.textContent='';}
+}
+function toggleFields(){
+  const m=$('mat').value;
+  $('bd').classList.toggle('hidden',m==='l');
+  $('ld').classList.toggle('hidden',m!=='l');
+}
+function updateDiagram(H,C,sh,net,mat,opening){
+  const pxH=70+Math.min(H,96)/96*110;
+  const top=215-pxH;
+  const gapPx=Math.max(10,Math.min(pxH*0.3,C/H*pxH));
+  const skB=215-gapPx;
+  const set=(id,a)=>{const e=$(id);for(const k in a)e.setAttribute(k,a[k]);};
+  set('dk',{y:top-10});
+  set('tDeck',{y:top-16});
+  set('p1',{y:top,height:pxH});set('p2',{y:top,height:pxH});
+  set('sk',{y:top,height:skB-top,fill:'url(#p'+mat+')'});
+  set('gd1',{y1:top,y2:top});
+  set('dimH',{y1:top,y2:215});
+  const mid=(top+215)/2;
+  set('tH',{y:mid,transform:'rotate(-90 76 '+mid+')'});
+  set('dimS',{y1:top+2,y2:skB-2});
+  const sm=(top+skB)/2;
+  set('sbg',{y:sm-17});set('tS',{y:sm+1});
+  set('gd2',{y1:skB,y2:skB});
+  set('dimG',{y1:skB,y2:215});
+  set('tG',{y:(skB+215)/2+5});
+  $('tH').textContent='H = '+fmt(H,1).replace('.0','')+' in';
+  $('tS').textContent='Skirt '+fmt(sh,1).replace('.0','')+' in';
+  $('tG').textContent='Gap '+fmt(C,1).replace('.0','')+' in';
+  $('tC').textContent='Net skirt run: '+fmt(net,1).replace('.0','')+' ft'+(opening>0?' (after '+fmt(opening,1).replace('.0','')+' ft opening)':'');
+}
+
+function calculate(){
+  ['dl','dw','dh','cl','gp','op','os','stock','pr'].forEach(i=>setErr(i,''));
+  $('sides-err').textContent='';
+  let bad=false;
+  const E=(id,m)=>{setErr(id,m);bad=true;};
+  const val=id=>{const v=$(id).value.trim();return v===''?NaN:Number(v);};
+  const L=val('dl'),W=val('dw'),H=val('dh'),C=val('cl');
+  const mat=$('mat').value;
+  const G=mat==='l'?0:val('gp');
+  const ov=$('op').value.trim(),O=ov===''?0:Number(ov);
+  const pv=$('pr').value.trim(),price=pv===''?0:Number(pv);
+  const os=$('os').value;
+  const sides=[
+    {k:'f',name:'Front',len:L,on:$('sf').checked},
+    {k:'b',name:'Back',len:L,on:$('sb').checked},
+    {k:'l',name:'Left',len:W,on:$('sl').checked},
+    {k:'r',name:'Right',len:W,on:$('sr').checked}];
+  if(!(L>0))E('dl','Enter a deck length greater than 0.');else if(L>200)E('dl','That is over 200 ft. Please check the length.');
+  if(!(W>0))E('dw','Enter a deck width greater than 0.');else if(W>200)E('dw','That is over 200 ft. Please check the width.');
+  if(!(H>=6&&H<=96))E('dh','Enter a height between 6 and 96 inches.');
+  if(isNaN(C)||C<0)E('cl','Enter 0 or more inches.');
+  else if(C>12)E('cl','Keep clearance at 12 inches or less.');
+  else if(H>=6&&H<=96&&H-C<4)E('cl','Clearance must leave at least 4 inches of skirt.');
+  if(mat!=='l'&&(isNaN(G)||G<0||G>3))E('gp','Enter a gap between 0 and 3 inches.');
+  if(!sides.some(s=>s.on)){$('sides-err').textContent='Select at least one side to skirt.';bad=true;}
+  if(isNaN(O)||O<0)E('op','Enter 0 or more feet.');
+  else if(O>0){
+    const s=sides.find(x=>x.k===os);
+    if(!s.on)E('os','That side is not selected for skirting. Choose a skirted side or set the opening to 0.');
+    else if(s.len>0&&O>=s.len)E('op','The opening must be shorter than the '+s.name.toLowerCase()+' side ('+fmt(s.len,1)+' ft).');
+  }
+  if(isNaN(price)||price<0)E('pr','Enter a price of 0 or more, or leave blank.');
+  const stockL=Number($('stock').value);
+  const sh=H-C;
+  if(!bad&&mat==='v'&&stockL*12<sh)E('stock','A '+stockL+' ft board is shorter than the '+fmt(sh,1)+' in skirt. Choose longer boards.');
+  if(bad){$('results').innerHTML='';summary='';return;}
+
+  const bw=Number($('bw').value),sp=Number($('sp').value),waste=Number($('ws').value)/100;
+  const pp=$('panel').value.split('x').map(Number),ph=pp[0],pw=pp[1];
+  const rails=sh>48?3:2;
+  const rows=mat==='h'?cl((sh+G)/(bw+G)):0;
+  let net=0,studs=0,base=0;const per=[];
+  sides.forEach(s=>{
+    if(!s.on)return;
+    const segs=(O>0&&s.k===os)?[(s.len-O)/2,(s.len-O)/2]:[s.len];
+    let sn=0,st=0,q=0;
+    segs.forEach(g=>{
+      sn+=g;st+=cl(g*12/sp)+1;
+      if(mat==='v')q+=cl(g*12/(bw+G));
+      else if(mat==='l')q+=cl(g/pw)*cl(sh/12/ph);
+    });
+    if(mat==='h')q=rows*sn;
+    net+=sn;studs+=st;base+=q;
+    per.push({name:s.name,len:s.len,net:sn,q:q,st:st});
+  });
+  let buy,clad,primName,cutInfo,qLabel;
+  if(mat==='v'){
+    const cut=cl(base*(1+waste));
+    const pps=Math.floor((stockL*12+1e-9)/sh);
+    buy=cl(cut/pps);clad=cut*rails*2;
+    primName=stockL+'-ft boards';
+    cutInfo=fmt(cut)+' pieces of '+fmt(sh,1)+' in ('+fmt(pps)+' per board), incl. '+Math.round(waste*100)+'% waste';
+    qLabel=q=>fmt(q)+' boards';
+  }else if(mat==='h'){
+    buy=cl(base*(1+waste)/stockL);clad=cl(rows*studs*2*(1+waste));
+    primName=stockL+'-ft boards';
+    cutInfo=fmt(rows)+' rows over '+fmt(net,1)+' ft = '+fmt(base,1)+' lin ft, incl. '+Math.round(waste*100)+'% waste';
+    qLabel=q=>fmt(q,1)+' lin ft';
+  }else{
+    buy=cl(base*(1+waste));clad=cl(buy*2*(ph+pw)*12/8);
+    primName=ph+'×'+pw+' ft lattice panels';
+    cutInfo=fmt(base)+' panels counted, incl. '+Math.round(waste*100)+'% waste';
+    qLabel=q=>fmt(q)+' panels';
+  }
+  const perStud=Math.floor(96/sh);
+  const studPieces=cl(studs/perStud);
+  const railLF=rails*net;
+  const railPieces=cl(railLF*(1+waste)/8);
+  const frameScrews=studs*rails*2;
+  const area=net*sh/12;
+  const frac=mat==='l'?0.4:G/(bw+G);
+  const prov=area*frac,req=L*W/150;
+  const ventOK=prov>=req;
+  const cost=price>0?price*buy:0;
+
+  let t='';
+  const r=(a,b,c)=>'<tr><td>'+a+'</td><td class="num">'+b+'</td><td>'+c+'</td></tr>';
+  t+=r('Skirted run (net)',fmt(net,1)+' ft',O>0?fmt(O,1)+' ft opening deducted':'No opening');
+  t+=r('Skirt height',fmt(sh,1)+' in',fmt(H,1)+' in − '+fmt(C,1)+' in clearance');
+  t+=r('Skirt area',fmt(area,1)+' sq ft','Net run × height');
+  t+=r(primName+' to buy',fmt(buy),cutInfo);
+  t+=r('2x4 studs (8 ft pieces)',fmt(studPieces),fmt(studs)+' studs at '+sp+' in o.c.');
+  t+=r('2x4 rails (8 ft pieces)',fmt(railPieces),rails+' rails, '+fmt(railLF,1)+' lin ft');
+  t+=r('Cladding screws',fmt(clad),'Incl. waste');
+  t+=r('Framing screws (3 in)',fmt(frameScrews),'2 per stud-rail joint');
+  if(cost>0)t+=r('Estimated cladding cost','$'+fmt(cost,2),fmt(buy)+' × $'+fmt(price,2)+' (excludes framing)');
+  let s2='';
+  per.forEach(p=>{s2+='<tr><td>'+p.name+'</td><td class="num">'+fmt(p.len,1)+'</td><td class="num">'+fmt(p.net,1)+'</td><td class="num">'+qLabel(p.q)+'</td><td class="num">'+fmt(p.st)+'</td></tr>';});
+
+  const vent='<div class="box '+(ventOK?'ok':'warn')+'"><strong>Ventilation check: '+(ventOK?'meets':'below')+' rule of thumb.</strong> Open area about '+fmt(prov,1)+' sq ft vs '+fmt(req,1)+' sq ft suggested (1 sq ft per 150 sq ft of deck)'+(ventOK?'.':'. Widen board gaps, add vent openings or use lattice panels.')+(mat==='l'?' Lattice assumed 40% open.':'')+'</div>';
+  const notes='<div class="box"><strong>Notes</strong><ul><li>Use ground-contact rated lumber for any wood near soil (IRC R317.1) and corrosion-resistant fasteners.</li><li>Keep the framing independent of the deck ledger and guard posts.</li><li>Ventilation uses a rule of thumb based on IRC R408.1 crawl-space guidance. Local codes vary and may be stricter, especially in wildfire zones.</li><li>This is a materials estimate, not engineering, permit or inspection approval.</li></ul></div>';
+
+  summary='Deck skirting estimate (toolwick.com)\n'+
+   'Net run: '+fmt(net,1)+' ft, skirt height '+fmt(sh,1)+' in, area '+fmt(area,1)+' sq ft\n'+
+   primName+': '+fmt(buy)+'\n2x4 studs (8 ft): '+fmt(studPieces)+'\n2x4 rails (8 ft): '+fmt(railPieces)+'\nCladding screws: '+fmt(clad)+'\nFraming screws: '+fmt(frameScrews)+
+   (cost>0?'\nEstimated cladding cost: $'+fmt(cost,2):'');
+
+  const html='<div class="fade"><div class="big">'+fmt(buy)+' × '+primName+'</div><div class="bigl">to buy for '+fmt(net,1)+' ft of skirting, '+fmt(sh,1)+' in high ('+fmt(area,1)+' sq ft)</div>'+
+   '<div class="tw"><table><thead><tr><th>Item</th><th class="num">Quantity</th><th>Details</th></tr></thead><tbody>'+t+'</tbody></table></div>'+
+   '<div class="tw"><table><thead><tr><th>Side</th><th class="num">Run (ft)</th><th class="num">Net (ft)</th><th class="num">Cladding</th><th class="num">Studs</th></tr></thead><tbody>'+s2+'</tbody></table></div>'+
+   vent+notes+'<button class="copy" id="copyBtn" type="button">Copy results</button></div>';
+  requestAnimationFrame(()=>{
+    $('results').innerHTML=html;
+    updateDiagram(H,C,sh,net,mat,O);
+  });
+}
+
+$('calcBtn').addEventListener('click',()=>{requestAnimationFrame(calculate);});
+document.querySelectorAll('input,select').forEach(el=>{
+  el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();requestAnimationFrame(calculate);}});
+});
+$('mat').addEventListener('change',toggleFields);
+$('ws').addEventListener('input',()=>{$('wv').textContent=$('ws').value+'%';});
+$('results').addEventListener('click',e=>{
+  if(e.target.id!=='copyBtn')return;
+  const b=e.target;
+  const done=()=>{b.textContent='Copied!';setTimeout(()=>{const x=$('copyBtn');if(x)x.textContent='Copy results';},2000);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(summary).then(done,done);}
+  else{const ta=document.createElement('textarea');ta.value=summary;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(x){}document.body.removeChild(ta);done();}
+});
+toggleFields();
+requestAnimationFrame(calculate);
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
