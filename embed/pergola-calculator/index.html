@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Pergola Calculator | Toolwick</title>
+<meta name="description" content="Free pergola calculator: enter size, height and snow load to get posts, beams, rafters, footings, concrete bags and a lumber cost estimate.">
+<link rel="canonical" href="https://toolwick.com/pergola-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;font-size:1.15rem;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.2;margin:1.5rem 0 .75rem}
+h2{font-size:1.4rem;margin:2.5rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 10px rgba(0,0,0,.06);margin:2rem 0}
+.fig{background:#f8f9fa;border-radius:8px;padding:1rem;margin:0 0 1.5rem;text-align:center}
+.fig svg{width:100%;max-width:420px;height:auto;display:block;margin:0 auto}
+.fig figcaption{font-size:.8rem;color:#666;margin-top:.5rem}
+.t{font-size:11px;fill:#1a1a2e;font-family:inherit}.b{font-weight:600}
+.dim{stroke:#0077b6;stroke-width:1.3;fill:none}.gd{stroke:#e0e0e0;stroke-width:1;stroke-dasharray:3 3}
+.grp{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#0077b6;margin:1.5rem 0 .75rem;padding-bottom:.35rem;border-bottom:1px solid #e0e0e0}
+.grp:first-of-type{margin-top:0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.f{min-width:0}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.err:empty{display:none}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.btn{width:100%;margin-top:1.5rem;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+.res{margin-top:2rem;animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.res{animation:none}}
+.key{text-align:center;background:#f8f9fa;border-radius:8px;padding:1.25rem 1rem;margin-bottom:1.25rem}
+.kl{font-size:.85rem;color:#444;font-weight:500}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.2}
+.ks{font-size:.85rem;color:#666}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1.5rem}
+.st{background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;min-width:0}
+.st span{display:block;font-size:.78rem;color:#666}
+.st b{font-size:1.05rem}
+.sh{font-weight:700;margin:1.5rem 0 .5rem}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#f0f0f0;text-align:left;padding:.6rem .75rem;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:.6rem .75rem;border-bottom:1px solid #eee}
+tbody tr:nth-child(odd) td{background:#fafafa}
+tbody tr:nth-child(even) td{background:#fff}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+.warn{background:#fff4e5;border:1px solid #f0b86e;border-left:4px solid #e67e22;padding:.75rem 1rem;border-radius:6px;margin:.75rem 0;font-size:.9rem;color:#5a3300}
+.note{font-size:.85rem;color:#555;margin-top:1rem}
+.copy{min-height:44px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:1rem}
+.copy:hover{background:#f0f8fc}
+.ad-slot{min-height:0;margin:0}
+.content li{margin-bottom:.5rem}
+.content code{background:#f0f0f0;padding:1px 5px;border-radius:3px;font-size:.9em}
+details{border:1px solid #e0e0e0;border-radius:6px;padding:0 1rem;margin:.5rem 0}
+summary{cursor:pointer;font-weight:600;padding:.75rem 0;min-height:44px}
+details p{margin:0 0 .85rem}
+.rel ul{list-style:none;padding:0;margin:0;display:grid;gap:.5rem}
+.rel a{display:block;padding:.65rem 1rem;background:#f8f9fa;border-radius:6px}
+footer{border-top:1px solid #eee;padding:1.5rem 0;margin-top:2rem;color:#666;font-size:.9rem}
+footer a{color:#0077b6;text-decoration:underline}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.card{padding:1.25rem}.big{font-size:2.2rem}h1{font-size:1.6rem}}
+@media(min-width:561px){.stats{grid-template-columns:repeat(4,1fr)}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/pergola-calculator/">
+<meta property="og:title" content="Pergola Calculator">
+<meta property="og:description" content="Free pergola calculator: enter size, height and snow load to get posts, beams, rafters, footings, concrete bags and a lumber cost estimate.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Pergola Calculator</h1>
+<p>This pergola calculator works out how many posts, beams, rafters and top slats your pergola needs, how big the footings should be, how many bags of concrete to buy and what the lumber will roughly cost. Enter your dimensions and site conditions, and every result is rounded to the safe side.</p>
+
+<div class="card">
+<figure class="fig">
+<svg id="dgsvg" viewBox="0 0 360 462" role="img" aria-label="Pergola diagram showing width, height, overhang, footing and post layout">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<g id="dg"></g>
+</svg>
+<figcaption>Diagram updates with your numbers when you calculate. Not to scale.</figcaption>
+</figure>
+
+<form id="frm" novalidate>
+<p class="grp">Size</p>
+<div class="grid">
+<div class="f"><label for="len">Length, post to post (ft)</label><input id="len" type="number" inputmode="decimal" step="0.5" value="16" aria-describedby="len-err"><div class="err" id="len-err"></div><div class="hint">Direction the beams run</div></div>
+<div class="f"><label for="wid">Width, post to post (ft)</label><input id="wid" type="number" inputmode="decimal" step="0.5" value="12" aria-describedby="wid-err"><div class="err" id="wid-err"></div><div class="hint">Direction the rafters span</div></div>
+<div class="f"><label for="hgt">Post height above ground (ft)</label><input id="hgt" type="number" inputmode="decimal" step="0.5" value="8" aria-describedby="hgt-err"><div class="err" id="hgt-err"></div></div>
+<div class="f"><label for="ovh">Overhang past beams (in)</label><input id="ovh" type="number" inputmode="decimal" step="1" value="12" aria-describedby="ovh-err"><div class="err" id="ovh-err"></div></div>
+</div>
+
+<p class="grp">Lumber</p>
+<div class="grid">
+<div class="f"><label for="raft">Rafter size</label><select id="raft"><option value="2x6">2x6</option><option value="2x8">2x8</option><option value="2x10" selected>2x10</option><option value="2x12">2x12</option></select></div>
+<div class="f"><label for="rsp">Rafter spacing</label><select id="rsp"><option value="12">12 in on center</option><option value="16" selected>16 in on center</option><option value="24">24 in on center</option></select></div>
+<div class="f"><label for="beam">Beam (two plies)</label><select id="beam"><option value="2x6">Double 2x6</option><option value="2x8">Double 2x8</option><option value="2x10" selected>Double 2x10</option><option value="2x12">Double 2x12</option></select></div>
+<div class="f"><label for="slat">Top slats (2x2)</label><select id="slat"><option value="0">None</option><option value="4">4 in on center</option><option value="6">6 in on center</option><option value="12" selected>12 in on center</option><option value="24">24 in on center</option></select></div>
+<div class="f"><label for="spec">Lumber species</label><select id="spec"><option value="1">Southern Pine / Douglas Fir (No. 2)</option><option value="0.9">Hem-fir / SPF (No. 2)</option><option value="0.85">Western cedar / redwood</option></select></div>
+<div class="f"><label for="price">Lumber price ($ per board foot)</label><input id="price" type="number" inputmode="decimal" step="0.05" value="1.75" aria-describedby="price-err"><div class="err" id="price-err"></div></div>
+</div>
+
+<p class="grp">Site and loads</p>
+<div class="grid">
+<div class="f"><label for="snow">Ground snow load</label><select id="snow"><option value="30" selected>Little or none (up to 30 psf)</option><option value="40">40 psf</option><option value="60">60 psf</option><option value="80">80 psf</option></select></div>
+<div class="f"><label for="frost">Local frost depth (in)</label><input id="frost" type="number" inputmode="decimal" step="1" value="24" aria-describedby="frost-err"><div class="err" id="frost-err"></div></div>
+<div class="f"><label for="soil">Soil bearing capacity</label><select id="soil"><option value="1000">1,000 psf (soft or clay)</option><option value="1500" selected>1,500 psf (typical)</option><option value="2000">2,000 psf (dense, gravel)</option></select></div>
+<div class="f"><label for="mount">Post mounting</label><select id="mount"><option value="bury" selected>Buried in concrete</option><option value="base">Standoff base on pier</option></select></div>
+</div>
+<button type="submit" class="btn" id="go">Calculate Pergola</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<div class="content">
+<h2>How to Use This Pergola Calculator</h2>
+<p>Enter the post-to-post length and width, the post height above ground, and how far the rafters and beams overhang. Pick your lumber sizes, rafter spacing, optional top slats, and your local snow load, frost depth and soil type. Press Calculate to get a post count, post size, footing size, concrete bags, a full materials list, shade percentage and a lumber cost estimate. Change any dropdown afterward and the results refresh so you can compare options quickly.</p>
+
+<h2>Why This Matters</h2>
+<p>A pergola looks light, but the structure carries real loads: its own weight, snow, wind uplift and the occasional person hanging a swing or a planter from it. Most failures come from the same few mistakes: beams that span too far between posts, posts that are too slim for their height, and footings that are too shallow or too small. Getting the numbers right before you shop saves money and prevents a rebuild.</p>
+<p>Consider a typical 12 by 16 foot pergola over a patio. Builders often drop in four posts because it looks clean, but a double 2x10 beam can only span about 9 feet under a standard 50 psf load, so a 16 foot side needs a third post in the middle. That is six posts, six footings and roughly 39 bags of concrete rather than four posts and 26 bags. Knowing that up front lets you budget correctly, order the right lengths of lumber and avoid mid-project trips to the yard. It also helps when you talk to a contractor, because you can check their quote against a clear materials list.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator uses rule-of-thumb spans derived from the International Residential Code deck tables: R507.5 for beams, R507.6 for joists (used here for rafters) and R507.4 for post height. Those tables assume Southern Pine No. 2 under 40 psf live plus 10 psf dead load. A pergola is not a deck, so this is a conservative approximation, not a code compliance check. Local codes vary.</p>
+<ul>
+<li><strong>Design load:</strong> <code>q = max(snow, 20) + 5</code> psf. If q is above 50 psf, spans are scaled by <code>√(50 / q)</code>. Hem-fir and cedar are scaled down a further 10 to 15 percent.</li>
+<li><strong>Beam span:</strong> tributary width is <code>T = W / 2 + overhang</code>. The max span comes from the next-higher tabulated width, then is rounded down to 0.1 ft.</li>
+<li><strong>Posts:</strong> <code>spans = ceil(L / max span)</code>, then <code>posts = 2 × (spans + 1)</code>. Posts are 6x6 if they are over 8 ft tall, the beam is a double 2x10 or larger, snow is above 40 psf, or tributary area exceeds 64 sq ft.</li>
+<li><strong>Rafters:</strong> if your width exceeds the rafter's max span, the tool upsizes the rafter. Count is <code>ceil(total length / spacing) + 1</code>.</li>
+<li><strong>Footings:</strong> depth is the greater of 30 in or your frost depth, rounded up to the next 6 in. Diameter is <code>√(4P / (π × bearing))</code> with P the post load, rounded up to an even inch with a 12 in minimum. Concrete includes 10 percent waste, at 0.6 cu ft per 80 lb bag.</li>
+<li><strong>Lumber lengths:</strong> every piece is rounded up to the next stock length (8, 10, 12, 14, 16 or 20 ft).</li>
+</ul>
+
+<h2>Worked Example</h2>
+<p>Take a 16 by 12 ft pergola, 8 ft post height, 12 in overhang, 2x10 rafters at 16 in, double 2x10 beams, 2x2 slats at 12 in, Southern Pine, 30 psf snow, 24 in frost depth and 1,500 psf soil.</p>
+<ol>
+<li>Tributary width is 12 ÷ 2 + 1 = 7 ft, so the table gives a 9.0 ft max beam span. 16 ÷ 9 rounds up to 2 spans of 8 ft, so 6 posts.</li>
+<li>2x10 rafters at 16 in can span 14 ft, and your width is 12 ft, so they pass. Rafters are 12 + 2 = 14 ft long. (216 in ÷ 16 in) rounds up to 14, plus 1, gives 15 rafters.</li>
+<li>Posts are 6x6 because the beam is a double 2x10. Buried length is 8 + 2.5 = 10.5 ft, so buy 12 ft stock.</li>
+<li>Footing depth is 30 in. Post load is 8 × 7 × 35 psf = 1,960 lb, which needs 1.31 sq ft at 1,500 psf, or a 15.5 in circle. That rounds up to 16 in diameter. Six footings use about 23 cu ft with waste, so 39 bags.</li>
+<li>Lumber is about 800 board feet, or roughly $1,399 at $1.75 per board foot. Shade from rafters plus slats is about 21 percent.</li>
+</ol>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Don't copy a 4-post layout for a long side.</strong> The beam, not the posts, usually decides how many posts you need.</li>
+<li><strong>Use through-bolts and post caps.</strong> Wind lifts a pergola as easily as snow pushes it down, so toenailed connections are not enough. Hurricane ties at every rafter are cheap insurance.</li>
+<li><strong>Buy ground-contact lumber for buried posts.</strong> Standard treated lumber rots quickly in soil. Cedar and redwood need to be heartwood grades for contact.</li>
+<li><strong>Check for utilities before you dig.</strong> Call 811 in the US at least a few days before digging footings.</li>
+<li><strong>Keep overhangs modest.</strong> A cantilever longer than a quarter of the supported span invites sagging, so keep overhangs short on long spans.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many posts do I need for a 12x16 pergola?</summary><p>Usually six: three along each 16 ft side. A double 2x10 beam spans about 9 ft under a standard load, so one span of 16 ft is too long. Run the calculator with your beam size, since a double 2x12 can sometimes reach farther.</p></details>
+<details><summary>How far can a pergola beam span?</summary><p>For a double 2x10 supporting a 12 ft wide pergola with a 1 ft overhang, about 9 ft. A double 2x12 reaches roughly 10 ft 6 in. Heavy snow or weaker lumber such as cedar shortens those spans.</p></details>
+<details><summary>What size posts should I use for a pergola?</summary><p>4x4 posts only suit small, low pergolas up to 8 ft tall. Most pergolas use 6x6 posts, which resist bending and give you room to attach beams and brackets. The tool picks 6x6 whenever height, beam size, snow or load area calls for it.</p></details>
+<details><summary>How deep should pergola post footings be?</summary><p>At least as deep as your local frost line, and this tool never goes shallower than 30 in so there is resistance to wind uplift. In cold climates the frost depth can be 36 to 60 in. Your building department can tell you the exact number.</p></details>
+<details><summary>Do I need a permit to build a pergola?</summary><p>Often yes, especially if it is attached to your house, taller than a set height or larger than a set area, commonly 120 to 200 square feet. Rules differ widely by city and county. Call your local building office before buying materials.</p></details>
+<details><summary>How far apart should pergola rafters be?</summary><p>For shade and a classic look, 12 to 16 in on center is common. 24 in works for a lighter look or when you add slats on top. Wider spacing also reduces the span a rafter can safely cover, so the calculator checks this for you.</p></details>
+
+<div class="rel">
+<h2>Related Tools</h2>
+<ul>
+<li><a href="/fence-gate-calculator/">Fence Gate Calculator</a></li>
+<li><a href="/chain-link-fence-calculator/">Chain Link Fence Calculator</a></li>
+<li><a href="/deck-post-size-calculator/">Deck Post Size Calculator</a></li>
+<li><a href="/deck-screws-calculator/">Deck Screws Calculator</a></li>
+<li><a href="/house-painting-cost-calculator/">Exterior House Painting Cost Calculator</a></li>
+<li><a href="/composite-decking-calculator/">Composite Decking Calculator</a></li>
+</ul>
+</div>
+<p class="note" style="margin-top:2rem">Results are planning estimates based on rule-of-thumb spans from IRC R507 deck tables. They are not engineering, permit or inspection approval. Snow, wind, seismic rules and lumber grades vary by location, so confirm your design with your local building department or a licensed engineer.</p>
+</div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/pergola-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var BT={'2x6':[6.9,5.9,5.3,4.8,4.5,4.25,4.0],'2x8':[8.75,7.6,6.75,6.15,5.7,5.3,5.0],'2x10':[10.3,9.0,8.0,7.3,6.75,6.3,6.0],'2x12':[12.15,10.55,9.4,8.55,7.9,7.4,7.0]};
+var TX=[6,8,10,12,14,16,18];
+var RT={'2x6':{12:9.9,16:9.0,24:7.6},'2x8':{12:13.1,16:11.8,24:9.7},'2x10':{12:16.2,16:14.0,24:11.4},'2x12':{12:18.0,16:16.5,24:13.5}};
+var SZ=['2x6','2x8','2x10','2x12'],STK=[8,10,12,14,16,20];
+var lastText='',done=false;
+function fmt(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function f2(x){return fmt(x,x%1?1:0)}
+function fl1(x){return Math.floor(x*10+1e-9)/10}
+function ftin(x){var t=Math.floor(x*12+1e-6);return Math.floor(t/12)+' ft '+(t%12)+' in'}
+function stepVal(a,t){for(var i=0;i<7;i++){if(t<=TX[i]+1e-9)return a[i]}return a[6]}
+function stock(l){for(var i=0;i<STK.length;i++){if(l<=STK[i]+1e-9)return STK[i]}return 20}
+function boards(len,q){if(len<=20+1e-9)return[{len:stock(len),qty:q}];var full=Math.floor(len/20),rem=len-full*20,r=[{len:20,qty:full*q}];if(rem>0.01)r.push({len:stock(rem),qty:q});return r}
+function nom(s){var p=s.split('x');return p[0]*p[1]/12}
+function setErr(id,m){var e=$(id);e.classList.toggle('bad',!!m);if(m)e.setAttribute('aria-invalid','true');else e.removeAttribute('aria-invalid');$(id+'-err').textContent=m||''}
+
+function dg(d){
+var A=' marker-start="url(#ar)" marker-end="url(#ar)"',i,s='';
+s+='<text x="180" y="12" text-anchor="middle" class="t b">Front view (looking along the beams)</text>';
+s+='<line class="gd" x1="100" y1="28" x2="100" y2="62"/><line class="gd" x1="260" y1="28" x2="260" y2="62"/><line class="gd" x1="300" y1="40" x2="300" y2="52"/><line class="gd" x1="76" y1="78" x2="92" y2="78"/>';
+s+='<line class="dim" x1="100" y1="28" x2="260" y2="28"'+A+'/><text x="180" y="23" text-anchor="middle" class="t">W = '+f2(d.W)+' ft (rafter span)</text>';
+s+='<line class="dim" x1="260" y1="40" x2="300" y2="40"'+A+'/><text x="304" y="44" class="t">o = '+f2(d.O)+' in</text>';
+if(d.slats>0){for(i=0;i<14;i++)s+='<rect x="'+(61+i*17.6).toFixed(1)+'" y="46" width="6" height="6" fill="#0077b6" opacity=".55"/>'}
+s+='<rect x="60" y="52" width="240" height="10" fill="#eaf4fa" stroke="#0077b6"/>';
+s+='<rect x="90" y="62" width="20" height="16" fill="#cfe6f3" stroke="#0077b6"/><rect x="250" y="62" width="20" height="16" fill="#cfe6f3" stroke="#0077b6"/>';
+s+='<rect x="95" y="78" width="10" height="142" fill="#fff" stroke="#0077b6" stroke-width="1.5"/><rect x="255" y="78" width="10" height="142" fill="#fff" stroke="#0077b6" stroke-width="1.5"/>';
+s+='<rect x="88" y="220" width="24" height="38" fill="#eaf4fa" stroke="#0077b6" stroke-dasharray="4 3"/><rect x="248" y="220" width="24" height="38" fill="#eaf4fa" stroke="#0077b6" stroke-dasharray="4 3"/>';
+s+='<line x1="20" y1="220" x2="340" y2="220" stroke="#1a1a2e" stroke-width="1.5"/>';
+s+='<line class="dim" x1="76" y1="78" x2="76" y2="220"'+A+'/><text x="70" y="152" text-anchor="end" class="t">H = '+f2(d.H)+' ft</text>';
+s+='<line class="dim" x1="124" y1="220" x2="124" y2="258"'+A+'/><text x="130" y="243" class="t">'+d.fd+' in deep</text>';
+s+='<text x="100" y="276" text-anchor="middle" class="t">footing dia. '+d.dia+' in</text>';
+s+='<text x="180" y="298" text-anchor="middle" class="t b">Top view (plan)</text>';
+var sc=Math.min(240/d.L,78/d.W),pw=d.L*sc,ph=d.W*sc,x0=180-pw/2,y0=355-ph/2,ov=Math.min(d.O/12*sc,12);
+var step=Math.max(1,Math.ceil(3/(d.rsp/12*sc))),tw=pw+2*ov;
+for(i=0;i<d.nR;i++){if(i%step&&i!==d.nR-1)continue;var x=(x0-ov+i*tw/(d.nR-1)).toFixed(1);s+='<line x1="'+x+'" y1="'+(y0-ov).toFixed(1)+'" x2="'+x+'" y2="'+(y0+ph+ov).toFixed(1)+'" stroke="#0077b6" stroke-width="1" opacity=".35"/>'}
+s+='<line x1="'+(x0-ov)+'" y1="'+y0+'" x2="'+(x0+pw+ov)+'" y2="'+y0+'" stroke="#0077b6" stroke-width="3"/><line x1="'+(x0-ov)+'" y1="'+(y0+ph)+'" x2="'+(x0+pw+ov)+'" y2="'+(y0+ph)+'" stroke="#0077b6" stroke-width="3"/>';
+for(i=0;i<=d.spans;i++){var px=(x0+i*pw/d.spans).toFixed(1);s+='<circle cx="'+px+'" cy="'+y0+'" r="4.5" fill="#1a1a2e"/><circle cx="'+px+'" cy="'+(y0+ph)+'" r="4.5" fill="#1a1a2e"/>'}
+s+='<rect x="140" y="347" width="80" height="17" rx="3" fill="#fff" opacity=".9"/><text x="180" y="359" text-anchor="middle" class="t">W = '+f2(d.W)+' ft</text>';
+var yb=y0+ph+ov+14;
+s+='<line class="dim" x1="'+x0+'" y1="'+yb+'" x2="'+(x0+pw)+'" y2="'+yb+'"'+A+'/>';
+s+='<text x="180" y="'+(yb+16)+'" text-anchor="middle" class="t">L = '+f2(d.L)+' ft: '+d.spans+' span'+(d.spans>1?'s':'')+' at '+fmt(d.L/d.spans,2)+' ft</text>';
+s+='<text x="180" y="456" text-anchor="middle" class="t">● Post   ━ Beam   | Rafter</text>';
+return s}
+
+var DEF={L:16,W:12,H:8,O:12,spans:2,fd:30,dia:16,slats:12,rsp:16,nR:15};
+$('dg').innerHTML=dg(DEF);
+$('yr').textContent=new Date().getFullYear();
+
+function calc(){
+var bad=null;
+function g(id,min,max,nm,u){var el=$(id),v=el.value.trim(),n=parseFloat(v),m='';
+if(v===''||!isFinite(n))m='Enter a number for '+nm+'.';
+else if(n<min||n>max)m=nm+' must be between '+fmt(min,min%1?1:0)+' and '+fmt(max)+' '+u+'.';
+setErr(id,m);if(m&&!bad)bad=id;return n}
+var L=g('len',4,40,'Length','ft'),W=g('wid',4,30,'Width','ft'),H=g('hgt',6,14,'Post height','ft'),O=g('ovh',0,36,'Overhang','in'),FR=g('frost',0,72,'Frost depth','in'),PR=g('price',0.1,50,'Price','$ per board foot');
+function stop(id){lastText='';$('results').innerHTML='';if(id){var e=$(id);if(e)e.focus()}}
+if(bad){stop(bad);return}
+var bs=$('beam').value,rs=$('raft').value,sp=+$('rsp').value,sl=+$('slat').value,S=+$('snow').value,mount=$('mount').value,bear=+$('soil').value,spf=+$('spec').value;
+var q=Math.max(S,20)+5,f=Math.min(1,Math.sqrt(50/q))*spf,o=O/12,T=W/2+o,rl=W+2*o;
+if(rl>20){setErr('wid','Rafter length (width plus overhangs) is '+fmt(rl,1)+' ft, longer than 20 ft lumber. Reduce width or overhang.');stop('wid');return}
+var rmax={},bmax={};
+SZ.forEach(function(z){rmax[z]=fl1(RT[z][sp]*f);bmax[z]=fl1(stepVal(BT[z],T)*f)});
+var ru=null,i;
+for(i=SZ.indexOf(rs);i<4;i++){if(W<=rmax[SZ[i]]+1e-9){ru=SZ[i];break}}
+if(!ru){setErr('wid','Width of '+fmt(W,1)+' ft is beyond the longest tabulated rafter span ('+ftin(rmax['2x12'])+' for 2x12 at '+sp+' in). Add a center beam or hire an engineer.');stop('wid');return}
+var bu=bmax[bs],spans=Math.ceil(L/bu-1e-9),spacing=L/spans,posts=2*(spans+1);
+var area=spacing*T,ps=(H>8||S>40||area>64||bs==='2x10'||bs==='2x12')?'6x6':'4x4';
+var fd=Math.ceil(Math.max(30,FR)/6)*6,P=area*q,dia=Math.max(12,Math.ceil(Math.sqrt(4*(P/bear)/Math.PI)*12/2)*2);
+var vol=Math.PI*Math.pow(dia/24,2)*fd/12,tot=vol*posts*1.1,bags=Math.ceil(tot/0.6-1e-9);
+var pl=mount==='bury'?H+fd/12:H;
+var nR=Math.ceil((L*12+2*O)/sp-1e-9)+1,bl=L+2*o,nS=sl?Math.ceil((W*12+2*O)/sl-1e-9)+1:0;
+var rows=[],bf=0;
+function lum(item,size,len,qty){boards(len,qty).forEach(function(b){rows.push([item,size,fmt(b.len),qty===undefined?0:b.qty]);bf+=nom(size)*b.len*b.qty})}
+lum('Posts',ps,pl,posts);lum('Beam plies (2 beams × 2)',bs,bl,4);lum('Rafters',ru,rl,nR);if(nS)lum('Top slats',  '2x2',bl,nS);
+var ties=nR*4;
+function hw(item,size,qty){rows.push([item,size,'—',qty])}
+hw('Post caps / beam connectors','Per post size',posts);
+hw('Through-bolts with nuts and washers','1/2 in galvanized',posts*2);
+if(mount==='base')hw('Standoff post bases','Per post size',posts);
+hw('Rafter-to-beam hurricane ties','H2.5A or equal',ties);
+hw('Tie fasteners (10% extra)','1-1/2 in structural',ties*11);
+if(nS)hw('Slat screws (10% extra)','#8 × 3 in exterior',Math.ceil(nS*nR*11/5));
+hw('Concrete, 80 lb bags','10% waste included',bags);
+var cost=Math.ceil(bf*PR-1e-9),bfc=Math.ceil(bf-1e-9);
+var shade=(1-(1-1.5/sp)*(1-(sl?1.5/sl:0)))*100,rarea=(L+2*o)*rl;
+var w=[];
+if(ru!==rs)w.push('Rafters upsized from '+rs+' to '+ru+'. A '+rs+' at '+sp+' in on center can only span '+ftin(rmax[rs])+' for this load and species; your width is '+f2(W)+' ft.');
+if(o>spacing/4+1e-9)w.push('Overhang is longer than one quarter of the post spacing ('+fmt(spacing,2)+' ft). Shorten the overhang or add posts to limit beam sag.');
+if(o>W/4+1e-9)w.push('Rafter overhang is longer than one quarter of the rafter span. Shorten it to limit rafter sag.');
+if(H>12)w.push('Posts taller than 12 ft need bracing and engineered design. Do not build from this estimate alone.');
+if(dia>30)w.push('Footings this large suggest too few posts for the load. Choose a larger beam or lower the loads.');
+if(spans>6)w.push('This beam size needs many posts. A larger beam would cut the post count.');
+if(bl>20)w.push('Beams are longer than 20 ft stock, so splice the plies over a post and stagger the joints.');
+if(S>40)w.push('Heavy snow region: have a local engineer confirm the design.');
+var h='<div class="res">';
+w.forEach(function(x){h+='<div class="warn">'+x+'</div>'});
+h+='<div class="key"><div class="kl">Estimated lumber cost</div><div class="big">$'+fmt(cost)+'</div><div class="ks">'+fmt(bfc)+' board feet at $'+fmt(PR,2)+'/bf. Hardware, concrete and tax not included.</div></div>';
+var tiles=[['Posts',posts+' × '+ps],['Post spacing',fmt(spacing,2)+' ft ('+spans+' spans)'],['Rafters',nR+' × '+ru+' × '+fmt(rl,1)+' ft'],['Footings',dia+' in dia × '+fd+' in deep'],['Concrete',fmt(bags)+' × 80 lb bags'],['Overhead shade',fmt(shade,0)+'%'],['Roof area',fmt(rarea,0)+' sq ft'],['Max beam span',ftin(bu)]];
+h+='<div class="stats">';tiles.forEach(function(t){h+='<div class="st"><span>'+t[0]+'</span><b>'+t[1]+'</b></div>'});h+='</div>';
+h+='<p class="sh">Materials list</p><div class="tw"><table><thead><tr><th>Item</th><th>Size</th><th class="n">Length (ft)</th><th class="n">Qty</th></tr></thead><tbody>';
+rows.forEach(function(r){h+='<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="n">'+r[2]+'</td><td class="n">'+fmt(r[3])+'</td></tr>'});
+h+='</tbody></table></div>';
+h+='<p class="sh">Beam options (tributary width '+fmt(T,1)+' ft)</p><div class="tw"><table><thead><tr><th>Beam</th><th class="n">Max span</th><th class="n">Total posts</th></tr></thead><tbody>';
+SZ.forEach(function(z){h+='<tr><td>Double '+z+(z===bs?' (selected)':'')+'</td><td class="n">'+ftin(bmax[z])+'</td><td class="n">'+(2*(Math.ceil(L/bmax[z]-1e-9)+1))+'</td></tr>'});
+h+='</tbody></table></div>';
+h+='<p class="sh">Rafter options (span '+f2(W)+' ft at '+sp+' in)</p><div class="tw"><table><thead><tr><th>Rafter</th><th class="n">Max span</th><th>Result</th></tr></thead><tbody>';
+SZ.forEach(function(z){h+='<tr><td>'+z+(z===ru?' (used)':'')+'</td><td class="n">'+ftin(rmax[z])+'</td><td>'+(W<=rmax[z]+1e-9?'OK':'Too short')+'</td></tr>'});
+h+='</tbody></table></div>';
+h+='<p class="note">Rounded to the safe side. Spans follow IRC R507.5 and R507.6 deck tables (Southern Pine No. 2), scaled for snow and species; post rules follow R507.4. Footings are never shallower than 30 in. Wind uplift is not calculated, so anchor every connection. Local codes vary. This is not engineering, permit or inspection approval.</p>';
+h+='<button type="button" class="copy" id="cp">Copy results</button></div>';
+var tx=['Pergola Calculator results (Toolwick)','Size: '+f2(L)+' x '+f2(W)+' ft, posts '+f2(H)+' ft high, overhang '+f2(O)+' in','Posts: '+posts+' x '+ps+' ('+fmt(pl,1)+' ft needed, buy '+stock(pl)+' ft)','Post spacing: '+fmt(spacing,2)+' ft ('+spans+' spans), beams double '+bs,'Rafters: '+nR+' x '+ru+' x '+fmt(rl,1)+' ft at '+sp+' in','Footings: '+dia+' in dia x '+fd+' in deep, '+bags+' x 80 lb bags','Lumber: '+fmt(bfc)+' board feet, about $'+fmt(cost)];
+w.forEach(function(x){tx.push('Warning: '+x)});
+tx.push('Estimate only. Not engineering or permit approval; local codes vary.');
+lastText=tx.join('\n');done=true;
+requestAnimationFrame(function(){
+$('results').innerHTML=h;
+$('dg').innerHTML=dg({L:L,W:W,H:H,O:O,spans:spans,fd:fd,dia:dia,slats:sl,rsp:sp,nR:nR});
+$('dgsvg').setAttribute('aria-label','Pergola diagram: '+f2(L)+' by '+f2(W)+' feet, '+f2(H)+' feet tall, '+posts+' posts, footings '+dia+' inches wide and '+fd+' inches deep');
+})}
+
+$('frm').addEventListener('submit',function(e){e.preventDefault();requestAnimationFrame(calc)});
+['raft','rsp','beam','slat','spec','snow','soil','mount'].forEach(function(id){$(id).addEventListener('change',function(){if(done)requestAnimationFrame(calc)})});
+$('results').addEventListener('click',function(e){
+var b=e.target.closest&&e.target.closest('#cp');if(!b)return;
+function ok(){b.textContent='Copied!';setTimeout(function(){var c=$('cp');if(c)c.textContent='Copy results'},2000)}
+function fb(){var t=document.createElement('textarea');t.value=lastText;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(t);ok()}
+if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(lastText).then(ok,fb);else fb()});
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
