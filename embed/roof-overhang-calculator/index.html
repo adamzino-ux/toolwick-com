@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Free Roof Overhang Calculator | Toolwick</title>
+<meta name="description" content="Free roof overhang calculator: find rafter tail length, overhang drop, full rafter length, fascia, soffit and added roof area from your pitch.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/roof-overhang-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:1rem 1.5rem 1.5rem}
+h1{font-size:1.9rem;line-height:1.2;margin:.5rem 0 1rem}
+h2{font-size:1.35rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+figure{margin:0 0 1.5rem;background:#f8f9fa;border-radius:8px;padding:.5rem}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:.8rem;color:#555;text-align:center;padding:.25rem}
+svg text{font-size:14px;fill:#1a1a2e;font-family:inherit}
+.grid{display:grid;grid-template-columns:1fr;gap:1.25rem}
+@media(min-width:560px){.grid{grid-template-columns:1fr 1fr}.full{grid-column:1/-1}}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;height:44px}
+input.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.err:empty{display:none}
+.hint{font-size:.8rem;color:#555;margin-top:.3rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#555}
+output{color:#0077b6;font-weight:700}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:44px;cursor:pointer;width:100%;font-family:inherit}
+button:hover{background:#006299}
+.go{margin-top:1.5rem}
+#results{margin-top:1.5rem}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.fade{animation:none}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+.key .lbl{font-size:.9rem;color:#444;font-weight:500}
+.big{font-size:2.1rem;font-weight:800;color:#0077b6;line-height:1.2;margin:.25rem 0}
+.sub{font-size:.9rem;color:#555}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-bottom:1.25rem}
+.stat{border:1px solid #e0e0e0;border-radius:8px;padding:.75rem;text-align:center}
+.stat b{display:block;font-size:1.25rem;color:#0077b6}
+.stat span{font-size:.8rem;color:#555}
+.tw{overflow-x:auto;margin:.5rem 0 1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;font-weight:600}
+td{padding:10px 12px;border-bottom:1px solid #e5e5e5}
+tbody tr:nth-child(odd){background:#fff}
+tbody tr:nth-child(even){background:#fafafa}
+th.n,td.n{text-align:right;white-space:nowrap}
+tr.me td{background:#e6f2f9;font-weight:700}
+h3{font-size:1.05rem;margin:1.25rem 0 .25rem}
+.note{background:#fff8e6;border-left:4px solid #e0a800;padding:.75rem 1rem;margin:0 0 .75rem;border-radius:4px;font-size:.92rem}
+.safe{font-size:.82rem;color:#555;margin:.5rem 0 1rem}
+.copy{width:auto;min-height:44px;background:#fff;color:#0077b6;border:1px solid #0077b6;padding:8px 16px;font-size:.9rem}
+.copy:hover{background:#eef7fc}
+.ad-slot{min-height:0;margin:0}
+.content ul{padding-left:1.25rem;margin:0 0 1rem}
+.content li{margin-bottom:.5rem}
+code{background:#f0f0f0;padding:2px 6px;border-radius:4px;font-size:.9em}
+details{border-bottom:1px solid #e5e5e5;padding:.5rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .75rem}
+.rel{list-style:none;padding:0;display:grid;gap:.5rem}
+.rel a{display:block;padding:12px 16px;background:#f8f9fa;border-radius:6px;min-height:44px}
+footer{max-width:640px;margin:2rem auto 0;padding:1.5rem;border-top:1px solid #e0e0e0;font-size:.9rem;color:#555}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/roof-overhang-calculator/">
+<meta property="og:title" content="Roof Overhang Calculator">
+<meta property="og:description" content="Free roof overhang calculator: find rafter tail length, overhang drop, full rafter length, fascia, soffit and added roof area from your pitch.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<main class="wrap">
+<h1>Roof Overhang Calculator</h1>
+<p>This free roof overhang calculator turns your building size, roof pitch and overhang depth into the numbers you actually frame with: rafter tail length, vertical drop, full rafter length, plumb cut, fascia, soffit and the extra roof area the overhang adds.</p>
+
+<section class="card">
+<figure>
+<svg id="dgm" viewBox="0 0 500 300" role="img" aria-labelledby="dt">
+<title id="dt">Roof eave cross-section showing overhang, drop and pitch</title>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<g id="dg"></g>
+</svg>
+<figcaption>Eave cross-section (gable roof). Diagram is not to scale and updates when you calculate.</figcaption>
+</figure>
+
+<form id="f" novalidate>
+<div class="grid">
+<div>
+<label for="bw">Building width (ft)</label>
+<input type="number" id="bw" value="24" step="any" inputmode="decimal" aria-describedby="bw-h bw-e">
+<div class="hint" id="bw-h">Wall to wall, across the roof (perpendicular to the ridge).</div>
+<div class="err" id="bw-e"></div>
+</div>
+<div>
+<label for="bl">Building length (ft)</label>
+<input type="number" id="bl" value="36" step="any" inputmode="decimal" aria-describedby="bl-h bl-e">
+<div class="hint" id="bl-h">Along the ridge, between gable walls.</div>
+<div class="err" id="bl-e"></div>
+</div>
+<div class="full">
+<label for="pitch">Roof pitch (rise per 12 in of run): <output id="pv" for="pitch">6 : 12</output></label>
+<input type="range" id="pitch" min="0" max="24" step="0.5" value="6">
+<div class="ticks"><span>0:12</span><span>12:12</span><span>24:12</span></div>
+</div>
+<div>
+<label for="eo">Eave overhang (in)</label>
+<input type="number" id="eo" value="12" step="any" inputmode="decimal" aria-describedby="eo-h eo-e">
+<div class="hint" id="eo-h">Horizontal distance from wall face to tail.</div>
+<div class="err" id="eo-e"></div>
+</div>
+<div>
+<label for="ro">Rake overhang (in)</label>
+<input type="number" id="ro" value="12" step="any" inputmode="decimal" aria-describedby="ro-h ro-e">
+<div class="hint" id="ro-h">Gable-end overhang. Enter 0 for none.</div>
+<div class="err" id="ro-e"></div>
+</div>
+<div>
+<label for="rs">Rafter size</label>
+<select id="rs">
+<option value="3.5">2×4 (3.5 in actual)</option>
+<option value="5.5">2×6 (5.5 in actual)</option>
+<option value="7.25" selected>2×8 (7.25 in actual)</option>
+<option value="9.25">2×10 (9.25 in actual)</option>
+<option value="11.25">2×12 (11.25 in actual)</option>
+</select>
+</div>
+<div>
+<label for="ll">Wall to property line (ft) — optional</label>
+<input type="number" id="ll" step="any" inputmode="decimal" aria-describedby="ll-h ll-e">
+<div class="hint" id="ll-h">Used only for a setback warning.</div>
+<div class="err" id="ll-e"></div>
+</div>
+</div>
+<button type="submit" class="go">Calculate Overhang</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</section>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<article class="content">
+<h2>How to Use This Roof Overhang Calculator</h2>
+<p>Enter the building width (wall to wall, across the roof) and length, drag the slider to your roof pitch, then type the eave overhang and rake overhang in inches. Pick your rafter size so the plumb cut and birdsmouth limit can be worked out. Press Calculate, or hit Enter in any field. You get the full rafter length with overhang, the rafter tail, the vertical drop, fascia and soffit quantities, and a comparison table of other eave depths at your pitch. The diagram redraws with your values.</p>
+
+<h2>Why This Matters</h2>
+<p>Overhang looks like a small detail, but it does real work. A 12 to 24 inch eave keeps rain off siding, windows and the foundation line, which is where most moisture damage starts. A deeper overhang also shades south-facing glass in summer, when the sun is high, and still lets low winter sun in. Builders in hot, sunny climates often go to 24 inches or more, while 12 inches is common in cold, snowy areas where long tails collect ice and snow.</p>
+<p>The number also drives money and safety. Take a 24 × 36 ft house with a 6:12 roof and 12 inch rakes. Going from a 12 inch to a 24 inch eave adds about 85 square feet of roof (two eave sides, each 38 ft long and 1 ft wider, times the 1.118 slope factor). That is a bit under one extra square of shingles, plus longer soffit runs. If you deepen the rakes to 24 inches as well, the total added is closer to 147 square feet. Longer tails are also more exposed to wind uplift and snow load. Work out the sloped length, the drop and the stock size before you buy: a rafter that finishes at 14 ft 6½ in cannot be cut from a 14 ft board, so you need 16 ft lumber and the right plan for the waste.</p>
+
+<h2>How It's Calculated</h2>
+<p>Overhang is measured horizontally, but rafters run along the slope. The calculator converts using the slope factor from the pitch (rise per 12 in of run):</p>
+<ul>
+<li><strong>Slope factor</strong> = <code>√(144 + pitch²) ÷ 12</code></li>
+<li><strong>Vertical drop</strong> of the overhang = <code>overhang × pitch ÷ 12</code></li>
+<li><strong>Rafter tail along the slope</strong> = <code>overhang × slope factor</code></li>
+<li><strong>Full rafter length</strong> = <code>(½ width in inches + overhang) × slope factor</code>, measured from the building centerline (ridge) to the plumb cut at the tail</li>
+<li><strong>Plumb cut length</strong> = <code>rafter depth × slope factor</code></li>
+<li><strong>Roof surface area</strong> = <code>(length + 2 × rake) × (width + 2 × eave) × slope factor</code></li>
+<li><strong>Added roof from eaves (comparison table)</strong> = <code>(length + 2 × rake) × 2 × eave ÷ 12 × slope factor</code>, so a 0 in eave always shows 0 and your rake overhang stays fixed at the value you entered</li>
+</ul>
+<p>Eave fascia is two runs of the length plus both rake overhangs. Rake fascia is four sloped runs from tail to ridge. Eave soffit area is the level soffit width times the same eave length. Ridge board thickness, birdsmouth seat, wall thickness and fascia thickness are not subtracted, so lengths err on the long side.</p>
+<p>Results that affect what you buy or cut are rounded conservatively. Rafter lengths round up to the next ⅛ inch, lumber rounds up to the next even foot, material quantities round up to whole feet or square feet, and the birdsmouth seat limit (about one quarter of the rafter depth, a common IRC R802 rule of thumb) rounds down. The warnings reference IRC R802 (roof framing) and R302.1 (fire separation) as general guidance only. Local codes, snow and wind loads vary.</p>
+
+<h2>Worked Example</h2>
+<p>A 24 ft wide by 36 ft long house, 6:12 pitch, 12 in eave and rake overhangs, 2×8 rafters:</p>
+<ul>
+<li>Slope factor = √(144 + 36) ÷ 12 = 13.416 ÷ 12 = <strong>1.1180</strong> (angle 26.57°).</li>
+<li>Drop = 12 × 6 ÷ 12 = <strong>6.00 in</strong>.</li>
+<li>Tail along slope = 12 × 1.1180 = 13.42 in, rounded up to <strong>1 ft 1½ in</strong>.</li>
+<li>Full rafter = (144 + 12) × 1.1180 = 174.41 in, rounded up to <strong>14 ft 6½ in</strong>. Buy <strong>16 ft</strong> lumber.</li>
+<li>Plumb cut = 7.25 × 1.1180 = 8.11 in, rounded up to <strong>8⅛ in</strong>. Birdsmouth seat limit is 7.25 ÷ 4 = <strong>1 13/16 in</strong>.</li>
+<li>Roof footprint is 26 × 38 ft. Eave fascia is 2 × 38 = <strong>76 ft</strong>. Rake fascia is 4 × 14.53 = 58.1, rounded up to <strong>59 ft</strong>.</li>
+<li>Roof surface = 38 × 26 × 1.1180 = <strong>1,105 sq ft</strong>. The same roof with no overhang is 966 sq ft, so the two overhangs together add about <strong>139 sq ft</strong>.</li>
+<li>In the comparison table, the 12 in eave row shows 38 × 2 × 1.1180 = <strong>85 sq ft</strong> added by the eaves alone, and the 24 in row shows <strong>170 sq ft</strong>. The difference between those two rows is the 85 sq ft mentioned above.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure overhang horizontally.</strong> Many people measure along the rafter, which overstates the overhang by the slope factor. A 6:12 roof makes a 12 in horizontal overhang a 13.4 in tail.</li>
+<li><strong>Check the limit before going long.</strong> Prescriptive span tables often assume overhangs of about 24 in or less, and tails much longer than a third of the backspan can overstress the rafter. Past that, use lookouts, a ladder frame or an engineer.</li>
+<li><strong>Don't over-notch the rafter.</strong> A birdsmouth deeper than about a quarter of the rafter depth weakens the member right where it bears.</li>
+<li><strong>Add waste and check stock lengths.</strong> Order 10% extra fascia and soffit, and remember rafters come in even-foot lengths.</li>
+<li><strong>Plan for wind and fire.</strong> High-wind areas need proper uplift straps and tail blocking. Overhangs near a property line can need a fire-rated underside or be prohibited.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much roof overhang should I have?</summary><p>Most homes have 12 to 24 inches on the eaves and about 6 to 12 inches on the rakes. Wetter and sunnier climates benefit from deeper eaves. Snowy regions often stay shorter because long tails collect ice dams and snow load.</p></details>
+<details><summary>How do you calculate roof overhang length?</summary><p>Measure the horizontal distance from the outside wall face to the end of the tail, then multiply by the slope factor, √(144 + pitch²) ÷ 12, to get the length along the rafter. This calculator does both and also gives the vertical drop.</p></details>
+<details><summary>What is the maximum roof overhang without extra support?</summary><p>A common rule of thumb is about 24 inches for ordinary rafters. Many span tables assume that figure. Longer overhangs usually need lookouts, larger rafters or an engineer's design, and a good guide is no more than a third of the backspan.</p></details>
+<details><summary>Does overhang affect how much roofing I need?</summary><p>Yes. Overhang adds surface on every side. The comparison table shows how much extra roof each eave depth creates at your pitch, holding your rake overhang constant. Add waste, usually 10 to 15 percent, on top of the area shown.</p></details>
+<details><summary>Is the overhang measured to the fascia or the rafter tail?</summary><p>Most framers measure to the plumb cut at the end of the rafter tail. The fascia board adds about 3/4 to 1½ inch beyond it. If you want a specific finished overhang, subtract the fascia thickness before entering the value.</p></details>
+<details><summary>Can I build an overhang near my property line?</summary><p>Often not freely. Building codes such as IRC R302.1 can restrict projections within about 5 feet of a lot line, require a fire-rated underside, or prohibit them within 2 feet. Check with your local building department before framing.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/roof-sheathing-calculator/">Roof Sheathing Calculator</a></li>
+<li><a href="/roof-replacement-cost-calculator/">Roof Replacement Cost Calculator</a></li>
+<li><a href="/roof-underlayment-calculator/">Roof Underlayment Calculator</a></li>
+<li><a href="/drip-edge-roof-trim-calculator/">Drip Edge &amp; Roof Trim Calculator</a></li>
+<li><a href="/roof-attic-ventilation-calculator/">Roof Attic Ventilation Calculator</a></li>
+<li><a href="/roof-pitch-rafter-calculator/">Roof Pitch &amp; Rafter Length Calculator</a></li>
+</ul>
+</article>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/roof-overhang-calculator/">Toolwick</a></p>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const res=$('results'),pitch=$('pitch'),pv=$('pv');
+let lastText='';
+const fmt=(n,d)=>n.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+const cu=x=>Math.ceil(x-1e-9);
+function fr(N,den){const w=Math.floor(N/den),r=N%den;let s=w?''+w:'';if(r){const g=gcd(r,den);s+=(s?' ':'')+(r/g)+'/'+(den/g)}return s||'0'}
+function ftIn(x){const N=Math.max(0,Math.ceil(x*8-1e-9)),ft=Math.floor(N/96);return(ft?ft+' ft ':'')+fr(N-ft*96,8)+' in'}
+function inDown(x){return fr(Math.max(0,Math.floor(x*16+1e-9)),16)+' in'}
+const spec=[['bw','Building width',4,200,'ft'],['bl','Building length',4,500,'ft'],['eo','Eave overhang',0,120,'in'],['ro','Rake overhang',0,120,'in'],['ll','Distance to property line',0,1000,'ft',1]];
+pitch.addEventListener('input',()=>{pv.textContent=pitch.value+' : 12'});
+
+function drawDiagram(E,p,drop,tail){
+const th=Math.atan(p/12),dth=Math.min(th,0.698),t=Math.tan(dth),c=Math.cos(dth);
+const wx=250,yw=120,ox=E>0?50+Math.min(E,36)/36*60:0,tx=wx-ox,ty=yw+ox*t,vt=18/c;
+const u=t>0.01?Math.min(200,(yw-25)/t):200,ex=wx+u,ey=yw-u*t;
+const n=x=>x.toFixed(1),G='#b0b0b0',B='#0077b6',ang=th*180/Math.PI;
+const dash='stroke="'+G+'" stroke-dasharray="4 3"';
+let s='<line x1="10" y1="286" x2="490" y2="286" stroke="#e0e0e0" stroke-width="3"/>';
+s+='<rect x="'+wx+'" y="'+n(yw+vt)+'" width="34" height="'+n(286-yw-vt)+'" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="1.5"/><text x="'+(wx+17)+'" y="276" text-anchor="middle" style="font-size:12px">Wall</text>';
+s+='<polygon points="'+n(tx)+','+n(ty)+' '+n(ex)+','+n(ey)+' '+n(ex)+','+n(ey+vt)+' '+n(tx)+','+n(ty+vt)+'" fill="rgba(0,119,182,.12)" stroke="'+B+'" stroke-width="2.5" stroke-linejoin="round"/>';
+s+='<line x1="'+n(tx-26)+'" y1="'+yw+'" x2="'+wx+'" y2="'+yw+'" '+dash+'/><line x1="'+n(tx-26)+'" y1="'+n(ty)+'" x2="'+n(tx)+'" y2="'+n(ty)+'" '+dash+'/>';
+if(ty-yw>6)s+='<line x1="'+n(tx-22)+'" y1="'+yw+'" x2="'+n(tx-22)+'" y2="'+n(ty)+'" stroke="'+B+'" stroke-width="1.5" marker-start="url(#ah)" marker-end="url(#ah)"/>';
+s+='<text x="'+n(tx-28)+'" y="'+n((yw+ty)/2+5)+'" text-anchor="end">Drop '+fmt(drop,1)+' in</text>';
+s+='<line x1="'+n(tx)+'" y1="'+n(ty+vt)+'" x2="'+n(tx)+'" y2="262" '+dash+'/>';
+if(ox>6)s+='<line x1="'+n(tx)+'" y1="262" x2="'+wx+'" y2="262" stroke="'+B+'" stroke-width="1.5" marker-start="url(#ah)" marker-end="url(#ah)"/>';
+s+='<text x="'+(wx-4)+'" y="279" text-anchor="end">Overhang '+fmt(E,1)+' in</text>';
+const rise=100*t;
+s+='<polygon points="360,250 460,250 460,'+n(250-rise)+'" fill="none" stroke="'+B+'" stroke-width="2"/>';
+s+='<text x="410" y="268" text-anchor="middle">12</text><text x="466" y="'+n(250-rise/2+5)+'">'+fmt(p,1)+'</text>';
+s+='<text x="12" y="24" style="font-weight:700">Pitch '+fmt(p,1)+':12 ('+fmt(ang,1)+'°)</text><text x="12" y="44">Tail along slope: '+fmt(tail,1)+' in</text>';
+$('dg').innerHTML=s;
+$('dt').textContent='Roof eave cross-section: overhang '+fmt(E,1)+' in, drop '+fmt(drop,1)+' in, pitch '+fmt(p,1)+' in 12';
+}
+drawDiagram(12,6,6,12*Math.sqrt(180)/12);
+
+function compute(){
+const errs={},v={};
+for(const [id,name,min,max,u,opt] of spec){
+const raw=$(id).value.trim();
+if(raw===''){if(opt){v[id]=null}else errs[id]='Enter '+name.toLowerCase()+'.';continue}
+const x=Number(raw);
+if(!isFinite(x)){errs[id]='Enter a valid number.';continue}
+if(x<min){errs[id]=min===0?name+' cannot be negative.':name+' must be at least '+min+' '+u+'.';continue}
+if(x>max){errs[id]=name+' is too large. Maximum is '+fmt(max)+' '+u+'.';continue}
+v[id]=x}
+if(Object.keys(errs).length)return{errs};
+const bw=v.bw,bl=v.bl,eo=v.eo,ro=v.ro,ll=v.ll,p=+pitch.value,sel=$('rs'),depth=+sel.value,rsName=sel.options[sel.selectedIndex].text.split(' ')[0];
+const sec=Math.sqrt(144+p*p)/12,ang=Math.atan(p/12)*180/Math.PI,half=bw*6;
+const Lr=(half+eo)*sec,tail=eo*sec,drop=eo*p/12,plumb=depth*sec,seat=depth/4;
+const stock=Math.ceil(Math.max(8,cu(Lr/12))/2)*2;
+const W2=bw+2*eo/12,L2=bl+2*ro/12,eaveF=2*L2,rakeF=4*(bw/2+eo/12)*sec,soff=2*L2*eo/12;
+const area=L2*W2*sec,base=bl*bw*sec,added=area-base,sq=Math.ceil(area/10-1e-9)/10;
+const notes=[];
+if(eo>24)notes.push('Eave overhang exceeds 24 in. Many prescriptive rafter span tables (IRC R802) assume 24 in or less, so confirm with lookouts, larger rafters or an engineer.');
+if(eo>half/3)notes.push('The overhang is more than one-third of the backspan ('+fmt(half/3,1)+' in), a common limit for conventional rafter tails.');
+if(eo>0&&eo<12)notes.push('Eaves under about 12 in give limited protection to siding and windows.');
+if(ro>12)notes.push('Rake overhangs beyond about 12 in generally need lookouts or outriggers anchored into the roof framing.');
+if(stock>24)notes.push('Rafter exceeds standard 24 ft lumber. Plan a splice, a purlin support or engineered members.');
+if(p===0)notes.push('A 0:12 pitch is flat. Real roofs need slope for drainage, so check the minimum pitch for your roofing.');
+if(ll!==null){if(ll-eo/12<2)notes.push('The overhang would come within 2 ft of the property line. Projections there may not be permitted (IRC R302.1). Check with your building department.');else if(ll<5)notes.push('The wall is under 5 ft from the property line. IRC R302.1 may require a fire-rated underside or limit projections. Confirm locally.')}
+const rows=[['Eave overhang (horizontal)',fmt(eo,2)+' in'],['Roof pitch / angle',fmt(p,1)+':12 / '+fmt(ang,2)+'°'],['Slope factor',fmt(sec,4)],['Vertical drop of overhang',fmt(drop,2)+' in'],['Rafter tail along slope',ftIn(tail)+' ('+fmt(tail,2)+' in)'],['Full rafter, ridge centerline to tail',ftIn(Lr)],['Lumber to buy (next even foot)',stock+' ft'],['Plumb cut length ('+rsName+')',ftIn(plumb)],['Max birdsmouth seat depth (¼ depth)',inDown(seat)],['Overall roof size incl. overhangs',fmt(W2,2)+' × '+fmt(L2,2)+' ft'],['Eave fascia / drip edge run',fmt(cu(eaveF))+' ft'],['Rake fascia / drip edge run',fmt(cu(rakeF))+' ft'],['Eave soffit area (level)',fmt(cu(soff))+' sq ft'],['Roof surface area incl. overhangs',fmt(cu(area))+' sq ft ('+fmt(sq,1)+' squares)'],['Roof area added by eave + rake overhangs',fmt(cu(added))+' sq ft']];
+let list=[0,6,12,16,18,24,30,36];if(list.indexOf(eo)<0){list.push(eo);list.sort((a,b)=>a-b)}
+const cmp=list.map(e=>{const a=L2*(2*e/12)*sec;return '<tr'+(e===eo?' class="me"':'')+'><td class="n">'+fmt(e,e%1?2:0)+'</td><td class="n">'+fmt(e*p/12,2)+'</td><td class="n">'+fmt(e*sec,2)+'</td><td class="n">'+fmt(cu(a))+'</td><td class="n">'+fmt(cu(2*L2*e/12))+'</td></tr>'}).join('');
+const text='Roof Overhang Calculator (toolwick.com)\n'+'Building: '+fmt(bw,2)+' ft x '+fmt(bl,2)+' ft, pitch '+fmt(p,1)+':12, eave '+fmt(eo,2)+' in, rake '+fmt(ro,2)+' in, rafters '+rsName+'\n'+rows.map(r=>r[0]+': '+r[1]).join('\n')+'\nEstimate only; not engineering or permit approval. Local codes vary.';
+const html='<div class="fade"><div class="key"><div class="lbl">Full rafter length including overhang</div><div class="big">'+ftIn(Lr)+'</div><div class="sub">'+fmt(Lr,2)+' in along the slope · buy '+stock+' ft lumber</div></div>'+
+'<div class="stats"><div class="stat"><b>'+fmt(drop,2)+' in</b><span>Vertical drop</span></div><div class="stat"><b>'+fmt(tail,2)+' in</b><span>Tail along slope</span></div><div class="stat"><b>'+fmt(ang,1)+'°</b><span>Roof angle</span></div></div>'+
+'<div class="tw"><table><thead><tr><th>Measurement</th><th class="n">Result</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>').join('')+'</tbody></table></div>'+
+notes.map(m=>'<p class="note">'+m+'</p>').join('')+
+'<h3>Compare eave overhangs at '+fmt(p,1)+':12</h3><p class="safe">Added roof counts the eave sides only, with your '+fmt(ro,ro%1?2:0)+' in rake overhang held constant.</p><div class="tw"><table><thead><tr><th class="n">Eave overhang (in)</th><th class="n">Drop (in)</th><th class="n">Tail (in)</th><th class="n">Added roof from eaves (sq ft)</th><th class="n">Soffit (sq ft)</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'+
+'<p class="safe">Lengths round up and seat depth rounds down. Rules of thumb follow IRC R802 and R302.1; local codes, snow and wind loads vary. This is a planning estimate, not engineering, permit or inspection approval. Order about 10% extra material.</p>'+
+'<button type="button" class="copy" id="cp">Copy results</button></div>';
+return{errs:{},html:html,text:text,d:[eo,p,drop,tail]};
+}
+
+function render(r){
+let first=null;
+for(const s of spec){const id=s[0],el=$(id),m=r.errs[id];el.classList.toggle('bad',!!m);if(m){el.setAttribute('aria-invalid','true');if(!first)first=el}else el.removeAttribute('aria-invalid');$(id+'-e').textContent=m||''}
+if(first){res.innerHTML='';lastText='';first.focus();return}
+res.innerHTML=r.html;lastText=r.text;
+drawDiagram.apply(null,r.d);
+}
+$('f').addEventListener('submit',e=>{e.preventDefault();const r=compute();requestAnimationFrame(()=>render(r))});
+res.addEventListener('click',e=>{
+const b=e.target.closest('#cp');if(!b)return;
+const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+const fb=()=>{const ta=document.createElement('textarea');ta.value=lastText;document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(ta);done()};
+if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(lastText).then(done,fb);else fb();
+});
+$('yr').textContent=new Date().getFullYear();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
