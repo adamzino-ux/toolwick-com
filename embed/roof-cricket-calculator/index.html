@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Roof Cricket Calculator | Toolwick</title>
+<meta name="description" content="Free roof cricket calculator: enter chimney width and roof pitch to get cricket ridge height, valley length, sheathing area and flashing.">
+<link rel="canonical" href="https://toolwick.com/roof-cricket-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem}
+h1{font-size:1.9rem;line-height:1.2;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;max-width:420px;height:auto;margin:0 auto}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;padding:12px 16px;min-height:44px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666;margin-top:-.4rem}
+.bad{border-color:#e74c3c!important}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;min-height:44px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;font-family:inherit}
+button:hover{background:#006299}
+button.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;font-size:.85rem;padding:8px 16px;margin-top:1rem}
+button.copy:hover{background:#f0f8fc}
+#results{margin-top:1.5rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.sub{color:#444;font-size:.95rem;margin-top:.4rem}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(even) td{background:#fafafa}
+th.n,td.n{text-align:right}
+tr.sel td{font-weight:700;background:#eaf5fb}
+.warn{border-left:4px solid #e67e22;background:#fff8f0;padding:.75rem 1rem;margin:.75rem 0;font-size:.92rem;border-radius:0 6px 6px 0}
+.info{border-left:4px solid #0077b6;background:#f0f8fc;padding:.75rem 1rem;margin:.75rem 0;font-size:.92rem;border-radius:0 6px 6px 0}
+.note{font-size:.82rem;color:#555;margin-top:1rem}
+h3{font-size:1rem;margin:1.5rem 0 .25rem}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.8rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.3rem 0 0}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.rel li{margin:0}
+.rel a{display:block;padding:12px 14px;min-height:44px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px}
+.formula{background:#f8f9fa;border-radius:6px;padding:1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;overflow-x:auto;line-height:1.8}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem}
+@media(max-width:640px){.card{padding:1.25rem}.rel{grid-template-columns:1fr}h1{font-size:1.6rem}.big{font-size:2.2rem}button.copy{width:100%}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/roof-cricket-calculator/">
+<meta property="og:title" content="Roof Cricket Calculator">
+<meta property="og:description" content="Free roof cricket calculator: enter chimney width and roof pitch to get cricket ridge height, valley length, sheathing area and flashing.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Roof Cricket Calculator</h1>
+<p>Use this roof cricket calculator to size the small saddle roof that sits behind a chimney. Enter the chimney width and roof pitch to get the cricket ridge height, valley length, sheathing area and flashing lengths, all rounded up on the conservative side.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="dsvg" viewBox="0 0 400 420" role="img" aria-label="Roof cricket side and plan view diagram">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<g id="dg"></g>
+</svg>
+</div>
+
+<div class="field">
+<label for="w">Chimney width (inches) — the uphill face, measured along the eave/ridge direction</label>
+<input type="number" id="w" value="48" min="6" max="240" step="0.25" inputmode="decimal" aria-describedby="werr">
+<div class="err" id="werr" role="alert"></div>
+</div>
+
+<div class="field">
+<label for="p">Roof pitch (rise per 12 in. of run): <strong id="pv">6:12</strong></label>
+<input type="range" id="p" min="1" max="18" step="0.5" value="6">
+<div class="ticks"><span>1:12</span><span>9:12</span><span>18:12</span></div>
+</div>
+
+<div class="field">
+<label for="r">Cricket pitch</label>
+<select id="r">
+<option value="0.5" selected>Half the roof pitch (common)</option>
+<option value="0.75">¾ of the roof pitch</option>
+<option value="1">Same as the roof pitch</option>
+</select>
+</div>
+
+<div class="field">
+<label for="waste">Sheathing waste allowance (%)</label>
+<input type="number" id="waste" value="15" min="0" max="50" step="1" inputmode="decimal" aria-describedby="eerr">
+<div class="hint">Triangular cut-offs waste more than rectangles; 15% is typical.</div>
+<div class="err" id="eerr" role="alert"></div>
+</div>
+
+<button type="button" id="calc">Calculate Cricket</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Roof Cricket Calculator</h2>
+<p>Measure the width of the chimney face that looks uphill, along the direction of the eave, and enter it in inches. Set the slider to your roof pitch (for example 6:12), then choose how steep the cricket should be compared with the roof. Half the roof pitch is the usual choice. Press Calculate to see the ridge height at the chimney, the level ridge length, valley lengths, sheathing and flashing quantities, and a comparison of all three pitch options. The diagram above updates with your numbers.</p>
+
+<h2>Why This Matters</h2>
+<p>A chimney is a dam. On a sloped roof, water running downhill hits the wide uphill face of the chimney and has nowhere to go but around the sides. On a narrow chimney that works fine, but once the face gets wide, debris, snow and ice pile up behind it. The flashing at that joint becomes the most leak-prone spot on the roof. A cricket, also called a saddle, is a small two-sided roof that splits the flow and sends it around both sides.</p>
+<p>Model codes recognize this. The International Residential Code requires a cricket where the chimney dimension parallel to the ridge exceeds 30 inches (see IRC R1003.20 and R903.2.2, and verify the edition your jurisdiction has adopted). A typical masonry chimney with a two-flue stack is 48 to 56 inches wide, so most of them need one. Homeowners get a firm quantity before calling a roofer, carpenters can pre-cut the ridge and valleys on the ground, and estimators can price sheathing and flashing without a site visit. Getting the height wrong in either direction has a cost. Too flat and water pools. Too tall and you spend extra on lumber, metal and shingles.</p>
+
+<h2>How It's Calculated</h2>
+<p>The model is a standard saddle with a level ridge. The ridge starts at the chimney's centerline at height H above the roof surface, and runs uphill until it meets the roof. Each face slopes down to a chimney corner, and the valleys run from those corners to the ridge's end. With chimney width W, roof pitch p (rise per 12) and a pitch ratio k (0.5 for half pitch), the formulas are:</p>
+<div class="formula">Cricket pitch c = p × k (rise per 12)<br>Ridge height H = (W ÷ 2) × c ÷ 12<br>Ridge run R = k × (W ÷ 2)<br>Valley length V = √[(W÷2)² + R² + H²]<br>Area, both faces = R × √[H² + (W÷2)²] ÷ 144 (sq ft)</div>
+<p>Because the ridge is level, its run depends only on the ratio k and the chimney width, not on the roof pitch. Lengths are rounded up to the next 1/8 inch, lumber to the next even foot, sheets of 4×8 sheathing up to the next whole sheet, and flashing adds a 10% lap allowance. The tool follows this geometric rule of thumb and the IRC's 30-inch trigger. Local codes vary, and this is not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>A brick chimney is 48 inches wide on a 6:12 roof, and you pick a half-pitch cricket with 15% waste.</p>
+<ul>
+<li>Cricket pitch: 6 × 0.5 = 3:12, a face angle of about 14.0°.</li>
+<li>Ridge height: (48 ÷ 2) × 3 ÷ 12 = 6.00 inches.</li>
+<li>Ridge run: 0.5 × 24 = 12.00 inches.</li>
+<li>Valley length: √(24² + 12² + 6²) = √756 ≈ 27.50 inches, or 2′ 3½″.</li>
+<li>Sheathing: 12 × √(6² + 24²) ÷ 144 = 12 × 24.74 ÷ 144 ≈ 2.06 sq ft. With 15% waste that is 2.37 sq ft, so one 4×8 sheet.</li>
+<li>Valley flashing: 2 × 27.50 in × 1.10 ÷ 12 ≈ 5.04 ft, rounded up to 6 ft. Back flashing: (48 + 12) ÷ 12 = 5 ft.</li>
+</ul>
+<p>That matches what the calculator outputs for these inputs.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the right face.</strong> Use the chimney width parallel to the eave, not the depth running up the slope. Mixing them up changes every result.</li>
+<li><strong>Watch the cricket pitch.</strong> On a low-slope roof, half pitch can fall below 2:12. Asphalt shingles are not permitted under 2:12 (IRC R905.2.2), and slopes under 4:12 call for special underlayment. Use the comparison table to pick a steeper option, or cover the cricket in sheet metal or membrane.</li>
+<li><strong>Metal is often the best covering.</strong> Many roofers cap crickets in soldered or sealed sheet metal because valleys on tiny shingled saddles are hard to seal.</li>
+<li><strong>Don't skimp on flashing.</strong> Counterflash the cricket-to-chimney joint in the same way as any roof-to-wall intersection. Flashing mistakes cause most chimney leaks, far more than the cricket's geometry.</li>
+<li><strong>Verify on the roof.</strong> Chimneys and framing are rarely perfectly square. Dry-fit before final cuts, and check the plan with your roofer or building department.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What is a roof cricket?</summary><p>A roof cricket, or saddle, is a small peaked structure built on the uphill side of a chimney or other wide penetration. It diverts water and debris around the obstruction instead of letting it collect behind it.</p></details>
+<details><summary>When is a roof cricket required?</summary><p>The IRC calls for one when the chimney's dimension parallel to the ridge is more than 30 inches. Local amendments can change that, so check with your building department. Even for narrower chimneys, a cricket can help in snowy climates.</p></details>
+<details><summary>How tall should a roof cricket be?</summary><p>A common rule is to make the cricket pitch half the roof pitch, so the ridge height is the chimney width times the roof pitch ÷ 48. A 48-inch chimney on a 6:12 roof gives a 6-inch ridge. Go steeper for heavy snow or low-pitch roofs.</p></details>
+<details><summary>Can I use shingles on a cricket?</summary><p>Yes, if the cricket pitch is at least 2:12 and underlayment rules for the slope are followed. Below that, use sheet metal or a low-slope membrane. Many installers choose metal anyway because the valleys are very short.</p></details>
+<details><summary>Does roof pitch change the cricket ridge length?</summary><p>No. With a level ridge, the run equals the pitch ratio times half the chimney width. Roof pitch only changes how tall the ridge is.</p></details>
+<details><summary>Is this calculator a substitute for a roofer or an engineer?</summary><p>No. It gives geometry and material estimates based on a rule of thumb. Your local code, the actual framing, and a qualified roofer or engineer decide the final design.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/roof-overhang-calculator/">Roof Overhang Calculator</a></li>
+<li><a href="/roof-sheathing-calculator/">Roof Sheathing Calculator</a></li>
+<li><a href="/roof-replacement-cost-calculator/">Roof Replacement Cost Calculator</a></li>
+<li><a href="/roof-underlayment-calculator/">Roof Underlayment Calculator</a></li>
+<li><a href="/drip-edge-roof-trim-calculator/">Drip Edge &amp; Roof Trim Calculator</a></li>
+<li><a href="/roof-attic-ventilation-calculator/">Roof Attic Ventilation Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/roof-cricket-calculator/">Toolwick</a></p>
+
+<script>
+const $=id=>document.getElementById(id);
+const nf=(n,d=0)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+function fi(inch){
+  let e=Math.max(0,Math.ceil(inch*8-1e-9));
+  const ft=Math.floor(e/96), r=e-ft*96, w=Math.floor(r/8);
+  let num=r%8, den=8;
+  while(num&&num%2===0){num/=2;den/=2}
+  const parts=[];
+  if(ft)parts.push(ft+'′');
+  if(w||num)parts.push((w?w:'')+(num?(w?' ':'')+num+'/'+den:'')+'″');
+  if(!parts.length)parts.push('0″');
+  return parts.join(' ');
+}
+function compute(W,p,k,waste){
+  const half=W/2,c=p*k,H=half*c/12,R=k*half,V=Math.sqrt(half*half+R*R+H*H);
+  const area=R*Math.sqrt(H*H+half*half)/144;
+  return{W,p,k,waste,c,H,R,V,area,ang:Math.atan(c/12)*180/Math.PI};
+}
+function dia(d){
+  const sd=Math.max(.08,Math.min(d.p/12,.55)),yB=170,Rp=150,Hp=Rp*sd,y=x=>(yB-(x-140)*sd).toFixed(1);
+  const ay=(yB-Hp).toFixed(1),cx=140+Rp,f1=n=>nf(n,1);
+  const half=80,pr=half*d.k,ap=(370-pr).toFixed(1),mid=((370+ +ap)/2).toFixed(1);
+  const t='font-size="11" fill="#1a1a2e"';
+  return `<text x="10" y="14" font-size="11" fill="#666">Side view (not to scale)</text>
+<polygon points="40,${y(40)} 40,28 140,28 140,${yB}" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="1.5"/>
+<text x="90" y="52" text-anchor="middle" ${t}>Chimney</text>
+<polygon points="140,${yB} 140,${ay} ${cx},${ay}" fill="#0077b6" fill-opacity=".15" stroke="#0077b6" stroke-width="2"/>
+<polyline points="15,${y(15)} 385,${y(385)}" fill="none" stroke="#1a1a2e" stroke-width="2.5"/>
+<line x1="140" y1="${ay}" x2="${cx}" y2="${ay}" stroke="#0077b6" stroke-width="3.5"/>
+<line x1="126" y1="${ay}" x2="140" y2="${ay}" stroke="#bbb" stroke-dasharray="3 3"/>
+<line x1="126" y1="${yB}" x2="140" y2="${yB}" stroke="#bbb" stroke-dasharray="3 3"/>
+<line x1="130" y1="${ay}" x2="130" y2="${yB}" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text x="123" y="${((+ay+yB)/2+4).toFixed(1)}" text-anchor="end" ${t}>H = ${f1(d.H)} in</text>
+<line x1="140" y1="${ay}" x2="140" y2="${(ay-18).toFixed(1)}" stroke="#bbb" stroke-dasharray="3 3"/>
+<line x1="${cx}" y1="${ay}" x2="${cx}" y2="${(ay-18).toFixed(1)}" stroke="#bbb" stroke-dasharray="3 3"/>
+<line x1="140" y1="${(ay-14).toFixed(1)}" x2="${cx}" y2="${(ay-14).toFixed(1)}" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text x="${140+Rp/2}" y="${(ay-20).toFixed(1)}" text-anchor="middle" ${t}>Level ridge run R = ${f1(d.R)} in</text>
+<text x="215" y="${(+y(215)+34).toFixed(1)}" ${t}>Roof pitch ${nf(d.p,d.p%1?1:0)}:12</text>
+<text x="215" y="${(+y(215)+50).toFixed(1)}" ${t}>Cricket pitch ${nf(d.c,1)}:12</text>
+<text x="10" y="285" font-size="11" fill="#666">Plan view (looking down)</text>
+<text x="390" y="305" text-anchor="end" font-size="11" fill="#666">↑ upslope</text>
+<polygon points="120,370 280,370 200,${ap}" fill="#0077b6" fill-opacity=".15" stroke="#0077b6" stroke-width="2"/>
+<line x1="200" y1="370" x2="200" y2="${ap}" stroke="#0077b6" stroke-width="3.5"/>
+<text x="200" y="${(ap-6).toFixed(1)}" text-anchor="middle" ${t}>Ridge R = ${f1(d.R)} in</text>
+<text x="254" y="${(+mid+4).toFixed(1)}" ${t}>Valley ${f1(d.V)} in</text>
+<rect x="120" y="370" width="160" height="38" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="1.5"/>
+<line x1="124" y1="380" x2="276" y2="380" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text x="200" y="402" text-anchor="middle" ${t}>Chimney width W = ${f1(d.W)} in</text>`;
+}
+function setDia(d){
+  $('dg').innerHTML=dia(d);
+  $('dsvg').setAttribute('aria-label','Roof cricket diagram: chimney width '+nf(d.W,1)+' inches, roof pitch '+nf(d.p,1)+' in 12, ridge height '+nf(d.H,1)+' inches, ridge run '+nf(d.R,1)+' inches, valley length '+nf(d.V,1)+' inches.');
+}
+function pLabel(p){return nf(p,p%1?1:0)+':12'}
+function clearErr(){
+  ['w','waste'].forEach(i=>{$(i).classList.remove('bad');$(i).removeAttribute('aria-invalid')});
+  $('werr').textContent='';$('eerr').textContent='';
+}
+function bad(id,eid,msg){$(id).classList.add('bad');$(id).setAttribute('aria-invalid','true');$(eid).textContent=msg}
+function read(){
+  clearErr();let ok=true;
+  const W=parseFloat($('w').value),wa=parseFloat($('waste').value);
+  if($('w').value.trim()===''||!isFinite(W)){bad('w','werr','Enter the chimney width in inches.');ok=false}
+  else if(W<6||W>240){bad('w','werr','Width must be between 6 and 240 inches.');ok=false}
+  if($('waste').value.trim()===''||!isFinite(wa)||wa<0||wa>50){bad('waste','eerr','Enter a waste allowance from 0 to 50%.');ok=false}
+  return ok?{W,wa}:null;
+}
+let lastText='',shown=false;
+function calcRun(){
+  const v=read();
+  if(!v){requestAnimationFrame(()=>{$('results').innerHTML='';shown=false});return}
+  const p=parseFloat($('p').value),k=parseFloat($('r').value);
+  const d=compute(v.W,p,k,v.wa);
+  const aw=d.area*(1+v.wa/100),sheets=Math.max(1,Math.ceil(aw/32-1e-9));
+  const valFt=Math.ceil(2*d.V*1.1/12-1e-9),backFt=Math.ceil((d.W+12)/12-1e-9);
+  const buy=x=>Math.max(2,Math.ceil(x/12/2-1e-9)*2);
+  let warn='';
+  if(d.W>30)warn+=`<div class="info">Chimney is wider than 30 in: the IRC (R1003.20 / R903.2.2) calls for a cricket or saddle. Confirm with your local building department.</div>`;
+  else warn+=`<div class="info">Chimney is 30 in or narrower: a cricket is generally not required by the IRC, but it can still help in snowy or debris-heavy areas.</div>`;
+  if(d.c<2)warn+=`<div class="warn"><strong>Cricket pitch is below 2:12.</strong> Asphalt shingles are not permitted under 2:12 (IRC R905.2.2). Use sheet metal or a low-slope membrane, or choose a steeper option below.</div>`;
+  else if(d.c<4)warn+=`<div class="warn"><strong>Cricket pitch is under 4:12.</strong> Shingled slopes this low need special underlayment per code. Consider a steeper cricket or a metal covering.</div>`;
+  const ratios=[[.5,'Half roof pitch'],[.75,'¾ roof pitch'],[1,'Same as roof']];
+  let cmp=ratios.map(([kk,lb])=>{const x=compute(d.W,d.p,kk,v.wa);return `<tr${kk===d.k?' class="sel"':''}><td>${lb}</td><td class="n">${nf(x.c,2)}:12</td><td class="n">${nf(x.H,2)}</td><td class="n">${nf(x.R,2)}</td><td class="n">${nf(x.area,2)}</td></tr>`}).join('');
+  const rows=[
+   ['Cricket pitch',nf(d.c,2)+' : 12',nf(d.ang,1)+'° face slope'],
+   ['Ridge height at chimney (H)',nf(d.H,2)+' in',fi(d.H)],
+   ['Ridge length, level (R)',nf(d.R,2)+' in',fi(d.R)],
+   ['Valley length (each of 2)',nf(d.V,2)+' in',fi(d.V)],
+   ['Sheathing area, 2 faces',nf(d.area,2)+' sq ft','—'],
+   ['Area with '+nf(v.wa,0)+'% waste',nf(aw,2)+' sq ft','—'],
+   ['4×8 sheathing sheets',nf(sheets),'—'],
+   ['Valley flashing (+10% lap)',nf(valFt)+' ft','—'],
+   ['Back flashing at chimney face',nf(backFt)+' ft','—'],
+   ['Ridge board to buy',nf(buy(d.R))+' ft','1 piece'],
+   ['Valley boards to buy',nf(buy(d.V))+' ft','2 pieces']
+  ].map(r=>`<tr><td>${r[0]}</td><td class="n">${r[1]}</td><td class="n">${r[2]}</td></tr>`).join('');
+  lastText=`Roof Cricket Calculator (toolwick.com)
+Chimney width: ${nf(d.W,2)} in | Roof pitch: ${pLabel(d.p)} | Cricket pitch: ${nf(d.c,2)}:12
+Ridge height: ${nf(d.H,2)} in (${fi(d.H)})
+Ridge length: ${nf(d.R,2)} in (${fi(d.R)})
+Valley length (each of 2): ${nf(d.V,2)} in (${fi(d.V)})
+Sheathing: ${nf(d.area,2)} sq ft (${nf(aw,2)} sq ft with ${nf(v.wa,0)}% waste), ${sheets} sheet(s) 4x8
+Valley flashing: ${valFt} ft | Back flashing: ${backFt} ft
+Estimate only; local codes vary.`;
+  const html=`<div class="res"><div class="key"><div class="big">${nf(d.H,2)} in</div><div class="sub">Cricket ridge height above the roof at the chimney face<br>(${fi(d.H)}, rounded up to 1/8″)</div></div>${warn}
+<h3>Cricket dimensions &amp; materials</h3>
+<div class="tw"><table><thead><tr><th>Item</th><th class="n">Value</th><th class="n">Feet-inches (rounded up)</th></tr></thead><tbody>${rows}</tbody></table></div>
+<h3>Compare cricket pitch options</h3>
+<div class="tw"><table><thead><tr><th>Option</th><th class="n">Pitch</th><th class="n">Height (in)</th><th class="n">Run (in)</th><th class="n">Area (sq ft)</th></tr></thead><tbody>${cmp}</tbody></table></div>
+<button type="button" class="copy" id="copyBtn">Copy results</button>
+<p class="note">Based on a level-ridge saddle and the IRC 30-inch cricket rule of thumb. Lengths are rounded up for framing. Local codes vary. This is an estimate, not engineering, permit or inspection approval.</p></div>`;
+  requestAnimationFrame(()=>{$('results').innerHTML=html;setDia(d);shown=true});
+}
+$('calc').addEventListener('click',calcRun);
+['w','waste','r','p'].forEach(i=>$(i).addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();calcRun()}}));
+$('p').addEventListener('input',()=>{
+  $('pv').textContent=pLabel(parseFloat($('p').value));
+  if(shown)calcRun();
+});
+$('r').addEventListener('change',()=>{if(shown)calcRun()});
+$('results').addEventListener('click',e=>{
+  if(e.target.id!=='copyBtn')return;
+  const b=e.target,done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,done)}
+  else{const t=document.createElement('textarea');t.value=lastText;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(t);done()}
+});
+$('yr').textContent=new Date().getFullYear();
+setDia(compute(48,6,.5,15));
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
