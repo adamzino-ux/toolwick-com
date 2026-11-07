@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Free Rim Joist Insulation Calculator | Toolwick</title>
+<meta name="description" content="Free rim joist insulation calculator: find the thickness, R-value, board feet or foam sheets needed for your band joist by climate zone.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/rim-joist-insulation-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Rim Joist Insulation Calculator", "url": "https://toolwick.com/rim-joist-insulation-calculator/", "description": "Free rim joist insulation calculator: find the thickness, R-value, board feet or foam sheets needed for your band joist by climate zone.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Rim Joist Insulation Calculator", "item": "https://toolwick.com/rim-joist-insulation-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What R-value do I need for a rim joist?", "acceptedAnswer": {"@type": "Answer", "text": "Most codes treat the rim joist like an exterior wall, so a common range is R-13 in warm climates up to R-20 or more in cold ones. Check your local code, since it may specify combinations such as R-13 cavity plus R-5 continuous."}}, {"@type": "Question", "name": "How thick should spray foam be on a rim joist?", "acceptedAnswer": {"@type": "Answer", "text": "Closed-cell foam gives about R-6.5 per inch, so R-20 needs roughly 3 to 3.25 in. Many installers apply 2 in for air sealing and add more up to the target. Follow the manufacturer's maximum lift thickness."}}, {"@type": "Question", "name": "Can I use fiberglass batts in a rim joist?", "acceptedAnswer": {"@type": "Answer", "text": "You can, but it performs poorly on its own. Fiberglass doesn't stop air movement, and moist air can condense on the cold rim board behind it. If you use batts, seal the rim with caulk or foam first, or add a layer of rigid foam."}}, {"@type": "Question", "name": "Is rigid foam board or spray foam better for rim joists?", "acceptedAnswer": {"@type": "Answer", "text": "Spray foam seals irregular gaps in one step and costs more per board foot. Cut-and-cobble foam board is cheaper and DIY-friendly, but every piece has to be sealed at the edges with can foam or caulk."}}, {"@type": "Question", "name": "Will insulating my rim joist cause moisture problems?", "acceptedAnswer": {"@type": "Answer", "text": "Done well, it reduces moisture because the rim board stays warmer and air can't carry vapor into the cavity. Fix any bulk water leaks first, and use foam or another material that blocks air and vapor against the wood."}}, {"@type": "Question", "name": "How do I measure the rim joist perimeter?", "acceptedAnswer": {"@type": "Answer", "text": "Measure the inside of the foundation wall along every straight run and add them up. For a rectangle, use 2 × (length + width). Subtract wall sections with no rim access, such as a garage firewall, using the openings field."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;margin:2.5rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;height:auto}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1rem}
+.f{margin-bottom:1rem}
+.full{grid-column:1/-1}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.bad{border-color:#e74c3c}
+.errmsg{color:#c0392b;font-size:.82rem;margin-top:.3rem}
+.errmsg:empty{display:none}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.chk{display:flex;align-items:center;gap:.6rem;min-height:44px;margin:0;font-size:.95rem;color:#1a1a2e;cursor:pointer}
+.chk input{width:22px;height:22px;accent-color:#0077b6;flex:none}
+.btn{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+.hidden{display:none}
+#results{margin-top:1.5rem}
+.fade{animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.keybox{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.key{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.1}
+.keysub{color:#444;font-size:.95rem;margin-top:.4rem}
+.tw{overflow-x:auto;margin:0 0 1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e5e5e5}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right}
+tr.sel td{font-weight:700;background:#e8f3fa}
+h3{font-size:1rem;margin:1.25rem 0 .5rem}
+.notes{margin:0 0 1rem;padding-left:1.2rem;font-size:.9rem;color:#333}
+.notes li{margin-bottom:.4rem}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;min-height:44px;padding:8px 16px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit}
+.copy:hover{background:#f0f8fc}
+.ad-slot{min-height:0;margin:0}
+pre.f1{background:#f8f9fa;border-radius:8px;padding:1rem;overflow-x:auto;font-size:.88rem;line-height:1.6}
+ul.c{padding-left:1.2rem}
+ul.c li{margin-bottom:.5rem}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:.75rem 0;min-height:44px}
+details p{color:#333}
+.rel{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.rel a{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:12px 14px;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.88rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;margin-right:1rem}
+.disc{font-size:.85rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;border-radius:0 6px 6px 0}
+@media(max-width:640px){.grid,.rel{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.5rem}.key{font-size:2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/rim-joist-insulation-calculator/">
+<meta property="og:title" content="Rim Joist Insulation Calculator">
+<meta property="og:description" content="Free rim joist insulation calculator: find the thickness, R-value, board feet or foam sheets needed for your band joist by climate zone.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Rim Joist Insulation Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This rim joist insulation calculator tells you how thick your insulation needs to be, what R-value you will actually get, and how much material to buy for your band joist: spray foam board feet, rigid foam sheets or batt pieces. Enter your foundation size, joist depth and climate zone to get started.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="diagram" viewBox="0 0 520 290" role="img" aria-labelledby="dgt">
+<title id="dgt">Cross-section of a rim joist showing insulation thickness and covered height</title>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<rect x="135" y="78" width="340" height="12" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="1.2"/>
+<rect x="150" y="90" width="325" height="95" fill="none" stroke="#c4c4c4" stroke-dasharray="5 4"/>
+<rect x="135" y="90" width="15" height="95" fill="#f8f9fa" stroke="#0077b6" stroke-width="2"/>
+<rect x="135" y="185" width="50" height="15" fill="#f8f9fa" stroke="#0077b6" stroke-width="2"/>
+<rect x="125" y="200" width="80" height="75" fill="#e9ecef" stroke="#0077b6" stroke-width="2"/>
+<rect id="dIns" x="150" y="90" width="30" height="95" fill="#0077b6" fill-opacity=".25" stroke="#0077b6" stroke-width="1.5"/>
+<rect id="dInsS" x="185" y="185" width="30" height="15" fill="#0077b6" fill-opacity=".25" stroke="#0077b6" stroke-width="1.5"/>
+<line x1="40" y1="90" x2="135" y2="90" stroke="#c4c4c4" stroke-dasharray="4 3"/>
+<line id="dHg" x1="40" y1="200" x2="125" y2="200" stroke="#c4c4c4" stroke-dasharray="4 3"/>
+<line id="dHl" x1="40" y1="90" x2="40" y2="200" stroke="#0077b6" stroke-width="1.2" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text id="dHt" x="26" y="145" transform="rotate(-90 26 145)" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a2e">Height 10.75 in</text>
+<line x1="150" y1="62" x2="150" y2="90" stroke="#c4c4c4" stroke-dasharray="4 3"/>
+<line id="dTg" x1="180" y1="62" x2="180" y2="90" stroke="#c4c4c4" stroke-dasharray="4 3"/>
+<line id="dTl" x1="150" y1="64" x2="180" y2="64" stroke="#0077b6" stroke-width="1.2" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text id="dTt" x="150" y="44" font-size="12" font-weight="600" fill="#1a1a2e">Insulation 3.25 in (R-21.1)</text>
+<text x="480" y="71" text-anchor="end" font-size="11" fill="#1a1a2e">Subfloor</text>
+<text x="340" y="142" text-anchor="middle" font-size="11" fill="#1a1a2e">Floor joist (behind)</text>
+<text x="128" y="140" text-anchor="end" font-size="11" fill="#1a1a2e">Rim joist</text>
+<text x="128" y="196" text-anchor="end" font-size="11" fill="#1a1a2e">Sill plate</text>
+<text x="165" y="243" text-anchor="middle" font-size="11" fill="#1a1a2e">Foundation</text>
+<text x="70" y="270" text-anchor="middle" font-size="11" fill="#555">Exterior</text>
+<text x="380" y="240" text-anchor="middle" font-size="11" fill="#555">Interior (basement)</text>
+<text x="515" y="285" text-anchor="end" font-size="10" fill="#555">Not to scale</text>
+</svg>
+</div>
+
+<form id="form" novalidate>
+<div class="grid">
+<div class="f full"><label for="mode">Measure foundation by</label>
+<select id="mode"><option value="rect">Length × width (rectangular house)</option><option value="per">Known perimeter (linear feet)</option></select></div>
+<div class="f" id="gLen"><label for="len">Foundation length (ft)</label><input type="number" id="len" value="30" min="0" step="any" inputmode="decimal"><div class="errmsg" id="e-len"></div></div>
+<div class="f" id="gWid"><label for="wid">Foundation width (ft)</label><input type="number" id="wid" value="30" min="0" step="any" inputmode="decimal"><div class="errmsg" id="e-wid"></div></div>
+<div class="f full hidden" id="gPer"><label for="per">Rim joist perimeter (linear ft)</label><input type="number" id="per" value="120" min="0" step="any" inputmode="decimal"><div class="errmsg" id="e-per"></div></div>
+<div class="f"><label for="depth">Floor joist / rim board depth</label>
+<select id="depth"><option value="5.5">2×6 (5.5 in)</option><option value="7.25">2×8 (7.25 in)</option><option value="9.25" selected>2×10 (9.25 in)</option><option value="11.25">2×12 (11.25 in)</option><option value="9.5">I-joist 9.5 in</option><option value="11.875">I-joist 11⅞ in</option><option value="14">I-joist 14 in</option><option value="custom">Custom depth…</option></select></div>
+<div class="f hidden" id="gDc"><label for="depthC">Custom depth (in)</label><input type="number" id="depthC" value="9.25" min="0" step="any" inputmode="decimal"><div class="errmsg" id="e-depthC"></div></div>
+<div class="f"><label for="sp">Joist spacing (on center)</label>
+<select id="sp"><option value="12">12 in</option><option value="16" selected>16 in</option><option value="19.2">19.2 in</option><option value="24">24 in</option></select></div>
+<div class="f full"><label class="chk" for="sill"><input type="checkbox" id="sill" checked> Also cover the sill plate (adds 1.5 in of height)</label></div>
+<div class="f"><label for="zone">Climate zone (IECC)</label>
+<select id="zone"><option value="1">Zone 1 – S. Florida, Hawaii</option><option value="2">Zone 2 – Houston, Phoenix</option><option value="3">Zone 3 – Atlanta, Dallas</option><option value="4" selected>Zone 4 – Washington DC, Seattle</option><option value="5">Zone 5 – Chicago, Boston</option><option value="6">Zone 6 – Minneapolis, Maine</option><option value="7">Zone 7 – Northern Minnesota</option><option value="8">Zone 8 – Interior Alaska</option></select></div>
+<div class="f"><label for="target">Target R-value</label><input type="number" id="target" value="20" min="1" step="any" inputmode="decimal"><div class="errmsg" id="e-target"></div><div class="hint">Auto-filled from zone. Edit to match your local code.</div></div>
+<div class="f full"><label for="mat">Insulation type</label>
+<select id="mat"><option value="ccspf">Closed-cell spray foam (R-6.5/in)</option><option value="xps">XPS rigid foam board (R-5.0/in)</option><option value="iso">Polyiso rigid board, foil-faced (R-5.6/in)</option><option value="eps">EPS rigid foam board (R-4.0/in)</option><option value="mw">Mineral wool batt (R-4.2/in)</option><option value="fg">Fiberglass batt, unfaced (R-3.2/in)</option></select></div>
+<div class="f"><label for="waste">Waste / overage (%)</label><input type="number" id="waste" value="10" min="0" step="any" inputmode="decimal"><div class="errmsg" id="e-waste"></div></div>
+<div class="f"><label for="open">Openings to subtract (sq ft)</label><input type="number" id="open" value="5" min="0" step="any" inputmode="decimal"><div class="errmsg" id="e-open"></div><div class="hint">Vents, ducts, dryer exhaust, wiring.</div></div>
+</div>
+<button type="submit" class="btn" id="calcBtn">Calculate insulation</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/rim-joist-insulation-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Rim Joist Insulation Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/rim-joist-insulation-calculator/&quot;&gt;Rim Joist Insulation Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/rim-joist-insulation-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Rim Joist Insulation Calculator</h2>
+<p>Start by entering your foundation's length and width, or switch to "Known perimeter" if you already measured the linear feet of rim joist. Pick your joist depth (2×10 is the most common in modern homes) and joist spacing, then choose your climate zone. The zone fills in a typical target R-value, which you can overwrite with your local code number.</p>
+<p>Select an insulation type, add a waste percentage and subtract any openings. The calculator returns the thickness you need, the R-value you will actually achieve after rounding up to stock sizes, and the quantity to buy. A comparison table shows every material side by side so you can price them.</p>
+
+<h2>Why This Matters</h2>
+<p>The rim joist (also called the band joist or box sill) is the board that wraps the top of your foundation wall and caps the ends of your floor joists. It is wood sitting on concrete, full of gaps, and in most basements it is either bare or stuffed with a loose scrap of fiberglass. That makes it one of the leakiest spots in the house: cold air, insects and moisture can all get in, and in winter the floor above feels it.</p>
+<p>A typical 30 × 40 ft house has 140 linear feet of rim joist. With 2×10 joists and a covered sill plate that is about 125 sq ft of area, roughly the size of one small bedroom wall. Insulating it to R-20 with closed-cell spray foam takes around 400 board feet of foam. That is a weekend project for a confident DIYer, or a half-day job for a spray crew.</p>
+<p>Homeowners use this calculation before buying materials, before comparing contractor quotes, and when planning a basement finish. Knowing the area and thickness lets you check that a quote is realistic and that your shopping list covers the whole perimeter, not just the easy walls.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator works from the geometry of the rim joist and the R-value per inch of each material.</p>
+<pre class="f1">Perimeter (ft)     = 2 × (length + width)
+Covered height     = joist depth + 1.5 in (if sill plate covered)
+Gross area (sq ft) = perimeter × covered height ÷ 12
+Net area           = gross area − openings
+Order area         = net area × (1 + waste %)
+Thickness needed   = target R ÷ R-per-inch, rounded UP to stock size
+Achieved R         = thickness × R-per-inch
+Spray foam         = order area × thickness  (board feet)
+Foam board         = ceil(order area ÷ 32) × layers  (4×8 sheets)
+Joist cavities     = ceil(perimeter × 12 ÷ joist spacing)</pre>
+<p>R-values per inch used: closed-cell spray foam 6.5, XPS 5.0, polyiso 5.6 (a conservative aged, cold-weather figure), EPS 4.0, mineral wool 4.2 and fiberglass 3.2. Spray foam is rounded up to the next ¼ in, foam board to the next ½ in (minimum 1 in, stacked in layers when needed), and batts to the next standard depth of 3.5, 5.5 or 7.25 in.</p>
+<p>Every rounding step goes up, never down, so the achieved R-value meets or beats your target. Default targets (R-13 in zones 1–2, R-20 in zones 3–4, R-25 in zones 5–6, R-30 in zones 7–8) are rule-of-thumb figures based on the wall insulation ranges in the IECC (R402.1) and IRC Chapter 11 (N1102), set on the cautious side. Foam plastics also fall under IRC R316 thermal-barrier rules. Code editions and local amendments vary, so confirm your own requirements.</p>
+
+<h2>Worked Example</h2>
+<p>A 30 × 30 ft house with 2×10 joists at 16 in on center, sill plate covered, climate zone 4 (target R-20), 10% waste and 5 sq ft of openings:</p>
+<ul class="c">
+<li><strong>Perimeter:</strong> 2 × (30 + 30) = 120 ft</li>
+<li><strong>Covered height:</strong> 9.25 + 1.5 = 10.75 in</li>
+<li><strong>Gross area:</strong> 120 × 10.75 ÷ 12 = 107.5 sq ft; minus 5 = 102.5 sq ft net</li>
+<li><strong>Order area:</strong> 102.5 × 1.10 = 112.75 sq ft</li>
+<li><strong>Closed-cell spray foam:</strong> 20 ÷ 6.5 = 3.08 in, rounded up to 3.25 in, which gives R-21.1. Quantity: 112.75 × 3.25 ≈ 367 board feet, or one 600 bd ft kit.</li>
+<li><strong>XPS foam board:</strong> 20 ÷ 5.0 = 4.0 in, which is two layers (for example 2 in + 2 in). Quantity: ceil(112.75 ÷ 32) = 4 sheets per layer, so 8 sheets in total.</li>
+<li><strong>Joist cavities:</strong> 120 × 12 ÷ 16 = 90 cavities to cut and seal.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul class="c">
+<li><strong>Air-seal first, insulate second.</strong> Most heat loss at the rim is air leakage. Caulk or foam every joint between sill plate, rim board and subfloor.</li>
+<li><strong>Don't rely on fiberglass alone.</strong> Loose batts let air and moisture reach the cold rim board. Use air-sealed foam, or foam board with batts behind it.</li>
+<li><strong>Check thermal-barrier and fireblocking rules.</strong> Exposed foam plastics generally need a thermal barrier such as ½ in drywall (IRC R316), though exceptions exist for some rim areas. Ask your building department.</li>
+<li><strong>Measure the real perimeter.</strong> Stairs, bump-outs and porches add linear feet. Walk the basement with a tape rather than assuming a rectangle.</li>
+<li><strong>Mind termite inspection gaps</strong> in termite-prone regions. Some jurisdictions require a visible strip or an approved foam product.</li>
+<li><strong>Spray foam safety:</strong> wear a respirator, eye protection and gloves, ventilate, and apply in lifts per the manufacturer's data sheet.</li>
+</ul>
+<p class="disc">This calculator gives planning estimates only. It is not engineering advice and is not a permit, plan-review or inspection approval. Local codes vary; verify requirements with your building department.</p>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What R-value do I need for a rim joist?</summary><p>Most codes treat the rim joist like an exterior wall, so a common range is R-13 in warm climates up to R-20 or more in cold ones. Check your local code, since it may specify combinations such as R-13 cavity plus R-5 continuous.</p></details>
+<details><summary>How thick should spray foam be on a rim joist?</summary><p>Closed-cell foam gives about R-6.5 per inch, so R-20 needs roughly 3 to 3.25 in. Many installers apply 2 in for air sealing and add more up to the target. Follow the manufacturer's maximum lift thickness.</p></details>
+<details><summary>Can I use fiberglass batts in a rim joist?</summary><p>You can, but it performs poorly on its own. Fiberglass doesn't stop air movement, and moist air can condense on the cold rim board behind it. If you use batts, seal the rim with caulk or foam first, or add a layer of rigid foam.</p></details>
+<details><summary>Is rigid foam board or spray foam better for rim joists?</summary><p>Spray foam seals irregular gaps in one step and costs more per board foot. Cut-and-cobble foam board is cheaper and DIY-friendly, but every piece has to be sealed at the edges with can foam or caulk.</p></details>
+<details><summary>Will insulating my rim joist cause moisture problems?</summary><p>Done well, it reduces moisture because the rim board stays warmer and air can't carry vapor into the cavity. Fix any bulk water leaks first, and use foam or another material that blocks air and vapor against the wood.</p></details>
+<details><summary>How do I measure the rim joist perimeter?</summary><p>Measure the inside of the foundation wall along every straight run and add them up. For a rectangle, use 2 × (length + width). Subtract wall sections with no rim access, such as a garage firewall, using the openings field.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/insulation-installation-cost-calculator/">Insulation Installation Cost Calculator</a></li>
+<li><a href="/basement-wall-insulation-calculator/">Basement Wall Insulation Calculator</a></li>
+<li><a href="/joist-spacing-layout-calculator/">Joist Spacing &amp; Layout Calculator</a></li>
+<li><a href="/fiberglass-batt-insulation-calculator/">Fiberglass Batt Insulation Calculator</a></li>
+<li><a href="/blown-in-insulation-coverage-calculator/">Blown-In Insulation Coverage Calculator</a></li>
+<li><a href="/floor-joist-span-size-calculator/">Floor Joist Span &amp; Size Calculator</a></li>
+</ul>
+
+<nav class="cluster-nav" aria-label="More Framing &amp; Structure Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Framing &amp; Structure Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/basement-wall-insulation-calculator/">Basement Wall Insulation Calculator</a></li><li><a href="/floor-joist-span-size-calculator/">Floor Joist Span &amp; Size Calculator</a></li><li><a href="/joist-spacing-layout-calculator/">Joist Spacing &amp; Layout Calculator</a></li><li><a href="/board-and-batten-wall-calculator/">Board and Batten Wall Calculator</a></li><li><a href="/cement-backer-board-calculator/">Cement Backer Board Calculator</a></li><li><a href="/deck-beam-size-calculator/">Deck Beam Size Calculator</a></li><li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li><li><a href="/gable-end-wall-area-calculator/">Gable End Wall Area Calculator</a></li><li><a href="/framing-calculators/"><strong>All Framing &amp; Structure calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+</main>
+<footer><div class="wrap"><p><a href="/about/">About</a><a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a></p><p>© <span id="yr">2025</span> toolwick.com</p></div></footer>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var fmt=function(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var ZR={1:13,2:13,3:20,4:20,5:25,6:25,7:30,8:30};
+var MATS=[
+{id:'ccspf',n:'Closed-cell spray foam',r:6.5,k:'s'},
+{id:'xps',n:'XPS foam board',r:5,k:'b'},
+{id:'iso',n:'Polyiso board (foil-faced)',r:5.6,k:'b'},
+{id:'eps',n:'EPS foam board',r:4,k:'b'},
+{id:'mw',n:'Mineral wool batt',r:4.2,k:'t'},
+{id:'fg',n:'Fiberglass batt (unfaced)',r:3.2,k:'t'}];
+var lastText='';
+$('yr').textContent=new Date().getFullYear();
+function num(i){var v=$(i).value.trim();return v===''?NaN:Number(v)}
+function setErr(i,m){var e=$('e-'+i),x=$(i);if(!e)return;e.textContent=m||'';if(m){x.classList.add('bad');x.setAttribute('aria-invalid','true');x.setAttribute('aria-describedby','e-'+i)}else{x.classList.remove('bad');x.removeAttribute('aria-invalid');x.removeAttribute('aria-describedby')}}
+function diagram(H,T,R,sill){
+var t=Math.min(T*10,90),yb=sill?200:185,mid=(90+yb)/2;
+$('dIns').setAttribute('width',t);
+$('dInsS').setAttribute('width',t);
+$('dInsS').setAttribute('display',sill?'inline':'none');
+$('dHl').setAttribute('y2',yb);
+$('dHg').setAttribute('y1',yb);$('dHg').setAttribute('y2',yb);
+$('dHg').setAttribute('x2',sill?125:135);
+$('dHt').setAttribute('y',mid);
+$('dHt').setAttribute('transform','rotate(-90 26 '+mid+')');
+$('dHt').textContent=H===null?'Height —':'Height '+fmt(H,2)+' in';
+$('dTl').setAttribute('x2',150+t);
+$('dTg').setAttribute('x1',150+t);$('dTg').setAttribute('x2',150+t);
+$('dTt').textContent=T===null?'Insulation —':'Insulation '+fmt(T,2)+' in (R-'+fmt(R,1)+')';
+}
+function calcMat(m,tg,ow,cav,w){
+var T,R,qty,need=tg/m.r;
+if(m.k==='s'){T=Math.max(1,Math.ceil(need*4-1e-9)/4);var bf=Math.ceil(ow*T),kits=Math.ceil(bf/600);qty=fmt(bf)+' bd ft (~'+kits+' × 600 bd ft kit'+(kits>1?'s':'')+')'}
+else if(m.k==='b'){T=Math.max(1,Math.ceil(need*2-1e-9)/2);var st=[1,1.5,2,3],ly=st.indexOf(T)>-1?1:Math.max(2,Math.ceil(T/3)),sh=ly*Math.ceil(ow/32);qty=fmt(sh)+' sheets 4×8'+(ly>1?' ('+ly+' layers)':'')}
+else{var o=[3.5,5.5,7.25],f=null,i;for(i=0;i<o.length;i++){if(o[i]>=need-1e-9){f=o[i];break}}
+var ly2=1;if(f===null){ly2=Math.ceil(need/3.5-1e-9);f=ly2*3.5}T=f;var pc=Math.ceil(cav*(1+w/100));qty=fmt(pc)+' pieces (~'+fmt(Math.ceil(ow))+' sq ft)'+(ly2>1?', '+ly2+' layers':'')}
+R=T*m.r;return{T:T,R:R,qty:qty}}
+function clearRes(){$('results').innerHTML='';lastText='';diagram(null,null,null,$('sill').checked)}
+function calculate(){
+['len','wid','per','depthC','target','waste','open'].forEach(function(i){setErr(i,'')});
+var ok=true,P,mode=$('mode').value;
+if(mode==='rect'){var L=num('len'),W=num('wid');
+if(!(L>0&&L<=1000)){setErr('len','Enter a length between 0.1 and 1,000 ft.');ok=false}
+if(!(W>0&&W<=1000)){setErr('wid','Enter a width between 0.1 and 1,000 ft.');ok=false}
+P=2*(L+W)}else{P=num('per');if(!(P>0&&P<=5000)){setErr('per','Enter a perimeter between 0.1 and 5,000 ft.');ok=false}}
+var d;if($('depth').value==='custom'){d=num('depthC');if(!(d>=3&&d<=30)){setErr('depthC','Enter a depth between 3 and 30 in.');ok=false}}else d=Number($('depth').value);
+var tg=num('target');if(!(tg>=1&&tg<=60)){setErr('target','Enter a target R-value between 1 and 60.');ok=false}
+var w=num('waste');if(!(w>=0&&w<=50)){setErr('waste','Enter waste between 0 and 50%.');ok=false}
+var opRaw=$('open').value.trim(),op=opRaw===''?0:Number(opRaw);if(!(op>=0)){setErr('open','Openings must be 0 or more.');ok=false}
+if(!ok){clearRes();return}
+var sill=$('sill').checked,H=d+(sill?1.5:0),gross=P*H/12,net=gross-op;
+if(net<=0){setErr('open','Openings can\'t equal or exceed the total rim joist area ('+fmt(gross,1)+' sq ft).');clearRes();return}
+var ow=net*(1+w/100),sp=Number($('sp').value),cav=Math.ceil(P*12/sp-1e-9);
+var sel=MATS.filter(function(m){return m.id===$('mat').value})[0];
+var all=MATS.map(function(m){return{m:m,c:calcMat(m,tg,ow,cav,w)}});
+var cs=all.filter(function(a){return a.m.id===sel.id})[0].c;
+var rows='';all.forEach(function(a){rows+='<tr'+(a.m.id===sel.id?' class="sel"':'')+'><td>'+a.m.n+'</td><td class="n">'+fmt(a.m.r,1)+'</td><td class="n">'+fmt(a.c.T,2)+' in</td><td class="n">R-'+fmt(a.c.R,1)+'</td><td>'+a.c.qty+'</td></tr>'});
+var nt=['Thickness is rounded up to the next stock size, so the achieved R-value meets or exceeds your target.'];
+if(sel.k==='s'){if(cs.T>2)nt.push('Closed-cell foam is normally applied in lifts of about 2 in or less; follow the manufacturer\'s data sheet for maximum pass thickness and cure time.');nt.push('Foam plastics generally require a thermal or ignition barrier (IRC R316). Some exceptions exist for rim and sill areas; confirm with your building department.')}
+if(sel.k==='b'){nt.push('Cut boards snug and seal every edge with can foam or caulk to make the layer airtight. Stagger seams when stacking layers.');nt.push('Foam plastics generally require a thermal barrier such as ½ in drywall (IRC R316) unless a local exception applies.');if(sel.id==='iso')nt.push('Polyiso loses R-value in cold temperatures; this tool uses a conservative R-5.6 per inch.')}
+if(sel.k==='t'){nt.push('Air-permeable batts are not recommended alone at the rim joist. Air-seal the rim with caulk or foam first, or add a layer of rigid foam to limit condensation on the cold rim board.')}
+nt.push('Planning estimate only, based on IECC R402.1 / IRC N1102 rules of thumb. Local codes vary and this is not permit or inspection approval.');
+var wa=function(lbl,v){return '<tr><td>'+lbl+'</td><td class="n">'+v+'</td></tr>'};
+var html='<div class="fade"><div class="keybox"><div class="key">'+fmt(cs.T,2)+' in</div><div class="keysub">of '+sel.n.toLowerCase()+' for R-'+fmt(cs.R,1)+' (target R-'+fmt(tg,1)+')</div><div class="keysub"><strong>Buy:</strong> '+cs.qty+'</div></div>'
++'<h3>Project details</h3><div class="tw"><table><thead><tr><th>Item</th><th class="n">Value</th></tr></thead><tbody>'
++wa('Rim joist perimeter',fmt(P,1)+' ft')+wa('Covered height',fmt(H,2)+' in')+wa('Gross area',fmt(gross,1)+' sq ft')+wa('Openings deducted',fmt(op,1)+' sq ft')+wa('Net area',fmt(net,1)+' sq ft')+wa('Order area (with '+fmt(w,0)+'% waste)',fmt(ow,1)+' sq ft')+wa('Joist cavities at '+sp+' in o.c.',fmt(cav))
++'</tbody></table></div><h3>Compare all materials</h3><div class="tw"><table><thead><tr><th>Material</th><th class="n">R/in</th><th class="n">Thickness</th><th class="n">Achieved R</th><th>Quantity</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
++'<h3>Notes</h3><ul class="notes">'+nt.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'
++'<button type="button" class="copy" id="copyBtn">Copy results</button></div>';
+lastText='Rim joist insulation estimate (toolwick.com)\nPerimeter: '+fmt(P,1)+' ft | Covered height: '+fmt(H,2)+' in\nNet area: '+fmt(net,1)+' sq ft (order '+fmt(ow,1)+' sq ft incl. '+fmt(w,0)+'% waste)\nTarget: R-'+fmt(tg,1)+'\n'+sel.n+': '+fmt(cs.T,2)+' in = R-'+fmt(cs.R,1)+'\nBuy: '+cs.qty+'\nPlanning estimate only; local codes vary.';
+requestAnimationFrame(function(){$('results').innerHTML=html;diagram(H,cs.T,cs.R,sill)});
+}
+$('form').addEventListener('submit',function(e){e.preventDefault();calculate()});
+$('mode').addEventListener('change',function(){var r=this.value==='rect';$('gLen').classList.toggle('hidden',!r);$('gWid').classList.toggle('hidden',!r);$('gPer').classList.toggle('hidden',r)});
+$('depth').addEventListener('change',function(){$('gDc').classList.toggle('hidden',this.value!=='custom')});
+$('zone').addEventListener('change',function(){$('target').value=ZR[this.value];setErr('target','')});
+$('results').addEventListener('click',function(e){
+if(e.target&&e.target.id==='copyBtn'){var b=e.target,done=function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,done)}else{var t=document.createElement('textarea');t.value=lastText;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(t);done()}}});
+calculate();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
