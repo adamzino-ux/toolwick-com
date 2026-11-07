@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Subfloor Calculator | Toolwick</title>
+<meta name="description" content="Free subfloor calculator: find how many 4x8 plywood or OSB sheets, adhesive tubes and fasteners your floor needs, with waste and joist spacing.">
+<link rel="canonical" href="https://toolwick.com/subfloor-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Subfloor Calculator", "url": "https://toolwick.com/subfloor-calculator/", "description": "Free subfloor calculator: find how many 4x8 plywood or OSB sheets, adhesive tubes and fasteners your floor needs, with waste and joist spacing.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Subfloor Calculator", "item": "https://toolwick.com/subfloor-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many sheets of plywood do I need for a 12x12 subfloor?", "acceptedAnswer": {"@type": "Answer", "text": "A 12×12 ft room is 144 sq ft. With a 10% waste allowance that becomes 158.4 sq ft, or 4.95 sheets, so buy 5 sheets of 4×8. If the room has closets or angles, bump waste to 15% and buy 6."}}, {"@type": "Question", "name": "What thickness subfloor do I need for 16-inch joists?", "acceptedAnswer": {"@type": "Answer", "text": "The IRC allows 19/32 in. (often sold as 5/8 in.) rated panels over 16 in. centers, and many builders use 23/32 in. (3/4 in.) tongue-and-groove for a stiffer feel. For tile, stone or hardwood, 3/4 in. is the safer choice. Always confirm with your local building department."}}, {"@type": "Question", "name": "Should I use plywood or OSB for a subfloor?", "acceptedAnswer": {"@type": "Answer", "text": "Both are code-approved when they carry a span rating stamp. OSB is usually cheaper and flatter, while plywood tolerates prolonged moisture exposure during construction a bit better. Pick a panel with an Exposure 1 rating either way."}}, {"@type": "Question", "name": "Should I glue and screw a subfloor?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Construction adhesive on the joist tops bonds the panel to the framing and removes most of the movement that causes squeaks. Add ring-shank nails or screws at the edge and field spacing, about 6 in. and 12 in."}}, {"@type": "Question", "name": "Which direction do subfloor sheets go?", "acceptedAnswer": {"@type": "Answer", "text": "Lay the 8 ft length perpendicular to the joists so each sheet spans several joists. Offset the rows so the end seams do not line up. Every panel end should land on the center of a joist."}}, {"@type": "Question", "name": "Do I need a gap between subfloor panels?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, leave about 1/8 in. between panel edges and ends. Wood panels swell with humidity, and without a gap they can buckle. Tongue-and-groove edges should be seated snugly but not hammered tight."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.85rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.25rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.dg{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.dg svg{display:block;width:100%;height:auto}
+.dg text{fill:#1a1a2e;font-size:14px;font-family:inherit}
+.jo{stroke:#dadada;stroke-width:3}
+.sm{stroke:#0077b6;stroke-width:1;stroke-dasharray:4 3;opacity:.75}
+.row{display:grid;grid-template-columns:1fr;gap:1rem;margin-bottom:1rem}
+@media(min-width:520px){.row{grid-template-columns:1fr 1fr}}
+.f{min-width:0}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.err{border-color:#e74c3c}
+.emsg{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.hint{font-size:.85rem;color:#666;margin:.25rem 0 0}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.sl{margin-bottom:1rem}
+.sl label span{color:#0077b6;font-weight:700}
+.btn{display:block;width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+.cp{background:#fff;color:#0077b6;border:1px solid #0077b6;font-size:.85rem;padding:8px 16px;width:auto;display:inline-block;margin-top:1rem}
+.cp:hover{background:#eaf6fb}
+#results{margin-top:1.5rem}
+.fade{opacity:0;transition:opacity .3s ease}
+.fade.show{opacity:1}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.big{display:block;font-size:3rem;font-weight:800;color:#0077b6;line-height:1.1}
+.klbl{color:#444;font-size:.95rem}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th:last-child,td:last-child{text-align:right}
+tr.cur td{font-weight:700;color:#0077b6}
+.msg{padding:.85rem 1rem;border-radius:6px;font-size:.92rem;margin-bottom:1rem}
+.ok{background:#eaf6fb;border:1px solid #b9dcee}
+.warn{background:#fff4e5;border:1px solid #f0b86e}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;padding:.85rem 1rem;border-radius:6px}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;font-weight:600;padding:12px 0;min-height:44px}
+details p{margin:0 0 1rem}
+ul{padding-left:1.25rem}
+li{margin-bottom:.5rem}
+.rel li{margin-bottom:.25rem}
+.rel a{display:inline-block;min-height:44px;line-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{color:#0077b6;margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:540px){.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.6rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/subfloor-calculator/">
+<meta property="og:title" content="Subfloor Calculator">
+<meta property="og:description" content="Free subfloor calculator: find how many 4x8 plywood or OSB sheets, adhesive tubes and fasteners your floor needs, with waste and joist spacing.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Subfloor Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>Use this subfloor calculator to work out how many 4×8 plywood or OSB sheets, adhesive tubes and fasteners your floor needs, based on room size, joist spacing and waste. It also checks panel thickness against your joist spacing.</p>
+
+<div class="card">
+<div class="dg">
+<svg id="dg" viewBox="0 0 420 250" role="img" aria-labelledby="dgT">
+<title id="dgT">Top-down diagram of a subfloor: joists, panel seams, and room length and width dimensions</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<g id="dyn"></g>
+<line x1="60" y1="238" x2="84" y2="238" class="jo"/><text x="90" y="243" style="font-size:13px">Joist</text>
+<line x1="150" y1="238" x2="174" y2="238" class="sm" style="opacity:1"/><text x="180" y="243" style="font-size:13px">Panel seam (4×8 sheets)</text>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="row">
+<div class="f"><label for="unit">Units</label>
+<select id="unit"><option value="ft">Feet</option><option value="m">Meters</option></select></div>
+<div class="f"><label for="span">Joists run along the</label>
+<select id="span"><option value="width">Width (span = width)</option><option value="length">Length (span = length)</option></select></div>
+</div>
+<div class="row">
+<div class="f"><label for="len">Room length</label>
+<input id="len" type="number" inputmode="decimal" step="any" min="0" value="14" aria-describedby="lenE"><div class="emsg" id="lenE"></div></div>
+<div class="f"><label for="wid">Room width</label>
+<input id="wid" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="widE"><div class="emsg" id="widE"></div></div>
+</div>
+<div class="row">
+<div class="f"><label for="sp">Joist spacing (on center)</label>
+<select id="sp"><option value="12">12 in.</option><option value="16" selected>16 in.</option><option value="19.2">19.2 in.</option><option value="24">24 in.</option></select></div>
+<div class="f"><label for="th">Panel thickness</label>
+<select id="th"><option value="1">1/2 in. (15/32)</option><option value="2">5/8 in. (19/32)</option><option value="3" selected>3/4 in. (23/32)</option></select></div>
+</div>
+<div class="sl">
+<label for="waste">Waste allowance: <span id="wv">10%</span></label>
+<input id="waste" type="range" min="5" max="20" step="1" value="10">
+<div class="ticks"><span>5%</span><span>20%</span></div>
+<p class="hint">10% suits a simple rectangle; use 15% or more for odd shapes or diagonal layouts.</p>
+</div>
+<div class="row">
+<div class="f"><label for="pprice">Price per panel, $ (optional)</label>
+<input id="pprice" type="number" inputmode="decimal" step="any" min="0" aria-describedby="ppriceE"><div class="emsg" id="ppriceE"></div></div>
+<div class="f"><label for="tprice">Price per adhesive tube, $ (optional)</label>
+<input id="tprice" type="number" inputmode="decimal" step="any" min="0" aria-describedby="tpriceE"><div class="emsg" id="tpriceE"></div></div>
+</div>
+<button class="btn" type="submit" id="go">Calculate Subfloor</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/subfloor-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Subfloor Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/subfloor-calculator/&quot;&gt;Subfloor Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/subfloor-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Subfloor Calculator</h2>
+<p>Enter your room's length and width, tell the tool which direction the joists run, and pick the joist spacing, panel thickness and waste allowance. Press Calculate to see how many 4×8 sheets to buy, how many joists you have, how much construction adhesive and how many fasteners to order, plus an optional cost estimate. The diagram above redraws with your dimensions, joist lines and staggered panel seams so you can sanity-check the layout.</p>
+
+<h2>Why This Matters</h2>
+<p>Subflooring is the structural layer between your joists and your finished floor, and it is one of the easiest places to under- or over-order. A 12×14 ft bedroom is 168 sq ft, which sounds like five and a quarter sheets, but with cuts, staggered end joints and a few damaged edges you will really need six. Running short means a second trip to the lumber yard, and a second batch of panels can come from a different mill lot with slightly different thickness, which shows up as a lip under vinyl or tile.</p>
+<p>The stakes go beyond cost. Panel thickness has to match joist spacing: a 1/2 in. panel that feels fine on 12 in. centers can bounce and squeak on 19.2 in. or 24 in. centers, and tile will crack over a floor that deflects. Contractors use estimates like these for additions, basement conversions, attic floors and sistering repairs. Homeowners use them to compare budgets before demolition starts. Getting joists, adhesive and fasteners counted up front also keeps the floor quiet, because glue plus proper fastening is what stops squeaks.</p>
+
+<h2>How It's Calculated</h2>
+<p>All math is done in square feet; meters are converted at 1 m = 3.28084 ft. Every rounding step goes to the safer, larger side.</p>
+<ul>
+<li><strong>Sheets</strong> = ⌈ (length × width × (1 + waste%)) ÷ 32 ⌉, since a 4×8 panel covers 32 sq ft.</li>
+<li><strong>Layout check</strong> = ⌈span ÷ 4 ft⌉ rows × ⌈spacing-direction ÷ 8 ft⌉ sheets per row, with panels laid 8 ft side perpendicular to the joists. This is an upper bound with no offcut reuse.</li>
+<li><strong>Joists</strong> = ⌈dimension across joists × 12 ÷ spacing⌉ + 1.</li>
+<li><strong>Adhesive</strong>: bead length = joists × span × 1.1 (10% extra for end joints). One 28 oz tube is assumed to cover 30 linear ft, a cautious figure, and tubes are rounded up.</li>
+<li><strong>Fasteners</strong>: per sheet, one fastener every 6 in. along the two 4 ft panel ends and every 12 in. along each interior joist, then ×1.05 and rounded up to the next 50.</li>
+<li><strong>Thickness check</strong>: following the IRC 2021 wood structural panel subfloor table (R503.2.1.1(1)) in a conservative way, the tool wants at least 19/32 in. (5/8 in.) panels for 12 and 16 in. joists, and 23/32 in. (3/4 in.) for 19.2 and 24 in.</li>
+</ul>
+<p>The nailing rule of thumb (6 in. at panel edges, 12 in. in the field) follows the IRC fastening schedule, Table R602.3(1). Local codes vary, and this tool is a materials estimator, not engineering, permit or inspection approval. It does not verify joist size, species, grade or span.</p>
+
+<h2>Worked Example</h2>
+<p>A 14 ft × 12 ft room with 2×10 joists at 16 in. on center, running along the 12 ft width, 10% waste and 3/4 in. panels:</p>
+<ul>
+<li>Area = 14 × 12 = 168 sq ft. With 10% waste: 168 × 1.10 = 184.8 sq ft.</li>
+<li>Sheets = 184.8 ÷ 32 = 5.775, rounded up to <strong>6 sheets</strong>. The layout check agrees: 3 rows (12 ÷ 4) × 2 sheets per row (14 ÷ 8, rounded up).</li>
+<li>Joists = 14 × 12 ÷ 16 = 10.5, rounded up to 11, plus 1 = 12 joists.</li>
+<li>Adhesive bead = 12 × 12 × 1.1 = 158.4 ft; ÷ 30 = 5.28, so <strong>6 tubes</strong>.</li>
+<li>Fasteners per sheet = 2 × 9 (ends) + 5 interior joists × 5 = 43. Six sheets × 43 × 1.05 = 271, rounded up to <strong>300</strong>.</li>
+<li>Thickness: 3/4 in. is above the 5/8 in. minimum for 16 in. centers, so it passes.</li>
+</ul>
+<p>At $48 per sheet and $7 per tube, the materials total is 6 × 48 + 6 × 7 = $330.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Run sheets perpendicular to the joists</strong> and stagger the end joints by at least one joist bay, so no four corners meet at a point.</li>
+<li><strong>Leave a 1/8 in. gap</strong> at panel ends and edges for expansion, and keep panels about 1/2 in. from walls, especially in humid seasons.</li>
+<li><strong>Glue and fasten</strong>. A continuous 1/4 in. adhesive bead on each joist plus ring-shank nails or construction screws is the best squeak prevention. Do not use drywall screws.</li>
+<li><strong>Check joists first</strong>. Sight each joist for crowns and sistering needs; planing high spots is cheaper than chasing a bumpy floor later.</li>
+<li><strong>Going over tile, stone or hardwood?</strong> Ask the finish manufacturer about minimum thickness and stiffness; many call for 3/4 in. panels plus an underlayment layer.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many sheets of plywood do I need for a 12x12 subfloor?</summary>
+<p>A 12×12 ft room is 144 sq ft. With a 10% waste allowance that becomes 158.4 sq ft, or 4.95 sheets, so buy 5 sheets of 4×8. If the room has closets or angles, bump waste to 15% and buy 6.</p></details>
+<details><summary>What thickness subfloor do I need for 16-inch joists?</summary>
+<p>The IRC allows 19/32 in. (often sold as 5/8 in.) rated panels over 16 in. centers, and many builders use 23/32 in. (3/4 in.) tongue-and-groove for a stiffer feel. For tile, stone or hardwood, 3/4 in. is the safer choice. Always confirm with your local building department.</p></details>
+<details><summary>Should I use plywood or OSB for a subfloor?</summary>
+<p>Both are code-approved when they carry a span rating stamp. OSB is usually cheaper and flatter, while plywood tolerates prolonged moisture exposure during construction a bit better. Pick a panel with an Exposure 1 rating either way.</p></details>
+<details><summary>Should I glue and screw a subfloor?</summary>
+<p>Yes. Construction adhesive on the joist tops bonds the panel to the framing and removes most of the movement that causes squeaks. Add ring-shank nails or screws at the edge and field spacing, about 6 in. and 12 in.</p></details>
+<details><summary>Which direction do subfloor sheets go?</summary>
+<p>Lay the 8 ft length perpendicular to the joists so each sheet spans several joists. Offset the rows so the end seams do not line up. Every panel end should land on the center of a joist.</p></details>
+<details><summary>Do I need a gap between subfloor panels?</summary>
+<p>Yes, leave about 1/8 in. between panel edges and ends. Wood panels swell with humidity, and without a gap they can buckle. Tongue-and-groove edges should be seated snugly but not hammered tight.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/rim-joist-insulation-calculator/">Rim Joist Insulation Calculator</a></li>
+<li><a href="/roof-cricket-calculator/">Roof Cricket Calculator</a></li>
+<li><a href="/roof-overhang-calculator/">Roof Overhang Calculator</a></li>
+<li><a href="/deck-skirting-calculator/">Deck Skirting Calculator</a></li>
+<li><a href="/pergola-calculator/">Pergola Calculator</a></li>
+<li><a href="/fence-gate-calculator/">Fence Gate Calculator</a></li>
+</ul>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<a href="/about/">About</a><a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a>
+<div>© <span id="yr">2025</span> toolwick.com</div>
+</footer>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var fmt=function(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var fmtT=function(n){return fmt(n,Number.isInteger(n)?0:2)};
+var FT=3.28084,lastText='',shown=false,prevUnit='ft';
+$('yr').textContent=new Date().getFullYear();
+
+function err(id,m){var e=$(id);e.classList.toggle('err',!!m);if(m)e.setAttribute('aria-invalid','true');else e.removeAttribute('aria-invalid');$(id+'E').textContent=m||''}
+function clearRes(){$('results').innerHTML='';lastText='';shown=false}
+
+function draw(o){
+var sc=Math.min(300/o.Lf,130/o.Wf),rw=o.Lf*sc,rh=o.Wf*sc,x0=75+(300-rw)/2,y0=50+(130-rh)/2;
+var v=o.span==='width',D=v?o.Lf:o.Wf,S=v?o.Wf:o.Lf;
+var P=function(d,s){return v?[x0+d*sc,y0+s*sc]:[x0+s*sc,y0+d*sc]};
+var ln=function(d1,s1,d2,s2,c){var a=P(d1,s1),b=P(d2,s2);return '<line x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'" class="'+c+'"/>'};
+var h='',i,r,d;
+var n=Math.ceil(D*12/o.sp-1e-9)+1;
+if(n<=60)for(i=0;i<n;i++){d=Math.min(i*o.sp/12,D);h+=ln(d,0,d,S,'jo')}
+var rows=Math.ceil(S/4-1e-9),per=Math.ceil(D/8-1e-9);
+if(rows*per<=400){
+for(r=1;r<rows;r++)h+=ln(0,r*4,D,r*4,'sm');
+var st=Math.round(48/o.sp)*o.sp/12;
+for(r=0;r<rows;r++){var s1=r*4,s2=Math.min(s1+4,S),off=r%2?st:0;
+for(d=off||8;d<D-0.01;d+=8)h+=ln(d,s1,d,s2,'sm')}
+}
+h+='<rect x="'+x0.toFixed(1)+'" y="'+y0.toFixed(1)+'" width="'+rw.toFixed(1)+'" height="'+rh.toFixed(1)+'" fill="none" stroke="#0077b6" stroke-width="2"/>';
+var ty=y0-14,lx=x0-14;
+h+='<line x1="'+x0.toFixed(1)+'" y1="'+ty.toFixed(1)+'" x2="'+(x0+rw).toFixed(1)+'" y2="'+ty.toFixed(1)+'" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+h+='<text x="'+(x0+rw/2).toFixed(1)+'" y="'+(ty-6).toFixed(1)+'" text-anchor="middle" style="font-weight:600">Length: '+o.Ld+'</text>';
+h+='<line x1="'+lx.toFixed(1)+'" y1="'+y0.toFixed(1)+'" x2="'+lx.toFixed(1)+'" y2="'+(y0+rh).toFixed(1)+'" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+var tx=lx-8,tcy=y0+rh/2;
+h+='<text transform="rotate(-90 '+tx.toFixed(1)+' '+tcy.toFixed(1)+')" x="'+tx.toFixed(1)+'" y="'+tcy.toFixed(1)+'" text-anchor="middle" style="font-weight:600">Width: '+o.Wd+'</text>';
+h+='<text x="210" y="222" text-anchor="middle">Joists @ '+o.sp+' in. o.c. · span '+o.Sd+(o.sheets?' · '+o.sheets+' sheets':'')+'</text>';
+$('dyn').innerHTML=h;
+}
+draw({Lf:14,Wf:12,sp:16,span:'width',Ld:'14 ft',Wd:'12 ft',Sd:'12 ft'});
+
+function calc(){
+var m=$('unit').value==='m',u=m?' m':' ft',bad=false;
+var L=parseFloat($('len').value),W=parseFloat($('wid').value),mx=m?90:300;
+[['len',L],['wid',W]].forEach(function(a){
+var id=a[0],v=a[1],msg='';
+if($(id).value.trim()===''||isNaN(v))msg='Enter a number greater than 0.';
+else if(v<=0)msg='Must be greater than 0.';
+else if(v>mx)msg='Maximum is '+mx+u+'. Split larger floors into sections.';
+err(id,msg);if(msg)bad=true});
+var pp=$('pprice').value.trim(),tp=$('tprice').value.trim(),ppv=parseFloat(pp),tpv=parseFloat(tp);
+var m1=(pp!==''&&(isNaN(ppv)||ppv<0))?'Enter a price of 0 or more.':'';
+var m2=(tp!==''&&(isNaN(tpv)||tpv<0))?'Enter a price of 0 or more.':'';
+err('pprice',m1);err('tprice',m2);if(m1||m2)bad=true;
+if(bad){clearRes();return}
+var Lf=m?L*FT:L,Wf=m?W*FT:W,sp=parseFloat($('sp').value),span=$('span').value,th=parseInt($('th').value,10),w=parseInt($('waste').value,10);
+var v=span==='width',D=v?Lf:Wf,S=v?Wf:Lf;
+var area=Lf*Wf,areaW=area*(1+w/100),sheets=Math.ceil(areaW/32-1e-9);
+var rows=Math.ceil(S/4-1e-9),per=Math.ceil(D/8-1e-9);
+var joists=Math.ceil(D*12/sp-1e-9)+1;
+var bead=joists*S*1.1,tubes=Math.ceil(bead/30-1e-9);
+var inter=Math.max(0,Math.ceil(96/sp-1e-9)-1),perSheet=2*9+inter*5;
+var fast=Math.ceil(perSheet*sheets*1.05/50-1e-9)*50;
+var thN=['','1/2 in.','5/8 in.','3/4 in.'],need=sp<=16?2:3;
+var thHtml=th>=need?'<div class="msg ok"><strong>Thickness OK:</strong> '+thN[th]+' meets or exceeds the conservative minimum of '+thN[need]+' for '+sp+' in. joist spacing. Tile, stone or hardwood may need extra underlayment; check the finish manufacturer.</div>':'<div class="msg warn"><strong>Panels may be too thin:</strong> '+thN[th]+' is below the conservative minimum of '+thN[need]+' for '+sp+' in. joist spacing. Choose thicker panels or reduce joist spacing.</div>';
+var Ld=fmtT(L)+u,Wd=fmtT(W)+u,Sd=fmtT(v?W:L)+u;
+var cost='',costTxt='';
+if(pp!==''||tp!==''){var cs=pp!==''?sheets*ppv:0,ct=tp!==''?tubes*tpv:0;
+cost='<tr><td>Estimated materials cost</td><td>$'+fmt(cs+ct,2)+'</td></tr>';costTxt='\nEstimated materials cost: $'+fmt(cs+ct,2)}
+var rowsT=[
+['Floor area',fmt(area,1)+' sq ft ('+fmt(area/10.7639,1)+' m²)'],
+['Waste allowance',w+'%'],
+['Area to cover, incl. waste',fmt(areaW,1)+' sq ft'],
+['Panel size / thickness','4×8 ft (32 sq ft) / '+thN[th]],
+['Sheet layout (no offcut reuse)',rows+' rows × '+per+' = '+fmt(rows*per)],
+['Joists (estimated)',fmt(joists)+' at '+sp+' in. o.c.'],
+['Adhesive bead',fmt(bead,0)+' ft → '+fmt(tubes)+' tubes (28 oz)'],
+['Fasteners (6 in. edge / 12 in. field)',fmt(fast)+' (≈ '+perSheet+' per sheet)']
+];
+var tb=rowsT.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'}).join('')+cost;
+var sc=[0,5,10,15,20].map(function(p){var s=Math.ceil(area*(1+p/100)/32-1e-9);return '<tr'+(p===w?' class="cur"':'')+'><td>'+p+'%'+(p===w?' (selected)':'')+'</td><td>'+fmt(s)+'</td><td>'+fmt(s*32)+' sq ft</td></tr>'}).join('');
+var html='<div class="fade"><div class="key"><span class="big">'+fmt(sheets)+'</span><span class="klbl">sheets of 4×8 subfloor panels ('+thN[th]+'), '+w+'% waste included</span></div>'+thHtml+
+'<div class="tw"><table><thead><tr><th>Item</th><th>Result</th></tr></thead><tbody>'+tb+'</tbody></table></div>'+
+'<h3>Waste scenarios</h3><div class="tw"><table><thead><tr><th>Waste</th><th>Sheets</th><th>Coverage</th></tr></thead><tbody>'+sc+'</tbody></table></div>'+
+'<p class="note">Estimate follows the IRC 2021 panel subfloor table (R503.2.1.1(1)) and fastening schedule (R602.3(1)), rounded to the conservative side. Local codes vary. This is a materials estimate, not engineering, permit or inspection approval, and it does not verify joist size or span.</p>'+
+'<button type="button" class="btn cp" id="cpy">Copy results</button></div>';
+lastText='Subfloor Calculator (toolwick.com)\nRoom: '+Ld+' × '+Wd+', joists '+sp+' in. o.c. spanning '+Sd+'\nSheets of 4×8 ('+thN[th]+'): '+sheets+' (incl. '+w+'% waste)\nJoists: '+joists+'\nAdhesive: '+tubes+' tubes (28 oz)\nFasteners: '+fast+costTxt+'\nLocal codes vary; not engineering or permit approval.';
+requestAnimationFrame(function(){
+$('results').innerHTML=html;
+draw({Lf:Lf,Wf:Wf,sp:sp,span:span,Ld:Ld,Wd:Wd,Sd:Sd,sheets:sheets});
+shown=true;
+requestAnimationFrame(function(){var f=$('results').firstChild;if(f)f.classList.add('show')});
+});
+}
+
+$('f').addEventListener('submit',function(e){e.preventDefault();calc()});
+$('waste').addEventListener('input',function(){$('wv').textContent=this.value+'%';if(shown)requestAnimationFrame(calc)});
+$('unit').addEventListener('change',function(){
+var nu=this.value;
+if(nu!==prevUnit){var k=nu==='m'?1/FT:FT;
+['len','wid'].forEach(function(id){var x=parseFloat($(id).value);if(!isNaN(x)&&x>0)$(id).value=Math.round(x*k*100)/100});
+prevUnit=nu}
+});
+$('results').addEventListener('click',function(e){
+var b=e.target.closest('#cpy');if(!b||!lastText)return;
+var done=function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,function(){fb()})}else fb();
+function fb(){var t=document.createElement('textarea');t.value=lastText;t.setAttribute('readonly','');t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(t)}
+});
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
