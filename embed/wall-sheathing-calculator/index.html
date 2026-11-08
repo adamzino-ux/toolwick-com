@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Wall Sheathing Calculator | Toolwick</title>
+<meta name="description" content="Free wall sheathing calculator: enter wall size, windows, doors and gables to get the number of OSB or plywood sheets, waste and nails needed.">
+<link rel="canonical" href="https://toolwick.com/wall-sheathing-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.25rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+fieldset{border:1px solid #e0e0e0;border-radius:6px;margin:0 0 1.25rem;padding:1rem 1rem .25rem;min-width:0}
+legend{font-weight:600;font-size:.9rem;padding:0 .4rem;color:#1a1a2e}
+.f{margin-bottom:1rem}
+.row{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:640px){.row.c2{grid-template-columns:1fr 1fr}.row.c3{grid-template-columns:1fr 1fr 1fr}}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;min-height:48px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=number]:focus,select:focus{border-color:#0077b6;outline-offset:0}
+input.invalid{border-color:#e74c3c}
+input[type=range]{width:100%;height:44px;margin:0;padding:0;accent-color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666;margin-top:-.25rem}
+.err{color:#c0392b;font-size:.85rem;min-height:0;margin-top:.25rem}
+.btn{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:48px;font-family:inherit}
+.btn:hover{background:#006299}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.85rem;cursor:pointer;min-height:44px;font-family:inherit;width:100%}
+.copy:hover{background:#f0f8fc}
+#results{margin-top:1.5rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.big{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+.big .num{display:block;font-size:3rem;font-weight:800;color:#0077b6;line-height:1.1}
+.big .lbl{font-weight:600}
+.sub{font-size:.9rem;color:#444;margin:.5rem 0 0}
+.rh{font-weight:700;margin:1.5rem 0 .5rem}
+.tw{overflow-x:auto;margin-bottom:.5rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(odd) td{background:#fafafa}
+tr:nth-child(even) td{background:#fff}
+th.n,td.n{text-align:right;white-space:nowrap}
+tr.hl td{font-weight:700;color:#0077b6}
+.warn{background:#fff8e1;border-left:4px solid #f0a500;padding:.75rem 1rem;margin:1rem 0;font-size:.9rem;border-radius:0 6px 6px 0}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;margin:1rem 0 0}
+.ad-slot{min-height:0;margin:0}
+.formula{background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;overflow-x:auto;margin:0 0 1rem}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+details{border-bottom:1px solid #e8e8e8;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:.75rem 0;min-height:44px}
+details p{margin:0 0 1rem}
+.rel{list-style:none;padding:0;display:grid;gap:.5rem}
+.rel a{display:block;padding:12px 16px;background:#f8f9fa;border-radius:6px;min-height:44px}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/wall-sheathing-calculator/">
+<meta property="og:title" content="Wall Sheathing Calculator">
+<meta property="og:description" content="Free wall sheathing calculator: enter wall size, windows, doors and gables to get the number of OSB or plywood sheets, waste and nails needed.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<main>
+<h1>Wall Sheathing Calculator</h1>
+<p>Use this free wall sheathing calculator to find out how many 4×8, 4×9, 4×10 or 4×12 sheets of OSB or plywood you need to cover your walls. It subtracts windows and doors, adds gable ends and a waste allowance, and estimates nails too.</p>
+
+<div class="card">
+<div class="diagram"><svg id="diagram" viewBox="0 0 400 256" role="img" aria-label="Wall elevation diagram showing length, height and sheet seams"><defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1a1a2e"/></marker></defs><g id="dg"></g></svg></div>
+
+<form id="form" novalidate>
+<fieldset><legend>Walls</legend>
+<div class="row c2">
+<div class="f"><label for="len">Total wall length (ft)</label><input type="number" id="len" inputmode="decimal" step="any" min="0" value="40" aria-describedby="e-len"><div class="err" id="e-len"></div></div>
+<div class="f"><label for="hgt">Wall height (ft)</label><input type="number" id="hgt" inputmode="decimal" step="any" min="0" value="8" aria-describedby="e-hgt"><div class="err" id="e-hgt"></div></div>
+</div></fieldset>
+
+<fieldset><legend>Windows</legend>
+<div class="row c3">
+<div class="f"><label for="wc">Number of windows</label><input type="number" id="wc" inputmode="numeric" step="1" min="0" value="4" aria-describedby="e-wc"><div class="err" id="e-wc"></div></div>
+<div class="f"><label for="ww">Window width (ft)</label><input type="number" id="ww" inputmode="decimal" step="any" min="0" value="3" aria-describedby="e-ww"><div class="err" id="e-ww"></div></div>
+<div class="f"><label for="wh">Window height (ft)</label><input type="number" id="wh" inputmode="decimal" step="any" min="0" value="4" aria-describedby="e-wh"><div class="err" id="e-wh"></div></div>
+</div></fieldset>
+
+<fieldset><legend>Doors</legend>
+<div class="row c3">
+<div class="f"><label for="dc">Number of doors</label><input type="number" id="dc" inputmode="numeric" step="1" min="0" value="2" aria-describedby="e-dc"><div class="err" id="e-dc"></div></div>
+<div class="f"><label for="dw">Door width (ft)</label><input type="number" id="dw" inputmode="decimal" step="any" min="0" value="3" aria-describedby="e-dw"><div class="err" id="e-dw"></div></div>
+<div class="f"><label for="dh">Door height (ft)</label><input type="number" id="dh" inputmode="decimal" step="any" min="0" value="7" aria-describedby="e-dh"><div class="err" id="e-dh"></div></div>
+</div></fieldset>
+
+<fieldset><legend>Gable ends (optional)</legend>
+<div class="row c3">
+<div class="f"><label for="gc">Number of gables</label><input type="number" id="gc" inputmode="numeric" step="1" min="0" value="0" aria-describedby="e-gc"><div class="err" id="e-gc"></div></div>
+<div class="f"><label for="gb">Gable base width (ft)</label><input type="number" id="gb" inputmode="decimal" step="any" min="0" value="0" aria-describedby="e-gb"><div class="err" id="e-gb"></div></div>
+<div class="f"><label for="gr">Gable rise (ft)</label><input type="number" id="gr" inputmode="decimal" step="any" min="0" value="0" aria-describedby="e-gr"><div class="err" id="e-gr"></div></div>
+</div></fieldset>
+
+<fieldset><legend>Panels and fastening</legend>
+<div class="row c2">
+<div class="f"><label for="sheet">Sheet size</label><select id="sheet"><option value="4x8" selected>4 × 8 ft (32 sq ft)</option><option value="4x9">4 × 9 ft (36 sq ft)</option><option value="4x10">4 × 10 ft (40 sq ft)</option><option value="4x12">4 × 12 ft (48 sq ft)</option></select></div>
+<div class="f"><label for="ded">Opening deduction</label><select id="ded"><option value="1">Full — deduct 100% of openings</option><option value="0.5" selected>Half — deduct 50% (conservative)</option><option value="0">None — ignore openings</option></select></div>
+<div class="f"><label for="stud">Stud spacing</label><select id="stud"><option value="16" selected>16 in. on center</option><option value="24">24 in. on center</option></select></div>
+<div class="f"><label for="edge">Edge nail spacing</label><select id="edge"><option value="6" selected>6 in. (IRC base schedule)</option><option value="4">4 in. (closer)</option><option value="3">3 in. (closer)</option></select></div>
+</div>
+<div class="f"><label for="waste">Waste allowance: <strong id="wv">10%</strong></label><input type="range" id="waste" min="0" max="25" step="1" value="10"><div class="ticks"><span>0%</span><span>10%</span><span>25%</span></div></div>
+<div class="f"><label for="price">Price per sheet (optional, $)</label><input type="number" id="price" inputmode="decimal" step="any" min="0" placeholder="e.g. 28.50" aria-describedby="e-price"><div class="err" id="e-price"></div></div>
+</fieldset>
+
+<button type="submit" class="btn" id="go">Calculate Sheathing</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Wall Sheathing Calculator</h2>
+<p>Enter the total length of all exterior walls you plan to sheathe and the wall height. Add the count and size of windows and doors, plus any gable triangles, then choose your sheet size, stud spacing and waste allowance. The calculator returns the number of sheets to buy, a full area breakdown, an estimated nail count in pounds, and a comparison of every common sheet size.</p>
+
+<h2>Why This Matters</h2>
+<p>Sheathing is one of the first big material orders on a framing job, and it is expensive to get wrong. At roughly $25–$45 per 4×8 sheet of OSB or plywood, a 2,000 sq ft, two-story house needs about 70–90 sheets, so a 10% error is a $200–$400 mistake. Order short and the crew stands around waiting for a second delivery; order long and you pay for sheets that end up as scrap.</p>
+<p>Homeowners building a garage, shed or addition use this to budget before they talk to a supplier. Framing contractors use it to check a lumberyard takeoff. Remodelers re-sheathing after a siding teardown use it to price a single wall. Wall height matters more than most people expect: an 8-ft wall fits a 4×8 sheet with no waste, but a 9-ft wall wastes a full foot of every sheet unless you switch to 4×9s, and a 10-ft wall needs a second course with blocking if you use 4×8s. That is why the comparison table is useful. Sometimes fewer, taller sheets are cheaper in total because they also mean fewer seams to nail and fewer pieces to cut.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator uses the standard area method used in most material takeoffs:</p>
+<div class="formula">Gross = length × height<br>Gable = gables × ½ × base × rise<br>Openings = windows × (w × h) + doors × (w × h)<br>Net = Gross + Gable − (Openings × deduction %)<br>Area to cover = Net × (1 + waste %)<br>Sheets = Area to cover ÷ sheet area, rounded up</div>
+<p>Because openings leave cut-outs that are rarely usable, the default deducts only half of the opening area. That is deliberately on the safe side: you buy slightly more than a pure area count says. Every result is rounded up, never down.</p>
+<p>For fasteners, the tool follows the prescriptive pattern in IRC Table R602.3(1) (2021 edition): 8d common nails, 6 in. on center at panel edges and 12 in. in the field. It counts a full perimeter of edge nails for each sheet, even though neighboring sheets share seams, plus field nails on each intermediate stud. This overcounts a little, which is the safe direction for a purchase. It assumes about 100 nails per pound of 8d common nails. Local codes vary, and braced or shear walls (IRC R602.10, or an engineer's plan) often call for tighter edge nailing than the base schedule. This tool is a materials estimator, not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>Take a 40-ft run of 8-ft walls with four 3×4 ft windows and two 3×7 ft doors, 4×8 sheets, 16 in. stud spacing, half opening deduction and 10% waste. These are the calculator's default values.</p>
+<ul>
+<li><strong>Gross area:</strong> 40 × 8 = 320 sq ft.</li>
+<li><strong>Openings:</strong> windows 4 × 12 = 48 sq ft; doors 2 × 21 = 42 sq ft; total 90 sq ft. Half deduction = 45 sq ft.</li>
+<li><strong>Net area:</strong> 320 − 45 = 275 sq ft.</li>
+<li><strong>With waste:</strong> 275 × 1.10 = 302.5 sq ft.</li>
+<li><strong>Sheets:</strong> 302.5 ÷ 32 = 9.45, rounded up to <strong>10 sheets</strong>.</li>
+<li><strong>Nails per sheet:</strong> edge 2 × (48 + 96) ÷ 6 = 48; field 2 intermediate studs × 8 = 16; total 64. For 10 sheets that is 640 nails, or <strong>7 lb</strong> of 8d.</li>
+</ul>
+<p>The comparison table shows 4×9 sheets would take 9, 4×10 would take 8 and 4×12 would take 7. With an 8-ft wall, though, the longer sheets would need trimming, so the 4×8 is usually the practical choice.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the framed height, not the floor-to-ceiling height.</strong> Sheathing usually runs over the rim joist, so add 10–12 in. for the band board on each floor.</li>
+<li><strong>Leave a 1/8 in. gap at panel edges.</strong> OSB and plywood expand with moisture, and tight joints buckle. Most panel manufacturers print the spacing requirement on the sheet.</li>
+<li><strong>Do not deduct every opening in full.</strong> Window and door cut-outs are often too small or oddly shaped to reuse. Half deduction is a safer budget number.</li>
+<li><strong>Check edge support on tall walls.</strong> If your wall is taller than the sheet, horizontal seams must land on framing or blocking.</li>
+<li><strong>Follow your plans for nailing.</strong> Engineered shear walls and high-wind areas often require closer spacing or larger nails than the base schedule, so use the closer edge spacing options and confirm with your building department.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many sheets of sheathing do I need for a wall?</summary><p>Multiply wall length by height, subtract part or all of the openings, add 5–15% for waste, then divide by the sheet area (32 sq ft for a 4×8). Always round up to a whole sheet. A 40×8 ft wall with a few windows typically needs 9–11 sheets.</p></details>
+<details><summary>Should I subtract windows and doors?</summary><p>Yes, but cautiously. The cut-out pieces from large openings can sometimes be reused, small ones usually cannot. Deducting about half the opening area is a common compromise that avoids running short.</p></details>
+<details><summary>How much waste should I allow for wall sheathing?</summary><p>Plan on 5–10% for simple rectangular walls and 10–15% for walls with many openings, gables or angles. Cut-heavy jobs or crews new to the work should lean to the higher end.</p></details>
+<details><summary>What nails and spacing are used for wall sheathing?</summary><p>The IRC prescriptive schedule uses 8d common nails at 6 in. on center along panel edges and 12 in. on center in the field for typical wall sheathing. Shear walls and high-wind zones may require 4 in. or 3 in. edge spacing. Local codes vary, so check your plans and building department.</p></details>
+<details><summary>Is 4×8, 4×9 or 4×10 sheathing better?</summary><p>Match the sheet to the wall height. A 4×9 or 4×10 sheet covers a 9- or 10-ft wall in one piece, giving fewer seams and less cutting. On 8-ft walls, a 4×8 wastes nothing.</p></details>
+<details><summary>Should sheathing run vertically or horizontally?</summary><p>Either is allowed in many cases, but vertical sheets span the full wall height without horizontal seams, which is simpler to nail and often needed for braced wall panels. Horizontal sheets must have all edges supported by framing or blocking. Check your plans.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/roof-flashing-calculator/">Step and Wall Flashing Calculator</a></li>
+<li><a href="/roof-sheathing-calculator/">Roof Sheathing Calculator</a></li>
+<li><a href="/basement-wall-insulation-calculator/">Basement Wall Insulation Calculator</a></li>
+<li><a href="/gable-end-wall-area-calculator/">Gable End Wall Area Calculator</a></li>
+<li><a href="/shower-wall-tile-calculator/">Shower Wall Tile Calculator</a></li>
+<li><a href="/board-and-batten-wall-calculator/">Board and Batten Wall Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/wall-sheathing-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var SH={'4x8':{l:8,a:32},'4x9':{l:9,a:36},'4x10':{l:10,a:40},'4x12':{l:12,a:48}};
+var bad=false,copyText='';
+$('yr').textContent=new Date().getFullYear();
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function fs(n){return fmt(n,1).replace(/\.0$/,'')}
+function cl(x){return Math.ceil(x-1e-9)}
+function clearErr(){
+  document.querySelectorAll('.err').forEach(function(e){e.textContent=''});
+  document.querySelectorAll('input.invalid').forEach(function(e){e.classList.remove('invalid');e.removeAttribute('aria-invalid')});
+}
+function setErr(id,m){
+  var e=$('e-'+id);if(e&&!e.textContent)e.textContent=m;
+  $(id).classList.add('invalid');$(id).setAttribute('aria-invalid','true');bad=true;
+}
+function num(id,o){
+  var raw=$(id).value.trim();
+  if(raw===''){if(o.req)setErr(id,o.name+' is required.');return 0}
+  var v=Number(raw);
+  if(!isFinite(v)){setErr(id,'Enter a valid number.');return 0}
+  if(v<0){setErr(id,o.name+' cannot be negative.');return 0}
+  if(o.gt&&v<=0){setErr(id,o.name+' must be greater than 0.');return 0}
+  if(o.max&&v>o.max){setErr(id,o.name+' must be '+fmt(o.max,0)+' or less.');return 0}
+  if(o.int&&v%1!==0){setErr(id,'Use a whole number.');return 0}
+  return v;
+}
+function draw(p){
+  var g=p.gc>0&&p.gb>0&&p.gr>0;
+  var s=Math.min(280/p.L,120/(p.H+(g?p.gr:0)));
+  var wl=p.L*s,hh=p.H*s,x0=200-wl/2,yb=200,yt=yb-hh,o='';
+  function X(v){return v.toFixed(1)}
+  o+='<rect x="'+X(x0)+'" y="'+X(yt)+'" width="'+X(wl)+'" height="'+X(hh)+'" fill="#fff" stroke="#0077b6" stroke-width="2"/>';
+  if(4*s>=4){for(var x=4;x<p.L-0.01;x+=4){var gx=X(x0+x*s);o+='<line x1="'+gx+'" y1="'+X(yt)+'" x2="'+gx+'" y2="'+yb+'" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>'}}
+  if(g){var gw=Math.min(p.gb,p.L)*s,ay=yt-p.gr*s;
+    o+='<polygon points="'+X(200-gw/2)+','+X(yt)+' '+X(200+gw/2)+','+X(yt)+' 200,'+X(ay)+'" fill="#fff" stroke="#0077b6" stroke-width="2" stroke-dasharray="6 3"/>';
+    o+='<text x="'+X(200+gw/2+6)+'" y="'+X(yt-p.gr*s/2+4)+'" font-size="12" fill="#1a1a2e">Gable</text>';}
+  if(p.wc>0&&p.ww>0&&p.wh>0){var w=Math.min(p.ww*s,wl*.4),h=Math.min(p.wh*s,hh*.8),wx=x0+wl*.12,wy=yt+(hh-h)*.35;
+    o+='<rect x="'+X(wx)+'" y="'+X(wy)+'" width="'+X(w)+'" height="'+X(h)+'" fill="#fff" stroke="#0077b6" stroke-width="1.5"/><line x1="'+X(wx+w/2)+'" y1="'+X(wy)+'" x2="'+X(wx+w/2)+'" y2="'+X(wy+h)+'" stroke="#0077b6"/><line x1="'+X(wx)+'" y1="'+X(wy+h/2)+'" x2="'+X(wx+w)+'" y2="'+X(wy+h/2)+'" stroke="#0077b6"/>';}
+  if(p.dc>0&&p.dw>0&&p.dh>0){var dw=Math.min(p.dw*s,wl*.3),dh=Math.min(p.dh*s,hh);
+    o+='<rect x="'+X(x0+wl*.88-dw)+'" y="'+X(yb-dh)+'" width="'+X(dw)+'" height="'+X(dh)+'" fill="#fff" stroke="#0077b6" stroke-width="1.5"/>';}
+  o+='<line x1="'+X(x0)+'" y1="216" x2="'+X(x0+wl)+'" y2="216" stroke="#1a1a2e" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  o+='<text x="200" y="232" font-size="12" text-anchor="middle" fill="#1a1a2e">'+fs(p.L)+' ft</text>';
+  o+='<line x1="'+X(x0-12)+'" y1="'+X(yt)+'" x2="'+X(x0-12)+'" y2="'+yb+'" stroke="#1a1a2e" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  o+='<text x="'+X(x0-17)+'" y="'+X((yt+yb)/2+4)+'" font-size="12" text-anchor="end" fill="#1a1a2e">'+fs(p.H)+' ft</text>';
+  o+='<text x="200" y="16" font-size="13" font-weight="700" text-anchor="middle" fill="#1a1a2e">Wall '+fs(p.L)+' ft × '+fs(p.H)+' ft</text>';
+  o+='<text x="200" y="33" font-size="12" text-anchor="middle" fill="#0077b6" font-weight="600">'+fmt(p.sheets,0)+' sheets of '+p.sheet.replace('x','×')+' (incl. '+p.waste+'% waste)</text>';
+  o+='<text x="200" y="250" font-size="11" text-anchor="middle" fill="#1a1a2e">Dashed lines: 4 ft sheet seams</text>';
+  $('dg').innerHTML=o;
+  $('diagram').setAttribute('aria-label','Wall elevation '+fs(p.L)+' ft by '+fs(p.H)+' ft needing '+p.sheets+' sheets of '+p.sheet);
+}
+function calc(){
+  bad=false;clearErr();
+  var L=num('len',{name:'Wall length',req:1,gt:1,max:5000});
+  var H=num('hgt',{name:'Wall height',req:1,gt:1,max:60});
+  var wc=num('wc',{name:'Window count',int:1,max:500}),ww=num('ww',{name:'Window width',max:100}),wh=num('wh',{name:'Window height',max:60});
+  var dc=num('dc',{name:'Door count',int:1,max:500}),dw=num('dw',{name:'Door width',max:100}),dh=num('dh',{name:'Door height',max:60});
+  var gc=num('gc',{name:'Gable count',int:1,max:20}),gb=num('gb',{name:'Gable base',max:200}),gr=num('gr',{name:'Gable rise',max:40});
+  var price=num('price',{name:'Price',max:10000});
+  if(!bad){
+    if(wc>0){if(ww<=0)setErr('ww','Enter the window width.');if(wh<=0)setErr('wh','Enter the window height.');if(ww>L)setErr('ww','Window is wider than the wall.');if(wh>H)setErr('wh','Window is taller than the wall.')}
+    if(dc>0){if(dw<=0)setErr('dw','Enter the door width.');if(dh<=0)setErr('dh','Enter the door height.');if(dw>L)setErr('dw','Door is wider than the wall.');if(dh>H)setErr('dh','Door is taller than the wall.')}
+    if(gc>0){if(gb<=0)setErr('gb','Enter the gable base width.');if(gr<=0)setErr('gr','Enter the gable rise.')}
+  }
+  var gross=L*H,gableA=gc>0?gc*0.5*gb*gr:0,openA=wc*ww*wh+dc*dw*dh;
+  if(!bad&&openA>gross)setErr('wc','Windows and doors total more than the wall area. Check sizes.');
+  if(bad){$('results').innerHTML='';copyText='';return}
+  var key=$('sheet').value,sh=SH[key],f=parseFloat($('ded').value),waste=parseInt($('waste').value,10);
+  var stud=parseInt($('stud').value,10),edge=parseInt($('edge').value,10);
+  var ded=openA*f,net=gross+gableA-ded,total=net*(1+waste/100),exact=total/sh.a,sheets=Math.max(1,cl(exact));
+  var sl=sh.l*12,lines=Math.floor(48/stud)+1;
+  var edgeN=cl(2*(48+sl)/edge),fieldN=Math.max(0,lines-2)*cl(sl/12),perSheet=edgeN+fieldN;
+  var nails=perSheet*sheets,lb=cl(nails/100);
+  var label=key.replace('x','×');
+  var rows=[['Wall area ('+fs(L)+' × '+fs(H)+' ft)',fmt(gross,1)+' sq ft']];
+  if(gableA>0)rows.push(['Gable area ('+gc+' gable'+(gc>1?'s':'')+')','+ '+fmt(gableA,1)+' sq ft']);
+  rows.push(['Openings, total',fmt(openA,1)+' sq ft']);
+  rows.push(['Opening deduction applied ('+Math.round(f*100)+'%)','− '+fmt(ded,1)+' sq ft']);
+  rows.push(['Net area',fmt(net,1)+' sq ft']);
+  rows.push(['Waste allowance ('+waste+'%)','+ '+fmt(net*waste/100,1)+' sq ft']);
+  rows.push(['Area to cover',fmt(total,1)+' sq ft']);
+  rows.push(['Area per sheet ('+label+')',fmt(sh.a,0)+' sq ft']);
+  rows.push(['Sheets needed (exact)',fmt(exact,2)]);
+  var h='<div class="res"><div class="big"><span class="num">'+fmt(sheets,0)+'</span><span class="lbl">sheets of '+label+' to buy</span><p class="sub">Covers '+fmt(net,1)+' sq ft net + '+waste+'% waste = '+fmt(total,1)+' sq ft. Rounded up.</p></div>';
+  if(price>0)h+='<p><strong>Estimated sheathing cost:</strong> $'+fmt(sheets*price,2)+' ('+fmt(sheets,0)+' × $'+fmt(price,2)+')</p>';
+  if(H>sh.l)h+='<div class="warn">Your wall height ('+fs(H)+' ft) is taller than the '+sh.l+' ft sheet length. Plan a second course with horizontal seams backed by framing or blocking, or choose a longer sheet.</div>';
+  h+='<p class="rh">Area breakdown</p><div class="tw"><table><tr><th>Item</th><th class="n">Value</th></tr>';
+  rows.forEach(function(r){h+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>'});
+  h+='<tr class="hl"><td>Sheets to buy</td><td class="n">'+fmt(sheets,0)+'</td></tr></table></div>';
+  h+='<p class="rh">Fasteners (8d common nails, IRC R602.3 pattern)</p><div class="tw"><table><tr><th>Item</th><th class="n">Value</th></tr>';
+  h+='<tr><td>Edge spacing / field spacing</td><td class="n">'+edge+' in. / 12 in.</td></tr>';
+  h+='<tr><td>Nails per sheet (conservative)</td><td class="n">'+fmt(perSheet,0)+'</td></tr>';
+  h+='<tr><td>Total nails</td><td class="n">'+fmt(nails,0)+'</td></tr>';
+  h+='<tr class="hl"><td>Buy at least (≈100 per lb)</td><td class="n">'+fmt(lb,0)+' lb</td></tr></table></div>';
+  h+='<p class="rh">Compare sheet sizes</p><div class="tw"><table><tr><th>Sheet</th><th class="n">Sq ft each</th><th class="n">Sheets to buy</th></tr>';
+  var cmp='';
+  Object.keys(SH).forEach(function(k){var n=Math.max(1,cl(total/SH[k].a));var sel=k===key;
+    h+='<tr'+(sel?' class="hl"':'')+'><td>'+k.replace('x','×')+' ft'+(sel?' (selected)':'')+'</td><td class="n">'+fmt(SH[k].a,0)+'</td><td class="n">'+fmt(n,0)+'</td></tr>';
+    cmp+=k.replace('x','×')+': '+n+(k==='4x12'?'':', ')});
+  h+='</table></div><button type="button" class="copy" id="copyBtn">Copy results</button>';
+  h+='<p class="note">Estimate only. Fastener counts follow the IRC R602.3(1) base nailing pattern (2021 edition) and are rounded up. Local codes vary, and braced or shear walls (IRC R602.10 or an engineer\'s plans) may require closer nailing or specific panels. This is not engineering, permit or inspection approval.</p></div>';
+  copyText='Wall Sheathing Calculator (toolwick.com)\nWall: '+fs(L)+' ft x '+fs(H)+' ft\nNet area: '+fmt(net,1)+' sq ft; with '+waste+'% waste: '+fmt(total,1)+' sq ft\nSheets to buy: '+sheets+' of '+key.replace('x',' x ')+'\nNails: about '+fmt(nails,0)+' ('+lb+' lb of 8d)\nOther sizes: '+cmp.replace(/×/g,'x');
+  requestAnimationFrame(function(){
+    $('results').innerHTML=h;
+    draw({L:L,H:H,wc:wc,ww:ww,wh:wh,dc:dc,dw:dw,dh:dh,gc:gc,gb:gb,gr:gr,sheet:key,sheets:sheets,waste:waste});
+  });
+}
+$('form').addEventListener('submit',function(e){e.preventDefault();requestAnimationFrame(calc)});
+$('waste').addEventListener('input',function(){$('wv').textContent=this.value+'%'});
+$('results').addEventListener('click',function(e){
+  if(e.target.id!=='copyBtn')return;
+  var b=e.target;
+  function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(copyText).then(done,fb)}else fb();
+  function fb(){var t=document.createElement('textarea');t.value=copyText;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(t);done()}
+});
+calc();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
