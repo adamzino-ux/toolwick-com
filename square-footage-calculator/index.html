@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Square Footage Calculator | Toolwick</title>
+<meta name="description" content="Free square footage calculator for rooms, triangles, circles and trapezoids. Add waste, convert to sq yd or sq m, and estimate material cost.">
+<link rel="canonical" href="https://toolwick.com/square-footage-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Square Footage Calculator", "url": "https://toolwick.com/square-footage-calculator/", "description": "Free square footage calculator for rooms, triangles, circles and trapezoids. Add waste, convert to sq yd or sq m, and estimate material cost.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Square Footage Calculator", "item": "https://toolwick.com/square-footage-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate square footage of a room?", "acceptedAnswer": {"@type": "Answer", "text": "Measure the length and width of the room in feet and multiply them together. A 12 ft by 15 ft room is 12 × 15 = 180 square feet. For an irregular room, split it into rectangles, calculate each, and add them."}}, {"@type": "Question", "name": "How do I calculate square footage of an L-shaped room?", "acceptedAnswer": {"@type": "Answer", "text": "Divide the L into two rectangles, measure each, and add the areas. In this calculator, use the Multiple rooms tab and enter each rectangle as its own row. Add a third row set to \"Subtract\" if part of the space is a cutout."}}, {"@type": "Question", "name": "How many square feet are in a square yard?", "acceptedAnswer": {"@type": "Answer", "text": "There are 9 square feet in one square yard, because a yard is 3 feet and 3 × 3 = 9. Carpet is often priced per square yard, so divide your square footage by 9 to compare prices. The results table shows this conversion automatically."}}, {"@type": "Question", "name": "How much extra should I order for waste?", "acceptedAnswer": {"@type": "Answer", "text": "A common rule of thumb is 5-10% for straight flooring layouts and 10-15% for tile, diagonal patterns or rooms with many corners. Check the manufacturer's recommendation, since some products need more. This tool rounds the final order up to the next whole square foot."}}, {"@type": "Question", "name": "Is the square footage in a listing the same as flooring area?", "acceptedAnswer": {"@type": "Answer", "text": "Not always. Many agents and appraisers follow standards like ANSI Z765, which measures finished above-grade space from exterior walls and includes wall thickness. Flooring is measured on the interior of each room, so your flooring area will usually be smaller. Local practice varies."}}, {"@type": "Question", "name": "How do I convert square meters to square feet?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply square meters by 10.7639 to get square feet. To go the other way, multiply square feet by 0.09290304. Choose meters as the unit in this calculator, and it converts for you."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+.nav{border-bottom:1px solid #e0e0e0;padding:1rem 0}
+.nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:2rem;line-height:1.2;margin:2rem 0 .75rem}
+h2{font-size:1.4rem;line-height:1.3;margin:2.5rem 0 .75rem}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.lead{font-size:1.05rem;color:#333}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+svg text{font-size:13px;fill:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+svg .big{font-size:14px;font-weight:700}
+svg .sm{font-size:12px;fill:#666}
+.sg{display:none}
+svg[data-mode=rect] .g-rect,svg[data-mode=tri] .g-tri,svg[data-mode=cir] .g-cir,svg[data-mode=trap] .g-trap,svg[data-mode=multi] .g-multi{display:inline}
+.field{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=text],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input::placeholder{color:#6b6b6b}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6}
+input.invalid,select.invalid{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.err:empty{display:none}
+.tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:.5rem;margin:0 0 1.25rem}
+.tabs button{min-height:44px;padding:8px 10px;border:1px solid #ddd;background:#fff;color:#1a1a2e;border-radius:6px;font-size:.9rem;font-family:inherit;cursor:pointer}
+.tabs button[aria-selected=true]{background:#0077b6;border-color:#0077b6;color:#fff;font-weight:600}
+.panel{display:none}
+.panel.on{display:block}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.room{background:#f8f9fa;border:1px solid #e8e8e8;border-radius:8px;padding:1rem;margin-bottom:1rem}
+.btn{display:block;width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;font-family:inherit;cursor:pointer}
+.btn:hover{background:#006299}
+.ghost{min-height:44px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:10px 16px;font-size:.9rem;font-family:inherit;cursor:pointer}
+.ghost:hover{background:#f0f8fc}
+.rm{align-self:end;margin-bottom:1.1rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.res{opacity:0;transition:opacity .3s ease}
+.res.in{opacity:1}
+.res.stale{display:none}
+.rbox{margin-top:2rem;border-top:1px solid #e0e0e0;padding-top:1.5rem}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+.key .big{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.15;overflow-wrap:anywhere}
+.key .sub{color:#555;font-size:.9rem}
+.formula{font-size:.9rem;color:#444;overflow-wrap:anywhere}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:.6rem .75rem;border-bottom:1px solid #ddd;font-weight:600}
+td{padding:.6rem .75rem;border-bottom:1px solid #e5e5e5}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.note{font-size:.85rem;color:#555}
+.ad-slot{min-height:0;margin:0}
+.content ul{padding-left:1.25rem;margin:0 0 1rem}
+.content li{margin-bottom:.5rem}
+.content ol{padding-left:1.25rem}
+.formulabox{background:#f8f9fa;border-left:4px solid #0077b6;padding:.75rem 1rem;margin:0 0 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9rem;overflow-x:auto}
+details{border-bottom:1px solid #e5e5e5;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{color:#333}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:640px){.card{padding:1.25rem}h1{font-size:1.65rem}.key .big{font-size:2rem}}
+@media(max-width:400px){.two{gap:.6rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/square-footage-calculator/">
+<meta property="og:title" content="Square Footage Calculator">
+<meta property="og:description" content="Free square footage calculator for rooms, triangles, circles and trapezoids. Add waste, convert to sq yd or sq m, and estimate material cost.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav class="nav"><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Square Footage Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p class="lead">This square footage calculator finds the area of rooms, triangles, circles and trapezoids, adds up multiple rooms, and shows the result in square feet, yards, meters and acres. Add a waste allowance and a price per square foot to get a ready-to-order quantity and a cost estimate.</p>
+
+<section class="card" id="tool" aria-label="Square footage calculator">
+<div class="diagram">
+<svg id="diagram" viewBox="0 0 420 230" data-mode="rect" role="img" aria-labelledby="dtitle">
+<title id="dtitle">Diagram of the selected shape with labeled dimensions and area</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<g class="sg g-rect">
+<rect x="50" y="55" width="240" height="115" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/>
+<line x1="50" y1="38" x2="290" y2="38" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="290" y1="55" x2="320" y2="55" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="290" y1="170" x2="320" y2="170" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="315" y1="55" x2="315" y2="170" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="d-rL" x="170" y="28" text-anchor="middle">L</text>
+<text id="d-rW" x="325" y="117">W</text>
+<text id="d-rA" x="170" y="118" text-anchor="middle" class="big">Area</text>
+</g>
+<g class="sg g-tri">
+<polygon points="120,170 330,170 180,55" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/>
+<line x1="180" y1="55" x2="180" y2="170" stroke="#0077b6" stroke-dasharray="5 4"/>
+<path d="M180 160H190V170" fill="none" stroke="#0077b6"/>
+<line x1="180" y1="55" x2="100" y2="55" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="120" y1="170" x2="100" y2="170" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="105" y1="55" x2="105" y2="170" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="120" y1="195" x2="330" y2="195" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="d-tH" x="98" y="117" text-anchor="end">h</text>
+<text id="d-tB" x="225" y="214" text-anchor="middle">base</text>
+<text id="d-tA" x="245" y="158" text-anchor="middle" class="big">Area</text>
+</g>
+<g class="sg g-cir">
+<circle cx="210" cy="110" r="75" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/>
+<line x1="135" y1="110" x2="210" y2="110" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="210" y1="110" x2="285" y2="110" stroke="#0077b6" stroke-width="1.5" marker-end="url(#ar)"/>
+<circle cx="210" cy="110" r="3" fill="#0077b6"/>
+<text id="d-cR" x="248" y="100" text-anchor="middle">r</text>
+<text id="d-cA" x="210" y="140" text-anchor="middle" class="big">Area</text>
+</g>
+<g class="sg g-trap">
+<polygon points="110,60 230,60 300,170 40,170" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/>
+<line x1="110" y1="42" x2="230" y2="42" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="40" y1="195" x2="300" y2="195" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="230" y1="60" x2="325" y2="60" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="300" y1="170" x2="325" y2="170" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="320" y1="60" x2="320" y2="170" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="d-zA2" x="170" y="34" text-anchor="middle">a</text>
+<text id="d-zB" x="170" y="214" text-anchor="middle">b</text>
+<text id="d-zH" x="328" y="118">h</text>
+<text id="d-zA" x="170" y="130" text-anchor="middle" class="big">Area</text>
+</g>
+<g class="sg g-multi">
+<rect x="40" y="60" width="160" height="110" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/>
+<rect x="200" y="100" width="130" height="70" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/>
+<text id="d-m0" x="120" y="108" text-anchor="middle">Room 1</text>
+<text id="d-m0a" x="120" y="128" text-anchor="middle" class="big">sq ft</text>
+<text id="d-m1" x="265" y="130" text-anchor="middle">Room 2</text>
+<text id="d-m1a" x="265" y="150" text-anchor="middle" class="big">sq ft</text>
+<text id="d-mT" x="185" y="38" text-anchor="middle" class="big">Total</text>
+<text x="185" y="200" text-anchor="middle" class="sm">Rooms are added; cutouts are subtracted</text>
+</g>
+</svg>
+</div>
+
+<div class="field">
+<label for="unit">Measurement unit</label>
+<select id="unit">
+<option value="ft" selected>Feet (ft)</option>
+<option value="in">Inches (in)</option>
+<option value="yd">Yards (yd)</option>
+<option value="m">Meters (m)</option>
+<option value="cm">Centimeters (cm)</option>
+</select>
+</div>
+
+<div class="tabs" role="tablist" aria-label="Shape to measure">
+<button type="button" role="tab" id="t-rect" data-m="rect" aria-selected="true" aria-controls="p-rect">Rectangle</button>
+<button type="button" role="tab" id="t-tri" data-m="tri" aria-selected="false" aria-controls="p-tri">Triangle</button>
+<button type="button" role="tab" id="t-cir" data-m="cir" aria-selected="false" aria-controls="p-cir">Circle</button>
+<button type="button" role="tab" id="t-trap" data-m="trap" aria-selected="false" aria-controls="p-trap">Trapezoid</button>
+<button type="button" role="tab" id="t-multi" data-m="multi" aria-selected="false" aria-controls="p-multi">Multiple rooms</button>
+</div>
+
+<div class="panel on" id="p-rect" role="tabpanel" aria-labelledby="t-rect">
+<div class="two">
+<div class="field"><label for="rectL">Length</label><input type="text" id="rectL" inputmode="decimal" autocomplete="off" placeholder="e.g. 18" aria-describedby="e-rectL"><div class="err" id="e-rectL"></div></div>
+<div class="field"><label for="rectW">Width</label><input type="text" id="rectW" inputmode="decimal" autocomplete="off" placeholder="e.g. 14" aria-describedby="e-rectW"><div class="err" id="e-rectW"></div></div>
+</div>
+</div>
+<div class="panel" id="p-tri" role="tabpanel" aria-labelledby="t-tri">
+<div class="two">
+<div class="field"><label for="triB">Base</label><input type="text" id="triB" inputmode="decimal" autocomplete="off" placeholder="e.g. 12" aria-describedby="e-triB"><div class="err" id="e-triB"></div></div>
+<div class="field"><label for="triH">Perpendicular height</label><input type="text" id="triH" inputmode="decimal" autocomplete="off" placeholder="e.g. 8" aria-describedby="e-triH"><div class="err" id="e-triH"></div></div>
+</div>
+</div>
+<div class="panel" id="p-cir" role="tabpanel" aria-labelledby="t-cir">
+<div class="two">
+<div class="field"><label for="cirT">Circle measurement</label><select id="cirT"><option value="r">Radius</option><option value="d">Diameter</option></select></div>
+<div class="field"><label for="cirV">Radius or diameter value</label><input type="text" id="cirV" inputmode="decimal" autocomplete="off" placeholder="e.g. 5" aria-describedby="e-cirV"><div class="err" id="e-cirV"></div></div>
+</div>
+</div>
+<div class="panel" id="p-trap" role="tabpanel" aria-labelledby="t-trap">
+<div class="two">
+<div class="field"><label for="trapA">Parallel side a</label><input type="text" id="trapA" inputmode="decimal" autocomplete="off" placeholder="e.g. 10" aria-describedby="e-trapA"><div class="err" id="e-trapA"></div></div>
+<div class="field"><label for="trapB">Parallel side b</label><input type="text" id="trapB" inputmode="decimal" autocomplete="off" placeholder="e.g. 16" aria-describedby="e-trapB"><div class="err" id="e-trapB"></div></div>
+</div>
+<div class="field"><label for="trapH">Height (distance between the parallel sides)</label><input type="text" id="trapH" inputmode="decimal" autocomplete="off" placeholder="e.g. 8" aria-describedby="e-trapH"><div class="err" id="e-trapH"></div></div>
+</div>
+<div class="panel" id="p-multi" role="tabpanel" aria-labelledby="t-multi">
+<div id="rooms"></div>
+<div class="err" id="multiErr" role="alert"></div>
+<button type="button" class="ghost" id="addRoom" style="margin-bottom:1.25rem">+ Add another room</button>
+</div>
+
+<div class="field">
+<label for="waste">Waste / overage allowance: <span id="wasteVal">10</span>%</label>
+<input type="range" id="waste" min="0" max="25" step="1" value="10">
+<div class="ticks"><span>0%</span><span>25%</span></div>
+</div>
+<div class="field">
+<label for="price">Price per square foot (optional, $)</label>
+<input type="text" id="price" inputmode="decimal" autocomplete="off" placeholder="e.g. 4.50" aria-describedby="e-price">
+<div class="err" id="e-price"></div>
+</div>
+<button type="button" class="btn" id="calcBtn">Calculate Square Footage</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div class="res stale" id="res" aria-live="polite" aria-atomic="true"></div>
+</section>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/square-footage-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Square Footage Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/square-footage-calculator/&quot;&gt;Square Footage Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/square-footage-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<section class="content">
+<h2>How to Use This Square Footage Calculator</h2>
+<p>Pick a measurement unit, choose the shape that matches your space, and enter its dimensions. For an L-shaped or multi-room layout, use the Multiple rooms tab and set closets, stairwells or cutouts to "Subtract." The results show total area in square feet, yards, meters, inches and acres, plus a waste-adjusted order quantity and optional cost.</p>
+
+<h2>Why This Matters</h2>
+<p>Almost every home project starts with area. Flooring, paint, drywall, insulation, sod, concrete, roofing underlayment and carpet are all sold or priced by the square foot or something derived from it. A small mistake multiplies quickly: a 12 by 15 foot bedroom is 180 square feet, and if you misjudge one wall by just 6 inches you are off by about 7 square feet, enough to leave a visible gap in a floor install or an extra box short on tile.</p>
+<p>Homeowners use square footage to compare quotes, since a contractor charging $6 per square foot on 400 square feet of hardwood is a $2,400 job before extras. Landlords and buyers use it to compare price per square foot between listings. Gardeners use it to size mulch, seed and fertilizer coverage, and painters use it to estimate coats. Because material is sold in whole boxes, rolls and sheets, the number you actually order is always a little larger than the raw area, which is why this tool adds a waste allowance and rounds the order quantity up rather than down.</p>
+
+<h2>How It's Calculated</h2>
+<p>Every dimension is converted to feet first, then the standard area formula for the shape is applied:</p>
+<div class="formulabox">Rectangle: A = length × width<br>Triangle: A = ½ × base × height<br>Circle: A = π × r² (r = diameter ÷ 2)<br>Trapezoid: A = ½ × (a + b) × height</div>
+<p>For multiple rooms, each room's area is calculated as length × width, then added or subtracted according to your selection. The conversions used are 1 sq yd = 9 sq ft, 1 sq m = 10.7639 sq ft (1 sq ft = 0.09290304 sq m), 1 sq ft = 144 sq in, and 1 acre = 43,560 sq ft.</p>
+<p>The waste step multiplies the area by (1 + waste ÷ 100) and then rounds the result <strong>up</strong> to the next whole square foot, so you are never shorted. Cost is calculated on that rounded-up order quantity. Common rules of thumb are 5-10% waste for straight-lay flooring, 10-15% for tile or diagonal patterns, and more for intricate layouts, but your product's manufacturer guidance takes priority.</p>
+<p>This tool measures geometric area. It is not an appraisal, permit or inspection document. Real-estate listings often follow a different method, such as ANSI Z765 for single-family homes, which measures finished above-grade space from the exterior walls, so a listing number can differ from your room-by-room flooring area. Local codes, appraisal practice and supplier rules vary, so always confirm quantities with your supplier or local authority.</p>
+
+<h2>Worked Example</h2>
+<p>Say you are installing laminate flooring in a living room that measures 18 feet by 14 feet, with 10% waste and a price of $4.50 per square foot.</p>
+<ol>
+<li>Area = 18 × 14 = <strong>252.00 sq ft</strong>.</li>
+<li>Conversions: 252 ÷ 9 = 28.00 sq yd; 252 × 0.09290304 = 23.41 sq m; 252 × 144 = 36,288 sq in; 252 ÷ 43,560 = 0.0058 acres.</li>
+<li>Perimeter = 2 × (18 + 14) = 64 ft, handy for estimating baseboard.</li>
+<li>Waste: 252 × 1.10 = 277.20 sq ft, rounded up to an order quantity of <strong>278 sq ft</strong>.</li>
+<li>Estimated cost: 278 × $4.50 = <strong>$1,251.00</strong>.</li>
+</ol>
+<p>Enter the same numbers above and the results table will match each step.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Don't mix units.</strong> Pick one unit for every dimension. If you measured 10 ft 6 in, enter 10.5 ft (divide inches by 12) or choose inches and enter 126.</li>
+<li><strong>Break odd shapes into pieces.</strong> An L-shaped room is two rectangles. A room with a bay window might be a rectangle plus a trapezoid. Calculate each and add them, or use the Multiple rooms tab.</li>
+<li><strong>Measure the true height of a triangle.</strong> Use the perpendicular height, not the slanted side, or the area will come out too large.</li>
+<li><strong>Roofs are not flat.</strong> A roof's surface area is bigger than the footprint beneath it because of the slope. Multiply the footprint by a pitch factor before ordering roofing material.</li>
+<li><strong>Always add waste.</strong> Cuts, damaged pieces and pattern matching consume material. Buying exactly the measured area usually means a second trip to the store, and dye lots may not match.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How do I calculate square footage of a room?</summary><p>Measure the length and width of the room in feet and multiply them together. A 12 ft by 15 ft room is 12 × 15 = 180 square feet. For an irregular room, split it into rectangles, calculate each, and add them.</p></details>
+<details><summary>How do I calculate square footage of an L-shaped room?</summary><p>Divide the L into two rectangles, measure each, and add the areas. In this calculator, use the Multiple rooms tab and enter each rectangle as its own row. Add a third row set to "Subtract" if part of the space is a cutout.</p></details>
+<details><summary>How many square feet are in a square yard?</summary><p>There are 9 square feet in one square yard, because a yard is 3 feet and 3 × 3 = 9. Carpet is often priced per square yard, so divide your square footage by 9 to compare prices. The results table shows this conversion automatically.</p></details>
+<details><summary>How much extra should I order for waste?</summary><p>A common rule of thumb is 5-10% for straight flooring layouts and 10-15% for tile, diagonal patterns or rooms with many corners. Check the manufacturer's recommendation, since some products need more. This tool rounds the final order up to the next whole square foot.</p></details>
+<details><summary>Is the square footage in a listing the same as flooring area?</summary><p>Not always. Many agents and appraisers follow standards like ANSI Z765, which measures finished above-grade space from exterior walls and includes wall thickness. Flooring is measured on the interior of each room, so your flooring area will usually be smaller. Local practice varies.</p></details>
+<details><summary>How do I convert square meters to square feet?</summary><p>Multiply square meters by 10.7639 to get square feet. To go the other way, multiply square feet by 0.09290304. Choose meters as the unit in this calculator, and it converts for you.</p></details>
+
+<h2>Related Tools</h2>
+<ul>
+<li><a href="/roofing-nails-per-square-calculator/">Roofing Nails Per Square Calculator</a>: estimate fasteners per 100 sq ft of roofing.</li>
+<li><a href="/linear-feet-to-square-feet-calculator/">Linear Feet to Square Feet Calculator</a>: convert board or trim length to area.</li>
+<li><a href="/wall-sheathing-calculator/">Wall Sheathing Calculator</a>: figure out sheets needed for wall framing.</li>
+<li><a href="/subfloor-calculator/">Subfloor Calculator</a>: plan subfloor panels for a room or addition.</li>
+<li><a href="/rim-joist-insulation-calculator/">Rim Joist Insulation Calculator</a>: size insulation for your rim joist area.</li>
+<li><a href="/roof-cricket-calculator/">Roof Cricket Calculator</a>: plan the geometry of a roof cricket.</li>
+</ul>
+</section>
+
+<div class="ad-slot" id="ad-bottom"></div>
+</main>
+
+<footer>
+<div class="wrap">
+<p><a href="/about/">About</a> <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> <a href="/contact/">Contact</a></p>
+<p>&copy; 2025 toolwick.com. Results are estimates for planning only and are not engineering, permit or inspection approval.</p>
+</div>
+</footer>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var K={ft:1,'in':1/12,yd:3,m:3.280839895013123,cm:0.03280839895013123};
+var TITLES={rect:'Rectangle',tri:'Triangle',cir:'Circle',trap:'Trapezoid',multi:'Multiple rooms'};
+var mode='rect',rid=0,last='';
+var nf2=new Intl.NumberFormat('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+var nfd=new Intl.NumberFormat('en-US',{maximumFractionDigits:2});
+var nf0=new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
+var nf4=new Intl.NumberFormat('en-US',{minimumFractionDigits:4,maximumFractionDigits:4});
+function fa(n){return nf2.format(n)}
+function fd(n){return nfd.format(n)}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function T(id,t){$(id).textContent=t}
+function clearErr(){
+document.querySelectorAll('.invalid').forEach(function(e){e.classList.remove('invalid');e.removeAttribute('aria-invalid')});
+document.querySelectorAll('.err').forEach(function(e){e.textContent=''});
+}
+function setErr(id,m){var el=$(id);el.classList.add('invalid');el.setAttribute('aria-invalid','true');var e=$('e-'+id);if(e)e.textContent=m}
+function get(id){
+var v=$(id).value.trim().replace(/,/g,'');
+if(v===''){setErr(id,'Enter a value.');return null}
+var n=Number(v);
+if(!isFinite(n)||n<=0){setErr(id,'Enter a number greater than zero.');return null}
+if(n*K[$('unit').value]>100000){setErr(id,'That is too large. Enter a value under 100,000 ft.');return null}
+return n;
+}
+function roomRow(){
+rid++;var i=rid;
+return '<div class="room" data-id="'+i+'"><div class="field"><label for="mN'+i+'">Room name (optional)</label><input type="text" id="mN'+i+'" maxlength="30" autocomplete="off" placeholder="e.g. Kitchen"></div>'+
+'<div class="two"><div class="field"><label for="mL'+i+'">Length</label><input type="text" id="mL'+i+'" inputmode="decimal" autocomplete="off" aria-describedby="e-mL'+i+'"><div class="err" id="e-mL'+i+'"></div></div>'+
+'<div class="field"><label for="mW'+i+'">Width</label><input type="text" id="mW'+i+'" inputmode="decimal" autocomplete="off" aria-describedby="e-mW'+i+'"><div class="err" id="e-mW'+i+'"></div></div></div>'+
+'<div class="two"><div class="field"><label for="mS'+i+'">Counts as</label><select id="mS'+i+'"><option value="1">Add area</option><option value="-1">Subtract (cutout)</option></select></div>'+
+'<button type="button" class="ghost rm" data-rm="'+i+'">Remove</button></div></div>';
+}
+function multi(u,k){
+var rows=document.querySelectorAll('.room'),items=[],bad=false,idx=0;
+rows.forEach(function(rw){
+idx++;var i=rw.getAttribute('data-id');
+if($('mL'+i).value.trim()===''&&$('mW'+i).value.trim()==='')return;
+var L=get('mL'+i),W=get('mW'+i);
+if(L===null||W===null){bad=true;return}
+items.push({nm:$('mN'+i).value.trim()||('Room '+idx),L:L,W:W,s:+$('mS'+i).value,a:L*k*W*k});
+});
+if(bad)return null;
+if(!items.length){$('multiErr').textContent='Enter a length and width for at least one room.';return null}
+var total=0;items.forEach(function(x){total+=x.s*x.a});
+if(total<=0){$('multiErr').textContent='Subtracted areas cancel out the total. Make sure at least one larger room is set to "Add area".';return null}
+var tb='<h3>Room breakdown</h3><div class="tw"><table><thead><tr><th>Room</th><th class="n">Size ('+u+')</th><th class="n">Area (sq ft)</th></tr></thead><tbody>';
+var lines=[];
+items.forEach(function(x){
+var sg=x.s>0?'+':'\u2212';
+tb+='<tr><td>'+esc(x.nm)+(x.s<0?' (cutout)':'')+'</td><td class="n">'+fd(x.L)+' \u00d7 '+fd(x.W)+'</td><td class="n">'+sg+fa(x.a)+'</td></tr>';
+lines.push(x.nm+': '+sg+fa(x.a)+' sq ft');
+});
+tb+='</tbody></table></div>';
+return {area:total,formula:'Sum of room areas (length \u00d7 width), adding rooms and subtracting cutouts = '+fa(total)+' sq ft',extra:tb,copy:lines.join('\n'),
+draw:function(){
+var a=items[0],b=items[1];
+T('d-m0',a.nm.slice(0,14));T('d-m0a',(a.s>0?'':'\u2212')+fa(a.a)+' sq ft');
+if(b){T('d-m1',b.nm.slice(0,14));T('d-m1a',(b.s>0?'':'\u2212')+fa(b.a)+' sq ft')}else{T('d-m1','Room 2');T('d-m1a','sq ft')}
+T('d-mT','Total: '+fa(total)+' sq ft'+(items.length>2?' ('+items.length+' rooms)':''));
+}};
+}
+function calc(){
+clearErr();
+var u=$('unit').value,k=K[u],r=null,a,b,c;
+if(mode==='rect'){
+a=get('rectL');b=get('rectW');
+if(a&&b){var A=a*k*b*k;r={area:A,perim:2*(a+b)*k,pl:'Perimeter',formula:'Area = length \u00d7 width = '+fd(a)+' '+u+' \u00d7 '+fd(b)+' '+u+' = '+fa(A)+' sq ft',
+draw:function(){T('d-rL','L = '+fd(a)+' '+u);T('d-rW','W = '+fd(b)+' '+u);T('d-rA',fa(A)+' sq ft')}}}
+}else if(mode==='tri'){
+a=get('triB');b=get('triH');
+if(a&&b){var A2=0.5*a*k*b*k;r={area:A2,formula:'Area = \u00bd \u00d7 base \u00d7 height = \u00bd \u00d7 '+fd(a)+' '+u+' \u00d7 '+fd(b)+' '+u+' = '+fa(A2)+' sq ft',
+draw:function(){T('d-tB','base = '+fd(a)+' '+u);T('d-tH','h = '+fd(b)+' '+u);T('d-tA',fa(A2)+' sq ft')}}}
+}else if(mode==='cir'){
+a=get('cirV');
+if(a){var rad=$('cirT').value==='d'?a/2:a,rf=rad*k,A3=Math.PI*rf*rf;
+r={area:A3,perim:2*Math.PI*rf,pl:'Circumference',formula:'Area = \u03c0 \u00d7 r\u00b2 = \u03c0 \u00d7 ('+fd(rad)+' '+u+')\u00b2 = '+fa(A3)+' sq ft',
+draw:function(){T('d-cR','r = '+fd(rad)+' '+u);T('d-cA',fa(A3)+' sq ft')}}}
+}else if(mode==='trap'){
+a=get('trapA');b=get('trapB');c=get('trapH');
+if(a&&b&&c){var A4=0.5*(a+b)*k*c*k;r={area:A4,formula:'Area = \u00bd \u00d7 (a + b) \u00d7 h = \u00bd \u00d7 ('+fd(a)+' + '+fd(b)+') '+u+' \u00d7 '+fd(c)+' '+u+' = '+fa(A4)+' sq ft',
+draw:function(){T('d-zA2','a = '+fd(a)+' '+u);T('d-zB','b = '+fd(b)+' '+u);T('d-zH','h = '+fd(c)+' '+u);T('d-zA',fa(A4)+' sq ft')}}}
+}else{r=multi(u,k)}
+var p=null,pe=false,pv=$('price').value.trim().replace(/,/g,'');
+if(pv!==''){p=Number(pv);if(!isFinite(p)||p<0||p>1e6){setErr('price','Enter a price of zero or more.');pe=true}}
+var res=$('res');
+if(!r||pe){
+res.className='res stale';res.innerHTML='';
+var f=document.querySelector('.invalid');if(f)f.focus();
+return;
+}
+r.draw();
+var area=r.area,w=+$('waste').value,adj=area*(1+w/100),ord=Math.ceil(+adj.toFixed(6));
+var t1=[['Square feet (sq ft)',fa(area)],['Square yards (sq yd)',fa(area/9)],['Square meters (sq m)',fa(area*0.09290304)],['Square inches (sq in)',fa(area*144)],['Acres',nf4.format(area/43560)]];
+if(r.perim)t1.push([r.pl+' (linear)',fa(r.perim)+' ft']);
+var t2=[['Waste allowance',w+'%'],['Area plus waste',fa(adj)+' sq ft'],['Order quantity (rounded up)',nf0.format(ord)+' sq ft']];
+var cost=null;
+if(p!==null&&p>0){cost=ord*p;t2.push(['Price per sq ft','$'+fa(p)]);t2.push(['Estimated cost (order quantity)','$'+fa(cost)])}
+function tbl(h1,h2,rows){var s='<div class="tw"><table><thead><tr><th>'+h1+'</th><th class="n">'+h2+'</th></tr></thead><tbody>';rows.forEach(function(x){s+='<tr><td>'+x[0]+'</td><td class="n">'+x[1]+'</td></tr>'});return s+'</tbody></table></div>'}
+var html='<div class="rbox"><div class="key"><div class="big">'+fa(area)+' sq ft</div><div class="sub">Total area \u00b7 '+TITLES[mode]+'</div></div>'+
+'<p class="formula">'+esc(r.formula)+'</p>'+(r.extra||'')+
+'<h3>Area in other units</h3>'+tbl('Measurement','Value',t1)+
+'<h3>Material order (with waste)</h3>'+tbl('Item','Value',t2)+
+'<p class="note">Order quantity is rounded up so you are not shorted. This is a geometric estimate for planning, not an appraisal, permit or inspection approval. Follow the manufacturer\'s waste guidance, and note that local rules vary.</p>'+
+'<button type="button" class="ghost" id="copyBtn">Copy results</button></div>';
+last='Square footage ('+TITLES[mode]+'): '+fa(area)+' sq ft\n'+r.formula+'\n'+(r.copy?r.copy+'\n':'')+
+'= '+fa(area/9)+' sq yd | '+fa(area*0.09290304)+' sq m | '+fa(area*144)+' sq in | '+nf4.format(area/43560)+' acres\n'+
+'Waste '+w+'%: '+fa(adj)+' sq ft, order '+nf0.format(ord)+' sq ft'+(cost!==null?'\nEstimated cost: $'+fa(cost):'')+'\nCalculated at toolwick.com';
+res.className='res';
+res.innerHTML=html;
+requestAnimationFrame(function(){res.classList.add('in')});
+}
+function run(){requestAnimationFrame(calc)}
+$('calcBtn').addEventListener('click',run);
+$('tool').addEventListener('keydown',function(e){
+if(e.key==='Enter'&&e.target.tagName==='INPUT'){e.preventDefault();run()}
+});
+$('tool').addEventListener('input',function(e){
+var t=e.target;
+if(t.classList&&t.classList.contains('invalid')){t.classList.remove('invalid');t.removeAttribute('aria-invalid');var m=$('e-'+t.id);if(m)m.textContent=''}
+});
+$('waste').addEventListener('input',function(){$('wasteVal').textContent=this.value});
+document.querySelectorAll('[role=tab]').forEach(function(btn){
+btn.addEventListener('click',function(){
+mode=btn.getAttribute('data-m');
+document.querySelectorAll('[role=tab]').forEach(function(x){x.setAttribute('aria-selected',x===btn?'true':'false')});
+document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('on',p.id==='p-'+mode)});
+$('diagram').setAttribute('data-mode',mode);
+$('res').classList.add('stale');
+});
+});
+$('addRoom').addEventListener('click',function(){
+if(document.querySelectorAll('.room').length>=20){$('multiErr').textContent='You can add up to 20 rooms.';return}
+$('rooms').insertAdjacentHTML('beforeend',roomRow());
+});
+$('rooms').addEventListener('click',function(e){
+var id=e.target.getAttribute&&e.target.getAttribute('data-rm');
+if(!id)return;
+if(document.querySelectorAll('.room').length<=1){$('multiErr').textContent='Keep at least one room.';return}
+var row=document.querySelector('.room[data-id="'+id+'"]');if(row)row.remove();
+});
+$('res').addEventListener('click',function(e){
+if(e.target.id!=='copyBtn')return;
+var b=e.target;
+function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(last).then(done,function(){fallback()})}else{fallback()}
+function fallback(){var ta=document.createElement('textarea');ta.value=last;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(ta);done()}
+});
+$('rooms').innerHTML=roomRow()+roomRow();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
