@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Vinyl Fence Calculator | Toolwick</title>
+<meta name="description" content="Free vinyl fence calculator: enter your fence length, height, gates and corners to get panels, posts, concrete bags and a cost estimate.">
+<link rel="canonical" href="https://toolwick.com/vinyl-fence-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+nav{max-width:640px;margin:0 auto;padding:1rem 1.5rem}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none}
+main,footer{max-width:640px;margin:0 auto;padding:0 1.5rem}
+h1{font-size:1.9rem;line-height:1.25;margin:.5rem 0 1rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2rem 0 .75rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus,select:focus{outline:2px solid #0077b6;outline-offset:2px}
+.tool{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;height:auto}
+.dl{font-size:15px;fill:#1a1a2e;font-family:inherit}
+.cap{font-size:.8rem;color:#666;margin:.25rem 0 0;text-align:center}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input[type=range]{padding:0;accent-color:#0077b6;border:0}
+input.invalid,select.invalid{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.25rem}
+.hint{color:#666;font-size:.8rem;margin-top:.25rem}
+.field{margin-bottom:1.1rem}
+.grid{display:grid;grid-template-columns:1fr;gap:0 1rem}
+.lenrow{display:grid;grid-template-columns:1fr 120px;gap:.5rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+details.opt{background:#f8f9fa;border-radius:6px;padding:0 1rem;margin-bottom:1.25rem}
+details.opt summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:500;color:#0077b6}
+details.opt .grid{padding-bottom:.5rem}
+.btn{width:100%;min-height:48px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+.results{opacity:0;transition:opacity .3s ease;margin-top:2rem}
+.results:empty{margin:0}
+.results.show{opacity:1}
+.key{text-align:center;padding:1rem 0 1.25rem}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.sub{color:#444;margin-top:.4rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.stat{background:#f8f9fa;border-radius:6px;padding:.9rem;text-align:center}
+.stat b{display:block;font-size:1.5rem;color:#1a1a2e}
+.stat span{font-size:.8rem;color:#444}
+.rh{font-weight:700;margin:1.5rem 0 .5rem}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:420px}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd) td{background:#fafafa}
+tbody tr:nth-child(even) td{background:#fff}
+.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+th.n{text-align:right}
+tr.sel td{font-weight:600;color:#0077b6}
+.note{background:#f8f9fa;border-left:4px solid #0077b6;padding:1rem;border-radius:6px;font-size:.88rem;margin-top:1.25rem}
+.copy{margin-top:1rem;min-height:44px;padding:8px 18px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit}
+.copy:hover{background:#f0f8ff}
+.ad-slot{min-height:0;margin:0}
+.content ul{padding-left:1.25rem}
+.content li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border-radius:6px;padding:1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;overflow-x:auto;line-height:1.7}
+details.faq{border-bottom:1px solid #e0e0e0}
+details.faq summary{min-height:44px;padding:10px 0;cursor:pointer;font-weight:600;display:flex;align-items:center}
+details.faq p{color:#333}
+.related{list-style:none;padding:0;display:grid;grid-template-columns:1fr;gap:.5rem}
+.related a{display:block;padding:12px 16px;background:#f8f9fa;border-radius:6px;min-height:44px}
+footer{padding-top:2rem;padding-bottom:2rem;color:#666;font-size:.9rem;border-top:1px solid #e0e0e0;margin-top:2rem}
+footer a{color:#0077b6;text-decoration:underline}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}.related{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.tool{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.1rem}}
+@media(max-width:420px){.lenrow{grid-template-columns:1fr}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/vinyl-fence-calculator/">
+<meta property="og:title" content="Vinyl Fence Calculator">
+<meta property="og:description" content="Free vinyl fence calculator: enter your fence length, height, gates and corners to get panels, posts, concrete bags and a cost estimate.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<main>
+<h1>Vinyl Fence Calculator</h1>
+<p>This free vinyl fence calculator tells you how many panels, posts, gate kits, concrete bags and gravel you need for your fence line, with conservative post-hole depths and an optional cost estimate. Enter your measurements below and calculate.</p>
+
+<div class="tool" id="tool">
+<div class="diagram">
+<svg viewBox="0 0 480 270" role="img" aria-label="Vinyl fence elevation showing panel width, fence height, post embed depth and total run">
+<title>Vinyl fence layout diagram</title>
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker>
+<pattern id="slats" width="8" height="10" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="10" stroke="#e0e0e0" stroke-width="1.5"/></pattern>
+<g id="pg"><rect x="-16" y="170" width="32" height="52" fill="#fff" stroke="#0077b6" stroke-dasharray="4 3"/><rect x="-6" y="74" width="12" height="148" fill="#fff" stroke="#0077b6" stroke-width="2"/><rect x="-8" y="68" width="16" height="6" fill="#0077b6"/></g>
+</defs>
+<rect x="0" y="170" width="480" height="52" fill="#f8f9fa"/>
+<line x1="0" y1="170" x2="480" y2="170" stroke="#1a1a2e" stroke-width="1.5"/>
+<rect x="146" y="80" width="88" height="84" fill="url(#slats)" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="246" y="80" width="88" height="84" fill="url(#slats)" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="346" y="80" width="88" height="84" fill="#fff" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text class="dl" x="390" y="128" text-anchor="middle">Gate</text>
+<use href="#pg" x="140"/><use href="#pg" x="240"/><use href="#pg" x="340"/><use href="#pg" x="440"/>
+<line x1="140" y1="44" x2="240" y2="44" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="140" y1="44" x2="140" y2="66" stroke="#e0e0e0" stroke-dasharray="3 3"/><line x1="240" y1="44" x2="240" y2="66" stroke="#e0e0e0" stroke-dasharray="3 3"/>
+<text class="dl" id="d-pw" x="190" y="34" text-anchor="middle">Panel width</text>
+<line x1="90" y1="80" x2="90" y2="170" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="90" y1="80" x2="134" y2="80" stroke="#e0e0e0" stroke-dasharray="3 3"/>
+<text class="dl" id="d-h" x="84" y="130" text-anchor="end">Height</text>
+<line x1="90" y1="170" x2="90" y2="222" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="90" y1="222" x2="124" y2="222" stroke="#e0e0e0" stroke-dasharray="3 3"/>
+<text class="dl" id="d-e" x="84" y="200" text-anchor="end">Embed</text>
+<line x1="140" y1="240" x2="440" y2="240" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="dl" id="d-t" x="290" y="262" text-anchor="middle">Total run</text>
+</svg>
+<p class="cap">Typical section, not to scale. Labels update with your numbers.</p>
+</div>
+
+<div class="field">
+<label for="len">Total fence length (including gate openings)</label>
+<div class="lenrow">
+<input type="number" id="len" inputmode="decimal" min="0" step="any" value="150" aria-describedby="len-err">
+<select id="unit" aria-label="Length unit"><option value="ft">feet</option><option value="m">meters</option></select>
+</div>
+<div class="err" id="len-err"></div>
+</div>
+
+<div class="grid">
+<div class="field"><label for="h">Fence height</label>
+<select id="h"><option value="3">3 ft</option><option value="4">4 ft</option><option value="5">5 ft</option><option value="6" selected>6 ft</option><option value="8">8 ft</option></select></div>
+<div class="field"><label for="pw">Panel width (post to post)</label>
+<select id="pw"><option value="5">5 ft</option><option value="6">6 ft</option><option value="8" selected>8 ft</option></select></div>
+<div class="field"><label for="rt">Layout</label>
+<select id="rt"><option value="open" selected>Open run (two end posts)</option><option value="closed">Closed perimeter (fully enclosed)</option></select></div>
+<div class="field"><label for="cor">Corners / direction changes</label>
+<input type="number" id="cor" inputmode="numeric" min="0" step="1" value="2" aria-describedby="cor-err"><div class="err" id="cor-err"></div></div>
+<div class="field"><label for="gates">Number of gates</label>
+<input type="number" id="gates" inputmode="numeric" min="0" step="1" value="1" aria-describedby="gates-err"><div class="err" id="gates-err"></div></div>
+<div class="field"><label for="gw">Gate opening width</label>
+<select id="gw"><option value="3">3 ft walk gate</option><option value="4" selected>4 ft walk gate</option><option value="5">5 ft walk gate</option><option value="8">8 ft double gate</option><option value="10">10 ft double gate</option><option value="12">12 ft double gate</option></select></div>
+<div class="field"><label for="ps">Post size</label>
+<select id="ps"><option value="4">4 × 4 in</option><option value="5" selected>5 × 5 in</option></select></div>
+<div class="field"><label for="hd">Post hole diameter</label>
+<select id="hd"><option value="10">10 in</option><option value="12" selected>12 in</option><option value="14">14 in</option></select></div>
+</div>
+
+<div class="field">
+<label for="fr">Local frost depth (inches)</label>
+<input type="number" id="fr" inputmode="decimal" min="0" step="any" value="30" aria-describedby="fr-hint fr-err">
+<div class="hint" id="fr-hint">Ask your building department. Posts are never set shallower than 30 in.</div>
+<div class="err" id="fr-err"></div>
+</div>
+
+<div class="field">
+<label for="al">Extra panel allowance for cuts and damage: <span id="alv">5%</span></label>
+<input type="range" id="al" min="0" max="15" step="1" value="5">
+<div class="ticks"><span>0%</span><span>15%</span></div>
+</div>
+
+<details class="opt">
+<summary>Optional: add prices for a cost estimate</summary>
+<div class="grid">
+<div class="field"><label for="pPanel">Price per panel ($)</label><input type="number" id="pPanel" inputmode="decimal" min="0" step="any" placeholder="e.g. 95" aria-describedby="pPanel-err"><div class="err" id="pPanel-err"></div></div>
+<div class="field"><label for="pPost">Price per post ($)</label><input type="number" id="pPost" inputmode="decimal" min="0" step="any" placeholder="e.g. 35" aria-describedby="pPost-err"><div class="err" id="pPost-err"></div></div>
+<div class="field"><label for="pGate">Price per gate kit ($)</label><input type="number" id="pGate" inputmode="decimal" min="0" step="any" placeholder="e.g. 220" aria-describedby="pGate-err"><div class="err" id="pGate-err"></div></div>
+<div class="field"><label for="pBag">Price per 60 lb concrete bag ($)</label><input type="number" id="pBag" inputmode="decimal" min="0" step="any" placeholder="e.g. 6" aria-describedby="pBag-err"><div class="err" id="pBag-err"></div></div>
+</div>
+</details>
+
+<button class="btn" id="calcBtn" type="button">Calculate Materials</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+<div class="results" id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<div class="content">
+<h2>How to Use This Vinyl Fence Calculator</h2>
+<p>Enter the total length of the fence line, including any gate openings, then choose the fence height, panel width, and whether the fence is an open run or a closed perimeter. Add the number of corners and gates, your post size, hole diameter and local frost depth. The calculator returns panels, posts, gate kits, reinforced posts, concrete bags, gravel, and a side-by-side comparison of 5, 6 and 8 foot panel widths. Add prices if you want a rough cost total.</p>
+
+<h2>Why This Matters</h2>
+<p>Vinyl fence panels are bulky, often special order, and rarely returnable once the pallet is delivered. Ordering two panels short on a 150 foot backyard can stall a weekend project for two weeks, while ordering two extra can tie up a couple of hundred dollars. Posts are the bigger surprise. A 6 foot privacy fence needs 9 foot posts, and every one of them sits in a hole of roughly 2 cubic feet of concrete. On a 23-post job that is over 100 sixty-pound bags, which is a truck load, not a quick hardware store run.</p>
+<p>Homeowners use a vinyl fence calculator to compare quotes from installers, build a shopping list for a DIY weekend, or check whether switching from 6 foot to 8 foot panels saves enough posts to matter. Contractors use it for fast bids. Landlords and HOA boards use it to budget a perimeter. Getting counts right before you dig also helps you schedule utility locates, concrete delivery and permits in the right order.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator works in feet and rounds every count up, never down.</p>
+<div class="formula">
+Runs = corners + 1 (open) or corners (closed)<br>
+Panel length = total length − (gates × gate width)<br>
+Panels per run = ROUNDUP( panel length ÷ runs ÷ panel width )<br>
+Base panels = runs × panels per run<br>
+Order quantity = ROUNDUP( base panels × (1 + allowance) )<br>
+Posts = base panels + gates + 1 (open) or + 0 (closed)<br>
+Embed depth = largest of 30 in, half the fence height, frost depth<br>
+Concrete per hole = (π × (diameter ÷ 2)² − post width²) × embed ÷ 1,728<br>
+Bags = ROUNDUP( total concrete × 1.10 ÷ 0.45 cu ft per 60 lb bag )
+</div>
+<p>Rounding each straight run separately matters because panels cannot be shared around a corner. The embed rule follows the common installer guideline that one third of the total post length should be underground, which equals half of the above-ground height, plus the minimum 30 inches and local frost depth. Vinyl fences are not covered by a single national code table, so local ordinances, HOA rules and your manufacturer's installation guide always take priority. Results are material estimates, not engineering, permit or inspection approval. Each hole also gets a 4 inch gravel base for drainage.</p>
+
+<h2>Worked Example</h2>
+<p>A homeowner has 150 ft of open fence line with 2 corners and one 4 ft walk gate, using 6 ft tall, 8 ft wide panels, 5 × 5 in posts, 12 in holes, 30 in frost depth, and a 5% panel allowance.</p>
+<ul>
+<li>Runs: 2 corners + 1 = 3 runs. Panel length: 150 − 4 = 146 ft, or 48.67 ft per run.</li>
+<li>Panels per run: 48.67 ÷ 8 = 6.08, rounded up to 7. Base panels: 3 × 7 = 21. With 5% allowance: 22.05, rounded up to <strong>23 panels</strong>.</li>
+<li>Posts: 21 + 1 gate + 1 end = <strong>23 posts</strong>, with 6 to reinforce (2 end, 2 corner, 2 gate).</li>
+<li>Embed: the largest of 30, 36 (half of 72 in) and 30 is 36 in, so each post is at least 9 ft long.</li>
+<li>Concrete per hole: (113.1 − 25) × 36 ÷ 1,728 = 1.84 cu ft. For 23 holes plus 10%: 46.4 cu ft, or <strong>104 sixty-pound bags</strong> (78 eighty-pound bags).</li>
+<li>Gravel: about 6.6 cu ft including 10% extra.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the fence line, not the lot line.</strong> Stake and string the exact path, including setbacks, and check your property survey before you order.</li>
+<li><strong>Don't forget the gate posts.</strong> Gates carry swinging weight, so use reinforced posts with aluminum or steel inserts and a wider footing if the manufacturer recommends it.</li>
+<li><strong>Dig below frost depth.</strong> Shallow posts heave in freeze-thaw cycles and the fence racks out of line. When unsure, go deeper, not shallower.</li>
+<li><strong>Plan each run on its own.</strong> Panels can't wrap a corner, so uneven runs create leftovers. Adjust post spacing slightly or buy a spare panel to cut.</li>
+<li><strong>Call 811 before digging</strong> and confirm permit, height and setback rules with your city and HOA before you buy anything.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details class="faq"><summary>How many vinyl fence panels do I need for 100 feet?</summary><p>With 8 ft panels and no gates or corners, 100 ÷ 8 = 12.5, so you need 13 panels and 14 posts for an open run. Each corner or gate can add a panel because partial runs are rounded up separately, so use the calculator for your exact layout.</p></details>
+<details class="faq"><summary>How deep should vinyl fence posts be buried?</summary><p>A common rule is one third of the total post length underground, at least 30 inches, and always below your local frost line. For a 6 ft fence that means 36 inches in the ground and a 9 ft post. Check your local code and the manufacturer's instructions, which can require more.</p></details>
+<details class="faq"><summary>How many bags of concrete per vinyl fence post?</summary><p>A 12 in hole, 36 in deep, with a 5 × 5 in post takes about 1.84 cubic feet, roughly 4 sixty-pound bags or 3 eighty-pound bags. The calculator adds 10% for spillage and uneven holes.</p></details>
+<details class="faq"><summary>Do corner and end posts count as extra posts?</summary><p>No. Corner posts replace line posts at a direction change and end posts finish an open run, so they are all part of the total. The calculator lists them separately because they should be reinforced.</p></details>
+<details class="faq"><summary>Why does the calculator add extra panels?</summary><p>Cut mistakes, shipping damage and uneven ground can all consume a panel. The slider adds 0 to 15% and always rounds up, so you don't have to wait on a reorder with a different dye lot.</p></details>
+<details class="faq"><summary>Do I need a permit for a vinyl fence?</summary><p>Most towns require one, and many limit height to about 4 ft in front yards and 6 ft in back yards. Some HOAs also restrict color and style. Check before you buy materials.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="related">
+<li><a href="/fence-gate-calculator/">Fence Gate Calculator</a></li>
+<li><a href="/chain-link-fence-calculator/">Chain Link Fence Calculator</a></li>
+<li><a href="/fence-installation-cost-calculator/">Fence Installation Cost Calculator</a></li>
+<li><a href="/fence-picket-calculator/">Fence Picket Calculator</a></li>
+<li><a href="/vinyl-plank-flooring-calculator/">Vinyl Plank Flooring Calculator</a></li>
+<li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a></li>
+</ul>
+</div>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/vinyl-fence-calculator/">Toolwick</a></p>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var fmt=function(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:d||0})};
+var fmtF=function(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var money=function(n){return '$'+fmtF(n,2)};
+var cl=function(n){return Math.ceil(n-1e-9)};
+var summary='';
+$('yr').textContent=new Date().getFullYear();
+
+function val(id){var s=$(id).value.trim();return s===''?NaN:Number(s)}
+function setErr(id,m){var e=$(id+'-err'),i=$(id);if(m){e.textContent=m;i.classList.add('invalid');i.setAttribute('aria-invalid','true')}else{e.textContent='';i.classList.remove('invalid');i.removeAttribute('aria-invalid')}}
+
+function read(){
+  var bad=false,first=null;
+  function chk(id,cond,msg){if(cond){setErr(id,msg);bad=true;if(!first)first=id}else setErr(id,'')}
+  var unit=$('unit').value,lenIn=val('len'),total=lenIn*(unit==='m'?3.28084:1);
+  chk('len',isNaN(lenIn)||lenIn<=0,'Enter a fence length greater than 0.');
+  if(!isNaN(lenIn)&&lenIn>0)chk('len',total>100000,'That length is too large. Enter 100,000 ft (30,480 m) or less.');
+  var closed=$('rt').value==='closed',cor=val('cor');
+  chk('cor',isNaN(cor)||cor<0||cor%1!==0||cor>50,'Enter a whole number of corners from 0 to 50.');
+  if(!isNaN(cor)&&cor>=0&&cor%1===0&&cor<=50)chk('cor',closed&&cor<3,'A closed perimeter needs at least 3 corners.');
+  var gates=val('gates'),gw=Number($('gw').value);
+  chk('gates',isNaN(gates)||gates<0||gates%1!==0||gates>20,'Enter a whole number of gates from 0 to 20.');
+  if(!isNaN(gates)&&gates>=0&&gates%1===0&&gates<=20&&!isNaN(total)&&total>0)chk('gates',gates*gw>=total,'Gate openings ('+fmt(gates*gw,1)+' ft) must be shorter than the total fence length.');
+  var fr=val('fr');
+  chk('fr',isNaN(fr)||fr<0||fr>120,'Enter a frost depth from 0 to 120 inches.');
+  var pr={};
+  ['pPanel','pPost','pGate','pBag'].forEach(function(id){
+    var s=$(id).value.trim();
+    if(s===''){pr[id]=null;setErr(id,'');return}
+    var v=Number(s);
+    if(isNaN(v)||v<0||v>1000000){setErr(id,'Enter a price of 0 or more.');bad=true;if(!first)first=id}else{setErr(id,'');pr[id]=v}
+  });
+  if(bad){if(first)$(first).focus();return null}
+  return {total:total,closed:closed,corners:cor,gates:gates,gateW:gw,gateLen:gates*gw,h:Number($('h').value),pw:Number($('pw').value),post:Number($('ps').value),hole:Number($('hd').value),frost:fr,allow:Number($('al').value),pr:pr};
+}
+
+function run(p,w){
+  var runs=p.closed?p.corners:p.corners+1;
+  var fl=p.total-p.gateLen;
+  var base=runs*cl(fl/runs/w);
+  return {runs:runs,fl:fl,base:base,panels:cl(base*(1+p.allow/100)),posts:base+p.gates+(p.closed?0:1)};
+}
+
+function calculate(){
+  var p=read(),res=$('results');
+  if(!p){res.classList.remove('show');res.innerHTML='';summary='';return}
+  var a=run(p,p.pw);
+  var e=Math.ceil(Math.max(30,p.h*6,p.frost));
+  var dia=Math.max(p.hole,p.post+6);
+  var area=Math.PI*Math.pow(dia/2,2);
+  var vol=(area-p.post*p.post)*e/1728;
+  var grav=area*4/1728;
+  var postLen=cl((p.h*12+e)/12);
+  var bagsFor=function(n){return cl(n*vol*1.1/0.45)};
+  var totVol=vol*a.posts,bags=bagsFor(a.posts),bags80=cl(totVol*1.1/0.6);
+  var totGrav=grav*a.posts*1.1,gravBags=cl(totGrav/0.5);
+  var endP=p.closed?0:2,corP=p.corners,gatP=2*p.gates;
+  var sumP=endP+corP+gatP,reinforced=Math.min(a.posts,sumP),lineP=Math.max(0,a.posts-sumP);
+  var spares=a.panels-a.base;
+
+  var h='<div class="key"><div class="big">'+fmt(a.panels)+' panels</div><div class="sub">and '+fmt(a.posts)+' posts for '+fmt(p.total,1)+' ft of '+p.h+' ft vinyl fence</div></div>';
+  h+='<div class="stats"><div class="stat"><b>'+fmt(a.posts)+'</b><span>Posts ('+postLen+' ft long)</span></div><div class="stat"><b>'+fmt(bags)+'</b><span>Concrete bags (60 lb)</span></div><div class="stat"><b>'+fmt(p.gates)+'</b><span>Gate kits</span></div><div class="stat"><b>'+fmt(reinforced)+'</b><span>Posts to reinforce</span></div></div>';
+
+  h+='<p class="rh">Shopping list</p><div class="tw"><table><thead><tr><th>Item</th><th class="n">Qty</th><th>Notes</th></tr></thead><tbody>';
+  h+='<tr><td>Vinyl panels</td><td class="n">'+fmt(a.panels)+'</td><td>'+fmt(a.base)+' needed + '+fmt(spares)+' spare ('+p.allow+'%), '+fmt(a.runs)+' run'+(a.runs>1?'s':'')+'</td></tr>';
+  h+='<tr><td>Posts</td><td class="n">'+fmt(a.posts)+'</td><td>'+p.post+' × '+p.post+' in, minimum '+postLen+' ft long</td></tr>';
+  h+='<tr><td>Post caps</td><td class="n">'+fmt(a.posts)+'</td><td>One per post</td></tr>';
+  h+='<tr><td>Gate kits</td><td class="n">'+fmt(p.gates)+'</td><td>'+(p.gates?p.gateW+' ft opening each':'No gates')+'</td></tr>';
+  h+='<tr><td>Post stiffeners / inserts</td><td class="n">'+fmt(reinforced)+'</td><td>End, corner and gate posts</td></tr>';
+  h+='<tr><td>Concrete, 60 lb bags</td><td class="n">'+fmt(bags)+'</td><td>or '+fmt(bags80)+' × 80 lb bags, includes 10% extra</td></tr>';
+  h+='<tr><td>Gravel base</td><td class="n">'+fmt(totGrav,1)+' cu ft</td><td>4 in per hole, about '+fmt(gravBags)+' × 0.5 cu ft bags</td></tr>';
+  h+='</tbody></table></div>';
+
+  h+='<p class="rh">Post holes (conservative)</p><div class="tw"><table><thead><tr><th>Spec</th><th class="n">Value</th></tr></thead><tbody>';
+  h+='<tr><td>Embed depth (concrete zone)</td><td class="n">'+fmt(e)+' in</td></tr>';
+  h+='<tr><td>Dig depth (embed + 4 in gravel)</td><td class="n">'+fmt(e+4)+' in</td></tr>';
+  h+='<tr><td>Hole diameter used</td><td class="n">'+fmt(dia)+' in</td></tr>';
+  h+='<tr><td>Minimum post length</td><td class="n">'+postLen+' ft</td></tr>';
+  h+='<tr><td>Concrete per hole</td><td class="n">'+fmtF(vol,2)+' cu ft</td></tr>';
+  h+='<tr><td>Total concrete (no extra)</td><td class="n">'+fmtF(totVol,1)+' cu ft</td></tr>';
+  h+='</tbody></table></div>';
+
+  h+='<p class="rh">Post breakdown</p><div class="tw"><table><thead><tr><th>Post type</th><th class="n">Count</th></tr></thead><tbody>';
+  h+='<tr><td>End posts</td><td class="n">'+endP+'</td></tr><tr><td>Corner posts</td><td class="n">'+corP+'</td></tr><tr><td>Gate posts (2 per gate)</td><td class="n">'+gatP+'</td></tr><tr><td>Line posts (remainder)</td><td class="n">'+fmt(lineP)+'</td></tr><tr><td><strong>Total posts</strong></td><td class="n"><strong>'+fmt(a.posts)+'</strong></td></tr>';
+  h+='</tbody></table></div>';
+  if(sumP>a.posts)h+='<p class="hint">Some end, corner and gate posts overlap on a short fence, so the total is smaller than the sum of the categories.</p>';
+
+  h+='<p class="rh">Compare panel widths</p><div class="tw"><table><thead><tr><th>Panel width</th><th class="n">Panels</th><th class="n">Posts</th><th class="n">60 lb bags</th></tr></thead><tbody>';
+  [5,6,8].forEach(function(w){var r=run(p,w);h+='<tr'+(w===p.pw?' class="sel"':'')+'><td>'+w+' ft'+(w===p.pw?' (selected)':'')+'</td><td class="n">'+fmt(r.panels)+'</td><td class="n">'+fmt(r.posts)+'</td><td class="n">'+fmt(bagsFor(r.posts))+'</td></tr>'});
+  h+='</tbody></table></div>';
+
+  var rows=[['pPanel','Panels',a.panels],['pPost','Posts',a.posts],['pGate','Gate kits',p.gates],['pBag','Concrete bags',bags]],cost='',sub=0;
+  rows.forEach(function(r){var pr=p.pr[r[0]];if(pr!==null){var t=pr*r[2];sub+=t;cost+='<tr><td>'+r[1]+'</td><td class="n">'+fmt(r[2])+'</td><td class="n">'+money(pr)+'</td><td class="n">'+money(t)+'</td></tr>'}});
+  if(cost){h+='<p class="rh">Estimated material cost</p><div class="tw"><table><thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th></tr></thead><tbody>'+cost+'<tr><td colspan="3"><strong>Estimated total</strong></td><td class="n"><strong>'+money(sub)+'</strong></td></tr></tbody></table></div><p class="hint">Excludes tax, delivery, labor, permits and hardware you did not price.</p>'}
+
+  h+='<div class="note"><strong>Safety and code note:</strong> embed depth uses a rule of thumb: the greatest of 30 in, one third of total post length (half the above-ground height), and your local frost depth, with all counts rounded up. Vinyl fence footings are not set by one national code table, so local codes, HOA rules and the manufacturer\'s instructions govern and may require more. This is a materials estimate, not engineering, permit or inspection approval. Call 811 before you dig.</div>';
+  h+='<button class="copy" id="copyBtn" type="button">Copy results</button>';
+
+  summary='Vinyl fence estimate ('+fmt(p.total,1)+' ft, '+p.h+' ft high, '+p.pw+' ft panels)\nPanels: '+fmt(a.panels)+' ('+fmt(a.base)+' + '+fmt(spares)+' spare)\nPosts: '+fmt(a.posts)+' ('+postLen+' ft long, '+fmt(reinforced)+' reinforced)\nGate kits: '+fmt(p.gates)+'\nEmbed depth: '+fmt(e)+' in, hole '+fmt(dia)+' in diameter\nConcrete: '+fmt(bags)+' x 60 lb bags ('+fmt(bags80)+' x 80 lb)\nGravel: '+fmt(totGrav,1)+' cu ft'+(cost?'\nEstimated material cost: '+money(sub):'')+'\nMaterial estimate only. Check local codes and manufacturer instructions.';
+
+  requestAnimationFrame(function(){
+    res.classList.remove('show');
+    res.innerHTML=h;
+    $('d-pw').textContent=p.pw+' ft panel';
+    $('d-h').textContent=p.h+' ft high';
+    $('d-e').textContent=e+' in embed';
+    $('d-t').textContent=fmt(p.total,1)+' ft total \u00b7 '+fmt(a.posts)+' posts';
+    requestAnimationFrame(function(){res.classList.add('show')});
+  });
+}
+
+function copyText(t){
+  if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t);
+  return new Promise(function(ok,no){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy')?ok():no()}catch(x){no()}document.body.removeChild(ta)});
+}
+
+$('results').addEventListener('click',function(ev){
+  var b=ev.target.closest&&ev.target.closest('#copyBtn');
+  if(!b||!summary)return;
+  copyText(summary).then(function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)},function(){b.textContent='Copy failed';setTimeout(function(){b.textContent='Copy results'},2000)});
+});
+$('calcBtn').addEventListener('click',function(){requestAnimationFrame(calculate)});
+document.querySelectorAll('#tool input,#tool select').forEach(function(el){
+  el.addEventListener('keydown',function(ev){if(ev.key==='Enter'){ev.preventDefault();requestAnimationFrame(calculate)}});
+});
+$('al').addEventListener('input',function(){$('alv').textContent=this.value+'%'});
+$('rt').addEventListener('change',function(){if(this.value==='closed'&&(Number($('cor').value)||0)<3)$('cor').value=4});
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
