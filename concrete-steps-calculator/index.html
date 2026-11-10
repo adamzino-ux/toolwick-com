@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Free Concrete Steps Calculator | Toolwick</title>
+<meta name="description" content="Free concrete steps calculator: get the step count, riser height and exact concrete volume in cubic yards or bags for poured steps with a landing.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/concrete-steps-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Concrete Steps Calculator", "url": "https://toolwick.com/concrete-steps-calculator/", "description": "Free concrete steps calculator: get the step count, riser height and exact concrete volume in cubic yards or bags for poured steps with a landing.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Concrete Steps Calculator", "item": "https://toolwick.com/concrete-steps-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many cubic yards of concrete do I need for 3 steps?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on width, tread depth and landing. For a 21-inch rise (three 7-inch risers), 48 inches wide, 11-inch treads and a 36-inch landing, the net volume is about 1.02 yd³. With 10% waste you would order 1.25 yd³. Change the inputs above to match your steps."}}, {"@type": "Question", "name": "What is the maximum riser height for concrete steps?", "acceptedAnswer": {"@type": "Answer", "text": "The 2021 IRC sets a 7¾-inch maximum riser for residential stairs, and the 2021 IBC sets 7 inches for commercial. Some jurisdictions use older or stricter rules, so check locally. A riser of 6½ to 7 inches usually feels more comfortable outdoors."}}, {"@type": "Question", "name": "How deep should each concrete step tread be?", "acceptedAnswer": {"@type": "Answer", "text": "Residential code requires at least 10 inches and commercial code at least 11 inches. Many builders use 11 to 12 inches for exterior steps so people can place their whole foot. Deeper treads also add concrete and extend the footprint."}}, {"@type": "Question", "name": "How many bags of concrete do I need for steps?", "acceptedAnswer": {"@type": "Answer", "text": "One cubic yard is 27 ft³, or about 45 bags of 80 lb mix at 0.60 ft³ each. A 1.5 yd³ stoop is around 68 bags before waste. Above roughly 1 yd³, ready-mix is usually easier and gives a more uniform pour."}}, {"@type": "Question", "name": "Do concrete steps need a footing or rebar?", "acceptedAnswer": {"@type": "Answer", "text": "Often yes, especially when attached to a heated structure or built in a freezing climate. Frost depth ranges from nearly zero to several feet depending on region. Reinforcement and footing details are set by your local code and a designer or inspector, not by this calculator."}}, {"@type": "Question", "name": "Can I hollow out the steps to use less concrete?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, steps can be formed as a reinforced slab over compacted fill, and that uses less concrete. This calculator assumes a solid pour, which gives a safe upper estimate. Hollow designs need proper reinforcement and base preparation, so consult a professional."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #eee}
+nav a{display:inline-block;padding:.8rem 0;font-weight:700;font-size:1.1rem;color:#0077b6;text-decoration:none}
+h1{font-size:1.8rem;line-height:1.25;margin:1.5rem 0 .75rem}
+h2{font-size:1.3rem;line-height:1.3;margin:2rem 0 .75rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+main a,footer a{text-decoration:underline}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.dg{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.dg svg{display:block;width:100%;height:auto}
+#diagram text{font-size:13px;fill:#1a1a2e}
+.g2{display:grid;gap:0 1rem}
+@media(min-width:600px){.g2{grid-template-columns:1fr 1fr}}
+.f{margin-bottom:1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible,.tw:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input:focus,select:focus{border-color:#0077b6;outline-offset:0}
+input.bad{border-color:#e74c3c}
+input[type=range]{padding:0;border:0;height:44px;accent-color:#0077b6}
+.hint{font-size:.8rem;color:#666;margin-top:.25rem}
+.err{font-size:.85rem;color:#c0392b;margin-top:.3rem;font-weight:500}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.btn{display:block;width:100%;min-height:48px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:.5rem}
+.btn:hover{background:#006299}
+.btn2{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:10px 16px;min-height:44px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit;margin-top:1rem}
+.btn2:hover{background:#eef7fc}
+.res{margin-top:2rem}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.fade{animation:none}}
+.key{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.5rem}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.sub{font-size:.9rem;color:#555;margin-top:.4rem}
+.res h3{font-size:1.05rem;margin:1.75rem 0 .6rem}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+.tw table{min-width:400px}
+th{background:#f0f0f0;text-align:left;padding:.6rem .75rem;border-bottom:1px solid #ddd;font-weight:600}
+td{padding:.6rem .75rem;border-bottom:1px solid #e5e5e5}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+tbody th{background:transparent;font-weight:500}
+tfoot th,tfoot td{font-weight:700;background:#f0f0f0}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+.hx .xr{display:none}
+.chk{list-style:none;padding:0;margin:0}
+.chk li{padding:.55rem .8rem;margin-bottom:.4rem;border-left:4px solid;font-size:.92rem;border-radius:0 4px 4px 0}
+.chk .ok{border-color:#1b7f3b;background:#f2faf4}.chk .ok strong{color:#176b32}
+.chk .warn{border-color:#c0392b;background:#fdf2f1}.chk .warn strong{color:#a93226}
+.chk .note{border-color:#0077b6;background:#f1f8fc}.chk .note strong{color:#00598a}
+.bn{background:#fdf2f1;border:1px solid #e74c3c;border-radius:6px;padding:.7rem 1rem;color:#7b241c;font-size:.92rem;margin-bottom:1rem}
+.disc{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.8rem 1rem;font-size:.88rem;color:#555;margin-top:1.5rem}
+.ad-slot{min-height:0;margin:0}
+.formula{background:#f8f9fa;border-left:4px solid #0077b6;padding:.8rem 1rem;font-family:Consolas,Menlo,monospace;font-size:.88rem;overflow-x:auto;margin:0 0 1rem;white-space:pre-wrap}
+ul.l{padding-left:1.25rem;margin:0 0 1rem}
+ul.l li{margin-bottom:.5rem}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;font-weight:600;padding:.75rem 0;min-height:44px}
+details p{margin:0 0 1rem}
+.rel{list-style:none;padding:0;margin:0}
+.rel li{margin-bottom:.5rem}
+.rel a{display:block;padding:.7rem .9rem;border:1px solid #e0e0e0;border-radius:6px;background:#f8f9fa}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.5rem 0 2rem;font-size:.9rem;color:#666}
+footer a{display:inline-block;padding:.65rem .25rem;margin-right:.9rem}
+@media(max-width:480px){.card{padding:1.25rem}.big{font-size:2.2rem}h1{font-size:1.55rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/concrete-steps-calculator/">
+<meta property="og:title" content="Concrete Steps Calculator">
+<meta property="og:description" content="Free concrete steps calculator: get the step count, riser height and exact concrete volume in cubic yards or bags for poured steps with a landing.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Concrete Steps Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>Use this concrete steps calculator to find how many steps your rise needs, the exact riser height, and how much concrete to order for poured steps with a landing. Results come in cubic yards (or cubic meters), cubic feet and bags.</p>
+
+<div class="card">
+<div class="dg"><svg id="diagram" viewBox="0 0 420 250" role="img" aria-labelledby="dgT"><title id="dgT">Side view of concrete steps</title><g id="dg"></g></svg></div>
+
+<div class="g2">
+<div class="f"><label for="units">Units</label><select id="units"><option value="imp">Imperial (inches, yd³)</option><option value="met">Metric (cm, m³)</option></select></div>
+<div class="f"><label for="code">Code basis for limits</label><select id="code"><option value="irc">Residential: IRC 2021 R311.7</option><option value="ibc">Commercial: IBC 2021 §1011</option></select></div>
+<div class="f"><label for="rise">Total rise (<span class="uL">in</span>)</label><input type="number" id="rise" inputmode="decimal" step="any" value="28" aria-describedby="rise-h rise-e"><div class="hint" id="rise-h">Ground up to top landing surface.</div><div class="err" id="rise-e" role="alert"></div></div>
+<div class="f"><label for="width">Step width (<span class="uL">in</span>)</label><input type="number" id="width" inputmode="decimal" step="any" value="48" aria-describedby="width-h width-e"><div class="hint" id="width-h">Side to side.</div><div class="err" id="width-e" role="alert"></div></div>
+<div class="f"><label for="tread">Tread depth (<span class="uL">in</span>)</label><input type="number" id="tread" inputmode="decimal" step="any" value="11" aria-describedby="tread-h tread-e"><div class="hint" id="tread-h">Front to back of each step.</div><div class="err" id="tread-e" role="alert"></div></div>
+<div class="f"><label for="land">Top landing depth (<span class="uL">in</span>)</label><input type="number" id="land" inputmode="decimal" step="any" value="36" aria-describedby="land-h land-e"><div class="hint" id="land-h">Enter 0 if none.</div><div class="err" id="land-e" role="alert"></div></div>
+<div class="f"><label for="base">Base slab under steps (<span class="uL">in</span>, optional)</label><input type="number" id="base" inputmode="decimal" step="any" value="0" aria-describedby="base-h base-e"><div class="hint" id="base-h">Extra thickness poured below the steps.</div><div class="err" id="base-e" role="alert"></div></div>
+<div class="f"><label for="steps">Number of steps (optional)</label><input type="number" id="steps" inputmode="numeric" step="1" aria-describedby="steps-h steps-e"><div class="hint" id="steps-h">Blank = fewest risers within the limit.</div><div class="err" id="steps-e" role="alert"></div></div>
+</div>
+<div class="f"><label for="price">Concrete price per <span class="uV">yd³</span> (optional)</label><input type="number" id="price" inputmode="decimal" step="any" aria-describedby="price-e"><div class="err" id="price-e" role="alert"></div></div>
+<div class="f"><label for="waste">Waste and over-excavation allowance: <output id="wo" for="waste">10%</output></label><input type="range" id="waste" min="0" max="25" step="1" value="10"><div class="ticks"><span>0%</span><span>25%</span></div></div>
+<button class="btn" id="calc" type="button">Calculate Concrete Steps</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+<div class="res" id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/concrete-steps-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Concrete Steps Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/concrete-steps-calculator/&quot;&gt;Concrete Steps Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/concrete-steps-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<section>
+<h2>How to Use This Concrete Steps Calculator</h2>
+<p>Enter the total rise: the vertical distance from finished ground (or the lower slab) up to the top surface of the landing or door threshold. Then add the step width, the tread depth you want and the landing depth. Leave "Number of steps" blank and the calculator picks the fewest risers that stay under the riser limit of your chosen code basis. Press Calculate to see the riser height, total length, net concrete, the amount to order with waste, bag counts, a step-count comparison and a per-step volume table. The diagram above redraws with your numbers.</p>
+
+<h2>Why This Matters</h2>
+<p>Poured concrete steps are a job where the math has to be right twice: once for the geometry and once for the concrete. Get the geometry wrong and you build a trip hazard that fails inspection, or one that someone falls on. Get the volume wrong and you either pay for a second truck or watch a crew stand around with a half-finished pour while the first load stiffens.</p>
+<p>Typical cases: a homeowner replacing a three-step front stoop (usually 1 to 2 cubic yards), a landscaper building a four-step approach to a deck, or a contractor pricing a basement walkout. A 28-inch rise at a 7¾-inch limit needs four risers, not three, and because a solid pour fills everything below each tread, one extra step adds noticeably more concrete. Many ready-mix plants also add a short-load fee on small orders, so knowing whether you need 1.25 or 1.75 yards helps you decide between a truck and bagged mix. Ordering a little over is cheap. Ordering short on a monolithic pour can mean a cold joint in the middle of your stairs.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator treats the steps as a solid, monolithic pour: each tread is concrete from grade up to that tread's height. With n risers, there are n − 1 treads plus the top landing.</p>
+<div class="formula">n = ⌈ rise ÷ max riser ⌉   (always rounded up)
+R = rise ÷ n                (actual riser height)
+Treads  = W × T × R × (n−1) × n ÷ 2
+Landing = W × L × n × R
+Base    = W × ((n−1) × T + L) × B
+Volume  = Treads + Landing + Base
+Order   = Volume × (1 + waste%), rounded up</div>
+<p>W is width, T is tread depth, L is landing depth and B is base slab thickness. The sum 1 + 2 + … + (n−1) = n(n−1)/2 gives the stacked tread heights. Volumes are computed in cubic inches, then converted: 1 yd³ = 46,656 in³ = 27 ft³, and 1 m³ = 61,023.7 in³. The order quantity rounds up to the next ¼ yd³ (or 0.1 m³). Bag counts use typical yields of 0.60 ft³ for an 80 lb bag and 0.45 ft³ for a 60 lb bag, rounded up.</p>
+<p>Limits follow the 2021 IRC R311.7 for residential (7¾-inch maximum riser, 10-inch minimum tread, 36-inch minimum width and landing) or the 2021 IBC §1011 for commercial (7-inch maximum riser, 4-inch minimum, 11-inch minimum tread, 44-inch width used as a conservative figure). Adopted editions and amendments vary by jurisdiction, so confirm with your local building department. A flight is limited here to 12 ft of rise, which is the conservative limit. The 2·riser + tread comfort check (24 to 25 inches) is a rule of thumb, not a code requirement.</p>
+
+<h2>Worked Example</h2>
+<p>Suppose a front stoop has a 28-inch rise, a 48-inch width, 11-inch treads, a 36-inch landing, the IRC basis and 10% waste.</p>
+<ul class="l">
+<li><strong>Steps:</strong> 28 ÷ 7.75 = 3.61, rounded up to n = 4 risers. Riser R = 28 ÷ 4 = 7.00 in, with 3 treads.</li>
+<li><strong>Treads:</strong> 48 × 11 × 7 × (3 × 4 ÷ 2) = 48 × 11 × 7 × 6 = 22,176 in³.</li>
+<li><strong>Landing:</strong> 48 × 36 × 4 × 7 = 48,384 in³.</li>
+<li><strong>Net volume:</strong> 70,560 in³ = 40.83 ft³ = 1.512 yd³.</li>
+<li><strong>With 10% waste:</strong> 1.512 × 1.10 = 1.664 yd³ (44.9 ft³), rounded up to <strong>1.75 yd³</strong> to order.</li>
+<li><strong>Bags:</strong> 44.9 ÷ 0.60 = 74.9, so 75 bags of 80 lb, or 100 bags of 60 lb.</li>
+</ul>
+<p>Check: 2 × 7 + 11 = 25 inches, which falls in the comfortable range. The tool's defaults reproduce this example.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul class="l">
+<li><strong>Measure the rise last and from the real surfaces.</strong> Measure from compacted finished grade to the finished top of the landing, not to the form board or a slab edge you plan to cut.</li>
+<li><strong>Don't round the step count down.</strong> If the answer is 3.6 steps, you need 4. Riser height must never exceed the code maximum, and all risers in a flight must be nearly equal (IRC allows a ⅜-inch variation).</li>
+<li><strong>Remember the landing and handrails.</strong> Exterior doors need a landing at least 36 inches deep, and four or more risers generally require a handrail. Open sides more than 30 inches above grade need guards.</li>
+<li><strong>Don't ignore the footing.</strong> Steps attached to a house often need frost-depth footings or a thickened edge. The base slab input adds concrete but doesn't design the footing, so ask your building department.</li>
+<li><strong>Order more than the net number.</strong> Uneven subgrade, form bulge and spillage commonly eat 5 to 10%. Use 10 to 15% on rough or excavated ground.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many cubic yards of concrete do I need for 3 steps?</summary><p>It depends on width, tread depth and landing. For a 21-inch rise (three 7-inch risers), 48 inches wide, 11-inch treads and a 36-inch landing, the net volume is about 1.02 yd³. With 10% waste you would order 1.25 yd³. Change the inputs above to match your steps.</p></details>
+<details><summary>What is the maximum riser height for concrete steps?</summary><p>The 2021 IRC sets a 7¾-inch maximum riser for residential stairs, and the 2021 IBC sets 7 inches for commercial. Some jurisdictions use older or stricter rules, so check locally. A riser of 6½ to 7 inches usually feels more comfortable outdoors.</p></details>
+<details><summary>How deep should each concrete step tread be?</summary><p>Residential code requires at least 10 inches and commercial code at least 11 inches. Many builders use 11 to 12 inches for exterior steps so people can place their whole foot. Deeper treads also add concrete and extend the footprint.</p></details>
+<details><summary>How many bags of concrete do I need for steps?</summary><p>One cubic yard is 27 ft³, or about 45 bags of 80 lb mix at 0.60 ft³ each. A 1.5 yd³ stoop is around 68 bags before waste. Above roughly 1 yd³, ready-mix is usually easier and gives a more uniform pour.</p></details>
+<details><summary>Do concrete steps need a footing or rebar?</summary><p>Often yes, especially when attached to a heated structure or built in a freezing climate. Frost depth ranges from nearly zero to several feet depending on region. Reinforcement and footing details are set by your local code and a designer or inspector, not by this calculator.</p></details>
+<details><summary>Can I hollow out the steps to use less concrete?</summary><p>Yes, steps can be formed as a reinforced slab over compacted fill, and that uses less concrete. This calculator assumes a solid pour, which gives a safe upper estimate. Hollow designs need proper reinforcement and base preparation, so consult a professional.</p></details>
+
+<div class="disc">This tool provides planning estimates only. It is not engineering, permit or inspection approval. Code limits are based on the 2021 IRC and IBC, and local codes and amendments vary. Confirm all dimensions, footings and reinforcement with your building department before pouring.</div>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/concrete-patio-cost-calculator/">Concrete Patio Cost Calculator</a></li>
+<li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li>
+<li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a></li>
+<li><a href="/sonotube-round-column-concrete-calculator/">Sonotube &amp; Round Column Concrete Calculator</a></li>
+<li><a href="/garage-slab-thickness-reinforcement-calculator/">Garage Concrete Slab Thickness &amp; Reinforcement Calculator</a></li>
+<li><a href="/concrete-volume-calculator/">Concrete Volume Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<div class="wrap"><nav class="cluster-nav" aria-label="More Concrete, Masonry &amp; Foundations Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Concrete, Masonry &amp; Foundations Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li><li><a href="/concrete-patio-cost-calculator/">Concrete Patio Cost Calculator</a></li><li><a href="/concrete-volume-calculator/">Concrete Volume Calculator</a></li><li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a></li><li><a href="/garage-slab-thickness-reinforcement-calculator/">Garage Concrete Slab Thickness &amp; Reinforcement Calculator</a></li><li><a href="/sonotube-round-column-concrete-calculator/">Sonotube &amp; Round Column Concrete Calculator</a></li><li><a href="/shower-pan-mortar-bed-calculator/">Bathtub &amp; Shower Pan Mortar Bed Calculator</a></li><li><a href="/brick-mortar-calculator/">Brick &amp; Mortar Calculator</a></li><li><a href="/concrete-calculators/"><strong>All Concrete, Masonry &amp; Foundations calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div></div>
+<footer><div class="wrap"><a href="/about/">About</a> <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> <a href="/contact/">Contact</a><p>© 2025 toolwick.com</p></div></footer>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)},res=$('results'),shown=false,lastText='',unit='imp';
+var C={irc:{n:'IRC 2021 R311.7',maxR:7.75,minR:0,minT:10,minW:36},ibc:{n:'IBC 2021 §1011',maxR:7,minR:4,minT:11,minW:44}};
+var MAXR=144,IDS=['rise','width','tread','land','base','steps','price'];
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function toIn(v){return unit==='imp'?v:v/2.54}
+function fromIn(i){return unit==='imp'?i:i*2.54}
+function uL(){return unit==='imp'?'in':'cm'}
+function fl(i,d){return fmt(fromIn(i),d==null?(unit==='imp'?2:1):d)+' '+uL()}
+function fs(i){return fmt(fromIn(i),unit==='imp'?2:1).replace(/(\.\d*?)0+$/,'$1').replace(/\.$/,'')+' '+uL()}
+function frac(i){var w=Math.floor(i+1e-9),f=Math.round((i-w)*16),g,d=16;if(f===16){w++;f=0}if(f===0)return w+' in';g=f;while(g%2===0){g/=2;d/=2}return(w>0?w+' ':'')+g+'/'+d+' in'}
+function gv(id){var s=$(id).value.trim();return s===''?null:Number(s)}
+function clr(){IDS.forEach(function(i){$(i).classList.remove('bad');$(i).removeAttribute('aria-invalid');$(i+'-e').textContent=''})}
+function setE(i,m){$(i).classList.add('bad');$(i).setAttribute('aria-invalid','true');$(i+'-e').textContent=m}
+function bad(v){return v===null||!isFinite(v)}
+function read(sil){
+var e=[],p={},k=$('code').value,c=C[k],v;p.c=c;p.k=k;
+v=gv('rise');
+if(bad(v))e.push(['rise','Enter the total rise, measured from the ground to the top landing surface.']);
+else if(v<=0)e.push(['rise','Total rise must be greater than 0.']);
+else{p.rise=toIn(v);if(p.rise>MAXR)e.push(['rise','That rise is over 12 ft ('+fs(MAXR)+'). Split it into flights with an intermediate landing and calculate each flight separately.'])}
+v=gv('width');
+if(bad(v))e.push(['width','Enter the step width.']);
+else if(v<=0)e.push(['width','Width must be greater than 0.']);
+else{p.width=toIn(v);if(p.width>600)e.push(['width','Width over '+fs(600)+' is not supported. Calculate wide stairs in sections.'])}
+v=gv('tread');
+if(bad(v))e.push(['tread','Enter the tread depth.']);
+else if(v<=0)e.push(['tread','Tread depth must be greater than 0.']);
+else{p.tread=toIn(v);if(p.tread>48)e.push(['tread','Tread depth over '+fs(48)+' is not supported.'])}
+v=gv('land');
+if(bad(v))e.push(['land','Enter the landing depth, or 0 if the steps meet an existing slab or door.']);
+else if(v<0)e.push(['land','Landing depth cannot be negative.']);
+else{p.land=toIn(v);if(p.land>240)e.push(['land','Landing depth over '+fs(240)+' is not supported.'])}
+v=gv('base');
+if(v===null)p.base=0;
+else if(!isFinite(v)||v<0)e.push(['base','Enter a thickness of 0 or more, or leave blank.']);
+else{p.base=toIn(v);if(p.base>48)e.push(['base','Base thickness over '+fs(48)+' is not supported.'])}
+v=gv('steps');
+if(v===null)p.n=0;
+else if(!isFinite(v)||v<1||v>60||Math.floor(v)!==v)e.push(['steps','Enter a whole number from 1 to 60, or leave blank.']);
+else p.n=v;
+v=gv('price');
+if(v===null)p.price=null;
+else if(!isFinite(v)||v<0)e.push(['price','Enter a price of 0 or more, or leave blank.']);
+else p.price=v;
+if(!sil)clr();
+if(e.length){if(!sil){e.forEach(function(x){setE(x[0],x[1])});$(e[0][0]).focus()}return null}
+p.waste=+$('waste').value;return p}
+function calc(p,n){
+var r=p.rise/n,T=p.tread,W=p.width,L=p.land,tr=n-1,sv=W*T*r*n*(n-1)/2,lv=W*L*n*r,len=tr*T+L,bv=W*len*p.base;
+return{n:n,r:r,tr:tr,sv:sv,lv:lv,bv:bv,len:len,net:sv+lv+bv}}
+function draw(p,n){
+var r=p.rise/n,T=p.tread,L=p.land,tr=n-1,H=p.rise,tl=tr*T+L,k;
+if(tl<=0)tl=T;
+var s=Math.min(300/tl,130/H),w=tl*s,h=H*s,x0=70+(300-w)/2,g=190,top=g-h,pts=[[x0,g]],xd=x0-16,yd=g+18;
+for(k=1;k<=tr;k++)pts.push([x0+(k-1)*T*s,g-k*r*s],[x0+k*T*s,g-k*r*s]);
+pts.push([x0+tr*T*s,top],[x0+w,top],[x0+w,g]);
+var pl=pts.map(function(q){return q[0].toFixed(1)+','+q[1].toFixed(1)}).join(' ');
+var ang=Math.atan(r/T)*180/Math.PI,cy=Math.min(g-h/2,g-32),x1=x0+w,o='';
+o+='<line x1="30" y1="'+g+'" x2="405" y2="'+g+'" stroke="#1a1a2e" stroke-width="1.5"/>';
+o+='<line x1="'+(xd-5)+'" y1="'+top+'" x2="'+x0+'" y2="'+top+'" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>';
+o+='<line x1="'+(xd-5)+'" y1="'+g+'" x2="'+x0+'" y2="'+g+'" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>';
+o+='<line x1="'+x0+'" y1="'+g+'" x2="'+x0+'" y2="'+(yd+5)+'" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>';
+o+='<line x1="'+x1+'" y1="'+g+'" x2="'+x1+'" y2="'+(yd+5)+'" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>';
+o+='<polygon points="'+pl+'" fill="#e8f4fa" stroke="#0077b6" stroke-width="2" stroke-linejoin="round"/>';
+if(tr>=1)o+='<line x1="'+x0+'" y1="'+(g-r*s)+'" x2="'+(x0+tr*T*s)+'" y2="'+top+'" stroke="#0077b6" stroke-width="1" stroke-dasharray="5 4"/>';
+o+='<line x1="'+xd+'" y1="'+g+'" x2="'+xd+'" y2="'+top+'" stroke="#0077b6" stroke-width="1.2"/>';
+o+='<polygon points="'+xd+','+top+' '+(xd-3)+','+(top+7)+' '+(xd+3)+','+(top+7)+'" fill="#0077b6"/>';
+o+='<polygon points="'+xd+','+g+' '+(xd-3)+','+(g-7)+' '+(xd+3)+','+(g-7)+'" fill="#0077b6"/>';
+o+='<text transform="translate('+(xd-7)+','+cy.toFixed(1)+') rotate(-90)" text-anchor="middle">Rise '+fs(H)+'</text>';
+o+='<line x1="'+x0+'" y1="'+yd+'" x2="'+x1+'" y2="'+yd+'" stroke="#0077b6" stroke-width="1.2"/>';
+o+='<polygon points="'+x0+','+yd+' '+(x0+7)+','+(yd-3)+' '+(x0+7)+','+(yd+3)+'" fill="#0077b6"/>';
+o+='<polygon points="'+x1+','+yd+' '+(x1-7)+','+(yd-3)+' '+(x1-7)+','+(yd+3)+'" fill="#0077b6"/>';
+o+='<text x="'+((x0+x1)/2).toFixed(1)+'" y="'+(yd+17)+'" text-anchor="middle">Total length '+fs(tr*T+L)+'</text>';
+o+='<text x="210" y="16" text-anchor="middle">'+n+(n===1?' riser × ':' risers × ')+fl(r)+'  |  '+tr+(tr===1?' tread × ':' treads × ')+fs(T)+'</text>';
+o+='<text x="210" y="33" text-anchor="middle">Landing '+fs(L)+'  |  Width '+fs(p.width)+(tr>=1?'  |  Slope '+fmt(ang,1)+'°':'')+'</text>';
+$('dg').innerHTML=o;
+$('dgT').textContent='Side view of concrete steps: '+n+' risers of '+fl(r)+', '+tr+' treads of '+fs(T)+', landing '+fs(L)+', total rise '+fs(H)}
+function sdraw(){var p=read(true);if(p)draw(p,p.n||Math.max(1,Math.ceil(p.rise/p.c.maxR-1e-9)))}
+function run(){
+var p=read(false);
+if(!p){res.innerHTML='';shown=false;return}
+var c=p.c,imp=unit==='imp',nA=Math.max(1,Math.ceil(p.rise/c.maxR-1e-9)),n=p.n||nA,d=calc(p,n);
+if(d.net<=0){setE('land','A single step with no landing has no tread to pour. Enter a landing depth or add more steps.');$('land').focus();res.innerHTML='';shown=false;return}
+var W=p.width,T=p.tread,L=p.land,r=d.r,H=p.rise,tr=d.tr,eps=1e-9;
+var gross=d.net*(1+p.waste/100);
+function B(x){return imp?x/46656:x*1.6387064e-5}
+var BD=imp?2:3,bu=imp?'yd³':'m³',order=imp?Math.ceil(B(gross)*4-eps)/4:Math.ceil(B(gross)*10-eps)/10,OD=imp?2:1;
+var ck=[],wc=0;
+function add(t,l,m){if(t==='warn')wc++;ck.push('<li class="'+t+'"><strong>'+l+'</strong> '+m+'</li>')}
+var minL=p.k==='ibc'?Math.max(36,W):36;
+if(r>c.maxR+eps)add('warn','Check:','Riser height '+fl(r)+' exceeds the '+fl(c.maxR)+' maximum ('+c.n+'). Add steps.');
+else if(r<c.minR-eps)add('warn','Check:','Riser height '+fl(r)+' is below the '+fl(c.minR)+' minimum ('+c.n+').');
+else add('ok','OK:','Riser height '+fl(r)+' is within the '+fl(c.maxR)+' maximum ('+c.n+').');
+if(tr>0){if(T<c.minT-eps)add('warn','Check:','Tread depth '+fs(T)+' is below the '+fs(c.minT)+' minimum ('+c.n+').');else add('ok','OK:','Tread depth '+fs(T)+' meets the '+fs(c.minT)+' minimum.')}
+if(W<c.minW-eps)add('warn','Check:','Width '+fs(W)+' is below the '+fs(c.minW)+' minimum used for '+c.n+'.');else add('ok','OK:','Width '+fs(W)+' meets the '+fs(c.minW)+' minimum.');
+if(L>0){if(L<minL-eps)add('warn','Check:','Landing depth '+fs(L)+' is below the '+fs(minL)+' minimum in the direction of travel.');else add('ok','OK:','Landing depth '+fs(L)+' meets the '+fs(minL)+' minimum.')}
+else add('warn','Check:','No landing entered. The top riser must meet an existing slab, floor or threshold, and exterior doors need a landing at least 36 in deep.');
+if(p.n&&p.n<nA)add('warn','Check:','Your step count of '+n+' is fewer than the '+nA+' needed to stay within the riser limit.');
+if(tr>0){var q=2*r+T;add('note','Note:','Comfort rule: 2 × riser + tread = '+fl(q)+(q>=24-eps&&q<=25+eps?', inside the usual 24–25 in range.':'. Steps feel most natural at 24–25 in (rule of thumb, not code).'))}
+if(n>=4)add('note','Note:','Four or more risers: a handrail is generally required (IRC R311.7.8; IBC requires both sides).');
+if(H>30)add('note','Note:','Drops over 30 in at open sides generally need guards (IRC R312.1.1).');
+function row(a,b){return'<tr><th scope="row">'+a+'</th><td class="n">'+b+'</td></tr>'}
+var rows=[];
+rows.push(row('Code basis',c.n));
+rows.push(row('Number of steps (risers)',n+(p.n?' (your entry)':' (auto)')));
+rows.push(row('Riser height',fl(r)+(imp?' (≈ '+frac(r)+')':'')));
+rows.push(row('Treads',tr+' × '+fs(T)));
+rows.push(row('Landing depth',L>0?fs(L):'None'));
+rows.push(row('Total horizontal length',fs(d.len)));
+if(tr>0)rows.push(row('Stair slope',fmt(Math.atan(r/T)*180/Math.PI,1)+'°'));
+rows.push(row('Net concrete volume',fmt(B(d.net),BD)+' '+bu+(imp?' ('+fmt(d.net/1728,1)+' ft³)':'')));
+rows.push(row('With '+fmt(p.waste,0)+'% waste',fmt(B(gross),BD)+' '+bu+(imp?' ('+fmt(gross/1728,1)+' ft³)':'')));
+rows.push(row('Concrete to order',fmt(order,OD)+' '+bu));
+var b80=0,b60=0;
+if(imp){b80=Math.ceil(gross/1728/0.6-eps);b60=Math.ceil(gross/1728/0.45-eps);rows.push(row('80 lb bags (0.60 ft³ each)',fmt(b80,0)));rows.push(row('60 lb bags (0.45 ft³ each)',fmt(b60,0)))}
+var cost=null;
+if(p.price!==null){cost=p.price*order;rows.push(row('Estimated concrete cost','$'+fmt(cost,2)))}
+var cmp='';
+for(var m=nA;m<=Math.min(nA+3,60);m++){var cc=calc(p,m),g2=cc.net*(1+p.waste/100),okc=cc.r<=c.maxR+eps&&cc.r>=c.minR-eps;
+cmp+='<tr><td>'+m+(m===n?' (selected)':'')+'</td><td class="n">'+fl(cc.r)+'</td><td class="n">'+fs(cc.len)+'</td><td class="n">'+fmt(B(g2),BD)+' '+bu+'</td><td>'+(okc?'Within limit':'Check')+'</td></tr>'}
+var svU=imp?'ft³':'m³';
+function sv(x){return imp?fmt(x/1728,2):fmt(x*1.6387064e-5,3)}
+var sr=[],i;
+for(i=1;i<=tr;i++)sr.push(['Step '+i,fl(i*r),fs(T),sv(W*T*r*i)]);
+if(L>0)sr.push(['Top landing',fl(H),fs(L),sv(d.lv)]);
+if(p.base>0)sr.push(['Base slab ('+fs(p.base)+' thick)','—',fs(d.len),sv(d.bv)]);
+var sh='';
+sr.forEach(function(x,j){sh+='<tr'+(j>=10?' class="xr"':'')+'><td>'+x[0]+'</td><td class="n">'+x[1]+'</td><td class="n">'+x[2]+'</td><td class="n">'+x[3]+'</td></tr>'});
+var html='<div class="fade"><div class="key"><div class="big">'+fmt(order,OD)+' '+bu+'</div><div class="sub">Concrete to order: '+n+(n===1?' step, ':' steps, ')+fmt(p.waste,0)+'% waste included, rounded up to the next '+(imp?'¼ yd³':'0.1 m³')+'</div></div>';
+if(wc)html+='<div class="bn" role="note"><strong>Check dimensions:</strong> some values fall outside the selected code limits. See the checks below.</div>';
+html+='<h3>Summary</h3><div class="tw" role="region" aria-label="Summary table" tabindex="0"><table><tbody>'+rows.join('')+'</tbody></table></div>';
+html+='<h3>Code and layout checks</h3><ul class="chk">'+ck.join('')+'</ul>';
+html+='<h3>Compare step counts</h3><div class="tw" role="region" aria-label="Step count comparison" tabindex="0"><table><thead><tr><th>Steps</th><th class="n">Riser</th><th class="n">Length</th><th class="n">Concrete</th><th>Riser check</th></tr></thead><tbody>'+cmp+'</tbody></table></div>';
+html+='<h3>Concrete per step (net)</h3><div class="tw'+(sr.length>10?' hx':'')+'" id="stepTbl" role="region" aria-label="Per-step concrete table" tabindex="0"><table><thead><tr><th>Part</th><th class="n">Top height</th><th class="n">Depth</th><th class="n">'+svU+'</th></tr></thead><tbody>'+sh+'</tbody><tfoot><tr><th colspan="3">Total (net)</th><td class="n">'+sv(d.net)+'</td></tr></tfoot></table></div>';
+if(sr.length>10)html+='<button class="btn2" id="showAll" type="button" aria-expanded="false">Show all '+sr.length+' rows</button> ';
+html+='<button class="btn2" id="copyBtn" type="button">Copy results</button>';
+html+='<div class="disc">Planning estimate for a solid monolithic pour. Limits follow '+c.n+'; local codes vary. This is not engineering, permit or inspection approval. Confirm footings and reinforcement with your building department.</div></div>';
+lastText='Concrete Steps Calculator (toolwick.com)\nCode basis: '+c.n+'\nSteps (risers): '+n+'\nRiser height: '+fl(r)+'\nTreads: '+tr+' x '+fs(T)+'\nLanding: '+(L>0?fs(L):'none')+'\nWidth: '+fs(W)+'\nNet volume: '+fmt(B(d.net),BD)+' '+bu+'\nWith '+fmt(p.waste,0)+'% waste: '+fmt(B(gross),BD)+' '+bu+'\nConcrete to order: '+fmt(order,OD)+' '+bu+(imp?'\n80 lb bags: '+b80+'\n60 lb bags: '+b60:'')+(cost!==null?'\nEstimated cost: $'+fmt(cost,2):'');
+res.innerHTML=html;shown=true;draw(p,n)}
+res.addEventListener('click',function(e){
+var b=e.target.closest('button');if(!b)return;
+if(b.id==='showAll'){var t=$('stepTbl'),x=t.classList.toggle('hx');b.setAttribute('aria-expanded',x?'false':'true');b.textContent=x?'Show all rows':'Show fewer rows'}
+if(b.id==='copyBtn'){
+var done=function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,function(){fb()})}else fb();
+function fb(){var a=document.createElement('textarea');a.value=lastText;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(a);done()}}});
+$('calc').addEventListener('click',function(){requestAnimationFrame(run)});
+IDS.forEach(function(i){$(i).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();requestAnimationFrame(run)}})});
+$('waste').addEventListener('input',function(){$('wo').textContent=this.value+'%';if(shown)requestAnimationFrame(run)});
+$('code').addEventListener('change',function(){if(shown)requestAnimationFrame(run);else sdraw()});
+$('units').addEventListener('change',function(){
+var nu=this.value,f=nu==='met'?2.54:1/2.54,dec=nu==='met'?1:2;
+['rise','width','tread','land','base'].forEach(function(i){var el=$(i),v=Number(el.value);if(el.value.trim()!==''&&isFinite(v))el.value=String(+(v*f).toFixed(dec))});
+var pr=$('price'),pv=Number(pr.value);if(pr.value.trim()!==''&&isFinite(pv))pr.value=String(+(pv*(nu==='met'?1.30795:1/1.30795)).toFixed(2));
+unit=nu;
+Array.prototype.forEach.call(document.querySelectorAll('.uL'),function(s){s.textContent=uL()});
+Array.prototype.forEach.call(document.querySelectorAll('.uV'),function(s){s.textContent=nu==='imp'?'yd³':'m³'});
+clr();if(shown)requestAnimationFrame(run);else sdraw()});
+sdraw();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
