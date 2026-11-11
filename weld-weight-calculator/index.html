@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Weld Weight Calculator | Toolwick</title>
+<meta name="description" content="Free weld weight calculator: estimate weld metal and filler wire or electrode needed for fillet and groove welds, with deposition efficiency.">
+<link rel="canonical" href="https://toolwick.com/weld-weight-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Weld Weight Calculator", "url": "https://toolwick.com/weld-weight-calculator/", "description": "Free weld weight calculator: estimate weld metal and filler wire or electrode needed for fillet and groove welds, with deposition efficiency.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Weld Weight Calculator", "item": "https://toolwick.com/weld-weight-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do you calculate the weight of a weld?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply the weld's cross-sectional area by its length to get volume, then by the metal's density. For steel that is about 0.2836 lb per cubic inch. A 1/4 in. equal-leg fillet has an area of 0.03125 in², so one foot weighs about 0.106 lb before convexity."}}, {"@type": "Question", "name": "What is deposition efficiency and why does it matter?", "acceptedAnswer": {"@type": "Answer", "text": "It is the share of purchased filler that ends up in the weld. The rest is lost as spatter, slag, fumes and electrode stubs. Stick electrodes run about 60%, solid MIG wire about 95%, so the same joint needs far more stick electrode by weight."}}, {"@type": "Question", "name": "How much filler metal do I need per foot of fillet weld?", "acceptedAnswer": {"@type": "Answer", "text": "A 1/4 in. steel fillet deposits about 0.106 lb per foot, and a 3/8 in. fillet about 0.239 lb per foot, before convexity and losses. Divide by your process efficiency and add a contingency to get the amount to order."}}, {"@type": "Question", "name": "Does the calculator include spatter, stubs and waste?", "acceptedAnswer": {"@type": "Answer", "text": "Spatter, slag and stub losses are covered by the deposition efficiency setting. The suggested order adds 10% on top for start/stop waste and minor repairs. Large rework or scrap is not modelled."}}, {"@type": "Question", "name": "Can I use it for stainless steel or aluminum?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Choose the material in the dropdown and the calculator switches the density. Aluminum weighs about a third as much as steel for the same weld volume, so spool weights are much lower even though the geometry is identical."}}, {"@type": "Question", "name": "Is this result good enough for design or inspection?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is an estimating tool for material quantities only. Weld sizes, joint preparation and procedures must come from a qualified WPS and applicable codes such as AWS D1.1 or ASME Section IX, and local requirements may differ."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #e0e0e0}
+nav a{font-weight:700;font-size:1.1rem;color:#0077b6;text-decoration:none}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.25rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.lead{color:#444;font-size:1.05rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.dia{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:.5rem}
+.dia svg{display:block;width:100%;height:auto}
+.cap{font-size:.85rem;color:#666;margin:0 0 1.5rem;text-align:center}
+.grid{display:grid;grid-template-columns:1fr;gap:1rem}
+@media(min-width:560px){.grid{grid-template-columns:1fr 1fr}.full{grid-column:1/-1}}
+.hide{display:none!important}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.err{border-color:#e74c3c}
+input.err:focus{outline-color:#0077b6}
+.msg{color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6;margin:0}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.btn{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:44px;width:100%;cursor:pointer;margin-top:1.25rem;font-family:inherit}
+.btn:hover{background:#006299}
+.btn2{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.9rem;min-height:44px;cursor:pointer;font-family:inherit;margin-top:1rem}
+.btn2:hover{background:#f0f7fb}
+#results:empty{display:none}
+#results{margin-top:2rem}
+.fade{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.fade{animation:none}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.kl{font-size:.9rem;color:#444;font-weight:500}
+.kn{font-size:2.3rem;font-weight:800;color:#0077b6;line-height:1.2;margin:.25rem 0;word-break:break-word}
+.ks{font-size:.9rem;color:#444}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;font-weight:600}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+td.n,th.n{text-align:right}
+tr.cur td{font-weight:700}
+h3{font-size:1rem;margin:1.25rem 0 .5rem}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0 0}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center;padding:.25rem 0}
+details p{margin:0 0 1rem;color:#333}
+ul{padding-left:1.25rem}
+li{margin-bottom:.5rem}
+code,.fm{background:#f0f0f0;padding:2px 6px;border-radius:4px;font-size:.9em}
+.fm{display:block;padding:.75rem 1rem;margin:0 0 1rem;overflow-x:auto;white-space:pre-wrap}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem}
+.rel li{margin-bottom:.4rem}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.kn{font-size:1.9rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/weld-weight-calculator/">
+<meta property="og:title" content="Weld Weight Calculator">
+<meta property="og:description" content="Free weld weight calculator: estimate weld metal and filler wire or electrode needed for fillet and groove welds, with deposition efficiency.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<main>
+<h1>Weld Weight Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p class="lead">Use this weld weight calculator to estimate how many pounds or kilograms of weld metal a fillet or groove weld deposits, and how much wire, rod or electrode you need to buy once deposition efficiency is included.</p>
+
+<section class="card" aria-label="Weld weight calculator">
+<div class="dia"><svg id="dia" viewBox="0 0 460 240" role="img" aria-label="Weld joint cross-section diagram" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1a1a2e"/></marker></defs>
+<g id="dg"></g></svg></div>
+<p class="cap">Joint cross-section (illustrative, not to scale). Labels update with your values.</p>
+
+<form id="f" novalidate>
+<div class="grid">
+<div class="fld"><label for="units">Unit system</label>
+<select id="units"><option value="imp">Imperial (in, ft, lb)</option><option value="met">Metric (mm, m, kg)</option></select></div>
+<div class="fld"><label for="jt">Joint type</label>
+<select id="jt"><option value="fillet">Fillet weld (equal leg)</option><option value="square">Square-groove butt</option><option value="v" selected>Single-V groove butt</option><option value="dv">Double-V groove butt</option><option value="bevel">Single-bevel groove</option></select></div>
+
+<div class="fld f hide" data-t="fillet"><label for="leg">Fillet leg size (<span class="ud">in</span>)</label>
+<input id="leg" type="number" inputmode="decimal" step="any" min="0" value="0.25" aria-describedby="e-leg"><div class="msg" id="e-leg"></div></div>
+
+<div class="fld f" data-t="square v dv bevel"><label for="t">Plate thickness (<span class="ud">in</span>)</label>
+<input id="t" type="number" inputmode="decimal" step="any" min="0" value="0.5" aria-describedby="e-t"><div class="msg" id="e-t"></div></div>
+
+<div class="fld f" data-t="square v dv bevel"><label for="gap">Root gap (<span class="ud">in</span>)</label>
+<input id="gap" type="number" inputmode="decimal" step="any" min="0" value="0.125" aria-describedby="e-gap"><div class="msg" id="e-gap"></div></div>
+
+<div class="fld f" data-t="v dv bevel"><label for="rf">Root face / land (<span class="ud">in</span>)</label>
+<input id="rf" type="number" inputmode="decimal" step="any" min="0" value="0.0625" aria-describedby="e-rf"><div class="msg" id="e-rf"></div></div>
+
+<div class="fld f" data-t="v dv bevel"><label for="ang"><span id="lang">Included groove angle (°)</span></label>
+<input id="ang" type="number" inputmode="decimal" step="any" min="0" value="60" aria-describedby="e-ang"><div class="msg" id="e-ang"></div></div>
+
+<div class="fld f" data-t="fillet square v dv bevel"><label for="h">Reinforcement / convexity height (<span class="ud">in</span>)</label>
+<input id="h" type="number" inputmode="decimal" step="any" min="0" value="0.0625" aria-describedby="e-h"><div class="msg" id="e-h"></div></div>
+
+<div class="fld"><label for="len">Weld length (<span class="ul">ft</span>)</label>
+<input id="len" type="number" inputmode="decimal" step="any" min="0" value="20" aria-describedby="e-len"><div class="msg" id="e-len"></div></div>
+
+<div class="fld"><label for="qty">Number of identical welds</label>
+<input id="qty" type="number" inputmode="numeric" step="1" min="1" value="1" aria-describedby="e-qty"><div class="msg" id="e-qty"></div>
+<div class="hint">Enter 2 for a fillet joint welded on both sides.</div></div>
+
+<div class="fld"><label for="mat">Filler / base material</label>
+<select id="mat"><option value="steel">Carbon steel (7.85 g/cm³)</option><option value="ss">Stainless steel (7.93 g/cm³)</option><option value="al">Aluminum (2.70 g/cm³)</option></select></div>
+
+<div class="fld"><label for="proc">Welding process</label>
+<select id="proc"><option value="smaw">Stick (SMAW) – 60%</option><option value="fcaw">Flux-cored (FCAW) – 85%</option><option value="gmaw" selected>MIG solid wire (GMAW) – 95%</option><option value="gtaw">TIG rod (GTAW) – 95%</option><option value="saw">Submerged arc (SAW) – 99%</option><option value="custom">Custom efficiency</option></select></div>
+
+<div class="fld full"><label for="eff">Deposition efficiency: <strong id="effv">95%</strong></label>
+<input id="eff" type="range" min="40" max="100" step="1" value="95">
+<div class="ticks" aria-hidden="true"><span>40%</span><span>70%</span><span>100%</span></div></div>
+</div>
+<button class="btn" type="submit" id="calcBtn">Calculate Weld Weight</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</section>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/weld-weight-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Weld Weight Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/weld-weight-calculator/&quot;&gt;Weld Weight Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/weld-weight-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<section>
+<h2>How to Use This Weld Weight Calculator</h2>
+<p>Pick your unit system and joint type, then enter the dimensions from your drawing or welding procedure: plate thickness, root gap, root face, groove angle, reinforcement height and weld length. For fillet welds you only need the leg size. Set the process (or drag the efficiency slider) and press Calculate. The tool returns the weld metal deposited in the joint, the filler metal you need to purchase after spatter and stub losses, and a suggested order quantity with a 10% contingency.</p>
+
+<h2>Why This Matters</h2>
+<p>Filler metal is a real line item. A fabricator welding 400 feet of 3/8 in. fillet on a skid frame deposits roughly 96 lb of steel, and with stick electrodes at 60% efficiency that means buying about 160 lb. Guess low and the job stops while you wait for a delivery; guess high and you tie up cash in rods that absorb moisture on the shelf.</p>
+<p>Weld weight also drives labor and schedule. Arc time is roughly deposited weight divided by the process deposition rate, so estimators use weld metal weight to price a job, compare processes, and decide whether a bevel, a smaller root gap or a different joint design saves money. Because fillet volume grows with the square of the leg size, going from a 1/4 in. to a 3/8 in. fillet uses 2.25 times the metal, which is why over-welding quietly eats margin and adds heat distortion.</p>
+<p>Procurement, shipping and crane planning for large structures, pressure piping and shipbuilding often start from weld metal tonnage. Hobbyists and farm shops use the same math to decide whether a 33 lb spool of wire will finish a trailer build.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator uses the standard estimating method: find the cross-sectional area of the weld, multiply by length to get volume, multiply by the material density to get weight, then divide by deposition efficiency to get the filler you must buy.</p>
+<span class="fm">Area (fillet)      = leg² / 2 + (2/3) × (leg × √2) × h
+Area (single V)    = g×t + d²×tan(α/2) + cap,   d = t − r
+Area (double V)    = g×t + 2×d²×tan(α/2) + 2×cap,   d = (t − r) / 2
+Area (single bevel)= g×t + d²×tan(β)/2 + cap,   d = t − r
+Area (square)      = g×t + cap
+Cap (reinforcement)= (2/3) × W × h,   W = groove top width + 2h
+Weight = Area × Length × Density × Number of welds
+Filler to buy = Weight ÷ Efficiency</span>
+<p>Here t is plate thickness, g is root gap, r is root face, α is the included groove angle, β is the bevel angle and h is reinforcement height. The cap is modelled as a parabolic segment, which closely matches a real convex bead. Densities are 7.85 g/cm³ for carbon steel, 7.93 g/cm³ for stainless and 2.70 g/cm³ for aluminum.</p>
+<p><strong>Conservative rounding:</strong> filler quantities are always rounded up, never down. Efficiency values are typical figures (stick about 60%, flux-cored about 85%, solid MIG about 95%, TIG rod about 95%, submerged arc about 99%); check your consumable manufacturer's data. This is a geometric estimating method for ordering material. Weld size, joint design and procedure must come from your qualified WPS and the governing code (for example AWS D1.1 or ASME Section IX), and local codes vary. This tool is not engineering, inspection or code-compliance approval.</p>
+
+<h2>Worked Example</h2>
+<p>Single-V butt joint in carbon steel, 1/2 in. plate, 1/8 in. root gap, 1/16 in. root face, 60° included angle, 1/16 in. reinforcement, 20 ft long, welded with solid MIG wire at 95%.</p>
+<ol>
+<li>Groove depth d = 0.5 − 0.0625 = 0.4375 in. tan(30°) = 0.5774.</li>
+<li>Groove area = g×t + d²×tan(α/2) = 0.0625 + 0.1914 × 0.5774 = 0.1730 in².</li>
+<li>Top width = 0.125 + 2 × 0.4375 × 0.5774 = 0.6302 in. Cap width W = 0.6302 + 0.125 = 0.7552 in. Cap area = (2/3) × 0.7552 × 0.0625 = 0.0315 in².</li>
+<li>Total area = 0.2045 in². Volume = 0.2045 × 240 in. = 49.07 in³.</li>
+<li>Weight = 49.07 × 0.2836 lb/in³ = 13.92 lb (about 0.696 lb per foot).</li>
+<li>Filler to buy = 13.92 ÷ 0.95 = 14.65 lb. With 10% contingency, order 16.2 lb.</li>
+</ol>
+<p>Those are the numbers the calculator shows with its default inputs.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use the as-welded dimensions.</strong> A root gap of 3/16 in. instead of 1/8 in. adds more than 10% to a V-groove on 1/2 in. plate. Take dimensions from the WPS, not from memory.</li>
+<li><strong>Do not forget both sides.</strong> A T-joint welded on both sides needs two welds. Enter 2 in "Number of identical welds."</li>
+<li><strong>Convert pipe welds to a length.</strong> For a girth weld, use the circumference (π × diameter) as the weld length.</li>
+<li><strong>Watch fillet size.</strong> Metal grows with the square of the leg, so a 1/16 in. oversize on a 1/4 in. fillet adds about 56% more weld metal.</li>
+<li><strong>Add a contingency.</strong> Start/stop waste, tack welds, repairs and test coupons are not in the geometry. The 10% suggested order covers typical shop waste, but increase it for out-of-position or repair-heavy work.</li>
+<li><strong>Match efficiency to the actual consumable.</strong> Self-shielded flux-cored wire and low-hydrogen stick electrodes have different efficiencies than the defaults. Use the slider for custom values.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How do you calculate the weight of a weld?</summary><p>Multiply the weld's cross-sectional area by its length to get volume, then by the metal's density. For steel that is about 0.2836 lb per cubic inch. A 1/4 in. equal-leg fillet has an area of 0.03125 in², so one foot weighs about 0.106 lb before convexity.</p></details>
+<details><summary>What is deposition efficiency and why does it matter?</summary><p>It is the share of purchased filler that ends up in the weld. The rest is lost as spatter, slag, fumes and electrode stubs. Stick electrodes run about 60%, solid MIG wire about 95%, so the same joint needs far more stick electrode by weight.</p></details>
+<details><summary>How much filler metal do I need per foot of fillet weld?</summary><p>A 1/4 in. steel fillet deposits about 0.106 lb per foot, and a 3/8 in. fillet about 0.239 lb per foot, before convexity and losses. Divide by your process efficiency and add a contingency to get the amount to order.</p></details>
+<details><summary>Does the calculator include spatter, stubs and waste?</summary><p>Spatter, slag and stub losses are covered by the deposition efficiency setting. The suggested order adds 10% on top for start/stop waste and minor repairs. Large rework or scrap is not modelled.</p></details>
+<details><summary>Can I use it for stainless steel or aluminum?</summary><p>Yes. Choose the material in the dropdown and the calculator switches the density. Aluminum weighs about a third as much as steel for the same weld volume, so spool weights are much lower even though the geometry is identical.</p></details>
+<details><summary>Is this result good enough for design or inspection?</summary><p>No. It is an estimating tool for material quantities only. Weld sizes, joint preparation and procedures must come from a qualified WPS and applicable codes such as AWS D1.1 or ASME Section IX, and local requirements may differ.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/rebar-spacing-weight-calculator/">Rebar Spacing &amp; Weight Calculator</a></li>
+<li><a href="/welding-amperage-calculator/">Welding Amperage Calculator</a></li>
+<li><a href="/concrete-steps-calculator/">Concrete Steps Calculator</a></li>
+<li><a href="/french-drain-calculator/">French Drain Calculator</a></li>
+<li><a href="/sloped-fence-calculator/">Sloped Fence Calculator</a></li>
+<li><a href="/vinyl-fence-calculator/">Vinyl Fence Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<p><a href="/about/">About</a><a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</footer>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const DENS={steel:7.85,ss:7.93,al:2.70};
+const PROC={smaw:['Stick (SMAW)',60],fcaw:['Flux-cored (FCAW)',85],gmaw:['MIG solid wire (GMAW)',95],gtaw:['TIG rod (GTAW)',95],saw:['Submerged arc (SAW)',99]};
+const TYPES={fillet:'Fillet weld (equal leg)',square:'Square-groove butt',v:'Single-V groove butt',dv:'Double-V groove butt',bevel:'Single-bevel groove'};
+const MATS={steel:'Carbon steel',ss:'Stainless steel',al:'Aluminum'};
+const LB=2.20462262;
+let imp=true,calculated=false,copyText='';
+const fmt=(n,d)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const up=(x,d)=>{const m=Math.pow(10,d);return Math.ceil(x*m-1e-7)/m;};
+const sh=v=>Number(v.toFixed(4)).toLocaleString('en-US',{maximumFractionDigits:4});
+function num(id){const s=$(id).value.trim();return s===''?NaN:Number(s);}
+function setErr(id,m){const e=$(id);e.classList.add('err');e.setAttribute('aria-invalid','true');$('e-'+id).textContent=m;}
+function clearErr(){document.querySelectorAll('input.err').forEach(e=>{e.classList.remove('err');e.removeAttribute('aria-invalid');});document.querySelectorAll('.msg').forEach(e=>{e.textContent='';});}
+function vis(){const ty=$('jt').value;document.querySelectorAll('.f').forEach(e=>e.classList.toggle('hide',e.dataset.t.split(' ').indexOf(ty)<0));$('lang').textContent=ty==='bevel'?'Bevel angle (°)':'Included groove angle (°)';}
+function units(){document.querySelectorAll('.ud').forEach(e=>{e.textContent=imp?'in':'mm';});document.querySelectorAll('.ul').forEach(e=>{e.textContent=imp?'ft':'m';});}
+function clearResult(){$('results').innerHTML='';calculated=false;}
+
+function area(v){
+  const cap=(w,h)=>2/3*w*h,r=Math.PI/180;
+  if(v.type==='fillet')return v.leg*v.leg/2+cap(v.leg*Math.SQRT2,v.h);
+  if(v.type==='square')return v.g*v.t+cap(v.g+2*v.h,v.h);
+  if(v.type==='v'){const tn=Math.tan(v.ang*r/2),d=v.t-v.rf;return v.g*v.t+d*d*tn+cap(v.g+2*d*tn+2*v.h,v.h);}
+  if(v.type==='dv'){const tn=Math.tan(v.ang*r/2),d=(v.t-v.rf)/2;return v.g*v.t+2*d*d*tn+2*cap(v.g+2*d*tn+2*v.h,v.h);}
+  const tn=Math.tan(v.ang*r),d=v.t-v.rf;return v.g*v.t+d*d*tn/2+cap(v.g+d*tn+2*v.h,v.h);
+}
+
+function read(){
+  clearErr();let ok=true;
+  const ty=$('jt').value,maxD=imp?200:5000,u=imp?'in':'mm',v={type:ty};
+  const bad=(id,m)=>{setErr(id,m);ok=false;};
+  if(ty==='fillet'){
+    v.leg=num('leg');
+    if(!(v.leg>0&&v.leg<=maxD))bad('leg','Enter a leg size greater than 0 (max '+fmt(maxD,0)+' '+u+').');
+  }else{
+    v.t=num('t');
+    if(!(v.t>0&&v.t<=maxD))bad('t','Enter a thickness greater than 0 (max '+fmt(maxD,0)+' '+u+').');
+    v.g=num('gap');
+    if(!(v.g>=0))bad('gap','Enter a root gap of 0 or more.');
+    else if(v.t>0&&v.g>2*v.t)bad('gap','Root gap cannot exceed 2x plate thickness ('+fmt(2*v.t,4)+' '+u+').');
+    if(ty!=='square'){
+      v.rf=num('rf');
+      if(!(v.rf>=0))bad('rf','Enter a root face of 0 or more.');
+      else if(v.t>0&&v.rf>=v.t)bad('rf','Root face must be less than the plate thickness.');
+      v.ang=num('ang');const mx=ty==='bevel'?75:120;
+      if(!(v.ang>=10&&v.ang<=mx))bad('ang','Enter an angle between 10° and '+mx+'°.');
+    }
+  }
+  v.h=num('h');const hm=ty==='fillet'?v.leg:v.t;
+  if(!(v.h>=0))bad('h','Enter a reinforcement height of 0 or more.');
+  else if(hm>0&&v.h>hm)bad('h','Reinforcement cannot exceed '+fmt(hm,4)+' '+u+'.');
+  v.len=num('len');
+  if(!(v.len>0&&v.len<=1e6))bad('len','Enter a weld length greater than 0 (max 1,000,000 '+(imp?'ft':'m')+').');
+  v.qty=num('qty');
+  if(!(Number.isInteger(v.qty)&&v.qty>=1&&v.qty<=1e6))bad('qty','Enter a whole number from 1 to 1,000,000.');
+  return ok?v:null;
+}
+
+function draw(){
+  const ty=$('jt').value,u=imp?'in':'mm',K='#1a1a2e',P='#0077b6',FL='#f8f9fa',WF='rgba(0,119,182,.25)';
+  const pk=(id,d)=>{const x=num(id);return isFinite(x)&&x>=0?x:d;};
+  let t=pk('t',imp?0.5:12);if(t<=0)t=imp?0.5:12;
+  let leg=pk('leg',imp?0.25:6);if(leg<=0)leg=imp?0.25:6;
+  const g=Math.min(pk('gap',imp?0.125:3),2*t),rf=Math.min(pk('rf',imp?0.0625:1.5),0.9*t);
+  const ang=Math.min(Math.max(pk('ang',60),10),ty==='bevel'?75:120);
+  const h=Math.min(pk('h',imp?0.0625:1.5),ty==='fillet'?leg:t);
+  const tx=(x,y,s,a)=>`<text x="${x}" y="${y}" text-anchor="${a||'middle'}" font-size="12" fill="${K}">${s}</text>`;
+  const dim=(a,b,c,d)=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${K}" stroke-width="1" marker-start="url(#ar)" marker-end="url(#ar)"/>`;
+  const ext=(a,b,c,d)=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${K}" stroke-opacity=".4" stroke-dasharray="3 3"/>`;
+  const arr=(a,b,c,d)=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${K}" stroke-width="1" marker-end="url(#ar)"/>`;
+  let o='',lab='';
+  if(ty==='fillet'){
+    const L=50,by=150,hp=Math.min(h/leg*L,18),n=0.7071;
+    o+=`<rect x="30" y="${by}" width="320" height="35" fill="${FL}" stroke="${P}" stroke-width="2"/>`;
+    o+=`<rect x="175" y="45" width="30" height="${by-45}" fill="${FL}" stroke="${P}" stroke-width="2"/>`;
+    let mx=205+L/2,my=by-L/2;
+    o+=`<path d="M205 ${by} V${by-L} Q${mx+n*2*hp} ${my-n*2*hp} ${205+L} ${by} Z" fill="${WF}" stroke="${P}" stroke-width="1.5"/>`;
+    mx=175-L/2;
+    o+=`<path d="M175 ${by} V${by-L} Q${mx-n*2*hp} ${my-n*2*hp} ${175-L} ${by} Z" fill="${WF}" stroke="${P}" stroke-width="1.5"/>`;
+    o+=ext(205,by-L,278,by-L)+ext(255,by,278,by)+dim(272,by-L,272,by);
+    o+=tx(282,by-L/2+4,'leg = '+sh(leg)+' '+u,'start');
+    o+=tx(50,18,'h = '+sh(h)+' '+u+' (convexity)','start')+tx(350,18,'Equal-leg fillet','end');
+    lab='Cross-section of an equal-leg fillet weld, leg '+sh(leg)+' '+u+', convexity '+sh(h)+' '+u+'.';
+  }else{
+    const y0=75,cx=190,T=80,sc=T/t;
+    const G=Math.min(Math.max(g*sc,2),64),Hp=Math.min(h*sc,22);
+    let R=0;if(ty==='v'||ty==='dv'||ty==='bevel')R=Math.min(rf*sc,T-8);
+    const tn=ty==='bevel'?Math.tan(ang*Math.PI/180):Math.tan(ang*Math.PI/360);
+    let D=T,E=0;
+    if(ty==='v'||ty==='bevel'){D=T-R;E=Math.min(D*tn,110);}
+    if(ty==='dv'){D=(T-R)/2;E=Math.min(D*tn,110);}
+    const xl=cx-G/2,xr=cx+G/2;
+    let tl=xl,tr=xr;
+    if(ty==='v'||ty==='dv'){tl=xl-E;tr=xr+E;}
+    if(ty==='bevel'){tr=xr+E;}
+    const yb=y0+T,pts=a=>a.map(p=>p.join(',')).join(' ');
+    let lp,rp,wp;
+    if(ty==='square'||ty==='bevel'){lp=[[50,y0],[xl,y0],[xl,yb],[50,yb]];}
+    if(ty==='square'){rp=[[350,y0],[xr,y0],[xr,yb],[350,yb]];wp=[[xl,y0],[xr,y0],[xr,yb],[xl,yb]];}
+    if(ty==='v'){lp=[[50,y0],[tl,y0],[xl,y0+D],[xl,yb],[50,yb]];rp=[[350,y0],[tr,y0],[xr,y0+D],[xr,yb],[350,yb]];wp=[[tl,y0],[tr,y0],[xr,y0+D],[xr,yb],[xl,yb],[xl,y0+D]];}
+    if(ty==='bevel'){rp=[[350,y0],[tr,y0],[xr,y0+D],[xr,yb],[350,yb]];wp=[[xl,y0],[tr,y0],[xr,y0+D],[xr,yb],[xl,yb]];}
+    if(ty==='dv'){lp=[[50,y0],[tl,y0],[xl,y0+D],[xl,y0+D+R],[tl,yb],[50,yb]];rp=[[350,y0],[tr,y0],[xr,y0+D],[xr,y0+D+R],[tr,yb],[350,yb]];wp=[[tl,y0],[tr,y0],[xr,y0+D],[xr,y0+D+R],[tr,yb],[tl,yb],[xl,y0+D+R],[xl,y0+D]];}
+    o+=`<line x1="${cx}" y1="40" x2="${cx}" y2="${yb+10}" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+    o+=`<polygon points="${pts(lp)}" fill="${FL}" stroke="${P}" stroke-width="2"/><polygon points="${pts(rp)}" fill="${FL}" stroke="${P}" stroke-width="2"/>`;
+    o+=`<polygon points="${pts(wp)}" fill="${WF}" stroke="${P}" stroke-width="1.5"/>`;
+    if(Hp>0){
+      const mc=(tl+tr)/2;
+      o+=`<path d="M${tl-Hp} ${y0} Q${mc} ${y0-2*Hp} ${tr+Hp} ${y0} Z" fill="${WF}" stroke="${P}" stroke-width="1.5"/>`;
+      if(ty==='dv')o+=`<path d="M${tl-Hp} ${yb} Q${mc} ${yb+2*Hp} ${tr+Hp} ${yb} Z" fill="${WF}" stroke="${P}" stroke-width="1.5"/>`;
+    }
+    o+=ext(350,y0,368,y0)+ext(350,yb,368,yb)+dim(362,y0,362,yb)+tx(372,y0+T/2+4,'t = '+sh(t)+' '+u,'start');
+    const Y=196;
+    o+=ext(xl,yb,xl,Y+4)+ext(xr,yb,xr,Y+4)+arr(xl-22,Y,xl,Y)+arr(xr+22,Y,xr,Y)+tx(cx,214,'g = '+sh(g)+' '+u);
+    if(ty!=='square')o+=tx(50,232,'root face r = '+sh(rf)+' '+u,'start');
+    o+=tx(50,18,'h = '+sh(h)+' '+u+' (reinforcement)','start');
+    if(ty!=='square')o+=tx(450,232,(ty==='bevel'?'β = ':'α = ')+sh(ang)+'°'+(ty==='bevel'?' bevel':' included'),'end');
+    lab='Cross-section of a '+TYPES[ty].toLowerCase()+': thickness '+sh(t)+' '+u+', root gap '+sh(g)+' '+u+(ty!=='square'?', root face '+sh(rf)+' '+u+', angle '+sh(ang)+' degrees':'')+', reinforcement '+sh(h)+' '+u+'.';
+  }
+  $('dg').innerHTML=o;$('dia').setAttribute('aria-label',lab);
+}
+
+function calculate(){
+  const v=read();
+  if(!v){clearResult();draw();const f=document.querySelector('input.err');if(f)f.focus();return;}
+  const k=imp?25.4:1;
+  const m={type:v.type,t:(v.t||0)*k,leg:(v.leg||0)*k,g:(v.g||0)*k,rf:(v.rf||0)*k,ang:v.ang,h:v.h*k};
+  const A=area(m);
+  if(!(A>0)){setErr(v.type==='fillet'?'h':'gap','These values give a weld with no cross-section. Add a root gap or reinforcement.');clearResult();draw();return;}
+  const mat=$('mat').value,effp=+$('eff').value,eff=effp/100;
+  const Lmm=v.len*(imp?304.8:1000),V=A*Lmm*v.qty;
+  const kg=V*DENS[mat]*1e-6,fkg=kg/eff;
+  const M=(x,d,c)=>{const a=imp?x*LB:x,b=imp?x:x*LB,f=y=>c?up(y,d):y;return fmt(f(a),d)+' '+(imp?'lb':'kg')+' ('+fmt(f(b),d)+' '+(imp?'kg':'lb')+')';};
+  const P1=(x,d,c)=>{const a=imp?x*LB:x;return fmt(c?up(a,d):a,d)+' '+(imp?'lb':'kg');};
+  const kgm=A*DENS[mat]*1e-3,perU=imp?kgm*0.671969:kgm;
+  const aS=imp?fmt(A/645.16,4)+' in² ('+fmt(A,2)+' mm²)':fmt(A,2)+' mm² ('+fmt(A/645.16,4)+' in²)';
+  const vS=imp?fmt(V/16387.064,2)+' in³ ('+fmt(V/1000,1)+' cm³)':fmt(V/1000,1)+' cm³ ('+fmt(V/16387.064,2)+' in³)';
+  const rows=[
+    ['Joint type',TYPES[v.type]+' · '+MATS[mat]],
+    ['Weld cross-section area',aS],
+    ['Total weld volume ('+fmt(v.qty,0)+' × '+fmt(v.len,2)+' '+(imp?'ft':'m')+')',vS],
+    ['Weld metal deposited (net)',M(kg,2,false)],
+    ['Weld metal per '+(imp?'ft':'m')+', one weld',fmt(perU,3)+' '+(imp?'lb/ft':'kg/m')],
+    ['Filler required at '+effp+'% efficiency (rounded up)',M(fkg,2,true)],
+    ['Suggested order (+10%, rounded up)',M(fkg*1.1,1,true)]
+  ];
+  let t1='<div class="tw"><table><thead><tr><th>Item</th><th class="n">Value</th></tr></thead><tbody>';
+  rows.forEach(r=>{t1+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>';});
+  t1+='</tbody></table></div>';
+  let t2='<h3>Filler needed by process (same joint)</h3><div class="tw"><table><thead><tr><th>Process</th><th class="n">Efficiency</th><th class="n">Filler ('+(imp?'lb':'kg')+')</th></tr></thead><tbody>';
+  Object.keys(PROC).forEach(p=>{const e=PROC[p][1];t2+='<tr'+(e===effp?' class="cur"':'')+'><td>'+PROC[p][0]+'</td><td class="n">'+e+'%</td><td class="n">'+fmt(up((imp?kg*LB:kg)/(e/100),2),2)+'</td></tr>';});
+  t2+='</tbody></table></div>';
+  const keyN=P1(fkg,2,true),keyS=imp?fmt(up(fkg,2),2)+' kg':fmt(up(fkg*LB,2),2)+' lb';
+  const html='<div class="fade"><div class="key"><div class="kl">Filler metal required (rounded up)</div><div class="kn">'+keyN+'</div><div class="ks">≈ '+(imp?fmt(up(fkg,2),2)+' kg':fmt(up(fkg*LB,2),2)+' lb')+' · net weld metal '+P1(kg,2,false)+' at '+effp+'% efficiency</div></div>'+t1+t2+
+    '<button type="button" class="btn2" id="copyBtn">Copy results</button>'+
+    '<p class="note">Estimate for ordering material only, using the geometric area × length × density method. Weld size, joint design and procedure must come from your qualified WPS and the governing code (e.g. AWS D1.1, ASME Section IX); local codes vary. This is not engineering, permit or inspection approval.</p></div>';
+  copyText='Weld weight estimate — '+TYPES[v.type]+' ('+MATS[mat]+')\n'+rows.slice(1).map(r=>r[0]+': '+r[1]).join('\n')+'\nCalculated at toolwick.com';
+  draw();
+  $('results').innerHTML=html;
+  calculated=true;
+}
+
+function afterChange(){if(calculated)requestAnimationFrame(calculate);}
+
+$('f').addEventListener('submit',e=>{e.preventDefault();requestAnimationFrame(calculate);});
+$('jt').addEventListener('change',()=>{
+  const ty=$('jt').value,a=$('ang');
+  if(ty==='bevel'&&num('ang')===60)a.value=45;
+  if(ty!=='bevel'&&num('ang')===45)a.value=60;
+  vis();clearErr();clearResult();draw();
+});
+$('units').addEventListener('change',()=>{
+  const toImp=$('units').value==='imp';if(toImp===imp)return;
+  const f=toImp?1/25.4:25.4,lf=toImp?1/0.3048:0.3048;
+  ['t','leg','gap','rf','h'].forEach(id=>{const x=num(id);if(isFinite(x))$(id).value=+(x*f).toFixed(toImp?4:2);});
+  const l=num('len');if(isFinite(l))$('len').value=+(l*lf).toFixed(3);
+  imp=toImp;units();clearErr();clearResult();draw();
+});
+$('proc').addEventListener('change',()=>{
+  const p=$('proc').value;
+  if(p!=='custom'){$('eff').value=PROC[p][1];$('effv').textContent=PROC[p][1]+'%';}
+  afterChange();
+});
+$('eff').addEventListener('input',()=>{
+  const e=+$('eff').value;$('effv').textContent=e+'%';
+  let m='custom';Object.keys(PROC).forEach(p=>{if(PROC[p][1]===e)m=p;});
+  $('proc').value=m;afterChange();
+});
+$('mat').addEventListener('change',afterChange);
+['t','leg','gap','rf','ang','h'].forEach(id=>$(id).addEventListener('change',()=>requestAnimationFrame(draw)));
+$('results').addEventListener('click',e=>{
+  if(e.target.id!=='copyBtn')return;
+  const b=e.target,done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results';},2000);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(copyText).then(done,()=>{});}
+  else{const ta=document.createElement('textarea');ta.value=copyText;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(x){}document.body.removeChild(ta);}
+});
+$('yr').textContent=new Date().getFullYear();
+vis();units();draw();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
