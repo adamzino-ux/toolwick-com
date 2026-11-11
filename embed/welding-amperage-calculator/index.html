@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Welding Amperage Calculator | Toolwick</title>
+<meta name="description" content="Free welding amperage calculator: get starting amps for stick, MIG, flux-core and TIG by metal thickness, wire size and position, plus circuit sizing.">
+<link rel="canonical" href="https://toolwick.com/welding-amperage-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.2rem 0 .6rem;line-height:1.3}
+p{margin:0 0 1rem}
+.lead{color:#444;font-size:1.05rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.f{margin-bottom:1.25rem}
+.f[hidden]{display:none}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,.tw:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+.fr{display:flex;gap:.6rem}.fr input{flex:1;min-width:0}.fr select{width:90px;flex:none}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.bad input{border-color:#e74c3c}
+.errmsg{display:none;color:#c0392b;font-size:.85rem;margin-top:.35rem}
+.bad .errmsg{display:block}
+button{font-family:inherit;font-size:1rem;cursor:pointer;min-height:44px}
+#go{width:100%;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-weight:600}
+#go:hover{background:#006299}
+.sec,.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.9rem}
+.sec{width:100%;margin-top:.75rem}
+.copy{margin:1rem 0 0}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+#results{margin-top:1.5rem}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.key .l{font-size:.85rem;color:#444;font-weight:500}
+.big{font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1.2}
+.key .s{font-size:.95rem;color:#444}
+.tw{overflow-x:auto;margin:.5rem 0}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.n,td.n,th.n{text-align:right}
+.rh{font-weight:700;margin:1.5rem 0 .25rem;font-size:1.05rem}
+.note{background:#fff8e1;border-left:4px solid #e0a100;padding:10px 14px;margin:.5rem 0;font-size:.9rem;border-radius:0 6px 6px 0}
+.disc{background:#f8f9fa;border-radius:6px;padding:12px 14px;font-size:.85rem;color:#444;margin-top:1.25rem}
+.cap{font-size:.85rem;color:#666}
+.safety{margin:1.25rem 0;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00}
+.est{font-size:.8rem;color:#666;margin:.75rem 0 0}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;font-weight:600;padding:12px 0;min-height:44px}
+details p{color:#333}
+ul{padding-left:1.2rem}li{margin-bottom:.5rem}
+a{color:#0077b6;text-decoration:underline}
+.rel{display:grid;gap:.5rem;padding:0;list-style:none}
+.rel li{margin:0}
+.rel a{display:block;padding:12px 16px;background:#f8f9fa;border-radius:6px;min-height:44px}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #e0e0e0;margin-top:2.5rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.3rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/welding-amperage-calculator/">
+<meta property="og:title" content="Welding Amperage Calculator">
+<meta property="og:description" content="Free welding amperage calculator: get starting amps for stick, MIG, flux-core and TIG by metal thickness, wire size and position, plus circuit sizing.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Welding Amperage Calculator</h1>
+<p class="lead">This welding amperage calculator gives you a starting amperage for stick, MIG, flux-core and TIG welding based on metal thickness, wire or rod size and welding position. It also estimates the electrical supply your welder needs.</p>
+
+<section class="card" aria-label="Welding amperage calculator">
+<svg id="dg" viewBox="0 0 660 280" role="img" aria-label="Weld cross-section diagram showing plate thickness, electrode and amperage" style="width:100%;height:auto;display:block;margin-bottom:1.5rem">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<line x1="303" y1="22" x2="303" y2="110" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="5 4"/>
+<rect id="dgPl" x="40" y="110" width="460" height="23" fill="#f8f9fa" stroke="#0077b6" stroke-width="2"/>
+<path d="M303 110Q372 92 440 110Z" fill="#0077b6" fill-opacity=".25" stroke="#0077b6" stroke-width="2"/>
+<line x1="390" y1="8" x2="352" y2="58" stroke="#1a1a2e" stroke-width="12" stroke-linecap="round"/>
+<line x1="352" y1="58" x2="305" y2="104" stroke="#0077b6" stroke-width="4" stroke-linecap="round"/>
+<circle cx="303" cy="106" r="6" fill="#0077b6" fill-opacity=".45"/>
+<line x1="250" y1="44" x2="170" y2="44" stroke="#0077b6" stroke-width="2" marker-end="url(#ar)"/>
+<text x="170" y="32" font-size="14" fill="#1a1a2e">Travel</text>
+<line id="dgG1" x1="500" y1="110" x2="528" y2="110" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>
+<line id="dgG2" x1="500" y1="133" x2="528" y2="133" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4 3"/>
+<line id="dgDim" x1="515" y1="110" x2="515" y2="133" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dgT" x="532" y="126" font-size="14" fill="#1a1a2e">t = –</text>
+<text id="dgA" x="420" y="40" font-size="26" font-weight="700" fill="#0077b6">– A</text>
+<text id="dgD" x="420" y="64" font-size="14" fill="#1a1a2e">–</text>
+<text id="dgP" x="420" y="84" font-size="14" fill="#1a1a2e">–</text>
+<text id="dgM" x="40" y="159" font-size="14" fill="#1a1a2e">–</text>
+</svg>
+
+<div class="f"><label for="proc">Welding process</label>
+<select id="proc"><option value="mig">MIG (GMAW, solid wire)</option><option value="stick">Stick (SMAW)</option><option value="fcaw">Flux-core (FCAW)</option><option value="tig">TIG (GTAW)</option></select></div>
+<div class="f"><label for="mat">Base metal</label><select id="mat"></select></div>
+<div class="f" id="thickF"><label for="thick">Material thickness</label>
+<div class="fr"><input id="thick" type="number" inputmode="decimal" step="any" min="0" value="0.125" aria-describedby="thickErr"><select id="unit" aria-label="Thickness unit"><option value="in">in</option><option value="mm">mm</option></select></div>
+<div class="errmsg" id="thickErr" role="alert"></div></div>
+<div class="f"><label for="rng">Thickness slider</label>
+<input type="range" id="rng" min="0.02" max="0.5" step="0.005" value="0.125">
+<div class="ticks"><span id="t1">0.02 in</span><span id="t2">0.25 in</span><span id="t3">0.5 in</span></div></div>
+<div class="f" id="rodRow" hidden><label for="rod">Electrode type</label>
+<select id="rod"><option value="e6011">E6010 / E6011 (deep penetration)</option><option value="e6013">E6013 (easy, light penetration)</option><option value="e7018">E7018 (low-hydrogen)</option></select></div>
+<div class="f"><label for="dia" id="diaLab">Wire diameter</label><select id="dia"></select></div>
+<div class="f"><label for="pos">Welding position</label>
+<select id="pos"><option value="flat">Flat</option><option value="horz">Horizontal</option><option value="vert">Vertical-up</option><option value="over">Overhead</option></select></div>
+<div class="f"><label for="volt">Supply voltage (for circuit check)</label>
+<select id="volt"><option value="240">240 V</option><option value="120">120 V</option></select></div>
+<button id="go" type="button">Calculate amperage</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<p class="est">Estimates only. Always confirm against your welder's manual, the filler metal data sheet and local code.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</section>
+
+<aside class="safety" role="note">Estimates for planning only. Building and electrical codes vary by location. Verify results with your local authority, and use a licensed electrician for any supply wiring. This tool is not engineering, permit or inspection approval.</aside>
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Welding Amperage Calculator</h2>
+<p>Choose your welding process and base metal, then enter the material thickness in inches or millimeters, or drag the slider. Optionally pick a specific wire, rod or tungsten size and your welding position; leave the size on Auto and the tool selects one that suits the thickness. Press Calculate to see a starting amperage, a working range, an estimated arc voltage and a conservative breaker and wire size for the supply. The table underneath compares amperage for common sheet gauges and plate sizes.</p>
+
+<h2>Why This Matters</h2>
+<p>Amperage is the setting that decides whether a weld actually fuses. Too low and the bead sits on top of the plate with cold lap and no penetration. Too high and you blow holes in sheet metal, undercut the edges and warp the part. Fabricators, farm and ranch repair welders, auto hobbyists and students all hit the same problem: the chart on the machine covers one wire, and the part in front of you is a different thickness.</p>
+<p>Consider a 16-gauge (0.060 in.) steel exhaust hanger and a 3/8 in. trailer tongue. The hanger needs roughly 60 amps with 0.023 in. wire. The tongue needs 250 amps or more, a beveled joint and several passes. Starting from a sensible number saves wire, rod and gas, and it breaks the "turn it up until it works" habit that leads to burn-through. The tool also checks your electrical supply. A welder that draws 28 amps from a 120-volt outlet will trip a 15- or 20-amp breaker, and knowing that before you buy a machine or run a circuit saves real money.</p>
+
+<h2>How It's Calculated</h2>
+<p>For MIG, flux-core and TIG the calculator uses the long-standing shop rule of about one amp per 0.001 in. of material thickness:</p>
+<p><strong>Amps = thickness (in) × 1,000 × metal factor × position factor</strong></p>
+<p>The metal factor is 1.0 for mild steel, 0.9 for stainless (it conducts heat poorly, so it needs less current) and 1.2 for aluminum (it sheds heat quickly). Position factors are 1.0 flat, 0.95 horizontal, 0.9 vertical-up and 0.85 overhead, because a smaller puddle is easier to control against gravity. The result is capped at the top of the chosen wire or tungsten range, and the tool tells you when multiple passes are needed.</p>
+<p>Stick welding works differently. Amperage is limited by the electrode, so the tool interpolates inside typical manufacturer ranges for E6010/E6011, E6013 and E7018 rods in 3/32, 1/8, 5/32 and 3/16 in. sizes, then applies the position factor. Always confirm against the range printed on your rod box.</p>
+<p>The circuit check is a conservative approximation, <strong>not the NEC Article 630 method</strong>. Article 630 sizes the supply conductors and overcurrent protection from the welder's nameplate primary current and duty cycle, and this tool has no nameplate to work from. Instead it estimates the arc voltage with NEMA-style load-voltage formulas (stick 20 + 0.04 × A, MIG and flux-core 14 + 0.05 × A, TIG 10 + 0.04 × A), then the input current:</p>
+<p><strong>Input amps = arc volts × output amps ÷ (0.75 efficiency × supply volts)</strong></p>
+<p>The breaker suggestion is 125% of that input current, rounded <em>up</em> to the next standard size (NEC 240.6). The copper conductor is the smallest wire whose NEC 310.16 60 °C ampacity meets or exceeds that breaker. On 120 V, the tool warns whenever the 125% figure is more than 20 A. Local codes vary, and your welder's nameplate and manual always override these numbers. Have a licensed electrician verify any installation.</p>
+
+<h2>Worked Example</h2>
+<p>You are MIG welding 1/8 in. (0.125 in., 3.18 mm) mild steel flat, on a 240 V circuit, with Auto wire size.</p>
+<ul>
+<li><strong>Amps:</strong> 0.125 × 1,000 × 1.0 × 1.0 = 125 A.</li>
+<li><strong>Wire:</strong> 125 A falls under the 140 A ceiling for 0.030 in. wire, so Auto picks 0.030 in. (typical range 40–190 A).</li>
+<li><strong>Working range:</strong> 90% to 110% of 125 A, or 113–138 A.</li>
+<li><strong>Arc voltage:</strong> 14 + 0.05 × 125 = 20.3 V.</li>
+<li><strong>Input current:</strong> 20.25 × 125 ÷ (0.75 × 240) = 14.1 A.</li>
+<li><strong>Circuit:</strong> 14.1 × 1.25 = 17.6 A, rounded up to a 20 A breaker with 12 AWG copper.</li>
+</ul>
+<p>On 120 V the same weld draws about 28 A. Times 1.25 that is 35 A, which rounds up to a 40 A breaker. The tool warns you that this is more than a standard 20 A household circuit can supply.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Treat the number as a starting point.</strong> Run a bead on scrap of the same thickness, then adjust 5–10 amps at a time based on bead shape and penetration.</li>
+<li><strong>Match wire size to thickness.</strong> Thin wire on thick plate lacks the current range; thick wire on sheet burns through. Let Auto pick if unsure.</li>
+<li><strong>Gauge is not thickness.</strong> Steel and aluminum gauges differ. Measure with calipers and enter the decimal value.</li>
+<li><strong>Do not skip joint prep on thick plate.</strong> Above about 3/8 in., bevel the edges and use multiple passes; maximum amps alone will not give full penetration.</li>
+<li><strong>Respect duty cycle.</strong> A machine rated 140 A at 20% duty can weld only two minutes in ten at full output. Heavy plate often needs a larger machine.</li>
+<li><strong>Never oversize a breaker to stop it tripping.</strong> A tripping breaker means the circuit is too small for the load; fix the circuit.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many amps do I need to weld 1/8 inch steel?</summary><p>For MIG, flux-core or TIG, about 125 amps flat (the one-amp-per-thousandth rule). For stick with a 1/8 in. E7018 rod, the tool suggests about 100 A within the rod's 90–150 A range. Use the working range as your tuning window.</p></details>
+<details><summary>How many amps per inch of thickness?</summary><p>Roughly 1,000 amps per inch, or 1 amp per 0.001 in., for mild steel. Stainless needs about 10% less and aluminum about 20% more. Very thick material is welded in several passes rather than one very hot pass.</p></details>
+<details><summary>Can I weld on a 120V outlet?</summary><p>Yes, for thin material. With the tool's conservative sizing (125% of estimated input must stay within 20 A), a 120 V machine tops out at about 80 A for MIG or flux-core, about 100 A for TIG and about 65 A for stick. For MIG that suits steel up to roughly 5/64 in. (2 mm). The calculator shows a warning whenever the result goes beyond that.</p></details>
+<details><summary>What happens if my amperage is too high or too low?</summary><p>Too high causes burn-through, undercut, spatter and distortion. Too low causes a tall, ropey bead, poor fusion and a stuttering arc. If the bead sits on top of the metal rather than wetting into it, raise the amps slightly.</p></details>
+<details><summary>Why does the calculator suggest a larger breaker than my welder's manual?</summary><p>The tool assumes continuous operation and a conservative 75% efficiency, applies a 125% factor and rounds up. NEC Article 630 instead sizes the supply from your welder's nameplate current and duty cycle, so the nameplate and manual take priority. Follow them and have a licensed electrician verify the installation.</p></details>
+<details><summary>Does welding position change the amperage?</summary><p>Yes. Vertical and overhead welds use a smaller, cooler puddle so it does not sag, so this calculator reduces amperage by 10–15% for those positions. Flat welding uses the highest current.</p></details>
+
+<h2>Related Tools</h2>
+<p>Once your amperage is set, estimate how much filler you will use. The other calculators below cover common fabrication, fence and site-layout jobs.</p>
+<ul class="rel">
+<li><a href="/welding-rod-wire-consumption-calculator/">Welding Rod &amp; Wire Consumption Calculator</a></li>
+<li><a href="/concrete-steps-calculator/">Concrete Steps Calculator</a></li>
+<li><a href="/french-drain-calculator/">French Drain Calculator</a></li>
+<li><a href="/sloped-fence-calculator/">Sloped Fence Calculator</a></li>
+<li><a href="/vinyl-fence-calculator/">Vinyl Fence Calculator</a></li>
+<li><a href="/square-footage-calculator/">Square Footage Calculator</a></li>
+</ul>
+</section>
+
+</main>
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/welding-amperage-calculator/">Toolwick</a></p>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const fmt=(x,d=0)=>x.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const P={stick:{n:'Stick (SMAW)',s:'Stick',lab:'Electrode diameter',w:'Rod',mats:['steel']},
+mig:{n:'MIG (GMAW, solid wire)',s:'MIG',lab:'Wire diameter',w:'Wire',mats:['steel','stainless','aluminum']},
+fcaw:{n:'Flux-core (FCAW)',s:'Flux-core',lab:'Wire diameter',w:'Wire',mats:['steel']},
+tig:{n:'TIG (GTAW)',s:'TIG',lab:'Tungsten diameter',w:'Tungsten',mats:['steel','stainless','aluminum']}};
+const M={steel:{n:'Mild steel',f:1},stainless:{n:'Stainless steel',f:.9},aluminum:{n:'Aluminum',f:1.2}};
+const POS={flat:['Flat',1],horz:['Horizontal',.95],vert:['Vertical-up',.9],over:['Overhead',.85]};
+const BIG=1e9,FC_MIN=.059;
+const DI={
+mig:[{l:'0.023 in (0.6 mm)',lo:30,hi:130,a:90},{l:'0.030 in (0.8 mm)',lo:40,hi:190,a:140},{l:'0.035 in (0.9 mm)',lo:60,hi:250,a:220},{l:'0.045 in (1.1 mm)',lo:100,hi:300,a:BIG}],
+fcaw:[{l:'0.030 in (0.8 mm)',lo:40,hi:140,a:90},{l:'0.035 in (0.9 mm)',lo:60,hi:200,a:150},{l:'0.045 in (1.1 mm)',lo:100,hi:280,a:BIG}],
+tig:[{l:'0.040 in (1.0 mm)',lo:15,hi:80,a:70},{l:'1/16 in (1.6 mm)',lo:60,hi:150,a:140},{l:'3/32 in (2.4 mm)',lo:120,hi:250,a:230},{l:'1/8 in (3.2 mm)',lo:200,hi:350,a:BIG}],
+stick:[{l:'3/32 in (2.4 mm)',s:[.0625,.125]},{l:'1/8 in (3.2 mm)',s:[.125,.25]},{l:'5/32 in (4.0 mm)',s:[.1875,.375]},{l:'3/16 in (4.8 mm)',s:[.25,.5]}]};
+const RODS={e6011:{n:'E6010/E6011',r:[[40,85],[75,125],[100,165],[140,200]]},e6013:{n:'E6013',r:[[40,90],[80,130],[105,180],[140,210]]},e7018:{n:'E7018',r:[[65,110],[90,150],[120,200],[150,250]]}};
+const SETUP={stick:'Match rod to base metal; E7018 rods must be kept dry',
+mig:{steel:'ER70S-6 wire, 75% argon / 25% CO₂',stainless:'ER308L wire, tri-mix or 98/2 argon-CO₂',aluminum:'ER4043 or ER5356 wire, 100% argon, spool or push-pull gun'},
+fcaw:'E71T-11 self-shielded, or E71T-1 with shielding gas',
+tig:{steel:'DC electrode negative, 100% argon, ER70S-2 filler',stainless:'DC electrode negative, 100% argon, ER308L filler',aluminum:'AC, 100% argon, ER4043 or ER5356 filler'}};
+const STD=[15,20,25,30,35,40,45,50,60,70,80,90,100,110,125,150,175,200];
+const CU=[[15,'14 AWG'],[20,'12 AWG'],[30,'10 AWG'],[40,'8 AWG'],[55,'6 AWG'],[70,'4 AWG'],[85,'3 AWG'],[95,'2 AWG'],[110,'1 AWG'],[125,'1/0 AWG'],[145,'2/0 AWG'],[165,'3/0 AWG'],[195,'4/0 AWG']];
+const G=[['24 ga',.0239],['22 ga',.0299],['20 ga',.0359],['18 ga',.0478],['16 ga',.0598],['14 ga',.0747],['12 ga',.1046],['10 ga',.1345],['3/16 in',.1875],['1/4 in',.25],['5/16 in',.3125],['3/8 in',.375],['1/2 in',.5]];
+let S=null,showAll=false,has=false,lastText='';
+
+function compute(p,m,t,di,pos,rod){
+ const pf=POS[pos][1],n=[];let amps,d,lo,hi;
+ if(p==='stick'){
+  const i=di>=0?di:(t<.125?0:t<=.25?1:t<=.375?2:3);
+  const r=RODS[rod].r[i],b=DI.stick[i].s;
+  const fr=Math.min(.8,Math.max(.2,(t-b[0])/(b[1]-b[0])));
+  amps=(r[0]+fr*(r[1]-r[0]))*pf;d=DI.stick[i];lo=r[0];hi=r[1];
+  if(t<.0625)n.push('Stick welding is not advised on material thinner than 1/16 in. (1.6 mm). Use MIG or TIG for thin sheet.');
+  else if(di>=0&&t<b[0])n.push('This rod is large for the thickness and may burn through. Try a smaller diameter.');
+  if(di>=0&&t>b[1]*1.5)n.push('This rod is small for the thickness. Expect many passes; consider a larger diameter.');
+ }else{
+  const raw=t*1000*M[m].f*pf,L=DI[p];let i=di;
+  if(i<0){i=L.findIndex(x=>raw<=x.a);if(i<0)i=L.length-1}
+  d=L[i];lo=d.lo;hi=d.hi;amps=raw;
+  if(raw>hi){amps=hi;n.push('The calculated '+fmt(Math.round(raw))+' A exceeds the top of this '+P[p].w.toLowerCase()+' size, so the result is capped at '+fmt(hi)+' A. Use multiple passes, a larger size or a bigger machine.')}
+  else if(raw<lo)n.push('The calculated '+fmt(Math.round(raw))+' A is below the stable range for this size. Choose a smaller diameter.');
+  if(p==='mig'&&m!=='aluminum'&&t<.03)n.push('Very thin sheet: use short tack or stitch welds to avoid burn-through.');
+  if(p==='fcaw'&&t<FC_MIN)n.push('Flux-core is best on 16 gauge (0.060 in.) and thicker. Solid-wire MIG suits thinner sheet better.');
+ }
+ if(t>.375)n.push('Material thicker than 3/8 in. normally needs a beveled joint, multiple passes and possibly preheat per the governing procedure.');
+ return{amps,d,lo,hi,n};
+}
+function tbl(){
+ const rows=G.slice(0,showAll?G.length:10).map(g=>{
+  const t=g[1];let a,dl='';
+  if(S.p==='stick'&&t<.0625)a='Not advised';
+  else if(S.p==='fcaw'&&t<FC_MIN)a='Use MIG/TIG';
+  else{const c=compute(S.p,S.m,t,-1,S.pos,S.rod);a=fmt(Math.round(c.amps*.9))+'–'+fmt(Math.round(c.amps*1.1))+' A';dl=c.d.l.split(' (')[0]}
+  return '<tr><td>'+g[0]+'</td><td class="n">'+fmt(t,3)+'</td><td class="n">'+fmt(t*25.4,2)+'</td><td class="n">'+a+'</td><td>'+dl+'</td></tr>';
+ }).join('');
+ return '<div class="tw" tabindex="0" role="region" aria-label="Amperage by thickness table"><table><thead><tr><th>Thickness</th><th class="n">in</th><th class="n">mm</th><th class="n">Amps</th><th>Size</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+(showAll?'':'<button class="sec" id="showAll" type="button">Show all '+G.length+' sizes</button>');
+}
+function diagram(c,t){
+ const H=8+Math.min(t,1)*120,S_=S;
+ const set=(id,k,v)=>$(id).setAttribute(k,v);
+ set('dgPl','height',H);set('dgG2','y1',110+H);set('dgG2','y2',110+H);set('dgDim','y2',110+H);
+ set('dgT','y',110+H/2+5);set('dgM','y',110+H+26);
+ $('dgT').textContent='t = '+fmt(S_.u==='mm'?t*25.4:t,S_.u==='mm'?1:3)+' '+S_.u;
+ $('dgA').textContent=fmt(Math.round(c.amps))+' A';
+ $('dgD').textContent=P[S_.p].w+' '+c.d.l.split(' (')[0];
+ $('dgP').textContent=P[S_.p].s+' · '+POS[S_.pos][0];
+ $('dgM').textContent='Base metal: '+M[S_.m].n;
+ $('dg').setAttribute('aria-label','Weld diagram: '+M[S_.m].n+' plate '+$('dgT').textContent+', '+P[S_.p].s+' at '+fmt(Math.round(c.amps))+' amps');
+}
+function resetDg(){['dgT','dgA','dgD','dgP','dgM'].forEach(id=>{$(id).textContent=id==='dgA'?'– A':'–'});$('dgPl').setAttribute('height',23)}
+
+function run(){
+ has=true;
+ const raw=$('thick').value.trim(),v=parseFloat(raw),u=$('unit').value,box=$('thickF');
+ let msg='',t=0;
+ if(raw===''||isNaN(v))msg='Enter the material thickness as a number.';
+ else if(v<=0)msg='Thickness must be greater than zero.';
+ else{t=u==='mm'?v/25.4:v;
+  if(t<.01)msg='That is thinner than 0.01 in (0.25 mm), which is outside these rules of thumb.';
+  else if(t>1)msg='Over 1 in (25.4 mm) needs a qualified welding procedure. Enter 1 in (25.4 mm) or less.'}
+ if(msg){$('thickErr').textContent=msg;box.classList.add('bad');$('thick').setAttribute('aria-invalid','true');$('results').innerHTML='';resetDg();return}
+ box.classList.remove('bad');$('thick').removeAttribute('aria-invalid');$('thickErr').textContent='';
+ const dv=$('dia').value;
+ S={p:$('proc').value,m:$('mat').value,t:t,u:u,di:dv==='auto'?-1:+dv,pos:$('pos').value,rod:$('rod').value,volt:+$('volt').value};
+ showAll=false;
+ const c=compute(S.p,S.m,t,S.di,S.pos,S.rod);
+ const A=c.amps,rlo=Math.round(A*.9),rhi=Math.round(A*1.1);
+ const V=S.p==='stick'?20+.04*A:S.p==='tig'?10+.04*A:14+.05*A;
+ const ia=V*A/(.75*S.volt);
+ const need=ia*1.25;
+ const br=STD.find(x=>x>=need);
+ const cu=br?(CU.find(x=>x[0]>=br)||[0,'consult an electrician'])[1]:null;
+ if(S.volt===120&&need>20)c.n.push('Estimated input of '+fmt(ia,1)+' A × 125% sizing factor = '+fmt(need,1)+' A, which is more than a standard 20 A, 120 V household circuit can be sized for. Use 240 V, lower the amperage, or choose a machine designed for it.');
+ const setup=S.p==='stick'?SETUP.stick+' ('+RODS[S.rod].n+')':S.p==='fcaw'?SETUP.fcaw:SETUP[S.p][S.m];
+ const rows=[['Process',P[S.p].n],['Base metal',M[S.m].n],['Thickness',fmt(t,3)+' in ('+fmt(t*25.4,2)+' mm)'],[P[S.p].lab,c.d.l],['Position',POS[S.pos][0]],
+ ['Typical range for this size',fmt(c.lo)+'–'+fmt(c.hi)+' A'],['Typical setup',setup],['Estimated arc voltage',fmt(V,1)+' V'],
+ ['Estimated input current ('+S.volt+' V)',fmt(ia,1)+' A'],['Suggested minimum breaker',br?br+' A':'Over 200 A, consult an electrician'],['Suggested minimum copper wire',cu?cu+' (NEC 310.16, 60 °C)':'Consult an electrician']];
+ lastText='Welding amperage: '+fmt(Math.round(A))+' A (range '+fmt(rlo)+'–'+fmt(rhi)+' A)\n'+rows.map(r=>r[0]+': '+r[1]).join('\n')+'\nStarting point only. Circuit figures are a conservative estimate, not the NEC Article 630 nameplate method. Verify with your equipment manual, local code and a licensed electrician.';
+ requestAnimationFrame(()=>{
+  const html='<div class="fade"><div class="key"><div class="l">Recommended starting amperage</div><div class="big">'+fmt(Math.round(A))+' A</div><div class="s">Working range '+fmt(rlo)+'–'+fmt(rhi)+' A</div></div>'
+  +c.n.map(x=>'<div class="note">'+x+'</div>').join('')
+  +'<div class="tw" tabindex="0" role="region" aria-label="Weld settings table"><table><tbody>'+rows.map(r=>'<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>').join('')+'</tbody></table></div>'
+  +'<button class="copy" id="copyBtn" type="button">Copy results</button>'
+  +'<div class="rh">Amperage by thickness</div><div class="cap">Auto-selected size, same process, metal and position. Gauges shown are steel; go by decimal thickness for other metals.</div><div id="tblBox">'+tbl()+'</div>'
+  +'<p class="disc">Starting-point estimate based on common rules of thumb and typical manufacturer ranges. The breaker and wire figures are a conservative approximation (125% of estimated input at 75% efficiency, rounded up to NEC 240.6 and 310.16 sizes). They are not the NEC Article 630 method, which uses your welder\'s nameplate current and duty cycle. Local codes vary. This is not engineering, permit or inspection approval. Follow your welder\'s nameplate, the filler metal data sheet and any required welding procedure, and have a licensed electrician verify the supply.</p></div>';
+  $('results').innerHTML=html;
+  diagram(c,t);
+ });
+}
+function fill(){
+ const p=$('proc').value,cur=$('mat').value;
+ $('mat').innerHTML=P[p].mats.map(k=>'<option value="'+k+'">'+M[k].n+'</option>').join('');
+ if(P[p].mats.indexOf(cur)>=0)$('mat').value=cur;
+ $('dia').innerHTML='<option value="auto">Auto (recommended)</option>'+DI[p].map((x,i)=>'<option value="'+i+'">'+x.l+'</option>').join('');
+ $('diaLab').textContent=P[p].lab;$('rodRow').hidden=p!=='stick';
+}
+let prevU='in';
+function setUnit(){
+ const u=$('unit').value,r=$('rng'),v=parseFloat($('thick').value);
+ if(u==='mm'){r.min=.5;r.max=12.7;r.step=.1;$('t1').textContent='0.5 mm';$('t2').textContent='6.4 mm';$('t3').textContent='12.7 mm';
+  if(!isNaN(v)&&prevU==='in')$('thick').value=+(v*25.4).toFixed(2)}
+ else{r.min=.02;r.max=.5;r.step=.005;$('t1').textContent='0.02 in';$('t2').textContent='0.25 in';$('t3').textContent='0.5 in';
+  if(!isNaN(v)&&prevU==='mm')$('thick').value=+(v/25.4).toFixed(3)}
+ prevU=u;r.value=$('thick').value;
+}
+function copy(txt,btn){
+ const done=()=>{btn.textContent='Copied!';setTimeout(()=>{btn.textContent='Copy results'},2000)};
+ const fb=()=>{const a=document.createElement('textarea');a.value=txt;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(a)};
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(done,fb);else fb();
+}
+const card=document.querySelector('.card');
+$('go').addEventListener('click',()=>{requestAnimationFrame(run)});
+card.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName!=='BUTTON'){e.preventDefault();requestAnimationFrame(run)}});
+card.addEventListener('change',e=>{
+ const id=e.target.id;
+ if(id==='proc')fill();
+ if(id==='unit')setUnit();
+ if(has&&id!=='thick'&&id!=='rng')requestAnimationFrame(run);
+});
+$('rng').addEventListener('input',()=>{$('thick').value=$('rng').value;requestAnimationFrame(run)});
+$('thick').addEventListener('input',()=>{const v=parseFloat($('thick').value);if(!isNaN(v))$('rng').value=v});
+$('results').addEventListener('click',e=>{
+ if(e.target.id==='copyBtn')copy(lastText,e.target);
+ if(e.target.id==='showAll'){showAll=true;requestAnimationFrame(()=>{$('tblBox').innerHTML=tbl()})}
+});
+$('yr').textContent=new Date().getFullYear();
+fill();run();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
