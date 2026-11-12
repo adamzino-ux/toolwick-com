@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Split Rail Fence Calculator | Toolwick</title>
+<meta name="description" content="Split rail fence calculator: find how many posts and rails you need, post length, burial depth and material cost for any run, with gates and corners.">
+<link rel="canonical" href="https://toolwick.com/split-rail-fence-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:.5rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.15rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.5rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+figure{margin:0 0 1.5rem;background:#f8f9fa;border-radius:8px;padding:.75rem}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:#666;text-align:center}
+svg text{font-family:inherit;fill:#1a1a2e;font-size:14px}
+.g{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:600px){.g{grid-template-columns:1fr 1fr}}
+.f{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:1px}
+input[type=range]{padding:0;border:0;accent-color:#0077b6}
+.hint{font-size:.8rem;color:#666;margin-top:.25rem}
+.msg{display:none;color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.err .msg{display:block}
+.err input,.err select{border-color:#e74c3c}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+button.go{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+button.go:hover{background:#006299}
+#results{margin-top:1.5rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.res{animation:none}}
+.keys{display:flex;flex-wrap:wrap;gap:1rem;background:#f8f9fa;border-radius:8px;padding:1.25rem;margin-bottom:1.25rem}
+.k{flex:1 1 120px;text-align:center}
+.kn{display:block;font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.1}
+.kl{font-size:.85rem;color:#444}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e5e5e5}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right}
+tr.sel td{font-weight:700;color:#0077b6}
+.note{font-size:.85rem;color:#444;background:#fff8e6;border-left:4px solid #e0a800;padding:.75rem 1rem;border-radius:0 6px 6px 0}
+.sum{color:#c0392b;font-weight:600}
+.cp{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;min-height:44px;padding:8px 16px;font-size:.9rem;cursor:pointer;font-family:inherit;margin-top:.5rem}
+.cp:hover{background:#f0f8fc}
+details{border-bottom:1px solid #e5e5e5;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .5rem}
+.formula{background:#f8f9fa;border-radius:6px;padding:1rem 1rem 1rem 2.2rem;font-size:.92rem}
+.formula li{margin-bottom:.4rem}
+.rel{display:grid;grid-template-columns:1fr;gap:.25rem;padding-left:1.2rem}
+.rel a{display:inline-block;min-height:36px;line-height:36px}
+.safety{margin:1.25rem 0;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px;text-decoration:underline}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.kn{font-size:2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/split-rail-fence-calculator/">
+<meta property="og:title" content="Split Rail Fence Calculator">
+<meta property="og:description" content="Split rail fence calculator: find how many posts and rails you need, post length, burial depth and material cost for any run, with gates and corners.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<main>
+<h1>Split Rail Fence Calculator</h1>
+<p>This split rail fence calculator tells you how many posts and rails to buy for your fence line, including gates, corners and spare rails. It also recommends a post length and minimum burial depth, then estimates material cost.</p>
+
+<div class="card">
+<figure>
+<svg id="diagram" viewBox="0 0 640 280" role="img" aria-labelledby="dgt">
+<title id="dgt">Split rail fence side view showing post spacing, height above ground and burial depth</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L9 5L0 9z" fill="#0077b6"/></marker></defs>
+<rect x="0" y="180" width="640" height="85" fill="#fff"/>
+<line x1="0" y1="180" x2="640" y2="180" stroke="#1a1a2e" stroke-width="2"/>
+<g stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="5 4">
+<line x1="150" y1="20" x2="150" y2="50"/><line x1="350" y1="20" x2="350" y2="50"/>
+<line x1="100" y1="50" x2="142" y2="50"/><line x1="100" y1="240" x2="142" y2="240"/>
+</g>
+<g fill="#fff" stroke="#0077b6" stroke-width="2">
+<rect x="142" y="50" width="16" height="190"/><rect x="342" y="50" width="16" height="190"/><rect x="542" y="50" width="16" height="190"/>
+</g>
+<g id="railsSvg" fill="#dff0f8" stroke="#0077b6" stroke-width="2">
+<rect x="152" y="65" width="196" height="10" rx="4"/><rect x="352" y="65" width="196" height="10" rx="4"/>
+<rect x="152" y="100" width="196" height="10" rx="4"/><rect x="352" y="100" width="196" height="10" rx="4"/>
+<rect x="152" y="135" width="196" height="10" rx="4"/><rect x="352" y="135" width="196" height="10" rx="4"/>
+</g>
+<g stroke="#0077b6" stroke-width="2" fill="none">
+<line x1="152" y1="28" x2="348" y2="28" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="100" y1="54" x2="100" y2="176" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="100" y1="184" x2="100" y2="236" marker-start="url(#ar)" marker-end="url(#ar)"/>
+</g>
+<text x="250" y="18" text-anchor="middle" font-weight="700" id="dSp">Post spacing 9.5 ft</text>
+<text x="92" y="108" text-anchor="end" font-weight="700" id="dHt">48 in</text>
+<text x="92" y="124" text-anchor="end">above grade</text>
+<text x="92" y="208" text-anchor="end" font-weight="700" id="dEm">30 in</text>
+<text x="92" y="224" text-anchor="end">min. buried</text>
+<text x="450" y="215" text-anchor="middle" id="dN">3 rails per section</text>
+<text x="550" y="42" text-anchor="middle" font-weight="700" id="dPl">7 ft post</text>
+<text x="630" y="274" text-anchor="end" style="font-size:12px;fill:#666">Illustrative, not to scale</text>
+</svg>
+<figcaption>The diagram updates with your numbers when you calculate.</figcaption>
+</figure>
+
+<form id="form" novalidate>
+<div class="g">
+<div class="f"><label for="len">Total fence length (ft)</label><input id="len" type="number" inputmode="decimal" step="any" value="250" aria-describedby="e-len"><span class="msg" id="e-len"></span></div>
+<div class="f"><label for="layout">Layout</label><select id="layout"><option value="open">Open run (two ends)</option><option value="loop">Closed loop (enclosure)</option></select></div>
+<div class="f"><label for="rails">Rails per section</label><select id="rails"><option value="2">2 rails (about 3 ft high)</option><option value="3" selected>3 rails (about 4 ft high)</option><option value="4">4 rails (about 5 ft high)</option></select></div>
+<div class="f"><label for="rlen">Rail length (ft)</label><select id="rlen"><option value="8">8</option><option value="10" selected>10</option><option value="11">11</option><option value="12">12</option></select></div>
+<div class="f"><label for="ovl">Rail overlap at each post (in)</label><input id="ovl" type="number" inputmode="decimal" step="any" value="6" aria-describedby="e-ovl"><span class="msg" id="e-ovl"></span><div class="hint">Post spacing = rail length minus this overlap.</div></div>
+<div class="f"><label for="corners">Corners</label><input id="corners" type="number" inputmode="numeric" step="1" value="0" aria-describedby="e-corners"><span class="msg" id="e-corners"></span><div class="hint">Points where the fence changes direction.</div></div>
+<div class="f"><label for="gates">Number of gates</label><input id="gates" type="number" inputmode="numeric" step="1" value="1" aria-describedby="e-gates"><span class="msg" id="e-gates"></span></div>
+<div class="f"><label for="gw">Gate opening width (ft)</label><input id="gw" type="number" inputmode="decimal" step="any" value="10" aria-describedby="e-gw"><span class="msg" id="e-gw"></span></div>
+<div class="f"><label for="ht">Fence height above ground (in)</label><input id="ht" type="number" inputmode="decimal" step="any" value="48" aria-describedby="e-ht"><span class="msg" id="e-ht"></span></div>
+<div class="f"><label for="frost">Local frost depth (in)</label><input id="frost" type="number" inputmode="decimal" step="any" value="30" aria-describedby="e-frost"><span class="msg" id="e-frost"></span><div class="hint">Ask your building department. Enter 0 if none.</div></div>
+</div>
+<div class="f"><label for="waste">Spare rails allowance: <span id="wv">5%</span></label><input id="waste" type="range" min="0" max="15" step="1" value="5"><div class="ticks"><span>0%</span><span>15%</span></div></div>
+<div class="g">
+<div class="f"><label for="pp">Price per post ($)</label><input id="pp" type="number" inputmode="decimal" step="any" value="15" aria-describedby="e-pp"><span class="msg" id="e-pp"></span></div>
+<div class="f"><label for="rp">Price per rail ($)</label><input id="rp" type="number" inputmode="decimal" step="any" value="10" aria-describedby="e-rp"><span class="msg" id="e-rp"></span></div>
+</div>
+<button type="submit" class="go">Calculate Posts &amp; Rails</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety" role="note">Estimates for planning only. Building codes and site conditions vary by location. Verify results with your local building department, and use a licensed contractor for structural or excavation work.</aside>
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Split Rail Fence Calculator</h2>
+<p>Enter the total length of the fence line, choose how many rails per section and the rail length you plan to buy, then add any gates, corners, and your local frost depth. Press Calculate to see the number of posts, rails to purchase (including spare rails), the post length to order, the minimum burial depth, and an estimated material cost. A side-by-side table compares 8, 10, 11 and 12 ft rails so you can see which size is cheapest for your layout.</p>
+
+<h2>Why This Matters</h2>
+<p>Split rail is the classic choice for ranch boundaries, horse paddocks, driveways, and front-yard property lines, and it is sold by the piece. Posts and rails come in separate bundles, so a miscount means a second trip to the farm store, and rail lots can vary from one delivery to the next. Ordering a little over is far cheaper than finishing a fence with mismatched stock.</p>
+<p>Consider a 250 ft frontage with one 10 ft driveway gap. A rough guess of "250 divided by 10" gives 25 sections, but that ignores the overlap in the post mortises, the extra gate posts, and the fact that each stretch of fence rounds up to a whole section. The real answer is 26 sections and 28 posts, and with three rails per section you need 78 rails before spares. At about $15 per post and $10 per rail, being off by even four posts and a dozen rails is a $180 error.</p>
+<p>Post depth matters just as much. A post set too shallow will heave in freeze-thaw cycles and lean within a couple of winters. This calculator rounds burial depth up, so you buy a slightly longer post rather than a shorter one.</p>
+
+<h2>How It's Calculated</h2>
+<ol class="formula">
+<li><strong>Post spacing</strong> = rail length − (overlap ÷ 12). A 10 ft rail with a 6 in overlap gives 9.5 ft between post centers.</li>
+<li><strong>Net fence length</strong> = total length − (gates × gate width).</li>
+<li><strong>Runs</strong> (straight stretches between gates, corners, or ends): open run = gates + corners + 1; closed loop = gates + corners (minimum 1).</li>
+<li><strong>Sections</strong> = runs × round up[(net length ÷ runs) ÷ post spacing]. The net length is split evenly across runs, and every run rounds up on its own, because you cannot buy part of a section.</li>
+<li><strong>Posts</strong>: open run = sections + gates + 1; closed loop = sections + gates. Every run needs a post at each end, but a corner post is shared by the two runs that meet there and is counted once. Gate posts (two per gate) are included.</li>
+<li><strong>Rails</strong> = sections × rails per section. Rails to buy = round up[rails × (1 + spare %)].</li>
+<li><strong>Burial depth</strong> = the largest of local frost depth, 24 in, or half the above-ground height (so at least one-third of the post is underground), rounded up to the next 6 in. <strong>Post length</strong> = round up[(height + burial) ÷ 12] feet, minimum 5 ft.</li>
+</ol>
+<p>These are common rule-of-thumb methods for rural and residential fencing, not a building code. Local codes, zoning, setbacks, and permit rules vary, and the results are not engineering, permit, or inspection approval. Call 811 before digging, and check with your local building department, especially for height limits or pool and livestock enclosures. If your runs are very different lengths, calculate each run separately and add the totals, since the even split here is an approximation.</p>
+
+<h2>Worked Example</h2>
+<p>Fence length 250 ft, open run, one 10 ft gate, no corners, three rails per section, 10 ft rails, 6 in overlap, 48 in height, 30 in frost depth, 5% spare rails, $15 per post, $10 per rail.</p>
+<ol>
+<li>Spacing = 10 − 6/12 = <strong>9.5 ft</strong>.</li>
+<li>Net length = 250 − (1 × 10) = <strong>240 ft</strong>.</li>
+<li>Runs = 1 gate + 0 corners + 1 = <strong>2</strong>, so each run is 120 ft.</li>
+<li>Sections per run = round up(120 ÷ 9.5 = 12.63) = 13, so total sections = <strong>26</strong>.</li>
+<li>Posts = 26 + 1 + 1 = <strong>28</strong>.</li>
+<li>Rails = 26 × 3 = 78. With 5% spare: 81.9, rounded up to <strong>82 rails</strong>.</li>
+<li>Burial = largest of 30, 24, and 24 (half of 48) = 30 in. Post = (48 + 30) ÷ 12 = 6.5, rounded up to a <strong>7 ft post</strong>, which buries 36 in.</li>
+<li>Cost = (28 × $15) + (82 × $10) = $420 + $820 = <strong>$1,240</strong>, before gate hardware, tax, and delivery.</li>
+</ol>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure post-to-post, not rail-to-rail.</strong> Rails sit in the mortises of the post, so the center-to-center spacing is always shorter than the rail.</li>
+<li><strong>Order spare rails.</strong> Natural split wood checks, bows, and cracks. Three to five percent spare is normal; go higher for rough-cut or cedar stock.</li>
+<li><strong>Do not forget gate posts.</strong> Gates need two sturdy posts, and many installers set them deeper than line posts. Hinges, latches, and the gate itself are extra.</li>
+<li><strong>Mark and check corners.</strong> A corner post serves two runs, so it is counted once, but it needs mortises drilled at the right angle. Buy pre-drilled corner posts or plan to drill them on site.</li>
+<li><strong>Check height limits and property lines.</strong> Many towns limit front-yard fence height, and a survey is cheaper than moving a fence.</li>
+<li><strong>Tamp the backfill.</strong> Add 4 in of gravel at the bottom of each hole for drainage, and tamp soil or gravel in layers around the post.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How far apart should split rail fence posts be?</summary><p>Posts are usually set 8 to 11.5 ft apart, depending on rail length. Subtract the overlap in the mortise, about 6 in, from the rail length. A 10 ft rail typically gives a post spacing of about 9.5 ft.</p></details>
+<details><summary>How many rails do I need per section?</summary><p>Two rails make a low boundary marker of about 3 ft. Three rails suit most yards and driveways at around 4 ft. Four rails create a taller fence of about 5 ft that is better for horses or larger animals.</p></details>
+<details><summary>How deep should split rail fence posts be buried?</summary><p>A common rule is to bury at least one-third of the post length and set the bottom below your local frost line, with a minimum of about 24 in. This calculator rounds that depth up to the next 6 in and picks a post length to match. Your local building department can confirm the frost depth.</p></details>
+<details><summary>Do I need concrete for split rail fence posts?</summary><p>Not always. Many installers use well-tamped gravel or soil for line posts, and save concrete for gate posts, corners, and loose or sandy soil. Whichever you use, the burial depth matters more than the backfill material.</p></details>
+<details><summary>How do gates change the post count?</summary><p>Each gate adds a pair of posts, one on the hinge side and one on the latch side, and splits the fence into separate runs. This calculator subtracts the gate opening from the fence length and adds the gate posts to the total.</p></details>
+<details><summary>Can a split rail fence keep animals in?</summary><p>Rails alone leave gaps, so they work for horses and cattle but not for small pets or sheep. Many people add welded or woven wire mesh to the inside face. Wire mesh is not included in this calculator, so measure the fence length and buy a roll with about 10% extra.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/sloped-fence-calculator/">Sloped Fence Calculator</a></li>
+<li><a href="/vinyl-fence-calculator/">Vinyl Fence Calculator</a></li>
+<li><a href="/fence-gate-calculator/">Fence Gate Calculator</a></li>
+<li><a href="/chain-link-fence-calculator/">Chain Link Fence Calculator</a></li>
+<li><a href="/fence-installation-cost-calculator/">Fence Installation Cost Calculator</a></li>
+<li><a href="/fence-picket-calculator/">Fence Picket Calculator</a></li>
+</ul>
+</section>
+</main>
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/split-rail-fence-calculator/">Toolwick</a></p>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const fmt=(n,d=0)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const f2=n=>n.toLocaleString('en-US',{maximumFractionDigits:2});
+const money=n=>'$'+fmt(n,2);
+let errs=[],last='',has=false;
+$('yr').textContent=new Date().getFullYear();
+function setErr(id,bad,msg){
+  const el=$(id),f=el.closest('.f');
+  f.classList.toggle('err',bad);
+  el.setAttribute('aria-invalid',bad?'true':'false');
+  if(bad){$('e-'+id).textContent=msg;errs.push(el);}
+}
+function num(id,min,max,int,msg){
+  const raw=$(id).value.trim(),v=Number(raw);
+  const bad=raw===''||!isFinite(v)||v<min||v>max||(int&&!Number.isInteger(v));
+  setErr(id,bad,msg);
+  return v;
+}
+function compute(p,L){
+  const sp=L-p.ovl/12,net=p.len-p.gates*p.gw;
+  const R=p.open?p.gates+p.corners+1:Math.max(1,p.gates+p.corners);
+  const per=Math.max(1,Math.ceil(net/R/sp-1e-9));
+  const S=R*per;
+  const posts=p.open?S+p.gates+1:S+p.gates;
+  const rails=S*p.n;
+  const buy=Math.ceil(rails*(1+p.waste/100)-1e-9);
+  return {L,sp,net,R,S,posts,rails,buy,cost:posts*p.pp+buy*p.rp};
+}
+function drawRails(n){
+  let s='';
+  for(let i=0;i<n;i++){
+    const y=70+i*70/(n-1)-5;
+    s+='<rect x="152" y="'+y+'" width="196" height="10" rx="4"/><rect x="352" y="'+y+'" width="196" height="10" rx="4"/>';
+  }
+  $('railsSvg').innerHTML=s;
+}
+function run(){
+  errs=[];
+  const len=num('len',1,100000,0,'Enter a fence length between 1 and 100,000 ft.');
+  const ovl=num('ovl',0,24,0,'Enter an overlap between 0 and 24 in.');
+  const corners=num('corners',0,200,1,'Enter a whole number from 0 to 200.');
+  const gates=num('gates',0,50,1,'Enter a whole number from 0 to 50.');
+  const gw=num('gw',2,30,0,'Enter a gate width between 2 and 30 ft.');
+  const ht=num('ht',24,96,0,'Enter a height between 24 and 96 in.');
+  const frost=num('frost',0,120,0,'Enter a frost depth from 0 to 120 in.');
+  const pp=num('pp',0,1000,0,'Enter a price from 0 to 1,000.');
+  const rp=num('rp',0,1000,0,'Enter a price from 0 to 1,000.');
+  if(!errs.length&&gates*gw>=len){setErr('gates',true,'Gates are as wide as the whole fence. Reduce the gates or gate width.');}
+  const out=$('results');
+  if(errs.length){
+    has=false;last='';
+    out.innerHTML='<p class="sum">Please correct the highlighted fields to see your results.</p>';
+    errs[0].focus();
+    return;
+  }
+  const p={len,ovl,corners,gates,gw,ht,frost,pp,rp,n:parseInt($('rails').value,10),open:$('layout').value==='open',waste:+$('waste').value};
+  const L=+$('rlen').value;
+  const r=compute(p,L);
+  const need=Math.ceil(Math.max(frost,24,Math.ceil(ht/2))/6)*6;
+  const pl=Math.max(5,Math.ceil((ht+need)/12-1e-9));
+  const actual=pl*12-ht;
+  const spare=r.buy-r.rails;
+  const rows=[
+    ['Fence run (after gate openings)',fmt(r.net,1)+' ft'],
+    ['Post spacing (center to center)',f2(r.sp)+' ft'],
+    ['Straight runs',fmt(r.R)],
+    ['Sections',fmt(r.S)],
+    ['Posts (incl. '+fmt(gates*2)+' gate posts)',fmt(r.posts)],
+    ['Rails needed',fmt(r.rails)],
+    ['Spare rails ('+p.waste+'%)',fmt(spare)],
+    ['Rails to buy',fmt(r.buy)],
+    ['Minimum burial depth',fmt(need)+' in'],
+    ['Post length to buy',pl+' ft (buries '+fmt(actual)+' in)'],
+    ['Posts cost',money(r.posts*pp)],
+    ['Rails cost',money(r.buy*rp)],
+    ['Estimated material total',money(r.cost)]
+  ];
+  let t1='<div class="tw" tabindex="0" role="region" aria-label="Results table"><table><thead><tr><th>Item</th><th class="n">Result</th></tr></thead><tbody>';
+  rows.forEach(x=>{t1+='<tr><td>'+x[0]+'</td><td class="n">'+x[1]+'</td></tr>';});
+  t1+='</tbody></table></div>';
+  let t2='<h3>Compare rail lengths</h3><div class="tw" tabindex="0" role="region" aria-label="Rail length comparison table"><table><thead><tr><th>Rail</th><th class="n">Spacing</th><th class="n">Posts</th><th class="n">Rails to buy</th><th class="n">Est. cost</th></tr></thead><tbody>';
+  [8,10,11,12].forEach(l=>{
+    const c=compute(p,l);
+    t2+='<tr'+(l===L?' class="sel"':'')+'><td>'+l+' ft</td><td class="n">'+f2(c.sp)+' ft</td><td class="n">'+fmt(c.posts)+'</td><td class="n">'+fmt(c.buy)+'</td><td class="n">'+money(c.cost)+'</td></tr>';
+  });
+  t2+='</tbody></table></div>';
+  let warn='';
+  if(pl>8)warn+=' A '+pl+' ft post is longer than most split rail stock, so confirm availability or consider a shorter fence.';
+  if(gates>0)warn+=' Gate hardware and gate panels are not included.';
+  const note='<p class="note"><strong>Rule of thumb, not approval.</strong> Counts and depths round up. Burial follows the common guideline of at least one-third of post length, below frost depth, and no less than 24 in. Local codes, zoning, and permit rules vary, and this is not engineering, permit, or inspection approval. Call 811 before you dig.'+warn+'</p>';
+  const keys='<div class="keys"><div class="k"><span class="kn">'+fmt(r.posts)+'</span><span class="kl">posts</span></div><div class="k"><span class="kn">'+fmt(r.buy)+'</span><span class="kl">rails to buy</span></div><div class="k"><span class="kn">'+pl+' ft</span><span class="kl">post length</span></div></div>';
+  last='Split rail fence estimate ('+fmt(len,1)+' ft, '+(p.open?'open run':'closed loop')+', '+p.n+' rails, '+L+' ft rails)\n'+rows.map(x=>x[0]+': '+x[1]).join('\n')+'\nCounts round up. Local codes vary; not engineering or permit approval.';
+  const html='<div class="res">'+keys+t1+t2+note+'<button type="button" class="cp" id="copy">Copy results</button></div>';
+  has=true;
+  out.innerHTML=html;
+  $('dSp').textContent='Post spacing '+f2(r.sp)+' ft';
+  $('dHt').textContent=f2(ht)+' in';
+  $('dEm').textContent=fmt(need)+' in';
+  $('dN').textContent=p.n+' rails per section';
+  $('dPl').textContent=pl+' ft post';
+  drawRails(p.n);
+}
+$('form').addEventListener('submit',e=>{e.preventDefault();requestAnimationFrame(run);});
+$('waste').addEventListener('input',()=>{
+  $('wv').textContent=$('waste').value+'%';
+  if(has)requestAnimationFrame(run);
+});
+$('results').addEventListener('click',e=>{
+  if(e.target.id!=='copy')return;
+  const b=e.target;
+  const done=()=>{b.textContent='Copied!';setTimeout(()=>{if(b.isConnected)b.textContent='Copy results';},2000);};
+  function fb(){
+    const ta=document.createElement('textarea');ta.value=last;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');done();}catch(x){}
+    document.body.removeChild(ta);
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(last).then(done,fb);
+  }else fb();
+});
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
