@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Fence Stain Calculator | Toolwick</title>
+<meta name="description" content="Free fence stain calculator: estimate how many gallons of stain you need for any fence length, height, style and number of coats, plus cost.">
+<link rel="canonical" href="https://toolwick.com/fence-stain-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #e0e0e0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.2;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.25rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.lead{color:#444;font-size:1.05rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.f{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;min-height:0;margin-top:.3rem}
+.hint{color:#666;font-size:.8rem;margin-top:.3rem}
+.ticks{display:flex;justify-content:space-between;color:#666;font-size:.8rem}
+.val{color:#0077b6;font-weight:700}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;min-height:44px;font:inherit;font-weight:600;cursor:pointer;width:100%}
+button:hover{background:#006299}
+button.sec{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;font-size:.9rem;padding:10px 18px;margin-top:1rem}
+button.sec:hover{background:#f0f8fc}
+.results{margin-top:1.5rem}
+.fade{opacity:0;transition:opacity .3s ease}
+.fade.in{opacity:1}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.big{display:block;font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.2}
+.key small{color:#444;font-size:.9rem}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #e0e0e0;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e0e0e0}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.n{text-align:right}
+th.n{text-align:right}
+.note{color:#555;font-size:.85rem}
+.ad-slot{min-height:0;margin:0}
+.content li{margin-bottom:.5rem}
+code,.formula{background:#f8f9fa;border-radius:6px}
+.formula{padding:1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;overflow-x:auto;margin-bottom:1rem;line-height:1.8}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center;padding:.4rem 0}
+details p{color:#333}
+.rel{display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1.5rem;padding:0;list-style:none}
+.rel li{margin:0}
+.rel a{display:inline-block;padding:.6rem 0;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;color:#666;font-size:.9rem}
+footer a{color:#555;margin-right:1rem;display:inline-block;padding:.5rem 0}
+@media(max-width:640px){
+.row,.rel{grid-template-columns:1fr}
+.card{padding:1.25rem}
+h1{font-size:1.6rem}
+button.sec{width:100%}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/fence-stain-calculator/">
+<meta property="og:title" content="Fence Stain Calculator">
+<meta property="og:description" content="Free fence stain calculator: estimate how many gallons of stain you need for any fence length, height, style and number of coats, plus cost.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Fence Stain Calculator</h1>
+<p class="lead">Use this fence stain calculator to estimate how many gallons of stain your fence needs based on its length, height, style, wood condition and number of coats. It rounds up to whole gallons so you don't run short mid-project.</p>
+
+<div class="card">
+<div class="diagram">
+<svg viewBox="0 0 600 300" role="img" aria-labelledby="dt dd">
+<title id="dt">Fence stain surface diagram</title>
+<desc id="dd">Side view of a fence showing length, height, surface area to stain and gallons needed.</desc>
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="#0077b6"/></marker>
+<pattern id="bd" width="14" height="10" patternUnits="userSpaceOnUse"><rect width="14" height="10" fill="#f8f9fa"/><line x1="0" y1="0" x2="0" y2="10" stroke="#e0e0e0" stroke-width="1.5"/></pattern>
+</defs>
+<text id="dArea" x="300" y="26" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a2e">Surface = L × H × style × sides</text>
+<text id="dInfo" x="300" y="50" text-anchor="middle" font-size="16" fill="#1a1a2e">Stain area ÷ coverage = gallons</text>
+<line x1="60" y1="200" x2="580" y2="200" stroke="#e0e0e0" stroke-width="2"/>
+<rect x="110" y="75" width="430" height="125" fill="url(#bd)" stroke="#0077b6" stroke-width="2"/>
+<rect x="105" y="68" width="10" height="148" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="212" y="68" width="10" height="148" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="320" y="68" width="10" height="148" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="427" y="68" width="10" height="148" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="535" y="68" width="10" height="148" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<line x1="80" y1="75" x2="105" y2="75" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="80" y1="200" x2="105" y2="200" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="85" y1="77" x2="85" y2="198" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dHei" x="76" y="143" text-anchor="end" font-size="18" font-weight="700" fill="#1a1a2e">H</text>
+<line x1="110" y1="218" x2="110" y2="248" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="540" y1="218" x2="540" y2="248" stroke="#e0e0e0" stroke-dasharray="4 3"/>
+<line x1="112" y1="240" x2="538" y2="240" stroke="#0077b6" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dLen" x="325" y="266" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a2e">Length (L)</text>
+<text id="dGal" x="325" y="292" text-anchor="middle" font-size="16" fill="#1a1a2e">Press Calculate to see gallons</text>
+</svg>
+</div>
+
+<div class="row">
+<div class="f">
+<label for="len">Fence length (feet)</label>
+<input type="number" id="len" inputmode="decimal" min="0" step="any" value="100" aria-describedby="lenErr">
+<div class="err" id="lenErr"></div>
+</div>
+<div class="f">
+<label for="hgt">Fence height (feet)</label>
+<input type="number" id="hgt" inputmode="decimal" min="0" step="any" value="6" aria-describedby="hgtErr">
+<div class="err" id="hgtErr"></div>
+</div>
+</div>
+
+<div class="f">
+<label for="style">Fence style</label>
+<select id="style">
+<option value="1">Solid privacy (tight boards)</option>
+<option value="1.25">Board-on-board / shadowbox</option>
+<option value="0.9">Horizontal slat (small gaps)</option>
+<option value="0.8">Picket (spaced pickets)</option>
+<option value="0.45">Ranch / 3-rail board fence</option>
+<option value="0.35">Split rail</option>
+</select>
+</div>
+
+<div class="row">
+<div class="f">
+<label for="sides">Sides to stain</label>
+<select id="sides"><option value="1">One side</option><option value="2" selected>Both sides</option></select>
+</div>
+<div class="f">
+<label for="coats">Number of coats</label>
+<select id="coats"><option value="1" selected>1 coat</option><option value="2">2 coats</option><option value="3">3 coats</option></select>
+</div>
+</div>
+
+<div class="f">
+<label for="cond">Wood condition</label>
+<select id="cond">
+<option value="250">New, smooth (250 sq ft/gal)</option>
+<option value="175" selected>Weathered or previously stained (175 sq ft/gal)</option>
+<option value="125">Rough-sawn or very dry (125 sq ft/gal)</option>
+</select>
+</div>
+
+<div class="row">
+<div class="f">
+<label for="cov">Coverage per gallon (optional override)</label>
+<input type="number" id="cov" inputmode="decimal" min="0" step="any" placeholder="From the can label" aria-describedby="covErr covHint">
+<div class="hint" id="covHint">Sq ft per gallon. Leave blank to use wood condition.</div>
+<div class="err" id="covErr"></div>
+</div>
+<div class="f">
+<label for="price">Price per gallon (optional)</label>
+<input type="number" id="price" inputmode="decimal" min="0" step="any" placeholder="e.g. 38" aria-describedby="priceErr">
+<div class="err" id="priceErr"></div>
+</div>
+</div>
+
+<div class="f">
+<label for="allow">Extra allowance for waste: <span class="val" id="allowVal">10%</span></label>
+<input type="range" id="allow" min="0" max="25" step="1" value="10" aria-describedby="allowHint">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>25%</span></div>
+<div class="hint" id="allowHint">About 5% for brush or roller, 10% typical, 15–20% for sprayers.</div>
+</div>
+
+<button type="button" id="calcBtn">Calculate Stain Needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+<div class="results" id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<div class="content">
+<h2>How to Use This Fence Stain Calculator</h2>
+<p>Enter your fence length and height in feet, choose the style, how many sides you'll stain, and how many coats you plan to apply. Pick the wood condition (or type the coverage rate printed on your stain can) and adjust the waste allowance. The calculator returns the exact gallons required, a rounded-up purchase quantity, a suggested mix of 5-gallon pails and 1-gallon cans, and an optional cost estimate.</p>
+
+<h2>Why This Matters</h2>
+<p>Stain is one of those purchases where being wrong in either direction hurts. Buy too little and you make a second trip mid-project, and a new batch can differ slightly in colour from the first, leaving a visible line on a long fence. Buy too much and you've spent an extra $40 to $70 per gallon on a product that's hard to store and harder to dispose of.</p>
+<p>Consider a typical backyard: 150 feet of 6-foot privacy fence, stained on both sides, comes to 1,800 square feet of surface. At 200 square feet per gallon, that's nine gallons for a single coat, and nearly double that if you apply two. Contractors quoting a job, homeowners comparing DIY cost against a pro bid, and property managers budgeting for HOA-mandated re-staining all need that number before they shop. Wood condition changes the answer dramatically: rough, thirsty, weathered boards can soak up 40% more stain than smooth new lumber, so a flat "one gallon per 250 square feet" rule can leave you short.</p>
+
+<h2>How It's Calculated</h2>
+<p>The tool multiplies the fence's face area by a style factor (since a picket or split-rail fence has less surface than a solid wall of boards), by the number of sides, then divides by coverage per gallon.</p>
+<div class="formula">Surface (sq ft) = Length × Height × Style factor × Sides<br>Gallons per coat = Surface ÷ Coverage per gallon<br>Gallons needed = Gallons per coat × Coats × (1 + Allowance)<br>Gallons to buy = Gallons needed, rounded UP to a whole gallon</div>
+<div class="tw"><table>
+<thead><tr><th>Fence style</th><th class="n">Style factor</th></tr></thead>
+<tbody>
+<tr><td>Solid privacy</td><td class="n">1.00</td></tr>
+<tr><td>Board-on-board / shadowbox</td><td class="n">1.25</td></tr>
+<tr><td>Horizontal slat</td><td class="n">0.90</td></tr>
+<tr><td>Picket</td><td class="n">0.80</td></tr>
+<tr><td>Ranch / 3-rail</td><td class="n">0.45</td></tr>
+<tr><td>Split rail</td><td class="n">0.35</td></tr>
+</tbody></table></div>
+<p>The coverage rates (250, 175 and 125 square feet per gallon) are common rules of thumb for penetrating and semi-transparent stains. To stay on the safe side, the calculator assumes every coat uses the same amount of stain, even though a second coat often goes further, and it always rounds up. These are planning estimates, not code requirements. Your stain's label coverage always takes priority, and VOC and product rules vary by state and locality.</p>
+
+<h2>Worked Example</h2>
+<p>A homeowner has 120 feet of 6-foot solid privacy fence, weathered, to be stained on both sides with one coat, using a 10% allowance.</p>
+<ol>
+<li>Face area: 120 × 6 = 720 sq ft</li>
+<li>Style factor 1.00 gives 720 sq ft per side; two sides gives 1,440 sq ft</li>
+<li>Coverage for weathered wood: 175 sq ft per gallon, so 1,440 ÷ 175 = 8.23 gallons per coat</li>
+<li>One coat with a 10% allowance: 8.23 × 1.10 = 9.05 gallons</li>
+<li>Round up: buy 10 gallons, which is two 5-gallon pails. At $38 per gallon, that's about $380.00</li>
+</ol>
+<p>Applying two coats would raise the requirement to 18.10 gallons, so you'd buy 19.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the fence, not the property line.</strong> Add up each run, and subtract gate openings only if you're not staining the gates.</li>
+<li><strong>Don't stain wet or brand-new wood too early.</strong> Pressure-treated lumber can need weeks to dry. A sprinkle of water that soaks in within about ten minutes is a good sign it will accept stain.</li>
+<li><strong>Buy all your stain at once and mix pails together.</strong> Boxing (blending cans in a larger bucket) evens out slight colour differences between batches.</li>
+<li><strong>Test on a hidden board.</strong> The same stain looks different on cedar, pine and treated lumber, and you can check the real coverage rate before committing.</li>
+<li><strong>Handle oily rags safely.</strong> Rags soaked in oil-based stain can heat up and ignite on their own. Lay them flat outdoors to dry or store them in a sealed metal container of water.</li>
+<li><strong>Don't ignore posts and caps.</strong> They add surface, and end grain on posts drinks stain. The 10% allowance helps, but bump it up for lots of posts.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many gallons of stain do I need for a 100 ft fence?</summary>
+<p>For a 6-foot solid fence on new smooth wood at 250 sq ft per gallon with a 10% allowance, plan on about 3 gallons for one side and 6 gallons for both sides, for one coat. Weathered or rough wood needs more, so use the calculator with your own details.</p></details>
+<details><summary>How much does a gallon of fence stain cover?</summary>
+<p>Most stains cover 150 to 300 square feet per gallon on smooth wood and much less on rough or weathered boards. The label on your specific product is the best guide, and you can type it into the coverage override field.</p></details>
+<details><summary>Do I need two coats of fence stain?</summary>
+<p>Penetrating and semi-transparent stains are often applied as a single coat, because a second coat can't soak in and may leave a sticky film. Solid-colour stains typically call for two coats. Follow the manufacturer's directions.</p></details>
+<details><summary>Do I need more stain if I use a sprayer?</summary>
+<p>Yes, usually. Overspray and wind drift waste product, so allow roughly 15 to 20% extra instead of 5 to 10%. Back-brushing after spraying helps work the stain into the wood and improves durability.</p></details>
+<details><summary>Should I include the posts and top cap in my measurement?</summary>
+<p>If the fence height is measured from the ground to the top of the boards, the posts between sections are largely covered. Posts that stick up above the boards, decorative caps and rails add extra surface, so raise the waste allowance a few percent.</p></details>
+<details><summary>How long should new fence wood dry before staining?</summary>
+<p>Kiln-dried lumber can be stained within days, while freshly pressure-treated boards often need several weeks to a few months to dry out. Stain applied over damp wood can peel or look blotchy, so check the product label and test a board.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/split-rail-fence-calculator/">Split Rail Fence Calculator</a></li>
+<li><a href="/sloped-fence-calculator/">Sloped Fence Calculator</a></li>
+<li><a href="/vinyl-fence-calculator/">Vinyl Fence Calculator</a></li>
+<li><a href="/fence-gate-calculator/">Fence Gate Calculator</a></li>
+<li><a href="/chain-link-fence-calculator/">Chain Link Fence Calculator</a></li>
+<li><a href="/fence-installation-cost-calculator/">Fence Installation Cost Calculator</a></li>
+</ul>
+</div>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/fence-stain-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var fmt=function(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:d===undefined?2:d})};
+var money=function(n){return '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})};
+var hasResult=false,lastText='';
+$('yr').textContent=new Date().getFullYear();
+
+function setErr(id,msg){
+ var i=$(id),e=$(id+'Err');
+ if(msg){i.classList.add('bad');i.setAttribute('aria-invalid','true');e.textContent=msg}
+ else{i.classList.remove('bad');i.removeAttribute('aria-invalid');e.textContent=''}
+}
+function clearResult(){
+ hasResult=false;
+ $('results').innerHTML='';
+ $('dArea').textContent='Surface = L × H × style × sides';
+ $('dInfo').textContent='Stain area ÷ coverage = gallons';
+ $('dLen').textContent='Length (L)';
+ $('dHei').textContent='H';
+ $('dGal').textContent='Press Calculate to see gallons';
+}
+function calculate(){
+ var L=parseFloat($('len').value),H=parseFloat($('hgt').value);
+ var covRaw=$('cov').value.trim(),prRaw=$('price').value.trim();
+ var ok=true,m;
+ m=null;if(isNaN(L)||L<=0)m='Enter a fence length greater than 0.';else if(L>100000)m='Length must be 100,000 ft or less.';
+ setErr('len',m);if(m)ok=false;
+ m=null;if(isNaN(H)||H<=0)m='Enter a fence height greater than 0.';else if(H>20)m='Height must be 20 ft or less.';
+ setErr('hgt',m);if(m)ok=false;
+ var cov=parseFloat($('cond').value);
+ m=null;
+ if(covRaw!==''){var c=parseFloat(covRaw);if(isNaN(c)||c<50||c>600)m='Enter 50 to 600 sq ft per gallon, or leave blank.';else cov=c}
+ setErr('cov',m);if(m)ok=false;
+ var price=0;
+ m=null;
+ if(prRaw!==''){var p=parseFloat(prRaw);if(isNaN(p)||p<0||p>10000)m='Enter a price between 0 and 10,000, or leave blank.';else price=p}
+ setErr('price',m);if(m)ok=false;
+ if(!ok){clearResult();return}
+
+ var factor=parseFloat($('style').value),sides=parseInt($('sides').value,10),coats=parseInt($('coats').value,10);
+ var allow=parseInt($('allow').value,10)/100;
+ var styleName=$('style').options[$('style').selectedIndex].text;
+ var face=L*H,perSide=face*factor,total=perSide*sides;
+ var perCoat=total/cov,need=perCoat*coats*(1+allow);
+ var buy=Math.max(1,Math.ceil(need-1e-9));
+ var pails=Math.floor(buy/5),rem=buy%5;
+ if(rem>=4){pails++;rem=0}
+ var pack=[];
+ if(pails)pack.push(pails+' × 5-gallon pail'+(pails>1?'s':''));
+ if(rem)pack.push(rem+' × 1-gallon can'+(rem>1?'s':''));
+ var packTxt=pack.join(' + ');
+ var hasPrice=prRaw!=='';
+
+ var rows=[
+  ['Fence face area (L × H)',fmt(face)+' sq ft'],
+  ['Style factor ('+styleName.split(' (')[0]+')',fmt(factor)],
+  ['Sides stained',sides],
+  ['Total surface to stain',fmt(total)+' sq ft'],
+  ['Coverage per gallon',fmt(cov)+' sq ft'],
+  ['Gallons per coat',fmt(perCoat)],
+  ['Coats',coats],
+  ['Waste allowance',fmt(allow*100,0)+'%'],
+  ['Gallons needed (exact)',fmt(need)],
+  ['<strong>Gallons to buy (rounded up)</strong>','<strong>'+fmt(buy,0)+'</strong>']
+ ];
+ if(hasPrice)rows.push(['Estimated cost ('+fmt(buy,0)+' gal × '+money(price)+')',money(buy*price)]);
+ var t='<div class="tw"><table><thead><tr><th>Breakdown</th><th class="n">Value</th></tr></thead><tbody>';
+ for(var i=0;i<rows.length;i++)t+='<tr><td>'+rows[i][0]+'</td><td class="n">'+rows[i][1]+'</td></tr>';
+ t+='</tbody></table></div>';
+
+ var cmp='<div class="tw"><table><thead><tr><th>Coats</th><th class="n">Gallons needed</th><th class="n">Buy</th>'+(hasPrice?'<th class="n">Cost</th>':'')+'</tr></thead><tbody>';
+ for(var k=1;k<=3;k++){
+  var n=perCoat*k*(1+allow),b=Math.max(1,Math.ceil(n-1e-9));
+  var s=k===coats?'<strong>':'',e=k===coats?'</strong>':'';
+  cmp+='<tr><td>'+s+k+(k===coats?' (selected)':'')+e+'</td><td class="n">'+s+fmt(n)+e+'</td><td class="n">'+s+fmt(b,0)+' gal'+e+'</td>'+(hasPrice?'<td class="n">'+s+money(b*price)+e+'</td>':'')+'</tr>';
+ }
+ cmp+='</tbody></table></div>';
+
+ lastText='Fence stain estimate\nFence: '+fmt(L)+' ft × '+fmt(H)+' ft, '+styleName.split(' (')[0]+', '+sides+' side(s), '+coats+' coat(s)\nSurface: '+fmt(total)+' sq ft at '+fmt(cov)+' sq ft/gal, '+fmt(allow*100,0)+'% allowance\nGallons needed: '+fmt(need)+'\nBuy: '+fmt(buy,0)+' gallons ('+packTxt+')'+(hasPrice?'\nEstimated cost: '+money(buy*price):'');
+
+ var html='<div class="fade" id="fd"><div class="key"><span class="big">'+fmt(buy,0)+' gallon'+(buy>1?'s':'')+'</span><small>to buy ('+fmt(need)+' gal needed, rounded up)</small><br><small>Suggested: '+packTxt+'</small></div>'
+  +t+'<p><strong>Compare coats</strong></p>'+cmp
+  +'<button type="button" class="sec" id="copyBtn">Copy results</button>'
+  +'<p class="note" style="margin-top:1rem">Planning estimate using rule-of-thumb coverage rates; local rules and product labels vary. Always check the coverage printed on your stain can.</p></div>';
+
+ requestAnimationFrame(function(){
+  $('results').innerHTML=html;
+  hasResult=true;
+  $('dArea').textContent=fmt(total)+' sq ft total to stain';
+  $('dInfo').textContent=fmt(perSide)+' sq ft per side × '+sides+(sides>1?' sides':' side')+' × '+coats+(coats>1?' coats':' coat');
+  $('dLen').textContent=fmt(L)+' ft';
+  $('dHei').textContent=fmt(H)+' ft';
+  $('dGal').textContent='≈ '+fmt(need)+' gal needed → buy '+fmt(buy,0)+' gal';
+  requestAnimationFrame(function(){var f=$('fd');if(f)f.classList.add('in')});
+ });
+}
+function run(){requestAnimationFrame(calculate)}
+
+$('calcBtn').addEventListener('click',run);
+document.querySelector('.card').addEventListener('keydown',function(e){
+ if(e.key==='Enter'&&e.target.tagName!=='BUTTON'&&e.target.tagName!=='SUMMARY'){e.preventDefault();run()}
+});
+$('allow').addEventListener('input',function(){
+ $('allowVal').textContent=this.value+'%';
+ if(hasResult)run();
+});
+$('results').addEventListener('click',function(e){
+ if(e.target.id!=='copyBtn')return;
+ var b=e.target;
+ function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+ function fb(){
+  var ta=document.createElement('textarea');ta.value=lastText;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');done()}catch(x){}
+  document.body.removeChild(ta);
+ }
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,fb)}else fb();
+});
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
