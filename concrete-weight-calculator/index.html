@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Concrete Weight Calculator | Toolwick</title>
+<meta name="description" content="Free concrete weight calculator: find the weight of slabs, footings, walls and round columns in pounds, kilograms and tons from size and density.">
+<link rel="canonical" href="https://toolwick.com/concrete-weight-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Concrete Weight Calculator", "url": "https://toolwick.com/concrete-weight-calculator/", "description": "Free concrete weight calculator: find the weight of slabs, footings, walls and round columns in pounds, kilograms and tons from size and density.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Concrete Weight Calculator", "item": "https://toolwick.com/concrete-weight-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much does a cubic yard of concrete weigh?", "acceptedAnswer": {"@type": "Answer", "text": "Plain normal-weight concrete weighs about 3,900 pounds per cubic yard (145 lb/ft³ × 27), and reinforced concrete about 4,050 pounds. Use roughly 4,000 lb, or 1.8 metric tonnes, as a quick estimate."}}, {"@type": "Question", "name": "How much does concrete weigh per cubic foot?", "acceptedAnswer": {"@type": "Answer", "text": "Typically 145 to 150 pounds per cubic foot, or about 2,320 to 2,400 kg per cubic metre. Lightweight mixes can be as low as 90 to 115 lb/ft³."}}, {"@type": "Question", "name": "How much does a 4-inch concrete slab weigh per square foot?", "acceptedAnswer": {"@type": "Answer", "text": "A 4-inch slab is one third of a cubic foot per square foot of area, so it weighs about 48 to 50 pounds per square foot. A 6-inch slab weighs about 72 to 75 lb/ft²."}}, {"@type": "Question", "name": "Does wet concrete weigh more than cured concrete?", "acceptedAnswer": {"@type": "Answer", "text": "Freshly mixed concrete is slightly heavier than fully cured concrete because some mixing water evaporates or is chemically bound as it cures. The difference is usually a few percent, and this calculator's allowance covers it. When moving a load of fresh concrete, plan for the higher number."}}, {"@type": "Question", "name": "Can my pickup truck carry a yard of concrete?", "acceptedAnswer": {"@type": "Answer", "text": "Usually not. A cubic yard weighs about 4,000 pounds, which exceeds the payload of most half-ton pickups (often 1,000 to 1,800 lb). Check the payload sticker on your door jamb and never exceed it."}}, {"@type": "Question", "name": "Does rebar change the weight of concrete?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, slightly. Steel is about 490 lb/ft³, so reinforcement raises the average density by roughly 3 to 5 lb/ft³ at typical rebar ratios. That is why the reinforced option uses 150 lb/ft³ instead of 145."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.15rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+.lead{color:#444}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram text{font-family:inherit;font-size:13px;fill:#1a1a2e}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input:focus,select:focus{border-color:#0077b6}
+input.error,select.error{border-color:#e74c3c}
+.row{display:flex;gap:.5rem}
+.row input{flex:1;min-width:0}
+.row select{flex:0 0 92px;width:92px;padding:12px 8px}
+.err-msg{color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.hide{display:none}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+button.primary{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+button.primary:hover{background:#006299}
+#results:empty{display:none}
+#results{margin-top:1.5rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.key .big{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.15;word-break:break-word}
+.key .sub{color:#444;font-size:.95rem;margin-top:.35rem}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr.sel td{font-weight:700}
+.h3{font-size:1rem;margin:0 0 .5rem;font-weight:600}
+.note{background:#fff8e6;border-left:4px solid #b7791f;padding:.75rem 1rem;font-size:.9rem;color:#444;border-radius:0 6px 6px 0;margin-bottom:1rem}
+.copy{background:#fff;border:1px solid #0077b6;color:#0077b6;border-radius:6px;padding:8px 16px;min-height:44px;font-size:.9rem;cursor:pointer;font-family:inherit;width:100%}
+.copy:hover{background:#f0f8fc}
+.ad-slot{min-height:0;margin:0}
+.content section{margin-bottom:0}
+.content ul{padding-left:1.25rem;margin:0 0 1rem}
+.content li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;padding:1rem;border-radius:6px;font-family:Consolas,Menlo,monospace;font-size:.9rem;overflow-x:auto;margin-bottom:1rem}
+details{border-bottom:1px solid #e8e8e8;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:.6rem 0;min-height:44px}
+details p{color:#333;margin:.25rem 0 .75rem}
+.related{list-style:none;padding:0!important;display:grid;gap:.5rem}
+.related a{display:block;padding:12px 16px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;color:#0077b6;font-weight:500;min-height:44px}
+a{color:#0077b6}
+footer{border-top:1px solid #eee;margin-top:2rem;padding:1.5rem 0 2.5rem;color:#666;font-size:.9rem}
+footer a{color:#0077b6;text-decoration:underline;display:inline-block;padding:10px 4px}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.key .big{font-size:2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/concrete-weight-calculator/">
+<meta property="og:title" content="Concrete Weight Calculator">
+<meta property="og:description" content="Free concrete weight calculator: find the weight of slabs, footings, walls and round columns in pounds, kilograms and tons from size and density.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<main>
+<h1>Concrete Weight Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p class="lead">This concrete weight calculator tells you how much a slab, footing, wall or round column weighs in pounds, kilograms and tons. Enter the dimensions, pick a concrete type, and get a planning weight that is always rounded up to the safe side.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="diagram" viewBox="-15 0 495 270" role="img" aria-label="Diagram of a concrete piece showing its length, width and thickness, or diameter and height, with the calculated weight">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#0077b6"/></marker></defs>
+<g id="gSlab">
+<polygon points="90,150 290,150 290,190 90,190" fill="#e6f2f9" stroke="#0077b6" stroke-width="2"/>
+<polygon points="90,150 160,100 360,100 290,150" fill="#f4f9fc" stroke="#0077b6" stroke-width="2"/>
+<polygon points="290,150 360,100 360,140 290,190" fill="#cfe5f2" stroke="#0077b6" stroke-width="2"/>
+<g stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3" fill="none"><path d="M90,192V216M290,192V216M88,150H58M88,190H58M292,192L309,209M362,142L379,159"/></g>
+<g stroke="#0077b6" stroke-width="1.5" fill="none"><line x1="90" y1="212" x2="290" y2="212" marker-start="url(#ar)" marker-end="url(#ar)"/><line x1="64" y1="150" x2="64" y2="190" marker-start="url(#ar)" marker-end="url(#ar)"/><line x1="305" y1="205" x2="375" y2="155" marker-start="url(#ar)" marker-end="url(#ar)"/></g>
+<text id="tL" x="190" y="232" text-anchor="middle">L = 10 ft</text>
+<text id="tT" x="56" y="175" text-anchor="end">T = 4 in</text>
+<text id="tW" x="386" y="178">W = 10 ft</text>
+</g>
+<g id="gCyl" class="hide" transform="translate(42,0)">
+<path d="M130,90 L130,200 A60,18 0 0 0 250,200 L250,90 Z" fill="#e6f2f9" stroke="#0077b6" stroke-width="2"/>
+<ellipse cx="190" cy="90" rx="60" ry="18" fill="#f4f9fc" stroke="#0077b6" stroke-width="2"/>
+<g stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3" fill="none"><path d="M130,90V50M250,90V50M254,90H304M254,200H304"/></g>
+<g stroke="#0077b6" stroke-width="1.5" fill="none"><line x1="130" y1="56" x2="250" y2="56" marker-start="url(#ar)" marker-end="url(#ar)"/><line x1="296" y1="90" x2="296" y2="200" marker-start="url(#ar)" marker-end="url(#ar)"/></g>
+<text id="tD" x="190" y="44" text-anchor="middle">Ø = 12 in</text>
+<text id="tH" x="306" y="150">H = 4 ft</text>
+</g>
+<text id="tSum" x="232" y="262" text-anchor="middle" style="font-weight:700;fill:#0077b6;font-size:14px">Enter sizes, then calculate</text>
+</svg>
+</div>
+
+<div class="field"><label for="shape">Shape</label>
+<select id="shape"><option value="slab">Rectangular — slab, footing, wall, block</option><option value="cyl">Round — Sonotube column, pier, cylinder</option></select></div>
+
+<div class="field"><label for="dimA" id="lblA">Length</label>
+<div class="row"><input id="dimA" type="text" inputmode="decimal" value="10" aria-describedby="dimAErr"><select id="unitA" aria-label="Length unit"><option>ft</option><option>in</option><option>m</option><option>cm</option><option>yd</option></select></div>
+<div class="err-msg" id="dimAErr" role="alert"></div></div>
+
+<div class="field" id="fieldB"><label for="dimB">Width</label>
+<div class="row"><input id="dimB" type="text" inputmode="decimal" value="10" aria-describedby="dimBErr"><select id="unitB" aria-label="Width unit"><option>ft</option><option>in</option><option>m</option><option>cm</option><option>yd</option></select></div>
+<div class="err-msg" id="dimBErr" role="alert"></div></div>
+
+<div class="field"><label for="dimC" id="lblC">Thickness</label>
+<div class="row"><input id="dimC" type="text" inputmode="decimal" value="4" aria-describedby="dimCErr"><select id="unitC" aria-label="Thickness unit"><option>in</option><option>ft</option><option>cm</option><option>m</option><option>yd</option></select></div>
+<div class="err-msg" id="dimCErr" role="alert"></div></div>
+
+<div class="field"><label for="qty">Number of identical pieces</label>
+<input id="qty" type="text" inputmode="numeric" value="1" aria-describedby="qtyErr">
+<div class="err-msg" id="qtyErr" role="alert"></div></div>
+
+<div class="field"><label for="dens">Concrete type</label>
+<select id="dens">
+<option value="light">Lightweight — 110 lb/ft³ (1,762 kg/m³)</option>
+<option value="normal">Normal weight, plain — 145 lb/ft³ (2,323 kg/m³)</option>
+<option value="reinf" selected>Reinforced normal weight — 150 lb/ft³ (2,403 kg/m³)</option>
+<option value="heavy">Heavyweight aggregate — 200 lb/ft³ (3,204 kg/m³)</option>
+<option value="custom">Custom density…</option></select></div>
+
+<div class="field hide" id="fieldCust"><label for="custDens">Custom density</label>
+<div class="row"><input id="custDens" type="text" inputmode="decimal" value="150" aria-describedby="custDensErr"><select id="custUnit" aria-label="Density unit"><option value="lb">lb/ft³</option><option value="kg">kg/m³</option></select></div>
+<div class="err-msg" id="custDensErr" role="alert"></div></div>
+
+<div class="field"><label for="margin">Allowance for over-pour and thickness variation: <span id="marginVal">5%</span></label>
+<input id="margin" type="range" min="0" max="20" step="1" value="5">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>10%</span><span>20%</span></div></div>
+
+<button class="primary" id="calcBtn" type="button">Calculate Weight</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/concrete-weight-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Concrete Weight Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/concrete-weight-calculator/&quot;&gt;Concrete Weight Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/concrete-weight-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<div class="content">
+<section>
+<h2>How to Use This Concrete Weight Calculator</h2>
+<p>Pick a shape: rectangular for slabs, footings, walls and blocks, or round for Sonotube columns and piers. Type each dimension with its own unit, so you can enter a slab as 20 ft by 12 ft by 4 in without converting anything. Then choose a concrete type (or a custom density), set how much allowance you want, and press Calculate. You get the volume, the planning weight in pounds, kilograms and tons, and a table showing how the same volume weighs with other concrete types.</p>
+</section>
+
+<section>
+<h2>Why This Matters</h2>
+<p>Concrete is far heavier than it looks. One cubic yard weighs roughly 4,000 pounds, about as much as a mid-size SUV. A modest 10 × 10 ft patio at 4 inches thick weighs around 5,000 pounds, which is two and a half short tons. People need the number for more reasons than curiosity.</p>
+<p>Homeowners use it to check whether a pickup, trailer or wheelbarrow route can handle a load. A half-ton truck often has a payload near 1,500 pounds, so a single yard of concrete can overload it. Deck builders and renovators use it to estimate dead load when a slab, a planter or a hearth pad will sit on a framed floor, balcony or roof. Contractors use it to plan cranes, forklifts and skid-steers, and to estimate haul-off weight when demolishing an old slab, where disposal is often billed by the ton. Precast makers and landscapers use it to size lifting hardware for steps, bollards, counterweights and pavers.</p>
+<p>Getting it wrong in the light direction is the costly mistake, which is why this tool rounds up.</p>
+</section>
+
+<section>
+<h2>How It's Calculated</h2>
+<p>The calculator finds the volume of the shape, then multiplies by the density of the concrete.</p>
+<div class="formula">Rectangular volume = length × width × thickness<br>Round volume = π × (diameter ÷ 2)² × height<br>Weight = volume × density × pieces × (1 + allowance)</div>
+<p>Every dimension is converted to feet first, so volume is in cubic feet. Cubic yards are cubic feet ÷ 27, and cubic metres are cubic feet × 0.0283168. Density is taken in pounds per cubic foot. Kilograms use the exact factor 0.45359237, short tons are pounds ÷ 2,000, and metric tonnes are kilograms ÷ 1,000.</p>
+<p>The densities are common rule-of-thumb values: about 145 lb/ft³ for plain normal-weight concrete, about 150 lb/ft³ once steel reinforcement is included, roughly 110 lb/ft³ for structural lightweight mixes, and about 200 lb/ft³ for heavyweight mixes made with barite or magnetite aggregate. Real mixes vary with aggregate type, air content and moisture, typically by a few percent. Design codes and engineers may specify different unit weights, and local codes vary.</p>
+<p>For safety, the planning weight includes your allowance and is then rounded up: pounds to the next 10, kilograms to the next 5, and tons to the next 0.01. This is a planning estimate, not engineering, permit or inspection approval.</p>
+</section>
+
+<section>
+<h2>Worked Example</h2>
+<p>You are pouring a 10 ft × 10 ft slab, 4 inches thick, with reinforcing steel, and you use a 5% allowance.</p>
+<ul>
+<li>Convert thickness: 4 in ÷ 12 = 0.3333 ft.</li>
+<li>Volume: 10 × 10 × 0.3333 = 33.33 ft³, which is 1.23 yd³ or 0.94 m³.</li>
+<li>Net weight at 150 lb/ft³: 33.33 × 150 = 5,000 lb.</li>
+<li>Add 5%: 5,000 × 1.05 = 5,250 lb, which is 2,381 kg before rounding up to 2,385 kg.</li>
+<li>In tons: 2.63 short tons, or 2.39 metric tonnes (both rounded up).</li>
+</ul>
+<p>That is exactly what the calculator shows with its default inputs. Hauling this in a pickup with a 1,500 lb payload would take four trips (5,250 ÷ 1,500, rounded up), which is why most people have it delivered by ready-mix truck.</p>
+</section>
+
+<section>
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Mixing up inches and feet.</strong> A 4-inch slab entered as 4 feet is 12 times too heavy. Check the unit dropdown beside each number.</li>
+<li><strong>Forgetting thickened edges.</strong> Slabs with thickened perimeter footings contain more concrete than a flat plate. Calculate the footing as a separate piece and add the weights.</li>
+<li><strong>Using the net number for equipment.</strong> Use the weight with allowance, and make sure lifting gear, trailers and ramps are rated well above it.</li>
+<li><strong>Ignoring the supporting structure.</strong> If concrete will rest on a deck, balcony, roof or suspended floor, have a structural engineer confirm the framing can carry it. This tool does not do that.</li>
+<li><strong>Assuming every mix is 150 lb/ft³.</strong> Lightweight and heavyweight mixes differ by a large margin. If you know your mix design density, use the custom option.</li>
+</ul>
+</section>
+
+<section>
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much does a cubic yard of concrete weigh?</summary><p>Plain normal-weight concrete weighs about 3,900 pounds per cubic yard (145 lb/ft³ × 27), and reinforced concrete about 4,050 pounds. Use roughly 4,000 lb, or 1.8 metric tonnes, as a quick estimate.</p></details>
+<details><summary>How much does concrete weigh per cubic foot?</summary><p>Typically 145 to 150 pounds per cubic foot, or about 2,320 to 2,400 kg per cubic metre. Lightweight mixes can be as low as 90 to 115 lb/ft³.</p></details>
+<details><summary>How much does a 4-inch concrete slab weigh per square foot?</summary><p>A 4-inch slab is one third of a cubic foot per square foot of area, so it weighs about 48 to 50 pounds per square foot. A 6-inch slab weighs about 72 to 75 lb/ft².</p></details>
+<details><summary>Does wet concrete weigh more than cured concrete?</summary><p>Freshly mixed concrete is slightly heavier than fully cured concrete because some mixing water evaporates or is chemically bound as it cures. The difference is usually a few percent, and this calculator's allowance covers it. When moving a load of fresh concrete, plan for the higher number.</p></details>
+<details><summary>Can my pickup truck carry a yard of concrete?</summary><p>Usually not. A cubic yard weighs about 4,000 pounds, which exceeds the payload of most half-ton pickups (often 1,000 to 1,800 lb). Check the payload sticker on your door jamb and never exceed it.</p></details>
+<details><summary>Does rebar change the weight of concrete?</summary><p>Yes, slightly. Steel is about 490 lb/ft³, so reinforcement raises the average density by roughly 3 to 5 lb/ft³ at typical rebar ratios. That is why the reinforced option uses 150 lb/ft³ instead of 145.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="related">
+<li><a href="/weld-weight-calculator/">Weld Weight Calculator</a></li>
+<li><a href="/concrete-steps-calculator/">Concrete Steps Calculator</a></li>
+<li><a href="/concrete-patio-cost-calculator/">Concrete Patio Cost Calculator</a></li>
+<li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li>
+<li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a></li>
+<li><a href="/sonotube-round-column-concrete-calculator/">Sonotube &amp; Round Column Concrete Calculator</a></li>
+</ul>
+</section>
+</div>
+</main>
+
+<nav class="cluster-nav" aria-label="More Concrete, Masonry &amp; Foundations Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Concrete, Masonry &amp; Foundations Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li><li><a href="/concrete-patio-cost-calculator/">Concrete Patio Cost Calculator</a></li><li><a href="/concrete-steps-calculator/">Concrete Steps Calculator</a></li><li><a href="/concrete-volume-calculator/">Concrete Volume Calculator</a></li><li><a href="/fence-post-spacing-concrete-calculator/">Fence Post Spacing &amp; Concrete Calculator</a></li><li><a href="/garage-slab-thickness-reinforcement-calculator/">Garage Concrete Slab Thickness &amp; Reinforcement Calculator</a></li><li><a href="/rebar-spacing-weight-calculator/">Rebar Spacing &amp; Weight Calculator</a></li><li><a href="/sonotube-round-column-concrete-calculator/">Sonotube &amp; Round Column Concrete Calculator</a></li><li><a href="/concrete-calculators/"><strong>All Concrete, Masonry &amp; Foundations calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<p><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</footer>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var LEN={ft:1,'in':1/12,m:1/0.3048,cm:1/30.48,yd:3};
+var DENS={light:110,normal:145,reinf:150,heavy:200};
+var NAMES={light:'Lightweight',normal:'Normal weight, plain',reinf:'Reinforced normal weight',heavy:'Heavyweight aggregate'};
+var lastText='';
+$('yr').textContent=new Date().getFullYear();
+function f(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function fm(n){return n.toLocaleString('en-US',{maximumFractionDigits:2})}
+function ceilTo(x,s){return Math.ceil(x/s-1e-6)*s}
+function val(id){return $(id).value.replace(/,/g,'').trim()}
+function setErr(id,msg){$(id).classList.add('error');$(id).setAttribute('aria-invalid','true');$(id+'Err').textContent=msg}
+function clearErrs(){['dimA','dimB','dimC','qty','custDens'].forEach(function(id){$(id).classList.remove('error');$(id).removeAttribute('aria-invalid');$(id+'Err').textContent=''})}
+function read(id,name,unitId){
+  var s=val(id);
+  if(!s){setErr(id,'Enter the '+name+'.');return null}
+  var n=Number(s);
+  if(!isFinite(n)){setErr(id,'Enter a number, for example 10 or 4.5.');return null}
+  if(n<=0){setErr(id,'The '+name+' must be greater than zero.');return null}
+  if(unitId&&n*LEN[$(unitId).value]>10000){setErr(id,'That is over 10,000 ft. Check the unit.');return null}
+  return n;
+}
+function hideResults(){$('results').innerHTML='';lastText='';$('tSum').textContent='Enter sizes, then calculate'}
+function dims(){
+  var cyl=$('shape').value==='cyl';
+  function lab(id,u,p){var n=Number(val(id));return p+(isFinite(n)&&n>0?fm(n)+' '+$(u).value:'—')}
+  $('tL').textContent=lab('dimA','unitA','L = ');
+  $('tW').textContent=lab('dimB','unitB','W = ');
+  $('tT').textContent=lab('dimC','unitC','T = ');
+  $('tD').textContent=lab('dimA','unitA','Ø = ');
+  $('tH').textContent=lab('dimC','unitC','H = ');
+}
+function setShape(){
+  var cyl=$('shape').value==='cyl';
+  $('gSlab').classList.toggle('hide',cyl);$('gCyl').classList.toggle('hide',!cyl);
+  $('fieldB').classList.toggle('hide',cyl);
+  $('lblA').textContent=cyl?'Diameter':'Length';
+  $('lblC').textContent=cyl?'Height':'Thickness';
+  $('unitA').setAttribute('aria-label',cyl?'Diameter unit':'Length unit');
+  $('unitC').setAttribute('aria-label',cyl?'Height unit':'Thickness unit');
+  if(cyl){$('dimA').value='12';$('unitA').value='in';$('dimC').value='4';$('unitC').value='ft'}
+  else{$('dimA').value='10';$('unitA').value='ft';$('dimB').value='10';$('unitB').value='ft';$('dimC').value='4';$('unitC').value='in'}
+  clearErrs();dims();hideResults();
+}
+function row(a,b){return '<tr><td>'+a+'</td><td class="n">'+b+'</td></tr>'}
+function calculate(){
+  clearErrs();
+  var cyl=$('shape').value==='cyl';
+  var a=read('dimA',cyl?'diameter':'length','unitA');
+  var b=cyl?1:read('dimB','width','unitB');
+  var c=read('dimC',cyl?'height':'thickness','unitC');
+  var q=null,qs=val('qty'),qn=Number(qs);
+  if(!qs||!isFinite(qn)||qn<1||Math.floor(qn)!==qn||qn>100000){setErr('qty','Enter a whole number from 1 to 100,000.')}else{q=qn}
+  var key=$('dens').value,d=null;
+  if(key==='custom'){
+    var cn=read('custDens','density');
+    if(cn!==null){
+      var dl=$('custUnit').value==='kg'?cn/16.01846337:cn;
+      if(dl<20||dl>400){setErr('custDens','Density should be between 20 and 400 lb/ft³ (320 to 6,400 kg/m³).')}else{d=dl}
+    }
+  }else d=DENS[key];
+  if(a===null||b===null||c===null||q===null||d===null){hideResults();return}
+  var aF=a*LEN[$('unitA').value],cF=c*LEN[$('unitC').value];
+  var bF=cyl?1:b*LEN[$('unitB').value];
+  var vol1=cyl?Math.PI*Math.pow(aF/2,2)*cF:aF*bF*cF;
+  var vol=vol1*q;
+  var m=Number($('margin').value)/100;
+  var netLb=vol*d,totLb=netLb*(1+m);
+  var KG=0.45359237;
+  var planLb=ceilTo(totLb,10),planKg=ceilTo(totLb*KG,5);
+  var tons=ceilTo(totLb/2000,0.01),tonnes=ceilTo(totLb*KG/1000,0.01);
+  var netLbR=ceilTo(netLb,10),netKgR=ceilTo(netLb*KG,5);
+  var trips=Math.ceil(totLb/1500-1e-9);
+  var mp=Math.round(m*100);
+  var allow=mp>0?'with '+mp+'% allowance':'no allowance';
+  var html='<div class="res"><div class="key"><div class="big">'+f(planLb,0)+' lb</div><div class="sub">≈ '+f(planKg,0)+' kg · '+f(tons,2)+' short tons · '+allow+', rounded up</div></div>';
+  html+='<p class="h3">Volume and weight</p><div class="tw"><table><thead><tr><th>Measure</th><th class="n">Value</th></tr></thead><tbody>';
+  html+=row('Volume (cubic feet)',f(vol,2)+' ft³')+row('Volume (cubic yards)',f(vol/27,2)+' yd³')+row('Volume (cubic metres)',f(vol*0.028316846592,2)+' m³');
+  html+=row('Density used',f(d,1)+' lb/ft³ ('+f(d*16.01846337,0)+' kg/m³)');
+  html+=row('Net weight, no allowance',f(netLbR,0)+' lb / '+f(netKgR,0)+' kg');
+  html+=row('Planning weight ('+allow+')',f(planLb,0)+' lb / '+f(planKg,0)+' kg');
+  html+=row('Short tons (US)',f(tons,2))+row('Metric tonnes',f(tonnes,2));
+  if(q>1)html+=row('Per piece ('+f(q,0)+' pieces)',f(ceilTo(totLb/q,10),0)+' lb');
+  html+=row('Trips at 1,500 lb pickup payload',f(trips,0));
+  html+='</tbody></table></div>';
+  var types=['light','normal','reinf','heavy'];
+  html+='<p class="h3">Same volume, different concrete types</p><div class="tw"><table><thead><tr><th>Type</th><th class="n">lb/ft³</th><th class="n">Weight (lb)</th><th class="n">Weight (kg)</th></tr></thead><tbody>';
+  var rows=types.map(function(t){return {k:t,n:NAMES[t],d:DENS[t]}});
+  if(key==='custom')rows.push({k:'custom',n:'Your custom density',d:d});
+  rows.forEach(function(r){
+    var w=vol*r.d*(1+m);
+    html+='<tr'+(r.k===key?' class="sel"':'')+'><td>'+r.n+'</td><td class="n">'+f(r.d,0)+'</td><td class="n">'+f(ceilTo(w,10),0)+'</td><td class="n">'+f(ceilTo(w*KG,5),0)+'</td></tr>';
+  });
+  html+='</tbody></table></div>';
+  var warn='Planning estimate only, rounded up. Densities are typical rule-of-thumb values (about 145 lb/ft³ plain, 150 lb/ft³ reinforced); local codes and mix designs vary. This is not engineering, permit or inspection approval.';
+  if(totLb>1500)warn+=' This load exceeds a typical half-ton pickup payload of about 1,500 lb, so use properly rated equipment.';
+  if(totLb>=500)warn+=' If it will rest on a deck, balcony, roof or suspended floor, have a structural engineer verify the support.';
+  html+='<div class="note">'+warn+'</div><button class="copy" id="copyBtn" type="button">Copy results</button></div>';
+  lastText='Concrete weight: '+f(planLb,0)+' lb ('+f(planKg,0)+' kg, '+f(tons,2)+' short tons, '+f(tonnes,2)+' metric tonnes), '+allow+', rounded up. Volume: '+f(vol,2)+' ft³ ('+f(vol/27,2)+' yd³, '+f(vol*0.028316846592,2)+' m³) at '+f(d,1)+' lb/ft³. Planning estimate only; local codes vary.';
+  requestAnimationFrame(function(){
+    $('results').innerHTML=html;
+    $('tSum').textContent='≈ '+f(planLb,0)+' lb ('+f(planKg,0)+' kg)';
+    dims();
+  });
+}
+function copyText(btn){
+  function done(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy results'},2000)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,fb)}else fb();
+  function fb(){var t=document.createElement('textarea');t.value=lastText;t.setAttribute('readonly','');t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);done()}
+}
+$('calcBtn').addEventListener('click',function(){requestAnimationFrame(calculate)});
+$('results').addEventListener('click',function(e){if(e.target&&e.target.id==='copyBtn')copyText(e.target)});
+$('shape').addEventListener('change',setShape);
+$('dens').addEventListener('change',function(){$('fieldCust').classList.toggle('hide',$('dens').value!=='custom')});
+$('margin').addEventListener('input',function(){
+  $('marginVal').textContent=$('margin').value+'%';
+  if($('results').innerHTML)calculate();
+});
+['dimA','dimB','dimC','unitA','unitB','unitC'].forEach(function(id){$(id).addEventListener('input',dims);$(id).addEventListener('change',dims)});
+document.querySelector('.card').addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&e.target.tagName==='INPUT'&&e.target.type!=='range'){e.preventDefault();requestAnimationFrame(calculate)}
+});
+dims();calculate();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
