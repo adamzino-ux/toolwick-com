@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Soil Swell &amp; Shrink Factor Calculator | Toolwick</title>
+<meta name="description" content="Free soil swell factor calculator: convert bank, loose and compacted cubic yards or meters, find load and shrink factors, and count truck loads.">
+<link rel="canonical" href="https://toolwick.com/soil-swell-shrink-factor-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+input[type=number],select{width:100%;min-height:46px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.err,select.err{border-color:#e74c3c}
+.emsg{color:#c0392b;font-size:.85rem;min-height:0;margin-top:.3rem}
+.field{margin-bottom:1.25rem}
+.row{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+input[type=range]{width:100%;height:44px;accent-color:#0077b6;margin:0}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666;margin-top:-6px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+button{font-family:inherit;font-size:1rem;cursor:pointer;border-radius:6px;min-height:46px}
+.btn{background:#0077b6;color:#fff;border:0;padding:12px 24px;font-weight:600;flex:1 1 200px}
+.btn:hover{background:#006299}
+.btn2{background:#fff;color:#0077b6;border:1px solid #0077b6;padding:12px 24px;flex:1 1 120px}
+.btn2:hover{background:#f0f8fc}
+#results{margin-top:1.5rem}
+.fade{opacity:0;transition:opacity .3s ease}
+.fade.show{opacity:1}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.key .l{font-size:.9rem;color:#444}
+.key .big{font-size:2.2rem;font-weight:800;color:#0077b6;line-height:1.2;word-break:break-word}
+.key .s{font-size:.95rem;color:#444;margin-top:.25rem}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right}
+tr.hl td{font-weight:700}
+h3{font-size:1rem;margin:0 0 .5rem}
+.copy{background:#fff;border:1px solid #ccc;color:#444;padding:8px 16px;font-size:.85rem;min-height:44px}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;margin-top:1rem}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.5rem 0 0}
+.formula{background:#f8f9fa;padding:.75rem 1rem;border-radius:6px;font-family:Consolas,monospace;font-size:.9rem;overflow-x:auto}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel{display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1.5rem;padding:0;list-style:none}
+.rel a{display:inline-block;min-height:44px;padding-top:8px}
+footer{border-top:1px solid #eee;margin-top:2rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem}
+@media(max-width:640px){.card{padding:1.25rem}.row{grid-template-columns:1fr}.rel{grid-template-columns:1fr}h1{font-size:1.5rem}.key .big{font-size:1.8rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/soil-swell-shrink-factor-calculator/">
+<meta property="og:title" content="Soil Swell &amp; Shrink Factor Calculator">
+<meta property="og:description" content="Free soil swell factor calculator: convert bank, loose and compacted cubic yards or meters, find load and shrink factors, and count truck loads.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Soil Swell & Shrink Factor Calculator</h1>
+<p>Use this soil swell factor calculator to convert excavation volumes between bank (in-place), loose (hauled) and compacted (placed fill) states, see your load and shrink factors, and count how many truck loads a job needs.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="dia" viewBox="0 0 360 224" role="img" aria-label="Diagram of bank, loose and compacted soil volumes">
+<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#0077b6"/></marker></defs>
+<line x1="180" y1="180" x2="180" y2="180" stroke="none"/>
+<line x1="10" y1="180" x2="350" y2="180" stroke="#1a1a2e" stroke-width="1.5"/>
+<line id="gl" x1="10" y1="50" x2="350" y2="50" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="5 4"/>
+<rect id="rB" x="25" y="50" width="70" height="130" fill="#e6f3fa" stroke="#0077b6" stroke-width="2"/>
+<rect id="rL" x="145" y="50" width="70" height="130" fill="#fff" stroke="#0077b6" stroke-width="2" stroke-dasharray="6 3"/>
+<rect id="rC" x="265" y="50" width="70" height="130" fill="#b9dcee" stroke="#0077b6" stroke-width="2"/>
+<line x1="100" y1="155" x2="140" y2="155" stroke="#0077b6" stroke-width="2" marker-end="url(#ah)"/>
+<line x1="220" y1="155" x2="260" y2="155" stroke="#0077b6" stroke-width="2" marker-end="url(#ah)"/>
+<text id="aS" x="120" y="146" text-anchor="middle" font-size="13" font-weight="700" fill="#0077b6">+25%</text>
+<text id="aH" x="240" y="146" text-anchor="middle" font-size="13" font-weight="700" fill="#0077b6">−12%</text>
+<text id="tB" x="60" y="44" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">100.00</text>
+<text id="tL" x="180" y="44" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">125.00</text>
+<text id="tC" x="300" y="44" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e">88.00</text>
+<text x="60" y="198" text-anchor="middle" font-size="13" fill="#1a1a2e">Bank</text>
+<text x="180" y="198" text-anchor="middle" font-size="13" fill="#1a1a2e">Loose</text>
+<text x="300" y="198" text-anchor="middle" font-size="13" fill="#1a1a2e">Compacted</text>
+<text id="tF" x="180" y="strong" text-anchor="middle" font-size="11.5" fill="#1a1a2e">Load factor 0.800 · Shrink factor 0.880 · yd³</text>
+</svg>
+</div>
+
+<div class="field"><label for="soil">Soil type (typical starting values)</label>
+<select id="soil">
+<option value="loam" selected>Common earth / loam (25% swell, 12% shrink)</option>
+<option value="sand">Sand, dry (12% swell, 10% shrink)</option>
+<option value="gravel">Gravel (12% swell, 8% shrink)</option>
+<option value="topsoil">Topsoil (30% swell, 15% shrink)</option>
+<option value="clay">Clay (40% swell, 15% shrink)</option>
+<option value="rock">Blasted rock (50% swell, 5% shrink)</option>
+<option value="custom">Custom (enter your own)</option>
+</select></div>
+
+<div class="field"><label for="vtype">The volume I know is…</label>
+<select id="vtype">
+<option value="bank" selected>Bank (in the ground, undisturbed)</option>
+<option value="loose">Loose (in the truck or stockpile)</option>
+<option value="comp">Compacted (placed and compacted fill)</option>
+</select></div>
+
+<div class="field"><div class="row">
+<div><label for="vol">Volume</label><input type="number" id="vol" inputmode="decimal" min="0" step="any" value="100"><div class="emsg" id="vol-e"></div></div>
+<div><label for="unit">Unit</label><select id="unit" aria-label="Volume unit"><option value="yd" selected>yd³ (cubic yards)</option><option value="m">m³ (cubic meters)</option></select></div>
+</div></div>
+
+<div class="field"><label for="swell">Swell (%) — bank to loose</label>
+<input type="number" id="swell" inputmode="decimal" min="0" max="100" step="any" value="25">
+<label for="swellR" class="sr">Swell percentage slider</label>
+<input type="range" id="swellR" min="0" max="100" step="1" value="25">
+<div class="ticks"><span>0%</span><span>50%</span><span>100%</span></div>
+<div class="emsg" id="swell-e"></div></div>
+
+<div class="field"><label for="shrink">Shrinkage (%) — bank to compacted</label>
+<input type="number" id="shrink" inputmode="decimal" min="0" max="50" step="any" value="12">
+<label for="shrinkR" class="sr">Shrinkage percentage slider</label>
+<input type="range" id="shrinkR" min="0" max="50" step="1" value="12">
+<div class="ticks"><span>0%</span><span>25%</span><span>50%</span></div>
+<div class="emsg" id="shrink-e"></div></div>
+
+<div class="field"><label for="truck" id="truckL">Truck capacity, loose volume (yd³) — optional</label>
+<input type="number" id="truck" inputmode="decimal" min="0" step="any" value="12">
+<div class="emsg" id="truck-e"></div></div>
+
+<div class="btns"><button class="btn" id="go" type="button">Calculate</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p><button class="btn2" id="reset" type="button">Reset</button></div>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<h2>How to Use This Soil Swell & Shrink Factor Calculator</h2>
+<p>Pick a soil type to load typical swell and shrinkage percentages, or choose Custom and type your own from a geotechnical report or past jobs. Select which volume you already know (bank, loose or compacted), enter it, and add your truck capacity if you want a load count. The calculator returns all three volumes, the swell, load and shrink factors, a rounded-up truck count, and a table showing how the answer shifts if your swell estimate is a few points off.</p>
+
+<h2>Why This Matters</h2>
+<p>Dirt does not occupy the same space after you dig it. A cubic yard of clay in the ground can become about 1.4 cubic yards once it is loosened and loaded, because digging breaks the soil structure and opens air voids. Ignore that and you under-order trucks, under-size stockpile areas and blow your haul budget. A 40 × 30 ft basement dug 8 ft deep is roughly 356 bank yards, but at 25% swell you are actually moving about 444 loose yards, which is the difference between 30 loads and 38 loads.</p>
+<p>The same physics works in reverse when you import fill. Compacting soil squeezes those voids out, so a yard of loose borrow material rarely yields a full yard of finished fill. If a spec calls for 100 compacted yards behind a retaining wall, you may need 140 or more loose yards delivered. Excavation contractors, site-work estimators, landscapers, homeowners planning a pond or grading project, and anyone ordering fill or hauling spoil use these factors. Getting them right early protects schedules and prevents the all-too-common "we're short a few loads" call.</p>
+
+<h2>How It's Calculated</h2>
+<p>Earthmoving uses three volume states. <strong>Bank</strong> (BCY or BCM) is soil undisturbed in place. <strong>Loose</strong> (LCY or LCM) is soil after excavation. <strong>Compacted</strong> (CCY or CCM) is soil after it is placed and compacted. The calculator follows the standard bank/loose/compacted convention used in equipment-manufacturer performance handbooks, and compaction targets are normally verified against ASTM D698 or D1557 density tests. Local specifications and soil conditions vary.</p>
+<div class="formula">Loose = Bank × (1 + Swell%)<br>Compacted = Bank × (1 − Shrink%)<br>Load factor = 1 ÷ (1 + Swell%)<br>Truck loads = Loose ÷ Truck capacity, rounded up</div>
+<p>If you know the loose volume, the calculator divides by (1 + swell) to get bank. If you know the compacted volume, it divides by (1 − shrink). Shrinkage here is measured from the original bank volume, not from the loose volume. Truck loads and the planning volume are always rounded up to the next whole number, so the estimate errs on the side of having enough capacity rather than too little.</p>
+
+<h2>Worked Example</h2>
+<p>You are excavating a basement 40 ft × 30 ft × 8 ft deep in common earth.</p>
+<ul>
+<li><strong>Bank volume:</strong> 40 × 30 × 8 = 9,600 ft³ ÷ 27 = 355.56 yd³.</li>
+<li><strong>Swell:</strong> 25% gives a swell factor of 1.25, so loose volume = 355.56 × 1.25 = 444.45 yd³. The load factor is 1 ÷ 1.25 = 0.800.</li>
+<li><strong>Trucks:</strong> with 12 yd³ loose capacity, 444.45 ÷ 12 = 37.04, which rounds up to 38 loads.</li>
+<li><strong>Compacted:</strong> with 12% shrinkage, 355.56 × 0.88 = 312.89 yd³ of soil if that same material were placed and compacted.</li>
+</ul>
+<p>Enter 355.56 as bank volume with those settings and the tool shows the same figures. Now reverse it: to build 100 compacted yards of fill, divide by 0.88 to get 113.64 bank yards, which equals 142.05 loose yards to deliver.</p>
+
+<h2>Tips & Common Mistakes</h2>
+<ul>
+<li><strong>Don't mix up volume states.</strong> Quarry and landscape suppliers sell loose yards; engineers' plans usually show bank or compacted yards. Always confirm which one a number refers to.</li>
+<li><strong>Treat the presets as starting points.</strong> Moisture, rock content and gradation move swell by 10 points or more. Use test data or local experience where you can.</li>
+<li><strong>Remember truck capacity is "struck" versus "heaped."</strong> Enter the realistic loose capacity you actually haul, not the advertised maximum, and consider legal weight limits for dense, wet soil.</li>
+<li><strong>Add contingency.</strong> Over-excavation, trench slopes, soft spots and spillage all add volume. Many estimators add 5–10% on top of the computed figure.</li>
+<li><strong>Don't confuse shrink with swell.</strong> Shrinkage is measured against the bank volume. Reversing the percentages will give you the wrong amount of fill.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What is a soil swell factor?</summary><p>It is the ratio by which soil increases in volume when excavated, shown as a percentage. A 25% swell means 1 bank yard becomes 1.25 loose yards. It depends on soil type, moisture and how finely the material is broken up.</p></details>
+<details><summary>What is the difference between swell factor and load factor?</summary><p>Swell factor is the percentage volume increase (1 + swell%), while load factor is its reciprocal, 1 ÷ (1 + swell%). Load factor converts loose volume back to bank volume. For 25% swell the load factor is 0.800.</p></details>
+<details><summary>How do I convert bank cubic yards to loose cubic yards?</summary><p>Multiply the bank volume by (1 + swell%). For 200 bank yards of clay at 40% swell, 200 × 1.40 = 280 loose yards. Select "Bank" in the calculator and enter 200 to see this directly.</p></details>
+<details><summary>What is the shrink factor for compacted soil?</summary><p>Shrink factor is compacted volume divided by bank volume, which is 1 minus the shrinkage percentage. A 12% shrinkage gives a factor of 0.88, so 100 bank yards compact to about 88 yards. Required compaction level, set by your project spec, strongly affects the result.</p></details>
+<details><summary>How many truck loads do I need to haul my excavated soil?</summary><p>Convert the bank volume to loose volume, then divide by the truck's loose capacity and round up. For 444.45 loose yards and a 12-yard truck, you need 38 loads. Add extra for contingency if conditions are uncertain.</p></details>
+<details><summary>Is this calculator suitable for engineering or permit approval?</summary><p>No. It is a planning estimate based on typical values and standard formulas. Confirm swell, shrinkage and compaction requirements with your geotechnical report, project specifications and local authorities.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/concrete-wall-calculator/">Concrete Wall Calculator</a></li>
+<li><a href="/attic-insulation-depth-r-value-calculator/">Attic Insulation Depth & R-Value Calculator</a></li>
+<li><a href="/concrete-weight-calculator/">Concrete Weight Calculator</a></li>
+<li><a href="/fence-stain-calculator/">Fence Stain Calculator</a></li>
+<li><a href="/split-rail-fence-calculator/">Split Rail Fence Calculator</a></li>
+<li><a href="/weld-weight-calculator/">Weld Weight Calculator</a></li>
+</ul>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/soil-swell-shrink-factor-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var PRE={sand:[12,10],gravel:[12,8],loam:[25,12],topsoil:[30,15],clay:[40,15],rock:[50,5]};
+var YM=0.764555,prevUnit='yd',lastText='';
+function f(n,d){d=d==null?2:d;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function num(id){var s=$(id).value.trim();return s===''?NaN:Number(s)}
+function uName(){return $('unit').value==='yd'?'yd³':'m³'}
+function setErr(id,msg){$(id).classList.add('err');$(id+'-e').textContent=msg}
+function clearErr(){['vol','swell','shrink','truck'].forEach(function(i){$(i).classList.remove('err');$(i+'-e').textContent=''})}
+function sync(a,b,custom){
+  $(a).addEventListener('input',function(){var v=$(a).value;if(v!==''&&!isNaN(v))$(b).value=Math.min(Math.max(Number(v),Number($(b).min)),Number($(b).max));if(custom)$('soil').value='custom'});
+  $(b).addEventListener('input',function(){$(a).value=$(b).value;$('soil').value='custom'});
+}
+sync('swell','swellR',true);sync('shrink','shrinkR',true);
+$('soil').addEventListener('change',function(){var p=PRE[$('soil').value];if(p){$('swell').value=p[0];$('swellR').value=p[0];$('shrink').value=p[1];$('shrinkR').value=p[1]}});
+function labels(){$('truckL').textContent='Truck capacity, loose volume ('+uName()+') — optional'}
+$('unit').addEventListener('change',function(){
+  var u=$('unit').value;if(u===prevUnit)return;
+  ['vol','truck'].forEach(function(i){var v=num(i);if(!isNaN(v)&&v>=0){$(i).value=Math.round((u==='m'?v*YM:v/YM)*100)/100}});
+  prevUnit=u;labels();
+});
+function draw(b,l,c,sw,sh){
+  var mx=Math.max(b,l,c),H=130,hb=H*b/mx,hl=H*l/mx,hc=H*c/mx;
+  function set(r,t,h,v,x){$(r).setAttribute('y',180-h);$(r).setAttribute('height',h);$(t).setAttribute('y',180-h-6);$(t).textContent=v}
+  set('rB','tB',hb,f(b,b>=100000?0:2));set('rL','tL',hl,f(l,l>=100000?0:2));set('rC','tC',hc,f(c,c>=100000?0:2));
+  $('gl').setAttribute('y1',180-hb);$('gl').setAttribute('y2',180-hb);
+  $('aS').textContent='+'+f(sw,sw%1?1:0)+'%';$('aH').textContent='−'+f(sh,sh%1?1:0)+'%';
+  $('tF').textContent='Load factor '+f(1/(1+sw/100),3)+' · Shrink factor '+f(1-sh/100,3)+' · '+uName();
+  $('dia').setAttribute('aria-label','Diagram: bank '+f(b)+', loose '+f(l)+', compacted '+f(c)+' '+uName());
+}
+function calc(){
+  clearErr();
+  var vol=num('vol'),sw=num('swell'),sh=num('shrink'),tr=num('truck'),t=$('vtype').value,bad=false;
+  if(isNaN(vol)||vol<=0){setErr('vol','Enter a volume greater than zero.');bad=true}
+  else if(vol>1e9){setErr('vol','That volume is too large. Enter a value under 1,000,000,000.');bad=true}
+  if(isNaN(sw)||sw<0||sw>100){setErr('swell','Enter a swell between 0 and 100%.');bad=true}
+  if(isNaN(sh)||sh<0||sh>50){setErr('shrink','Enter a shrinkage between 0 and 50%.');bad=true}
+  if($('truck').value.trim()!==''&&(isNaN(tr)||tr<=0)){setErr('truck','Enter a truck capacity above zero, or leave blank.');bad=true}
+  if(bad){requestAnimationFrame(function(){$('results').innerHTML=''});return}
+  var fs=1+sw/100,fh=1-sh/100;
+  var bank=t==='bank'?vol:(t==='loose'?vol/fs:vol/fh);
+  var loose=bank*fs,comp=bank*fh,u=uName();
+  var hasT=!isNaN(tr)&&tr>0,loads=hasT?Math.ceil(loose/tr-1e-9):null;
+  var plan=Math.ceil(loose-1e-9);
+  function mk(n,v,fac,inp){return '<tr'+(inp?' class="hl"':'')+'><td>'+n+(inp?' (your input)':'')+'</td><td class="n">'+f(v)+'</td><td class="n">'+f(fac,3)+'</td></tr>'}
+  var h='<div class="fade"><div class="key"><div class="l">Loose volume to haul or order</div><div class="big">'+f(loose)+' '+u+'</div><div class="s">'+(hasT?'About '+f(loads,0)+' truck load'+(loads===1?'':'s')+' at '+f(tr)+' '+u+' each (rounded up)':'Enter a truck capacity to see the load count')+'</div></div>';
+  h+='<h3>Volume by soil state</h3><div class="tw"><table><thead><tr><th>State</th><th class="n">Volume ('+u+')</th><th class="n">Factor vs. bank</th></tr></thead><tbody>'+mk('Bank (in place)',bank,1,t==='bank')+mk('Loose (excavated)',loose,fs,t==='loose')+mk('Compacted (placed)',comp,fh,t==='comp')+'</tbody></table></div>';
+  h+='<h3>Factors and planning figures</h3><div class="tw"><table><tbody><tr><td>Swell factor (1 + swell)</td><td class="n">'+f(fs,3)+'</td></tr><tr><td>Load factor (1 ÷ swell factor)</td><td class="n">'+f(1/fs,3)+'</td></tr><tr><td>Shrink factor (1 − shrinkage)</td><td class="n">'+f(fh,3)+'</td></tr><tr><td>Loose volume rounded up ('+u+')</td><td class="n">'+f(plan,0)+'</td></tr>'+(hasT?'<tr><td>Truck loads (rounded up)</td><td class="n">'+f(loads,0)+'</td></tr>':'')+'</tbody></table></div>';
+  var list=[sw-10,sw-5,sw,sw+5,sw+10].filter(function(x,i,a){return x>=0&&x<=100&&a.indexOf(x)===i});
+  h+='<h3>If your swell estimate is off</h3><div class="tw"><table><thead><tr><th class="n">Swell %</th><th class="n">Loose ('+u+')</th>'+(hasT?'<th class="n">Truck loads</th>':'')+'</tr></thead><tbody>';
+  list.forEach(function(s){var lv=bank*(1+s/100);h+='<tr'+(s===sw?' class="hl"':'')+'><td class="n">'+f(s,s%1?1:0)+'%</td><td class="n">'+f(lv)+'</td>'+(hasT?'<td class="n">'+f(Math.ceil(lv/tr-1e-9),0)+'</td>':'')+'</tr>'});
+  h+='</tbody></table></div><p style="font-size:.85rem;color:#555;margin-top:-.75rem">Bank volume held at '+f(bank)+' '+u+'.</p>';
+  h+='<button class="copy" id="copyBtn" type="button">Copy results</button>';
+  h+='<div class="note">Planning estimate only, based on the standard bank/loose/compacted method and typical soil values. It is not engineering, permit or inspection approval. Confirm swell, shrinkage and compaction requirements against your geotechnical report, project specs and local codes. Consider a 5–10% contingency.</div></div>';
+  lastText='Soil swell & shrink results ('+u+'): Bank '+f(bank)+' | Loose '+f(loose)+' | Compacted '+f(comp)+' | Swell '+f(sw)+'% | Shrinkage '+f(sh)+'%'+(hasT?' | Truck loads (rounded up) '+f(loads,0)+' at '+f(tr)+' '+u:'');
+  requestAnimationFrame(function(){
+    $('results').innerHTML=h;
+    draw(bank,loose,comp,sw,sh);
+    requestAnimationFrame(function(){var e=$('results').firstElementChild;if(e)e.classList.add('show')});
+  });
+}
+$('go').addEventListener('click',function(){requestAnimationFrame(calc)});
+['vol','swell','shrink','truck','soil','vtype','unit'].forEach(function(i){$(i).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();requestAnimationFrame(calc)}})});
+$('reset').addEventListener('click',function(){
+  $('soil').value='loam';$('vtype').value='bank';$('unit').value='yd';prevUnit='yd';
+  $('vol').value=100;$('swell').value=25;$('swellR').value=25;$('shrink').value=12;$('shrinkR').value=12;$('truck').value=12;
+  clearErr();labels();requestAnimationFrame(function(){$('results').innerHTML='';draw(100,125,88,25,12)});
+});
+$('results').addEventListener('click',function(e){
+  if(e.target.id!=='copyBtn')return;
+  var b=e.target;
+  function ok(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(ok,function(){})}
+  else{var ta=document.createElement('textarea');ta.value=lastText;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok()}catch(x){}document.body.removeChild(ta)}
+});
+$('tF').setAttribute('y',216);
+draw(100,125,88,25,12);
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
