@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Concrete Wall Calculator | Toolwick</title>
+<meta name="description" content="Free concrete wall calculator: enter length, height and thickness to get cubic yards, bags, weight, rebar and cost with waste included.">
+<link rel="canonical" href="https://toolwick.com/concrete-wall-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.15rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:2rem;line-height:1.2;margin:2rem 0 .75rem}
+h2{font-size:1.4rem;margin:2.5rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram p{font-size:.85rem;color:#666;margin:.25rem 0 0;text-align:center}
+.seg{display:flex;gap:0;margin-bottom:1.25rem}
+.seg button{flex:1;min-height:44px;border:1px solid #0077b6;background:#fff;color:#0077b6;font-size:.95rem;font-weight:600;cursor:pointer;padding:8px 10px;font-family:inherit}
+.seg button:first-child{border-radius:6px 0 0 6px}
+.seg button:last-child{border-radius:0 6px 6px 0;border-left:0}
+.seg button[aria-pressed=true]{background:#0077b6;color:#fff}
+.f{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;min-height:0;margin-top:.25rem}
+.hint{font-size:.8rem;color:#666;margin-top:.25rem}
+input[type=range]{padding:0;min-height:44px;accent-color:#0077b6;border:0}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.btn{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:44px;width:100%;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.85rem;min-height:44px;cursor:pointer;font-family:inherit;margin-top:1rem;width:100%}
+#results{margin-top:1.5rem}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+.kl{font-size:.9rem;color:#444;font-weight:500}
+.kn{font-size:2.4rem;font-weight:800;color:#0077b6;line-height:1.2}
+.ks{font-size:.85rem;color:#666}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+td:last-child,th:last-child{text-align:right}
+td:nth-child(2):not(:last-child),th:nth-child(2):not(:last-child){text-align:right}
+tr.hl td{background:#e8f4fb!important;font-weight:600}
+.warn{background:#fff8e5;border-left:4px solid #e0a800;padding:.75rem 1rem;margin:.75rem 0;font-size:.9rem;border-radius:0 6px 6px 0}
+.note{background:#f8f9fa;padding:.75rem 1rem;font-size:.85rem;color:#444;border-radius:6px;margin:.75rem 0}
+.ad-slot{min-height:0;margin:0}
+.formula{background:#f8f9fa;padding:1rem;border-radius:6px;font-family:Consolas,Menlo,monospace;font-size:.85rem;overflow-x:auto;margin:0 0 1rem}
+details{border-bottom:1px solid #e8e8e8;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .5rem}
+ul{padding-left:1.25rem}
+li{margin-bottom:.5rem}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666;text-align:center}
+footer a{color:#0077b6;text-decoration:underline;margin:0 .5rem;display:inline-block;min-height:44px;line-height:44px}
+.rel a{display:inline-block;padding:10px 0}
+@media(max-width:640px){.card{padding:1.25rem}h1{font-size:1.65rem}.kn{font-size:2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/concrete-wall-calculator/">
+<meta property="og:title" content="Concrete Wall Calculator">
+<meta property="og:description" content="Free concrete wall calculator: enter length, height and thickness to get cubic yards, bags, weight, rebar and cost with waste included.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Concrete Wall Calculator</h1>
+<p>Use this concrete wall calculator to work out how many cubic yards (or cubic metres) of concrete a poured wall needs, plus bag counts, weight, rebar and an optional cost estimate. Enter the wall length, height and thickness and the numbers update instantly, with waste built in and every order quantity rounded up, never down.</p>
+
+<div class="card">
+<div class="diagram">
+<svg viewBox="0 0 420 260" role="img" aria-labelledby="dt dd">
+<title id="dt">Concrete wall dimensions diagram</title>
+<desc id="dd">A concrete wall shown as a box with length along the bottom, height on the left and thickness on the right side.</desc>
+<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto-start-reverse"><path d="M0,0 L7,3.5 L0,7 z" fill="#0077b6"/></marker></defs>
+<polygon points="280,70 320,40 320,170 280,200" fill="#dcebf5" stroke="#0077b6" stroke-width="1.5"/>
+<polygon points="60,70 100,40 320,40 280,70" fill="#eef5fa" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="60" y="70" width="220" height="130" fill="#f8fbfd" stroke="#0077b6" stroke-width="2"/>
+<g id="dRb" stroke="#0077b6" stroke-width="1.2" stroke-dasharray="4 3" opacity=".6">
+<line x1="90" y1="78" x2="90" y2="192"/><line x1="130" y1="78" x2="130" y2="192"/><line x1="170" y1="78" x2="170" y2="192"/><line x1="210" y1="78" x2="210" y2="192"/><line x1="250" y1="78" x2="250" y2="192"/>
+<line x1="68" y1="85" x2="272" y2="85"/><line x1="68" y1="120" x2="272" y2="120"/><line x1="68" y1="155" x2="272" y2="155"/><line x1="68" y1="190" x2="272" y2="190"/>
+</g>
+<g id="dOp" style="display:none"><rect x="175" y="140" width="50" height="60" fill="#fff" stroke="#1a1a2e" stroke-width="1.2" stroke-dasharray="5 3"/><text x="200" y="174" font-size="10" text-anchor="middle" fill="#1a1a2e">Opening</text></g>
+<rect x="80" y="92" width="180" height="26" rx="4" fill="#fff" stroke="#e0e0e0"/>
+<text id="dV" x="170" y="110" font-size="12" font-weight="700" text-anchor="middle" fill="#1a1a2e">Net: 5.93 yd³</text>
+<g stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3 3"><line x1="60" y1="200" x2="60" y2="224"/><line x1="280" y1="200" x2="280" y2="224"/><line x1="60" y1="70" x2="34" y2="70"/><line x1="60" y1="200" x2="34" y2="200"/></g>
+<line x1="60" y1="219" x2="280" y2="219" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="38" y1="70" x2="38" y2="200" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="286" y1="206" x2="326" y2="176" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dL" x="170" y="241" font-size="12" text-anchor="middle" fill="#1a1a2e">Length 30 ft</text>
+<text id="dH" x="22" y="135" font-size="12" text-anchor="middle" fill="#1a1a2e" transform="rotate(-90 22 135)">Height 8 ft</text>
+<text x="332" y="190" font-size="12" fill="#1a1a2e">Thickness</text>
+<text id="dT" x="332" y="205" font-size="12" font-weight="700" fill="#1a1a2e">8 in</text>
+</svg>
+<p>Diagram updates with your numbers when you calculate.</p>
+</div>
+
+<div class="seg" role="group" aria-label="Unit system">
+<button type="button" id="uImp" aria-pressed="true">Imperial (ft, in)</button>
+<button type="button" id="uMet" aria-pressed="false">Metric (m, cm)</button>
+</div>
+
+<div class="f"><label for="len">Wall length (<span data-u="len">ft</span>)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="30" aria-describedby="e-len"><div class="err" id="e-len"></div></div>
+<div class="f"><label for="hgt">Wall height (<span data-u="len">ft</span>)</label><input id="hgt" type="number" inputmode="decimal" step="any" min="0" value="8" aria-describedby="e-hgt"><div class="err" id="e-hgt"></div></div>
+<div class="f"><label for="thk">Wall thickness (<span data-u="th">in</span>)</label><input id="thk" type="number" inputmode="decimal" step="any" min="0" value="8" aria-describedby="e-thk"><div class="err" id="e-thk"></div></div>
+<div class="f"><label for="cnt">Number of identical walls</label><input id="cnt" type="number" inputmode="numeric" step="1" min="1" value="1" aria-describedby="e-cnt"><div class="err" id="e-cnt"></div></div>
+<div class="f"><label for="opn">Openings per wall (<span data-u="area">sq ft</span>, optional)</label><input id="opn" type="number" inputmode="decimal" step="any" min="0" placeholder="0" aria-describedby="e-opn hint-opn"><div class="hint" id="hint-opn">Total door and window area in one wall. Leave blank to ignore openings (the safer, larger estimate).</div><div class="err" id="e-opn"></div></div>
+<div class="f"><label for="waste">Waste and overage: <output id="wv">10%</output></label><input id="waste" type="range" min="0" max="20" step="1" value="10"><div class="ticks" aria-hidden="true"><span>0%</span><span>10%</span><span>20%</span></div></div>
+<div class="f"><label for="rb">Rebar estimate</label><select id="rb"><option value="0">No rebar estimate</option><option value="1" selected>One layer (centered)</option><option value="2">Two layers (both faces)</option></select></div>
+<div id="rbOpts">
+<div class="f"><label for="bar">Bar size</label><select id="bar"><option value="3">#3 (10 mm)</option><option value="4" selected>#4 (13 mm)</option><option value="5">#5 (16 mm)</option></select></div>
+<div class="f"><label for="spc">Rebar spacing, each way (<span data-u="sp">in</span>)</label><input id="spc" type="number" inputmode="decimal" step="any" min="0" value="16" aria-describedby="e-spc"><div class="err" id="e-spc"></div></div>
+</div>
+<div class="f"><label for="price">Concrete price per <span data-u="vol">yd³</span> ($, optional)</label><input id="price" type="number" inputmode="decimal" step="any" min="0" placeholder="e.g. 165" aria-describedby="e-price"><div class="err" id="e-price"></div></div>
+
+<button type="button" class="btn" id="go">Calculate Concrete Needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<h2>How to Use This Concrete Wall Calculator</h2>
+<p>Choose imperial or metric, then enter the length, height and thickness of one wall and how many identical walls you are pouring. Subtract door or window openings if you wish, set a waste allowance with the slider, and optionally add a rebar grid and a price per cubic yard or cubic metre. The calculator returns an order quantity rounded up, bag counts, estimated weight, rebar quantities and a table showing how different waste allowances change the total.</p>
+
+<h2>Why This Matters</h2>
+<p>Concrete is one of the few building materials you cannot return or top up later. Ready-mix trucks charge by the cubic yard, the clock starts when the driver arrives, and a wall that runs out of concrete halfway up leaves a cold joint, a weak seam where fresh concrete meets concrete that has already begun to set. Order too much and you pay $150 to $200 per yard for material that ends up in a pile.</p>
+<p>The usual jobs are easy to picture. A 40-foot foundation stem wall, 3 feet high and 8 inches thick, holds about 80 cubic feet, roughly 2.96 cubic yards before waste. A 30 by 8 foot basement wall at 8 inches thick is almost 6 cubic yards. Homeowners use the number to decide between bagged mix and a truck, since beyond about one cubic yard bags become impractical. Contractors use it for bids, and many suppliers add a short-load fee on small orders, so knowing your true total helps you decide whether to combine pours.</p>
+
+<h2>How It's Calculated</h2>
+<p>Everything starts with the volume of a rectangular slab standing on its edge:</p>
+<div class="formula">Volume (ft³) = length (ft) × height (ft) × thickness (in) ÷ 12 × number of walls<br>Net volume = volume − (opening area × thickness ÷ 12 × walls)<br>Total = net volume × (1 + waste %)<br>Cubic yards = ft³ ÷ 27     Metric: m³ = length × height × thickness (all in m)</div>
+<p>The order quantity is rounded up to the next quarter cubic yard (or 0.1 m³), never down. Bag counts divide your total by typical yields, 0.30 ft³ for a 40 lb bag, 0.45 ft³ for 60 lb and 0.60 ft³ for 80 lb, and round up to whole bags. Weight uses 150 lb per cubic foot (about 2,400 kg/m³) applied to the total including waste, so it errs heavy.</p>
+<p>For rebar, the number of bars in each direction is the dimension divided by your spacing, rounded up, plus one. Vertical bars run the wall height and horizontal bars run the wall length. The calculator adds 15% for lap splices and cuts, then divides by 20 ft stock bars (6 m in metric) and rounds up. Openings are not deducted from rebar.</p>
+<p>As a safety check the calculator compares your thickness with the common ACI 318 bearing-wall rule of thumb, the greater of 4 inches or one twenty-fifth of the shorter unsupported dimension, and warns if you fall below it. Residential foundation walls are covered by prescriptive tables in IRC R404.1. This tool is a quantity estimator only. It is not an engineering design, permit or inspection approval, and local codes and adopted editions vary.</p>
+
+<h2>Worked Example</h2>
+<p>Say you are pouring one wall 30 ft long, 8 ft high and 8 in thick, with no openings, a 10% waste allowance and a single layer of #4 rebar at 16 in spacing.</p>
+<ul>
+<li><strong>Net volume:</strong> 30 × 8 × (8 ÷ 12) = 160 ft³, or 5.93 yd³.</li>
+<li><strong>With 10% waste:</strong> 160 × 1.10 = 176 ft³, or 6.52 yd³.</li>
+<li><strong>Order quantity:</strong> rounded up to the next quarter yard, 6.75 yd³.</li>
+<li><strong>Weight:</strong> 176 × 150 = 26,400 lb, about 13.2 US tons.</li>
+<li><strong>Bags:</strong> 176 ÷ 0.60 = 293.3, so 294 bags of 80 lb. Order ready-mix instead.</li>
+<li><strong>Rebar:</strong> vertical bars = ceil(30 ÷ 1.333) + 1 = 24 at 8 ft = 192 ft. Horizontal bars = ceil(8 ÷ 1.333) + 1 = 7 at 30 ft = 210 ft. Total 402 ft × 1.15 = 462.3 ft, which is 24 stock bars of 20 ft and about 309 lb.</li>
+</ul>
+<p>These are the values the calculator shows with its default inputs.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Add the footing separately.</strong> This tool covers the wall only. Calculate the footing (length × width × depth) and add it to your order, and make sure it reaches below local frost depth.</li>
+<li><strong>Measure the real forms.</strong> If forms bow out just ½ inch, a 30 × 8 ft wall takes about 10 extra cubic feet, roughly 0.37 yd³.</li>
+<li><strong>Don't over-deduct openings.</strong> Small openings rarely justify the savings, and any bucks, bulkheads and uneven subgrade eat the difference. Keep 5 to 10% waste for forms and 10 to 15% for rough ground.</li>
+<li><strong>Respect height limits.</strong> Walls over about 8 ft, walls holding back soil, and any wall carrying structural load beyond a prescriptive table should be designed by a licensed engineer. Forms must be built for the lateral pressure of fresh concrete, so pour tall walls in lifts.</li>
+<li><strong>Confirm rebar and cover with your local code.</strong> The rebar quantity here is a take-off for the spacing you enter, not a structural specification.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much concrete do I need for a wall?</summary><p>Multiply length by height by thickness (in the same units) to get volume, then divide cubic feet by 27 for cubic yards. Add 5 to 10% for waste and round up. This concrete wall calculator does all of that for you.</p></details>
+<details><summary>How many bags of concrete make a wall?</summary><p>An 80 lb bag yields about 0.60 ft³, so a 160 ft³ wall needs roughly 267 bags before waste. For anything over about one cubic yard, ready-mix delivery is almost always cheaper and gives a more consistent pour.</p></details>
+<details><summary>How thick should a concrete wall be?</summary><p>Common residential foundation walls are 8 inches thick, with 6 inches used in some prescriptive cases and 10 inches or more for taller or more heavily loaded walls. Check the IRC R404.1 tables or ask an engineer, because soil pressure, height and reinforcement all matter.</p></details>
+<details><summary>How much waste should I allow when ordering concrete?</summary><p>Plan on 5 to 10% for straight forms on a level base and 10 to 15% for uneven ground, long pumping lines or complicated shapes. The cost of a little extra is small compared with a short pour and cold joint.</p></details>
+<details><summary>Does this calculator include the footing?</summary><p>No. It calculates the wall only. Work out the footing volume separately and add the two together before placing your order.</p></details>
+<details><summary>Is the result safe to build from or submit for a permit?</summary><p>It is a material quantity estimate, not a structural design. Always follow your local building code, the edition your jurisdiction has adopted, and the advice of a licensed engineer for load-bearing, retaining or tall walls.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/concrete-weight-calculator/">Concrete Weight Calculator</a></li>
+<li><a href="/concrete-steps-calculator/">Concrete Steps Calculator</a></li>
+<li><a href="/wall-sheathing-calculator/">Wall Sheathing Calculator</a></li>
+<li><a href="/roof-flashing-calculator/">Step and Wall Flashing Calculator</a></li>
+<li><a href="/basement-wall-insulation-calculator/">Basement Wall Insulation Calculator</a></li>
+<li><a href="/concrete-patio-cost-calculator/">Concrete Patio Cost Calculator</a></li>
+</ul>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/concrete-wall-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+let unit='imp',lastText='',ok=true;
+const LBL={imp:{len:'ft',th:'in',area:'sq ft',sp:'in',vol:'yd³'},met:{len:'m',th:'cm',area:'m²',sp:'cm',vol:'m³'}};
+const LIM={imp:{len:5000,hgt:100,thk:60,spMin:4,spMax:48},met:{len:1500,hgt:30,thk:150,spMin:10,spMax:120}};
+const BAR={'3':0.376,'4':0.668,'5':1.043};
+const ids=['len','hgt','thk','cnt','opn','spc','price'];
+const fmt=(n,d=2)=>Number(n).toLocaleString('en-US',{maximumFractionDigits:d});
+const fx=(n,d=2)=>Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+function num(id){const v=$(id).value.trim();if(v==='')return null;const n=Number(v);return isFinite(n)?n:NaN}
+function clr(){ids.forEach(i=>{$(i).classList.remove('bad');$(i).removeAttribute('aria-invalid');$('e-'+i).textContent=''});}
+function bad(i,msg){$(i).classList.add('bad');$(i).setAttribute('aria-invalid','true');$('e-'+i).textContent=msg;ok=false}
+function labels(){document.querySelectorAll('[data-u]').forEach(e=>{e.textContent=LBL[unit][e.dataset.u]})}
+function setUnit(u){
+ if(u===unit)return;const toM=u==='met';
+ const conv=(id,f)=>{const v=num(id);if(v!==null&&!isNaN(v))$(id).value=+(toM?v*f:v/f).toFixed(3)};
+ conv('len',0.3048);conv('hgt',0.3048);conv('thk',2.54);conv('opn',0.09290304);conv('spc',2.54);conv('price',1.30795);
+ unit=u;$('uImp').setAttribute('aria-pressed',!toM);$('uMet').setAttribute('aria-pressed',toM);labels();
+ requestAnimationFrame(calc);
+}
+function calc(){
+ clr();ok=true;
+ const m=unit==='met',L=LIM[unit],lu=LBL[unit].len,tu=LBL[unit].th,au=LBL[unit].area;
+ const g=(id,name,max,u)=>{const v=num(id);
+  if(v===null){bad(id,'Enter the '+name+'.');return null}
+  if(isNaN(v)||v<=0){bad(id,'The '+name+' must be a number greater than zero.');return null}
+  if(v>max){bad(id,'Maximum is '+fmt(max)+' '+u+'. Split larger jobs into separate runs.');return null}
+  return v};
+ const len=g('len','wall length',L.len,lu),hgt=g('hgt','wall height',L.hgt,lu),thk=g('thk','wall thickness',L.thk,tu);
+ const cnt=num('cnt');
+ if(cnt===null||isNaN(cnt)||cnt<1||cnt>500||!Number.isInteger(cnt))bad('cnt','Enter a whole number from 1 to 500.');
+ let opn=num('opn');if(opn===null)opn=0;
+ if(isNaN(opn)||opn<0)bad('opn','Openings must be zero or a positive number.');
+ else if(len&&hgt&&opn>=len*hgt)bad('opn','Openings must be smaller than one wall face ('+fmt(len*hgt)+' '+au+').');
+ const rb=$('rb').value;let spc=0;
+ if(rb!=='0'){spc=num('spc');if(spc===null||isNaN(spc)||spc<L.spMin||spc>L.spMax)bad('spc','Enter a spacing between '+L.spMin+' and '+L.spMax+' '+LBL[unit].sp+'.')}
+ let price=num('price');if(price===null)price=0;
+ if(isNaN(price)||price<0)bad('price','Price must be zero or more.');
+ if(!ok){$('results').innerHTML='';lastText='';const f=document.querySelector('input.bad');if(f)f.focus();return}
+ const Lf=m?len/0.3048:len,Hf=m?hgt/0.3048:hgt,Ti=m?thk/2.54:thk,Of=m?opn/0.09290304:opn,Si=m?spc/2.54:spc;
+ const w=+$('waste').value,n=cnt,toM3=0.028316846592;
+ const gross=Lf*Hf*Ti/12*n,openV=Of*Ti/12*n,net=gross-openV,tot=net*(1+w/100);
+ const m3=tot*toM3,yd=tot/27;
+ const ordU=m?Math.max(0.1,Math.ceil(m3*10-1e-9)/10):Math.max(0.25,Math.ceil(yd*4-1e-9)/4);
+ const ordYd=m?ordU/toM3/27:ordU,ordM3=m?ordU:ordU*27*toM3;
+ const V=f=>m?fx(f*toM3)+' m³':fx(f/27)+' yd³ ('+fmt(f,1)+' ft³)';
+ const rows=[];
+ rows.push(['Wall size',fmt(len)+' × '+fmt(hgt)+' '+lu+' × '+fmt(thk)+' '+tu+(n>1?' × '+n+' walls':'')]);
+ rows.push(['Net volume',V(net)]);
+ if(openV>0)rows.push(['Openings deducted',V(openV)]);
+ rows.push(['Volume incl. '+w+'% waste',V(tot)]);
+ rows.push(['Order quantity (rounded up)',m?fx(ordM3,1)+' m³':fx(ordYd,2)+' yd³']);
+ if(m){const kg=Math.ceil(m3*2400);rows.push(['Approx. weight',fmt(kg,0)+' kg ('+fx(kg/1000,2)+' tonnes)'])}
+ else{const lb=Math.ceil(tot*150);rows.push(['Approx. weight',fmt(lb,0)+' lb ('+fx(lb/2000,2)+' US tons)'])}
+ [[40,.30],[60,.45],[80,.60]].forEach(b=>rows.push(['Bags, '+b[0]+' lb'+(m?' ('+Math.round(b[0]*0.45359237)+' kg)':''),fmt(Math.ceil(tot/b[1]-1e-9),0)]));
+ if(rb!=='0'){
+  const layers=+rb,s=Si/12;
+  const nV=Math.ceil(Lf/s-1e-9)+1,nH=Math.ceil(Hf/s-1e-9)+1;
+  const tl=(nV*Hf+nH*Lf)*n*layers*1.15,stick=m?6/0.3048:20,sticks=Math.ceil(tl/stick-1e-9);
+  const wt=tl*BAR[$('bar').value];
+  rows.push(['Rebar per layer, per wall',nV+' vertical + '+nH+' horizontal bars']);
+  rows.push(['Rebar total (incl. 15% laps/cuts)',m?fmt(Math.ceil(tl*0.3048),0)+' m':fmt(Math.ceil(tl),0)+' ft']);
+  rows.push(['Stock bars needed',fmt(sticks,0)+' × '+(m?'6 m':'20 ft')]);
+  rows.push(['Rebar weight',m?fmt(Math.ceil(wt*0.45359237),0)+' kg':fmt(Math.ceil(wt),0)+' lb']);
+ }
+ if(price>0)rows.push(['Estimated concrete cost','$'+fx(ordU*price,2)]);
+ const warn=[];
+ const tmin=Math.max(4,Math.min(Lf,Hf)*12/25);
+ if(Ti<tmin-1e-9)warn.push('Your thickness is below the ACI 318 bearing-wall rule of thumb (the greater of 4 in or 1/25 of the shorter unsupported dimension, here '+(m?fx(tmin*2.54,1)+' cm':fx(tmin,1)+' in')+'). Increase the thickness or have an engineer review it.');
+ if(Hf>8)warn.push('Walls taller than about 8 ft (2.4 m) usually need an engineered design and staged pours.');
+ const info=tot>27?'At this volume, order ready-mix delivery rather than bagged concrete.':'Under about 1 cubic yard, bagged mix is practical; mix only what you can place before it sets.';
+ const ws=[...new Set([0,5,10,15,20,w])].sort((a,b)=>a-b);
+ const wrows=ws.map(x=>{const t=net*(1+x/100);return '<tr'+(x===w?' class="hl"':'')+'><td>'+x+'%'+(x===w?' (selected)':'')+'</td><td>'+V(t)+'</td><td>'+fmt(Math.ceil(t/0.6-1e-9),0)+'</td></tr>'}).join('');
+ const keyMain=m?fx(ordM3,1)+' m³':fx(ordYd,2)+' yd³';
+ const keySub=(m?'≈ '+fx(ordYd,2)+' yd³':'≈ '+fx(ordM3,2)+' m³')+' · includes '+w+'% waste, rounded up';
+ lastText='Toolwick Concrete Wall Calculator\n'+rows.map(r=>r[0]+': '+r[1]).join('\n')+'\nPlanning estimate only. Not engineering or permit approval.';
+ const html='<div class="fade"><div class="key"><div class="kl">Concrete to order</div><div class="kn">'+keyMain+'</div><div class="ks">'+keySub+'</div></div>'
+ +'<h3>Breakdown</h3><div class="tw"><table><thead><tr><th>Item</th><th>Amount</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>').join('')+'</tbody></table></div>'
+ +warn.map(x=>'<div class="warn"><strong>Check:</strong> '+x+'</div>').join('')
+ +'<h3>Waste allowance comparison</h3><div class="tw"><table><thead><tr><th>Waste</th><th>Volume</th><th>80 lb bags</th></tr></thead><tbody>'+wrows+'</tbody></table></div>'
+ +'<div class="note">'+info+' This is a planning estimate based on common rules of thumb (ACI 318 wall thickness guidance, IRC R404.1 for residential foundation walls). Local codes and adopted editions vary. It is not engineering, permit or inspection approval. Retaining walls and walls resisting soil load need engineered design.</div>'
+ +'<button type="button" class="copy">Copy results</button></div>';
+ $('results').innerHTML=html;
+ $('dL').textContent='Length '+fmt(len)+' '+lu;
+ $('dH').textContent='Height '+fmt(hgt)+' '+lu;
+ $('dT').textContent=fmt(thk)+' '+tu;
+ $('dV').textContent=(n>1?'Net total: ':'Net: ')+(m?fx(net*toM3)+' m³':fx(net/27)+' yd³');
+ $('dOp').style.display=opn>0?'':'none';
+ $('dRb').style.display=rb!=='0'?'':'none';
+}
+function run(){requestAnimationFrame(calc)}
+$('go').addEventListener('click',run);
+document.querySelectorAll('input:not([type=range]),select').forEach(e=>e.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();run()}}));
+$('waste').addEventListener('input',()=>{$('wv').textContent=$('waste').value+'%';if($('results').innerHTML)run()});
+$('rb').addEventListener('change',()=>{$('rbOpts').style.display=$('rb').value==='0'?'none':'';if($('results').innerHTML)run()});
+$('bar').addEventListener('change',()=>{if($('results').innerHTML)run()});
+$('uImp').addEventListener('click',()=>setUnit('imp'));
+$('uMet').addEventListener('click',()=>setUnit('met'));
+$('results').addEventListener('click',e=>{
+ const b=e.target.closest('.copy');if(!b)return;
+ const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,()=>fb())}else fb();
+ function fb(){const t=document.createElement('textarea');t.value=lastText;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(t);done()}
+});
+$('yr').textContent=new Date().getFullYear();
+labels();run();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
