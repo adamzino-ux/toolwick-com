@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Steel Weight Calculator | Toolwick</title>
+<meta name="description" content="Free steel weight calculator: find the weight of plate, round bar, square bar, hex, tube, pipe and angle in kg or lb, with a safety allowance.">
+<link rel="canonical" href="https://toolwick.com/steel-weight-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Steel Weight Calculator", "url": "https://toolwick.com/steel-weight-calculator/", "description": "Free steel weight calculator: find the weight of plate, round bar, square bar, hex, tube, pipe and angle in kg or lb, with a safety allowance.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Steel Weight Calculator", "item": "https://toolwick.com/steel-weight-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate the weight of a steel plate?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply width × thickness × length to get volume, then multiply by 7,850 kg/m³. For quick estimates, use 7.85 kg per square metre per millimetre of thickness, or 40.8 lb per square foot per inch of thickness."}}, {"@type": "Question", "name": "What is the density of steel?", "acceptedAnswer": {"@type": "Answer", "text": "Carbon steel is normally taken as 7,850 kg/m³ (0.2836 lb/in³). Stainless grades are a little heavier, about 7,700 to 8,000 kg/m³ depending on the alloy, and gray cast iron is lighter at roughly 7,200 kg/m³."}}, {"@type": "Question", "name": "What is the weight formula for round steel bar?", "acceptedAnswer": {"@type": "Answer", "text": "In millimetres, weight per metre in kilograms is about diameter² ÷ 162. A 25 mm bar is 625 ÷ 162, or roughly 3.85 kg per metre. This calculator uses the exact π/4 × d² area and your chosen density."}}, {"@type": "Question", "name": "Why does the result include an allowance?", "acceptedAnswer": {"@type": "Answer", "text": "Real steel varies from nominal size, and coatings, welds and fittings add weight. The allowance gives you a safer planning number, and the final figure is rounded up rather than down."}}, {"@type": "Question", "name": "Can I use this steel weight calculator for crane lifts?", "acceptedAnswer": {"@type": "Answer", "text": "No, treat it as an estimate only. Lifting plans must use certified weights, include the weight of rigging and attachments, and be approved by a qualified rigger or engineer under the rules that apply where you work."}}, {"@type": "Question", "name": "Does the tool work for stainless steel and cast iron?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Pick stainless 304, 316 or 430 or gray cast iron from the material list, or enter a custom density in kg/m³ for any other alloy. The comparison table shows how the same part weighs in each material."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65;font-size:1rem}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:.5rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.15rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2.5rem 0 .75rem}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+code{background:#f0f0f0;padding:1px 6px;border-radius:4px;font-size:.9em}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.dgw{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.dgw svg{width:100%;height:auto;display:block}
+svg text{fill:#1a1a2e;font-size:13px}
+.dl{stroke:#0077b6;stroke-width:1.3}
+.sp{fill:#eaf4fa;stroke:#0077b6;stroke-width:2}
+.gd{stroke:#e0e0e0;stroke-width:1.5;stroke-dasharray:4 3}
+.grid{display:grid;gap:1rem;grid-template-columns:1fr;margin-bottom:1rem}
+@media(min-width:600px){.grid{grid-template-columns:1fr 1fr}}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;min-height:44px;background:#fff;color:#1a1a2e;font-family:inherit}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px;border-color:#0077b6}
+input[type=range]{padding:0;border:0;accent-color:#0077b6}
+.bad{border-color:#e74c3c}
+.err{display:none;color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.tk{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.main{width:100%;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:44px;cursor:pointer;margin-top:.5rem;font-family:inherit}
+.main:hover{background:#006299}
+#results{margin-top:1.5rem}
+.res{animation:fd .3s ease}
+@keyframes fd{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.res{animation:none}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.key small{display:block;color:#555;font-size:.85rem}
+.big{font-size:2.3rem;font-weight:700;color:#0077b6;line-height:1.2;word-break:break-word}
+.sub{color:#444;font-size:.95rem;margin-top:.25rem}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#f0f0f0;text-align:left;padding:.6rem .75rem;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:.6rem .75rem;border-bottom:1px solid #e5e5e5;white-space:nowrap}
+tr:nth-child(even) td{background:#fafafa}
+th.n,td.n{text-align:right}
+tr.tot td,tr.sel td{font-weight:700;background:#e8f3fa}
+.note{font-size:.85rem;color:#444;background:#fff8e6;border-left:4px solid #e0a800;padding:.75rem 1rem;border-radius:4px;margin:1rem 0}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;min-height:44px;font-size:.9rem;cursor:pointer;font-family:inherit;margin-top:.25rem}
+.copy:hover{background:#f0f8fc}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e5e5e5}
+summary{cursor:pointer;font-weight:600;padding:.75rem 0;min-height:44px}
+details p{margin:0 0 1rem}
+ul.l{padding-left:1.25rem}
+ul.l li{margin-bottom:.6rem}
+.rel{list-style:none;padding:0;display:grid;gap:.5rem}
+.rel a{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.75rem 1rem;min-height:44px}
+footer{border-top:1px solid #eee;padding:1.5rem 0;font-size:.9rem;color:#666;margin-top:2rem}
+footer a{margin-right:1rem}
+@media(max-width:480px){.card{padding:1.25rem}.big{font-size:1.9rem}h1{font-size:1.6rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/steel-weight-calculator/">
+<meta property="og:title" content="Steel Weight Calculator">
+<meta property="og:description" content="Free steel weight calculator: find the weight of plate, round bar, square bar, hex, tube, pipe and angle in kg or lb, with a safety allowance.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Steel Weight Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>Use this steel weight calculator to find the theoretical weight of steel plate, round bar, square bar, hex bar, tube, pipe and angle in kilograms, pounds and tons. Enter the size, length and quantity, add a safety allowance, and get a planning weight rounded up for ordering, shipping and lifting estimates.</p>
+
+<div class="card">
+<div class="dgw"><svg id="dg" viewBox="0 0 400 190" role="img" aria-labelledby="dgt"><title id="dgt">Diagram of the selected steel shape cross-section with its dimensions, next to a bar showing its length</title><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs><g id="dgg"></g></svg></div>
+
+<div class="grid">
+<div><label for="shape">Shape</label><select id="shape">
+<option value="plate">Plate / flat bar / sheet</option>
+<option value="round">Round bar</option>
+<option value="square">Square bar</option>
+<option value="hex">Hex bar</option>
+<option value="rtube">Round tube / pipe</option>
+<option value="stube">Square / rectangular tube</option>
+<option value="angle">Angle (L-section)</option>
+</select></div>
+<div><label for="mat">Material</label><select id="mat">
+<option value="carbon">Carbon / alloy steel (7,850 kg/m³)</option>
+<option value="s304">Stainless 304 (7,930 kg/m³)</option>
+<option value="s316">Stainless 316 (7,980 kg/m³)</option>
+<option value="s430">Stainless 430 (7,700 kg/m³)</option>
+<option value="cast">Gray cast iron (7,200 kg/m³)</option>
+<option value="custom">Custom density…</option>
+</select></div>
+<div id="w-dens" hidden><label for="dens">Custom density (kg/m³)</label><input id="dens" type="number" inputmode="decimal" step="any" value="7850" aria-describedby="e-dens"><div class="err" id="e-dens"></div></div>
+<div><label for="unit">Unit system</label><select id="unit"><option value="m">Metric (mm, m, kg)</option><option value="i">Imperial (in, ft, lb)</option></select></div>
+</div>
+
+<div class="grid">
+<div class="fld" id="w-f1"><label for="f1" id="l-f1">Width</label><input id="f1" type="number" inputmode="decimal" step="any" min="0" aria-describedby="e-f1"><div class="err" id="e-f1"></div></div>
+<div class="fld" id="w-f2"><label for="f2" id="l-f2">Thickness</label><input id="f2" type="number" inputmode="decimal" step="any" min="0" aria-describedby="e-f2"><div class="err" id="e-f2"></div></div>
+<div class="fld" id="w-f3" hidden><label for="f3" id="l-f3">Thickness</label><input id="f3" type="number" inputmode="decimal" step="any" min="0" aria-describedby="e-f3"><div class="err" id="e-f3"></div></div>
+<div><label for="len" id="l-len">Length per piece (m)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="2.4" aria-describedby="e-len"><div class="err" id="e-len"></div></div>
+<div><label for="qty">Quantity (pieces)</label><input id="qty" type="number" inputmode="numeric" step="1" min="1" value="1" aria-describedby="e-qty"><div class="err" id="e-qty"></div></div>
+<div><label for="price" id="l-price">Price per kg (optional)</label><input id="price" type="number" inputmode="decimal" step="any" min="0" aria-describedby="e-price"><div class="err" id="e-price"></div></div>
+</div>
+
+<div style="margin-bottom:1rem">
+<label for="allow">Weight allowance for mill tolerance, coatings and waste: <span id="allowv">5%</span></label>
+<input id="allow" type="range" min="0" max="15" step="0.5" value="5">
+<div class="tk"><span>0%</span><span>7.5%</span><span>15%</span></div>
+</div>
+
+<button class="main" id="go" type="button">Calculate steel weight</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/steel-weight-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Steel Weight Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/steel-weight-calculator/&quot;&gt;Steel Weight Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/steel-weight-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Steel Weight Calculator</h2>
+<p>Choose the shape you are working with, then the material and your preferred unit system. Enter the cross-section dimensions (the fields change with the shape), the length of each piece and how many pieces you need. If you buy steel by weight, add your price per kilogram or pound. Press the button or hit Enter and you will see the weight per metre or foot, the weight of one piece, the total for all pieces, and a planning total that includes your chosen allowance. The diagram above redraws with your dimensions, and two comparison tables show the same part in other materials and at other quantities.</p>
+
+<h2>Why This Matters</h2>
+<p>Steel is sold, shipped and lifted by weight, so getting the number right early saves money and prevents hazards. A fabricator quoting a job needs the weight of every bar and plate to price material. A trucker needs to know whether a bundle stays under the payload limit. A rigger needs to know whether a plate is a two-person carry or a crane lift. A single 1,200 × 2,400 × 10 mm plate weighs about 226 kg (498 lb), far beyond what two people should handle by hand. A bundle of fifty 25 mm round bars, each 6 metres long, weighs roughly 1,155 kg before you add the strapping and dunnage.</p>
+<p>Homeowners and builders use the same maths when planning a steel beam delivery, a garage lintel, a gate frame or a workshop mezzanine. Estimators use it to compare carbon steel with stainless, where the extra density and the much higher price per kilogram make a real difference. Scrap yards and recyclers use theoretical weights to sanity-check scale tickets. In every case, a quick and consistent calculation beats guessing, and rounding up is safer than rounding down.</p>
+
+<h2>How It's Calculated</h2>
+<p>This calculator uses the standard theoretical-weight rule of thumb used by mills and suppliers: <strong>weight = cross-section area × length × density</strong>. Carbon steel is taken as 7,850 kg/m³, which is 0.2836 lb/in³ or about 490 lb/ft³. The result is a nominal, theoretical weight. It is not a certified mill weight under ASTM A6 or EN 10029, and tolerance rules and local codes vary.</p>
+<p>Cross-section areas used:</p>
+<ul class="l">
+<li><strong>Plate / flat bar:</strong> <code>A = width × thickness</code></li>
+<li><strong>Round bar:</strong> <code>A = π/4 × d²</code> (in millimetres this gives the familiar <code>d²/162</code> kg per metre)</li>
+<li><strong>Square bar:</strong> <code>A = a²</code></li>
+<li><strong>Hex bar:</strong> <code>A = (√3/2) × across-flats²</code></li>
+<li><strong>Round tube / pipe:</strong> <code>A = π × t × (OD − t)</code></li>
+<li><strong>Rectangular tube:</strong> <code>A = W×H − (W−2t)(H−2t)</code></li>
+<li><strong>Angle:</strong> <code>A = t × (A + B − t)</code></li>
+</ul>
+<p>Tube corner radii and angle root fillets are ignored, which changes weight by only a small percentage. Weight per metre is <code>A × density</code>. The piece weight multiplies by length, and the total multiplies by quantity. The planning total adds your allowance percentage and is <strong>rounded up</strong>, never down, so the figure errs on the heavy side. Imperial results convert using 1 kg = 2.2046 lb and 1 m = 3.2808 ft. A useful check for plate: steel weighs 7.85 kg per square metre for every millimetre of thickness, or 40.8 lb per square foot for every inch.</p>
+
+<h2>Worked Example</h2>
+<p>Take one carbon steel plate, 1,200 mm wide, 10 mm thick and 2.4 m long, with the default 5% allowance.</p>
+<ol class="l">
+<li>Area: 1.2 m × 0.010 m = 0.012 m², which is 12,000 mm² or 18.60 in².</li>
+<li>Volume: 0.012 m² × 2.4 m = 0.02880 m³.</li>
+<li>Weight per metre: 0.012 × 7,850 = 94.200 kg/m, which is 63.299 lb/ft.</li>
+<li>Weight of the piece: 94.2 × 2.4 = 226.08 kg, or 498.42 lb.</li>
+<li>Add 5%: 226.08 × 1.05 = 237.384 kg, rounded up to <strong>237.39 kg</strong>, which is 523.35 lb.</li>
+</ol>
+<p>If steel costs 1.10 per kg, the estimated material cost is 237.39 × 1.10 = 261.13 (rounded up). Use the 237.39 kg figure when planning handling and transport, and the 226.08 kg figure as the nominal weight.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul class="l">
+<li><strong>Check your units.</strong> Entering inches while the tool is set to millimetres makes the answer 645 times too small. Look at the unit in each label before you calculate.</li>
+<li><strong>Pipe size is not outside diameter.</strong> A 2-inch nominal pipe has an outside diameter of 2.375 in. Always enter the actual OD and wall thickness from the supplier's data sheet.</li>
+<li><strong>Keep the allowance.</strong> Mill tolerances, galvanizing (often several percent), welds and attachments add weight that nominal dimensions miss. Do not set it to zero for lifting or transport planning.</li>
+<li><strong>Add cut-off waste to your order.</strong> The tool weighs the pieces you enter. Offcuts, kerf and stock-length rounding are extra when you buy material.</li>
+<li><strong>Do not use this for lifting approval.</strong> Rigging, crane capacity and structural decisions need certified weights, rated equipment and a qualified person.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How do I calculate the weight of a steel plate?</summary><p>Multiply width × thickness × length to get volume, then multiply by 7,850 kg/m³. For quick estimates, use 7.85 kg per square metre per millimetre of thickness, or 40.8 lb per square foot per inch of thickness.</p></details>
+<details><summary>What is the density of steel?</summary><p>Carbon steel is normally taken as 7,850 kg/m³ (0.2836 lb/in³). Stainless grades are a little heavier, about 7,700 to 8,000 kg/m³ depending on the alloy, and gray cast iron is lighter at roughly 7,200 kg/m³.</p></details>
+<details><summary>What is the weight formula for round steel bar?</summary><p>In millimetres, weight per metre in kilograms is about diameter² ÷ 162. A 25 mm bar is 625 ÷ 162, or roughly 3.85 kg per metre. This calculator uses the exact π/4 × d² area and your chosen density.</p></details>
+<details><summary>Why does the result include an allowance?</summary><p>Real steel varies from nominal size, and coatings, welds and fittings add weight. The allowance gives you a safer planning number, and the final figure is rounded up rather than down.</p></details>
+<details><summary>Can I use this steel weight calculator for crane lifts?</summary><p>No, treat it as an estimate only. Lifting plans must use certified weights, include the weight of rigging and attachments, and be approved by a qualified rigger or engineer under the rules that apply where you work.</p></details>
+<details><summary>Does the tool work for stainless steel and cast iron?</summary><p>Yes. Pick stainless 304, 316 or 430 or gray cast iron from the material list, or enter a custom density in kg/m³ for any other alloy. The comparison table shows how the same part weighs in each material.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/concrete-weight-calculator/">Concrete Weight Calculator</a></li>
+<li><a href="/weld-weight-calculator/">Weld Weight Calculator</a></li>
+<li><a href="/rebar-spacing-weight-calculator/">Rebar Spacing &amp; Weight Calculator</a></li>
+<li><a href="/rafter-vent-baffle-calculator/">Rafter Vent &amp; Attic Baffle Calculator</a></li>
+<li><a href="/soil-swell-shrink-factor-calculator/">Soil Swell &amp; Shrink Factor Calculator</a></li>
+<li><a href="/concrete-wall-calculator/">Concrete Wall Calculator</a></li>
+</ul>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<p><a href="/about/">About</a> <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> <a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com. Theoretical weights only; not engineering, permit or inspection approval.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+const $=i=>document.getElementById(i);
+const KG=2.20462262185,FT=3.280839895,M3F=35.3146667,IN2=1550.0031;
+const SH={
+plate:{s:'Plate',f:['Width','Thickness'],d:[1200,10]},
+round:{s:'Round bar',f:['Diameter'],d:[25]},
+square:{s:'Square bar',f:['Side length'],d:[25]},
+hex:{s:'Hex bar',f:['Across flats'],d:[24]},
+rtube:{s:'Round tube',f:['Outside diameter','Wall thickness'],d:[60,4]},
+stube:{s:'Rect. tube',f:['Width','Height','Wall thickness'],d:[100,50,4]},
+angle:{s:'Angle',f:['Leg A (vertical)','Leg B (horizontal)','Thickness'],d:[50,50,5]}};
+const MT={carbon:['Carbon / alloy steel',7850],s304:['Stainless 304',7930],s316:['Stainless 316',7980],s430:['Stainless 430',7700],cast:['Gray cast iron',7200]};
+let unit='m',lastText='';
+const du=()=>unit==='m'?'mm':'in',lu=()=>unit==='m'?'m':'ft',wu=()=>unit==='m'?'kg':'lb';
+const fmt=(n,d)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fd=n=>n.toLocaleString('en-US',{maximumFractionDigits:3});
+const up=(n,d)=>{const f=Math.pow(10,d);return Math.ceil(n*f-1e-7)/f};
+const wd=n=>n<1?4:2;
+const fw=n=>fmt(n,wd(n));
+const fu=n=>fmt(up(n,wd(n)),wd(n));
+const sm=x=>{if(!(x>0))return'0';return fmt(x,Math.max(0,Math.min(8,3-Math.floor(Math.log10(x)))))};
+const rnd=(x,d)=>Math.round(x*Math.pow(10,d))/Math.pow(10,d);
+const cl=(x,a,b)=>Math.max(a,Math.min(b,x));
+const num=id=>{const v=$(id).value.trim();return v===''?NaN:Number(v)};
+const IDS=['f1','f2','f3','len','qty','price','dens'];
+
+function labels(){
+const sh=SH[$('shape').value];
+for(let i=0;i<3;i++){$('w-f'+(i+1)).hidden=i>=sh.f.length;if(i<sh.f.length)$('l-f'+(i+1)).textContent=sh.f[i]+' ('+du()+')'}
+$('l-len').textContent='Length per piece ('+lu()+')';
+$('l-price').textContent='Price per '+wu()+' (optional)';
+}
+function defaults(){
+const sh=SH[$('shape').value];
+for(let i=0;i<sh.f.length;i++)$('f'+(i+1)).value=unit==='m'?sh.d[i]:rnd(sh.d[i]/25.4,3);
+}
+function clearErrs(){IDS.forEach(id=>{$(id).classList.remove('bad');$(id).removeAttribute('aria-invalid');const e=$('e-'+id);e.textContent='';e.style.display='none'})}
+function rhoNow(){return $('mat').value==='custom'?num('dens'):MT[$('mat').value][1]}
+function area(k,p){
+switch(k){
+case'plate':return p[0]*p[1];
+case'round':return Math.PI/4*p[0]*p[0];
+case'square':return p[0]*p[0];
+case'hex':return Math.sqrt(3)/2*p[0]*p[0];
+case'rtube':return Math.PI*p[1]*(p[0]-p[1]);
+case'stube':return p[0]*p[1]-(p[0]-2*p[2])*(p[1]-2*p[2]);
+case'angle':return p[2]*(p[0]+p[1]-p[2]);
+}}
+
+function validate(){
+clearErrs();
+let first=null;
+const key=$('shape').value,sh=SH[key],n=sh.f.length,k=unit==='m'?0.001:0.0254,p=[];
+const e=(id,m)=>{$(id).classList.add('bad');$(id).setAttribute('aria-invalid','true');const x=$('e-'+id);x.textContent=m;x.style.display='block';if(!first)first=id};
+for(let i=1;i<=n;i++){const v=num('f'+i);
+if(!(v>0))e('f'+i,'Enter a value greater than 0.');
+else if(v>100000)e('f'+i,'That value looks too large. Check your units.');
+p.push(v*k)}
+if(!first){
+if(key==='rtube'&&2*p[1]>=p[0])e('f2','Wall thickness must be less than half the outside diameter.');
+if(key==='stube'&&2*p[2]>=Math.min(p[0],p[1]))e('f3','Wall thickness must be less than half of the smaller side.');
+if(key==='angle'&&p[2]>=Math.min(p[0],p[1]))e('f3','Thickness must be smaller than both legs.');
+}
+const len=num('len');
+if(!(len>0))e('len','Enter a length greater than 0.');else if(len>10000)e('len','Length looks too large. Check your units.');
+const qty=num('qty');
+if(!(qty>=1)||Math.floor(qty)!==qty)e('qty','Enter a whole number of pieces (1 or more).');else if(qty>1000000)e('qty','Quantity cannot exceed 1,000,000.');
+let price=null;
+if($('price').value.trim()!==''){const v=num('price');if(!(v>=0)||v>1000000)e('price','Enter a price of 0 or more.');else price=v}
+let rho=rhoNow();
+if($('mat').value==='custom'&&!(rho>=100&&rho<=25000))e('dens','Enter a density between 100 and 25,000 kg/m³.');
+if(first){$(first).focus();return null}
+return{key,sh,p,len,qty,price,rho,pct:+$('allow').value};
+}
+
+function draw(pl){
+const key=$('shape').value,sh=SH[key],u=du(),cx=100,cy=72,n=sh.f.length;
+const v=[],r=[];
+for(let i=0;i<n;i++){const x=num('f'+(i+1));v.push(x>0?x:NaN);r.push(x>0?x:sh.d[i])}
+const L=(i,s)=>isNaN(v[i])?s:s+' '+fd(v[i])+' '+u;
+const hd=(x1,x2,y,t)=>`<line class="dl" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" marker-start="url(#ar)" marker-end="url(#ar)"/><text x="${(x1+x2)/2}" y="${y+15}" text-anchor="middle">${t}</text>`;
+const vd=(x,y1,y2,t)=>`<line class="dl" x1="${x}" y1="${y1}" x2="${x}" y2="${y2}" marker-start="url(#ar)" marker-end="url(#ar)"/><text x="${x+7}" y="${(y1+y2)/2+4}">${t}</text>`;
+const gl=(a,b,c,d)=>`<line class="gd" x1="${a}" y1="${b}" x2="${c}" y2="${d}"/>`;
+let o='',pre='';
+if(key==='plate'){
+const W=120,H=cl(W*r[1]/r[0],14,66),x=cx-W/2,y=cy-H/2,yd=y+H+16,xr=x+W+14;
+o+=`<rect class="sp" x="${x}" y="${y}" width="${W}" height="${H}"/>`+gl(x,y+H,x,yd+4)+gl(x+W,y+H,x+W,yd+4)+hd(x,x+W,yd,L(0,'W'))+gl(x+W,y,xr+4,y)+gl(x+W,y+H,xr+4,y+H)+vd(xr,y,y+H,L(1,'t'));
+}else if(key==='round'){
+const R=46,yd=cy+R+16;
+o+=`<circle class="sp" cx="${cx}" cy="${cy}" r="${R}"/>`+gl(cx-R,cy,cx-R,yd+4)+gl(cx+R,cy,cx+R,yd+4)+hd(cx-R,cx+R,yd,L(0,'Ø'));
+}else if(key==='square'){
+const S=80,x=cx-40,y=cy-40,yd=y+S+16;
+o+=`<rect class="sp" x="${x}" y="${y}" width="${S}" height="${S}"/>`+gl(x,y+S,x,yd+4)+gl(x+S,y+S,x+S,yd+4)+hd(x,x+S,yd,L(0,'a'));
+}else if(key==='hex'){
+const R=48,h=R*Math.sin(Math.PI/3),pts=[];
+for(let a=0;a<6;a++)pts.push((cx+R*Math.cos(a*Math.PI/3)).toFixed(1)+','+(cy+R*Math.sin(a*Math.PI/3)).toFixed(1));
+const xr=cx+R+14;
+o+=`<polygon class="sp" points="${pts.join(' ')}"/>`+gl(cx+R/2,cy-h,xr+4,cy-h)+gl(cx+R/2,cy+h,xr+4,cy+h)+vd(xr,cy-h,cy+h,L(0,'AF'));
+}else if(key==='rtube'){
+const ro=46,ri=cl(ro*(r[0]-2*r[1])/r[0],6,42),yd=cy+ro+16,xl=cx+(ro+ri)/2;
+o+=`<circle class="sp" cx="${cx}" cy="${cy}" r="${ro}"/><circle cx="${cx}" cy="${cy}" r="${ri}" fill="#fff" stroke="#0077b6" stroke-width="1.5"/>`+gl(cx-ro,cy,cx-ro,yd+4)+gl(cx+ro,cy,cx+ro,yd+4)+hd(cx-ro,cx+ro,yd,L(0,'OD'))+`<line class="dl" x1="${xl}" y1="${cy}" x2="${cx+ro+12}" y2="${cy}"/><text x="${cx+ro+16}" y="${cy+4}">${L(1,'t')}</text>`;
+}else if(key==='stube'){
+const s=100/Math.max(r[0],r[1]),Wp=Math.max(30,r[0]*s),Hp=Math.max(30,r[1]*s),tp=cl(r[2]*s,5,Math.min(Wp,Hp)/2-6),x=cx-Wp/2,y=cy-Hp/2,yd=y+Hp+16,xr=x+Wp+14;
+o+=`<rect class="sp" x="${x}" y="${y}" width="${Wp}" height="${Hp}"/><rect x="${x+tp}" y="${y+tp}" width="${Wp-2*tp}" height="${Hp-2*tp}" fill="#fff" stroke="#0077b6" stroke-width="1.5"/>`+gl(x,y+Hp,x,yd+4)+gl(x+Wp,y+Hp,x+Wp,yd+4)+hd(x,x+Wp,yd,L(0,'W'))+gl(x+Wp,y,xr+4,y)+gl(x+Wp,y+Hp,xr+4,y+Hp)+vd(xr,y,y+Hp,L(1,'H'))+`<text x="${cx}" y="${y-8}" text-anchor="middle">${L(2,'Wall t')}</text>`;
+}else{
+const s=95/Math.max(r[0],r[1]),Ap=Math.max(30,r[0]*s),Bp=Math.max(30,r[1]*s),tp=cl(r[2]*s,6,Math.min(Ap,Bp)-6),x0=cx-Bp/2,y0=cy+Ap/2,xr=x0+Bp+14,yd=y0+16;
+o+=`<polygon class="sp" points="${x0},${y0-Ap} ${x0+tp},${y0-Ap} ${x0+tp},${y0-tp} ${x0+Bp},${y0-tp} ${x0+Bp},${y0} ${x0},${y0}"/>`+gl(x0,y0,x0,yd+4)+gl(x0+Bp,y0,x0+Bp,yd+4)+hd(x0,x0+Bp,yd,L(1,'B'))+gl(x0+tp,y0-Ap,xr+4,y0-Ap)+gl(x0+Bp,y0,xr+4,y0)+vd(xr,y0-Ap,y0,L(0,'A'));
+pre=L(2,'t')+' · ';
+}
+const ln=num('len'),q=num('qty');
+o+=`<polygon class="sp" points="265,75 281,62 366,62 350,75"/><polygon class="sp" points="350,75 366,62 366,90 350,103"/><rect class="sp" x="265" y="75" width="85" height="28"/>`+gl(265,103,265,128)+gl(350,103,350,128)+hd(265,350,124,'L'+(ln>0?' '+fd(ln)+' '+lu():''));
+o+=`<text x="315" y="46" text-anchor="middle" font-weight="600">${sh.s}${q>1?' × '+fd(q):''}</text>`;
+const rho=rhoNow();
+o+=`<text x="200" y="182" text-anchor="middle">${pre}${rho>0?'ρ '+fd(rho)+' kg/m³':''}${pl?' · '+pl:''}</text>`;
+$('dgg').innerHTML=o;
+}
+
+function calc(){
+const d=validate();
+if(!d){$('results').innerHTML='';lastText='';draw(null);return}
+const metric=unit==='m',Lm=d.len*(metric?1:1/FT),A=area(d.key,d.p),rho=d.rho;
+const kgm=A*rho,lbft=kgm*KG/FT,wp=kgm*Lm,wt=wp*d.qty,planKg=wt*(1+d.pct/100),planLb=planKg*KG;
+const key=metric?fu(planKg)+' kg':fu(planLb)+' lb';
+const other=metric?fu(planLb)+' lb':fu(planKg)+' kg';
+const tM=fmt(up(planKg/1000,4),4),tS=fmt(up(planLb/2000,4),4);
+const R=(a,b,c,k)=>'<tr'+(k?' class="'+k+'"':'')+'><td>'+a+'</td><td class="n">'+b+'</td><td class="n">'+c+'</td></tr>';
+const qs=fmt(d.qty,0),pc=+d.pct;
+let h='<div class="res"><div class="key"><small>Planning weight (nominal + '+pc+'% allowance, rounded up)</small><div class="big">'+key+'</div><div class="sub">'+other+' · '+tM+' metric t · '+tS+' short tons</div></div>';
+if(d.price!==null){const cost=up(d.price*(metric?planKg:planLb),2);h+='<p><strong>Estimated material cost: '+fmt(cost,2)+'</strong> (your price × planning weight, rounded up)</p>'}
+h+='<div class="tw"><table><thead><tr><th>Item</th><th class="n">Metric</th><th class="n">Imperial</th></tr></thead><tbody>'
++R('Cross-section area',sm(A*1e6)+' mm²',sm(A*IN2)+' in²')
++R('Volume per piece',sm(A*Lm)+' m³',sm(A*Lm*M3F)+' ft³')
++R('Weight per length',fmt(kgm,3)+' kg/m',fmt(lbft,3)+' lb/ft')
++R('Weight per piece (nominal)',fw(wp)+' kg',fw(wp*KG)+' lb')
++R('Total, '+qs+' pc (nominal)',fw(wt)+' kg',fw(wt*KG)+' lb')
++R('Total + '+pc+'% allowance',fu(planKg)+' kg',fu(planLb)+' lb','tot')
++R('Planning total in tons',tM+' t',tS+' short tons')
++'</tbody></table></div>';
+h+='<h3>Same part in other materials (nominal total)</h3><div class="tw"><table><thead><tr><th>Material</th><th class="n">kg/m³</th><th class="n">kg/m</th><th class="n">Total kg</th><th class="n">Total lb</th></tr></thead><tbody>';
+const mk=$('mat').value,mats=Object.keys(MT).map(k=>({n:MT[k][0],r:MT[k][1],s:mk===k}));
+if(mk==='custom')mats.push({n:'Custom density',r:rho,s:true});
+mats.forEach(m=>{const t=A*Lm*d.qty*m.r;h+='<tr'+(m.s?' class="sel"':'')+'><td>'+m.n+'</td><td class="n">'+fmt(m.r,0)+'</td><td class="n">'+fmt(A*m.r,3)+'</td><td class="n">'+fw(t)+'</td><td class="n">'+fw(t*KG)+'</td></tr>'});
+h+='</tbody></table></div><h3>Weight by quantity</h3><div class="tw"><table><thead><tr><th class="n">Pieces</th><th class="n">Nominal kg</th><th class="n">Nominal lb</th><th class="n">Planning kg</th><th class="n">Planning lb</th></tr></thead><tbody>';
+const qa=[1,5,10,25,50,100];if(qa.indexOf(d.qty)<0)qa.push(d.qty);qa.sort((a,b)=>a-b);
+qa.forEach(q=>{const t=wp*q,pk=t*(1+d.pct/100);h+='<tr'+(q===d.qty?' class="sel"':'')+'><td class="n">'+fmt(q,0)+'</td><td class="n">'+fw(t)+'</td><td class="n">'+fw(t*KG)+'</td><td class="n">'+fu(pk)+'</td><td class="n">'+fu(pk*KG)+'</td></tr>'});
+h+='</tbody></table></div><div class="note">Theoretical weight from nominal dimensions and density only. Real mill weights vary, and tube corner radii and angle fillets are ignored. Always use certified weights and a qualified rigger or engineer for lifting, hauling or structural decisions. This is not engineering, permit or inspection approval, and local codes vary.</div><button class="copy" id="cp" type="button">Copy results</button></div>';
+const dimStr=d.p.map((x,i)=>fd(num('f'+(i+1)))).join(' × ')+' '+du();
+const mn=mk==='custom'?'Custom':MT[mk][0];
+lastText='Steel weight calculation (toolwick.com)\nShape: '+$('shape').selectedOptions[0].text+' — '+dimStr+'\nMaterial: '+mn+' ('+fmt(rho,0)+' kg/m³)\nLength: '+fd(d.len)+' '+lu()+' × '+qs+' pc\nWeight per length: '+fmt(kgm,3)+' kg/m ('+fmt(lbft,3)+' lb/ft)\nNominal total: '+fw(wt)+' kg ('+fw(wt*KG)+' lb)\nPlanning total (+'+pc+'%, rounded up): '+fu(planKg)+' kg ('+fu(planLb)+' lb)\nTheoretical weight only; verify before lifting or ordering.';
+$('results').innerHTML=h;
+draw(metric?fmt(kgm,3)+' kg/m':fmt(lbft,3)+' lb/ft');
+}
+const go=()=>requestAnimationFrame(calc);
+
+$('go').addEventListener('click',go);
+document.querySelectorAll('input').forEach(i=>i.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();go()}}));
+$('shape').addEventListener('change',()=>{labels();defaults();go()});
+$('mat').addEventListener('change',()=>{$('w-dens').hidden=$('mat').value!=='custom';go()});
+$('allow').addEventListener('input',()=>{$('allowv').textContent=$('allow').value+'%';if(lastText)go()});
+$('unit').addEventListener('change',()=>{
+const nu=$('unit').value;if(nu===unit)return;
+const k=nu==='i'?1/25.4:25.4,n=SH[$('shape').value].f.length;
+for(let i=1;i<=n;i++){const v=num('f'+i);if(v>0)$('f'+i).value=rnd(v*k,3)}
+const l=num('len');if(l>0)$('len').value=rnd(nu==='i'?l*FT:l/FT,4);
+const p=num('price');if(p>=0)$('price').value=rnd(nu==='i'?p/KG:p*KG,4);
+unit=nu;labels();go();
+});
+$('results').addEventListener('click',ev=>{
+const b=ev.target.closest('#cp');if(!b)return;
+const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,()=>{})}
+else{const t=document.createElement('textarea');t.value=lastText;document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(t)}
+});
+$('yr').textContent=new Date().getFullYear();
+labels();defaults();draw(null);go();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
