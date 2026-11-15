@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Rafter Vent &amp; Attic Baffle Calculator | Toolwick</title>
+<meta name="description" content="Free rafter vent baffle calculator: find baffle length, quantity and insulation depth for attic eaves and cathedral rafter bays, with a live diagram.">
+<link rel="canonical" href="https://toolwick.com/rafter-vent-baffle-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Rafter Vent & Attic Baffle Calculator", "url": "https://toolwick.com/rafter-vent-baffle-calculator/", "description": "Free rafter vent baffle calculator: find baffle length, quantity and insulation depth for attic eaves and cathedral rafter bays, with a live diagram.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Rafter Vent & Attic Baffle Calculator", "item": "https://toolwick.com/rafter-vent-baffle-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many rafter vents do I need per bay?", "acceptedAnswer": {"@type": "Answer", "text": "You need one baffle per rafter or truss bay along the eave. For cathedral ceilings you need a continuous channel from soffit to ridge in every bay, so several overlapped pieces per bay is normal. The calculator rounds up and adds 10% for cuts and damaged pieces."}}, {"@type": "Question", "name": "How far should an attic baffle extend past the insulation?", "acceptedAnswer": {"@type": "Answer", "text": "A common rule of thumb is to extend the baffle at least 4 to 6 inches above the finished insulation surface. This calculator uses 6 inches. Always check the manufacturer's installation instructions for your product."}}, {"@type": "Question", "name": "Do I need a baffle if I use batt insulation?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Batts can droop or shift into the soffit area, and the 1-inch clearance rule still applies. A baffle keeps the channel open and also protects against wind washing, which lowers the effective R-value of the batt near the eave."}}, {"@type": "Question", "name": "How much air space does insulation need under the roof deck?", "acceptedAnswer": {"@type": "Answer", "text": "IRC R806.3 calls for a minimum 1-inch space between the insulation and the roof sheathing where eave vents are installed. Some foam vent products need 1.5 inches. Local amendments differ, so confirm requirements with your inspector."}}, {"@type": "Question", "name": "Why does the calculator say less insulation fits at the wall?", "acceptedAnswer": {"@type": "Answer", "text": "At a standard truss heel there is only about 3.5 inches from top plate to roof, and the baffle takes 1 inch of it. That leaves roughly R-8 over the wall unless you use a raised-heel truss or dense foam in that zone. It's a common weak point in attic energy performance."}}, {"@type": "Question", "name": "Can this calculator approve my project for a permit?", "acceptedAnswer": {"@type": "Answer", "text": "No. It gives planning estimates using IRC R806.3 clearances and typical installer practice. It isn't engineering, permit or inspection approval, so always confirm with your local building department."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;line-height:1.3;margin:2.2rem 0 .75rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+svg text{font-size:14px;fill:#1a1a2e;font-family:inherit}
+.cap{font-size:.85rem;color:#666;margin:.5rem 0 0;text-align:center}
+.hid{display:none}
+.tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab{flex:1 1 200px;min-height:44px;padding:10px 14px;border:1px solid #ddd;border-radius:6px;background:#f8f9fa;color:#1a1a2e;font-size:.95rem;font-weight:600;cursor:pointer;font-family:inherit}
+.tab.on{background:#0077b6;border-color:#0077b6;color:#fff}
+.tab:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.field{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:0;border-color:#0077b6}
+input[type=range]{padding:0;border:0;accent-color:#0077b6}
+input.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.25rem}
+.err:empty{display:none}
+.hint{font-size:.85rem;color:#666;margin-top:.25rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.row{display:block}
+@media(min-width:640px){.row{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}}
+.go{width:100%;min-height:44px;padding:12px 24px;background:#0077b6;color:#fff;border:0;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.go:hover{background:#006299}
+#results{margin-top:1.5rem}
+.fade{animation:f .3s ease}
+@keyframes f{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.big{display:block;font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1.1}
+.key small{color:#666;font-size:.9rem}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.r{text-align:right;font-variant-numeric:tabular-nums}
+th.r{text-align:right}
+.warn{background:#fff8e1;border-left:4px solid #e6a100;padding:.75rem 1rem;margin:0 0 1rem;font-size:.92rem;border-radius:0 6px 6px 0}
+.ok{background:#eaf7ef;border-left-color:#2e8b57}
+.cp{min-height:44px;padding:8px 16px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;font-size:.9rem;cursor:pointer;font-family:inherit}
+.disc{font-size:.85rem;color:#666;margin-top:1rem}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{min-height:44px;padding:10px 0;cursor:pointer;font-weight:600}
+details p{margin:0 0 1rem}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0}
+.rel li{margin:0}
+.rel a{display:block;padding:12px 0;border-bottom:1px solid #e8e8e8}
+.formula{background:#f8f9fa;border-radius:6px;padding:1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;overflow-x:auto;margin-bottom:1rem}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#666}
+footer a{margin-right:1rem;color:#0077b6;text-decoration:underline}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/rafter-vent-baffle-calculator/">
+<meta property="og:title" content="Rafter Vent &amp; Attic Baffle Calculator">
+<meta property="og:description" content="Free rafter vent baffle calculator: find baffle length, quantity and insulation depth for attic eaves and cathedral rafter bays, with a live diagram.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Rafter Vent & Attic Baffle Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This free rafter vent baffle calculator works out how long each baffle must be, how many pieces to buy, and how much insulation fits while keeping the soffit-to-ridge air channel open. Choose attic eave baffles or full-length cathedral rafter vents, enter your framing, and get a conservative shopping quantity.</p>
+
+<div class="card">
+<div class="diagram">
+<svg viewBox="0 0 520 260" role="img" aria-labelledby="svgT">
+<title id="svgT">Cross-section diagram of an attic baffle or rafter vent with insulation depth labels</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<g id="gA">
+<polygon points="10,187 440,40 440,28 10,175" fill="#e9e1d3" stroke="#1a1a2e"/>
+<rect x="40" y="200" width="24" height="50" fill="#f8f9fa" stroke="#1a1a2e"/>
+<polygon points="64,200 64,174.5 235,116 440,116 440,200" fill="#dcebf5"/>
+<line x1="40" y1="200" x2="440" y2="200" stroke="#1a1a2e" stroke-width="2"/>
+<line x1="10" y1="200" x2="40" y2="200" stroke="#1a1a2e" stroke-dasharray="4 3"/>
+<line x1="235" y1="116" x2="440" y2="116" stroke="#0077b6" stroke-dasharray="5 4"/>
+<line x1="64" y1="174.5" x2="290" y2="97.3" stroke="#0077b6" stroke-width="3.5"/>
+<line x1="400" y1="200" x2="400" y2="116" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="74" y1="200" x2="74" y2="165" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<line x1="150" y1="108" x2="150" y2="143" stroke="#0077b6" stroke-dasharray="3 3"/>
+<line x1="25" y1="238" x2="25" y2="206" stroke="#0077b6" stroke-width="2" marker-end="url(#ar)"/>
+<text x="2" y="256">Air in</text>
+<text id="dHeel" x="84" y="222">Heel</text>
+<text id="dBaf" x="110" y="100">Baffle</text>
+<text id="dPit" x="260" y="62">Pitch</text>
+<text x="392" y="154" text-anchor="end" id="dI1">Insulation</text>
+<text x="392" y="172" text-anchor="end" id="dI2">depth</text>
+</g>
+<g id="gB" class="hid">
+<rect x="80" y="18" width="300" height="12" fill="#cfc4ae" stroke="#1a1a2e"/>
+<rect x="60" y="30" width="20" height="150" fill="#e9e1d3" stroke="#1a1a2e"/>
+<rect x="380" y="30" width="20" height="150" fill="#e9e1d3" stroke="#1a1a2e"/>
+<rect x="80" y="30" width="300" height="22" fill="#cde7f5" stroke="#0077b6" stroke-dasharray="4 3"/>
+<rect x="80" y="52" width="300" height="128" fill="#e6eef4"/>
+<rect x="80" y="180" width="300" height="10" fill="#e0e0e0" stroke="#1a1a2e"/>
+<line x1="430" y1="30" x2="430" y2="180" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text x="230" y="12" text-anchor="middle">Roof sheathing</text>
+<text x="230" y="46" text-anchor="middle">1 in min. vent channel</text>
+<text id="eIns" x="230" y="122" text-anchor="middle">Insulation</text>
+<text x="230" y="212" text-anchor="middle">Drywall</text>
+<text x="440" y="100">Rafter</text>
+<text id="eDep" x="440" y="118">depth</text>
+</g>
+</svg>
+<p class="cap" id="cap">Eave cross-section, not to scale. Blue line: baffle. Shaded: insulation. Labels update when you calculate.</p>
+</div>
+
+<div class="tabs" role="tablist" aria-label="Calculator mode">
+<button type="button" role="tab" class="tab on" id="tabA" aria-selected="true" aria-controls="pA">Attic eave baffles</button>
+<button type="button" role="tab" class="tab" id="tabB" aria-selected="false" aria-controls="pB">Cathedral rafter vents</button>
+</div>
+
+<div class="panel" id="pA" role="tabpanel" aria-labelledby="tabA">
+<div class="row">
+<div class="field"><label for="aLen">Eave length (ft)</label><input id="aLen" type="number" inputmode="decimal" value="40" min="1" step="any" aria-describedby="aLen-e"><div class="err" id="aLen-e"></div></div>
+<div class="field"><label for="aEaves">Eaves to baffle</label><select id="aEaves"><option value="2" selected>2 (both sides)</option><option value="1">1 (one side)</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="aSp">Truss / rafter spacing (on center)</label><select id="aSp"><option value="12">12 in</option><option value="16">16 in</option><option value="24" selected>24 in</option></select></div>
+<div class="field"><label for="aPitch">Roof pitch (rise per 12 in run)</label><input id="aPitch" type="number" inputmode="decimal" value="6" min="1" max="24" step="any" aria-describedby="aPitch-e"><div class="err" id="aPitch-e"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="aHeel">Heel height at wall plate (in)</label><input id="aHeel" type="number" inputmode="decimal" value="3.5" min="0" step="any" aria-describedby="aHeel-e"><div class="err" id="aHeel-e"></div><div class="hint">Standard truss: about 3.5 in. Raised heel: 8 in or more.</div></div>
+<div class="field"><label for="aType">Insulation type</label><select id="aType"><option value="cel" selected>Blown cellulose</option><option value="fgb">Blown fiberglass</option><option value="bat">Fiberglass batts</option><option value="mw">Mineral wool batts</option></select></div>
+</div>
+<div class="field"><label for="aR">Target attic R-value: <output id="aRv">R-38</output></label><input id="aR" type="range" min="19" max="60" step="1" value="38"><div class="ticks"><span>R-19</span><span>R-38</span><span>R-60</span></div></div>
+<div class="field"><label for="aOvr">Or enter installed insulation depth (in) — optional</label><input id="aOvr" type="number" inputmode="decimal" min="2" step="any" placeholder="Leave blank to use R-value" aria-describedby="aOvr-e"><div class="err" id="aOvr-e"></div></div>
+</div>
+
+<div class="panel hid" id="pB" role="tabpanel" aria-labelledby="tabB">
+<div class="row">
+<div class="field"><label for="bRun">Horizontal run, eave to ridge (ft)</label><input id="bRun" type="number" inputmode="decimal" value="14" min="1" max="60" step="any" aria-describedby="bRun-e"><div class="err" id="bRun-e"></div></div>
+<div class="field"><label for="bLen">Roof length along ridge (ft)</label><input id="bLen" type="number" inputmode="decimal" value="40" min="1" step="any" aria-describedby="bLen-e"><div class="err" id="bLen-e"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="bSlopes">Roof slopes to vent</label><select id="bSlopes"><option value="2" selected>2 (gable)</option><option value="1">1 (shed)</option></select></div>
+<div class="field"><label for="bPitch">Roof pitch (rise per 12 in run)</label><input id="bPitch" type="number" inputmode="decimal" value="6" min="1" max="24" step="any" aria-describedby="bPitch-e"><div class="err" id="bPitch-e"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="bDepth">Rafter size</label><select id="bDepth"><option value="5.5">2x6 (5.5 in)</option><option value="7.25">2x8 (7.25 in)</option><option value="9.25" selected>2x10 (9.25 in)</option><option value="11.25">2x12 (11.25 in)</option></select></div>
+<div class="field"><label for="bSp">Rafter spacing (on center)</label><select id="bSp"><option value="12">12 in</option><option value="16" selected>16 in</option><option value="24">24 in</option></select></div>
+</div>
+<div class="field"><label for="bType">Insulation type</label><select id="bType"><option value="cel">Dense-pack cellulose</option><option value="fgb">Blown fiberglass</option><option value="bat" selected>Fiberglass batts</option><option value="mw">Mineral wool batts</option></select></div>
+<div class="field"><label for="bR">Target roof R-value: <output id="bRv">R-30</output></label><input id="bR" type="range" min="13" max="60" step="1" value="30"><div class="ticks"><span>R-13</span><span>R-30</span><span>R-60</span></div></div>
+</div>
+
+<button type="button" class="go" id="calc">Calculate baffles</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/rafter-vent-baffle-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Rafter Vent &amp;amp; Attic Baffle Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/rafter-vent-baffle-calculator/&quot;&gt;Rafter Vent &amp;amp; Attic Baffle Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/rafter-vent-baffle-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Rafter Vent & Attic Baffle Calculator</h2>
+<p>Pick <strong>Attic eave baffles</strong> if you have a ventilated attic with trusses or joists and need baffles at the soffit to hold insulation back from the vent. Pick <strong>Cathedral rafter vents</strong> if insulation sits between sloped rafters and you need a vent channel the full length of every bay. Enter lengths, spacing, pitch and your insulation target. The calculator returns the cut length per bay, pieces per bay, a total to buy including 10% waste, and the insulation depth that actually fits.</p>
+
+<h2>Why This Matters</h2>
+<p>Most attic moisture and ice-dam problems trace back to blocked soffit vents. Blown-in insulation slides downhill into the eaves in minutes if there is no baffle, and the soffit airflow that carries moisture and heat out of the roof assembly stops. A 1,600 sq ft ranch with 40-foot eaves and trusses at 24 inches has about 40 bays across both sides. Skipping even a handful can create cold, damp pockets, frost on the sheathing, and shingles that cook from underneath.</p>
+<p>Baffles matter more every year because attic insulation targets keep rising. Many climate zones now call for R-49 or R-60, which is 14 to 20 inches of loose-fill. That is far deeper than the 3.5-inch heel of a standard truss, so the baffle has to run a long way up the slope before the roof is high enough to hold the full depth. In vaulted ceilings the problem is different: a 2x10 rafter only has 9.25 inches of depth, and after a 1-inch air channel you are limited to about R-28 with batts. Knowing that before you buy materials saves a trip back to the store, or a failed inspection.</p>
+
+<h2>How It's Calculated</h2>
+<p><strong>Attic eave baffles.</strong> The baffle must run up the roof slope from the wall plate until the roof underside is high enough that insulation can no longer slide under it, then continue a further 6 inches as a safety margin (a common installer rule of thumb, not a code number).</p>
+<div class="formula">Design depth = target R ÷ R-per-inch × settling factor<br>Slope sin = pitch ÷ √(144 + pitch²)<br>Baffle length = (design depth − heel height) ÷ sin + 6 in<br>(minimum 24 in, rounded up to the next whole inch)</div>
+<p>Settling factors are 1.18 for blown cellulose and 1.10 for blown fiberglass, so the baffle covers the as-blown depth rather than the settled depth. Batts use 1.0. Baffle pieces are 48 inches long and overlap 4 inches where more than one is needed. Bay count is eave length ÷ spacing, rounded up, per eave.</p>
+<p><strong>Cathedral rafter vents.</strong> Rafter length is run × 12 × √(1 + (pitch ÷ 12)²). The maximum insulation depth is the rafter depth minus 1 inch, following the 1-inch clearance between insulation and roof sheathing in IRC R806.3 (2018 and 2021 editions). The achievable R-value is rounded down. Local codes vary, so confirm with your building department.</p>
+
+<h2>Worked Example</h2>
+<p>A gable house has 40-foot eaves on both sides, trusses at 24 inches on center, a 6/12 pitch, a 3.5-inch standard heel, and R-38 blown cellulose.</p>
+<ul>
+<li>Bays: 40 × 12 ÷ 24 = 20 per eave, so 40 total.</li>
+<li>Design depth: 38 ÷ 3.5 = 10.86 in, × 1.18 = 12.81 in as blown.</li>
+<li>Slope sine at 6/12: 6 ÷ √180 = 0.4472.</li>
+<li>Baffle length: (12.81 − 3.5) ÷ 0.4472 + 6 = 26.8 in, rounded up to 27 in. One 48-inch baffle per bay, cut to length.</li>
+<li>Quantity: 40 baffles + 10% waste = 44 to buy.</li>
+<li>At the wall plate only 3.5 − 1 = 2.5 in fits, about R-8. The calculator warns about this, and a raised heel would solve it.</li>
+</ul>
+<p>For a cathedral version of the same house with a 14-foot run, 2x10 rafters at 16 inches and R-30 batts: rafter length is 188 in, so 5 overlapped pieces per bay across 60 bays, or 330 with waste. The 2x10 holds 8.25 in of insulation (R-26 with batts), so R-30 does not fit. You would need 2x12 rafters or added rigid foam.</p>
+
+<h2>Tips & Common Mistakes</h2>
+<ul>
+<li><strong>Don't confuse the baffle with the soffit vent.</strong> The baffle only protects the air path. Total ventilation still has to meet the net free area requirement, so check it with the roof attic ventilation calculator.</li>
+<li><strong>Staple baffles at the top and sides</strong> so loose-fill can't push them down. Foam-board dams at the wall plate stop wind washing under the baffle.</li>
+<li><strong>Measure the real heel.</strong> A truss labeled raised-heel can still be only 6 inches. Measure from the top plate to the underside of the sheathing.</li>
+<li><strong>Add depth markers.</strong> Staple rulers or mark rafters so installers blow insulation to the planned depth, and keep it below the baffle top.</li>
+<li><strong>Don't compress batts to fit.</strong> A compressed R-30 batt delivers less than R-30. Pick a deeper rafter or a denser product.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many rafter vents do I need per bay?</summary><p>You need one baffle per rafter or truss bay along the eave. For cathedral ceilings you need a continuous channel from soffit to ridge in every bay, so several overlapped pieces per bay is normal. The calculator rounds up and adds 10% for cuts and damaged pieces.</p></details>
+<details><summary>How far should an attic baffle extend past the insulation?</summary><p>A common rule of thumb is to extend the baffle at least 4 to 6 inches above the finished insulation surface. This calculator uses 6 inches. Always check the manufacturer's installation instructions for your product.</p></details>
+<details><summary>Do I need a baffle if I use batt insulation?</summary><p>Yes. Batts can droop or shift into the soffit area, and the 1-inch clearance rule still applies. A baffle keeps the channel open and also protects against wind washing, which lowers the effective R-value of the batt near the eave.</p></details>
+<details><summary>How much air space does insulation need under the roof deck?</summary><p>IRC R806.3 calls for a minimum 1-inch space between the insulation and the roof sheathing where eave vents are installed. Some foam vent products need 1.5 inches. Local amendments differ, so confirm requirements with your inspector.</p></details>
+<details><summary>Why does the calculator say less insulation fits at the wall?</summary><p>At a standard truss heel there is only about 3.5 inches from top plate to roof, and the baffle takes 1 inch of it. That leaves roughly R-8 over the wall unless you use a raised-heel truss or dense foam in that zone. It's a common weak point in attic energy performance.</p></details>
+<details><summary>Can this calculator approve my project for a permit?</summary><p>No. It gives planning estimates using IRC R806.3 clearances and typical installer practice. It isn't engineering, permit or inspection approval, so always confirm with your local building department.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/attic-insulation-depth-r-value-calculator/">Attic Insulation Depth & R-Value Calculator</a></li>
+<li><a href="/ridge-vent-length-calculator/">Ridge Vent Length Calculator</a></li>
+<li><a href="/roof-attic-ventilation-calculator/">Roof Attic Ventilation Calculator</a></li>
+<li><a href="/knee-wall-stud-height-attic-storage-calculator/">Knee Wall Stud Height & Attic Storage Calculator</a></li>
+<li><a href="/roof-pitch-rafter-calculator/">Roof Pitch & Rafter Length Calculator</a></li>
+<li><a href="/soil-swell-shrink-factor-calculator/">Soil Swell & Shrink Factor Calculator</a></li>
+</ul>
+
+<nav class="cluster-nav" aria-label="More Framing &amp; Structure Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Framing &amp; Structure Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/knee-wall-stud-height-attic-storage-calculator/">Knee Wall Stud Height &amp; Attic Storage Calculator</a></li><li><a href="/basement-wall-insulation-calculator/">Basement Wall Insulation Calculator</a></li><li><a href="/board-and-batten-wall-calculator/">Board and Batten Wall Calculator</a></li><li><a href="/cement-backer-board-calculator/">Cement Backer Board Calculator</a></li><li><a href="/deck-beam-size-calculator/">Deck Beam Size Calculator</a></li><li><a href="/deck-ledger-board-lag-bolt-calculator/">Deck Ledger Board Lag Bolt Calculator</a></li><li><a href="/floor-joist-span-size-calculator/">Floor Joist Span &amp; Size Calculator</a></li><li><a href="/gable-end-wall-area-calculator/">Gable End Wall Area Calculator</a></li><li><a href="/framing-calculators/"><strong>All Framing &amp; Structure calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<p><a href="/about/">About</a> <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> <a href="/contact/">Contact</a></p>
+<p>© 2025 toolwick.com</p>
+</footer>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var T={cel:{r:3.5,f:1.18,n:'Blown cellulose'},fgb:{r:2.5,f:1.10,n:'Blown fiberglass'},bat:{r:3.2,f:1,n:'Fiberglass batts'},mw:{r:3.7,f:1,n:'Mineral wool batts'}};
+var TB={cel:{r:3.5,f:1},fgb:{r:2.5,f:1},bat:{r:3.2,f:1},mw:{r:3.7,f:1}};
+var mode='A',bad=false,firstBad=null,last='';
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0})}
+function nf(n){return n.toLocaleString('en-US',{maximumFractionDigits:2})}
+function V(id,min,max,name,opt){
+var el=$(id),s=el.value.trim(),m='',n=0;
+if(s===''){if(!opt)m=name+' is required.'}
+else{n=Number(s);
+if(!isFinite(n))m='Enter a valid number for '+name.toLowerCase()+'.';
+else if(n<min||n>max)m=name+' must be between '+nf(min)+' and '+nf(max)+'.';}
+$(id+'-e').textContent=m;
+el.classList.toggle('bad',!!m);
+el.setAttribute('aria-invalid',m?'true':'false');
+if(m){bad=true;if(!firstBad)firstBad=el}
+return n;
+}
+function fail(){$('results').innerHTML='';last='';if(firstBad)firstBad.focus()}
+function pieces(L){return L<=48?1:1+Math.ceil((L-48)/44-1e-9)}
+function waste(n){return Math.ceil(n*11/10-1e-9)}
+function row(a,b){return '<tr><td>'+a+'</td><td class="r">'+b+'</td></tr>'}
+function ftIn(i){var f=Math.floor(i/12);return f+' ft '+nf(i-f*12)+' in'}
+var DISC='<p class="disc">Planning estimate only. Based on the 1-inch insulation clearance in IRC R806.3 and common baffle practice. Local codes vary. This is not engineering, permit or inspection approval. Follow your baffle manufacturer\'s instructions.</p>';
+function copyBtn(){return '<button type="button" class="cp" onclick="cpRes(this)">Copy results</button>'}
+
+function runA(){
+bad=false;firstBad=null;
+var len=V('aLen',1,1000,'Eave length'),pitch=V('aPitch',1,24,'Roof pitch'),h0=V('aHeel',0,24,'Heel height'),ovr=V('aOvr',2,40,'Insulation depth',true);
+if(bad)return fail();
+var eaves=+$('aEaves').value,sp=+$('aSp').value,tk=$('aType').value,t=T[tk],R=+$('aR').value;
+var sin=pitch/Math.sqrt(144+pitch*pitch);
+var bays=Math.ceil(len*12/sp-1e-9)*eaves;
+function cA(D){var L=D>h0?(D-h0)/sin+6:0;L=Math.max(Math.ceil(L-1e-9),24);var n=pieces(L);return{L:L,n:n,raw:n*bays,tot:waste(n*bays)}}
+var D=ovr>0?ovr:R/t.r*t.f,c=cA(D);
+var clear=sp-1.5,wallD=Math.max(0,h0-1),wallR=Math.floor(wallD*t.r+1e-9);
+var bw=sp===12?'Up to 10.5 in (cut to fit)':sp===16?'14 in':'22 in';
+var tgt=ovr>0?nf(ovr)+' in (entered)':'R-'+R+' ('+t.n+')';
+var w='';
+if(D>h0)w+='<div class="warn">Heel height ('+nf(h0)+' in) is below the insulation depth ('+nf(Math.round(D*10)/10)+' in). Only about '+nf(wallD)+' in fits above the wall plate under the baffle'+(ovr>0?'':' (roughly R-'+wallR+' vs. the R-'+R+' target)')+'. Consider raised-heel trusses or dense foam over the wall.</div>';
+if(c.n>1)w+='<div class="warn">The baffle is longer than one 48 in piece. Overlap pieces at least 4 in and staple each joint.</div>';
+if(D>24)w+='<div class="warn">Insulation depth over 24 in is unusual. Double-check your inputs.</div>';
+var sc='';
+if(!(ovr>0)){
+var rs=[30,38,49,60],rows='';
+rs.forEach(function(r){var d=r/t.r*t.f,x=cA(d);rows+='<tr><td>R-'+r+'</td><td class="r">'+fmt(d,1)+'</td><td class="r">'+fmt(x.L)+'</td><td class="r">'+x.n+'</td><td class="r">'+fmt(x.tot)+'</td></tr>'});
+sc='<h3 style="font-size:1rem;margin:1.5rem 0 .5rem">Compare R-value targets</h3><div class="tw"><table><thead><tr><th>Target</th><th class="r">Depth (in)</th><th class="r">Cut (in)</th><th class="r">Per bay</th><th class="r">To buy</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+last='Attic baffles ('+nf(len)+' ft eave x '+eaves+', '+sp+' in o.c., '+nf(pitch)+'/12 pitch, '+nf(h0)+' in heel, '+tgt+'): '+fmt(bays)+' bays, '+c.L+' in cut length, '+c.n+' piece(s) per bay, buy '+fmt(c.tot)+' baffles (incl. 10% waste). Estimate only; local codes vary.';
+var html='<div class="fade"><div class="key"><span class="big">'+fmt(c.tot)+'</span><small>baffles to buy (includes 10% waste; '+fmt(c.raw)+' needed)</small></div>'+w+
+'<div class="tw"><table><thead><tr><th>Item</th><th class="r">Result</th></tr></thead><tbody>'+
+row('Baffle bays (total)',fmt(bays))+row('Design insulation depth',fmt(D,1)+' in')+row('Baffle cut length per bay',fmt(c.L)+' in ('+ftIn(c.L)+')')+row('48 in pieces per bay',fmt(c.n))+row('Baffles needed (no waste)',fmt(c.raw))+row('Baffles to buy (+10%)',fmt(c.tot))+row('Suggested baffle width',bw)+row('Vent channel per bay (1 in deep)',fmt(clear*1,1)+' sq in')+row('Total vent channel opening',fmt(clear*bays,0)+' sq in')+row('Insulation that fits at wall plate',fmt(wallD,1)+' in (R-'+wallR+')')+
+'</tbody></table></div>'+sc+
+'<p class="hint">The baffle channel is not your ventilation total. Soffit vent net free area is usually the limit, so use the <a href="/roof-attic-ventilation-calculator/">Roof Attic Ventilation Calculator</a>.</p>'+copyBtn()+DISC+'</div>';
+requestAnimationFrame(function(){
+$('results').innerHTML=html;
+$('dHeel').textContent='Heel '+nf(h0)+' in';
+$('dBaf').textContent='Baffle '+fmt(c.L)+' in';
+$('dPit').textContent='Pitch '+nf(pitch)+'/12';
+$('dI1').textContent=ovr>0?'Insulation':'Insulation R-'+R;
+$('dI2').textContent=fmt(D,1)+' in';
+});
+}
+
+function runB(){
+bad=false;firstBad=null;
+var run=V('bRun',1,60,'Run'),len=V('bLen',1,1000,'Roof length'),pitch=V('bPitch',1,24,'Roof pitch');
+if(bad)return fail();
+var slopes=+$('bSlopes').value,depth=+$('bDepth').value,sp=+$('bSp').value,tk=$('bType').value,t=TB[tk],R=+$('bR').value,tn=T[tk].n;
+var rafIn=run*12*Math.sqrt(1+Math.pow(pitch/12,2)),L=Math.ceil(rafIn-1e-9),n=pieces(L);
+var bays=Math.ceil(len*12/sp-1e-9)*slopes,raw=n*bays,tot=waste(raw);
+var maxIns=depth-1,need=R/t.r,needR=Math.ceil(need*10-1e-9)/10,fits=need<=maxIns+1e-9,maxR=Math.floor(maxIns*t.r+1e-9);
+var opts=[[5.5,'2x6'],[7.25,'2x8'],[9.25,'2x10'],[11.25,'2x12']],sm='None up to 2x12 (add rigid foam or use denser insulation)';
+for(var i=0;i<opts.length;i++){if(opts[i][0]-1>=need-1e-9){sm=opts[i][1];break}}
+var w=fits?'<div class="warn ok">R-'+R+' needs about '+fmt(needR,1)+' in, and this rafter holds '+fmt(maxIns,2)+' in with a 1 in vent channel. It fits.</div>':'<div class="warn">R-'+R+' needs about '+fmt(needR,1)+' in, but this rafter only holds '+fmt(maxIns,2)+' in after the 1 in vent channel (about R-'+maxR+' with '+tn.toLowerCase()+'). Do not compress insulation into the channel. Use deeper rafters, denser insulation, or add rigid foam.</div>';
+if(n>1)w+='<div class="warn">Each bay needs '+n+' overlapped 48 in pieces. Overlap at least 4 in, and leave a gap at the ridge for airflow.</div>';
+last='Cathedral rafter vents ('+nf(run)+' ft run, '+nf(pitch)+'/12, '+nf(len)+' ft long, '+slopes+' slope(s), '+sp+' in o.c.): rafter length '+L+' in, '+n+' piece(s) per bay, '+fmt(bays)+' bays, buy '+fmt(tot)+' vents (incl. 10% waste). Max insulation '+fmt(maxIns,2)+' in (R-'+maxR+', '+tn+'). Estimate only; local codes vary.';
+var html='<div class="fade"><div class="key"><span class="big">'+fmt(tot)+'</span><small>rafter vents to buy (includes 10% waste; '+fmt(raw)+' needed)</small></div>'+w+
+'<div class="tw"><table><thead><tr><th>Item</th><th class="r">Result</th></tr></thead><tbody>'+
+row('Rafter length (eave to ridge)',fmt(L)+' in ('+ftIn(L)+')')+row('Rafter bays (total)',fmt(bays))+row('48 in pieces per bay',fmt(n))+row('Vents needed (no waste)',fmt(raw))+row('Vents to buy (+10%)',fmt(tot))+row('Max insulation depth (rafter − 1 in)',fmt(maxIns,2)+' in')+row('Highest R-value that fits ('+tn+')','R-'+maxR)+row('Depth needed for R-'+R,fmt(needR,1)+' in')+row('Smallest rafter that fits',sm)+row('Vent channel per bay (1 in deep)',fmt((sp-1.5),1)+' sq in')+
+'</tbody></table></div>'+
+'<p class="hint">Need ridge-side airflow? Size it with the <a href="/ridge-vent-length-calculator/">Ridge Vent Length Calculator</a>.</p>'+copyBtn()+DISC+'</div>';
+requestAnimationFrame(function(){
+$('results').innerHTML=html;
+$('eIns').textContent='Insulation up to '+fmt(maxIns,2)+' in (R-'+maxR+')';
+$('eDep').textContent=nf(depth)+' in';
+});
+}
+
+function go(){requestAnimationFrame(function(){mode==='A'?runA():runB()})}
+$('calc').addEventListener('click',go);
+document.addEventListener('keydown',function(e){
+if(e.key==='Enter'&&/^(INPUT|SELECT)$/.test(e.target.tagName)&&e.target.closest('.panel')){e.preventDefault();go()}
+});
+function setMode(m){
+mode=m;
+$('pA').classList.toggle('hid',m!=='A');$('pB').classList.toggle('hid',m!=='B');
+$('gA').classList.toggle('hid',m!=='A');$('gB').classList.toggle('hid',m!=='B');
+$('tabA').classList.toggle('on',m==='A');$('tabB').classList.toggle('on',m==='B');
+$('tabA').setAttribute('aria-selected',m==='A');$('tabB').setAttribute('aria-selected',m==='B');
+$('cap').textContent=m==='A'?'Eave cross-section, not to scale. Blue line: baffle. Shaded: insulation. Labels update when you calculate.':'Rafter bay cross-section, not to scale. Shaded blue: vent channel. Labels update when you calculate.';
+$('results').innerHTML='';last='';
+}
+$('tabA').addEventListener('click',function(){setMode('A')});
+$('tabB').addEventListener('click',function(){setMode('B')});
+$('aR').addEventListener('input',function(){$('aRv').textContent='R-'+this.value});
+$('bR').addEventListener('input',function(){$('bRv').textContent='R-'+this.value});
+window.cpRes=function(btn){
+function done(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy results'},2000)}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(last).then(done,function(){fb()})}else fb();
+function fb(){var a=document.createElement('textarea');a.value=last;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(a);done()}
+};
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
