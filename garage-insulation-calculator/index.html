@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Garage Insulation Calculator | Toolwick</title>
+<meta name="description" content="Free garage insulation calculator: estimate wall and ceiling insulation area, R-value targets, thickness and materials needed for your garage size.">
+<link rel="canonical" href="https://toolwick.com/garage-insulation-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Garage Insulation Calculator", "url": "https://toolwick.com/garage-insulation-calculator/", "description": "Free garage insulation calculator: estimate wall and ceiling insulation area, R-value targets, thickness and materials needed for your garage size.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Garage Insulation Calculator", "item": "https://toolwick.com/garage-insulation-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What R-value do I need for a garage?", "acceptedAnswer": {"@type": "Answer", "text": "For a heated garage, follow your climate zone's wall and ceiling values, such as R-20 walls and R-49 ceiling in Zone 3. An unheated detached garage has no code minimum in most areas, so R-13 walls and R-30 ceiling is a sensible budget target."}}, {"@type": "Question", "name": "Should I insulate the garage door?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, if the garage is heated or attached. Door kits are inexpensive and cut heat loss and noise through a large uninsulated surface. Check that your door's springs and opener can handle the added weight."}}, {"@type": "Question", "name": "How much insulation do I need for a 2-car garage?", "acceptedAnswer": {"@type": "Answer", "text": "A 24 × 24 ft garage with 9 ft walls has about 864 sq ft of gross wall and 576 sq ft of ceiling before subtracting doors. With 10% waste, expect to buy around 1,300–1,500 sq ft of insulation, depending on openings."}}, {"@type": "Question", "name": "Is spray foam better than fiberglass for a garage?", "acceptedAnswer": {"@type": "Answer", "text": "Spray foam gives more R-value per inch and seals air leaks, which helps in shallow cavities. Fiberglass costs less and works well in deep cavities, but needs careful installation. Foam needs a code-approved barrier and a trained installer."}}, {"@type": "Question", "name": "Do I need a vapor barrier in a garage?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on climate and the insulation. Cold climates often use a vapor retarder on the warm side, while foam may act as its own. Ask your local building department which applies to you."}}, {"@type": "Question", "name": "Why is my cavity flagged as too shallow?", "acceptedAnswer": {"@type": "Answer", "text": "The target R-value divided by the product's R-per-inch is deeper than your framing. Use a higher R-per-inch product, add continuous rigid foam over the studs, or frame deeper walls."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+[hidden]{display:none!important}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #eee;padding:1rem 0}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.8rem;line-height:1.25;margin:1.5rem 0 .75rem}
+h2{font-size:1.3rem;margin:2.5rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+svg text{font-size:14px;fill:#1a1a2e}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0 1rem}
+.g2{grid-template-columns:repeat(2,1fr)}
+.field{margin-bottom:1.1rem}
+label,legend{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;background:#fff;color:#1a1a2e;font-family:inherit}
+input:focus,select:focus,button:focus-visible,summary:focus-visible,input[type=range]:focus-visible,input[type=checkbox]:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.err{border-color:#e74c3c}
+.em{display:block;color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.hint{color:#666;font-size:.85rem}
+fieldset{border:0;padding:0;margin:0 0 1.1rem}
+.chk{display:flex;align-items:center;gap:.6rem;min-height:44px}
+.chk input{width:24px;height:24px;margin:0;flex:none}
+.chk label{margin:0;font-size:.95rem;color:#1a1a2e}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666;margin-top:-.4rem}
+.rv{font-weight:700;color:#0077b6}
+.btn{display:block;width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+.copy{min-height:44px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:10px 16px;font-size:.9rem;cursor:pointer;margin-top:1rem;font-family:inherit}
+.copy:hover{background:#f0f8fc}
+#results{margin-top:1.5rem}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+.kl{font-size:.9rem;color:#444}
+.kn{font-size:2.5rem;font-weight:800;color:#0077b6;line-height:1.2}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1rem}
+.st{background:#f8f9fa;border-radius:6px;padding:.6rem;text-align:center}
+.st b{display:block;font-size:1.15rem}
+.st span{font-size:.78rem;color:#666}
+.tw{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;min-width:480px;font-size:.92rem}
+th{background:#f0f0f0;font-weight:600}
+th,td{padding:.6rem .75rem;border-bottom:1px solid #e5e5e5;text-align:right}
+th:first-child,td:first-child{text-align:left}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.bar{height:12px;border-radius:6px;background:#bfe0f2;overflow:hidden}
+.bar span{display:block;height:100%;background:#0077b6}
+.note{background:#fff8e1;border-left:4px solid #e0a800;padding:.7rem 1rem;margin:.75rem 0;font-size:.9rem}
+.safe{background:#f8f9fa;border-left:4px solid #0077b6;padding:.7rem 1rem;margin:.75rem 0;font-size:.88rem;color:#444}
+ul{padding-left:1.25rem;margin:0 0 1rem}
+li{margin-bottom:.4rem}
+details{border-bottom:1px solid #e5e5e5}
+summary{min-height:44px;padding:.65rem 0;cursor:pointer;font-weight:600}
+details p{padding-bottom:.5rem}
+.formula{background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;margin:0 0 1rem;overflow-x:auto}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2rem;font-size:.9rem;color:#666}
+footer a{color:#0077b6}
+@media(max-width:640px){
+.card{padding:1.25rem}
+.grid,.g2{grid-template-columns:1fr}
+.copy{width:100%}
+.kn{font-size:2.1rem}
+h1{font-size:1.5rem}
+.stats{grid-template-columns:1fr}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/garage-insulation-calculator/">
+<meta property="og:title" content="Garage Insulation Calculator">
+<meta property="og:description" content="Free garage insulation calculator: estimate wall and ceiling insulation area, R-value targets, thickness and materials needed for your garage size.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Garage Insulation Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>Use this garage insulation calculator to estimate how much insulation your garage walls, ceiling and door need, which R-value to aim for in your climate zone, and how thick the material must be. Results are rounded up so you do not run short at the hardware store.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="dia" viewBox="0 0 520 310" role="img" aria-label="Garage diagram: 24 ft long, 22 ft wide, 9 ft walls, with wall section showing insulation thickness in the stud cavity.">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<text x="155" y="24" text-anchor="middle" font-weight="600">Front elevation</text>
+<text x="400" y="24" text-anchor="middle" font-weight="600">Wall section (plan)</text>
+<polyline points="40,100 155,55 270,100" fill="none" stroke="#e0e0e0" stroke-width="3"/>
+<rect x="50" y="100" width="210" height="110" fill="#fff" stroke="#0077b6" stroke-width="2.5"/>
+<line x1="50" y1="100" x2="260" y2="100" stroke="#e0e0e0" stroke-dasharray="5 4"/>
+<rect id="sDoor" x="85" y="150" width="140" height="60" fill="#e8f4fa" stroke="#0077b6" stroke-width="2"/>
+<text id="sDoorT" x="155" y="186" text-anchor="middle">1 door 16×7 ft</text>
+<line x1="50" y1="232" x2="260" y2="232" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="sL" x="155" y="253" text-anchor="middle">24 ft long</text>
+<text id="sW" x="155" y="273" text-anchor="middle">× 22 ft wide</text>
+<line x1="26" y1="100" x2="26" y2="210" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="sH" x="12" y="155" text-anchor="middle" transform="rotate(-90 12 155)">9 ft wall</text>
+<text x="344" y="72" text-anchor="middle" style="font-size:12px">Ext.</text>
+<text x="456" y="72" text-anchor="middle" style="font-size:12px">Int.</text>
+<rect x="340" y="80" width="8" height="140" fill="#e0e0e0" stroke="#bbb"/>
+<rect x="452" y="80" width="8" height="140" fill="#e0e0e0" stroke="#bbb"/>
+<rect x="348" y="80" width="104" height="14" fill="#e0e0e0" stroke="#bbb"/>
+<rect x="348" y="206" width="104" height="14" fill="#e0e0e0" stroke="#bbb"/>
+<rect id="sFill" x="348" y="94" width="104" height="112" fill="#bfe0f2" stroke="#0077b6" stroke-dasharray="4 3"/>
+<line x1="348" y1="238" x2="452" y2="238" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="sCav" x="400" y="258" text-anchor="middle">Cavity 5.5 in</text>
+<text id="sIns" x="400" y="278" text-anchor="middle" font-weight="600">R-20 ≈ 5.5 in</text>
+<text id="sWarn" x="400" y="298" text-anchor="middle" style="fill:#c0392b"></text>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="grid">
+<div class="field"><label for="len">Garage length (ft)</label><input type="number" id="len" value="24" min="4" max="200" step="any" inputmode="decimal"><span class="em" id="e-len"></span></div>
+<div class="field"><label for="wid">Garage width (ft)</label><input type="number" id="wid" value="22" min="4" max="200" step="any" inputmode="decimal"><span class="em" id="e-wid"></span></div>
+<div class="field"><label for="hgt">Wall height (ft)</label><input type="number" id="hgt" value="9" min="4" max="30" step="any" inputmode="decimal"><span class="em" id="e-hgt"></span></div>
+</div>
+<div class="grid">
+<div class="field"><label for="dn">Garage doors (count)</label><input type="number" id="dn" value="1" min="0" max="6" step="1" inputmode="numeric"><span class="em" id="e-dn"></span></div>
+<div class="field"><label for="dw">Door width (ft)</label><input type="number" id="dw" value="16" min="0" max="30" step="any" inputmode="decimal"><span class="em" id="e-dw"></span></div>
+<div class="field"><label for="dh">Door height (ft)</label><input type="number" id="dh" value="7" min="0" max="30" step="any" inputmode="decimal"><span class="em" id="e-dh"></span></div>
+</div>
+<div class="field"><label for="oth">Windows and entry doors, total area (sq ft)</label><input type="number" id="oth" value="20" min="0" step="any" inputmode="decimal"><span class="em" id="e-oth"></span></div>
+
+<div class="grid g2">
+<div class="field"><label for="zone">Climate zone (IECC)</label>
+<select id="zone"><option value="1">Zone 1 – S. Florida, Hawaii</option><option value="2">Zone 2 – Gulf Coast, Phoenix</option><option value="3" selected>Zone 3 – Atlanta, Dallas</option><option value="4">Zone 4 – Kansas City, Washington DC</option><option value="5">Zone 5 – Chicago, Denver</option><option value="6">Zone 6 – Minneapolis, Montana</option><option value="7">Zone 7 – N. Minnesota</option><option value="8">Zone 8 – Interior Alaska</option></select></div>
+<div class="field"><label for="goal">R-value goal</label>
+<select id="goal"><option value="h">Heated workshop (IECC-level)</option><option value="b">Basic / budget (R-13 walls, R-30 ceiling)</option></select></div>
+<div class="field"><label for="wr">Wall R-value override (optional)</label><input type="number" id="wr" min="1" max="80" step="any" inputmode="decimal" placeholder="Auto"><span class="em" id="e-wr"></span></div>
+<div class="field"><label for="cr">Ceiling R-value override (optional)</label><input type="number" id="cr" min="1" max="80" step="any" inputmode="decimal" placeholder="Auto"><span class="em" id="e-cr"></span></div>
+<div class="field"><label for="ptype">Insulation product</label>
+<select id="ptype"><option value="fg">Fiberglass batt / roll (R-3.7 per in)</option><option value="mw">Mineral wool batt (R-4.0 per in)</option><option value="ccsf">Closed-cell spray foam (R-6.0 per in)</option><option value="ocsf">Open-cell spray foam (R-3.5 per in)</option><option value="xps">Rigid foam board (R-5.0 per in)</option><option value="cel">Blown cellulose / fiberglass (R-3.4 per in)</option></select></div>
+<div class="field"><label for="wd">Wall framing depth</label>
+<select id="wd"><option value="3.5">2×4 (3.5 in)</option><option value="5.5" selected>2×6 (5.5 in)</option><option value="7.25">2×8 (7.25 in)</option></select></div>
+</div>
+<div class="field"><label for="cd">Ceiling joist depth</label>
+<select id="cd"><option value="0" selected>Open attic above joists (no limit)</option><option value="5.5">2×6 (5.5 in)</option><option value="7.25">2×8 (7.25 in)</option><option value="9.25">2×10 (9.25 in)</option><option value="11.25">2×12 (11.25 in)</option></select></div>
+
+<div class="field"><label for="waste">Waste and cutting allowance: <output id="wv" class="rv" for="waste">10%</output></label>
+<input type="range" id="waste" min="0" max="25" step="1" value="10"><div class="ticks"><span>0%</span><span>25%</span></div></div>
+
+<fieldset><legend>Surfaces to insulate</legend>
+<div class="chk"><input type="checkbox" id="sw" checked><label for="sw">Walls</label></div>
+<div class="chk"><input type="checkbox" id="sc" checked><label for="sc">Ceiling</label></div>
+<div class="chk"><input type="checkbox" id="sd" checked><label for="sd">Garage door(s)</label></div>
+<span class="em" id="e-scope"></span></fieldset>
+
+<button type="submit" class="btn" id="calcBtn">Calculate Insulation</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<button type="button" class="copy" id="copyBtn" hidden>Copy results</button>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/garage-insulation-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Garage Insulation Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/garage-insulation-calculator/&quot;&gt;Garage Insulation Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/garage-insulation-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Garage Insulation Calculator</h2>
+<p>Enter your garage's length, width and wall height, then describe the garage door and any windows or entry doors so their area is subtracted from the wall total. Choose your climate zone, whether you want code-level or budget R-values, and the product you plan to buy. Press Calculate to see net area, target R-value, required thickness and a rounded-up purchase quantity for the walls, ceiling and door.</p>
+
+<h2>Why This Matters</h2>
+<p>An uninsulated garage tends to follow the weather outside: freezing in January, baking in July. That matters if you use the space as a workshop, a gym, or storage for paint, batteries and tools that dislike temperature swings. It matters even more when the garage is attached. A cold garage under a bedroom or against a living room wall steals heat from the house, and a bonus room above a garage is notorious for icy floors.</p>
+<p>Take a typical 24 × 22 ft two-car garage with 9 ft walls. It has roughly 830 sq ft of wall and 528 sq ft of ceiling, and the big metal door alone is over 100 sq ft. Guessing the quantity usually means two trips to the store, or a pile of leftover batts. Getting the thickness right matters just as much: R-20 in a 2×4 wall does not fit with ordinary batts, and finding that out after the drywall is up is expensive. This tool checks the cavity depth for you and tells you when a different product or a continuous foam layer is needed.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator works from simple geometry, then applies product data and a waste factor:</p>
+<div class="formula">Gross wall = 2 × (length + width) × height<br>Net wall = gross − (doors × width × height) − other openings<br>Ceiling = length × width (flat ceiling)<br>Thickness = target R ÷ R-per-inch, rounded up to ½ in<br>Buy area = net area × (1 + waste %), rounded up</div>
+<p>Spray foam is ordered in board feet (buy area × thickness in inches). Rigid foam is counted in 4×8 ft sheets (32 sq ft each), and loose fill in cubic feet (area × thickness ÷ 12). Garage doors are handled with a door insulation kit, so only their area and kit count are reported.</p>
+<p>Target R-values come from the prescriptive tables in the 2021 IECC (Table R402.1.3), using the cavity-only option for walls and the ceiling value for the attic or roof. Garages that are unheated and detached usually have no energy-code requirement, so the "budget" setting uses R-13 walls and R-30 ceilings as a practical rule of thumb. Local codes vary, so confirm with your building department.</p>
+<div class="tw"><table style="min-width:360px"><thead><tr><th>Climate zone</th><th>Wall R</th><th>Ceiling R</th></tr></thead><tbody>
+<tr><td>1</td><td>13</td><td>30</td></tr><tr><td>2</td><td>13</td><td>49</td></tr><tr><td>3</td><td>20</td><td>49</td></tr><tr><td>4–8</td><td>30</td><td>60</td></tr></tbody></table></div>
+<p>The cavity check compares your framing depth × the product's R-per-inch to the target. If the cavity falls more than half an R-point short, the tool warns you instead of pretending it fits. Thickness is always rounded up, never down.</p>
+
+<h2>Worked Example</h2>
+<p>A 24 × 22 ft garage, 9 ft walls, one 16 × 7 ft door, 20 sq ft of entry door and window, Zone 3, heated workshop, fiberglass, 2×6 walls, open attic, 10% waste (the default settings above):</p>
+<ul>
+<li>Gross wall = 2 × (24 + 22) × 9 = 828 sq ft</li>
+<li>Door = 16 × 7 = 112 sq ft; net wall = 828 − 112 − 20 = 696 sq ft</li>
+<li>Ceiling = 24 × 22 = 528 sq ft</li>
+<li>Targets: walls R-20, ceiling R-49. Fiberglass at R-3.7 per inch: walls 5.4 in → 5.5 in (fits a 2×6 cavity); ceiling 13.2 in → 13.5 in</li>
+<li>Buy: walls 696 × 1.10 = 766 sq ft; ceiling 528 × 1.10 = 581 sq ft; total 1,347 sq ft</li>
+<li>Garage door: 112 sq ft, one kit</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Do not forget the garage door.</strong> It is often 15–20% of the wall area and the leakiest part of the envelope. Seal the perimeter weatherstripping too.</li>
+<li><strong>Air seal first.</strong> Caulk gaps, seal top plates and fix the door seal before adding insulation, since leaks defeat even high R-values.</li>
+<li><strong>Do not compress batts.</strong> Squashing an R-19 batt into a 3.5 in cavity lowers its real R-value. Match the batt to the cavity or switch products.</li>
+<li><strong>Keep clearances.</strong> Leave required gaps around flues, water heaters, furnaces and non-IC-rated recessed lights, and never cover vents.</li>
+<li><strong>Measure sloped ceilings along the slope.</strong> If you insulate under rafters, the area is larger than length × width; add roughly 5–20% depending on pitch.</li>
+</ul>
+<div class="safe">Code note: Garage walls and ceilings shared with living space need fire-rated gypsum board under IRC R302.6, and exposed foam plastic needs a thermal or ignition barrier (IRC R316). Local codes vary. This tool gives a materials estimate only; it is not engineering, permit or inspection approval.</div>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What R-value do I need for a garage?</summary><p>For a heated garage, follow your climate zone's wall and ceiling values, such as R-20 walls and R-49 ceiling in Zone 3. An unheated detached garage has no code minimum in most areas, so R-13 walls and R-30 ceiling is a sensible budget target.</p></details>
+<details><summary>Should I insulate the garage door?</summary><p>Yes, if the garage is heated or attached. Door kits are inexpensive and cut heat loss and noise through a large uninsulated surface. Check that your door's springs and opener can handle the added weight.</p></details>
+<details><summary>How much insulation do I need for a 2-car garage?</summary><p>A 24 × 24 ft garage with 9 ft walls has about 864 sq ft of gross wall and 576 sq ft of ceiling before subtracting doors. With 10% waste, expect to buy around 1,300–1,500 sq ft of insulation, depending on openings.</p></details>
+<details><summary>Is spray foam better than fiberglass for a garage?</summary><p>Spray foam gives more R-value per inch and seals air leaks, which helps in shallow cavities. Fiberglass costs less and works well in deep cavities, but needs careful installation. Foam needs a code-approved barrier and a trained installer.</p></details>
+<details><summary>Do I need a vapor barrier in a garage?</summary><p>It depends on climate and the insulation. Cold climates often use a vapor retarder on the warm side, while foam may act as its own. Ask your local building department which applies to you.</p></details>
+<details><summary>Why is my cavity flagged as too shallow?</summary><p>The target R-value divided by the product's R-per-inch is deeper than your framing. Use a higher R-per-inch product, add continuous rigid foam over the studs, or frame deeper walls.</p></details>
+
+<h2>Related Tools</h2>
+<ul>
+<li><a href="/attic-insulation-depth-r-value-calculator/">Attic Insulation Depth &amp; R-Value Calculator</a></li>
+<li><a href="/rim-joist-insulation-calculator/">Rim Joist Insulation Calculator</a></li>
+<li><a href="/insulation-installation-cost-calculator/">Insulation Installation Cost Calculator</a></li>
+<li><a href="/basement-wall-insulation-calculator/">Basement Wall Insulation Calculator</a></li>
+<li><a href="/epoxy-garage-floor-calculator/">Epoxy Garage Floor Coverage Calculator</a></li>
+<li><a href="/fiberglass-batt-insulation-calculator/">Fiberglass Batt Insulation Calculator</a></li>
+</ul>
+
+<nav class="cluster-nav" aria-label="More Concrete, Masonry &amp; Foundations Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Concrete, Masonry &amp; Foundations Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/epoxy-garage-floor-calculator/">Epoxy Garage Floor Coverage Calculator</a></li><li><a href="/garage-slab-thickness-reinforcement-calculator/">Garage Concrete Slab Thickness &amp; Reinforcement Calculator</a></li><li><a href="/shower-pan-mortar-bed-calculator/">Bathtub &amp; Shower Pan Mortar Bed Calculator</a></li><li><a href="/brick-mortar-calculator/">Brick &amp; Mortar Calculator</a></li><li><a href="/cinder-block-wall-calculator/">Cinder Block Wall Calculator</a></li><li><a href="/concrete-bags-per-cubic-yard-calculator/">Concrete Bags Per Cubic Yard Calculator</a></li><li><a href="/concrete-patio-cost-calculator/">Concrete Patio Cost Calculator</a></li><li><a href="/concrete-steps-calculator/">Concrete Steps Calculator</a></li><li><a href="/concrete-calculators/"><strong>All Concrete, Masonry &amp; Foundations calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<p><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</footer>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var f=function(x){return Number(x.toFixed(2)).toLocaleString('en-US')};
+var n=function(x){return Math.round(x).toLocaleString('en-US')};
+var ZW=[13,13,20,30,30,30,30,30],ZC=[30,49,49,60,60,60,60,60];
+var TY={fg:{n:'Fiberglass',r:3.7,u:'sq'},mw:{n:'Mineral wool',r:4,u:'sq'},ccsf:{n:'Closed-cell spray foam',r:6,u:'bf'},ocsf:{n:'Open-cell spray foam',r:3.5,u:'bf'},xps:{n:'Rigid foam board',r:5,u:'sh'},cel:{n:'Blown cellulose/fiberglass',r:3.4,u:'cf'}};
+var last='';
+$('yr').textContent=new Date().getFullYear();
+$('waste').addEventListener('input',function(){$('wv').textContent=this.value+'%'});
+
+function setErr(id,m){var el=$(id),e=$('e-'+id);if(m){el.classList.add('err');el.setAttribute('aria-invalid','true');e.textContent=m}else{el.classList.remove('err');el.removeAttribute('aria-invalid');e.textContent=''}}
+function rd(id,min,max,msg,opt){
+  var raw=$(id).value.trim();
+  if(raw===''){if(opt){setErr(id,'');return null}setErr(id,msg);return NaN}
+  var v=Number(raw);
+  if(!isFinite(v)||v<min||v>max){setErr(id,msg);return NaN}
+  setErr(id,'');return v;
+}
+function clearRes(){$('results').innerHTML='';$('copyBtn').hidden=true}
+
+function calc(){
+  var L=rd('len',4,200,'Enter a length between 4 and 200 ft.');
+  var W=rd('wid',4,200,'Enter a width between 4 and 200 ft.');
+  var H=rd('hgt',4,30,'Enter a wall height between 4 and 30 ft.');
+  var dn=rd('dn',0,6,'Enter a whole number from 0 to 6.');
+  var dw=rd('dw',0,30,'Enter a door width from 0 to 30 ft.');
+  var dh=rd('dh',0,30,'Enter a door height from 0 to 30 ft.');
+  var oth=rd('oth',0,5000,'Enter 0 or more sq ft (max 5,000).');
+  var wr=rd('wr',1,80,'Enter R-1 to R-80, or leave blank.',true);
+  var cr=rd('cr',1,80,'Enter R-1 to R-80, or leave blank.',true);
+  var bad=[L,W,H,dn,dw,dh,oth,wr,cr].some(function(v){return Number.isNaN(v)});
+  if(!bad&&dn%1!==0){setErr('dn','Enter a whole number of doors.');bad=true}
+  if(!bad&&dh>H){setErr('dh','Door cannot be taller than the wall height.');bad=true}
+  var dW=$('sw').checked,dC=$('sc').checked,dD=$('sd').checked;
+  if(!dW&&!dC&&!dD){$('e-scope').textContent='Select at least one surface to insulate.';bad=true}else $('e-scope').textContent='';
+  var gross=0,doorA=0,net=0;
+  if(!bad){
+    gross=2*(L+W)*H;doorA=dn*dw*dh;net=gross-doorA-oth;
+    if(net<=0){setErr('oth','Doors and openings are larger than the wall area. Check the sizes.');bad=true}
+  }
+  if(bad){clearRes();return}
+
+  var z=+$('zone').value-1,bud=$('goal').value==='b';
+  var wR=wr!==null?wr:(bud?13:ZW[z]);
+  var cR=cr!==null?cr:(bud?30:ZC[z]);
+  var T=TY[$('ptype').value],wd=+$('wd').value,cd=+$('cd').value,waste=+$('waste').value/100;
+  function spec(R,depth){
+    var t=Math.ceil(R/T.r*2)/2,maxR=depth>0?depth*T.r:Infinity;
+    var short=depth>0&&R>maxR+0.5;
+    if(depth>0&&!short&&t>depth)t=depth;
+    return {R:R,t:t,short:short,maxR:maxR,depth:depth};
+  }
+  function ord(area,t){
+    var a=area*(1+waste),sq=Math.ceil(a),tx;
+    if(T.u==='bf')tx=n(Math.ceil(a*t))+' board ft';
+    else if(T.u==='sh')tx=n(Math.ceil(a/32))+' sheets (4×8)';
+    else if(T.u==='cf')tx=n(Math.ceil(a*t/12))+' cu ft';
+    else tx=n(sq)+' sq ft';
+    return {sq:sq,tx:tx};
+  }
+  var ws=spec(wR,wd),cs=spec(cR,cd);
+  var rows='',notes='',net2=0,buy=0,wo,co,lines=[];
+  if(dW){wo=ord(net,ws.t);net2+=net;buy+=wo.sq;
+    rows+='<tr><td>Walls</td><td>'+n(net)+'</td><td>R-'+f(wR)+'</td><td>'+f(ws.t)+' in</td><td>'+wo.tx+'</td></tr>';
+    lines.push('Walls: '+n(net)+' sq ft net, R-'+f(wR)+', '+f(ws.t)+' in, buy '+wo.tx);
+    if(ws.short)notes+='<div class="note"><strong>Walls:</strong> a '+f(wd)+' in cavity of '+T.n.toLowerCase()+' reaches only about R-'+f(ws.maxR)+' versus the R-'+f(wR)+' target. Add a continuous foam layer, use a higher R-per-inch product, or choose deeper framing.</div>'}
+  if(dC){var ca=L*W;co=ord(ca,cs.t);net2+=ca;buy+=co.sq;
+    rows+='<tr><td>Ceiling</td><td>'+n(ca)+'</td><td>R-'+f(cR)+'</td><td>'+f(cs.t)+' in</td><td>'+co.tx+'</td></tr>';
+    lines.push('Ceiling: '+n(ca)+' sq ft, R-'+f(cR)+', '+f(cs.t)+' in, buy '+co.tx);
+    if(cs.short)notes+='<div class="note"><strong>Ceiling:</strong> a '+f(cd)+' in joist bay of '+T.n.toLowerCase()+' reaches only about R-'+f(cs.maxR)+' versus the R-'+f(cR)+' target. Add a layer above the joists or use a higher R-per-inch product.</div>'}
+  var dArea=dn*dw*dh;
+  if(dD&&dn>0){rows+='<tr><td>Garage door'+(dn>1?'s':'')+'</td><td>'+n(dArea)+'</td><td>Kit</td><td>Per kit</td><td>'+n(dn)+' kit'+(dn===1?'':'s')+'</td></tr>';
+    lines.push('Garage door: '+n(dArea)+' sq ft, '+dn+' insulation kit(s)')}
+  if(T.u==='bf')notes+='<div class="note">Spray foam in a garage needs an approved thermal or ignition barrier (IRC R316) and a trained installer.</div>';
+  if($('ptype').value==='cel'&&dW)notes+='<div class="note">Loose fill in walls must be dense-packed behind netting or fabric to prevent settling.</div>';
+  var keyLbl,keyVal;
+  if(dW||dC){keyLbl='Insulation to buy, walls + ceiling (incl. '+Math.round(waste*100)+'% waste)';keyVal=n(buy)+' sq ft'}
+  else{keyLbl='Garage door area to insulate';keyVal=n(dArea)+' sq ft'}
+  var bar='';
+  if(dW&&dC){var p=Math.round(net/net2*100);bar='<div class="bar" role="img" aria-label="Walls '+p+' percent, ceiling '+(100-p)+' percent"><span style="width:'+p+'%"></span></div><p class="hint">Walls '+p+'% · Ceiling '+(100-p)+'% of insulated area</p>'}
+  var html='<div class="fade"><div class="key"><div class="kl">'+keyLbl+'</div><div class="kn">'+keyVal+'</div></div>'+
+   '<div class="stats"><div class="st"><b>'+n(net2)+' sq ft</b><span>Net area (no waste)</span></div><div class="st"><b>'+n(Math.max(0,buy-net2))+' sq ft</b><span>Waste added</span></div><div class="st"><b>'+n(dArea)+' sq ft</b><span>Door area</span></div></div>'+bar+
+   '<div class="tw"><table><thead><tr><th>Surface</th><th>Net area (sq ft)</th><th>Target R</th><th>Thickness</th><th>Buy (incl. waste)</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+   '<p class="hint">Product: '+T.n+' at R-'+f(T.r)+' per inch. Gross wall area '+n(gross)+' sq ft, minus '+n(doorA+oth)+' sq ft of openings.</p>'+notes+
+   '<div class="safe">R-value targets follow the 2021 IECC Table R402.1.3 (cavity-only option) or your override; unheated detached garages often have no requirement. Quantities and thicknesses are rounded up. Local codes vary. This is a materials estimate, not engineering, permit or inspection approval.</div></div>';
+  last='Garage insulation estimate ('+f(L)+' × '+f(W)+' × '+f(H)+' ft, '+T.n+')\n'+lines.join('\n')+'\nTotal to buy (walls+ceiling): '+n(buy)+' sq ft\nEstimate only; local codes vary. toolwick.com/garage-insulation-calculator/';
+  requestAnimationFrame(function(){
+    $('results').innerHTML=html;
+    $('copyBtn').hidden=false;
+    $('sL').textContent=f(L)+' ft long';
+    $('sW').textContent='× '+f(W)+' ft wide';
+    $('sH').textContent=f(H)+' ft wall';
+    $('sDoor').style.display=dn>0?'':'none';
+    $('sDoorT').textContent=dn>0?dn+' door'+(dn>1?'s':'')+' '+f(dw)+'×'+f(dh)+' ft':'';
+    var fr=Math.min(1,ws.t/wd);
+    $('sFill').setAttribute('width',104*fr);
+    $('sCav').textContent='Cavity '+f(wd)+' in';
+    $('sIns').textContent='R-'+f(wR)+' ≈ '+f(ws.t)+' in';
+    $('sWarn').textContent=ws.short?'Exceeds cavity depth':'';
+    $('dia').setAttribute('aria-label','Garage diagram: '+f(L)+' ft long, '+f(W)+' ft wide, '+f(H)+' ft walls. Wall section: R-'+f(wR)+' needs '+f(ws.t)+' inches in a '+f(wd)+' inch cavity.');
+  });
+}
+$('f').addEventListener('submit',function(e){e.preventDefault();requestAnimationFrame(calc)});
+$('copyBtn').addEventListener('click',function(){
+  var b=this;
+  function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(last).then(done,fb)}else fb();
+  function fb(){var t=document.createElement('textarea');t.value=last;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);done()}
+});
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
