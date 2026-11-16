@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Wall R-Value Calculator | Toolwick</title>
+<meta name="description" content="Free wall R-value calculator: add up siding, sheathing, insulation, studs and drywall to get the effective whole-wall R-value, U-factor and heat loss.">
+<link rel="canonical" href="https://toolwick.com/wall-r-value-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+nav{max-width:640px;margin:0 auto;padding:1rem 1.5rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.8rem;line-height:1.25;margin:.5rem 0 1rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.dg{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.dg svg{width:100%;height:auto;display:block}
+.dg text{font-family:inherit;fill:#1a1a2e}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.err,select.err{border-color:#e74c3c}
+.msg{color:#c0392b;font-size:.85rem;min-height:0;margin-top:.25rem}
+.field{margin-bottom:1.25rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.hide{display:none}
+.hint{font-size:.85rem;color:#666;margin:.25rem 0 0}
+output{font-weight:700;color:#0077b6}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;min-height:44px;font-family:inherit}
+button:hover{background:#006299}
+button.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;padding:8px 16px;font-size:.9rem;margin-top:1rem}
+button.copy:hover{background:#f0f8fc}
+#results{margin-top:2rem}
+.fade{animation:fd .3s ease}
+@keyframes fd{from{opacity:0}to{opacity:1}}
+.big{text-align:center;background:#f8f9fa;border-radius:8px;padding:1.25rem 1rem;margin-bottom:1rem}
+.num{display:block;font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.2}
+.sm{font-size:.9rem;color:#555}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem}
+.stat{background:#f8f9fa;border-radius:8px;padding:.75rem 1rem}
+.stat b{display:block;font-size:1.2rem;color:#1a1a2e}
+.stat span{font-size:.8rem;color:#555}
+.code{border-left:4px solid #0077b6;background:#f8f9fa;padding:.75rem 1rem;border-radius:0 6px 6px 0;margin-bottom:1.25rem;font-size:.92rem}
+.code.bad{border-left-color:#e74c3c}
+.tw{overflow-x:auto;margin-bottom:1.25rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(even) td{background:#fafafa}
+th.r,td.r{text-align:right}
+tr.tot td{font-weight:700;background:#eef6fb}
+h3{font-size:1rem;margin:1.25rem 0 .5rem}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 1rem}
+.ad-slot{min-height:0;margin:0}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;padding:0;list-style:none}
+.rel a{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:10px 14px;min-height:44px}
+footer{max-width:640px;margin:2rem auto 0;padding:1.5rem;border-top:1px solid #e0e0e0;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;margin-right:1rem}
+@media(max-width:640px){.row,.stats,.rel{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.5rem}.num{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/wall-r-value-calculator/">
+<meta property="og:title" content="Wall R-Value Calculator">
+<meta property="og:description" content="Free wall R-value calculator: add up siding, sheathing, insulation, studs and drywall to get the effective whole-wall R-value, U-factor and heat loss.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<main class="wrap">
+<h1>Wall R-Value Calculator</h1>
+<p>This wall r-value calculator adds up every layer in your wall, from siding to drywall, and corrects for the wood studs that let heat bypass the insulation. You get the effective whole-wall R-value, U-factor and the heat lost through your wall area.</p>
+
+<div class="card">
+<div class="dg">
+<svg id="diagram" viewBox="0 0 460 290" role="img" aria-labelledby="dgT dgD">
+<title id="dgT">Wall assembly section diagram</title>
+<desc id="dgD">Plan view of a wall showing, from outside to inside, siding, continuous insulation, sheathing, an insulated cavity between studs, and drywall, with the R-value of each layer.</desc>
+<defs>
+<pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#8cc4e0" stroke-width="2"/></pattern>
+<marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker>
+</defs>
+<text x="130" y="22" font-size="13" font-weight="700">OUTSIDE</text>
+<text x="346" y="22" font-size="13" font-weight="700" text-anchor="end">INSIDE</text>
+<rect x="130" y="40" width="18" height="150" fill="#e8eef2" stroke="#0077b6" stroke-width="1.5"/>
+<rect id="d_cir" x="148" y="40" width="30" height="150" fill="#d6ecf7" stroke="#0077b6" stroke-width="1.5" fill-opacity=".3"/>
+<rect x="178" y="40" width="14" height="150" fill="#eadfc9" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="192" y="75" width="140" height="80" fill="url(#hatch)" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="192" y="40" width="140" height="35" fill="#f0e6d2" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="192" y="155" width="140" height="35" fill="#f0e6d2" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="332" y="40" width="14" height="150" fill="#eeeeee" stroke="#0077b6" stroke-width="1.5"/>
+<rect x="222" y="92" width="80" height="46" rx="4" fill="#fff" fill-opacity=".92"/>
+<text x="262" y="62" font-size="12" text-anchor="middle" id="d_stud">Stud</text>
+<text x="262" y="177" font-size="12" text-anchor="middle">Stud (wood)</text>
+<text x="262" y="109" font-size="13" text-anchor="middle" font-weight="700">Cavity</text>
+<text x="262" y="127" font-size="13" text-anchor="middle" id="d_cav">R-0</text>
+<g stroke="#1a1a2e" stroke-opacity=".45" stroke-width="1">
+<line x1="122" y1="70" x2="139" y2="70"/><line x1="122" y1="110" x2="163" y2="110"/><line x1="122" y1="150" x2="185" y2="150"/><line x1="352" y1="118" x2="339" y2="118"/></g>
+<g font-size="13" text-anchor="end">
+<text x="118" y="63" font-weight="700">Siding</text><text x="118" y="78" id="d_sid">R-0</text>
+<text x="118" y="103" font-weight="700">Cont. insul.</text><text x="118" y="118" id="d_ci">R-0</text>
+<text x="118" y="143" font-weight="700">Sheathing</text><text x="118" y="158" id="d_sh">R-0</text></g>
+<g font-size="13"><text x="356" y="111" font-weight="700">Drywall</text><text x="356" y="126" id="d_dr">R-0</text></g>
+<line x1="192" y1="190" x2="192" y2="212" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="332" y1="190" x2="332" y2="212" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="195" y1="205" x2="329" y2="205" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text x="262" y="228" font-size="13" text-anchor="middle" id="d_dim">3.5 in cavity depth</text>
+<text x="230" y="268" font-size="17" font-weight="700" text-anchor="middle" id="d_tot" style="fill:#0077b6">Effective R-0</text>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="row">
+<div class="field"><label for="size">Wall framing</label>
+<select id="size"><option value="3.5">2×4 (3.5 in cavity)</option><option value="5.5" selected>2×6 (5.5 in cavity)</option><option value="7.25">2×8 (7.25 in cavity)</option></select></div>
+<div class="field"><label for="ff">Framing fraction: <output id="ffo">25%</output></label>
+<input type="range" id="ff" min="15" max="30" step="1" value="25">
+<p class="hint">About 25% for 16 in o.c., 22% for 24 in o.c. (typical framing).</p></div>
+</div>
+<div class="field"><label for="cav">Cavity insulation</label>
+<select id="cav">
+<option value="3.7" selected>Fiberglass batt — R-3.7 per inch</option>
+<option value="4.2">Mineral wool batt — R-4.2 per inch</option>
+<option value="3.6">Dense-pack cellulose — R-3.6 per inch</option>
+<option value="3.7">Open-cell spray foam — R-3.7 per inch</option>
+<option value="6.5">Closed-cell spray foam — R-6.5 per inch</option>
+<option value="air">Empty cavity (air space, R-1.0)</option>
+<option value="custom">Custom cavity R-value…</option></select></div>
+<div class="field hide" id="crw"><label for="cr">Custom cavity R-value</label>
+<input type="number" id="cr" step="any" value="19" aria-describedby="e_cr"><div class="msg" id="e_cr"></div></div>
+<div class="row">
+<div class="field"><label for="ci">Exterior continuous insulation</label>
+<select id="ci"><option value="0" selected>None</option><option value="4">EPS foam board — R-4.0 per inch</option><option value="5">XPS foam board — R-5.0 per inch</option><option value="5">Polyiso (aged value) — R-5.0 per inch</option><option value="4.2">Mineral wool board — R-4.2 per inch</option></select></div>
+<div class="field"><label for="ct">Continuous insulation thickness (in)</label>
+<input type="number" id="ct" step="any" value="1" aria-describedby="e_ct"><div class="msg" id="e_ct"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="sh">Sheathing</label>
+<select id="sh"><option value="0.5" selected>OSB 7/16 in — R-0.50</option><option value="0.62">Plywood 1/2 in — R-0.62</option><option value="0.77">Plywood 5/8 in — R-0.77</option><option value="0.45">Gypsum sheathing 1/2 in — R-0.45</option><option value="0">None — R-0</option></select></div>
+<div class="field"><label for="sd">Siding</label>
+<select id="sd"><option value="0.61" selected>Vinyl siding — R-0.61</option><option value="0.15">Fiber cement lap — R-0.15</option><option value="0.8">Wood bevel lap — R-0.80</option><option value="0.34">Hardboard 7/16 in — R-0.34</option><option value="0.18">Stucco 7/8 in — R-0.18</option><option value="0.44">Brick veneer 4 in — R-0.44</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="dw">Interior finish</label>
+<select id="dw"><option value="0.45" selected>Drywall 1/2 in — R-0.45</option><option value="0.56">Drywall 5/8 in — R-0.56</option><option value="0">None — R-0</option></select></div>
+<div class="field"><label for="cz">Climate zone (code check)</label>
+<select id="cz"><option value="1">Zone 1</option><option value="2">Zone 2</option><option value="3">Zone 3</option><option value="4">Zone 4</option><option value="5" selected>Zone 5</option><option value="6">Zone 6</option><option value="7">Zone 7–8</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="ar">Wall area (sq ft)</label>
+<input type="text" inputmode="decimal" id="ar" value="1,000" aria-describedby="e_ar"><div class="msg" id="e_ar"></div></div>
+<div class="field"><label for="ti">Indoor temperature (°F)</label>
+<input type="number" id="ti" step="any" value="70" aria-describedby="e_ti"><div class="msg" id="e_ti"></div></div>
+</div>
+<div class="field"><label for="to">Outdoor design temperature (°F)</label>
+<input type="number" id="to" step="any" value="20" aria-describedby="e_to"><div class="msg" id="e_to"></div></div>
+<button type="submit" id="go">Calculate Wall R-Value</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Wall R-Value Calculator</h2>
+<p>Pick your stud size, the framing fraction, and the insulation that fills the cavity. Then choose any continuous insulation on the exterior, the sheathing, the siding and the interior finish. Enter your wall area and the indoor and outdoor temperatures if you want a heat loss figure. The result is the effective whole-wall R-value, the U-factor, the R-value through the cavity and through the studs, and a table showing how added exterior foam changes the result. Results update as you change any input.</p>
+
+<h2>Why This Matters</h2>
+<p>The R-value printed on an insulation package is not the R-value of your wall. A 2×6 wall filled with R-21 batts is often sold as an "R-21 wall," but the studs, plates, headers and corners are wood at about R-1.25 per inch, so they conduct heat far faster than the insulation. Roughly 25% of a typical wall's area is framing, and that framing can carry 40–45% of the heat that escapes. A wall with R-20 in the cavity may perform closer to R-16 overall.</p>
+<p>Knowing the real number helps you make better decisions. If you are building new, you can compare a 2×4 wall with R-13 batts against a 2×6 wall, or see whether one inch of exterior foam is worth the cost. If you are sizing a furnace or heat pump, the U-factor feeds directly into your heat loss calculation. If you are checking energy code compliance, you can see how your assembly compares with the prescriptive values. Homeowners planning a re-side can find out whether adding R-5 foam under new siding would cut wall heat loss by about a quarter, and builders can show clients why thermal bridging matters.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator uses the parallel-path method described in the ASHRAE Handbook of Fundamentals. Heat flows through two paths at once: the insulated cavity and the wood framing. Each path gets its own total R-value, found by adding the R-values of every layer in series:</p>
+<p><strong>R<sub>cavity path</sub></strong> = R<sub>outside film</sub> + R<sub>siding</sub> + R<sub>continuous insulation</sub> + R<sub>sheathing</sub> + R<sub>cavity insulation</sub> + R<sub>drywall</sub> + R<sub>inside film</sub><br>
+<strong>R<sub>framing path</sub></strong> = the same layers, but with the cavity replaced by wood framing at R-1.25 per inch of depth.</p>
+<p>The two paths are then combined by area, using the framing fraction <em>f</em>:</p>
+<p><strong>U = f ÷ R<sub>framing path</sub> + (1 − f) ÷ R<sub>cavity path</sub></strong><br>
+<strong>Effective R = 1 ÷ U</strong><br>
+<strong>Heat loss (BTU/hr) = Area × (T<sub>in</sub> − T<sub>out</sub>) × U</strong></p>
+<p>Air films are fixed at R-0.68 inside and R-0.17 outside (15 mph wind). Cavity insulation is its per-inch value times the cavity depth. The table below lists the per-inch values used.</p>
+<div class="tw"><table><thead><tr><th>Material</th><th class="r">R per inch</th></tr></thead><tbody>
+<tr><td>Fiberglass batt or blown (typical)</td><td class="r">3.7</td></tr>
+<tr><td>Mineral wool batt</td><td class="r">4.2</td></tr>
+<tr><td>Dense-pack cellulose</td><td class="r">3.6</td></tr>
+<tr><td>Open-cell spray foam</td><td class="r">3.7</td></tr>
+<tr><td>Closed-cell spray foam</td><td class="r">6.5</td></tr>
+<tr><td>EPS / XPS / polyiso (aged) / mineral wool board</td><td class="r">4.0 / 5.0 / 5.0 / 4.2</td></tr>
+<tr><td>Softwood framing</td><td class="r">1.25</td></tr></tbody></table></div>
+<p><strong>Conservative rounding:</strong> the effective R-value is rounded down, while the U-factor and heat loss are rounded up, so the tool never overstates insulating performance. Values are typical design numbers; check your product's labeled R-value. The code check compares your nominal cavity and continuous R-values with the prescriptive wood-frame wall table in the 2015/2018 IECC (Table R402.1.2). Your jurisdiction may use a different edition or local amendments, so confirm with your building department. This tool is an estimating aid and is not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>Take a 2×6 wall, 25% framing, fiberglass batts (3.7 × 5.5 = R-20.35), OSB sheathing, vinyl siding and 1/2 in drywall, with 1,000 sq ft of wall at 70°F inside and 20°F outside.</p>
+<ol>
+<li>Common layers: 0.17 + 0.61 + 0.50 + 0.45 + 0.68 = R-2.41.</li>
+<li>Cavity path: 2.41 + 20.35 = R-22.76.</li>
+<li>Framing path: 2.41 + (1.25 × 5.5) = 2.41 + 6.875 = R-9.285 (shown as 9.28 after rounding down).</li>
+<li>U = 0.25 ÷ 9.285 + 0.75 ÷ 22.76 = 0.02692 + 0.03295 = 0.05988.</li>
+<li>Effective R = 1 ÷ 0.05988 = <strong>R-16.7</strong>, about 45% of the heat passing through the studs.</li>
+<li>Heat loss = 1,000 × 50 × 0.05988 = about 2,994 BTU/hr.</li>
+</ol>
+<p>Add 1 inch of XPS (R-5.0) outside the sheathing and the common layers become R-7.41. The framing path rises to R-14.285 and the cavity path to R-27.76, so U falls to 0.04452 and the effective R climbs to about <strong>R-22.4</strong>. That is a 34% gain from an R-5 layer, because the foam covers the studs too.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Don't use the batt label as the wall R-value.</strong> Framing, headers, corners and window trim reduce the whole-wall value well below the cavity R-value.</li>
+<li><strong>Continuous insulation outside the studs is the most effective upgrade.</strong> It covers the framing, so it improves both heat paths.</li>
+<li><strong>Don't compress batts.</strong> An R-21 batt squeezed into a 3.5 in cavity won't deliver R-21. Match batt thickness to cavity depth.</li>
+<li><strong>Use a higher framing fraction for complicated walls.</strong> Many windows, doubled studs and tight corners push the fraction toward 28–30%.</li>
+<li><strong>Watch moisture.</strong> Adding exterior foam changes where condensation can form. Check your climate zone's recommended minimum R-value for foam over the sheathing.</li>
+<li><strong>Air sealing matters as much as R-value.</strong> Gaps and leaks can cancel out much of the insulation's benefit.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What is a good R-value for exterior walls?</summary><p>Under the 2018 IECC, most of the U.S. calls for R-20, or R-13 plus R-5 continuous insulation, in Zones 3–5, and R-20+5 or R-13+10 in Zones 6–8. Warmer Zones 1–2 call for R-13. Those are nominal values, so the effective whole-wall R-value will be lower.</p></details>
+<details><summary>What is the R-value of a 2×4 wall?</summary><p>A 2×4 wall with R-13 fiberglass batts has a cavity R-value around 13, but the whole-wall effective value is about R-10 to R-11 once the studs, siding, sheathing and drywall are counted. Run the numbers in the calculator above with your own materials.</p></details>
+<details><summary>What is the R-value of a 2×6 wall?</summary><p>A 2×6 wall with R-20 or R-21 insulation usually comes out near R-16 to R-17 effective with typical sheathing and siding. Adding 1 inch of exterior XPS or similar foam typically lifts that to the low 20s.</p></details>
+<details><summary>How do I convert R-value to U-factor?</summary><p>U-factor is the inverse of R-value: U = 1 ÷ R. A wall with R-16.7 has a U-factor of about 0.060 BTU/hr·ft²·°F. To convert to metric RSI, divide the R-value by 5.678.</p></details>
+<details><summary>Why is whole-wall R-value lower than the insulation R-value?</summary><p>Wood studs have a much lower R-value per inch than insulation, so heat flows through them more easily. This is called thermal bridging. The whole-wall value blends the cavity and framing paths by area, which is why it comes out lower than the cavity R-value.</p></details>
+<details><summary>Does the air film count in R-value?</summary><p>Yes. Still air against the interior surface adds about R-0.68, and the exterior air film adds about R-0.17 under a 15 mph wind. They are small but are included in standard assembly calculations, and this calculator adds them automatically.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/concrete-wall-calculator/">Concrete Wall Calculator</a></li>
+<li><a href="/wall-sheathing-calculator/">Wall Sheathing Calculator</a></li>
+<li><a href="/roof-flashing-calculator/">Step and Wall Flashing Calculator</a></li>
+<li><a href="/basement-wall-insulation-calculator/">Basement Wall Insulation Calculator</a></li>
+<li><a href="/gable-end-wall-area-calculator/">Gable End Wall Area Calculator</a></li>
+<li><a href="/shower-wall-tile-calculator/">Shower Wall Tile Calculator</a></li>
+</ul>
+</section>
+</main>
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/wall-r-value-calculator/">Toolwick</a></p>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var fmt=function(n,d){d=d===undefined?2:d;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var fl=function(x,d){var m=Math.pow(10,d);return Math.floor(x*m+1e-6)/m};
+var ce=function(x,d){var m=Math.pow(10,d);return Math.ceil(x*m-1e-6)/m};
+var nm=function(id){var s=$(id);return s.options[s.selectedIndex].text.split(' — ')[0]};
+var OPTS={1:[[13,0]],2:[[13,0]],3:[[20,0],[13,5]],4:[[20,0],[13,5]],5:[[20,0],[13,5]],6:[[20,5],[13,10]],7:[[20,5],[13,10]]};
+var last='';
+var ids=['cr','ct','ar','ti','to'];
+function read(){
+var ok=true,p={};
+ids.forEach(function(i){$(i).classList.remove('err');$(i).removeAttribute('aria-invalid');$('e_'+i).textContent=''});
+function err(i,m){$(i).classList.add('err');$(i).setAttribute('aria-invalid','true');$('e_'+i).textContent=m;ok=false}
+function num(i){var s=String($(i).value).replace(/,/g,'').trim();return s===''?NaN:Number(s)}
+p.depth=+$('size').value;p.f=+$('ff').value/100;
+var cv=$('cav').value;
+if(cv==='custom'){var v=num('cr');if(!(v>=0.5&&v<=60))err('cr','Enter a cavity R-value between 0.5 and 60.');else p.cav=v}
+else if(cv==='air')p.cav=1;else p.cav=+cv*p.depth;
+p.cv=cv;
+p.ciPer=+$('ci').value;p.ct=0;
+if(p.ciPer>0){var t=num('ct');if(!(t>0&&t<=12))err('ct','Enter a thickness between 0.1 and 12 inches.');else p.ct=t}
+p.sh=+$('sh').value;p.sd=+$('sd').value;p.dw=+$('dw').value;
+p.area=num('ar');if(!(p.area>0&&p.area<=1000000))err('ar','Enter a wall area greater than 0 and up to 1,000,000 sq ft.');
+p.ti=num('ti');if(!(p.ti>=-60&&p.ti<=130))err('ti','Enter a temperature between -60 and 130 °F.');
+p.to=num('to');if(!(p.to>=-60&&p.to<=130))err('to','Enter a temperature between -60 and 130 °F.');
+return ok?p:null}
+function model(p,t){
+var ci=p.ciPer*t,common=0.17+p.sd+ci+p.sh+p.dw+0.68;
+var Rc=common+p.cav,Rf=common+1.25*p.depth,U=p.f/Rf+(1-p.f)/Rc;
+return{ci:ci,common:common,Rc:Rc,Rf:Rf,U:U,R:1/U}}
+function calculate(){
+var p=read(),res=$('results');
+if(!p){res.innerHTML='';last='';return}
+var m=model(p,p.ct),dT=Math.abs(p.ti-p.to),Q=p.area*dT*m.U;
+var share=(p.f/m.Rf)/m.U*100;
+var cavNom=p.cv==='air'?0:Math.floor(p.cav+0.1),ciNom=Math.floor(m.ci+0.1);
+var zopts=OPTS[$('cz').value],pass=zopts.some(function(o){return cavNom>=o[0]&&ciNom>=o[1]});
+var req=zopts.map(function(o){return o[1]?'R-'+o[0]+' cavity + R-'+o[1]+' continuous':'R-'+o[0]+' cavity'}).join(' or ');
+var codeMsg=(pass?'<b>Meets the nominal prescriptive values.</b> ':'<b>Below the nominal prescriptive values.</b> ')+'The 2015/2018 IECC wood-frame wall table for this zone calls for '+req+'. Your wall: R-'+fmt(fl(p.cav,1),1)+' cavity + R-'+fmt(fl(m.ci,1),1)+' continuous. Code editions and local amendments vary; confirm with your building department.';
+var cavName=p.cv==='air'?'Air space (empty cavity)':p.cv==='custom'?'Cavity insulation (custom)':nm('cav');
+var ciName=p.ciPer>0?nm('ci')+', '+fmt(p.ct,p.ct%1?2:0)+' in':'Continuous insulation (none)';
+function row(n,a,b){return '<tr><td>'+n+'</td><td class="r">'+fmt(a)+'</td><td class="r">'+fmt(b)+'</td></tr>'}
+var layers=row('Outside air film',0.17,0.17)+row(nm('sd'),p.sd,p.sd)+row(ciName,m.ci,m.ci)+row(nm('sh'),p.sh,p.sh)
++'<tr><td>'+cavName+' / wood framing ('+fmt(p.depth,p.depth%1?2:1)+' in)</td><td class="r">'+fmt(p.cav)+'</td><td class="r">'+fmt(1.25*p.depth)+'</td></tr>'
++row(nm('dw'),p.dw,p.dw)+row('Inside air film',0.68,0.68)
++'<tr class="tot"><td>Path total R-value</td><td class="r">'+fmt(fl(m.Rc,2))+'</td><td class="r">'+fmt(fl(m.Rf,2))+'</td></tr>';
+var per=p.ciPer>0?p.ciPer:4,cmpName=p.ciPer>0?nm('ci'):'EPS foam board';
+var cmp=[0,0.5,1,1.5,2,3].map(function(t){var x=model(p,t*1);x=model({ciPer:per,sd:p.sd,sh:p.sh,dw:p.dw,cav:p.cav,depth:p.depth,f:p.f},t);
+return '<tr><td>'+fmt(t,1)+' in</td><td class="r">'+fmt(fl(x.R,1),1)+'</td><td class="r">'+fmt(ce(x.U,3),3)+'</td><td class="r">'+fmt(Math.ceil(p.area*dT*x.U-1e-6),0)+'</td></tr>'}).join('');
+var Rd=fl(m.R,1),Ud=ce(m.U,3),Qd=Math.ceil(Q-1e-6),rsi=fl(m.R/5.678,2);
+var html='<div class="fade"><div class="big"><span class="num">R-'+fmt(Rd,1)+'</span><span class="sm">Effective whole-wall R-value (rounded down)</span><div class="sm">U-factor '+fmt(Ud,3)+' BTU/hr·ft²·°F &nbsp;|&nbsp; RSI '+fmt(rsi,2)+'</div></div>'
++'<div class="stats"><div class="stat"><b>R-'+fmt(fl(m.Rc,1),1)+'</b><span>Through the insulated cavity</span></div>'
++'<div class="stat"><b>R-'+fmt(fl(m.Rf,1),1)+'</b><span>Through the wood framing</span></div>'
++'<div class="stat"><b>'+fmt(share,1)+'%</b><span>of heat flows through framing</span></div>'
++'<div class="stat"><b>'+fmt(Qd,0)+' BTU/hr</b><span>'+(p.ti>=p.to?'Heat loss':'Heat gain')+' at '+fmt(dT,0)+'°F difference</span></div></div>'
++'<div class="code'+(pass?'':' bad')+'">'+codeMsg+'</div>'
++'<h3>Layer breakdown (R-value by heat path)</h3><div class="tw"><table><thead><tr><th>Layer</th><th class="r">Cavity path</th><th class="r">Framing path</th></tr></thead><tbody>'+layers+'</tbody></table></div>'
++'<h3>Compare continuous insulation: '+cmpName+'</h3><div class="tw"><table><thead><tr><th>Thickness</th><th class="r">Effective R</th><th class="r">U-factor</th><th class="r">BTU/hr</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'
++'<p class="hint">Parallel-path estimate using typical design values. Real walls vary with workmanship, air leakage and moisture. Not engineering or code approval.</p>'
++'<button type="button" class="copy" id="cp">Copy results</button></div>';
+last='Wall R-value: effective R-'+fmt(Rd,1)+' (U '+fmt(Ud,3)+', RSI '+fmt(rsi,2)+'). Cavity path R-'+fmt(fl(m.Rc,1),1)+', framing path R-'+fmt(fl(m.Rf,1),1)+', framing share '+fmt(share,1)+'%. Heat flow '+fmt(Qd,0)+' BTU/hr over '+fmt(p.area,0)+' sq ft at '+fmt(dT,0)+'°F difference. Estimate only; local codes vary.';
+requestAnimationFrame(function(){
+res.innerHTML=html;
+$('d_sid').textContent='R-'+fmt(p.sd);
+$('d_ci').textContent=p.ciPer>0?'R-'+fmt(m.ci)+' ('+fmt(p.ct,p.ct%1?2:0)+' in)':'None';
+$('d_cir').setAttribute('fill-opacity',p.ciPer>0?'1':'.15');
+$('d_sh').textContent='R-'+fmt(p.sh);
+$('d_dr').textContent='R-'+fmt(p.dw);
+$('d_cav').textContent='R-'+fmt(fl(p.cav,1),1);
+$('d_stud').textContent='Stud R-'+fmt(fl(1.25*p.depth,1),1);
+$('d_dim').textContent=fmt(p.depth,p.depth%1?2:1)+' in cavity depth';
+$('d_tot').textContent='Effective whole wall: R-'+fmt(Rd,1);
+})}
+function run(){requestAnimationFrame(calculate)}
+$('f').addEventListener('submit',function(e){e.preventDefault();run()});
+$('f').addEventListener('change',function(e){
+if(e.target.id==='cav')$('crw').classList.toggle('hide',e.target.value!=='custom');
+run()});
+$('ff').addEventListener('input',function(){$('ffo').textContent=this.value+'%';run()});
+$('results').addEventListener('click',function(e){
+if(e.target.id==='cp'&&last){var b=e.target;
+var done=function(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(last).then(done,done)}
+else{var t=document.createElement('textarea');t.value=last;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(t);done()}}});
+$('yr').textContent=new Date().getFullYear();
+calculate();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
