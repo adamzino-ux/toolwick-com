@@ -4,81 +4,86 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free Cinder Block Wall Calculator | Toolwick</title>
-<meta name="description" content="Calculate how many cinder blocks, mortar bags, and rebar you need for any wall project. Free cinder block wall calculator with instant results.">
+<meta name="description" content="Free cinder block wall calculator: estimate blocks, mortar bags, grout and rebar for any wall from its length, height, openings and waste.">
 <link rel="canonical" href="https://toolwick.com/cinder-block-wall-calculator/">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;font-size:16px;line-height:1.6}
-a{color:#0077b6;text-decoration:none}
-a:hover{text-decoration:underline}
-nav{border-bottom:1px solid #e0e0e0;padding:12px 20px;background:#fff}
-nav a{font-weight:600;font-size:1rem;color:#0077b6}
-.container{max-width:640px;margin:0 auto;padding:24px 20px}
-h1{font-size:1.6rem;font-weight:700;margin-bottom:6px;color:#1a1a2e}
-.subtitle{color:#555;font-size:0.95rem;margin-bottom:24px}
-.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:2rem}
-.diagram-wrap{margin-bottom:1.5rem;text-align:center}
-svg.wall-diagram{width:100%;max-width:560px;height:auto}
+a{color:#0077b6;text-decoration:underline}
+nav.top{border-bottom:1px solid #e0e0e0;padding:12px 1.5rem;background:#fff}
+nav.top a{font-weight:700;font-size:1.05rem;text-decoration:none}
+.container{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.7rem;font-weight:700;margin-bottom:.5rem;line-height:1.25}
+.subtitle{color:#555;font-size:.97rem;margin-bottom:2rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:2rem}
+.diagram-wrap{margin-bottom:1.5rem;background:#f8f9fa;border-radius:8px;padding:.5rem}
+svg.wall-diagram{display:block;width:100%;height:auto}
 .form-group{margin-bottom:1.25rem}
-label{display:block;font-size:0.85rem;font-weight:500;color:#444;margin-bottom:5px}
-input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;color:#1a1a2e;background:#fff;transition:border-color .2s,box-shadow .2s;min-height:44px}
-input:focus,select:focus{outline:none;border-color:#0077b6;box-shadow:0 0 0 3px rgba(0,119,182,0.15)}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:6px}
+input,select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff;min-height:44px}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px;border-color:#0077b6}
 input.error{border-color:#e74c3c}
-.error-msg{color:#e74c3c;font-size:0.8rem;margin-top:4px;display:none}
-.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.btn{display:block;width:100%;background:#0077b6;color:#fff;border:none;padding:13px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;transition:background .2s;min-height:44px;margin-top:0.5rem}
+.error-msg{color:#c0392b;font-size:.82rem;margin-top:4px;display:none}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.btn{display:block;width:100%;background:#0077b6;color:#fff;border:none;padding:12px 24px;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;min-height:44px;font-family:inherit}
 .btn:hover{background:#006299}
-.results{opacity:0;transition:opacity .3s ease;display:none}
-.results.visible{opacity:1;display:block}
-.big-number{font-size:2.4rem;font-weight:700;color:#0077b6;line-height:1.1}
-.big-label{font-size:0.9rem;color:#555;margin-bottom:1.25rem}
+.btn:focus-visible,.copy-btn:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.hint{font-size:.78rem;color:#666;margin-top:.75rem}
+.results{display:none;opacity:0;transition:opacity .3s ease}
+.results.show{display:block}
+.results.visible{opacity:1}
+.results h2{margin-bottom:1rem}
+.results h3{font-size:1rem;margin:1.5rem 0 .5rem}
+.hero{text-align:center;margin-bottom:1.25rem}
+.big-number{font-size:2.6rem;font-weight:700;color:#0077b6;line-height:1.1}
+.big-label{font-size:.9rem;color:#555}
 .results-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
-.stat-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:14px 16px;text-align:center}
+.stat-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:14px 12px;text-align:center}
 .stat-val{font-size:1.5rem;font-weight:700;color:#0077b6}
-.stat-lbl{font-size:0.78rem;color:#555;margin-top:2px}
+.stat-lbl{font-size:.78rem;color:#555;margin-top:2px}
 .table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:0.9rem}
-thead th{background:#f0f0f0;padding:9px 12px;text-align:left;font-weight:600;font-size:0.83rem;color:#444;border-bottom:2px solid #ddd}
-thead th:last-child{text-align:right}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#f0f0f0;padding:9px 12px;text-align:left;font-weight:600;font-size:.83rem;color:#444;border-bottom:2px solid #ddd;white-space:nowrap}
 tbody tr:nth-child(odd){background:#fafafa}
 tbody tr:nth-child(even){background:#fff}
-tbody td{padding:9px 12px;border-bottom:1px solid #eee;color:#1a1a2e}
-tbody td:last-child{text-align:right;font-weight:600;color:#0077b6}
-.copy-btn{background:transparent;border:1px solid #0077b6;color:#0077b6;padding:6px 14px;border-radius:5px;font-size:0.8rem;cursor:pointer;transition:all .2s;margin-top:1rem}
+td{padding:9px 12px;border-bottom:1px solid #eee}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+td.num{font-weight:600}
+tr.sel td{font-weight:700;color:#0077b6}
+.note{border-left:3px solid #e0a800;background:#fff8e1;padding:10px 14px;border-radius:0 5px 5px 0;font-size:.85rem;color:#4a3b00;margin-bottom:.75rem}
+.info{border-left-color:#0077b6;background:#e8f4fb;color:#1a1a2e}
+.copy-btn{background:#fff;border:1px solid #0077b6;color:#0077b6;padding:8px 16px;border-radius:5px;font-size:.85rem;cursor:pointer;margin-top:1rem;min-height:44px;font-family:inherit}
 .copy-btn:hover{background:#0077b6;color:#fff}
-.section-gap{margin-top:2rem}
-h2{font-size:1.15rem;font-weight:700;margin-bottom:10px;color:#1a1a2e}
-.content-section p{margin-bottom:0.9rem;color:#333;font-size:0.95rem}
-.content-section ul{margin:0.5rem 0 0.9rem 1.25rem}
-.content-section ul li{color:#333;font-size:0.95rem;margin-bottom:5px}
-details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:8px}
-summary{padding:12px 16px;cursor:pointer;font-weight:600;font-size:0.9rem;color:#1a1a2e;list-style:none;position:relative;padding-right:36px}
-summary::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#0077b6;font-size:1rem}
-details[open] summary::after{content:'▴'}
-details p{padding:0 16px 14px;font-size:0.9rem;color:#444}
-.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:0.75rem}
-.related-link{display:block;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:10px 14px;font-size:0.85rem;color:#0077b6;font-weight:500;transition:background .2s}
-.related-link:hover{background:#e8f4fb;text-decoration:none}
+.disc{font-size:.8rem;color:#555;margin-top:1rem}
 .ad-slot{min-height:0;margin:0}
-footer{border-top:1px solid #e0e0e0;padding:20px;text-align:center;font-size:0.83rem;color:#666;margin-top:2rem}
-footer a{color:#0077b6;margin:0 8px}
-.note{background:#e8f4fb;border-left:3px solid #0077b6;padding:10px 14px;border-radius:0 5px 5px 0;font-size:0.85rem;color:#1a1a2e;margin-bottom:1rem}
+.content-section h2,.results h2{font-size:1.25rem;font-weight:700;margin-bottom:.6rem}
+.section-gap{margin-top:2rem}
+.content-section p{margin-bottom:.9rem;color:#333}
+.content-section ul,.content-section ol{margin:.5rem 0 .9rem 1.25rem}
+.content-section li{color:#333;margin-bottom:6px}
+.formula{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:10px 14px;margin-bottom:.9rem;font-size:.92rem}
+details{border:1px solid #e0e0e0;border-radius:6px;margin-bottom:8px}
+summary{padding:12px 40px 12px 16px;cursor:pointer;font-weight:600;font-size:.95rem;list-style:none;position:relative;min-height:44px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';position:absolute;right:16px;top:10px;color:#0077b6;font-size:1.2rem}
+details[open] summary::after{content:'−'}
+details p{padding:0 16px 14px;font-size:.93rem;color:#333;margin:0}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:.75rem}
+.related-grid a{display:flex;align-items:center;min-height:44px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:10px 14px;font-size:.9rem;font-weight:500}
+footer{border-top:1px solid #e0e0e0;padding:1.5rem;text-align:center;font-size:.85rem;color:#666;margin-top:2rem}
+footer a{margin:0 8px;display:inline-block;padding:10px 0}
 @media(max-width:640px){
-  .row-2{grid-template-columns:1fr}
-  .results-grid{grid-template-columns:1fr 1fr}
-  .related-grid{grid-template-columns:1fr}
-  .card{padding:1.25rem}
-  h1{font-size:1.35rem}
-  .big-number{font-size:1.9rem}
-}
-@media(max-width:400px){
-  .results-grid{grid-template-columns:1fr}
+.row-2{grid-template-columns:1fr}
+.related-grid{grid-template-columns:1fr}
+.card{padding:1.25rem}
+h1{font-size:1.45rem}
+.big-number{font-size:2.2rem}
 }
 </style>
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://toolwick.com/cinder-block-wall-calculator/">
 <meta property="og:title" content="Cinder Block Wall Calculator">
-<meta property="og:description" content="Calculate how many cinder blocks, mortar bags, and rebar you need for any wall project. Free cinder block wall calculator with instant results.">
+<meta property="og:description" content="Free cinder block wall calculator: estimate blocks, mortar bags, grout and rebar for any wall from its length, height, openings and waste.">
 <meta property="og:site_name" content="Toolwick">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -89,250 +94,189 @@ footer a{color:#0077b6;margin:0 8px}
 <base target="_blank">
 </head>
 <body>
-
+<nav class="top"><a href="/">Toolwick</a></nav>
 <div class="container">
   <h1>Cinder Block Wall Calculator</h1>
-  <p class="subtitle">Estimate blocks, mortar, grout, and rebar for your masonry wall project.</p>
+  <p class="subtitle">This cinder block wall calculator estimates the blocks, mortar, grout and rebar you need for a masonry wall from its length, height, openings and waste allowance.</p>
 
   <div class="card">
-    <!-- SVG Diagram -->
     <div class="diagram-wrap">
-      <svg class="wall-diagram" viewBox="0 0 540 210" xmlns="http://www.w3.org/2000/svg" aria-label="Cinder block wall diagram">
-        <!-- Wall outline -->
-        <rect x="60" y="40" width="420" height="130" fill="#f8f9fa" stroke="#0077b6" stroke-width="2" rx="2"/>
-        <!-- Block rows (3 visible rows, 6 blocks each) -->
-        <!-- Row 1 -->
-        <rect x="60" y="127" width="70" height="43" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="130" y="127" width="70" height="43" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="200" y="127" width="70" height="43" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="270" y="127" width="70" height="43" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="340" y="127" width="70" height="43" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="410" y="127" width="70" height="43" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <!-- Row 2 (offset) -->
-        <rect x="60" y="84" width="35" height="43" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="95" y="84" width="70" height="43" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="165" y="84" width="70" height="43" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="235" y="84" width="70" height="43" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="305" y="84" width="70" height="43" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="375" y="84" width="70" height="43" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="445" y="84" width="35" height="43" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <!-- Row 3 -->
-        <rect x="60" y="40" width="70" height="44" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="130" y="40" width="70" height="44" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="200" y="40" width="70" height="44" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="270" y="40" width="70" height="44" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="340" y="40" width="70" height="44" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <rect x="410" y="40" width="70" height="44" fill="#fff" stroke="#0077b6" stroke-width="1.2"/>
-        <!-- Width arrow -->
-        <line x1="60" y1="188" x2="480" y2="188" stroke="#1a1a2e" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arrL)"/>
-        <text x="270" y="203" text-anchor="middle" font-size="12" fill="#1a1a2e" id="diag-width">Width: —</text>
-        <!-- Height arrow -->
-        <line x1="22" y1="40" x2="22" y2="170" stroke="#1a1a2e" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arrL)"/>
-        <text x="18" y="108" text-anchor="middle" font-size="12" fill="#1a1a2e" transform="rotate(-90,18,108)" id="diag-height">Height: —</text>
-        <!-- Block size label -->
-        <text x="95" y="152" text-anchor="middle" font-size="9" fill="#555" id="diag-block">16"×8"</text>
-        <!-- Mortar joint indicator -->
-        <line x1="130" y1="125" x2="130" y2="172" stroke="#e74c3c" stroke-width="1" stroke-dasharray="3,2"/>
-        <text x="131" y="121" font-size="8" fill="#e74c3c">joint</text>
-        <!-- Arrow markers -->
+      <svg class="wall-diagram" id="diagram" viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cinder block wall diagram showing length, height, courses and mortar joint">
         <defs>
-          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L8,3 z" fill="#1a1a2e"/>
-          </marker>
-          <marker id="arrL" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse">
-            <path d="M0,0 L0,6 L8,3 z" fill="#1a1a2e"/>
-          </marker>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto-start-reverse"><path d="M0,0 L0,6 L7,3 z" fill="#1a1a2e"/></marker>
         </defs>
+        <rect x="60" y="30" width="420" height="138" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+        <g fill="#fff" stroke="#0077b6" stroke-width="1.2">
+          <path d="M130,122V168M200,122V168M270,122V168M340,122V168M410,122V168M60,122H480"/>
+          <path d="M95,76V122M165,76V122M235,76V122M305,76V122M375,76V122M445,76V122M60,76H480"/>
+          <path d="M130,30V76M200,30V76M270,30V76M340,30V76M410,30V76"/>
+        </g>
+        <g id="d-rb" stroke="#1a1a2e" stroke-width="2" stroke-dasharray="5 3"></g>
+        <text id="d-blk" x="95" y="150" text-anchor="middle" font-size="13" fill="#1a1a2e">16"×8"</text>
+        <text id="d-reb" x="270" y="21" text-anchor="middle" font-size="14" fill="#1a1a2e"></text>
+        <path d="M60,188H480" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+        <path d="M38,30V168" stroke="#0077b6" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+        <path d="M60,172V194M480,172V194M34,30H56M34,168H56" stroke="#e0e0e0" stroke-width="1"/>
+        <text id="d-w" x="270" y="208" text-anchor="middle" font-size="15" font-weight="600" fill="#1a1a2e">Length: — ft</text>
+        <text id="d-h" x="20" y="99" text-anchor="middle" font-size="15" font-weight="600" fill="#1a1a2e" transform="rotate(-90 20 99)">Height: — ft</text>
+        <text id="d-c" x="270" y="228" text-anchor="middle" font-size="13" fill="#1a1a2e"></text>
+        <path d="M468,76H490" stroke="#1a1a2e" stroke-width="1.2"/>
+        <text id="d-j" x="494" y="81" font-size="13" fill="#1a1a2e">joint 3/8"</text>
       </svg>
     </div>
 
-    <!-- Inputs -->
     <div class="row-2">
       <div class="form-group">
         <label for="wallLength">Wall Length (feet)</label>
-        <input type="number" id="wallLength" placeholder="e.g. 20" min="0.1" step="0.1">
-        <div class="error-msg" id="err-length">Please enter a valid wall length.</div>
+        <input type="number" id="wallLength" inputmode="decimal" min="0" step="any" placeholder="e.g. 20" aria-describedby="err-wallLength">
+        <div class="error-msg" id="err-wallLength" role="alert"></div>
       </div>
       <div class="form-group">
         <label for="wallHeight">Wall Height (feet)</label>
-        <input type="number" id="wallHeight" placeholder="e.g. 8" min="0.1" step="0.1">
-        <div class="error-msg" id="err-height">Please enter a valid wall height.</div>
+        <input type="number" id="wallHeight" inputmode="decimal" min="0" step="any" placeholder="e.g. 8" aria-describedby="err-wallHeight">
+        <div class="error-msg" id="err-wallHeight" role="alert"></div>
       </div>
     </div>
-
     <div class="row-2">
       <div class="form-group">
-        <label for="blockSize">Block Size</label>
-        <select id="blockSize">
-          <option value="16,8,8">Standard 16"×8"×8"</option>
-          <option value="16,4,8">Half-height 16"×4"×8"</option>
-          <option value="8,8,8">Square 8"×8"×8"</option>
-          <option value="12,8,8">Wide 16"×8"×12"</option>
+        <label for="blockFace">Block Face (length × height, nominal)</label>
+        <select id="blockFace">
+          <option value="16,8" selected>16" × 8" (standard)</option>
+          <option value="16,4">16" × 4" (low profile)</option>
+          <option value="8,8">8" × 8" (half-length)</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="mortarJoint">Mortar Joint Thickness (inches)</label>
+        <label for="blockThick">Wall Thickness (nominal)</label>
+        <select id="blockThick">
+          <option value="4">4" thick</option>
+          <option value="6">6" thick</option>
+          <option value="8" selected>8" thick (most common)</option>
+          <option value="10">10" thick</option>
+          <option value="12">12" thick</option>
+        </select>
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="form-group">
+        <label for="mortarJoint">Mortar Joint Thickness</label>
         <select id="mortarJoint">
-          <option value="0.375">3/8 inch (standard)</option>
-          <option value="0.5">1/2 inch</option>
-          <option value="0.25">1/4 inch</option>
+          <option value="0.375" selected>3/8" (standard)</option>
+          <option value="0.5">1/2"</option>
+          <option value="0.25">1/4"</option>
         </select>
       </div>
+      <div class="form-group">
+        <label for="openings">Door/Window Openings (sq ft)</label>
+        <input type="number" id="openings" inputmode="decimal" min="0" step="any" placeholder="0" aria-describedby="err-openings">
+        <div class="error-msg" id="err-openings" role="alert"></div>
+      </div>
     </div>
-
     <div class="row-2">
       <div class="form-group">
-        <label for="openings">Total Opening Area (sq ft) <span style="font-weight:400;color:#666">(doors/windows)</span></label>
-        <input type="number" id="openings" placeholder="0" min="0" step="0.1" value="0">
-      </div>
-      <div class="form-group">
-        <label for="waste">Waste Factor (%)</label>
+        <label for="waste">Waste Allowance</label>
         <select id="waste">
-          <option value="5">5% — Straight wall</option>
-          <option value="10" selected>10% — Standard (recommended)</option>
-          <option value="15">15% — Complex cuts</option>
-          <option value="20">20% — High complexity</option>
+          <option value="5">5% — simple straight wall</option>
+          <option value="10" selected>10% — standard</option>
+          <option value="15">15% — many cuts or corners</option>
+          <option value="20">20% — complex layout</option>
         </select>
       </div>
-    </div>
-
-    <div class="row-2">
       <div class="form-group">
-        <label for="rebarSpacing">Vertical Rebar Spacing (inches)</label>
+        <label for="rebarSpacing">Vertical Rebar Spacing</label>
         <select id="rebarSpacing">
           <option value="0">No rebar</option>
-          <option value="24">Every 24" (light)</option>
-          <option value="16" selected>Every 16" (standard)</option>
-          <option value="8">Every 8" (heavy)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="rebarSize">Rebar Size</label>
-        <select id="rebarSize">
-          <option value="3">#3 (3/8")</option>
-          <option value="4" selected>#4 (1/2")</option>
-          <option value="5">#5 (5/8")</option>
+          <option value="48">Every 48"</option>
+          <option value="32">Every 32"</option>
+          <option value="24">Every 24"</option>
+          <option value="16" selected>Every 16"</option>
+          <option value="8">Every 8"</option>
         </select>
       </div>
     </div>
-
-    <button class="btn" id="calcBtn">Calculate Materials</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+    <div class="form-group">
+      <label for="rebarSize">Rebar Size</label>
+      <select id="rebarSize">
+        <option value="3">#3 (3/8")</option>
+        <option value="4" selected>#4 (1/2")</option>
+        <option value="5">#5 (5/8")</option>
+      </select>
+    </div>
+    <button class="btn" id="calcBtn" type="button">Calculate Materials</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+    <p class="hint">Planning estimate only. Local codes vary — see the notes below the results.</p>
   </div>
 
-  <!-- Results -->
-  <div class="results card" id="results">
-    <div style="text-align:center;margin-bottom:1.25rem">
-      <div class="big-number" id="res-total-blocks">0</div>
-      <div class="big-label">Total Cinder Blocks Needed (with waste)</div>
-    </div>
-
-    <div class="results-grid" id="res-grid">
-      <div class="stat-box">
-        <div class="stat-val" id="res-net-blocks">0</div>
-        <div class="stat-lbl">Net Blocks (no waste)</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-val" id="res-mortar">0</div>
-        <div class="stat-lbl">Mortar Bags (60 lb)</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-val" id="res-grout">0</div>
-        <div class="stat-lbl">Grout Bags (needed)</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-val" id="res-rebar">0</div>
-        <div class="stat-lbl">Rebar Bars (10 ft)</div>
-      </div>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Detail</th>
-            <th>Quantity</th>
-          </tr>
-        </thead>
-        <tbody id="res-table-body"></tbody>
-      </table>
-    </div>
-
-    <button class="copy-btn" id="copyBtn">📋 Copy Summary</button>
-  </div>
+  <div class="results card" id="results" aria-live="polite" aria-atomic="true"></div>
 
   <aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
 
-  <!-- Content -->
   <div class="content-section">
     <div class="section-gap">
       <h2>How to Use This Cinder Block Wall Calculator</h2>
-      <p>Enter your wall's length and height in feet, then select your block size (the standard 16"×8"×8" is most common), mortar joint thickness, and any opening area for doors or windows. The calculator subtracts openings automatically and applies your chosen waste factor to give you a purchase quantity with margin for cuts and breakage.</p>
-      <p>Rebar inputs are optional — if your local code requires reinforced CMU walls, select the spacing and bar size. Results appear instantly with a full material breakdown table.</p>
+      <p>Enter the wall length and height in feet, subtract the area of any doors or windows, then choose the block face, wall thickness, mortar joint and waste allowance. If the wall will be reinforced, pick a vertical rebar spacing and bar size. The calculator returns blocks, mortar bags, grout bags and rebar sticks to buy, plus a breakdown table and a rebar-spacing comparison.</p>
     </div>
 
     <div class="section-gap">
       <h2>Why This Matters</h2>
-      <p>Buying too few cinder blocks mid-project is expensive — you may face delivery fees, dye-lot color differences, and scheduling delays. Buying too many ties up cash and leaves you with heavy, awkward leftovers. Most experienced masons add 10% for a standard straight wall because cuts at corners and around openings inevitably produce waste.</p>
-      <p>A typical 20×8 ft garden wall (160 sq ft) needs roughly 270 standard blocks and 17 bags of mortar. That same wall at 15 ft long uses about 200 blocks — seemingly small dimension differences add up fast at scale. For retaining walls taller than 4 feet, vertical rebar every 16 inches filled with grout is standard practice in most U.S. building codes, and this calculator accounts for that reinforcement.</p>
-      <p>Homeowners building garden walls, contractors estimating bids, and DIYers building basement partitions all benefit from getting accurate takeoffs before ordering. Concrete masonry units (CMUs) are heavy — a standard 8-inch block weighs about 38 lbs — so over-ordering by 50 blocks means moving nearly a ton of unnecessary material.</p>
+      <p>Ordering the wrong number of blocks is one of the most common masonry mistakes. Run short and you pay a second delivery fee, risk a color or batch mismatch, and leave a half-built wall open to weather. Over-order and you haul leftovers: a standard 8-inch block weighs roughly 35 to 40 lb, so 50 spare blocks is nearly a ton of material. A 20 ft × 8 ft wall is 160 sq ft, which needs 180 blocks laid and about 198 with a 10% waste allowance. Shorten the same wall to 15 ft and you need about 149. Garden walls, retaining walls, garage and workshop partitions, property-line walls and basement dividers all start with this takeoff, as do contractors pricing bids and homeowners comparing DIY cost against a mason's quote. The reinforcement numbers matter even more, because grout and rebar are what let stacked blocks resist wind, soil pressure and impact. Treat this as a planning estimate. Final design, footing depth and reinforcement must follow your local code and, for tall or retaining walls, a licensed engineer.</p>
     </div>
 
     <div class="section-gap">
       <h2>How It's Calculated</h2>
-      <p>The calculator uses these formulas:</p>
-      <p><strong>Block face area</strong> (with mortar joint) = (block length + joint) × (block height + joint)</p>
-      <p><strong>Net blocks</strong> = (Wall area − Opening area) ÷ Block face area</p>
-      <p><strong>Total blocks (with waste)</strong> = Net blocks × (1 + waste%)</p>
-      <p><strong>Mortar bags</strong>: One 60 lb bag covers approximately 35 blocks for standard CMU work. Formula: Total blocks ÷ 35.</p>
-      <p><strong>Grout bags</strong>: One 80 lb bag fills approximately 3.75 standard block cores. Formula: Total blocks ÷ 3.75.</p>
-      <p><strong>Rebar</strong>: Vertical bars spaced at your selected interval across the wall length, each bar running full wall height. Number of bars = wall length ÷ spacing. Bars per 10-ft stick = ceil(wall height ÷ 10). Total sticks = bars × sticks each.</p>
+      <p>A nominal "16 × 8" block is actually 15⅝" × 7⅝". The nominal size already includes a 3/8" mortar joint, so the calculator adds the joint to the <em>actual</em> block size and never counts it twice.</p>
+      <div class="formula"><strong>Module area</strong> = (actual length + joint) × (actual height + joint)<br>
+      <strong>Net blocks</strong> = (wall area − openings) × 144 ÷ module area<br>
+      <strong>Total blocks</strong> = net blocks × (1 + waste %), rounded up</div>
+      <p>With a 3/8" joint a 16 × 8 block has a 128 sq in module, which is 0.889 sq ft or 1.125 blocks per sq ft. A 1/2" joint gives slightly fewer blocks per sq ft, and a 1/4" joint slightly more.</p>
+      <p><strong>Mortar.</strong> Block is bedded on its face shells. Volume per block = joint × bedded width × (module length + actual height). Bedded width is two face shells (the full width for 4" units). The result is doubled to allow for droppings, furrowing and mixing loss, then divided by 0.45 cu ft per 60 lb bag. This works out to roughly 15 to 20 standard blocks per bag, and joint thickness changes the answer directly.</p>
+      <p><strong>Grout.</strong> Only cores that hold rebar are grouted, so grout is zero when you choose "No rebar". Grouted cells = wall length ÷ spacing, rounded up, plus one for the end bar. Each cell's volume = core area × laid height, where core area ≈ (actual thickness − 2 face shells) × 5.1 sq in. A 10% spill allowance is added and the total is divided by 0.6 cu ft per 80 lb bag. Check your bag's printed yield.</p>
+      <p><strong>Rebar.</strong> Bar length = laid height + a lap or footing-embed allowance of 48 bar diameters. Bars are priced in 10 ft sticks, with extra sticks for splices on tall walls.</p>
+      <p><strong>Rounding and codes.</strong> Every quantity rounds up, and the wall height rounds up to whole courses. Reinforcement layouts follow general practice consistent with the IRC R606 masonry provisions and TMS 402, but local codes, seismic and wind zones, and soil conditions vary. This tool is not engineering, permit or inspection approval.</p>
     </div>
 
     <div class="section-gap">
-      <h2>Tips & Common Mistakes</h2>
+      <h2>Worked Example</h2>
+      <p>A 20 ft × 8 ft wall, 8" thick 16 × 8 block, 3/8" joint, no openings, 10% waste, #4 rebar every 16":</p>
+      <ol>
+        <li><strong>Area:</strong> 20 × 8 = 160 sq ft, with no openings deducted.</li>
+        <li><strong>Net blocks:</strong> 160 × 144 ÷ 128 = 180 blocks. That is 12 courses of 15 blocks.</li>
+        <li><strong>With waste:</strong> 180 × 1.10 = 198 blocks to buy.</li>
+        <li><strong>Mortar:</strong> 0.375 × 2.5 × (16 + 7.625) = 22.15 cu in per block, doubled to 44.30. Times 198 gives 8,771 cu in, or 5.08 cu ft. Divided by 0.45 that is 11.3, so buy 12 bags (60 lb).</li>
+        <li><strong>Rebar:</strong> 240" ÷ 16" = 15, plus 1 end bar = 16 bars. Each is 8 ft + 2 ft lap = 10 ft, so 16 sticks (160 linear ft).</li>
+        <li><strong>Grout:</strong> core area (7.625 − 2.5) × 5.1 = 26.14 sq in. Each cell holds 26.14 ÷ 144 × 8 = 1.452 cu ft. Sixteen cells give 23.23 cu ft, plus 10% is 25.56 cu ft (0.95 cu yd). Divided by 0.6 that is 42.6, so buy 43 bags (80 lb).</li>
+      </ol>
+    </div>
+
+    <div class="section-gap">
+      <h2>Tips &amp; Common Mistakes</h2>
       <ul>
-        <li><strong>Always measure opening widths and heights:</strong> A single 3×7 ft door opening removes 21 sq ft — about 35 blocks. Not accounting for openings causes significant over-ordering.</li>
-        <li><strong>Don't forget the footing:</strong> This calculator covers the above-grade wall. Your footing typically needs to be twice the block width and extend below frost depth — plan concrete separately.</li>
-        <li><strong>Check local codes for rebar:</strong> Many jurisdictions require vertical rebar at 24" OC minimum for walls over 3 ft, and 16" OC for retaining walls. Grout must be poured to fill those cores.</li>
-        <li><strong>Order by the pallet:</strong> Cinder blocks are typically sold in pallets of 108 (16"×8") or 90 (8"×8"). Rounding up to the nearest pallet saves per-unit cost and ensures consistent batch color.</li>
-        <li><strong>Mortar has a short working time:</strong> Mix only what you can use in 1-2 hours. Order in stages if building in sections rather than all at once.</li>
+        <li><strong>Plan the footing separately.</strong> This tool covers the wall above the footing. Footing width, depth below frost line and dowels come from local code.</li>
+        <li><strong>Design heights in whole courses.</strong> A 16 × 8 wall rises 8" per course, so a 7 ft 10 in wall is built as 8 ft. The calculator uses the laid height for rebar and grout.</li>
+        <li><strong>Don't forget lintels, caps and bond beams.</strong> Openings need lintels, and many walls need a grouted bond beam or cap course. None of these are included in the totals.</li>
+        <li><strong>Grout in lifts and consolidate.</strong> Tall cells are normally filled in lifts of about 4 ft and rodded or vibrated. Follow your local code and the grout manufacturer.</li>
+        <li><strong>Buy from one batch.</strong> Round up to full pallets, and keep the whole wall on the same production lot to avoid visible color shifts.</li>
       </ul>
     </div>
 
     <div class="section-gap">
       <h2>Frequently Asked Questions</h2>
-
-      <details>
-        <summary>How many cinder blocks do I need per square foot?</summary>
-        <p>A standard 16"×8" block covers approximately 0.889 square feet of face area (including a 3/8" mortar joint). That works out to about 1.125 blocks per square foot of wall face. For quick estimates, use 1.125 blocks/sq ft for standard blocks and 2.25 for 4"-height blocks.</p>
-      </details>
-
-      <details>
-        <summary>What's the difference between a cinder block and a concrete block?</summary>
-        <p>Technically, true cinder blocks use cinder (ash) as aggregate and are no longer commonly manufactured. Today "cinder block" is a colloquial term for concrete masonry units (CMUs) made with Portland cement and aggregate. For practical purposes, they're the same thing when buying materials.</p>
-      </details>
-
-      <details>
-        <summary>How much does a cinder block wall cost per square foot?</summary>
-        <p>Material costs typically run $2–$5 per block, plus mortar and labor. Total installed costs (including labor) average $10–$25 per square foot depending on wall height, complexity, reinforcement requirements, and regional labor rates. DIY-only material costs are roughly $3–$7 per square foot.</p>
-      </details>
-
-      <details>
-        <summary>Do I need rebar in a cinder block wall?</summary>
-        <p>For decorative or garden walls under 3 feet tall, rebar is often optional. For structural walls, load-bearing applications, or retaining walls, most building codes require vertical rebar at 16"–24" spacing filled with grout. Always check your local building code or consult a structural engineer for walls taller than 4 feet.</p>
-      </details>
+      <details><summary>How many cinder blocks do I need per square foot?</summary><p>A standard 16" × 8" block has a 128 sq in module with its mortar joint, so it covers 0.889 sq ft of wall. That is 1.125 blocks per sq ft. A 16" × 4" block needs 2.25 per sq ft.</p></details>
+      <details><summary>What's the difference between a cinder block and a concrete block?</summary><p>True cinder blocks used coal ash as aggregate and are rarely made today. "Cinder block" is now a common name for concrete masonry units (CMUs). For ordering and calculating, you treat them the same.</p></details>
+      <details><summary>How much mortar do I need for a block wall?</summary><p>Expect roughly one 60 lb bag for every 15 to 20 standard blocks, depending on joint thickness and how neatly you work. This calculator uses the block's size and joint thickness, with a generous allowance for droppings and mixing loss, and always rounds up.</p></details>
+      <details><summary>Do I need rebar and grout in a cinder block wall?</summary><p>Low decorative walls are sometimes built unreinforced. Taller, load-bearing, retaining and wind-exposed walls normally need vertical rebar in grouted cores, with spacing set by code or an engineer. Always confirm with your local building department.</p></details>
+      <details><summary>How many blocks come on a pallet?</summary><p>It varies by maker and size. A pallet of 8" blocks commonly holds somewhere around 72 to 90, and thinner blocks pack more. Ask your supplier, then round your total up to whole pallets.</p></details>
+      <details><summary>Does this include the footing or concrete slab?</summary><p>No. The calculator covers blocks, mortar, grout and vertical rebar for the wall only. Footings, horizontal bond-beam steel, lintels and caps must be planned separately, for example with the concrete wall calculator.</p></details>
     </div>
 
     <div class="section-gap">
       <h2>Related Tools</h2>
       <div class="related-grid">
-        <a class="related-link" href="/garage-slab-thickness-reinforcement-calculator/">Garage Concrete Slab Thickness & Reinforcement Calculator</a>
-        <a class="related-link" href="/drywall-screw-spacing-quantity-calculator/">Drywall Screw Spacing & Quantity Calculator</a>
-        <a class="related-link" href="/suspended-ceiling-load-capacity-calculator/">Suspended Ceiling Load Capacity Calculator</a>
-        <a class="related-link" href="/hardwood-floor-board-count-waste-calculator/">Hardwood Floor Board Count & Waste Calculator</a>
-        <a class="related-link" href="/header-beam-size-calculator/">Header Beam Size Calculator</a>
-        <a class="related-link" href="/bathroom-tile-layout-planner/">Bathroom Tile Layout Planner</a>
+        <a href="/retaining-wall-block-calculator/">Retaining Wall Block Calculator</a>
+        <a href="/wall-r-value-calculator/">Wall R-Value Calculator</a>
+        <a href="/concrete-wall-calculator/">Concrete Wall Calculator</a>
+        <a href="/wall-sheathing-calculator/">Wall Sheathing Calculator</a>
+        <a href="/roof-flashing-calculator/">Step and Wall Flashing Calculator</a>
+        <a href="/basement-wall-insulation-calculator/">Basement Wall Insulation Calculator</a>
       </div>
     </div>
   </div>
@@ -342,154 +286,159 @@ footer a{color:#0077b6;margin:0 8px}
 <p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/cinder-block-wall-calculator/">Toolwick</a></p>
 
 <script>
-document.getElementById('yr').textContent = new Date().getFullYear();
+(function(){
+const $=id=>document.getElementById(id);
+const cl=x=>Math.ceil(x-1e-9);
+const fmt=(n,d=0)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const nf=n=>n.toLocaleString('en-US',{maximumFractionDigits:2});
+const SHELL={4:0.75,6:1,8:1.25,10:1.375,12:1.5};
+const SP=[48,32,24,16,8];
+const R=$('results');
+let summary='';
+$('yr').textContent=new Date().getFullYear();
 
-function fmt(n, dec=0){
-  if(isNaN(n)) return '—';
-  return n.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+function setErr(id,msg){
+  const e=$('err-'+id),i=$(id);
+  if(msg){e.textContent=msg;e.style.display='block';i.classList.add('error');i.setAttribute('aria-invalid','true')}
+  else{e.style.display='none';i.classList.remove('error');i.removeAttribute('aria-invalid')}
 }
+function clearResults(){R.className='results card';R.innerHTML='';summary=''}
 
-function showErr(id, show){
-  const el = document.getElementById(id);
-  const inp = el.previousElementSibling;
-  el.style.display = show ? 'block' : 'none';
-  if(show) inp.classList.add('error'); else inp.classList.remove('error');
-}
+function run(){
+  const lv=$('wallLength').value.trim(),hv=$('wallHeight').value.trim(),ov=$('openings').value.trim();
+  const L=lv===''?NaN:Number(lv),H=hv===''?NaN:Number(hv),O=ov===''?0:Number(ov);
+  let ok=true,m=null;
+  if(!isFinite(L)||L<=0)m='Enter a wall length greater than 0.';else if(L>5000)m='Lengths over 5,000 ft are not supported. Split the wall into sections.';
+  setErr('wallLength',m);if(m)ok=false;
+  m=null;
+  if(!isFinite(H)||H<=0)m='Enter a wall height greater than 0.';else if(H>40)m='Heights over 40 ft are not supported for block walls here.';
+  setErr('wallHeight',m);if(m)ok=false;
+  m=null;
+  if(!isFinite(O)||O<0)m='Enter 0 or a positive opening area.';
+  else if(ok&&O>=L*H)m='Openings ('+fmt(O,1)+' sq ft) must be smaller than the wall area ('+fmt(L*H,1)+' sq ft).';
+  setErr('openings',m);if(m)ok=false;
+  if(!ok){clearResults();return}
 
-function calculate(){
-  const lengthVal = parseFloat(document.getElementById('wallLength').value);
-  const heightVal = parseFloat(document.getElementById('wallHeight').value);
-  const openingsVal = parseFloat(document.getElementById('openings').value) || 0;
-  const wasteVal = parseFloat(document.getElementById('waste').value) / 100;
-  const mortarJoint = parseFloat(document.getElementById('mortarJoint').value);
-  const rebarSpacing = parseFloat(document.getElementById('rebarSpacing').value);
-  const rebarSize = parseInt(document.getElementById('rebarSize').value);
-  const blockSizeStr = document.getElementById('blockSize').value;
-  const [bL, bH, bW] = blockSizeStr.split(',').map(Number);
+  const [bL,bH]=$('blockFace').value.split(',').map(Number);
+  const T=Number($('blockThick').value),j=Number($('mortarJoint').value);
+  const w=Number($('waste').value)/100,sp=Number($('rebarSpacing').value),rs=Number($('rebarSize').value);
+  const aL=bL-0.375,aH=bH-0.375,aT=T-0.375;
+  const mL=aL+j,mH=aH+j;
+  const wallArea=L*H,netArea=wallArea-O;
+  const perSqFt=144/(mL*mH);
+  const netBlocks=cl(netArea*perSqFt),total=cl(netArea*perSqFt*(1+w));
+  const courses=cl(H*12/mH),bpc=cl(L*12/mL),laidFt=courses*mH/12;
 
-  let valid = true;
-  if(!lengthVal || lengthVal <= 0){ showErr('err-length', true); valid=false; } else showErr('err-length', false);
-  if(!heightVal || heightVal <= 0){ showErr('err-height', true); valid=false; } else showErr('err-height', false);
-  if(!valid) return;
+  const bed=T===4?aT:2*SHELL[T];
+  const mortarIn3=j*bed*(mL+aH)*2;
+  const mortarCf=total*mortarIn3/1728,mortarBags=cl(mortarCf/0.45);
 
-  // Block face area in sq ft (with mortar joint)
-  const blockLenFt = (bL + mortarJoint) / 12;
-  const blockHtFt  = (bH + mortarJoint) / 12;
-  const blockFaceArea = blockLenFt * blockHtFt;
+  const reinforce=sp>0&&T>4;
+  const coreSqIn=T>4?(aT-2*SHELL[T])*5.1:0;
+  const lapFt=4*(rs/8);
+  const barLen=laidFt+lapFt;
+  const rc=s=>{
+    const bars=cl(L*12/s)+1;
+    const sticks=barLen<=10?cl(bars/Math.max(1,Math.floor(10/barLen+1e-9))):bars*(1+cl((barLen-10)/(10-lapFt)));
+    const cf=bars*coreSqIn/144*laidFt*1.1;
+    return{bars,sticks,linFt:bars*barLen,cf,bags:cl(cf/0.6)};
+  };
+  const cur=reinforce?rc(sp):{bars:0,sticks:0,linFt:0,cf:0,bags:0};
 
-  const wallArea = lengthVal * heightVal;
-  const netArea  = Math.max(0, wallArea - openingsVal);
-  const netBlocks = netArea / blockFaceArea;
-  const totalBlocks = Math.ceil(netBlocks * (1 + wasteVal));
+  const notes=[];
+  if(sp>0&&T===4)notes.push('4" blocks are not practical for reinforced, grouted cores, so rebar and grout are shown as zero. Use 6" or thicker units for a reinforced wall.');
+  if(sp===0&&H>4)notes.push('Block walls over about 4 ft are normally reinforced and set on an engineered footing. Check your local code before building without rebar.');
+  if(H>8)notes.push('Walls over 8 ft generally need engineering. Do not build from this estimate alone.');
+  if(reinforce&&laidFt>4)notes.push('Grout tall cells in lifts (commonly about 4 ft at a time) and consolidate each lift, following local code.');
+  if(O>0)notes.push('Openings need lintels or bond beams, which are not included. Rebar and grout are sized for the full wall length, which is conservative.');
+  if(laidFt-H>0.005)notes.push('Height rounds up to whole courses: '+nf(laidFt)+' ft laid vs '+nf(H)+' ft entered.');
+  const noteHtml=notes.map(n=>'<div class="note">'+n+'</div>').join('');
 
-  // Mortar: 1 bag (60 lb) per ~35 blocks
-  const mortarBags = Math.ceil(totalBlocks / 35);
+  const rows=[];
+  const r=(a,b,c)=>rows.push('<tr><td>'+a+'</td><td>'+b+'</td><td class="num">'+c+'</td></tr>');
+  r('Wall area',nf(L)+' × '+nf(H)+' ft',fmt(wallArea,1)+' sq ft');
+  r('Openings deducted','Doors / windows',fmt(O,1)+' sq ft');
+  r('Net wall area','After openings',fmt(netArea,1)+' sq ft');
+  r('Blocks per sq ft',bL+'" × '+bH+'" face, '+j+'" joint',fmt(perSqFt,3));
+  r('Courses',nf(laidFt)+' ft laid height',fmt(courses));
+  r('Blocks per course',nf(L)+' ft ÷ '+fmt(mL,3)+'"',fmt(bpc));
+  r('Net blocks','Before waste',fmt(netBlocks));
+  r('Waste allowance',fmt(w*100)+'%',fmt(total-netBlocks));
+  r('Total blocks to buy','Rounded up',fmt(total));
+  r('Mortar volume','Incl. 100% allowance',fmt(mortarCf,2)+' cu ft');
+  r('Mortar bags (60 lb)','0.45 cu ft per bag',fmt(mortarBags));
+  if(reinforce){
+    r('Grouted cells','#'+rs+' @ '+sp+'" o.c. + end bar',fmt(cur.bars));
+    r('Grout volume','Incl. 10% spill',fmt(cur.cf,2)+' cu ft ('+fmt(cur.cf/27,2)+' cu yd)');
+    r('Grout bags (80 lb)','0.6 cu ft per bag',fmt(cur.bags));
+    r('Rebar bars','Each '+nf(barLen)+' ft incl. lap',fmt(cur.bars));
+    r('Rebar sticks (10 ft)','Total to buy',fmt(cur.sticks));
+    r('Rebar total length','All bars',fmt(cur.linFt,1)+' ft');
+  }else r('Reinforcement','None calculated','—');
 
-  // Grout: 1 bag (80 lb) per ~3.75 block cores (standard 8" block)
-  const groutBags = Math.ceil(totalBlocks / 3.75);
-
-  // Rebar
-  let rebarSticks = 0;
-  let rebarBars = 0;
-  if(rebarSpacing > 0){
-    rebarBars = Math.ceil((lengthVal * 12) / rebarSpacing) + 1;
-    const sticksPerBar = Math.ceil(heightVal / 10);
-    rebarSticks = rebarBars * sticksPerBar;
+  let cmp='';
+  if(T>4){
+    cmp='<h3>Rebar spacing comparison</h3><div class="table-wrap" tabindex="0" role="region" aria-label="Rebar spacing comparison table"><table><thead><tr><th>Spacing</th><th class="num">Bars</th><th class="num">Sticks (10 ft)</th><th class="num">Grout bags</th></tr></thead><tbody>';
+    SP.forEach(s=>{const c=rc(s);cmp+='<tr'+(s===sp?' class="sel"':'')+'><td>'+s+'" o.c.'+(s===sp?' (selected)':'')+'</td><td class="num">'+fmt(c.bars)+'</td><td class="num">'+fmt(c.sticks)+'</td><td class="num">'+fmt(c.bags)+'</td></tr>'});
+    cmp+='</tbody></table></div>';
   }
 
-  // Courses (rows)
-  const courses = Math.round(heightVal / blockHtFt);
-  const blocksPerCourse = Math.round(lengthVal / blockLenFt);
-  const wallAreaDisplay = wallArea.toFixed(1);
+  summary='Cinder Block Wall Calculator (toolwick.com)\n'+
+    'Wall: '+nf(L)+' ft × '+nf(H)+' ft, openings '+fmt(O,1)+' sq ft\n'+
+    'Block: '+bL+'"×'+bH+'"×'+T+'", joint '+j+'", waste '+fmt(w*100)+'%\n'+
+    'Total blocks: '+fmt(total)+' (net '+fmt(netBlocks)+')\n'+
+    'Mortar (60 lb bags): '+fmt(mortarBags)+'\n'+
+    (reinforce?'Grout (80 lb bags): '+fmt(cur.bags)+'\nRebar #'+rs+' @ '+sp+'" o.c.: '+fmt(cur.bars)+' bars, '+fmt(cur.sticks)+' sticks (10 ft)\n':'Rebar/grout: none calculated\n')+
+    'Planning estimate only; local codes vary.';
 
-  // Block size label
-  const bSizeLabel = `${bL}"×${bH}"×${bW}"`;
+  const html='<h2>Your Material Estimate</h2>'+
+    '<div class="hero"><div class="big-number">'+fmt(total)+'</div><div class="big-label">Total blocks to buy (includes '+fmt(w*100)+'% waste)</div></div>'+
+    '<div class="results-grid">'+
+    '<div class="stat-box"><div class="stat-val">'+fmt(netBlocks)+'</div><div class="stat-lbl">Net blocks (no waste)</div></div>'+
+    '<div class="stat-box"><div class="stat-val">'+fmt(mortarBags)+'</div><div class="stat-lbl">Mortar bags (60 lb)</div></div>'+
+    '<div class="stat-box"><div class="stat-val">'+fmt(cur.bags)+'</div><div class="stat-lbl">Grout bags (80 lb)</div></div>'+
+    '<div class="stat-box"><div class="stat-val">'+fmt(cur.sticks)+'</div><div class="stat-lbl">Rebar sticks (10 ft)</div></div></div>'+
+    noteHtml+
+    '<h3>Material breakdown</h3><div class="table-wrap" tabindex="0" role="region" aria-label="Material breakdown table"><table><thead><tr><th>Item</th><th>Detail</th><th class="num">Quantity</th></tr></thead><tbody>'+rows.join('')+'</tbody></table></div>'+
+    cmp+
+    '<button type="button" class="copy-btn" data-copy="1">Copy summary</button>'+
+    '<p class="disc">Planning estimate only, rounded up. Reinforcement follows common practice consistent with IRC R606 and TMS 402; local codes vary. This is not engineering, permit or inspection approval. Have your building department or a licensed engineer confirm footing, reinforcement and grouting.</p>';
 
-  // Summary text
-  const summaryText =
-    `Cinder Block Wall Calculator — toolwick.com\n` +
-    `Wall: ${lengthVal} ft × ${heightVal} ft = ${wallAreaDisplay} sq ft\n` +
-    `Block size: ${bSizeLabel} | Mortar joint: ${mortarJoint}" | Waste: ${(wasteVal*100).toFixed(0)}%\n` +
-    `Openings: ${openingsVal} sq ft\n` +
-    `Net blocks: ${fmt(Math.ceil(netBlocks))}\n` +
-    `Total blocks (with waste): ${fmt(totalBlocks)}\n` +
-    `Mortar bags (60 lb): ${fmt(mortarBags)}\n` +
-    `Grout bags (80 lb): ${fmt(groutBags)}\n` +
-    (rebarSpacing > 0 ? `Rebar #${rebarSize} @ ${rebarSpacing}" OC: ${fmt(rebarBars)} bars, ${fmt(rebarSticks)} sticks (10 ft)\n` : 'Rebar: None\n');
-
-  const tableRows = [
-    ['Wall Area', `${lengthVal} × ${heightVal} ft`, `${fmt(wallArea,1)} sq ft`],
-    ['Opening Deduction', 'Total openings', `${fmt(openingsVal,1)} sq ft`],
-    ['Net Wall Area', 'After openings', `${fmt(netArea,1)} sq ft`],
-    ['Block Size', bSizeLabel, '—'],
-    ['Mortar Joint', `${mortarJoint}"`, '—'],
-    ['Block Face Area', 'Per block (with joint)', `${fmt(blockFaceArea,4)} sq ft`],
-    ['Blocks per Course', `${bL}" long`, fmt(blocksPerCourse)],
-    ['Number of Courses', `${bH}" high`, fmt(courses)],
-    ['Net Blocks Needed', 'Before waste', fmt(Math.ceil(netBlocks))],
-    ['Waste Factor', `${(wasteVal*100).toFixed(0)}%`, fmt(Math.ceil(netBlocks * wasteVal))],
-    ['Total Blocks', 'Purchase quantity', fmt(totalBlocks)],
-    ['Mortar Bags (60 lb)', '~35 blocks/bag', fmt(mortarBags)],
-    ['Grout Bags (80 lb)', '~3.75 blocks/bag', fmt(groutBags)],
-    ['Rebar Bars', rebarSpacing > 0 ? `#${rebarSize} @ ${rebarSpacing}" OC` : 'Not selected', rebarSpacing > 0 ? fmt(rebarBars) : '0'],
-    ['Rebar Sticks (10 ft)', 'Total to purchase', rebarSpacing > 0 ? fmt(rebarSticks) : '0'],
-  ];
-
-  let tbody = '';
-  tableRows.forEach(([item, detail, qty]) => {
-    tbody += `<tr><td>${item}</td><td>${detail}</td><td>${qty}</td></tr>`;
-  });
-
-  requestAnimationFrame(() => {
-    // Update diagram labels
-    document.getElementById('diag-width').textContent = `Width: ${lengthVal} ft`;
-    document.getElementById('diag-height').textContent = `Height: ${heightVal} ft`;
-    document.getElementById('diag-block').textContent = `${bL}"×${bH}"`;
-
-    // Update stats
-    document.getElementById('res-total-blocks').textContent = fmt(totalBlocks);
-    document.getElementById('res-net-blocks').textContent = fmt(Math.ceil(netBlocks));
-    document.getElementById('res-mortar').textContent = fmt(mortarBags);
-    document.getElementById('res-grout').textContent = fmt(groutBags);
-    document.getElementById('res-rebar').textContent = rebarSpacing > 0 ? fmt(rebarSticks) : '0';
-    document.getElementById('res-table-body').innerHTML = tbody;
-
-    const resultsEl = document.getElementById('results');
-    resultsEl.style.display = 'block';
-    requestAnimationFrame(() => { resultsEl.classList.add('visible'); });
-
-    // Store for copy
-    resultsEl.dataset.summary = summaryText;
+  requestAnimationFrame(()=>{
+    R.innerHTML=html;
+    R.className='results card show';
+    requestAnimationFrame(()=>{R.classList.add('visible')});
+    // diagram
+    $('d-w').textContent='Length: '+nf(L)+' ft';
+    $('d-h').textContent='Height: '+nf(H)+' ft';
+    $('d-blk').textContent=bL+'"×'+bH+'"';
+    $('d-j').textContent='joint '+(j===0.375?'3/8':j===0.5?'1/2':'1/4')+'"';
+    $('d-c').textContent=fmt(courses)+' courses × '+fmt(bpc)+' blocks per course';
+    $('d-reb').textContent=reinforce?'#'+rs+' rebar @ '+sp+'" o.c.':'No rebar';
+    let g='';
+    if(reinforce&&sp/(L*12)*420>=6){
+      const tot=L*12,pos=[];
+      for(let k=0;k*sp<=tot+1e-9;k++)pos.push(k*sp);
+      if(pos[pos.length-1]<tot-1e-6)pos.push(tot);
+      pos.forEach(p=>{const x=(60+p/tot*420).toFixed(1);g+='<line x1="'+x+'" y1="30" x2="'+x+'" y2="168"/>'});
+    }
+    $('d-rb').innerHTML=g;
+    $('diagram').setAttribute('aria-label','Wall '+nf(L)+' ft long by '+nf(H)+' ft high, '+fmt(courses)+' courses of '+bL+' by '+bH+' inch block');
   });
 }
 
-document.getElementById('calcBtn').addEventListener('click', () => {
-  requestAnimationFrame(() => { calculate(); });
-});
+function calc(){requestAnimationFrame(run)}
+$('calcBtn').addEventListener('click',calc);
+document.querySelectorAll('input,select').forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();calc()}}));
 
-document.querySelectorAll('input').forEach(inp => {
-  inp.addEventListener('keydown', e => {
-    if(e.key === 'Enter') requestAnimationFrame(() => { calculate(); });
-  });
+R.addEventListener('click',e=>{
+  const b=e.target.closest('[data-copy]');
+  if(!b||!summary)return;
+  const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy summary'},2000)};
+  const fb=()=>{const t=document.createElement('textarea');t.value=summary;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(t);done()};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(summary).then(done,fb);else fb();
 });
-
-document.getElementById('copyBtn').addEventListener('click', function(){
-  const text = document.getElementById('results').dataset.summary || '';
-  if(!text) return;
-  navigator.clipboard.writeText(text).then(() => {
-    this.textContent = '✅ Copied!';
-    setTimeout(() => { this.textContent = '📋 Copy Summary'; }, 2000);
-  }).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    this.textContent = '✅ Copied!';
-    setTimeout(() => { this.textContent = '📋 Copy Summary'; }, 2000);
-  });
-});
+})();
 </script>
 <script id="a11y-js">(function(){function run(){
 var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
