@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Concrete Countertop Calculator | Toolwick</title>
+<meta name="description" content="Free concrete countertop calculator: enter length, width, thickness, backsplash and sink cutouts to get bags of mix, volume and finished weight.">
+<link rel="canonical" href="https://toolwick.com/concrete-countertop-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+[hidden]{display:none!important}
+.nav{max-width:640px;margin:0 auto;padding:1rem 1.5rem}
+.nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem 2rem}
+h1{font-size:1.9rem;line-height:1.2;margin:.5rem 0 1rem}
+h2{font-size:1.4rem;line-height:1.3;margin:2.5rem 0 .75rem}
+h3{font-size:1.05rem;margin:1.75rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.card h2{margin-top:0;font-size:1.2rem}
+.dia{display:block;width:100%;height:auto;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:1.5rem}
+.dia text{font-size:12px;fill:#1a1a2e;font-family:inherit}
+.dia .st{font-weight:600}
+.grid{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:520px){.grid{grid-template-columns:1fr 1fr}}
+.f{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;font-size:1rem;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.bad{border-color:#e74c3c}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.err:empty{display:none}
+.hint{font-size:.85rem;color:#666;margin:-.4rem 0 1rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666;margin-top:-.3rem}
+.btn{display:block;width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-weight:600;font-size:1rem;cursor:pointer}
+.btn:hover{background:#006299}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;min-height:44px;font:inherit;font-size:.9rem;cursor:pointer;width:100%}
+.copy:hover{background:#f0f7fb}
+#copyrow{margin-top:1.25rem}
+@media(min-width:520px){.copy{width:auto}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+#results{margin-top:1.5rem}
+.res-in{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.res-in{animation:none}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+.big{display:block;font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.key span.t{display:block;color:#444;margin-top:.4rem}
+.errsum{color:#c0392b;font-weight:600}
+.tw{overflow-x:auto;margin:.5rem 0 1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:380px}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(even) td{background:#fafafa}
+th.n,td.n{text-align:right}
+tr.cur td{font-weight:700;color:#005a8c}
+.notes{background:#f8f9fa;border-left:4px solid #0077b6;border-radius:6px;padding:.5rem 1.25rem 1rem;margin-top:1.5rem}
+.notes ul{margin:0;padding-left:1.1rem}
+.notes li{margin-bottom:.5rem;font-size:.92rem}
+.notes li.warn{color:#8a3b00;font-weight:600}
+.ad-slot{min-height:0;margin:0}
+.content li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border-radius:6px;padding:1rem 1.25rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;overflow-x:auto;line-height:1.8}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;font-weight:600;padding:12px 0;min-height:44px}
+details p{margin:0 0 1rem}
+.rel{list-style:none;padding:0;display:grid;gap:.5rem}
+.rel a{display:block;padding:12px 16px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;min-height:44px;font-weight:500}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.5rem 0;font-size:.9rem;color:#666;text-align:center}
+footer a{color:#005a8c}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/concrete-countertop-calculator/">
+<meta property="og:title" content="Concrete Countertop Calculator">
+<meta property="og:description" content="Free concrete countertop calculator: enter length, width, thickness, backsplash and sink cutouts to get bags of mix, volume and finished weight.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav class="nav"><a href="/">Toolwick</a></nav>
+<main class="wrap">
+<h1>Concrete Countertop Calculator</h1>
+<p>This concrete countertop calculator tells you how many bags of mix to buy, how much concrete volume you need, and how heavy the finished slab will be. Enter your dimensions, backsplash and sink cutouts, and get a conservative, rounded-up estimate before you build the form.</p>
+
+<div class="card">
+<svg class="dia" id="dia" viewBox="0 0 400 210" role="img" aria-labelledby="dt dd" xmlns="http://www.w3.org/2000/svg">
+<title id="dt">Concrete countertop diagram</title>
+<desc id="dd">Top view showing length, width and sink cutout, and a side section showing thickness and backsplash height.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<rect width="400" height="210" fill="#fff"/>
+<text x="139" y="22" text-anchor="middle" class="st">Top view</text>
+<text x="330" y="22" text-anchor="middle" class="st">Side section</text>
+<rect x="34" y="40" width="210" height="110" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/>
+<g id="g-sink"><rect x="84" y="66" width="110" height="58" fill="#fff" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="5 3"/><text x="139" y="92" text-anchor="middle">Cutout</text><text id="d-sink" x="139" y="110" text-anchor="middle">30 × 16 in</text></g>
+<line x1="34" y1="150" x2="34" y2="176" stroke="#e0e0e0"/><line x1="244" y1="150" x2="244" y2="176" stroke="#e0e0e0"/>
+<line x1="34" y1="168" x2="244" y2="168" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="d-len" x="139" y="192" text-anchor="middle">Length: 96 in</text>
+<line x1="8" y1="40" x2="30" y2="40" stroke="#e0e0e0"/><line x1="8" y1="150" x2="30" y2="150" stroke="#e0e0e0"/>
+<line x1="24" y1="40" x2="24" y2="150" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="d-wid" transform="rotate(-90 14 95)" x="14" y="95" text-anchor="middle">Width: 25 in</text>
+<rect x="280" y="104" width="100" height="22" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/>
+<g id="g-bs"><rect x="280" y="64" width="12" height="40" fill="#eaf4fa" stroke="#0077b6" stroke-width="2"/><text id="d-bsp" x="330" y="54" text-anchor="middle">Backsplash: 4 in</text></g>
+<line x1="380" y1="104" x2="398" y2="104" stroke="#e0e0e0"/><line x1="380" y1="126" x2="398" y2="126" stroke="#e0e0e0"/>
+<line x1="394" y1="104" x2="394" y2="126" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="d-thk" x="330" y="150" text-anchor="middle">Thickness: 1.5 in</text>
+</svg>
+
+<h2>Enter Your Countertop Dimensions</h2>
+<div class="f"><label for="unit">Units for dimensions</label>
+<select id="unit"><option value="i">Inches (in)</option><option value="m">Centimeters (cm)</option></select></div>
+<div class="grid">
+<div class="f"><label for="len">Length (<span class="u">in</span>)</label><input id="len" type="number" step="any" min="0" inputmode="decimal" value="96" aria-describedby="e-len"><div class="err" id="e-len"></div></div>
+<div class="f"><label for="wid">Width / depth (<span class="u">in</span>)</label><input id="wid" type="number" step="any" min="0" inputmode="decimal" value="25" aria-describedby="e-wid"><div class="err" id="e-wid"></div></div>
+<div class="f"><label for="thk">Thickness (<span class="u">in</span>)</label><input id="thk" type="number" step="any" min="0" inputmode="decimal" value="1.5" aria-describedby="e-thk"><div class="err" id="e-thk"></div></div>
+<div class="f"><label for="sec">Identical sections</label><input id="sec" type="number" step="1" min="1" inputmode="numeric" value="1" aria-describedby="e-sec"><div class="err" id="e-sec"></div></div>
+<div class="f"><label for="bsp">Backsplash height (<span class="u">in</span>, 0 = none)</label><input id="bsp" type="number" step="any" min="0" inputmode="decimal" value="4" aria-describedby="e-bsp"><div class="err" id="e-bsp"></div></div>
+<div class="f"><label for="cnt">Cutouts per section (sink, cooktop)</label><input id="cnt" type="number" step="1" min="0" inputmode="numeric" value="1" aria-describedby="e-cnt"><div class="err" id="e-cnt"></div></div>
+<div class="f"><label for="cln">Cutout length (<span class="u">in</span>)</label><input id="cln" type="number" step="any" min="0" inputmode="decimal" value="30" aria-describedby="e-cln"><div class="err" id="e-cln"></div></div>
+<div class="f"><label for="cwd">Cutout width (<span class="u">in</span>)</label><input id="cwd" type="number" step="any" min="0" inputmode="decimal" value="16" aria-describedby="e-cwd"><div class="err" id="e-cwd"></div></div>
+</div>
+<p class="hint">Cutout size is used only when cutouts per section is above 0. Backsplash runs the full length at the same thickness.</p>
+<div class="f"><label for="waste">Waste &amp; overage allowance: <strong id="wv">10%</strong></label>
+<input id="waste" type="range" min="5" max="25" step="1" value="10">
+<div class="ticks"><span>5%</span><span>15%</span><span>25%</span></div></div>
+<div class="grid">
+<div class="f"><label for="bag">Mix bag size</label>
+<select id="bag"><option value="0.30" data-n="40-lb">40 lb bag (≈ 0.30 cu ft)</option><option value="0.375" data-n="50-lb">50 lb bag (≈ 0.375 cu ft)</option><option value="0.45" data-n="60-lb">60 lb bag (≈ 0.45 cu ft)</option><option value="0.60" data-n="80-lb" selected>80 lb bag (≈ 0.60 cu ft)</option></select></div>
+<div class="f"><label for="price">Price per bag, $ (optional)</label><input id="price" type="number" step="any" min="0" inputmode="decimal" placeholder="e.g. 28" aria-describedby="e-price"><div class="err" id="e-price"></div></div>
+</div>
+<button class="btn" id="go" type="button">Calculate Countertop Concrete</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<div id="copyrow" hidden><button class="copy" id="copy" type="button">Copy results</button><span class="sr" id="cstat" role="status"></span></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section class="content">
+<h2>How to Use This Concrete Countertop Calculator</h2>
+<p>Enter the finished length, width (front to back) and thickness of one countertop section, then the number of identical sections. Add a backsplash height and any sink or cooktop cutouts if you have them, choose a waste allowance, and pick the bag size you plan to buy. The tool returns the number of bags to order (always rounded up), the volume of concrete, the estimated finished weight, and a comparison of other thicknesses. The diagram above updates to show your numbers.</p>
+
+<h2>Why This Matters</h2>
+<p>A concrete countertop has to be poured in one continuous session. If you run out of mix halfway through, the second batch will not bond cleanly to the first, and you end up with a cold joint that shows up as a crack or a visible line. Ordering one bag too many costs about $25 to $30. Ordering one too few can ruin a slab you spent two days forming and reinforcing.</p>
+<p>Weight matters just as much. A typical 96 × 25 in kitchen run at 1.5 in thick, with a sink cutout and a 4 in backsplash, holds about 2 cubic feet of concrete and weighs roughly 300 lb. That is more than most people can safely lift, and it is a real load for standard cabinets. Knowing the number before you build lets you decide whether to split the top into sections, strengthen the base cabinets, or cast the pieces upside down in a shop and set them with help.</p>
+<p>Homeowners, remodelers, and woodworkers who build their own forms use this kind of estimate to budget the job, to plan how many mixing batches fit in a barrel or mixer, and to decide how many people to line up on install day.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator works in cubic inches, then converts. For each section it takes the top surface area, subtracts the cutouts, and multiplies by thickness. The backsplash is added as a second slab the same thickness as the top.</p>
+<div class="formula">Slab = (Length × Width − Cutouts × CutL × CutW) × Thickness<br>Backsplash = Length × Backsplash height × Thickness<br>Net volume (cu ft) = (Slab + Backsplash) × Sections ÷ 1,728<br>Mix volume = Net volume × (1 + Waste %)<br>Bags = Mix volume ÷ Bag yield, rounded up<br>Weight (lb) = Net volume × 150 lb/cu ft, rounded up to 5 lb</div>
+<p>Bag yields follow typical manufacturer label values: about 0.30 cu ft for a 40 lb bag, 0.375 for 50 lb, 0.45 for 60 lb and 0.60 for 80 lb. Specialty countertop mixes can differ slightly, so check the yield printed on your bag. The 150 lb/cu ft density is a common figure for normal-weight concrete; real slabs range from about 145 to 155 lb/cu ft and reinforcement adds a little, so treat weight as an estimate and round up for planning.</p>
+<p>No building code such as the IRC or IBC sets countertop thickness, mix or weight. This tool uses common rule-of-thumb guidance (roughly 1.5 to 2 in thickness for reinforced cast concrete) and rounds every result toward the safe side: more bags, more weight. Local codes and cabinet manufacturer limits vary, and the output is not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>Suppose you are casting one 96 in × 25 in countertop, 1.5 in thick, with a 4 in backsplash and one 30 × 16 in sink cutout, using 80 lb bags (0.60 cu ft each) and 10% waste.</p>
+<ol>
+<li>Top area after cutout: 96 × 25 = 2,400 in², minus 30 × 16 = 480 in², leaves 1,920 in² (13.33 sq ft).</li>
+<li>Slab volume: 1,920 × 1.5 = 2,880 in³.</li>
+<li>Backsplash volume: 96 × 4 × 1.5 = 576 in³.</li>
+<li>Net volume: 3,456 in³ ÷ 1,728 = 2.00 cu ft.</li>
+<li>With 10% waste: 2.00 × 1.10 = 2.20 cu ft to mix.</li>
+<li>Bags: 2.20 ÷ 0.60 = 3.67, rounded up to <strong>4 bags</strong>. At $28 a bag that is about $112.</li>
+<li>Weight: 2.00 × 150 = 300 lb, or 18.8 lb per sq ft of top surface.</li>
+</ol>
+<p>At 300 lb in a single piece, the notes in the results will recommend four or more people or lifting equipment, or splitting the top into two sections with a seam.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Do not skip the waste allowance.</strong> Concrete sticks to buckets, mixers and wheelbarrows, and forms are rarely perfectly level. Ten percent is a sensible minimum, and 15% suits complex shapes or first-time pours.</li>
+<li><strong>Do not go thinner than 1.5 in without a plan.</strong> Thin reinforced concrete is brittle. Counters thinner than that usually use GFRC or fiber-reinforced mixes and experienced finishers.</li>
+<li><strong>Watch the rim around cutouts.</strong> Less than about 3 in of concrete beside a sink is a common crack point. Add rebar or wire mesh at the cutout corners and avoid sharp inside corners.</li>
+<li><strong>Support overhangs.</strong> As a rule of thumb, overhangs beyond about 10 in need brackets or corbels. The calculator does not check structural capacity.</li>
+<li><strong>Check the cabinets and floor.</strong> A 1.5 in top weighs about 19 lb per sq ft. Confirm the cabinet frames, shims and floor can carry it, and ask a qualified professional if you are unsure.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many bags of concrete do I need for a countertop?</summary><p>Multiply the finished length, width and thickness to get volume, add backsplashes, and divide by your bag yield after adding waste. An 8-foot, 1.5 in countertop with a backsplash and sink cutout typically needs about 4 bags of 80 lb mix. Enter your own numbers above for an exact count.</p></details>
+<details><summary>How thick should a concrete countertop be?</summary><p>Reinforced cast-in-place or precast countertops are commonly 1.5 to 2 in thick. GFRC tops can be about 0.75 to 1 in but use special mixes and glass fibers. Thicker tops resist cracking better but weigh more and need stronger support.</p></details>
+<details><summary>How much does a concrete countertop weigh?</summary><p>Normal-weight concrete is about 150 lb per cubic foot, so each inch of thickness adds roughly 12.5 lb per square foot. A 1.5 in countertop is about 19 lb per square foot, and a 2 in countertop is about 25 lb per square foot.</p></details>
+<details><summary>Should I subtract the sink cutout from the concrete volume?</summary><p>Yes, a cutout is void space, so it does not use concrete. This calculator subtracts it, then adds your waste allowance so you still buy a safety margin. Increase the waste slider if your cutout forms are complex.</p></details>
+<details><summary>Can I pour a concrete countertop in one piece?</summary><p>You can, but long or heavy single pieces are hard to move and crack more easily. Sections over about 10 feet or 250 lb are commonly split with a seam placed at a sink or corner. Plan seams before building the forms.</p></details>
+<details><summary>Why does the calculator round bags up?</summary><p>You can only buy whole bags, and running short in the middle of a pour causes cold joints. Rounding up, plus a waste allowance, protects the pour. The leftover mix is cheap insurance.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/concrete-sealer-coverage-calculator/">Concrete Sealer Coverage Calculator</a></li>
+<li><a href="/concrete-sidewalk-calculator/">Concrete Sidewalk Calculator</a></li>
+<li><a href="/concrete-wall-calculator/">Concrete Wall Calculator</a></li>
+<li><a href="/concrete-weight-calculator/">Concrete Weight Calculator</a></li>
+<li><a href="/concrete-steps-calculator/">Concrete Steps Calculator</a></li>
+<li><a href="/concrete-patio-cost-calculator/">Concrete Patio Cost Calculator</a></li>
+</ul>
+</section>
+
+</main>
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/concrete-countertop-calculator/">Toolwick</a></p>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var IN=2.54,DEN=150,metric=false,lastText='';
+var IDS=['len','wid','thk','sec','bsp','cnt','cln','cwd','price'];
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function t2(n){return (+n.toFixed(2)).toLocaleString('en-US',{maximumFractionDigits:2})}
+function setErr(id,m){var i=$(id),e=$('e-'+id);e.textContent=m||'';i.classList.toggle('bad',!!m);if(m)i.setAttribute('aria-invalid','true');else i.removeAttribute('aria-invalid')}
+function setUnits(){var s=document.querySelectorAll('.u');for(var i=0;i<s.length;i++)s[i].textContent=metric?'cm':'in'}
+$('unit').addEventListener('change',function(){
+ var m=$('unit').value==='m';if(m===metric)return;
+ var k=m?IN:1/IN;
+ ['len','wid','thk','bsp','cln','cwd'].forEach(function(id){var v=parseFloat($(id).value);if(isFinite(v))$(id).value=+(v*k).toFixed(2)});
+ metric=m;setUnits();
+ if(lastText)requestAnimationFrame(calculate);
+});
+$('waste').addEventListener('input',function(){$('wv').textContent=$('waste').value+'%'});
+
+function calculate(){
+ var u=metric?'cm':'in',k=metric?IN:1,v={},errs={};
+ function chk(id,name,lo,hi,len,int){
+  var s=$(id).value.trim(),x=s===''?NaN:Number(s),f=len?k:1,m='';
+  if(!isFinite(x))m='Enter a number for '+name.toLowerCase()+'.';
+  else if(int&&x%1!==0)m=name+' must be a whole number.';
+  else if(x<lo*f-1e-9||x>hi*f+1e-9)m=name+' must be between '+t2(lo*f)+' and '+t2(hi*f)+(len?' '+u:'')+'.';
+  errs[id]=m;if(!m)v[id]=len?x/f:x;
+ }
+ chk('len','Length',1,600,1);chk('wid','Width',1,120,1);chk('thk','Thickness',0.5,12,1);
+ chk('sec','Sections',1,50,0,1);chk('bsp','Backsplash height',0,48,1);chk('cnt','Cutouts',0,10,0,1);
+ errs.cln='';errs.cwd='';errs.price='';
+ if(v.cnt>0){
+  chk('cln','Cutout length',1,120,1);chk('cwd','Cutout width',1,120,1);
+  if(!errs.cln&&v.len!==undefined&&v.cln>=v.len)errs.cln='Cutout length must be smaller than the countertop length.';
+  if(!errs.cwd&&v.wid!==undefined&&v.cwd>=v.wid)errs.cwd='Cutout width must be smaller than the countertop width.';
+  if(!errs.cln&&!errs.cwd&&!errs.cnt&&v.len&&v.wid&&v.cnt*v.cln*v.cwd>=v.len*v.wid)errs.cnt='Cutouts would take up the whole top. Reduce their number or size.';
+ }
+ var ps=$('price').value.trim(),price=0;
+ if(ps!==''){var px=Number(ps);if(!isFinite(px)||px<0||px>10000)errs.price='Price must be between 0 and 10,000.';else price=px}
+ var ok=true,first=null;
+ IDS.forEach(function(id){setErr(id,errs[id]);if(errs[id]){ok=false;if(!first)first=id}});
+ var res=$('results');
+ if(!ok){res.innerHTML='<p class="errsum">Please fix the highlighted fields to see your estimate.</p>';$('copyrow').hidden=true;lastText='';$(first).focus();return}
+
+ var L=v.len,W=v.wid,T=v.thk,S=v.sec,bh=v.bsp,n=v.cnt,cl=n?v.cln:0,cw=n?v.cwd:0;
+ var wp=+$('waste').value,w=wp/100,opt=$('bag').selectedOptions[0],yl=parseFloat($('bag').value),bn=opt.getAttribute('data-n');
+ function comp(t){
+  var topA=(L*W-n*cl*cw)*S,slab=topA*t/1728,bs=L*bh*t*S/1728,net=slab+bs,mix=net*(1+w);
+  return {topA:topA,slab:slab,bs:bs,net:net,mix:mix,bags:Math.max(1,Math.ceil(mix/yl-1e-9)),wt:Math.ceil(net*DEN/5-1e-9)*5,wtS:Math.ceil(net/S*DEN/5-1e-9)*5};
+ }
+ var c=comp(T),F3=0.0283168,KG=0.45359237;
+ var kgOf=function(lb){return Math.ceil(lb*KG-1e-9)};
+ var areaFt=c.topA/144,wsf=Math.ceil(T*DEN/12*10-1e-9)/10,wsfKg=Math.ceil(wsf*4.88243*10-1e-9)/10;
+ function r(a,b,cc,bold){var o=bold?' style="font-weight:700"':'';return '<tr'+o+'><td>'+a+'</td><td class="n">'+b+'</td><td class="n">'+cc+'</td></tr>'}
+ var rows=r('Top area (net of cutouts)',fmt(areaFt,2)+' sq ft',fmt(areaFt*0.092903,2)+' m²')+
+  r('Slab volume',fmt(c.slab,2)+' cu ft',fmt(c.slab*F3,3)+' m³')+
+  r('Backsplash volume',fmt(c.bs,2)+' cu ft',fmt(c.bs*F3,3)+' m³')+
+  r('Net volume (no waste)',fmt(c.net,2)+' cu ft',fmt(c.net*F3,3)+' m³')+
+  r('Waste allowance ('+wp+'%)',fmt(c.net*w,2)+' cu ft',fmt(c.net*w*F3,3)+' m³')+
+  r('Volume to mix',fmt(c.mix,2)+' cu ft',fmt(c.mix*F3,3)+' m³',1)+
+  r('Finished weight (rounded up)',fmt(c.wt,0)+' lb',fmt(kgOf(c.wt),0)+' kg')+
+  r('Weight per section',fmt(c.wtS,0)+' lb',fmt(kgOf(c.wtS),0)+' kg')+
+  r('Weight per area of top',fmt(wsf,1)+' lb/sq ft',fmt(wsfKg,1)+' kg/m²');
+ var ts=[1,1.5,2,2.5,3];
+ if(!ts.some(function(x){return Math.abs(x-T)<1e-4}))ts.push(T);
+ ts.sort(function(a,b){return a-b});
+ var cr=ts.map(function(t){var q=comp(t),cur=Math.abs(t-T)<1e-4;
+  return '<tr'+(cur?' class="cur"':'')+'><td>'+t2(t*k)+' '+u+(cur?' (yours)':'')+'</td><td class="n">'+fmt(q.bags,0)+'</td><td class="n">'+fmt(q.wt,0)+'</td><td class="n">'+fmt(kgOf(q.wt),0)+'</td></tr>'}).join('');
+
+ var nt=[];
+ if(c.wtS>250)nt.push('<li class="warn">Each section weighs about '+fmt(c.wtS,0)+' lb. Plan for four or more people or lifting equipment, or split the top into smaller sections.</li>');
+ else if(c.wtS>100)nt.push('<li class="warn">Each section weighs about '+fmt(c.wtS,0)+' lb. Plan for at least two strong people and a safe route to the cabinets.</li>');
+ if(T<1.5)nt.push('<li class="warn">Under 1.5 in thick, plain reinforced concrete is fragile. Thin tops normally need GFRC or fiber mixes and experienced finishers.</li>');
+ if(T>3)nt.push('<li class="warn">Over 3 in thick adds a great deal of weight. Check that cabinets and floor can carry it.</li>');
+ if(L>120)nt.push('<li class="warn">A single section longer than about 10 ft ('+fmt(120*2.54,0)+' cm) is hard to handle and cracks more easily. Consider a seam.</li>');
+ if(n>0&&(W-cw)/2<3)nt.push('<li class="warn">Less than about 3 in of concrete remains beside the cutout. Narrow rims are a common crack point, so reinforce them or enlarge the top.</li>');
+ if(n>0)nt.push('<li>Add rebar or wire mesh and rounded corners around each cutout to reduce cracking.</li>');
+ if(bh>0)nt.push('<li>The backsplash is calculated at full top thickness, which is the conservative side. A thinner backsplash will use less.</li>');
+ nt.push('<li>A '+t2(T*k)+' '+u+' top is about '+fmt(wsf,1)+' lb per sq ft. Confirm your cabinets, shims and floor can carry it, and keep overhangs beyond about 10 in supported.</li>');
+ nt.push('<li>These figures follow rule-of-thumb guidance (150 lb/cu ft, label bag yields) and are rounded up. They are estimates, not engineering, permit or inspection approval. Local codes and manufacturer limits vary.</li>');
+
+ var cost=price>0?'<br>Estimated mix cost: <strong>$'+fmt(c.bags*price,2)+'</strong> ('+c.bags+' × $'+fmt(price,2)+')':'';
+ var html='<div class="res-in"><div class="key"><span class="big">'+fmt(c.bags,0)+(c.bags===1?' bag':' bags')+'</span><span class="t">of '+bn+' countertop mix to order<br>Mix volume '+fmt(c.mix,2)+' cu ft ('+fmt(c.mix*F3,3)+' m³) incl. '+wp+'% waste; bags hold '+fmt(c.bags*yl,2)+' cu ft'+cost+'</span></div>'+
+ '<h3>Volume and weight breakdown</h3><div class="tw"><table><thead><tr><th>Item</th><th class="n">US units</th><th class="n">Metric</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+ '<h3>Thickness comparison</h3><div class="tw"><table><thead><tr><th>Thickness</th><th class="n">Bags</th><th class="n">Weight (lb)</th><th class="n">Weight (kg)</th></tr></thead><tbody>'+cr+'</tbody></table></div>'+
+ '<div class="notes"><h3>Safety &amp; planning notes</h3><ul>'+nt.join('')+'</ul></div></div>';
+
+ lastText='Concrete countertop estimate\nSize: '+t2(L*k)+' × '+t2(W*k)+' × '+t2(T*k)+' '+u+', '+S+' section(s)\nBacksplash: '+(bh>0?t2(bh*k)+' '+u:'none')+'; cutouts per section: '+n+(n?' ('+t2(cl*k)+' × '+t2(cw*k)+' '+u+')':'')+
+  '\nVolume to mix (incl. '+wp+'% waste): '+fmt(c.mix,2)+' cu ft ('+fmt(c.mix*F3,3)+' m³)\nBags needed: '+c.bags+' × '+bn+' (≈ '+yl+' cu ft each)\nFinished weight: about '+fmt(c.wt,0)+' lb ('+fmt(kgOf(c.wt),0)+' kg); per section about '+fmt(c.wtS,0)+' lb'+(price>0?'\nEstimated cost: $'+fmt(c.bags*price,2):'')+'\nEstimate only; local codes and manufacturer limits vary.';
+
+ res.innerHTML=html;$('copyrow').hidden=false;
+ $('d-len').textContent='Length: '+t2(L*k)+' '+u;
+ $('d-wid').textContent='Width: '+t2(W*k)+' '+u;
+ $('d-thk').textContent='Thickness: '+t2(T*k)+' '+u;
+ $('d-bsp').textContent='Backsplash: '+t2(bh*k)+' '+u;
+ $('d-sink').textContent=t2(cl*k)+' × '+t2(cw*k)+' '+u;
+ $('g-sink').style.display=n>0?'':'none';
+ $('g-bs').style.display=bh>0?'':'none';
+}
+function run(){requestAnimationFrame(calculate)}
+$('go').addEventListener('click',run);
+var els=document.querySelectorAll('input,select');
+for(var i=0;i<els.length;i++)els[i].addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();run()}});
+
+$('copy').addEventListener('click',function(){
+ if(!lastText)return;var b=$('copy');
+ function done(){b.textContent='Copied!';$('cstat').textContent='Results copied to clipboard';setTimeout(function(){b.textContent='Copy results';$('cstat').textContent=''},2000)}
+ function fb(){var t=document.createElement('textarea');t.value=lastText;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);done()}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(lastText).then(done,fb);else fb();
+});
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
