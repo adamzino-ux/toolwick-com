@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Culvert Pipe Size Calculator | Toolwick</title>
+<meta name="description" content="Culvert pipe size calculator: enter drainage area, rainfall and slope to get a conservative culvert diameter using the rational method and Manning.">
+<link rel="canonical" href="https://toolwick.com/culvert-pipe-size-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #e0e0e0}
+nav a{font-weight:700;font-size:1.1rem;color:#0077b6;text-decoration:none}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.lead{color:#333}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.dg{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.dg svg{display:block;width:100%;height:auto;max-width:420px;margin:0 auto}
+svg text{font-size:13px;fill:#1a1a2e}
+svg .b{font-weight:600}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.invalid,select.invalid{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.field{margin-bottom:1rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.tabs{display:flex;gap:.5rem;margin-bottom:1.25rem;flex-wrap:wrap}
+.tabs button{flex:1;min-height:44px;padding:10px 12px;border:1px solid #ddd;border-radius:6px;background:#f0f0f0;color:#1a1a2e;font:inherit;font-weight:600;cursor:pointer}
+.tabs button.on{background:#0077b6;color:#fff;border-color:#0077b6}
+.hide{display:none}
+input[type=range]{padding:0;min-height:44px;accent-color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.btn{display:block;width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-weight:600;cursor:pointer;margin-top:.5rem}
+.btn:hover{background:#006299}
+.small{width:auto;display:inline-block;padding:8px 14px;font-size:.85rem;background:#f0f0f0;color:#1a1a2e;border:1px solid #ddd;margin-top:1rem}
+.small:hover{background:#e6e6e6}
+#results{margin-top:1.5rem}
+.fade{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.key .big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.key .cap{font-size:.9rem;color:#444;margin-top:.4rem}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}tbody tr:nth-child(even){background:#fff}
+th.num,td.num{text-align:right}
+tr.sel td{background:#e6f2fa;font-weight:700}
+.warn{background:#fff8e6;border:1px solid #f0d58a;border-radius:6px;padding:.75rem 1rem .75rem 2rem;margin:0 0 1rem;font-size:.9rem}
+.warn li{margin:.25rem 0}
+.bad{background:#fdecea;border:1px solid #e74c3c;border-radius:6px;padding:1rem;color:#7a1f16}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-radius:6px;padding:.75rem 1rem}
+.ad-slot{min-height:0;margin:0}
+pre{background:#f8f9fa;border-radius:6px;padding:1rem;overflow-x:auto;font-size:.9rem;margin:0 0 1rem}
+details{border-bottom:1px solid #e8e8e8;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .5rem}
+ul.rel{padding-left:1.2rem}ul.rel li{margin:.4rem 0}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.5rem 0 2rem;font-size:.9rem;color:#555}
+footer a{color:#0077b6;text-decoration:underline}
+@media(max-width:640px){.row{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.6rem}.key .big{font-size:2.1rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/culvert-pipe-size-calculator/">
+<meta property="og:title" content="Culvert Pipe Size Calculator">
+<meta property="og:description" content="Culvert pipe size calculator: enter drainage area, rainfall and slope to get a conservative culvert diameter using the rational method and Manning.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Culvert Pipe Size Calculator</h1>
+<p class="lead">Use this culvert pipe size calculator to estimate the pipe diameter needed to carry stormwater under a driveway, farm lane or road. Enter your drainage area and rainfall, or a flow you already know, and get a conservative size rounded up to the next standard pipe.</p>
+
+<div class="card">
+<div class="dg">
+<svg id="dg" viewBox="0 0 360 310" role="img" aria-labelledby="dgt dgd">
+<title id="dgt">Culvert diagram</title>
+<desc id="dgd">Side view of a culvert pipe under a road embankment with headwater, flow and slope, and an end view showing pipe diameter.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<text x="180" y="14" text-anchor="middle" class="b">Side view</text>
+<polygon points="10,84 104,84 80,150 10,150" fill="rgba(0,119,182,.13)"/>
+<polygon points="80,150 110,70 250,70 280,150" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="2"/>
+<line x1="10" y1="150" x2="350" y2="150" stroke="#999" stroke-width="2"/>
+<line x1="110" y1="70" x2="250" y2="70" stroke="#1a1a2e" stroke-width="3"/>
+<text x="180" y="60" text-anchor="middle">Road</text>
+<line x1="10" y1="84" x2="104" y2="84" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="5 3"/>
+<polygon points="70,120 290,128 290,148 70,140" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<line x1="30" y1="86" x2="30" y2="140" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text x="12" y="77" id="dgHW">HW = —</text>
+<text x="180" y="106" text-anchor="middle" id="dgQ" class="b">Q = —</text>
+<line x1="140" y1="162" x2="220" y2="162" stroke="#0077b6" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="180" y="182" text-anchor="middle" id="dgS">Slope S = —</text>
+<text x="90" y="198" text-anchor="middle" class="b">End view</text>
+<circle cx="90" cy="254" r="46" fill="#fff" stroke="#0077b6" stroke-width="3"/>
+<circle cx="90" cy="254" r="39" fill="none" stroke="#e0e0e0"/>
+<line x1="45" y1="254" x2="135" y2="254" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="4 3" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text x="90" y="244" text-anchor="middle" id="dgD" class="b">D = —</text>
+<text x="152" y="224" id="dgMat" style="font-size:12px">Pipe: —</text>
+<text x="152" y="246" id="dgN" style="font-size:12px">n = —</text>
+<text x="152" y="268" id="dgV" style="font-size:12px">V ≈ —</text>
+<text x="152" y="290" id="dgB" style="font-size:12px">Barrels: —</text>
+</svg>
+</div>
+
+<div class="tabs" role="tablist" aria-label="Flow input method">
+<button type="button" role="tab" id="tab-ws" class="on" aria-selected="true" aria-controls="p-ws">From drainage area</button>
+<button type="button" role="tab" id="tab-fl" aria-selected="false" aria-controls="p-fl">I know the flow</button>
+</div>
+
+<div id="tool">
+<div id="p-ws" role="tabpanel" aria-labelledby="tab-ws">
+<div class="row">
+<div class="field"><label for="area">Drainage area (acres)</label><input type="number" id="area" inputmode="decimal" step="any" value="5" aria-describedby="area-err"><div class="err" id="area-err"></div></div>
+<div class="field"><label for="inten">Design rainfall intensity (in/hr)</label><input type="number" id="inten" inputmode="decimal" step="any" value="4.5" aria-describedby="inten-err"><div class="err" id="inten-err"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="cpre">Land cover preset</label>
+<select id="cpre"><option value="">Custom value</option><option value="0.20">Woodland (0.20)</option><option value="0.30">Lawns &amp; parks (0.30)</option><option value="0.40" selected>Pasture / farmland (0.40)</option><option value="0.50">Suburban residential (0.50)</option><option value="0.60">Gravel roads &amp; yards (0.60)</option><option value="0.80">Dense commercial (0.80)</option><option value="0.95">Pavement &amp; roofs (0.95)</option></select></div>
+<div class="field"><label for="c">Runoff coefficient C (0.05–1)</label><input type="number" id="c" inputmode="decimal" step="any" value="0.40" aria-describedby="c-err"><div class="err" id="c-err"></div></div>
+</div>
+<p class="hint" style="margin-top:-.25rem">Intensity comes from local rainfall data (e.g. NOAA Atlas 14) for your design storm and time of concentration.</p>
+</div>
+
+<div id="p-fl" class="hide" role="tabpanel" aria-labelledby="tab-fl">
+<div class="field"><label for="flow">Design peak flow (cfs)</label><input type="number" id="flow" inputmode="decimal" step="any" value="10" aria-describedby="flow-err"><div class="err" id="flow-err"></div></div>
+</div>
+
+<div class="row">
+<div class="field"><label for="slope">Pipe slope (%)</label><input type="number" id="slope" inputmode="decimal" step="any" value="2" aria-describedby="slope-err"><div class="err" id="slope-err"></div></div>
+<div class="field"><label for="hw">Max headwater depth at inlet (ft, optional)</label><input type="number" id="hw" inputmode="decimal" step="any" value="3" aria-describedby="hw-err"><div class="err" id="hw-err"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="mat">Pipe material (Manning n)</label>
+<select id="mat"><option value="0.012" selected>HDPE, smooth interior (n 0.012)</option><option value="0.013">Reinforced concrete (n 0.013)</option><option value="0.024">Corrugated metal, CMP (n 0.024)</option><option value="0.011">Smooth PVC / HDPE (n 0.011)</option><option value="0.020">Corrugated plastic, rough (n 0.020)</option></select></div>
+<div class="field"><label for="mind">Minimum pipe diameter</label>
+<select id="mind"><option value="12">12 in (small driveway)</option><option value="15">15 in</option><option value="18" selected>18 in (typical road crossing)</option><option value="24">24 in</option></select></div>
+</div>
+<div class="field"><label for="margin">Safety margin on design flow: <output id="mval">25%</output></label>
+<input type="range" id="margin" min="0" max="50" step="5" value="25">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>25%</span><span>50%</span></div></div>
+<button type="button" class="btn" id="calcBtn">Calculate Culvert Size</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</div>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<p class="note" style="margin-top:1.5rem">Planning estimate only — not engineering, permit or inspection approval. Uses the rational method (Q = CiA) and Manning's equation for full-barrel capacity with a conservative inlet-control screen, in the style of FHWA HDS-5 / HEC-22 practice. County, state and DOT rules vary; always confirm with your local authority.</p>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<h2>How to Use This Culvert Pipe Size Calculator</h2>
+<p>Choose "From drainage area" to let the tool compute peak runoff from the acres draining to the pipe, a land-cover runoff coefficient and a design rainfall intensity. If a hydrologist or engineer already gave you a design flow, use "I know the flow" and enter cubic feet per second. Then enter the pipe slope, material, optional headwater limit, and a minimum diameter.</p>
+<p>The result is the smallest standard pipe that passes your design flow (including the safety margin) without exceeding your headwater limit. You also get a size comparison table, estimated velocity, and warnings.</p>
+
+<h2>Why This Matters</h2>
+<p>An undersized culvert is one of the most common causes of washed-out driveways and flooded fields. When a pipe cannot pass a storm, water backs up, overtops the road and scours the embankment from the downstream side. A single washout on a rural lane can cost $5,000–$25,000 to rebuild, far more than the extra cost of stepping up one pipe size, which is often only a few hundred dollars.</p>
+<p>Landowners, contractors and road crews use a culvert pipe size calculator in situations like these:</p>
+<ul>
+<li>A new driveway crosses a roadside ditch carrying runoff from 3 acres of pasture.</li>
+<li>A farm lane crosses a creek that has flooded twice in five years.</li>
+<li>A subdivision lot needs a cross-drain under a gravel access road.</li>
+<li>An old 12-inch pipe keeps overtopping and you need to know how much bigger the replacement should be.</li>
+</ul>
+<p>Pipe size is not guesswork. A 5-acre pasture in a 4.5 in/hr storm sends roughly 9 cubic feet per second toward your pipe, about 4,000 gallons per minute. This calculator gives you a defensible starting number before you call the county or an engineer.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator works in three steps, all in US units.</p>
+<p><strong>1. Peak runoff (rational method).</strong> For drainage areas under about 200 acres:</p>
+<pre>Q = C × i × A
+Q = peak flow (cfs)   C = runoff coefficient
+i = rainfall intensity (in/hr)   A = area (acres)</pre>
+<p>The safety margin then multiplies Q: design flow = Q × (1 + margin). For metric users, 1 acre = 0.4047 ha, 1 in = 25.4 mm and 1 cfs = 0.0283 m³/s.</p>
+<p><strong>2. Barrel capacity (Manning's equation, flowing full).</strong> For a circular pipe, hydraulic radius R = D/4, so:</p>
+<pre>Q = (1.486 / n) × A × R^(2/3) × √S
+  = (0.463 / n) × D^(8/3) × √S    (D in feet, S in ft/ft)</pre>
+<p><strong>3. Inlet-control screen.</strong> On steeper slopes the entrance, not the barrel, limits flow. If you enter a headwater depth HW (feet above the inlet invert), the tool takes the smaller of a weir-type limit, 2.0 × D × HW<sup>1.5</sup>, and a submerged-orifice limit, 0.5 × A × √(2g × (HW − D/2)). These coefficients are deliberately lower than typical FHWA chart values, so the screen errs toward larger pipe. It is not a substitute for an HDS-5 headwater analysis.</p>
+<p>The tool tests standard sizes from your minimum up to 96 inches and picks the first that passes both checks. It never rounds down. If one pipe cannot do the job, it tries two, three, then four barrels. Velocity is calculated at the design flow using partial-flow normal depth.</p>
+
+<h2>Worked Example</h2>
+<p>A landowner has 5 acres of pasture (C = 0.40) draining to a driveway crossing. The local 10-year, 15-minute storm is 4.5 in/hr. The pipe will be smooth-interior HDPE (n = 0.012) at 2% slope with a 3 ft headwater limit, a 25% safety margin and an 18-inch minimum.</p>
+<ol>
+<li>Peak flow: Q = 0.40 × 4.5 × 5 = <strong>9.00 cfs</strong>.</li>
+<li>Design flow: 9.00 × 1.25 = <strong>11.25 cfs</strong>.</li>
+<li>Manning minimum diameter: D = [(11.25 × 0.012) / (0.463 × √0.02)]<sup>3/8</sup> ≈ 1.31 ft ≈ <strong>15.8 in</strong>, so the Manning check alone allows an 18-inch pipe.</li>
+<li>Inlet screen at HW = 3 ft: an 18-inch pipe passes only about 10.6 cfs, below 11.25, so it fails. A 24-inch pipe passes about 17.8 cfs, so it passes.</li>
+<li>Result: <strong>24 in</strong>. Full-barrel Manning capacity is about 34.6 cfs (the design flow uses about 33% of it), with a design-flow velocity of roughly 9.9 ft/s, just under the 10 ft/s erosion flag.</li>
+</ol>
+<p>Here headwater, not pipe-flow capacity, set the size. That is common on steeper slopes and why the headwater field matters.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use the right storm.</strong> Driveways are often designed for a 10-year storm, road crossings for 25–50 years. Using a 2-year storm is the most common reason culverts fail.</li>
+<li><strong>Don't pick C too low.</strong> Compacted gravel, saturated clay and steep slopes shed far more water than lawns. If unsure, use the higher coefficient.</li>
+<li><strong>Don't ignore the ends.</strong> Add headwalls or flared end sections, and riprap at the outlet if velocity exceeds about 10 ft/s. Many culverts fail from scour, not capacity.</li>
+<li><strong>Check cover and bedding.</strong> Most manufacturers require about 12 inches of compacted cover for light traffic, more for heavy loads. Follow their installation guide.</li>
+<li><strong>Look up local rules.</strong> Counties often set a minimum of 15–18 inches and may require permits near streams or wetlands. Round up if your size lands between standard sizes.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What size culvert do I need for a driveway?</summary><p>Most residential driveways use 12–18 inch pipe, but the right size depends on how much water reaches the crossing. A 1-acre pasture often produces 1.5–3 cfs in a design storm, which a 15-inch pipe handles. Larger watersheds need 24 inches or more. Enter your area and rainfall above to check.</p></details>
+<details><summary>Where do I find the rainfall intensity (in/hr)?</summary><p>Use NOAA Atlas 14 point precipitation estimates for your location, or your county's stormwater manual. Pick your design return period (such as 10 or 25 years) and a duration equal to the time of concentration, often 10–30 minutes for small sites. Convert depth to inches per hour if needed.</p></details>
+<details><summary>What is the difference between inlet control and outlet control?</summary><p>Under inlet control, the pipe entrance limits flow, typical on steeper slopes. Under outlet control, barrel friction or downstream water level limits flow, typical on flatter slopes and long pipes. This tool checks barrel capacity and a conservative inlet limit, so the larger requirement wins.</p></details>
+<details><summary>Can I use two smaller pipes instead of one large one?</summary><p>Yes, and the calculator tries multiple barrels when one pipe is not enough. Multiple barrels are useful where cover is shallow. Leave at least half a pipe diameter between barrels for compaction, and note that debris can block several small pipes more easily than one large one.</p></details>
+<details><summary>Why does the calculator add a safety margin?</summary><p>Rainfall estimates, runoff coefficients and pipe roughness are all uncertain, and pipes lose capacity over time from sediment and debris. A 25% margin is a reasonable default. Use 50% where failure would flood a house or close a road.</p></details>
+<details><summary>Which pipe material has the best flow?</summary><p>Smooth-interior pipe such as PVC, smooth HDPE and concrete has the lowest Manning n (0.011–0.013) and carries the most water per diameter. Corrugated metal (n about 0.024) carries roughly half as much at the same size and slope. Check the material's cover limits and service life as well.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/boiler-btu-output-pipe-size-calculator/">Boiler BTU Output &amp; Pipe Size Calculator</a></li>
+<li><a href="/pipe-sizing-flow-rate-calculator/">Pipe Sizing &amp; Flow Rate Calculator</a></li>
+<li><a href="/concrete-countertop-calculator/">Concrete Countertop Calculator</a></li>
+<li><a href="/concrete-sealer-coverage-calculator/">Concrete Sealer Coverage Calculator</a></li>
+<li><a href="/concrete-sidewalk-calculator/">Concrete Sidewalk Calculator</a></li>
+<li><a href="/wall-r-value-calculator/">Wall R-Value Calculator</a></li>
+</ul>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/culvert-pipe-size-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+const SIZES=[12,15,18,24,30,36,42,48,54,60,72,84,96];
+const K0=1.486,K=K0*Math.PI/4*Math.pow(4,-2/3),G2=64.348;
+const $=id=>document.getElementById(id);
+const fmt=(x,d)=>x.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const up=(x,d)=>{const m=Math.pow(10,d);return Math.ceil(x*m-1e-9)/m};
+const dn=(x,d)=>{const m=Math.pow(10,d);return Math.floor(x*m+1e-9)/m};
+const aF=s=>Math.PI*Math.pow(s/12,2)/4;
+const mCap=(s,n,S)=>K/n*Math.pow(s/12,8/3)*Math.sqrt(S);
+const iCap=(s,h)=>{const D=s/12;return Math.min(2*D*Math.pow(h,1.5),0.5*aF(s)*Math.sqrt(G2*Math.max(h-D/2,0)))};
+function normal(s,n,S,Q){
+  const D=s/12,f=r=>{const t=2*Math.acos(1-2*r),A=D*D/8*(t-Math.sin(t)),R=A/(D*t/2);return K0/n*A*Math.pow(R,2/3)*Math.sqrt(S)};
+  let lo=1e-6,hi=0.938;
+  if(f(hi)<Q)return{r:1,v:Q/aF(s)};
+  for(let i=0;i<50;i++){const m=(lo+hi)/2;if(f(m)<Q)lo=m;else hi=m}
+  const r=(lo+hi)/2,t=2*Math.acos(1-2*r),A=D*D/8*(t-Math.sin(t));
+  return{r:r,v:Q/A};
+}
+let mode='ws',summary='',errs=0;
+const IDS=['area','inten','c','flow','slope','hw'];
+function setMode(m){
+  mode=m;
+  $('tab-ws').classList.toggle('on',m==='ws');$('tab-fl').classList.toggle('on',m==='fl');
+  $('tab-ws').setAttribute('aria-selected',m==='ws');$('tab-fl').setAttribute('aria-selected',m==='fl');
+  $('p-ws').classList.toggle('hide',m!=='ws');$('p-fl').classList.toggle('hide',m!=='fl');
+}
+function bad(id,msg){const e=$(id);e.classList.add('invalid');e.setAttribute('aria-invalid','true');$(id+'-err').textContent=msg;errs++;return NaN}
+function num(id,min,max,label,req){
+  const raw=$(id).value.trim().replace(/,/g,'');
+  if(raw===''){return req?bad(id,'Enter '+label+'.'):null}
+  const v=Number(raw);
+  if(!isFinite(v))return bad(id,'Enter a valid number for '+label+'.');
+  if(v<min||v>max)return bad(id,label.charAt(0).toUpperCase()+label.slice(1)+' must be between '+fmt(min,min<1?2:0)+' and '+fmt(max,0)+'.');
+  return v;
+}
+function dg(o){
+  $('dgHW').textContent=o.hw;$('dgQ').textContent=o.q;$('dgS').textContent=o.s;$('dgD').textContent=o.d;
+  $('dgMat').textContent=o.m;$('dgN').textContent=o.n;$('dgV').textContent=o.v;$('dgB').textContent=o.b;
+}
+const dash={hw:'HW = —',q:'Q = —',s:'Slope S = —',d:'D = —',m:'Pipe: —',n:'n = —',v:'V ≈ —',b:'Barrels: —'};
+function calculate(){
+  errs=0;
+  IDS.forEach(id=>{const e=$(id);e.classList.remove('invalid');e.removeAttribute('aria-invalid');$(id+'-err').textContent=''});
+  let Q,area,C,inten;
+  if(mode==='ws'){
+    area=num('area',0.01,100000,'drainage area',true);
+    inten=num('inten',0.1,20,'rainfall intensity',true);
+    C=num('c',0.05,1,'runoff coefficient',true);
+    Q=area*C*inten;
+  }else{Q=num('flow',0.01,5000,'design flow',true)}
+  const S100=num('slope',0.1,30,'slope',true);
+  const HW=num('hw',0.5,40,'headwater depth',false);
+  if(errs){$('results').innerHTML='';dg(dash);return}
+  const S=S100/100,margin=(+$('margin').value)/100,n=+$('mat').value,minD=+$('mind').value;
+  const matTxt=$('mat').options[$('mat').selectedIndex].text.replace(/\s*\(n.*$/,'');
+  const Qd=Q*(1+margin);
+  let pick=null;
+  for(let b=1;b<=4&&!pick;b++){
+    const q=Qd/b;
+    for(const s of SIZES){
+      if(s<minD)continue;
+      if(mCap(s,n,S)>=q&&(HW===null||iCap(s,HW)>=q)){pick={s:s,b:b};break}
+    }
+  }
+  if(!pick){
+    $('results').innerHTML='<div class="fade"><div class="bad"><strong>No standard pipe arrangement found.</strong> A design flow of '+fmt(up(Qd,2),2)+' cfs is more than four 96-inch pipes can pass under these inputs. Raise the allowable headwater, increase the slope, or have an engineer design a box culvert or bridge.</div></div>';
+    dg(dash);return;
+  }
+  const q=Qd/pick.b;
+  const mFree=SIZES.find(s=>mCap(s,n,S)>=q),mMin=SIZES.find(s=>s>=minD&&mCap(s,n,S)>=q);
+  let gov='Barrel flow capacity (Manning)';
+  if(pick.s>mMin)gov='Inlet control (headwater limit)';else if(mMin>mFree)gov='Your minimum diameter setting';
+  const Dmin=12*Math.pow(q*n/(K*Math.sqrt(S)),3/8);
+  const cap=mCap(pick.s,n,S),vf=cap/aF(pick.s),ic=HW!==null?iCap(pick.s,HW):null;
+  const nd=normal(pick.s,n,S,q);
+  const used=Math.min(999,up(q/cap*100,0));
+  const label=(pick.b>1?pick.b+' × ':'')+pick.s+' in';
+  const w=[];
+  if(nd.v>10)w.push('Estimated velocity exceeds 10 ft/s. Plan outlet protection (riprap or an energy dissipator) and check for scour.');
+  if(nd.v<2.5)w.push('Velocity is low (under 2.5 ft/s). Sediment may deposit in the pipe, so plan for periodic cleaning.');
+  if(S100>10)w.push('Slope is steep (over 10%). Anchor the pipe, use end treatments, and confirm the design with a drainage professional.');
+  if(HW===null)w.push('No headwater limit entered, so only barrel capacity was checked. Inlet control or ponding may require a larger pipe.');
+  if(HW!==null&&HW>pick.s/12*1.5)w.push('Headwater is more than 1.5 pipe diameters. Confirm the water cannot reach the road surface or nearby structures.');
+  if(mode==='ws'&&area>200)w.push('The rational method is intended for areas under about 200 acres. Use a hydrologic model for larger watersheds.');
+  if(pick.b>1)w.push('Multiple barrels needed: keep at least half a pipe diameter between barrels and confirm the layout with an engineer.');
+  const rows=SIZES.map(s=>{
+    const c=mCap(s,n,S),ci=HW!==null?iCap(s,HW):null,ok=c>=q&&(ci===null||ci>=q),sel=s===pick.s;
+    const st=sel?'Selected':s<minD?'Below minimum':ok?'Adequate':'Too small';
+    return '<tr'+(sel?' class="sel"':'')+'><td class="num">'+s+'</td><td class="num">'+fmt(dn(c,1),1)+'</td>'+(ci!==null?'<td class="num">'+fmt(dn(ci,1),1)+'</td>':'')+'<td class="num">'+fmt(c/aF(s),1)+'</td><td>'+st+'</td></tr>';
+  }).join('');
+  const qTxt=mode==='ws'?fmt(up(Q,2),2)+' cfs ('+fmt(C,2)+' × '+fmt(inten,2)+' × '+fmt(area,2)+')':fmt(up(Q,2),2)+' cfs (entered)';
+  summary='Culvert size estimate: '+label+'\nPeak flow: '+qTxt+'\nDesign flow with '+Math.round(margin*100)+'% margin: '+fmt(up(Qd,2),2)+' cfs\nSlope: '+fmt(S100,2)+'%, '+matTxt+' (n='+n+')\nMin. calculated diameter (Manning): '+fmt(up(Dmin,1),1)+' in per barrel\nGoverning: '+gov+'\nEst. velocity at design flow: '+fmt(nd.v,1)+' ft/s\nPlanning estimate only; confirm with local codes and a qualified engineer. (toolwick.com)';
+  const html='<div class="fade"><div class="key"><div class="big">'+label+'</div><div class="cap">Recommended minimum culvert size — rounded up to the next standard pipe</div></div>'
+  +(w.length?'<ul class="warn">'+w.map(x=>'<li>'+x+'</li>').join('')+'</ul>':'')
+  +'<div class="tw"><table><tbody>'
+  +'<tr><td>Peak flow Q</td><td class="num">'+qTxt+'</td></tr>'
+  +'<tr><td>Design flow (+'+Math.round(margin*100)+'% margin)</td><td class="num">'+fmt(up(Qd,2),2)+' cfs</td></tr>'
+  +(pick.b>1?'<tr><td>Flow per barrel</td><td class="num">'+fmt(up(q,2),2)+' cfs</td></tr>':'')
+  +'<tr><td>Min. calculated diameter (Manning)</td><td class="num">'+fmt(up(Dmin,1),1)+' in</td></tr>'
+  +'<tr><td>Governing condition</td><td class="num">'+gov+'</td></tr>'
+  +'<tr><td>Full-barrel capacity of selected pipe</td><td class="num">'+fmt(dn(cap,1),1)+' cfs</td></tr>'
+  +(ic!==null?'<tr><td>Inlet capacity at '+fmt(HW,1)+' ft headwater</td><td class="num">'+fmt(dn(ic,1),1)+' cfs</td></tr>':'')
+  +'<tr><td>Capacity used by design flow</td><td class="num">'+fmt(used,0)+'%</td></tr>'
+  +'<tr><td>Est. velocity at design flow</td><td class="num">'+fmt(nd.v,1)+' ft/s</td></tr>'
+  +'<tr><td>Flow depth at design flow (y/D)</td><td class="num">'+fmt(nd.r,2)+'</td></tr>'
+  +'</tbody></table></div>'
+  +'<h2 style="font-size:1.1rem;margin-top:1.5rem">Standard size comparison'+(pick.b>1?' (per barrel)':'')+'</h2>'
+  +'<div class="tw"><table><thead><tr><th class="num">Size (in)</th><th class="num">Capacity (cfs)</th>'+(HW!==null?'<th class="num">Inlet cap. (cfs)</th>':'')+'<th class="num">Full velocity (ft/s)</th><th>Result</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+  +'<button type="button" class="btn small" id="copyBtn">Copy results</button></div>';
+  $('results').innerHTML=html;
+  dg({hw:HW!==null?'HW = '+fmt(HW,1)+' ft':'HW = not set',q:'Q = '+fmt(up(Qd,2),2)+' cfs',s:'Slope S = '+fmt(S100,2)+'%',d:'D = '+pick.s+' in',m:matTxt,n:'n = '+n,v:'V ≈ '+fmt(nd.v,1)+' ft/s',b:'Barrels: '+pick.b});
+}
+function run(){requestAnimationFrame(calculate)}
+$('calcBtn').addEventListener('click',run);
+$('tool').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')){e.preventDefault();run()}});
+$('tab-ws').addEventListener('click',()=>setMode('ws'));
+$('tab-fl').addEventListener('click',()=>setMode('fl'));
+$('cpre').addEventListener('change',()=>{if($('cpre').value)$('c').value=$('cpre').value});
+$('c').addEventListener('input',()=>{$('cpre').value=''});
+$('margin').addEventListener('input',()=>{$('mval').textContent=$('margin').value+'%'});
+$('results').addEventListener('click',e=>{
+  if(e.target.id!=='copyBtn')return;
+  const b=e.target,done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(summary).then(done,()=>{})}
+  else{const t=document.createElement('textarea');t.value=summary;document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(t)}
+});
+$('yr').textContent=new Date().getFullYear();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
