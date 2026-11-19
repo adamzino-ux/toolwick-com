@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Free Window Replacement Cost Calculator | Toolwick</title>
+<meta name="description" content="Free window replacement cost calculator: estimate installed cost by window size, style, frame, glass and labor, with a full breakdown.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://toolwick.com/window-replacement-cost-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem}
+h1{font-size:1.9rem;line-height:1.25;margin:1.5rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.5rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.field{margin-bottom:1.25rem}
+label,legend{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;min-height:44px;background:#fff;color:#1a1a2e;font-family:inherit}
+input:focus,select:focus,button:focus-visible,input[type=range]:focus-visible,summary:focus-visible,.tw:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.err{border-color:#e74c3c}
+.msg{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.row{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:641px){.row{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}}
+fieldset{border:0;padding:0;margin:0 0 1.25rem}
+.chk{display:flex;align-items:center;gap:.75rem;min-height:44px;font-size:.95rem;font-weight:400;color:#1a1a2e;margin:0;cursor:pointer}
+.chk input{width:22px;height:22px;flex:none;accent-color:#0077b6}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+button.main{width:100%;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:44px;cursor:pointer;font-family:inherit}
+button.main:hover{background:#006299}
+#results{margin-top:1.5rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.big{text-align:center;background:#f8f9fa;border-radius:8px;padding:1.25rem 1rem;margin-bottom:1.5rem}
+.big .lbl{font-size:.85rem;color:#444;font-weight:500}
+.big .num{font-size:2.5rem;font-weight:800;color:#0077b6;line-height:1.2}
+.big .sub{font-size:.9rem;color:#444}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.5rem}
+.stats div{background:#f8f9fa;border-radius:8px;padding:.75rem;text-align:center;font-size:.85rem;color:#444}
+.stats b{display:block;font-size:1.2rem;color:#1a1a2e}
+.bar{display:flex;height:18px;border-radius:9px;overflow:hidden;margin:.5rem 0}
+.legend{display:flex;flex-wrap:wrap;gap:.25rem 1rem;font-size:.85rem;color:#444;margin-bottom:1.5rem}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+th.n{text-align:right}
+tr.sel td{font-weight:700}
+tr.tot td{font-weight:700;border-top:2px solid #0077b6}
+.note{background:#f8f9fa;border-radius:8px;padding:1rem;font-size:.88rem;color:#444;margin-bottom:1rem}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.85rem;min-height:44px;cursor:pointer;font-family:inherit}
+.copy:hover{background:#f0f8fc}
+details{border-bottom:1px solid #e8e8e8;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:.6rem 0;min-height:44px}
+details p{color:#333}
+.ad-slot{min-height:0;margin:0}
+ul{padding-left:1.25rem}
+li{margin-bottom:.5rem}
+.rel li{margin-bottom:.6rem}
+.safety{margin:1.25rem 0;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2rem;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;margin-right:1rem}
+.formula{background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;font-family:Consolas,monospace;font-size:.85rem;overflow-x:auto;margin-bottom:1rem}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/window-replacement-cost-calculator/">
+<meta property="og:title" content="Window Replacement Cost Calculator">
+<meta property="og:description" content="Free window replacement cost calculator: estimate installed cost by window size, style, frame, glass and labor, with a full breakdown.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<h1>Window Replacement Cost Calculator</h1>
+<p>Use this free window replacement cost calculator to estimate what it will cost to replace the windows in your home. Enter the number of windows, their size, style, frame material and glass package, and you get an installed total, a typical range and a line-by-line breakdown.</p>
+
+<div class="card" id="tool">
+<div class="diagram">
+<svg id="svg" viewBox="0 0 420 240" role="img" aria-label="Window elevation diagram showing width and height dimensions">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<g id="dg"></g>
+</svg>
+</div>
+
+<div class="row">
+<div class="field"><label for="count">Number of windows</label><input type="number" id="count" value="8" min="1" max="200" step="1" inputmode="numeric" aria-describedby="e-count"><div class="msg" id="e-count"></div></div>
+<div class="field"><label for="style">Window style</label><select id="style"><option value="dh">Double-hung</option><option value="cs">Casement</option><option value="sl">Slider</option><option value="pic">Picture (fixed)</option><option value="aw">Awning</option><option value="bay">Bay / bow</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="wid">Average width (inches)</label><input type="number" id="wid" value="36" min="12" max="120" step="any" inputmode="decimal" aria-describedby="e-wid"><div class="msg" id="e-wid"></div></div>
+<div class="field"><label for="hei">Average height (inches)</label><input type="number" id="hei" value="60" min="12" max="120" step="any" inputmode="decimal" aria-describedby="e-hei"><div class="msg" id="e-hei"></div></div>
+</div>
+<div class="row">
+<div class="field"><label for="frame">Frame material</label><select id="frame"><option value="vinyl">Vinyl</option><option value="alum">Aluminum</option><option value="fib">Fiberglass</option><option value="comp">Composite</option><option value="wood">Wood / clad wood</option></select></div>
+<div class="field"><label for="glass">Glass package</label><select id="glass"><option value="dbl">Double-pane, clear</option><option value="low" selected>Double-pane, Low-E</option><option value="tri">Triple-pane, Low-E</option></select></div>
+</div>
+<div class="row">
+<div class="field"><label for="inst">Installation type</label><select id="inst"><option value="ins">Insert (pocket) replacement</option><option value="full">Full-frame replacement</option></select></div>
+<div class="field"><label for="reg">Local labor costs</label><select id="reg"><option value="low">Lower-cost area</option><option value="avg" selected>Average</option><option value="high">High-cost metro</option></select></div>
+</div>
+<fieldset><legend>Options</legend>
+<label class="chk"><input type="checkbox" id="rem" checked> Remove and dispose of old windows</label>
+<label class="chk"><input type="checkbox" id="grids"> Decorative grids (muntins)</label>
+<label class="chk"><input type="checkbox" id="trim"> New interior trim and exterior capping</label>
+<label class="chk"><input type="checkbox" id="lead"> Home built before 1978 (lead-safe work)</label>
+<label class="chk"><input type="checkbox" id="permit"> Include permit and inspection fees</label>
+</fieldset>
+<div class="field"><label for="pct">Contingency for rot or surprises: <span id="pctv">10%</span></label><input type="range" id="pct" min="0" max="25" step="1" value="10"><div class="ticks" aria-hidden="true"><span>0%</span><span>25%</span></div></div>
+<button class="main" id="calcBtn" type="button">Calculate Window Replacement Cost</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<div class="safety" role="note">Planning estimate only. Building codes and site conditions vary by location. This is not a quote, and it is not engineering, permit or inspection approval. Confirm requirements with your local building department and use a licensed contractor for the work.</div>
+
+<h2>How to Use This Window Replacement Cost Calculator</h2>
+<p>Enter how many windows you plan to replace and the average width and height of one window in inches. Pick the style, frame material, glass package and installation type, then tick any extras such as trim, permits or lead-safe work. Press the calculate button to see your estimated installed total, a typical price range, the cost per window and tables that compare other frame and glass choices on the same job. The diagram above redraws to match the size and style you entered.</p>
+
+<h2>Why This Matters</h2>
+<p>Windows are one of the largest single line items in a home exterior project, and quotes can differ by thousands of dollars for what sounds like the same job. A vinyl double-hung insert window of about 36 × 60 inches typically runs $450 to $900 installed, while a full-frame wood replacement of the same size commonly lands between $1,100 and $1,600. Replacing ten windows therefore swings between roughly $5,000 and $16,000 depending on the choices you make.</p>
+<p>Knowing the numbers before contractors visit lets you spot quotes that are far too high or suspiciously low. It also helps you decide whether to replace everything at once or phase the work, which windows deserve triple-pane glass (north-facing bedrooms in cold climates, for example) and how much contingency to hold back if the sheathing behind old trim turns out to be rotten. Homeowners preparing to sell use an estimate like this to judge return on investment, and landlords use it to budget a building-wide replacement across several units. If you are also planning other exterior work, the same discipline of pricing it out first applies to a roof or a basement, which is why those calculators are linked below.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator uses planning rates averaged from typical U.S. retail and installer pricing. Each window's product cost is priced by area, then adjusted for frame and glass. Labor depends on install type, window size and style. A regional factor then scales the labor-type items.</p>
+<div class="formula">area = width × height ÷ 144 (sq ft)<br>product = max($120, area × style rate × frame × glass)<br>labor = install base × style factor × size factor × region<br>size factor = area ÷ 15, limited to 0.7–2.0<br>total = (product + labor + extras) × (1 + contingency)</div>
+<p>Style rates per square foot of vinyl, Low-E double-pane unit are: double-hung $28, casement $36, slider $26, picture $22, awning $34, and bay or bow $75. Frame multipliers are aluminum 0.90, vinyl 1.00, fiberglass 1.35, composite 1.50 and wood 1.65. Glass multipliers are clear double-pane 0.90, Low-E 1.00 and triple-pane 1.25. Base labor is $175 per window for an insert and $375 for full-frame. It is multiplied by a style factor (picture 0.8, double-hung and slider 1.0, casement and awning 1.1, bay or bow 2.5) and by the size factor above.</p>
+<p>The regional setting multiplies labor, removal, trim, lead-safe work and permit fees by 0.85 for a lower-cost area, 1.00 for average and 1.25 for a high-cost metro. It does not change the product price or grids. The extras below are stated at the average (1.00) setting: removal and disposal $30 per window, trim $4.50 per linear foot of window perimeter, lead-safe work $75 per window, and permits $100 plus $10 per window. Decorative grids are a flat $35 per window.</p>
+<p>The total is rounded up to the next $10 so the estimate never lands on the cheap side. The range shows 15% below to 20% above that total. Code notes in the results follow the 2021 IRC (R310 egress, R308 safety glazing) and 2021 IECC fenestration requirements, but local codes vary.</p>
+
+<h2>Worked Example</h2>
+<p>Say you replace 8 vinyl double-hung windows, each 36 × 60 inches, with Low-E double-pane glass as insert replacements in an average-cost area. You include removal and disposal and a 10% contingency, with no grids, trim, permit or lead-safe work.</p>
+<ul>
+<li>Area per window: 36 × 60 ÷ 144 = 15 sq ft.</li>
+<li>Product: 15 × $28 × 1.00 × 1.00 = $420 each, so 8 × $420 = $3,360.</li>
+<li>Labor: $175 × 1.0 (style) × 1.0 (size) × 1.0 (region) = $175 each, so 8 × $175 = $1,400.</li>
+<li>Removal and disposal: 8 × $30 = $240.</li>
+<li>Subtotal: $3,360 + $1,400 + $240 = $5,000.</li>
+<li>Contingency: 10% of $5,000 = $500, giving a total of $5,500.</li>
+</ul>
+<p>That works out to about $688 per window and $45.83 per square foot of window, with a typical range of $4,670 to $6,600. These are the exact numbers the calculator shows with its default inputs.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the existing opening, not the old sash.</strong> Measure width and height at three points and use the smallest. For an exact opening check, use the <a href="/window-door-rough-opening-calculator/">rough opening calculator</a>.</li>
+<li><strong>Get three itemized quotes.</strong> Compare product line, glass package, U-factor and what is included for disposal, trim and permits, not just the bottom line.</li>
+<li><strong>Don't skip the contingency.</strong> Older homes often hide rotted sills or missing flashing. Ten percent is sensible, and 15–20% is safer for houses over 50 years old.</li>
+<li><strong>Check egress and safety glazing.</strong> Bedroom windows generally need a clear opening that meets egress rules, and glass near doors, tubs and stairs usually must be tempered. Both can change the price.</li>
+<li><strong>Don't pay for features you won't notice.</strong> Triple-pane and wood frames pay off in some climates and rooms, but not every window needs them.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much does it cost to replace one window?</summary><p>A single standard vinyl double-hung window typically costs $450 to $900 installed. Wood, fiberglass, large or specialty units can run $1,000 to $2,500 or more. Use the calculator with a count of 1 to see your own number.</p></details>
+<details><summary>How much does it cost to replace all windows in a house?</summary><p>A typical 2,000 sq ft home has 12 to 20 windows, which usually lands between $8,000 and $20,000 for mid-grade vinyl or fiberglass. Whole-house price depends heavily on window count, style and local labor rates.</p></details>
+<details><summary>What is the difference between insert and full-frame replacement?</summary><p>An insert window fits inside the existing frame and leaves interior and exterior trim in place, so it costs less. Full-frame replacement removes everything down to the rough opening, which lets you fix rot and flashing. In this calculator it adds roughly $200 to $500 per window in labor for common sizes, more for large or bay units.</p></details>
+<details><summary>Are triple-pane windows worth the extra cost?</summary><p>Triple-pane glass adds roughly 25% to the product cost in this calculator. It helps most in very cold climates, on noisy streets and for large north-facing windows. In mild climates, Low-E double-pane is usually the better value.</p></details>
+<details><summary>Do I need a permit to replace windows?</summary><p>Many jurisdictions require a permit if you change the opening size or structure, and some require one even for like-for-like swaps. Rules vary by city and county, so call your local building department before work begins.</p></details>
+<details><summary>Why does my contractor quote differ from this estimate?</summary><p>This calculator uses national-average planning rates. Brand, product line, wall type, access and local demand all move real quotes, so treat the estimate as a budgeting range and not a bid.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/window-door-rough-opening-calculator/">Window &amp; Door Rough Opening Calculator</a>: frame the opening for your new units.</li>
+<li><a href="/egress-window-size-well-calculator/">Egress Window Size &amp; Well Calculator</a>: check bedroom and basement escape openings.</li>
+<li><a href="/roof-replacement-cost-calculator/">Roof Replacement Cost Calculator</a>: budget the other big exterior project.</li>
+<li><a href="/basement-finishing-cost-calculator/">Basement Finishing Cost Calculator</a>: plan below-grade windows and finishes.</li>
+<li><a href="/concrete-countertop-calculator/">Concrete Countertop Calculator</a>: estimate material for a custom countertop.</li>
+<li><a href="/culvert-pipe-size-calculator/">Culvert Pipe Size Calculator</a>: size drainage pipe for site work.</li>
+</ul>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/window-replacement-cost-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var fm=function(x,d){d=d||0;return x.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var fx=function(v){return fm(v,2).replace(/\.00$/,'').replace(/(\.\d)0$/,'$1')};
+var usd=function(x){return '$'+fm(x)};
+var dsg=function(d){return d>0?'+'+usd(d):d<0?'−'+usd(-d):'$0'};
+var ST={dh:{n:'Double-hung',r:28,l:1},cs:{n:'Casement',r:36,l:1.1},sl:{n:'Slider',r:26,l:1},pic:{n:'Picture (fixed)',r:22,l:.8},aw:{n:'Awning',r:34,l:1.1},bay:{n:'Bay / bow',r:75,l:2.5}};
+var FR={vinyl:{n:'Vinyl',m:1},alum:{n:'Aluminum',m:.9},fib:{n:'Fiberglass',m:1.35},comp:{n:'Composite',m:1.5},wood:{n:'Wood / clad wood',m:1.65}};
+var GL={dbl:{n:'Double-pane, clear',m:.9},low:{n:'Double-pane, Low-E',m:1},tri:{n:'Triple-pane, Low-E',m:1.25}};
+var IN={ins:{n:'Insert (pocket)',l:175},full:{n:'Full-frame',l:375}};
+var RG={low:.85,avg:1,high:1.25};
+var done=false,copyText='',timer=null;
+
+function dia(w,h,sk,n,area){
+  var bw=230,bh=140,s=Math.min(bw/w,bh/h),dw=w*s,dh=h*s,x0=210-dw/2,y0=22+(bh-dh)/2;
+  var i=Math.max(5,Math.min(dw,dh)*.06),gx=x0+i,gy=y0+i,gw=dw-2*i,gh=dh-2*i;
+  var L='#0077b6',o='';
+  o+='<rect x="'+x0+'" y="'+y0+'" width="'+dw+'" height="'+dh+'" rx="2" fill="#f4f9fc" stroke="'+L+'" stroke-width="3"/>';
+  o+='<rect x="'+gx+'" y="'+gy+'" width="'+gw+'" height="'+gh+'" fill="#dff0f9" stroke="'+L+'" stroke-width="1.5"/>';
+  var d='fill="none" stroke="'+L+'" stroke-width="1.5" stroke-dasharray="5 4"';
+  if(sk==='dh')o+='<rect x="'+gx+'" y="'+(gy+gh/2-3)+'" width="'+gw+'" height="6" fill="#f4f9fc" stroke="'+L+'" stroke-width="1.5"/>';
+  else if(sk==='cs')o+='<polyline points="'+(gx+gw)+','+gy+' '+gx+','+(gy+gh/2)+' '+(gx+gw)+','+(gy+gh)+'" '+d+'/>';
+  else if(sk==='sl')o+='<rect x="'+(gx+gw/2-3)+'" y="'+gy+'" width="6" height="'+gh+'" fill="#f4f9fc" stroke="'+L+'" stroke-width="1.5"/><text x="'+(gx+gw/4)+'" y="'+(gy+gh/2+4)+'" font-size="13" text-anchor="middle" fill="#1a1a2e">←</text><text x="'+(gx+gw*.75)+'" y="'+(gy+gh/2+4)+'" font-size="13" text-anchor="middle" fill="#1a1a2e">→</text>';
+  else if(sk==='aw')o+='<polyline points="'+gx+','+(gy+gh)+' '+(gx+gw/2)+','+gy+' '+(gx+gw)+','+(gy+gh)+'" '+d+'/>';
+  else if(sk==='bay')o+='<line x1="'+(gx+gw*.28)+'" y1="'+gy+'" x2="'+(gx+gw*.28)+'" y2="'+(gy+gh)+'" stroke="'+L+'" stroke-width="3"/><line x1="'+(gx+gw*.72)+'" y1="'+gy+'" x2="'+(gx+gw*.72)+'" y2="'+(gy+gh)+'" stroke="'+L+'" stroke-width="3"/>';
+  else o+='<line x1="'+(gx+gw*.15)+'" y1="'+(gy+gh*.4)+'" x2="'+(gx+gw*.38)+'" y2="'+(gy+gh*.15)+'" stroke="'+L+'" stroke-width="2" opacity=".45"/>';
+  var xd=x0-20,yd=y0+dh+20;
+  o+='<g stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3 3"><line x1="'+(xd-5)+'" y1="'+y0+'" x2="'+x0+'" y2="'+y0+'"/><line x1="'+(xd-5)+'" y1="'+(y0+dh)+'" x2="'+x0+'" y2="'+(y0+dh)+'"/><line x1="'+x0+'" y1="'+(y0+dh)+'" x2="'+x0+'" y2="'+(yd+5)+'"/><line x1="'+(x0+dw)+'" y1="'+(y0+dh)+'" x2="'+(x0+dw)+'" y2="'+(yd+5)+'"/></g>';
+  o+='<line x1="'+xd+'" y1="'+y0+'" x2="'+xd+'" y2="'+(y0+dh)+'" stroke="'+L+'" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  o+='<line x1="'+x0+'" y1="'+yd+'" x2="'+(x0+dw)+'" y2="'+yd+'" stroke="'+L+'" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  var lx=xd-8,ly=y0+dh/2;
+  o+='<text x="'+lx+'" y="'+ly+'" transform="rotate(-90 '+lx+' '+ly+')" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a2e">'+fx(h)+' in</text>';
+  o+='<text x="'+(x0+dw/2)+'" y="'+(yd+17)+'" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a2e">'+fx(w)+' in</text>';
+  o+='<text x="210" y="230" text-anchor="middle" font-size="12" fill="#1a1a2e">'+n+' × '+ST[sk].n+' · '+fx(area)+' sq ft each</text>';
+  $('dg').innerHTML=o;
+  $('svg').setAttribute('aria-label','Window elevation diagram: '+ST[sk].n+' window, '+fx(w)+' inches wide by '+fx(h)+' inches high, '+fx(area)+' square feet, '+n+' windows');
+}
+
+function read(focus){
+  var ok=true,first=null;
+  function chk(id,min,max,int,msg){
+    var el=$(id),v=el.value.trim()===''?NaN:Number(el.value);
+    var bad=isNaN(v)||v<min||v>max||(int&&v%1!==0);
+    el.classList.toggle('err',bad);el.setAttribute('aria-invalid',bad?'true':'false');
+    $('e-'+id).textContent=bad?msg:'';
+    if(bad){ok=false;first=first||el}
+    return v;
+  }
+  var n=chk('count',1,200,true,'Enter a whole number of windows from 1 to 200.');
+  var w=chk('wid',12,120,false,'Enter a width between 12 and 120 inches.');
+  var h=chk('hei',12,120,false,'Enter a height between 12 and 120 inches.');
+  if(!ok){if(first&&focus)first.focus();return null}
+  return {n:n,w:w,h:h,st:$('style').value,fr:$('frame').value,gl:$('glass').value,ins:$('inst').value,rg:$('reg').value,
+    grids:$('grids').checked,rem:$('rem').checked,trim:$('trim').checked,lead:$('lead').checked,permit:$('permit').checked,pct:Number($('pct').value)};
+}
+
+function calc(c,fk,gk){
+  var S=ST[c.st],R=RG[c.rg],n=c.n,area=c.w*c.h/144;
+  var pe=Math.max(120,area*S.r*FR[fk].m*GL[gk].m);
+  var le=IN[c.ins].l*S.l*Math.min(2,Math.max(.7,area/15))*R;
+  var r={area:area,product:Math.round(pe*n),labor:Math.round(le*n)};
+  r.grids=c.grids?Math.round(35*n):0;
+  r.removal=c.rem?Math.round(30*n*R):0;
+  r.trim=c.trim?Math.round(4.5*2*(c.w+c.h)/12*n*R):0;
+  r.lead=c.lead?Math.round(75*n*R):0;
+  r.permit=c.permit?Math.round((100+10*n)*R):0;
+  r.sub=r.product+r.grids+r.labor+r.removal+r.trim+r.lead+r.permit;
+  r.cont=Math.round(r.sub*c.pct/100);
+  r.tot=r.sub+r.cont;
+  r.rounded=Math.ceil(r.tot/10)*10;
+  r.rnd=r.rounded-r.tot;
+  return r;
+}
+
+function cmp(c,r,map,kind,title){
+  var h='<h3>'+title+'</h3><div class="tw" tabindex="0" role="region" aria-label="'+title+'"><table><thead><tr><th>Option</th><th class="n">Per window</th><th class="n">Total</th><th class="n">vs. yours</th></tr></thead><tbody>';
+  for(var k in map){
+    var t=kind==='f'?calc(c,k,c.gl):calc(c,c.fr,k);
+    var sel=(kind==='f'?k===c.fr:k===c.gl);
+    h+='<tr'+(sel?' class="sel"':'')+'><td>'+map[k].n+(sel?' (selected)':'')+'</td><td class="n">'+usd(Math.round(t.rounded/c.n))+'</td><td class="n">'+usd(t.rounded)+'</td><td class="n">'+(sel?'—':dsg(t.rounded-r.rounded))+'</td></tr>';
+  }
+  return h+'</tbody></table></div>';
+}
+
+function calculate(focus){
+  var c=read(focus===true);
+  if(!c){requestAnimationFrame(function(){$('results').innerHTML=''});copyText='';return}
+  var r=calc(c,c.fr,c.gl);
+  var T=r.rounded;
+  var low=Math.floor(T*85/1000)*10,high=Math.ceil(T*120/1000)*10;
+  var pc=function(v){return fm(v/T*100,1)+'%'};
+  var rows=[['Windows (product)',r.product,1],['Decorative grids',r.grids,r.grids>0],['Installation labor ('+IN[c.ins].n.toLowerCase()+')',r.labor,1],['Remove and dispose of old windows',r.removal,r.removal>0],['Interior trim and exterior capping',r.trim,r.trim>0],['Lead-safe work (pre-1978 home)',r.lead,r.lead>0],['Permit and inspection fees',r.permit,r.permit>0]];
+  var tb='';
+  rows.forEach(function(x){if(x[2])tb+='<tr><td>'+x[0]+'</td><td class="n">'+usd(x[1])+'</td><td class="n">'+pc(x[1])+'</td></tr>'});
+  tb+='<tr class="sel"><td>Subtotal</td><td class="n">'+usd(r.sub)+'</td><td class="n">'+pc(r.sub)+'</td></tr>';
+  tb+='<tr><td>Contingency ('+c.pct+'%)</td><td class="n">'+usd(r.cont)+'</td><td class="n">'+pc(r.cont)+'</td></tr>';
+  if(r.rnd>0)tb+='<tr><td>Rounded up to next $10</td><td class="n">'+usd(r.rnd)+'</td><td class="n">'+pc(r.rnd)+'</td></tr>';
+  tb+='<tr class="tot"><td>Total estimate</td><td class="n">'+usd(T)+'</td><td class="n">100.0%</td></tr>';
+  var a=r.product+r.grids,b=r.labor+r.removal+r.trim+r.lead,d=r.permit+r.cont+r.rnd;
+  var per=Math.round(T/c.n),psf=T/(r.area*c.n);
+  var html='<div class="res"><div class="big"><div class="lbl">Estimated installed cost</div><div class="num">'+usd(T)+'</div><div class="sub">Typical range '+usd(low)+' – '+usd(high)+'</div></div>'
+  +'<div class="stats"><div><b>'+usd(per)+'</b>per window</div><div><b>$'+fm(psf,2)+'</b>per sq ft of window</div></div>'
+  +'<div class="bar" aria-hidden="true"><span style="width:'+(a/T*100)+'%;background:#0077b6"></span><span style="width:'+(b/T*100)+'%;background:#48a9d6"></span><span style="width:'+(d/T*100)+'%;background:#b8dff0"></span></div>'
+  +'<div class="legend"><span><i style="background:#0077b6"></i>Windows '+pc(a)+'</span><span><i style="background:#48a9d6"></i>Labor &amp; install '+pc(b)+'</span><span><i style="background:#b8dff0"></i>Permits &amp; contingency '+pc(d)+'</span></div>'
+  +'<h3>Cost breakdown</h3><div class="tw" tabindex="0" role="region" aria-label="Cost breakdown table"><table><thead><tr><th>Item</th><th class="n">Amount</th><th class="n">Share</th></tr></thead><tbody>'+tb+'</tbody></table></div>'
+  +cmp(c,r,FR,'f','Compare frame materials (same glass and options)')
+  +cmp(c,r,GL,'g','Compare glass packages (same frame and options)')
+  +'<div class="note"><strong>Planning estimate only.</strong> This is not a quote, and it is not engineering, permit or inspection approval. Totals are rounded up, and real prices vary by brand, region and site conditions. Code items to check locally (2021 IRC/IECC; your jurisdiction may differ): bedroom egress opening (IRC R310: at least 5.7 sq ft net clear, or 5.0 sq ft at grade floor; 24 in high; 20 in wide; sill no higher than 44 in), tempered safety glazing near doors, tubs and stairs (IRC R308), and energy U-factor limits (IECC). Changing opening size can require a new header and a permit. See the <a href="/egress-window-size-well-calculator/">egress window calculator</a> for bedroom windows.</div>'
+  +'<button type="button" class="copy" id="copyBtn">Copy results</button></div>';
+  copyText='Window replacement estimate (Toolwick)\n'+c.n+' × '+ST[c.st].n+', '+fx(c.w)+' × '+fx(c.h)+' in, '+FR[c.fr].n+', '+GL[c.gl].n+', '+IN[c.ins].n+' install\nTotal: '+usd(T)+' (range '+usd(low)+' – '+usd(high)+')\nPer window: '+usd(per)+' | Per sq ft: $'+fm(psf,2)+'\nSubtotal '+usd(r.sub)+' + contingency '+usd(r.cont)+' ('+c.pct+'%). Planning estimate only, not a quote.';
+  done=true;
+  requestAnimationFrame(function(){
+    dia(c.w,c.h,c.st,c.n,r.area);
+    $('results').innerHTML=html;
+  });
+}
+
+function doCopy(btn){
+  var ok=function(){btn.textContent='Copied!';clearTimeout(timer);timer=setTimeout(function(){btn.textContent='Copy results'},2000)};
+  function fb(){var t=document.createElement('textarea');t.value=copyText;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);ok()}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(copyText).then(ok,fb)}else fb();
+}
+
+$('calcBtn').addEventListener('click',function(){calculate(true)});
+$('tool').addEventListener('keydown',function(e){if(e.key==='Enter'&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')){e.preventDefault();calculate(true)}});
+$('tool').addEventListener('change',function(e){if(done&&e.target.id!=='pct')calculate(false)});
+$('pct').addEventListener('input',function(){$('pctv').textContent=this.value+'%';if(done)calculate(false)});
+$('results').addEventListener('click',function(e){if(e.target.id==='copyBtn')doCopy(e.target)});
+$('yr').textContent=new Date().getFullYear();
+dia(36,60,'dh',8,15);
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
