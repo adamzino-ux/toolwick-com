@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Drywall Texture Coverage Calculator | Toolwick</title>
+<meta name="description" content="Free drywall texture calculator: enter room size or area, pick orange peel, knockdown or skip trowel, and get bags or buckets of texture needed.">
+<link rel="canonical" href="https://toolwick.com/drywall-texture-coverage-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Drywall Texture Coverage Calculator", "url": "https://toolwick.com/drywall-texture-coverage-calculator/", "description": "Free drywall texture calculator: enter room size or area, pick orange peel, knockdown or skip trowel, and get bags or buckets of texture needed.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Drywall Texture Coverage Calculator", "item": "https://toolwick.com/drywall-texture-coverage-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much area does a bag of drywall texture cover?", "acceptedAnswer": {"@type": "Answer", "text": "It depends heavily on the style. This calculator assumes roughly 500 sq ft per 50 lb bag for light orange peel, about 400 for knockdown, down to about 100 sq ft for a 1/16 in smooth skim coat. These are rule-of-thumb assumptions, so check the coverage printed on your specific product."}}, {"@type": "Question", "name": "How many bags of texture do I need for a 12×12 room?", "acceptedAnswer": {"@type": "Answer", "text": "A 12×12 room with 8 ft ceilings has about 384 sq ft of wall and 144 sq ft of ceiling, before deducting openings. With knockdown texture and a 10% waste allowance, that works out to roughly 2 bags of powder. Enter your exact numbers above for a precise count."}}, {"@type": "Question", "name": "Is it cheaper to use powder or premixed texture?", "acceptedAnswer": {"@type": "Answer", "text": "Powder is generally cheaper per square foot, but you must mix it and get the consistency right. Premixed buckets cost more but save time, give a consistent mix, and are good for small repairs. The calculator shows both quantities so you can compare prices."}}, {"@type": "Question", "name": "Do I need a second coat of texture?", "acceptedAnswer": {"@type": "Answer", "text": "Most spray textures like orange peel and knockdown are applied in one coat. A second coat is used for heavier profiles, to even out a thin area, or to cover a patchy first pass. Selecting 2 coats doubles the material estimate."}}, {"@type": "Question", "name": "Should I subtract windows and doors?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, for walls. The calculator deducts 21 sq ft per door and 15 sq ft per window, which are standard sizes. If your openings are unusually large, such as sliding glass doors, enter a larger count or use the total area mode with your own measured number."}}, {"@type": "Question", "name": "What waste allowance should I use?", "acceptedAnswer": {"@type": "Answer", "text": "Ten percent suits most interior jobs. Use 15 to 20 percent for spray application with lots of overspray, tall or vaulted ceilings, or if you are a beginner. Use 5 percent only for small, simple surfaces applied by roller or trowel."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+h1{font-size:1.8rem;line-height:1.25;margin:2rem 0 1rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram text{font-family:inherit;fill:#1a1a2e}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:48px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{padding:0;min-height:44px;accent-color:#0077b6}
+.err{border-color:#e74c3c}
+.msg{color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.hint{color:#666;font-size:.85rem;margin-top:.3rem}
+.ticks{display:flex;justify-content:space-between;color:#666;font-size:.8rem}
+.hide{display:none}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;min-height:44px;width:100%;font-family:inherit}
+button:hover{background:#006299}
+button.small{width:auto;background:#fff;color:#0077b6;border:1px solid #0077b6;padding:8px 16px;font-size:.85rem;margin-top:1rem}
+button.small:hover{background:#f0f8fc}
+#results{margin-top:1.5rem}
+.res{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.sub{color:#444;margin:.25rem 0 1.25rem}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(even) td{background:#fafafa}
+th.n,td.n{text-align:right}
+tr.sel td{font-weight:700;color:#0077b6}
+.cap{color:#666;font-size:.85rem;margin:-.5rem 0 1rem}
+.note{background:#f8f9fa;border-left:4px solid #0077b6;padding:1rem;font-size:.88rem;color:#444;border-radius:0 6px 6px 0;margin-top:1.5rem}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.5rem 0 0}
+.formula{background:#f8f9fa;padding:1rem;border-radius:6px;font-family:Consolas,monospace;font-size:.9rem;overflow-x:auto;margin-bottom:1rem}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.rel li{margin:0}
+.rel a{display:flex;align-items:center;min-height:44px;padding:8px 12px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;color:#666;font-size:.88rem}
+footer a{color:#0077b6;text-decoration:underline;display:inline-block;padding:10px 4px}
+@media(max-width:640px){.row{grid-template-columns:1fr;gap:0}.card{padding:1.25rem}.rel{grid-template-columns:1fr}h1{font-size:1.5rem}.big{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/drywall-texture-coverage-calculator/">
+<meta property="og:title" content="Drywall Texture Coverage Calculator">
+<meta property="og:description" content="Free drywall texture calculator: enter room size or area, pick orange peel, knockdown or skip trowel, and get bags or buckets of texture needed.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Drywall Texture Coverage Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This drywall texture calculator estimates how many bags or buckets of texture compound you need for your walls and ceilings. Enter your room size, choose a texture style, and get a rounded-up shopping quantity with waste included.</p>
+
+<div class="card">
+<div class="diagram">
+<svg viewBox="0 0 560 270" role="img" aria-labelledby="svgT">
+<title id="svgT">Room diagram showing length, width and height, with door and window openings deducted from the textured area</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<polygon id="sCeil" points="70,90 390,90 430,50 110,50" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<polygon id="sSide" points="390,90 430,50 430,170 390,210" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect id="sWall" x="70" y="90" width="320" height="120" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="105" y="145" width="40" height="65" fill="#fff" stroke="#1a1a2e" stroke-dasharray="4 3"/>
+<rect x="255" y="118" width="70" height="45" fill="#fff" stroke="#1a1a2e" stroke-dasharray="4 3"/>
+<text x="125" y="182" font-size="11" text-anchor="middle" id="dDoor">door</text>
+<text x="290" y="145" font-size="11" text-anchor="middle" id="dWin">window</text>
+<text x="250" y="75" font-size="12" text-anchor="middle">ceiling</text>
+<text x="230" y="196" font-size="12" text-anchor="middle">wall</text>
+<g stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4 3"><line x1="70" y1="212" x2="70" y2="248"/><line x1="390" y1="212" x2="390" y2="248"/><line x1="66" y1="90" x2="36" y2="90"/><line x1="66" y1="210" x2="36" y2="210"/></g>
+<g stroke="#0077b6" stroke-width="1.5"><line x1="72" y1="240" x2="388" y2="240" marker-start="url(#ar)" marker-end="url(#ar)"/><line x1="42" y1="92" x2="42" y2="208" marker-start="url(#ar)" marker-end="url(#ar)"/><line x1="404" y1="88" x2="444" y2="52" marker-start="url(#ar)" marker-end="url(#ar)"/></g>
+<text id="dL" x="230" y="234" font-size="13" font-weight="600" text-anchor="middle">L</text>
+<text id="dH" x="30" y="150" font-size="13" font-weight="600" text-anchor="middle" transform="rotate(-90 30 150)">H</text>
+<text id="dW" x="452" y="58" font-size="13" font-weight="600">W</text>
+<text id="dNet" x="280" y="262" font-size="14" font-weight="700" text-anchor="middle">Textured area: —</text>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="field">
+<label for="mode">How do you want to enter the area?</label>
+<select id="mode"><option value="dims">Room dimensions</option><option value="area">I know the total area (sq ft)</option></select>
+</div>
+
+<div id="dimsBox">
+<div class="field">
+<label for="surface">Surfaces to texture</label>
+<select id="surface"><option value="both">Walls and ceiling</option><option value="walls">Walls only</option><option value="ceiling">Ceiling only</option></select>
+</div>
+<div class="row">
+<div class="field"><label for="length">Room length (ft)</label><input id="length" type="number" inputmode="decimal" step="any" min="0" value="14" aria-describedby="lengthErr"><div class="msg" id="lengthErr"></div></div>
+<div class="field"><label for="width">Room width (ft)</label><input id="width" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="widthErr"><div class="msg" id="widthErr"></div></div>
+</div>
+<div id="wallBox">
+<div class="row">
+<div class="field"><label for="height">Ceiling height (ft)</label><input id="height" type="number" inputmode="decimal" step="any" min="0" value="8" aria-describedby="heightErr"><div class="msg" id="heightErr"></div></div>
+<div class="field"><label for="doors">Doors (21 sq ft each)</label><input id="doors" type="number" inputmode="numeric" step="1" min="0" value="1" aria-describedby="doorsErr"><div class="msg" id="doorsErr"></div></div>
+</div>
+<div class="field"><label for="windows">Windows (15 sq ft each)</label><input id="windows" type="number" inputmode="numeric" step="1" min="0" value="2" aria-describedby="windowsErr"><div class="msg" id="windowsErr"></div></div>
+</div>
+</div>
+
+<div id="areaBox" class="hide">
+<div class="field"><label for="area">Total area to texture (sq ft)</label><input id="area" type="number" inputmode="decimal" step="any" min="0" value="500" aria-describedby="areaErr"><div class="msg" id="areaErr"></div></div>
+</div>
+
+<div class="row">
+<div class="field"><label for="texture">Texture style</label>
+<select id="texture">
+<option value="orange">Orange peel (spray)</option>
+<option value="knock" selected>Knockdown</option>
+<option value="skip">Skip trowel</option>
+<option value="swirl">Heavy hand-applied (sand swirl, slap brush)</option>
+<option value="skim">Smooth skim coat (~1/16 in)</option>
+</select></div>
+<div class="field"><label for="form">Product form</label>
+<select id="form"><option value="bag">Powder, 50 lb bag</option><option value="bkt">Premixed, 4.5 gal bucket</option></select></div>
+</div>
+
+<div class="row">
+<div class="field"><label for="coats">Number of coats</label>
+<select id="coats"><option value="1">1 coat</option><option value="2">2 coats</option></select></div>
+<div class="field"><label for="price">Price per unit (optional, $)</label><input id="price" type="number" inputmode="decimal" step="any" min="0" placeholder="e.g. 22.00" aria-describedby="priceErr"><div class="msg" id="priceErr"></div></div>
+</div>
+
+<div class="field"><label for="covOverride">Coverage from your product label (optional, sq ft per unit per coat)</label><input id="covOverride" type="number" inputmode="decimal" step="any" min="0" placeholder="Leave blank to use built-in planning rates" aria-describedby="covHint covOverrideErr"><div class="hint" id="covHint">The built-in rates are rule-of-thumb assumptions. If the label on your product states a coverage, enter it here and it will replace the built-in rate for the style and form you picked.</div><div class="msg" id="covOverrideErr"></div></div>
+
+<div class="field">
+<label for="waste">Waste and overspray allowance: <strong id="wasteOut">10%</strong></label>
+<input id="waste" type="range" min="5" max="25" step="1" value="10">
+<div class="ticks"><span>5%</span><span>15%</span><span>25%</span></div>
+</div>
+
+<button type="submit" id="calcBtn">Calculate Texture Needed</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+
+<div class="note"><strong>Planning estimate only.</strong> The built-in coverage figures are rule-of-thumb assumptions, not manufacturer data. Real coverage varies by product, mixing, spray equipment and applicator, so verify against the label on the product you buy. No building code sets texture quantities, and local rules vary. This is not a permit, inspection or professional approval. Textured ceilings in homes built before the 1980s may contain asbestos, so have a sample tested before sanding, scraping or disturbing them.</div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/drywall-texture-coverage-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Drywall Texture Coverage Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/drywall-texture-coverage-calculator/&quot;&gt;Drywall Texture Coverage Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/drywall-texture-coverage-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Drywall Texture Calculator</h2>
+<p>Choose whether to enter room dimensions or a known total area. For dimensions, type the length, width and ceiling height in feet, pick whether you are texturing walls, the ceiling or both, and enter the number of doors and windows so their area is subtracted. Then select a texture style, product form (powder or premixed), number of coats and a waste allowance. The result shows how many bags or buckets to buy, rounded up, along with a comparison of every texture style for the same area. If your product label states a coverage figure, type it into the optional label field and the calculator will use it instead of the built-in planning rate.</p>
+
+<h2>Why This Matters</h2>
+<p>Texture compound is one of those materials where running short costs far more than buying extra. Spray texture has to be applied wet and in one continuous session. If you run out halfway across a ceiling, the lap line where you stop and restart often shows after paint, because new batches rarely match the old one in thickness or drying time. Having the right amount on site before you start avoids a mid-job store run and a visible seam.</p>
+<p>The opposite problem is just as real. A homeowner retexturing a 14 × 12 ft bedroom might guess "a few bags" and come home with five when two would do. Powder bags are cheap, but premixed buckets can run $20 to $35 each, and leftover mixed material rarely keeps well. Contractors bidding repair or remodel work also need a defensible material line item: a 1,800 sq ft house with 8 ft ceilings has roughly 4,000 sq ft of paintable wall and ceiling surface, and the difference between orange peel and a heavy skip trowel can change the material count by 40 percent or more.</p>
+<p>Patch work is another common use. After a water-damage repair or a wall removal, you may only need to blend texture over 60 to 150 sq ft. Knowing roughly how far one bag stretches helps you buy a single small quantity instead of guessing.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator first finds the surface area, subtracts openings, applies your coats and waste allowance, and divides by the coverage rate of the chosen product. It always rounds up to the next whole bag or bucket so you never end up short.</p>
+<div class="formula">Walls = 2 × (L + W) × H<br>Ceiling = L × W<br>Net area = Walls + Ceiling − (doors × 21) − (windows × 15)<br>Area to cover = Net area × coats × (1 + waste %)<br>Units needed = ROUNDUP(Area to cover ÷ coverage per unit)</div>
+<p>Door and window deductions are applied to walls only and never reduce the ceiling. The planning coverage rates used, in sq ft per unit for a single coat, are below.</p>
+<div class="tw"><table>
+<thead><tr><th>Texture style</th><th class="n">50 lb powder bag</th><th class="n">4.5 gal premixed bucket</th></tr></thead>
+<tbody>
+<tr><td>Orange peel (spray)</td><td class="n">500</td><td class="n">450</td></tr>
+<tr><td>Knockdown</td><td class="n">400</td><td class="n">360</td></tr>
+<tr><td>Skip trowel</td><td class="n">300</td><td class="n">270</td></tr>
+<tr><td>Heavy hand-applied</td><td class="n">250</td><td class="n">225</td></tr>
+<tr><td>Smooth skim coat (~1/16 in)</td><td class="n">100</td><td class="n">115</td></tr>
+</tbody></table></div>
+<p><strong>These are assumptions, not manufacturer data.</strong> For the four textured styles they are typical rule-of-thumb figures for powder, and the premixed bucket rate is assumed to be about 90 percent of the powder rate. That 90 percent is a planning assumption with no published basis, so treat it as approximate. The skim coat figures come from volume: a 4.5 gal bucket holds about 0.60 cu ft, and a 1/16 in layer is about 0.0052 ft thick, so one bucket spreads over roughly 115 sq ft (0.60 ÷ 0.0052). For powder, the calculator assumes about 4 gal of mixed compound per 50 lb bag, which is about 0.53 cu ft and roughly 100 sq ft at the same thickness. A thicker skim coat covers proportionally less. Always compare against the coverage printed on your product, and enter it in the label field for a more accurate count.</p>
+
+<h2>Worked Example</h2>
+<p>A bedroom is 14 ft long, 12 ft wide, with 8 ft ceilings, one door and two windows. You plan one coat of knockdown with 50 lb powder bags and a 10% waste allowance.</p>
+<ul>
+<li>Walls: 2 × (14 + 12) × 8 = 416 sq ft</li>
+<li>Ceiling: 14 × 12 = 168 sq ft, so gross area is 584 sq ft</li>
+<li>Openings: 1 door × 21 + 2 windows × 15 = 51 sq ft, so net area is 533 sq ft</li>
+<li>With 10% waste and 1 coat: 533 × 1.10 = 586.3 sq ft to cover</li>
+<li>Knockdown powder is assumed to cover 400 sq ft per bag: 586.3 ÷ 400 = 1.47 bags, which rounds up to <strong>2 bags</strong></li>
+<li>With premixed at 360 sq ft per bucket: 586.3 ÷ 360 = 1.63, so <strong>2 buckets</strong></li>
+</ul>
+<p>At $22 per bag, the material cost is about $44.00.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Test for asbestos first.</strong> Textured ceilings installed before the 1980s can contain asbestos. Do not scrape or sand until a lab confirms it is safe, and follow local rules for removal.</li>
+<li><strong>Check the label.</strong> Coverage varies a lot between brands and mixing ratios. If the bag or bucket states a coverage, use the optional label field instead of the built-in rate.</li>
+<li><strong>Prime new drywall.</strong> Unprimed paper and joint compound absorb moisture unevenly, causing blotchy texture and varying coverage. Use a drywall primer first.</li>
+<li><strong>Practice on cardboard.</strong> Spray pattern depends on compressor pressure, nozzle size and mix thickness. Test on scrap before committing to the ceiling.</li>
+<li><strong>Mask everything.</strong> Overspray travels. Cover floors, windows, trim and fixtures, and wear a dust mask or respirator when mixing powder.</li>
+<li><strong>Buy all product at once.</strong> Different batches can vary slightly in color and consistency. Round up rather than down, and keep the extra for future patches.</li>
+<li><strong>Do not stretch coverage.</strong> Thinning compound too far to cover more area gives weak, patchy texture that can flake or fail to hold its profile.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much area does a bag of drywall texture cover?</summary><p>It depends heavily on the style. This calculator assumes roughly 500 sq ft per 50 lb bag for light orange peel, about 400 for knockdown, down to about 100 sq ft for a 1/16 in smooth skim coat. These are rule-of-thumb assumptions, so check the coverage printed on your specific product.</p></details>
+<details><summary>How many bags of texture do I need for a 12×12 room?</summary><p>A 12×12 room with 8 ft ceilings has about 384 sq ft of wall and 144 sq ft of ceiling, before deducting openings. With knockdown texture and a 10% waste allowance, that works out to roughly 2 bags of powder. Enter your exact numbers above for a precise count.</p></details>
+<details><summary>Is it cheaper to use powder or premixed texture?</summary><p>Powder is generally cheaper per square foot, but you must mix it and get the consistency right. Premixed buckets cost more but save time, give a consistent mix, and are good for small repairs. The calculator shows both quantities so you can compare prices.</p></details>
+<details><summary>Do I need a second coat of texture?</summary><p>Most spray textures like orange peel and knockdown are applied in one coat. A second coat is used for heavier profiles, to even out a thin area, or to cover a patchy first pass. Selecting 2 coats doubles the material estimate.</p></details>
+<details><summary>Should I subtract windows and doors?</summary><p>Yes, for walls. The calculator deducts 21 sq ft per door and 15 sq ft per window, which are standard sizes. If your openings are unusually large, such as sliding glass doors, enter a larger count or use the total area mode with your own measured number.</p></details>
+<details><summary>What waste allowance should I use?</summary><p>Ten percent suits most interior jobs. Use 15 to 20 percent for spray application with lots of overspray, tall or vaulted ceilings, or if you are a beginner. Use 5 percent only for small, simple surfaces applied by roller or trowel.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/concrete-sealer-coverage-calculator/">Concrete Sealer Coverage Calculator</a></li>
+<li><a href="/epoxy-garage-floor-calculator/">Epoxy Garage Floor Coverage Calculator</a></li>
+<li><a href="/joint-compound-drywall-tape-calculator/">Joint Compound &amp; Drywall Tape Calculator</a></li>
+<li><a href="/thinset-mortar-coverage-calculator/">Thinset Mortar Coverage Calculator</a></li>
+<li><a href="/drywall-installation-cost-calculator/">Drywall Installation Cost Calculator</a></li>
+<li><a href="/stucco-mix-coverage-coat-thickness-calculator/">Stucco Mix Coverage &amp; Coat Thickness Calculator</a></li>
+</ul>
+
+<nav class="cluster-nav" aria-label="More Drywall, Paint &amp; Finishes Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Drywall, Paint &amp; Finishes Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/ceiling-drywall-hanger-spacing-load-calculator/">Ceiling Drywall Hanger Spacing &amp; Load Calculator</a></li><li><a href="/ceiling-texture-spray-compressor-calculator/">Ceiling Texture Hopper Gun Air Compressor Calculator</a></li><li><a href="/drywall-calculator/">Drywall Calculator</a></li><li><a href="/drywall-installation-cost-calculator/">Drywall Installation Cost Calculator</a></li><li><a href="/drywall-screw-spacing-quantity-calculator/">Drywall Screw Spacing &amp; Quantity Calculator</a></li><li><a href="/joint-compound-drywall-tape-calculator/">Joint Compound &amp; Drywall Tape Calculator</a></li><li><a href="/paint-coverage-calculator/">Paint Coverage Calculator</a></li><li><a href="/tile-flooring-calculator/">Tile &amp; Flooring Coverage Calculator</a></li><li><a href="/flooring-drywall-paint-calculators/"><strong>All Drywall, Paint &amp; Finishes calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<p><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></p>
+<p>© <span id="yr">2025</span> toolwick.com</p>
+</footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const T={
+orange:{n:'Orange peel (spray)',bag:500,bkt:450},
+knock:{n:'Knockdown',bag:400,bkt:360},
+skip:{n:'Skip trowel',bag:300,bkt:270},
+swirl:{n:'Heavy hand-applied',bag:250,bkt:225},
+skim:{n:'Smooth skim coat',bag:100,bkt:115}
+};
+let lastCopy='';
+$('yr').textContent=new Date().getFullYear();
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function num(id){const v=$(id).value.trim();return v===''?NaN:Number(v);}
+function num0(id){const v=$(id).value.trim();return v===''?0:Number(v);}
+function err(id,m){$(id).classList.add('err');$(id).setAttribute('aria-invalid','true');$(id+'Err').textContent=m;}
+function clearErr(){document.querySelectorAll('.err').forEach(e=>{e.classList.remove('err');e.removeAttribute('aria-invalid');});document.querySelectorAll('.msg').forEach(m=>m.textContent='');}
+function ceilSafe(x){return Math.max(1,Math.ceil(x-1e-9));}
+function pl(n,s){return n===1?s:s+'s';}
+
+function updateMode(){
+ const d=$('mode').value==='dims';
+ $('dimsBox').classList.toggle('hide',!d);
+ $('areaBox').classList.toggle('hide',d);
+ $('wallBox').classList.toggle('hide',d&&$('surface').value==='ceiling');
+}
+$('mode').addEventListener('change',updateMode);
+$('surface').addEventListener('change',updateMode);
+$('waste').addEventListener('input',()=>{
+ $('wasteOut').textContent=$('waste').value+'%';
+ if($('results').firstChild)requestAnimationFrame(calc);
+});
+
+function calc(){
+ clearErr();
+ let ok=true;
+ const dims=$('mode').value==='dims',surf=$('surface').value;
+ let L=0,W=0,H=0,doors=0,wins=0,A=0;
+ if(dims){
+  L=num('length');W=num('width');
+  if(!(L>0&&L<=1000)){err('length','Enter a length greater than 0 and up to 1,000 ft.');ok=false;}
+  if(!(W>0&&W<=1000)){err('width','Enter a width greater than 0 and up to 1,000 ft.');ok=false;}
+  if(surf!=='ceiling'){
+   H=num('height');doors=num0('doors');wins=num0('windows');
+   if(!(H>0&&H<=100)){err('height','Enter a height greater than 0 and up to 100 ft.');ok=false;}
+   if(!(Number.isInteger(doors)&&doors>=0&&doors<=100)){err('doors','Enter a whole number from 0 to 100.');ok=false;}
+   if(!(Number.isInteger(wins)&&wins>=0&&wins<=100)){err('windows','Enter a whole number from 0 to 100.');ok=false;}
+  }
+ }else{
+  A=num('area');
+  if(!(A>0&&A<=1000000)){err('area','Enter an area greater than 0 and up to 1,000,000 sq ft.');ok=false;}
+ }
+ const pv=$('price').value.trim();let price=0;
+ if(pv!==''){price=Number(pv);if(!(price>=0&&price<=100000)){err('price','Enter a price of 0 or more.');ok=false;}}
+ const cv=$('covOverride').value.trim();let ovr=0;
+ if(cv!==''){ovr=Number(cv);if(!(ovr>=10&&ovr<=5000)){err('covOverride','Enter a coverage between 10 and 5,000 sq ft per unit, or leave blank.');ok=false;}}
+ let walls=0,ceil=0,ded=0,net=A;
+ if(ok&&dims){
+  walls=surf!=='ceiling'?2*(L+W)*H:0;
+  ceil=surf!=='walls'?L*W:0;
+  ded=surf!=='ceiling'?doors*21+wins*15:0;
+  if(surf!=='ceiling'&&ded>=walls){
+   const m='Door and window deductions ('+fmt(ded,0)+' sq ft) are as large as the wall area ('+fmt(walls,0)+' sq ft). Reduce the openings.';
+   if(doors>0)err('doors',m);
+   if(wins>0)err('windows',m);
+   if(doors===0&&wins===0)err('height','Wall area is too small. Check the length, width and height.');
+   ok=false;
+  }
+  net=walls+ceil-ded;
+ }
+ if(!ok){requestAnimationFrame(()=>{$('results').innerHTML='';});return;}
+
+ const tex=$('texture').value,form=$('form').value,coats=Number($('coats').value),waste=Number($('waste').value);
+ const t=T[tex],defCov=form==='bag'?t.bag:t.bkt,otherCov=form==='bag'?t.bkt:t.bag;
+ const cov=ovr>0?ovr:defCov;
+ const total=net*coats*(1+waste/100);
+ const exact=total/cov,units=ceilSafe(exact),otherUnits=ceilSafe(total/otherCov);
+ const uName=form==='bag'?'bag':'bucket',oName=form==='bag'?'bucket':'bag';
+ const uDesc=form==='bag'?'50 lb powder':'4.5 gal premixed';
+ const oDesc=form==='bag'?'4.5 gal premixed':'50 lb powder';
+ const cost=price>0?units*price:0;
+ const covSrc=ovr>0?'your label value':'planning assumption';
+
+ let rows='';
+ for(const k in T){
+  const x=T[k];
+  rows+='<tr'+(k===tex?' class="sel"':'')+'><td>'+x.n+'</td><td class="n">'+fmt(ceilSafe(total/x.bag),0)+'</td><td class="n">'+fmt(ceilSafe(total/x.bkt),0)+'</td></tr>';
+ }
+ let h='<div class="res"><div class="big">'+fmt(units,0)+' '+pl(units,uName)+'</div>';
+ h+='<p class="sub">of '+t.n.toLowerCase()+' texture ('+uDesc+') for about '+fmt(net,0)+' sq ft, rounded up.</p>';
+ h+='<div class="tw"><table><thead><tr><th>Detail</th><th class="n">Value</th></tr></thead><tbody>';
+ if(dims){
+  if(walls>0)h+='<tr><td>Wall area</td><td class="n">'+fmt(walls,1)+' sq ft</td></tr>';
+  if(ceil>0)h+='<tr><td>Ceiling area</td><td class="n">'+fmt(ceil,1)+' sq ft</td></tr>';
+  if(ded>0)h+='<tr><td>Openings deducted</td><td class="n">−'+fmt(ded,0)+' sq ft</td></tr>';
+ }
+ h+='<tr><td>Net area to texture</td><td class="n">'+fmt(net,1)+' sq ft</td></tr>';
+ h+='<tr><td>Coats</td><td class="n">'+coats+'</td></tr>';
+ h+='<tr><td>Waste allowance</td><td class="n">'+waste+'%</td></tr>';
+ h+='<tr><td>Total area to cover</td><td class="n">'+fmt(total,1)+' sq ft</td></tr>';
+ h+='<tr><td>Coverage rate per coat ('+covSrc+')</td><td class="n">'+fmt(cov,ovr>0&&ovr%1!==0?1:0)+' sq ft per '+uName+'</td></tr>';
+ h+='<tr><td>Exact amount</td><td class="n">'+fmt(exact,2)+' '+pl(exact===1?1:2,uName)+'</td></tr>';
+ h+='<tr><td>Order (rounded up)</td><td class="n">'+fmt(units,0)+' '+pl(units,uName)+'</td></tr>';
+ h+='<tr><td>Alternative: '+oDesc+' (planning assumption)</td><td class="n">'+fmt(otherUnits,0)+' '+pl(otherUnits,oName)+'</td></tr>';
+ if(cost>0)h+='<tr><td>Estimated material cost</td><td class="n">$'+fmt(cost,2)+'</td></tr>';
+ h+='</tbody></table></div>';
+ h+='<h2 style="margin-top:1.5rem">Compare texture styles for this area</h2><div class="tw"><table><thead><tr><th>Texture</th><th class="n">50 lb bags</th><th class="n">4.5 gal buckets</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+ h+='<p class="cap">Comparison uses the built-in planning rates, not your label value. Verify coverage against the product label before buying.</p>';
+ h+='<button type="button" class="small" id="copyBtn">Copy results</button></div>';
+
+ lastCopy='Drywall texture estimate: '+fmt(units,0)+' '+pl(units,uName)+' ('+uDesc+', '+t.n+'). Net area '+fmt(net,1)+' sq ft, '+coats+' coat(s), '+waste+'% waste, total '+fmt(total,1)+' sq ft at '+fmt(cov,ovr>0&&ovr%1!==0?1:0)+' sq ft per '+uName+' ('+covSrc+'). Alternative: '+fmt(otherUnits,0)+' '+pl(otherUnits,oName)+' ('+oDesc+').'+(cost>0?' Estimated cost $'+fmt(cost,2)+'.':'')+' Planning estimate only; check product label.';
+
+ requestAnimationFrame(()=>{
+  $('results').innerHTML=h;
+  $('dL').textContent=dims?'L = '+fmt(L,1)+' ft':'Length';
+  $('dW').textContent=dims?'W = '+fmt(W,1)+' ft':'Width';
+  $('dH').textContent=dims&&surf!=='ceiling'?'H = '+fmt(H,1)+' ft':'H';
+  $('dDoor').textContent=dims&&surf!=='ceiling'?'door ×'+fmt(doors,0):'door';
+  $('dWin').textContent=dims&&surf!=='ceiling'?'window ×'+fmt(wins,0):'window';
+  $('dNet').textContent='Textured area: '+fmt(net,0)+' sq ft';
+  const wallsOn=!dims||surf!=='ceiling',ceilOn=!dims||surf!=='walls';
+  $('sWall').setAttribute('fill',wallsOn?'#d6ebf7':'#fff');
+  $('sSide').setAttribute('fill',wallsOn?'#d6ebf7':'#fff');
+  $('sCeil').setAttribute('fill',ceilOn?'#d6ebf7':'#fff');
+ });
+}
+
+$('f').addEventListener('submit',e=>{e.preventDefault();requestAnimationFrame(calc);});
+$('f').addEventListener('keydown',e=>{
+ if(e.key==='Enter'&&e.target.tagName==='SELECT'){e.preventDefault();requestAnimationFrame(calc);}
+});
+$('results').addEventListener('click',e=>{
+ if(e.target.id!=='copyBtn')return;
+ const b=e.target;
+ const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results';},2000);};
+ function fb(){const ta=document.createElement('textarea');ta.value=lastCopy;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(x){}document.body.removeChild(ta);}
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastCopy).then(done,fb);}else fb();
+});
+updateMode();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
