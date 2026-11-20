@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Birdsmouth Cut Calculator | Toolwick</title>
+<meta name="description" content="Free birdsmouth cut calculator: get the heel plumb cut, seat length and angles for any roof pitch and rafter size, with a depth-limit check.">
+<link rel="canonical" href="https://toolwick.com/birdsmouth-cut-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.15rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 1rem}
+h2{font-size:1.35rem;margin:2.5rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 10px rgba(0,0,0,.06);margin:2rem 0}
+.dia{background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:1.5rem}
+#dia{width:100%;height:auto;max-height:440px;display:block}
+.lb{font-size:15px;fill:#1a1a2e;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
+.cap{font-size:.85rem;color:#666;margin:.5rem 0 0;text-align:center}
+.grid{display:grid;gap:1rem;grid-template-columns:1fr}
+@media(min-width:641px){.grid{grid-template-columns:1fr 1fr}.full{grid-column:1/-1}}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:48px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;font-size:1rem;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.err{border-color:#e74c3c}
+input[type=range]{padding:0;border:0;height:44px;accent-color:#0077b6;min-height:44px}
+.emsg{color:#b03a2e;font-size:.85rem;margin-top:.3rem}
+.emsg:empty{display:none}
+.hint{font-size:.85rem;color:#666;margin-top:.3rem}
+.legend{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.btn{width:100%;min-height:48px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-weight:600;font-size:1rem;cursor:pointer;margin-top:1.5rem}
+.btn:hover{background:#006299}
+.btn2{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;min-height:44px;font:inherit;font-size:.9rem;cursor:pointer}
+.btn2:hover{background:#f0f7fb}
+.cprow{margin-top:1rem}
+.res{opacity:0;transition:opacity .3s ease;margin-top:2rem}
+.res.show{opacity:1}
+.res:empty{margin:0}
+.key{background:#f8f9fa;border-left:4px solid #0077b6;border-radius:6px;padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.kl{font-size:.9rem;color:#444;font-weight:500}
+.kn{font-size:2.5rem;font-weight:800;color:#0077b6;line-height:1.2}
+.kn.bad{color:#b03a2e}
+.ks{font-size:.9rem;color:#444}
+.st{border-radius:6px;padding:1rem 1.25rem;margin-bottom:1.25rem;font-size:.95rem}
+.st.ok{background:#eaf7ee;color:#17592b;border:1px solid #bfe3c9}
+.st.adj{background:#fff4e0;color:#6b4500;border:1px solid #f0d39c}
+.st.bad{background:#fdecea;color:#8f2a1f;border:1px solid #f2b8b1}
+.tw{overflow-x:auto;margin-bottom:1.5rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:.6rem .75rem;border-bottom:1px solid #ddd;font-weight:600;white-space:nowrap}
+td{padding:.6rem .75rem;border-bottom:1px solid #eee}
+tr:nth-child(even) td{background:#fafafa}
+tr:nth-child(odd) td{background:#fff}
+.n{text-align:right;white-space:nowrap}
+tr.cur td{background:#e3f1fa;font-weight:600}
+.res h3{margin-top:0}
+.res ol{padding-left:1.25rem;margin:0 0 1.5rem}
+.res li{margin-bottom:.5rem}
+.note{font-size:.85rem;color:#666;background:#f8f9fa;border-radius:6px;padding:.75rem 1rem}
+.sr{position:absolute;left:-9999px}
+.ad-slot{min-height:0;margin:0}
+code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem}
+pre{background:#f8f9fa;border-radius:6px;padding:1rem;overflow-x:auto;line-height:1.6}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;font-weight:600;padding:.75rem 0;min-height:44px}
+details p{margin:0 0 1rem}
+li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0;margin:0}
+.rel li{margin:0;border-bottom:1px solid #eee}
+.rel a{display:block;padding:.7rem 0;min-height:44px}
+footer{margin:3rem 0 2rem;padding-top:1.5rem;border-top:1px solid #eee;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;display:inline-block;padding:.5rem .25rem}
+@media(max-width:640px){.card{padding:1.25rem}.kn{font-size:2.1rem}h1{font-size:1.6rem}}
+@media(prefers-reduced-motion:reduce){.res{transition:none}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/birdsmouth-cut-calculator/">
+<meta property="og:title" content="Birdsmouth Cut Calculator">
+<meta property="og:description" content="Free birdsmouth cut calculator: get the heel plumb cut, seat length and angles for any roof pitch and rafter size, with a depth-limit check.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<main>
+<h1>Birdsmouth Cut Calculator</h1>
+<p>This birdsmouth cut calculator gives you the heel plumb cut height, level seat length, cut angles and remaining rafter depth for any roof pitch, rafter size and wall plate width. It also checks the notch against the common one-quarter-depth limit, so you know the cut is safe to make before you touch a saw.</p>
+
+<div class="card">
+<div class="dia">
+<svg id="dia" viewBox="0 0 520 340" role="img" aria-label="Rafter birdsmouth cross-section diagram" preserveAspectRatio="xMidYMid meet">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10z" fill="#1a1a2e"/></marker></defs>
+<g id="dg"></g>
+</svg>
+<p class="cap">Rafter cross-section at the wall plate. The diagram follows your inputs; long overhangs are drawn shortened.</p>
+</div>
+
+<form id="f" novalidate>
+<div class="grid">
+<div class="full">
+<label for="pitch">Roof pitch (rise per 12&Prime; of run)</label>
+<input type="number" id="pitch" inputmode="decimal" step="any" value="6" aria-describedby="pitchErr">
+<div class="emsg" id="pitchErr"></div>
+<label for="pitchSlider" style="margin-top:.5rem">Drag to compare pitches</label>
+<input type="range" id="pitchSlider" min="1" max="18" step="0.5" value="6">
+<div class="legend" aria-hidden="true"><span>1/12</span><span>9/12</span><span>18/12</span></div>
+</div>
+<div>
+<label for="rafter">Rafter size (actual depth)</label>
+<select id="rafter">
+<option value="3.5">2&times;4 (3.5&Prime;)</option>
+<option value="5.5">2&times;6 (5.5&Prime;)</option>
+<option value="7.25" selected>2&times;8 (7.25&Prime;)</option>
+<option value="9.25">2&times;10 (9.25&Prime;)</option>
+<option value="11.25">2&times;12 (11.25&Prime;)</option>
+</select>
+</div>
+<div>
+<label for="plate">Top plate width (inches)</label>
+<input type="number" id="plate" inputmode="decimal" step="any" value="3.5" aria-describedby="plateErr plateHint">
+<div class="hint" id="plateHint">3.5 for a 2&times;4 wall, 5.5 for a 2&times;6 wall</div>
+<div class="emsg" id="plateErr"></div>
+</div>
+<div>
+<label for="seat">Seat cut length (optional, inches)</label>
+<input type="number" id="seat" inputmode="decimal" step="any" placeholder="Blank = full plate width" aria-describedby="seatErr">
+<div class="emsg" id="seatErr"></div>
+</div>
+<div>
+<label for="over">Overhang (optional, inches)</label>
+<input type="number" id="over" inputmode="decimal" step="any" value="12" aria-describedby="overErr">
+<div class="hint">Horizontal, from the outside face of the wall</div>
+<div class="emsg" id="overErr"></div>
+</div>
+</div>
+<button type="submit" class="btn" id="calcBtn">Calculate Birdsmouth Cut</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+
+<div id="res" class="res" aria-live="polite" aria-atomic="true"></div>
+<div class="cprow" id="cprow" hidden><button type="button" class="btn2" id="copyBtn">Copy results</button></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Birdsmouth Cut Calculator</h2>
+<p>Enter the roof pitch as the rise per 12 inches of run (type 6 for a 6/12 roof), pick your rafter size, and enter the width of the wall's top plate: 3.5 inches for a 2&times;4 wall, 5.5 inches for a 2&times;6 wall. Leave the seat length blank to use the full plate width, or type a shorter seat if you already plan to reduce it. Add the overhang if you want the tail length too.</p>
+<p>The results show the heel plumb cut height (the number you mark on the rafter), the seat length, both cut angles, the rafter depth left at the notch, and a pass/reduce/fail check. A pitch table below shows how the same rafter and seat behave from 2/12 to 12/12.</p>
+
+<h2>Why This Matters</h2>
+<p>A birdsmouth is the notch that lets a rafter sit flat on the wall's top plate. Cut it too shallow and the rafter rides high, leaving a gap and a wavy roof line. Cut it too deep and you remove the wood that carries the load. A rafter notched through more than a quarter of its depth can split at the heel under snow, wind uplift or a heavy roofing load.</p>
+<p>Framers, shed and garage builders, and DIYers replacing a single rafter all need the same two numbers right: the level seat length and the plumb cut height. Take a 12&times;16 shed with 2&times;6 rafters at 8/12 on a 2&times;4 wall. A full 3.5-inch seat needs a 2.33-inch heel cut, but a 2&times;6 is only 5.5 inches deep, so the quarter-depth limit is 1.375 inches. That roof needs a seat of about 2 1/16 inches or a deeper rafter. Finding that on paper costs nothing. Finding it after cutting 24 rafters costs a weekend and a pile of lumber. Steeper roofs are hit hardest, because the heel cut grows with the pitch for the same seat length.</p>
+
+<h2>How It's Calculated</h2>
+<p>Everything follows from the right triangle formed by the seat (level), the heel cut (plumb) and the rafter's bottom edge:</p>
+<pre>Angle &theta; = arctan(rise / 12)
+Heel plumb cut h = seat &times; (rise / 12)
+Max heel cut = actual rafter depth &divide; 4
+Max seat = (actual depth &divide; 4) &divide; (rise / 12)
+Notch edge along rafter = seat &divide; cos &theta;
+Notch depth, perpendicular = seat &times; sin &theta;
+Tail length along top edge = overhang &divide; cos &theta;</pre>
+<p>The depth check follows the rule in the International Residential Code (2018 and 2021, R802.7.1) that notches at the end of a sawn-lumber member must not exceed one-quarter of its depth, and the 1&frac12;-inch minimum bearing on wood in R802.6. The tool compares the vertical heel cut to a quarter of the <em>actual</em> depth (7.25&Prime; for a 2&times;8, not 8&Prime;). That is slightly conservative, because the notch is a little shallower when measured square to the rafter. When a seat is too long, it rounds the reduced seat <em>down</em> to the nearest 1/16&Prime;, and cut dimensions in fractions are also rounded down.</p>
+<p>Local codes vary, and some jurisdictions or engineered roof designs set different limits. This tool is a layout and checking aid. It is not engineering, a permit approval or an inspection sign-off, and it does not apply to trusses, I-joists or engineered rafters, which must never be notched.</p>
+
+<h2>Worked Example</h2>
+<p>A 6/12 roof, 2&times;8 rafters (7.25&Prime; actual), a 2&times;4 wall (3.5&Prime; plate), blank seat and a 12&Prime; overhang:</p>
+<ol>
+<li>Angle: arctan(6 &divide; 12) = <strong>26.57&deg;</strong>. The plumb cut sits 63.43&deg; from the rafter edge, and the seat cut sits 26.57&deg; from it.</li>
+<li>Seat: blank, so the full plate width of <strong>3.5&Prime;</strong>.</li>
+<li>Heel plumb cut: 3.5 &times; 6 &divide; 12 = <strong>1.75&Prime; (1 3/4&Prime;)</strong>.</li>
+<li>Limit: 7.25 &divide; 4 = 1.8125&Prime;. Since 1.75 is no more than 1.8125, the cut passes.</li>
+<li>Notch edge: 3.5 &divide; cos 26.57&deg; = 3.913&Prime;. Perpendicular notch depth: 3.5 &times; sin 26.57&deg; = 1.565&Prime;. Rafter left at the notch: 7.25 &minus; 1.565 = 5.685&Prime;.</li>
+<li>Tail: 12 &divide; cos 26.57&deg; = 13.416&Prime;, about 13 7/16&Prime; along the top edge.</li>
+</ol>
+<p>Change the rafter to a 2&times;6 and the heel cut of 1.75&Prime; exceeds the 1.375&Prime; limit. The tool reduces the seat to 2 3/4&Prime; (1.375 &divide; 0.5), giving a 1 3/8&Prime; heel cut. It also tells you that a 2&times;8 would allow the full seat.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use actual lumber sizes.</strong> A 2&times;8 is 7.25&Prime; deep, not 8&Prime;. Using the nominal size hides a notch that is too deep.</li>
+<li><strong>Measure the plumb cut along the plumb line.</strong> Mark it with a speed square, not from the rafter's bottom edge square across.</li>
+<li><strong>Don't overcut the corner.</strong> A circular saw blade runs past the inside corner on the underside. Stop short and finish with a handsaw, because the overcut is a crack starter right where the rafter is loaded.</li>
+<li><strong>Account for sheathing and wall thickness.</strong> Locate the plumb cut at the face of the framing plate that supports the rafter. If your plans call for exterior foam or sheathing, follow the plans for where the heel lands.</li>
+<li><strong>Cut one test rafter first.</strong> Fit it on the wall, adjust, then use it as the pattern. Crown the rafters up and confirm that the plate tops are level.</li>
+<li><strong>Add the connectors your code requires.</strong> A well-cut birdsmouth bears on the plate, but rafter ties, hurricane ties and the fastener schedule keep the roof attached.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What is a birdsmouth cut?</summary><p>It is a V-shaped notch cut into the underside of a rafter. It has a level seat that rests on the wall's top plate and a plumb heel cut that sits against the outside face of the plate. The notch lets the rafter bear flat on the wall while the rest of it slopes up to the ridge.</p></details>
+<details><summary>How deep can a birdsmouth cut be?</summary><p>The IRC limits a notch at the end of a sawn rafter to one-quarter of its depth. Some older rules of thumb allow one-third, and local codes vary. This calculator uses the stricter one-quarter limit and never rounds a safety result toward the less safe side.</p></details>
+<details><summary>How do I calculate the seat length of a birdsmouth?</summary><p>Start with the full width of the top plate, which is 3.5&Prime; for a 2&times;4 wall. Multiply by rise divided by 12 to get the heel cut height. If that height is over one-quarter of the rafter depth, shorten the seat until it fits, but keep at least 1&frac12;&Prime; of bearing.</p></details>
+<details><summary>What if my rafter is too shallow for the birdsmouth?</summary><p>Use a deeper rafter, such as moving from a 2&times;6 to a 2&times;8. Otherwise ask the designer about a different framing detail, such as a bearing plate or metal connectors. Don't just cut deeper, and don't notch past the limit hoping the roof will be fine.</p></details>
+<details><summary>Does the overhang change the birdsmouth cut?</summary><p>No. The seat and heel cut depend only on pitch, rafter depth and plate width. The overhang only moves where the tail's plumb cut lands, which is the horizontal overhang divided by the cosine of the roof angle, measured along the top edge.</p></details>
+<details><summary>Can I use this for metric dimensions?</summary><p>The tool works in inches. Divide millimetres by 25.4 to convert, and use the actual depth of your lumber. The pitch input stays as rise per 12 units of run.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/plywood-sheet-goods-cut-optimizer/">Plywood &amp; Sheet Goods Cut Optimizer</a></li>
+<li><a href="/drywall-texture-coverage-calculator/">Drywall Texture Coverage Calculator</a></li>
+<li><a href="/window-replacement-cost-calculator/">Window Replacement Cost Calculator</a></li>
+<li><a href="/basement-finishing-cost-calculator/">Basement Finishing Cost Calculator</a></li>
+<li><a href="/culvert-pipe-size-calculator/">Culvert Pipe Size Calculator</a></li>
+<li><a href="/concrete-countertop-calculator/">Concrete Countertop Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/birdsmouth-cut-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+const IN='\u2033';
+const SIZES=[['2\u00d74',3.5],['2\u00d76',5.5],['2\u00d78',7.25],['2\u00d710',9.25],['2\u00d712',11.25]];
+const $=id=>document.getElementById(id);
+const fmt=(x,d=3)=>x.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const tr=(x,d=3)=>String(parseFloat(x.toFixed(d)));
+const floor16=x=>Math.floor(x*16+1e-9)/16;
+function frac(x,m){
+  let n=x*16;
+  n=m==='f'?Math.floor(n+1e-9):m==='c'?Math.ceil(n-1e-9):Math.round(n);
+  const w=Math.floor(n/16);let r=n%16;
+  if(!r)return w+IN;
+  let d=16;while(r%2===0){r/=2;d/=2;}
+  return (w?w+' ':'')+r+'/'+d+IN;
+}
+const both=(x,m)=>fmt(x)+IN+' \u2248 '+frac(x,m);
+const num=id=>{const v=$(id).value.trim();return v===''?NaN:Number(v);};
+let lastText='';
+const GEN={p:6,D:7.25,W:3.5,s:3.5,ov:12,state:'ok',L:{h:'h',s:'seat',D:'D',ov:'overhang',ang:'\u03b8'}};
+
+function drawDiagram(g){
+  const t=g.p/12,th=Math.atan(t),c=Math.cos(th),sn=Math.sin(th);
+  const D=g.D,W=g.W,s=Math.min(g.s,W),h=s*t;
+  const k=Math.min(26,90/D,100/W),Wk=W*k,sk=s*k,hk=h*k,Dk=D*k,Dv=Dk/c;
+  const Lx=Math.max(Math.min(270,160/t),Wk+130),XL=24,X0=XL+Lx;
+  const ovp=Math.min(g.ov*k,140),XT=X0+ovp,Yp=46+Lx*t+Dv-hk;
+  const bot=x=>Yp+hk+(x-X0)*t,top=x=>bot(x)-Dv;
+  const pl=Math.max(14,1.5*k),wh=46;
+  const P=(x,y)=>x.toFixed(1)+','+y.toFixed(1);
+  const col=g.state==='bad'?'#e74c3c':'#0077b6';
+  const P1=P(X0,Yp+hk),C=P(X0,Yp),P2=P(X0-sk,Yp);
+  const dim=(a,b,c2,d)=>'<line x1="'+a.toFixed(1)+'" y1="'+b.toFixed(1)+'" x2="'+c2.toFixed(1)+'" y2="'+d.toFixed(1)+'" stroke="#1a1a2e" stroke-width="1.2" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  const gd=(a,b,c2,d)=>'<line x1="'+a.toFixed(1)+'" y1="'+b.toFixed(1)+'" x2="'+c2.toFixed(1)+'" y2="'+d.toFixed(1)+'" stroke="#bdbdbd" stroke-width="1" stroke-dasharray="4 3"/>';
+  const tx=(x,y,s2,an)=>'<text class="lb" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" text-anchor="'+(an||'start')+'">'+s2+'</text>';
+  let o='';
+  o+='<rect x="'+(X0-Wk).toFixed(1)+'" y="'+(Yp+pl).toFixed(1)+'" width="'+Wk.toFixed(1)+'" height="'+wh+'" fill="#f3f3f3" stroke="#bbb"/>';
+  o+='<rect x="'+(X0-Wk).toFixed(1)+'" y="'+Yp.toFixed(1)+'" width="'+Wk.toFixed(1)+'" height="'+pl.toFixed(1)+'" fill="#e9ecef" stroke="#777"/>';
+  if(Wk>=34)o+='<text x="'+(X0-Wk/2).toFixed(1)+'" y="'+(Yp+pl/2+4).toFixed(1)+'" font-size="11" text-anchor="middle" fill="#1a1a2e">plate</text>';
+  const pts=[P(XL,top(XL)),P(XT,top(XT)),P(XT,bot(XT)),P1,C,P2,P(XL,bot(XL))];
+  o+='<polygon points="'+pts.join(' ')+'" fill="#e3f1fa"/>';
+  o+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="#0077b6" stroke-width="2.5" stroke-linejoin="round"/>';
+  o+='<polygon points="'+P2+' '+C+' '+P1+'" fill="'+col+'" fill-opacity=".3" stroke="'+col+'" stroke-width="1.5" stroke-dasharray="4 3"/>';
+  // heel plumb height
+  o+=gd(X0,Yp,X0+22,Yp)+gd(X0,Yp+hk,X0+22,Yp+hk)+dim(X0+16,Yp,X0+16,Yp+hk);
+  o+=tx(X0+24,Yp+hk/2+5,g.L.h);
+  // seat
+  o+=gd(X0-sk,Yp,X0-sk,Yp-22)+gd(X0,Yp,X0,Yp-22)+dim(X0-sk,Yp-16,X0,Yp-16);
+  o+=tx(X0-sk/2,Yp-24,g.L.s,'middle');
+  // rafter depth
+  const Xd=Math.max(XL+90,X0-Wk-60),by=bot(Xd),ex=Xd+Dk*sn,ey=by-Dk*c;
+  o+=dim(Xd,by,ex,ey)+tx((Xd+ex)/2-10,(by+ey)/2+5,g.L.D,'end');
+  // overhang
+  if(g.ov>0){
+    const y0=bot(XT)+24;
+    o+=gd(X0,Yp+hk,X0,y0)+gd(XT,bot(XT),XT,y0)+dim(X0,y0-4,XT,y0-4);
+    o+=tx((X0+XT)/2,y0+16,g.L.ov,'middle');
+  }
+  // angle
+  const Sx=XL+30,Sy=top(Sx);
+  o+=gd(Sx,Sy,Sx+95,Sy);
+  o+='<path d="M'+P(Sx+60,Sy)+' A60 60 0 0 1 '+P(Sx+60*c,Sy+60*sn)+'" fill="none" stroke="#0077b6" stroke-width="1.5"/>';
+  o+=tx(Sx,Sy-10,g.L.ang);
+  const H=Math.max(Yp+pl+wh,bot(XT)+(g.ov>0?50:22))+12;
+  $('dg').innerHTML=o;
+  const sv=$('dia');
+  sv.setAttribute('viewBox','0 0 520 '+Math.ceil(H));
+  sv.setAttribute('aria-label','Rafter birdsmouth cross-section: '+(g.L.h==='h'?'enter values to see dimensions':g.L.ang+', seat '+g.L.s+', heel cut '+g.L.h+', rafter depth '+g.L.D));
+}
+
+function setErr(id,msg){
+  const e=$(id+'Err'),i=$(id);
+  e.textContent=msg||'';
+  if(msg){i.classList.add('err');i.setAttribute('aria-invalid','true');}
+  else{i.classList.remove('err');i.removeAttribute('aria-invalid');}
+  return !!msg;
+}
+
+function calculate(){
+  const res=$('res');
+  const p=num('pitch'),W=num('plate'),D=parseFloat($('rafter').value);
+  const sR=$('seat').value.trim(),oR=$('over').value.trim();
+  const e1=setErr('pitch',(isNaN(p)||p<0.5||p>24)?'Enter a pitch between 0.5 and 24 (rise per 12'+IN+' of run).':'');
+  const e2=setErr('plate',(isNaN(W)||W<2||W>12)?'Enter a plate width between 2'+IN+' and 12'+IN+'.':'');
+  let s=W,e3=false,ov=0,e4=false;
+  if(sR!==''){
+    s=Number(sR);let m='';
+    if(isNaN(s)||s<=0)m='Enter a positive seat length, or leave blank for the full plate width.';
+    else if(!isNaN(W)&&s>W+1e-9)m='Seat can\u2019t be longer than the plate width ('+tr(W)+IN+').';
+    e3=setErr('seat',m);
+  }else setErr('seat','');
+  if(oR!==''){
+    ov=Number(oR);
+    e4=setErr('over',(isNaN(ov)||ov<0||ov>72)?'Enter an overhang from 0 to 72'+IN+'.':'');
+  }else setErr('over','');
+  if(e1||e2||e3||e4){
+    res.classList.remove('show');res.innerHTML='';$('cprow').hidden=true;
+    drawDiagram(GEN);
+    const f=document.querySelector('.err');if(f)f.focus();
+    return;
+  }
+  const t=p/12,th=Math.atan(t),deg=th*180/Math.PI,cs=Math.cos(th),sn=Math.sin(th);
+  const size=(SIZES.find(z=>z[1]===D)||['',D])[0];
+  const limit=D/4,h=s*t,over=h>limit+1e-9,low=s<1.5-1e-9;
+  const rec=Math.min(s,floor16(limit/t));
+  const nxtF=SIZES.find(z=>z[1]>D+1e-9&&s*t<=z[1]/4+1e-9);
+  const nxtM=SIZES.find(z=>z[1]>D+1e-9&&1.5*t<=z[1]/4+1e-9);
+  let state,su=s,msg;
+  if(!over&&!low){
+    state='ok';
+    msg='<strong>Within the limit.</strong> The heel cut of '+tr(h,4)+IN+' is no more than '+tr(limit,4)+IN+' (\u00bc of the '+tr(D)+IN+' actual rafter depth), and the '+tr(s)+IN+' seat meets the 1\u00bd'+IN+' minimum bearing.';
+  }else if(over&&rec>=1.5-1e-9){
+    state='adj';su=rec;
+    msg='<strong>Seat reduced to stay within the limit.</strong> A '+tr(s)+IN+' seat at '+tr(p)+'/12 needs a '+tr(h,4)+IN+' heel cut, over the '+tr(limit,4)+IN+' limit (\u00bc of '+tr(D)+IN+'). The layout below uses a '+frac(rec,'f')+' seat (rounded down to 1/16'+IN+') with a '+tr(rec*t,4)+IN+' heel cut.'+(nxtF?' A '+nxtF[0]+' rafter would allow your full seat.':'');
+  }else if(over){
+    state='bad';
+    msg='<strong>Do not cut as entered.</strong> At '+tr(p)+'/12 even the minimum 1\u00bd'+IN+' seat needs a '+tr(1.5*t,4)+IN+' heel cut, over the '+tr(limit,4)+IN+' limit for a '+size+' rafter. '+(nxtF?'Use at least a '+nxtF[0]+' rafter to keep your seat.':nxtM?'A '+nxtM[0]+' rafter would allow a reduced seat.':'No standard size in this list works at this pitch; consult the roof designer.')+' Figures below are for the seat as entered.';
+  }else{
+    state='bad';
+    msg='<strong>Bearing too short.</strong> A '+tr(s)+IN+' seat is under the 1\u00bd'+IN+' minimum bearing on wood (IRC R802.6). '+(1.5*t<=limit+1e-9?'Increase the seat to at least 1\u00bd'+IN+' (heel cut '+tr(1.5*t,4)+IN+').':'A 1\u00bd'+IN+' seat would exceed the depth limit here, so use a deeper rafter.');
+  }
+  const hu=su*t,hyp=su/cs,perp=su*sn,remain=D-perp,tail=ov/cs;
+  const rows=[
+    ['Roof pitch',tr(p)+'/12 ('+fmt(deg,2)+'\u00b0)'],
+    ['Seat cut (level) length',both(su,'f')],
+    ['Heel plumb cut height',both(hu,'f')],
+    ['Plumb cut angle from rafter edge',fmt(90-deg,2)+'\u00b0'],
+    ['Seat cut angle from rafter edge',fmt(deg,2)+'\u00b0'],
+    ['Notch edge length along rafter',both(hyp,'f')],
+    ['Notch depth, square to rafter',fmt(perp)+IN],
+    ['Rafter depth left at notch',fmt(remain)+IN+' ('+fmt(remain/D*100,1)+'% of '+tr(D)+IN+')'],
+    ['Max heel cut (\u00bc depth)',fmt(Math.floor(limit*1000)/1000)+IN+' \u2248 '+frac(limit,'f')]
+  ];
+  if(ov>0)rows.push(['Tail length along top edge',both(tail,'r')]);
+  let tb='<div class="tw"><table><caption class="sr">Birdsmouth cut layout measurements</caption><thead><tr><th>Measurement</th><th class="n">Value</th></tr></thead><tbody>';
+  for(const r of rows)tb+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>';
+  tb+='</tbody></table></div>';
+  let steps='<h3>Layout steps</h3><ol>'+
+    '<li>On the rafter\u2019s bottom edge, find the point that will land on the outside face of the top plate. Pivot a speed square on that edge with the rafter edge at '+tr(p)+' on the COMMON scale (or '+fmt(deg,2)+'\u00b0 on an angle finder) and draw the plumb line up <strong>'+frac(hu,'f')+'</strong> long.</li>'+
+    '<li>From the top of that line, draw the seat line square to it (level), <strong>'+frac(su,'f')+'</strong> long, running toward the ridge.</li>'+
+    '<li>Cut both lines, stopping at the inside corner. Finish with a handsaw so the cut does not overrun and weaken the rafter.</li>'+
+    (ov>0?'<li>For the overhang, measure <strong>'+frac(tail,'r')+'</strong> along the top edge from the heel plumb line toward the eave and make a plumb cut at the same angle.</li>':'')+
+    '<li>Test-fit one rafter on the wall, then use it as the pattern for the rest.</li></ol>';
+  let pt='<h3>Other pitches, same rafter and seat</h3><p class="hint" style="margin-top:0">Heel cut for a '+size+' rafter with a '+tr(s)+IN+' seat. Limit is '+fmt(Math.floor(limit*1000)/1000)+IN+'.</p><div class="tw"><table><caption class="sr">Heel cut and result at other roof pitches</caption><thead><tr><th>Pitch</th><th class="n">Angle</th><th class="n">Heel cut</th><th class="n">Max seat</th><th>Result</th></tr></thead><tbody>';
+  for(let q=2;q<=12;q++){
+    const tq=q/12,hq=s*tq,mx=floor16(limit/tq);
+    let r;
+    if(hq>limit+1e-9)r=mx>=1.5?'Reduce seat':'Deeper rafter';
+    else r=low?'Seat under 1\u00bd'+IN:'OK';
+    pt+='<tr'+(Math.abs(q-p)<1e-9?' class="cur"':'')+'><td>'+q+'/12</td><td class="n">'+fmt(Math.atan(tq)*180/Math.PI,1)+'\u00b0</td><td class="n">'+fmt(hq)+IN+'</td><td class="n">'+fmt(Math.min(mx,W))+IN+(mx>=W?' (full)':'')+'</td><td>'+r+'</td></tr>';
+  }
+  pt+='</tbody></table></div>';
+  const html='<div class="key"><div class="kl">Heel plumb cut height</div><div class="kn'+(state==='bad'?' bad':'')+'">'+frac(hu,'f')+'</div><div class="ks">'+fmt(hu)+IN+' on a '+fmt(su)+IN+' level seat \u00b7 '+fmt(deg,2)+'\u00b0 roof angle'+(state==='bad'?' (as entered, not recommended)':'')+'</div></div>'+
+    '<div class="st '+state+'">'+msg+'</div>'+tb+steps+pt+
+    '<p class="note">Check follows IRC 2018/2021 R802.7.1 (end notch \u2264 \u00bc depth) and R802.6 (1\u00bd'+IN+' bearing on wood). Cut sizes are rounded down to 1/16'+IN+'. Local codes vary. This is a layout aid, not engineering, permit or inspection approval. Never notch trusses or engineered lumber.</p>';
+  lastText='Birdsmouth cut ('+size+' rafter, '+tr(p)+'/12 pitch, '+tr(W)+IN+' plate)\n'+
+    'Seat length: '+fmt(su)+IN+' ('+frac(su,'f')+')\n'+
+    'Heel plumb cut: '+fmt(hu)+IN+' ('+frac(hu,'f')+')\n'+
+    'Roof angle: '+fmt(deg,2)+'\u00b0\nPlumb cut angle from rafter edge: '+fmt(90-deg,2)+'\u00b0\n'+
+    'Max heel cut (1/4 depth): '+fmt(Math.floor(limit*1000)/1000)+IN+'\n'+
+    'Rafter depth left at notch: '+fmt(remain)+IN+
+    (ov>0?'\nTail length along top edge: '+fmt(tail)+IN:'')+
+    '\nStatus: '+(state==='ok'?'within limit':state==='adj'?'seat reduced to meet limit':'not recommended as entered');
+  const was=res.classList.contains('show');
+  res.innerHTML=html;
+  $('cprow').hidden=false;
+  const L={h:'h '+tr(hu)+IN,s:'seat '+tr(su)+IN,D:'D '+tr(D)+IN,ov:'overhang '+tr(ov)+IN,ang:'\u03b8 '+fmt(deg,1)+'\u00b0 ('+tr(p)+'/12)'};
+  drawDiagram({p:p,D:D,W:W,s:su,ov:ov,state:state,L:L});
+  if(!was)requestAnimationFrame(()=>requestAnimationFrame(()=>res.classList.add('show')));
+}
+
+$('f').addEventListener('submit',e=>{e.preventDefault();requestAnimationFrame(calculate);});
+$('pitchSlider').addEventListener('input',()=>{$('pitch').value=$('pitchSlider').value;requestAnimationFrame(calculate);});
+$('pitch').addEventListener('input',()=>{const v=Number($('pitch').value);if(!isNaN(v)&&v>=1&&v<=18)$('pitchSlider').value=v;});
+['pitch','plate','seat','over'].forEach(id=>$(id).addEventListener('input',()=>setErr(id,'')));
+$('copyBtn').addEventListener('click',()=>{
+  const b=$('copyBtn');
+  const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results';},2000);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,()=>{});}
+  else{const a=document.createElement('textarea');a.value=lastText;document.body.appendChild(a);a.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(a);}
+});
+$('yr').textContent=new Date().getFullYear();
+drawDiagram(GEN);
+requestAnimationFrame(calculate);
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
