@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar Panel Calculator (System Size &amp; Number of Panels)</title>
+<meta name="description" content="Free solar panel calculator: find the system size in kW and how many solar panels you need from your electricity use, sun hours and panel wattage.">
+<link rel="canonical" href="https://toolwick.com/solar-panel-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #e0e0e0}
+nav a{font-weight:700;font-size:1.1rem;color:#0077b6;text-decoration:none}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 1rem}
+h2{font-size:1.4rem;margin:2.5rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.75rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6;text-decoration:underline}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;fill:#1a1a2e}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+.val{color:#0077b6;font-weight:700}
+input[type=number],select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input[type=number]:focus,select:focus{outline:2px solid #0077b6;outline-offset:0;border-color:#0077b6}
+input[type=range]{width:100%;height:44px;margin:0;accent-color:#0077b6}
+input[type=range]:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.field{margin-bottom:1.25rem}
+.row{display:flex;gap:1rem}
+.row>*{flex:1}
+.row>.sm{flex:0 0 42%}
+.bad{border-color:#e74c3c!important}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.ticks{display:flex;justify-content:space-between;flex-wrap:wrap;font-size:.8rem;color:#666}
+.hint{font-size:.82rem;color:#666;margin:.35rem 0 0}
+button{font-family:inherit;font-size:1rem;cursor:pointer}
+.btn{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-weight:600}
+.btn:hover{background:#006299}
+.copy{min-height:44px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.9rem;margin-top:1rem}
+.copy:hover{background:#f0f8fc}
+#results{opacity:0;transition:opacity .3s ease;margin-top:1.5rem}
+#results.show{opacity:1}
+.big{text-align:center;background:#f8f9fa;border-radius:8px;padding:1.25rem 1rem;margin-bottom:1.25rem}
+.big .num{display:block;font-size:3rem;line-height:1.1;font-weight:800;color:#0077b6}
+.big .sub{color:#444;font-size:.95rem}
+.bar{height:14px;background:#e8eef2;border-radius:7px;overflow:hidden;margin:.4rem 0 .25rem}
+.bar span{display:block;height:100%;background:#0077b6}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.hl td{font-weight:700;color:#0077b6}
+.note{background:#fff8e6;border:1px solid #f0d890;border-radius:6px;padding:.9rem 1rem;font-size:.85rem;color:#4a3b00;margin-top:1rem}
+.formula{background:#f8f9fa;border-left:3px solid #0077b6;padding:.9rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;margin:0 0 1rem;overflow-x:auto;white-space:pre-wrap}
+details{border-bottom:1px solid #e0e0e0;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .5rem}
+ul{padding-left:1.25rem;margin:0 0 1rem}
+li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.rel li{margin:0}
+.rel a{display:flex;align-items:center;min-height:44px;padding:8px 12px;background:#f8f9fa;border-radius:6px}
+.ad-slot{min-height:0;margin:0}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.88rem;color:#666}
+footer a{margin-right:1rem}
+@media(max-width:640px){
+.row{flex-direction:column;gap:0}
+.row>.sm{flex:1}
+.rel{grid-template-columns:1fr}
+h1{font-size:1.6rem}
+}
+@media(max-width:480px){.card{padding:1.25rem}.big .num{font-size:2.5rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/solar-panel-calculator/">
+<meta property="og:title" content="Solar Panel Calculator (System Size &amp; Number of Panels)">
+<meta property="og:description" content="Free solar panel calculator: find the system size in kW and how many solar panels you need from your electricity use, sun hours and panel wattage.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<main>
+<h1>Solar Panel Calculator (System Size &amp; Number of Panels)</h1>
+<p>Use this free solar panel calculator to find the system size you need in kilowatts and exactly how many panels it takes to cover your electricity use. Enter your usage, local sun hours and panel wattage to get panel count, roof area, inverter size and a minimum breaker, all rounded up to the safe side.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="diagram" viewBox="0 0 420 250" role="img" aria-label="Solar array layout diagram. Enter your usage and press Calculate to see your panel layout.">
+<title>Solar array layout diagram</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<rect x="100" y="50" width="300" height="140" rx="4" fill="#fff" stroke="#e0e0e0" stroke-dasharray="6 4"/>
+<g stroke="#0077b6" stroke-width="2" fill="none" stroke-linecap="round"><circle cx="38" cy="40" r="12"/><path d="M38 18v5M38 57v5M16 40h5M55 40h5M22.4 24.4l3.5 3.5M50.1 52.1l3.5 3.5M22.4 55.6l3.5-3.5M50.1 27.9l3.5-3.5"/></g>
+<g stroke="#0077b6" stroke-width="1.5" stroke-dasharray="3 4" opacity=".6"><line x1="58" y1="58" x2="96" y2="82"/><line x1="50" y1="64" x2="96" y2="110"/></g>
+<g id="dg"></g>
+</svg>
+</div>
+
+<div class="field">
+<label for="usage">Electricity use</label>
+<div class="row">
+<div><input type="number" id="usage" inputmode="decimal" min="0" step="any" value="900" aria-describedby="e-usage"></div>
+<div class="sm"><select id="unit" aria-label="Usage period"><option value="m">kWh per month</option><option value="y">kWh per year</option></select></div>
+</div>
+<div class="err" id="e-usage"></div>
+<p class="hint">Find this on your utility bill. A 12-month average is best.</p>
+</div>
+
+<div class="field">
+<label for="sun">Peak sun hours per day: <span id="sunOut" class="val">5.0</span></label>
+<input type="range" id="sun" min="2" max="7" step="0.1" value="5">
+<div class="ticks"><span>2 (low)</span><span>4.5</span><span>7 (high)</span></div>
+<p class="hint">Typical US values: Seattle ~3.5, Chicago ~4.2, Denver ~5.5, Phoenix ~6.5.</p>
+</div>
+
+<div class="row">
+<div class="field">
+<label for="watts">Panel wattage (W)</label>
+<input type="number" id="watts" inputmode="decimal" min="100" max="800" step="any" value="400" aria-describedby="e-watts">
+<div class="err" id="e-watts"></div>
+</div>
+<div class="field">
+<label for="derate">System efficiency (%)</label>
+<input type="number" id="derate" inputmode="decimal" min="50" max="100" step="any" value="80" aria-describedby="e-derate">
+<div class="err" id="e-derate"></div>
+</div>
+</div>
+
+<div class="field">
+<label for="offset">Share of usage to offset: <span id="offOut" class="val">100%</span></label>
+<input type="range" id="offset" min="10" max="120" step="5" value="100">
+<div class="ticks"><span>10%</span><span>100%</span><span>120%</span></div>
+</div>
+
+<div class="row">
+<div class="field">
+<label for="cpw">Installed cost ($ per watt, optional)</label>
+<input type="number" id="cpw" inputmode="decimal" min="0" step="any" value="2.75" aria-describedby="e-cpw">
+<div class="err" id="e-cpw"></div>
+</div>
+<div class="field">
+<label for="rate">Electricity rate ($ per kWh, optional)</label>
+<input type="number" id="rate" inputmode="decimal" min="0" step="any" value="0.16" aria-describedby="e-rate">
+<div class="err" id="e-rate"></div>
+</div>
+</div>
+
+<button type="button" class="btn" id="calcBtn">Calculate Solar Panels</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<button type="button" class="copy" id="copyBtn" hidden>Copy results</button>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Solar Panel Calculator</h2>
+<p>Enter your electricity use from a utility bill, set the peak sun hours for your location with the slider, and type the wattage printed on the panels you are considering. The calculator returns the number of panels (always rounded up), the installed system size in kW, estimated yearly production, roof area, inverter size, and a minimum breaker. Cost and payback appear if you fill in the optional price fields. Change any input and the results update.</p>
+
+<h2>Why This Matters</h2>
+<p>Going solar is one of the largest purchases a homeowner makes, often $15,000 to $30,000 before incentives, so sizing it correctly pays off. Too small, and you keep buying power from the utility that you meant to replace. Too large, and you pay for capacity you cannot use, because many utilities credit exported power at less than the retail rate.</p>
+<p>Location changes the answer a lot. A home using 900 kWh a month needs about 7.4 kW of panels at five peak sun hours, but about 10.6 kW at Seattle's roughly 3.5 hours. That is the difference between 19 panels and 27. Planning an electric car (about 3,000 to 4,000 kWh a year) or a heat pump can add several more panels.</p>
+<p>Use this tool to sanity-check installer quotes, find out whether your roof has enough space before you book site visits, or compare 350 W and 500 W panels. It models a grid-tied system with no batteries.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator converts your target into the panel count that delivers it, using sun hours and a real-world efficiency factor:</p>
+<div class="formula">Annual kWh   = monthly kWh × 12 (if entered monthly)
+Target kWh   = Annual kWh × Offset %
+Required kW  = Target kWh ÷ (Sun hours × 365 × Efficiency %)
+Panels       = ROUNDUP(Required kW × 1,000 ÷ Panel watts)
+System kW    = Panels × Panel watts ÷ 1,000
+Production   = System kW × Sun hours × 365 × Efficiency %</div>
+<p><strong>Peak sun hours</strong> are the number of hours per day at a standard 1,000 W/m² intensity. They are not daylight hours. <strong>System efficiency</strong> (default 80%) covers inverter loss, wiring, heat, dust, and shading. Newer systems in clear locations may reach 85%, while shaded or hot-climate roofs can fall below 75%.</p>
+<p><strong>Roof area</strong> assumes about 19 W of panel per square foot (a 400 W panel covers roughly 21 sq ft), plus 25% for fire-code pathways, setbacks and spacing. <strong>Inverter size</strong> uses a DC-to-AC ratio of 1.2, rounded up to the next 0.5 kW. The AC current assumes 240 V single-phase. The <strong>minimum breaker</strong> is the inverter's AC amps multiplied by 125% for continuous output (NEC 690.8 and 705, 2020/2023 editions), then rounded up to the next standard breaker size. Roof setbacks follow the general intent of IRC R324. Local adoption and amendments vary, and your utility and inspector have the final say.</p>
+
+<h2>Worked Example</h2>
+<p>A household uses 900 kWh per month, has 5 peak sun hours, 400 W panels, 80% efficiency, a 100% offset target, $2.75 per watt installed, and $0.16 per kWh.</p>
+<ul>
+<li><strong>Annual use:</strong> 900 × 12 = 10,800 kWh.</li>
+<li><strong>Daily-to-yearly factor:</strong> 5 × 365 × 0.80 = 1,460 kWh per kW installed.</li>
+<li><strong>Required size:</strong> 10,800 ÷ 1,460 = 7.40 kW.</li>
+<li><strong>Panels:</strong> 7,397 W ÷ 400 W = 18.49, rounded up to <strong>19 panels</strong>.</li>
+<li><strong>Installed size:</strong> 19 × 400 W = 7.60 kW, producing 7.6 × 1,460 = 11,096 kWh a year (103% of use).</li>
+<li><strong>Roof area:</strong> 19 × 400 ÷ 19 = 400 sq ft of panels, or 500 sq ft with the 25% allowance.</li>
+<li><strong>Inverter:</strong> 7.6 ÷ 1.2 = 6.33 kW, rounded up to 6.5 kW. That is 27.1 A at 240 V, ×1.25 = 33.9 A, so a 35 A breaker minimum.</li>
+<li><strong>Cost and payback:</strong> 7,600 W × $2.75 = $20,900. Savings are 10,800 × $0.16 = $1,728 a year, so payback is about 12.1 years before incentives.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use 12 months of bills, not one.</strong> A single summer or winter bill can be 40% off your true annual average.</li>
+<li><strong>Do not confuse sun hours with daylight.</strong> Ten hours of daylight might equal only 4 to 5 peak sun hours. Use a local figure from NREL's PVWatts or your installer.</li>
+<li><strong>Account for shade, tilt and direction.</strong> A roof facing east or west, or shaded by trees after 2 p.m., can cut output 10 to 25%. Lower the efficiency input to model it.</li>
+<li><strong>Plan for future loads.</strong> An EV, heat pump or pool can add thousands of kWh. It is cheaper to add panels during the first install than later.</li>
+<li><strong>Check panel limits.</strong> Your main panel's busbar rating limits how large a breaker you can backfeed (the NEC 705.12 "120% rule"). Roof structure and wind or snow loads also need checking. Have a licensed electrician or engineer verify both.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many solar panels do I need to power a house?</summary><p>Most US homes need 15 to 25 panels of 400 W, depending on usage and sun hours. A house using 900 kWh a month at 5 sun hours needs about 19 panels. Enter your own numbers above for a tailored count.</p></details>
+<details><summary>How many panels do I need for 1,000 kWh per month?</summary><p>At 5 peak sun hours and 80% efficiency, 12,000 kWh a year needs about 8.2 kW, or 21 panels of 400 W. In a 4-hour location it rises to about 26 panels. The sun hours slider shows the effect.</p></details>
+<details><summary>How much power does one 400 W panel produce per day?</summary><p>With 5 peak sun hours and 80% efficiency, a 400 W panel yields about 1.6 kWh per day, or roughly 584 kWh per year. Cloudy regions may see less than half of that in winter.</p></details>
+<details><summary>What are peak sun hours?</summary><p>Peak sun hours measure how much solar energy your location receives, expressed as hours of full-intensity sunlight (1,000 W/m²) per day. Most of the US falls between 3.5 and 6.5. It is a standard figure for sizing a solar system.</p></details>
+<details><summary>Should I offset 100% of my electricity use?</summary><p>Not always. If your utility pays little for exported power, sizing for 80 to 90% can give a better return. If you plan to add an EV or heat pump, sizing above 100% makes sense. Use the offset slider to compare.</p></details>
+<details><summary>Can this replace a professional solar quote?</summary><p>No. It is a planning estimate. A licensed installer must assess your roof, shading, structure, electrical panel and local code requirements, and a permit and inspection are normally required before you connect to the grid.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/birdsmouth-cut-calculator/">Birdsmouth Cut Calculator</a></li>
+<li><a href="/drywall-texture-coverage-calculator/">Drywall Texture Coverage Calculator</a></li>
+<li><a href="/window-replacement-cost-calculator/">Window Replacement Cost Calculator</a></li>
+<li><a href="/basement-finishing-cost-calculator/">Basement Finishing Cost Calculator</a></li>
+<li><a href="/culvert-pipe-size-calculator/">Culvert Pipe Size Calculator</a></li>
+<li><a href="/concrete-countertop-calculator/">Concrete Countertop Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/solar-panel-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var fmt=function(n,d){return Number(n).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0})};
+var money=function(n){return '$'+fmt(Math.round(n))};
+var BR=[15,20,25,30,35,40,45,50,60,70,80,90,100,110,125,150,175,200];
+var res=$('results'),copyBtn=$('copyBtn'),shown=false,lastText='';
+$('yr').textContent=new Date().getFullYear();
+
+function num(id){var v=$(id).value.trim();return v===''?NaN:Number(v)}
+function err(id,msg){
+  var el=$(id),e=$('e-'+id);
+  if(msg){el.classList.add('bad');el.setAttribute('aria-invalid','true');e.textContent=msg}
+  else{el.classList.remove('bad');el.removeAttribute('aria-invalid');e.textContent=''}
+}
+
+function drawDiagram(d,sun){
+  var n=d?d.panels:12,sh=Math.min(n,100),cols=Math.min(10,Math.ceil(Math.sqrt(sh))),rows=Math.ceil(sh/cols);
+  var x0=100,y0=50,W=300,H=140,p=6;
+  var cw=Math.min((W-2*p)/cols,2*(H-2*p)/rows),ch=cw/2,aw=cw*cols,ah=ch*rows,ox=x0+(W-aw)/2,oy=y0+(H-ah)/2;
+  var s='',i,r,c;
+  for(i=0;i<sh;i++){
+    r=Math.floor(i/cols);c=i%cols;
+    s+='<rect x="'+(ox+c*cw+1).toFixed(1)+'" y="'+(oy+r*ch+1).toFixed(1)+'" width="'+(cw-2).toFixed(1)+'" height="'+(ch-2).toFixed(1)+'" fill="'+(d?'#cfe6f3':'#eef3f6')+'" stroke="#0077b6" stroke-width="1"/>';
+  }
+  var ph=d?Math.sqrt(d.watts/19/2):0;
+  var wt=d?'\u2248'+fmt(cols*2*ph,1)+' ft':'width',ht=d?'\u2248'+fmt(rows*ph,1)+' ft':'height';
+  s+='<g stroke="#e0e0e0" stroke-width="1"><line x1="'+ox+'" y1="'+(oy-12)+'" x2="'+ox+'" y2="'+oy+'"/><line x1="'+(ox+aw)+'" y1="'+(oy-12)+'" x2="'+(ox+aw)+'" y2="'+oy+'"/><line x1="'+(ox-12)+'" y1="'+oy+'" x2="'+ox+'" y2="'+oy+'"/><line x1="'+(ox-12)+'" y1="'+(oy+ah)+'" x2="'+ox+'" y2="'+(oy+ah)+'"/></g>';
+  s+='<g stroke="#0077b6" stroke-width="1.5"><line x1="'+ox+'" y1="'+(oy-10)+'" x2="'+(ox+aw)+'" y2="'+(oy-10)+'" marker-start="url(#ar)" marker-end="url(#ar)"/><line x1="'+(ox-10)+'" y1="'+oy+'" x2="'+(ox-10)+'" y2="'+(oy+ah)+'" marker-start="url(#ar)" marker-end="url(#ar)"/></g>';
+  s+='<text x="'+(ox+aw/2)+'" y="'+(oy-15)+'" text-anchor="middle" font-size="14">'+wt+'</text>';
+  s+='<text transform="translate('+(ox-16)+','+(oy+ah/2)+') rotate(-90)" text-anchor="middle" font-size="14">'+ht+'</text>';
+  var t1=d?fmt(d.panels)+' panels \u00d7 '+fmt(d.watts)+' W = '+fmt(d.kw,2)+' kW DC':'Your array layout appears here';
+  var t2=d?'\u2248 '+fmt(d.roof)+' sq ft roof \u00b7 '+sun.toFixed(1)+' sun hrs/day':'Enter your usage, then press Calculate';
+  if(d&&n>100)t2='\u2248 '+fmt(d.roof)+' sq ft roof \u00b7 100 of '+fmt(n)+' panels drawn';
+  s+='<text x="210" y="217" text-anchor="middle" font-size="15" font-weight="700">'+t1+'</text>';
+  s+='<text x="210" y="238" text-anchor="middle" font-size="13">'+t2+'</text>';
+  $('dg').innerHTML=s;
+  $('diagram').setAttribute('aria-label',d?'Solar array layout: '+t1+', '+t2+'. Array size is approximate.':'Solar array layout diagram. Enter your usage and press Calculate to see your panel layout.');
+}
+
+function calc(live){
+  var bad=null;
+  function chk(id,ok,msg){err(id,ok?'':msg);if(!ok&&!bad)bad=id}
+  var u=num('usage'),unit=$('unit').value,sun=+$('sun').value,w=num('watts'),dr=num('derate'),off=+$('offset').value;
+  var cr=$('cpw').value.trim(),rr=$('rate').value.trim();
+  var cpw=cr===''?null:Number(cr),rate=rr===''?null:Number(rr);
+  var annual=u*(unit==='m'?12:1);
+  chk('usage',isFinite(u)&&u>0&&annual<=2000000,'Enter electricity use above 0 and up to 2,000,000 kWh per year (for example, 900 per month).');
+  chk('watts',isFinite(w)&&w>=100&&w<=800,'Enter panel wattage between 100 and 800 W. Most home panels are 350 to 450 W.');
+  chk('derate',isFinite(dr)&&dr>=50&&dr<=100,'Enter an efficiency between 50 and 100%. 75 to 85% is typical.');
+  chk('cpw',cpw===null||(isFinite(cpw)&&cpw>=0&&cpw<=20),'Enter a cost between $0 and $20 per watt, or leave it blank.');
+  chk('rate',rate===null||(isFinite(rate)&&rate>=0&&rate<=5),'Enter a rate between $0 and $5 per kWh, or leave it blank.');
+  if(bad){
+    res.innerHTML='';res.classList.remove('show');copyBtn.hidden=true;shown=false;lastText='';
+    drawDiagram(null,sun);$(bad).focus();return;
+  }
+  var f=sun*365*dr/100,target=annual*off/100;
+  var pn=function(wt,fa){return Math.max(1,Math.ceil(target/(wt/1000*fa)-1e-9))};
+  var panels=pn(w,f),reqKW=target/f,kw=panels*w/1000,prod=kw*f,offAch=prod/annual*100;
+  var arrArea=panels*w/19,roof=arrArea*1.25;
+  var invKW=Math.max(0.5,Math.ceil(kw/1.2*2-1e-9)/2),amps=invKW*1000/240,minBr=amps*1.25;
+  var br=null,k;for(k=0;k<BR.length;k++){if(BR[k]>=minBr-1e-9){br=BR[k];break}}
+  var brTxt=br?br+' A':'Over 200 A: engineered design required';
+  var h='<h2 style="margin-top:0">Your solar panel estimate</h2>';
+  h+='<div class="big"><span class="num">'+fmt(panels)+'</span><span class="sub">solar panels of '+fmt(w)+' W<br>= <strong>'+fmt(kw,2)+' kW</strong> DC system (rounded up from '+fmt(reqKW,2)+' kW needed)</span></div>';
+  h+='<p style="margin:0">Estimated production vs. your usage: <strong>'+fmt(offAch,1)+'%</strong></p><div class="bar" role="img" aria-label="Production covers '+fmt(offAch,0)+' percent of usage"><span style="width:'+Math.min(100,offAch).toFixed(1)+'%"></span></div><p class="hint" style="margin-bottom:1rem">Bar is capped at 100%.</p>';
+  var r=function(a,b){return '<tr><td>'+a+'</td><td class="n">'+b+'</td></tr>'};
+  var t='';
+  t+=r('Annual electricity use',fmt(annual)+' kWh');
+  t+=r('Target offset',fmt(off)+'% ('+fmt(target)+' kWh)');
+  t+=r('Required system size',fmt(reqKW,2)+' kW');
+  t+=r('Installed system size',fmt(kw,2)+' kW DC');
+  t+=r('Est. annual production',fmt(prod)+' kWh');
+  t+=r('Est. average per month',fmt(prod/12)+' kWh');
+  t+=r('Panel area',fmt(arrArea)+' sq ft');
+  t+=r('Roof area incl. 25% setbacks',fmt(roof)+' sq ft');
+  t+=r('Suggested inverter (DC/AC 1.2)',fmt(invKW,1)+' kW AC');
+  t+=r('Inverter AC current at 240 V',fmt(amps,1)+' A');
+  t+=r('Minimum breaker (125%, rounded up)',brTxt);
+  var cost=null,sav=null;
+  if(cpw!==null){cost=kw*1000*cpw;t+=r('Estimated installed cost',money(cost)+' before incentives')}
+  if(rate!==null){sav=Math.min(prod,annual)*rate;t+=r('Est. annual savings',money(sav))}
+  var pay=(cost!==null&&sav!==null&&sav>0)?cost/sav:null;
+  if(pay!==null)t+=r('Simple payback',fmt(pay,1)+' years');
+  h+='<div class="tw"><table><thead><tr><th>Result</th><th class="n">Value</th></tr></thead><tbody>'+t+'</tbody></table></div>';
+  var ws=[300,350,400,450,500],q;if(ws.indexOf(w)<0){ws.push(w);ws.sort(function(a,b){return a-b})}
+  t='';
+  for(k=0;k<ws.length;k++){q=pn(ws[k],f);t+='<tr'+(ws[k]===w?' class="hl"':'')+'><td>'+fmt(ws[k])+' W'+(ws[k]===w?' (yours)':'')+'</td><td class="n">'+fmt(q)+'</td><td class="n">'+fmt(q*ws[k]/1000,2)+'</td><td class="n">'+fmt(q*ws[k]/19*1.25)+'</td></tr>'}
+  h+='<h3>Compare panel sizes</h3><div class="tw"><table><thead><tr><th>Panel</th><th class="n">Panels</th><th class="n">kW DC</th><th class="n">Roof sq ft</th></tr></thead><tbody>'+t+'</tbody></table></div>';
+  var ss=[3,4,5,6],sk=sun.toFixed(1);
+  if(ss.indexOf(+sk)<0){ss.push(+sk);ss.sort(function(a,b){return a-b})}
+  t='';
+  for(k=0;k<ss.length;k++){q=pn(w,ss[k]*365*dr/100);t+='<tr'+(ss[k]===+sk?' class="hl"':'')+'><td>'+ss[k].toFixed(1)+' hrs'+(ss[k]===+sk?' (yours)':'')+'</td><td class="n">'+fmt(q)+'</td><td class="n">'+fmt(q*w/1000,2)+'</td></tr>'}
+  h+='<h3>How sun hours change the answer</h3><div class="tw"><table><thead><tr><th>Peak sun hours</th><th class="n">Panels</th><th class="n">kW DC</th></tr></thead><tbody>'+t+'</tbody></table></div>';
+  var nt='Panels, roof area, inverter and breaker are rounded up. Formulas follow common rules of thumb and the NEC 2020/2023 (Articles 690 and 705, 125% continuous rule) with IRC R324 roof-access intent. Local codes and utilities vary. The backfed breaker must also satisfy your panel\u2019s busbar limit (NEC 705.12). This estimate is not engineering, permit or inspection approval; have a licensed professional verify the design.';
+  if(kw>10)nt+=' Systems above about 10 kW often need extra utility interconnection review.';
+  h+='<div class="note">'+nt+'</div>';
+  lastText='Solar Panel Calculator results (toolwick.com)\n'+fmt(panels)+' panels x '+fmt(w)+' W = '+fmt(kw,2)+' kW DC\nRequired size: '+fmt(reqKW,2)+' kW\nAnnual use: '+fmt(annual)+' kWh; production: '+fmt(prod)+' kWh ('+fmt(offAch,1)+'%)\nRoof area incl. setbacks: '+fmt(roof)+' sq ft\nInverter: '+fmt(invKW,1)+' kW AC ('+fmt(amps,1)+' A); min breaker: '+brTxt+(cost!==null?'\nCost: '+money(cost):'')+(sav!==null?'\nAnnual savings: '+money(sav):'')+(pay!==null?'\nPayback: '+fmt(pay,1)+' years':'');
+  res.innerHTML=h;
+  copyBtn.hidden=false;shown=true;
+  drawDiagram({panels:panels,watts:w,kw:kw,roof:roof},sun);
+  if(live){res.classList.add('show')}
+  else{res.classList.remove('show');requestAnimationFrame(function(){res.classList.add('show')})}
+}
+
+function go(live){requestAnimationFrame(function(){calc(live)})}
+$('calcBtn').addEventListener('click',function(){go(false)});
+['usage','unit','sun','watts','derate','offset','cpw','rate'].forEach(function(id){
+  $(id).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();go(false)}});
+});
+$('sun').addEventListener('input',function(){$('sunOut').textContent=(+this.value).toFixed(1);if(shown)go(true);else drawDiagram(null,+this.value)});
+$('offset').addEventListener('input',function(){$('offOut').textContent=this.value+'%';if(shown)go(true)});
+$('unit').addEventListener('change',function(){if(shown)go(true)});
+
+copyBtn.addEventListener('click',function(){
+  var done=function(){copyBtn.textContent='Copied!';setTimeout(function(){copyBtn.textContent='Copy results'},2000)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,fb)}else fb();
+  function fb(){var t=document.createElement('textarea');t.value=lastText;t.setAttribute('readonly','');t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(t)}
+});
+drawDiagram(null,5);
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
