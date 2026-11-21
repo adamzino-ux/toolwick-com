@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Pool Volume Calculator | Toolwick</title>
+<meta name="description" content="Free pool volume calculator: find gallons and liters for rectangle, round, oval and kidney pools with sloped depth, water level and fill time.">
+<link rel="canonical" href="https://toolwick.com/pool-volume-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Pool Volume Calculator", "url": "https://toolwick.com/pool-volume-calculator/", "description": "Free pool volume calculator: find gallons and liters for rectangle, round, oval and kidney pools with sloped depth, water level and fill time.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Pool Volume Calculator", "item": "https://toolwick.com/pool-volume-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many gallons are in a 16×32 pool?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on depth. A 16×32 ft rectangle averaging 4 ft of water holds about 15,300 gallons. With a 3.5 to 8 ft slope and the water 6 inches below the wall top, it is about 20,100 gallons."}}, {"@type": "Question", "name": "How do I calculate the volume of a round pool?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply π by the radius squared to get the area, then multiply by the water depth and by 7.48 for gallons. A 24 ft round pool with 4 ft of water holds about 13,500 gallons."}}, {"@type": "Question", "name": "How do I find the average depth of a sloped pool?", "acceptedAnswer": {"@type": "Answer", "text": "If the floor slopes evenly, add the shallow and deep depths and divide by two. If it has flat sections or a sudden drop, average each section and weight it by its share of the pool's length."}}, {"@type": "Question", "name": "Does the water level change the volume?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Each inch of water depth adds or removes surface area ÷ 12 cubic feet, then × 7.48 for gallons. On a 512 ft² pool that is about 319 gallons per inch, so use your real operating level."}}, {"@type": "Question", "name": "How long will it take to fill my pool?", "acceptedAnswer": {"@type": "Answer", "text": "Divide the volume by your flow rate. A typical garden hose delivers about 9 gallons per minute, so a 20,000-gallon pool takes around 37 hours. Check the flow with a bucket and a timer, since household pressure varies."}}, {"@type": "Question", "name": "Is this accurate enough for dosing chemicals?", "acceptedAnswer": {"@type": "Answer", "text": "For regular shapes it is usually within about 5%, less so for freeform pools with steps and benches. Dose from the low estimate, add chemicals in stages, and retest before adding more."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+[hidden]{display:none!important}
+nav{border-bottom:1px solid #eee}
+.nav-in{max-width:640px;margin:0 auto;padding:.9rem 1.5rem}
+nav a{font-weight:700;font-size:1.2rem;color:#0077b6;text-decoration:none;display:inline-block;min-height:44px;line-height:44px}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.9rem;line-height:1.2;margin:.5rem 0 1rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2.2rem 0 .75rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.f{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px;border-color:#0077b6}
+input[type=range]{padding:0;border:0;accent-color:#0077b6}
+.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.g{display:grid;gap:0 1rem}
+@media(min-width:641px){.g{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.65rem}}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.btn{display:block;width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:#006299}
+.btn:focus-visible,summary:focus-visible{outline:3px solid #1a1a2e;outline-offset:2px}
+.cp{display:inline-block;width:auto;min-height:44px;margin-top:1rem;background:#fff;color:#0077b6;border:1px solid #0077b6;font-size:.9rem;padding:8px 16px}
+.cp:hover{background:#f0f8fc}
+.dg{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.dg svg{display:block;width:100%;max-width:420px;height:auto;margin:0 auto}
+.lb{font-size:12px;fill:#1a1a2e}.sm{font-size:11px;fill:#666;font-weight:600;letter-spacing:.05em}
+.shp{fill:#e6f2f9;stroke:#0077b6;stroke-width:2}
+.dm{stroke:#0077b6;stroke-width:1.5;fill:none}
+.gd{stroke:#e0e0e0;stroke-width:1.5;stroke-dasharray:4 3}
+.results{opacity:0;transition:opacity .3s ease;margin-top:1.5rem}
+.results.in{opacity:1}.results:empty{display:none;margin:0}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center}
+.key .k{font-size:.85rem;color:#444;font-weight:500}
+.big{font-size:2.3rem;font-weight:800;color:#0077b6;line-height:1.15;overflow-wrap:anywhere}
+.key .s{color:#444;font-size:.95rem}
+.est{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:1rem 0}
+.est div{background:#f8f9fa;border-radius:8px;padding:.8rem;text-align:center;font-size:.8rem;color:#444}
+.est b{display:block;font-size:1.15rem;color:#1a1a2e}
+.rh{font-weight:700;margin:1.5rem 0 .5rem}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:.55rem .7rem;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:.55rem .7rem;border-bottom:1px solid #e8e8e8}
+tr:nth-child(even) td{background:#fafafa}
+.r{text-align:right}th.r{text-align:right}
+.note{font-size:.85rem;color:#555;background:#fff8e6;border-left:4px solid #e0a800;padding:.75rem 1rem;border-radius:4px;margin-top:1rem}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e8e8e8}
+summary{cursor:pointer;font-weight:600;padding:.75rem 0;min-height:44px}
+details p{padding-bottom:.5rem}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel li{margin-bottom:.6rem}
+footer{border-top:1px solid #eee;margin-top:2rem;padding:1.5rem 0;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;display:inline-block;padding:.5rem .25rem;min-height:44px}
+code{background:#f0f0f0;padding:2px 6px;border-radius:4px;font-size:.9em}
+.fm{background:#f8f9fa;border-radius:8px;padding:1rem;overflow-x:auto;font-size:.92rem}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/pool-volume-calculator/">
+<meta property="og:title" content="Pool Volume Calculator">
+<meta property="og:description" content="Free pool volume calculator: find gallons and liters for rectangle, round, oval and kidney pools with sloped depth, water level and fill time.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav><div class="nav-in"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Pool Volume Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This pool volume calculator tells you how many gallons or liters of water your pool holds. It handles rectangle, round, oval and kidney shapes, flat or sloped floors, and a water level below the wall top, so you can dose chemicals, plan a fill and size equipment from the right number.</p>
+
+<section class="card" aria-label="Pool volume calculator">
+<div class="dg">
+<svg id="diagram" viewBox="0 0 360 385" role="img" aria-labelledby="dgT dgD">
+<title id="dgT">Pool volume diagram</title>
+<desc id="dgD">Top view of the pool with its length and width, and a side view showing depth and water level. Labels update with your numbers.</desc>
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker>
+<clipPath id="pc"><polygon id="cp" points="50,225 310,225 310,325 50,325"/></clipPath>
+</defs>
+<text class="sm" x="10" y="18">TOP VIEW</text>
+<g id="g-rect">
+<rect class="shp" x="50" y="35" width="220" height="100"/>
+<line class="gd" x1="50" y1="135" x2="50" y2="156"/><line class="gd" x1="270" y1="135" x2="270" y2="156"/>
+<line class="dm" x1="50" y1="152" x2="270" y2="152" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="lb" id="rL" x="160" y="170" text-anchor="middle">L</text>
+<line class="gd" x1="270" y1="35" x2="292" y2="35"/><line class="gd" x1="270" y1="135" x2="292" y2="135"/>
+<line class="dm" x1="288" y1="35" x2="288" y2="135" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="lb" id="rW" transform="rotate(-90 304 85)" x="304" y="85" text-anchor="middle">W</text>
+</g>
+<g id="g-round" style="display:none">
+<circle class="shp" cx="160" cy="85" r="52"/>
+<line class="dm" x1="108" y1="85" x2="212" y2="85" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="lb" id="cD" x="160" y="78" text-anchor="middle">D</text>
+</g>
+<g id="g-oval" style="display:none">
+<ellipse class="shp" cx="160" cy="85" rx="110" ry="50"/>
+<line class="gd" x1="50" y1="85" x2="50" y2="156"/><line class="gd" x1="270" y1="85" x2="270" y2="156"/>
+<line class="dm" x1="50" y1="152" x2="270" y2="152" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="lb" id="oL" x="160" y="170" text-anchor="middle">L</text>
+<line class="gd" x1="160" y1="35" x2="292" y2="35"/><line class="gd" x1="160" y1="135" x2="292" y2="135"/>
+<line class="dm" x1="288" y1="35" x2="288" y2="135" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="lb" id="oW" transform="rotate(-90 304 85)" x="304" y="85" text-anchor="middle">W</text>
+</g>
+<g id="g-kidney" style="display:none">
+<path class="shp" d="M50 85C50 40 110 38 150 62C190 85 230 45 262 75C285 100 240 140 190 125C140 108 115 142 75 128C52 120 50 100 50 85Z"/>
+<line class="gd" x1="50" y1="110" x2="50" y2="156"/><line class="gd" x1="268" y1="100" x2="268" y2="156"/>
+<line class="dm" x1="50" y1="152" x2="268" y2="152" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="lb" id="kL" x="160" y="170" text-anchor="middle">L</text>
+<line class="dm" x1="87" y1="49" x2="87" y2="130" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="lb" id="kA" x="93" y="96">A</text>
+<line class="dm" x1="237" y1="64" x2="237" y2="122" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="lb" id="kB" x="231" y="96" text-anchor="end">B</text>
+</g>
+<text class="sm" x="10" y="205">SIDE VIEW</text>
+<line x1="20" y1="225" x2="340" y2="225" stroke="#e0e0e0" stroke-width="3"/>
+<g clip-path="url(#pc)"><rect id="wr" x="50" y="231" width="260" height="140" fill="#cfe8f5"/></g>
+<polygon id="pp" class="dm" style="stroke-width:2" points="50,225 310,225 310,325 50,325"/>
+<line id="wl" x1="50" y1="231" x2="310" y2="231" stroke="#0077b6" stroke-width="1.5" stroke-dasharray="5 3"/>
+<line id="dS" class="dm" x1="72" y1="225" x2="72" y2="300" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="lb" id="tS" x="78" y="266">Shallow</text>
+<line id="dD" class="dm" x1="292" y1="225" x2="292" y2="325" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="lb" id="tD" x="286" y="279" text-anchor="end">Deep</text>
+<text class="lb" id="wcap" x="180" y="352" text-anchor="middle">Water level</text>
+<text class="lb" id="vcap" x="180" y="372" text-anchor="middle" style="font-weight:700">Volume</text>
+</svg>
+</div>
+
+<div class="g">
+<div class="f"><label for="units">Units</label>
+<select id="units"><option value="imp">Imperial (feet, inches, gallons)</option><option value="met">Metric (meters, cm, liters)</option></select></div>
+<div class="f"><label for="shape">Pool shape</label>
+<select id="shape"><option value="rect">Rectangle</option><option value="round">Round</option><option value="oval">Oval</option><option value="kidney">Kidney</option></select></div>
+</div>
+
+<div class="g">
+<div class="f" id="w-len"><label for="len">Length, L (<span class="uL">ft</span>)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="32" aria-describedby="e-len"><div class="err" id="e-len" role="alert" hidden></div></div>
+<div class="f" id="w-wid"><label for="wid">Width, W (<span class="uL">ft</span>)</label><input id="wid" type="number" inputmode="decimal" step="any" min="0" value="16" aria-describedby="e-wid"><div class="err" id="e-wid" role="alert" hidden></div></div>
+<div class="f" id="w-dia" hidden><label for="dia">Diameter, D (<span class="uL">ft</span>)</label><input id="dia" type="number" inputmode="decimal" step="any" min="0" value="20" aria-describedby="e-dia"><div class="err" id="e-dia" role="alert" hidden></div></div>
+<div class="f" id="w-ka" hidden><label for="ka">Width A, widest point of one lobe (<span class="uL">ft</span>)</label><input id="ka" type="number" inputmode="decimal" step="any" min="0" value="14" aria-describedby="e-ka"><div class="err" id="e-ka" role="alert" hidden></div></div>
+<div class="f" id="w-kb" hidden><label for="kb">Width B, widest point of other lobe (<span class="uL">ft</span>)</label><input id="kb" type="number" inputmode="decimal" step="any" min="0" value="11" aria-describedby="e-kb"><div class="err" id="e-kb" role="alert" hidden></div></div>
+</div>
+
+<div class="f"><label for="profile">Floor profile</label>
+<select id="profile"><option value="slope">Sloped (shallow end to deep end)</option><option value="flat">Flat (same depth throughout)</option></select></div>
+
+<div class="g">
+<div class="f"><label for="shallow" id="lb-shallow">Shallow-end depth</label><input id="shallow" type="number" inputmode="decimal" step="any" min="0" value="3.5" aria-describedby="e-shallow"><div class="err" id="e-shallow" role="alert" hidden></div></div>
+<div class="f" id="w-deep"><label for="deep">Deep-end depth</label><input id="deep" type="number" inputmode="decimal" step="any" min="0" value="8" aria-describedby="e-deep"><div class="err" id="e-deep" role="alert" hidden></div></div>
+</div>
+<p style="font-size:.85rem;color:#555;margin-top:-.4rem">Depths are measured from the top of the pool wall, in <span class="uL">ft</span>.</p>
+
+<div class="f"><label for="drop">Water level below top of wall: <output id="dropOut" for="drop">6 in</output></label>
+<input id="drop" type="range" min="0" max="24" step="1" value="6" aria-describedby="e-drop">
+<div class="ticks" aria-hidden="true"><span>0</span><span id="tk2">12 in</span><span id="tk3">24 in</span></div>
+<div class="err" id="e-drop" role="alert" hidden></div></div>
+
+<div class="f"><label for="flow">Hose or fill flow rate, optional (<span class="uF">gal/min</span>)</label><input id="flow" type="number" inputmode="decimal" step="any" min="0" value="9" aria-describedby="e-flow"><div class="err" id="e-flow" role="alert" hidden></div></div>
+
+<button class="btn" id="calcBtn" type="button">Calculate Pool Volume</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" class="results" aria-live="polite" aria-atomic="true"></div>
+</section>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/pool-volume-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Pool Volume Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/pool-volume-calculator/&quot;&gt;Pool Volume Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/pool-volume-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Pool Volume Calculator</h2>
+<p>Choose your units and pool shape, then enter the measurements shown in the diagram: length and width for rectangles and ovals, diameter for round pools, or length plus the two widest points (A and B) for a kidney shape. Pick a flat or sloped floor, enter the depths, set how far the water sits below the top of the wall, and add your hose flow rate if you want a fill time. Press Calculate to see volume in gallons, liters, cubic feet and cubic meters, a low and high estimate, the weight of the water, and a table showing how volume changes with water level.</p>
+
+<h2>Why This Matters</h2>
+<p>Almost every decision about a pool starts with its volume. Chemical doses are printed per 10,000 gallons, so a 25% error in volume is a 25% error in every dose. Too little leaves algae and bacteria unchecked; too much can irritate skin and eyes and damage liners and equipment. Pump and filter sizing works the same way: to turn over the whole pool in eight hours, a 20,000-gallon pool needs about 42 gallons per minute through the system.</p>
+<p>Volume also drives money and logistics. Water delivery trucks charge by the gallon, heaters are sized by how many gallons they must raise a few degrees, and winter covers, salt systems and liners are all specified by capacity. Then there is weight: water is about 8.34 pounds per US gallon, so a 20,000-gallon pool holds more than 80 tons. That matters for above-ground pool walls, decks and rooftop installations. Whether you are a new owner topping off after a storm, a buyer comparing listings, or a contractor quoting a fill, a reliable volume figure saves chemicals, water and time.</p>
+
+<h2>How It's Calculated</h2>
+<p>Pool volume is surface area multiplied by average water depth. The calculator finds the area from your shape, averages the depth, subtracts the gap between the water and the top of the wall, then converts cubic units to gallons and liters.</p>
+<div class="fm">
+Rectangle: <code>area = L × W</code><br>
+Round: <code>area = π × (D ÷ 2)²</code><br>
+Oval: <code>area = 0.7854 × L × W</code><br>
+Kidney: <code>area = 0.45 × (A + B) × L</code><br>
+Average wall depth (sloped floor): <code>(shallow + deep) ÷ 2</code><br>
+Water depth: <code>average wall depth − water level drop</code><br>
+Volume: <code>area × water depth</code><br>
+US gallons: <code>cubic feet × 7.48052</code> &nbsp; Liters: <code>cubic meters × 1,000</code>
+</div>
+<p style="margin-top:1rem">These are standard geometric formulas and pool-industry rules of thumb. They are not tied to any building-code edition, and local codes and health regulations vary. The kidney factor of 0.45 is an approximation, and real pools with steps, benches or a deep-end drop will differ. The sloped-floor average assumes one constant slope from shallow to deep.</p>
+<p>The tool shows the calculated volume plus a low estimate (−5%) and a high estimate (+5%). Use the lower number for chemical dosing, so you never overdose, and the higher number for sizing fill, pump flow, heaters and covers. This is a planning estimate only, not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>Take a rectangular pool 32 ft long and 16 ft wide. The floor slopes from 3.5 ft at the shallow end to 8 ft at the deep end, and the water sits 6 inches below the top of the wall. These are the calculator's default values.</p>
+<ul>
+<li><strong>Surface area:</strong> 32 × 16 = 512 ft².</li>
+<li><strong>Average wall depth:</strong> (3.5 + 8) ÷ 2 = 5.75 ft.</li>
+<li><strong>Water depth:</strong> 5.75 − 0.5 ft (6 in) = 5.25 ft.</li>
+<li><strong>Volume:</strong> 512 × 5.25 = 2,688 ft³.</li>
+<li><strong>Gallons:</strong> 2,688 × 7.48052 ≈ 20,108 US gallons (about 76,116 liters or 76.12 m³).</li>
+<li><strong>Range:</strong> −5% is 19,102 gallons for dosing, and +5% is 21,113 gallons for sizing.</li>
+<li><strong>Fill time:</strong> 21,113 ÷ 9 gal/min ≈ 2,346 minutes, or about 39.1 hours on a standard garden hose.</li>
+<li><strong>Weight:</strong> about 167,800 lb, or roughly 84 tons.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Measure the water, not the coping.</strong> Take length and width at the inside waterline, and measure depth from the top of the wall to the floor, not from the deck.</li>
+<li><strong>Don't ignore the water level.</strong> Skimmer pools usually run 4 to 6 inches below the wall top. On a 512 ft² pool, every inch is about 319 gallons.</li>
+<li><strong>Handle flat sections separately.</strong> If the pool has a long flat shallow area, a slope and a flat deep area, average each section and weight it by its share of the length rather than using one simple average.</li>
+<li><strong>Dose in stages.</strong> Use the low estimate, add roughly half the calculated chemical, circulate, retest and adjust. Always follow the product label.</li>
+<li><strong>Check against a water meter.</strong> Reading the meter or a calibrated bucket during one fill is the best way to confirm your pool's true volume.</li>
+<li><strong>Get advice before draining.</strong> Emptying an in-ground pool can let groundwater lift or crack the shell. Ask a pool professional first.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many gallons are in a 16×32 pool?</summary><p>It depends on depth. A 16×32 ft rectangle averaging 4 ft of water holds about 15,300 gallons. With a 3.5 to 8 ft slope and the water 6 inches below the wall top, it is about 20,100 gallons.</p></details>
+<details><summary>How do I calculate the volume of a round pool?</summary><p>Multiply π by the radius squared to get the area, then multiply by the water depth and by 7.48 for gallons. A 24 ft round pool with 4 ft of water holds about 13,500 gallons.</p></details>
+<details><summary>How do I find the average depth of a sloped pool?</summary><p>If the floor slopes evenly, add the shallow and deep depths and divide by two. If it has flat sections or a sudden drop, average each section and weight it by its share of the pool's length.</p></details>
+<details><summary>Does the water level change the volume?</summary><p>Yes. Each inch of water depth adds or removes surface area ÷ 12 cubic feet, then × 7.48 for gallons. On a 512 ft² pool that is about 319 gallons per inch, so use your real operating level.</p></details>
+<details><summary>How long will it take to fill my pool?</summary><p>Divide the volume by your flow rate. A typical garden hose delivers about 9 gallons per minute, so a 20,000-gallon pool takes around 37 hours. Check the flow with a bucket and a timer, since household pressure varies.</p></details>
+<details><summary>Is this accurate enough for dosing chemicals?</summary><p>For regular shapes it is usually within about 5%, less so for freeform pools with steps and benches. Dose from the low estimate, add chemicals in stages, and retest before adding more.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/excavation-earthwork-volume-calculator/">Excavation &amp; Earthwork Volume Calculator</a></li>
+<li><a href="/concrete-volume-calculator/">Concrete Volume Calculator</a></li>
+<li><a href="/solar-panel-calculator/">Solar Panel Calculator (System Size &amp; Number of Panels)</a></li>
+<li><a href="/birdsmouth-cut-calculator/">Birdsmouth Cut Calculator</a></li>
+<li><a href="/drywall-texture-coverage-calculator/">Drywall Texture Coverage Calculator</a></li>
+<li><a href="/window-replacement-cost-calculator/">Window Replacement Cost Calculator</a></li>
+</ul>
+
+<div class="ad-slot" id="ad-bottom"></div>
+</main>
+<footer><div class="wrap" style="padding-top:0;padding-bottom:0">
+<a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a>
+<div>© <span id="yr">2025</span> toolwick.com</div>
+</div></footer>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var NUMF=['len','wid','dia','ka','kb','shallow','deep'];
+var SH={rect:['len','wid'],round:['dia'],oval:['len','wid'],kidney:['len','ka','kb']};
+var NAMES={rect:'Rectangle',round:'Round',oval:'Oval',kidney:'Kidney'};
+var prevImp=true,shown=false,lastText='';
+function f(v,d){d=d||0;return v.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function t(v){return v.toLocaleString('en-US',{maximumFractionDigits:2})}
+function T(i,s){$(i).textContent=s}
+function A(i,o){var e=$(i);for(var k in o)e.setAttribute(k,o[k])}
+function err(id,m){var e=$('e-'+id);e.textContent=m;e.hidden=false;$(id).classList.add('bad');$(id).setAttribute('aria-invalid','true')}
+function clr(){document.querySelectorAll('.err').forEach(function(e){e.hidden=true;e.textContent=''});document.querySelectorAll('.bad').forEach(function(e){e.classList.remove('bad');e.removeAttribute('aria-invalid')})}
+function updateUI(){
+var imp=$('units').value==='imp',shp=$('shape').value,sp=$('profile').value==='slope';
+var U=imp?'ft':'m',S=imp?'in':'cm';
+document.querySelectorAll('.uL').forEach(function(e){e.textContent=U});
+document.querySelectorAll('.uF').forEach(function(e){e.textContent=imp?'gal/min':'L/min'});
+['len','wid','dia','ka','kb'].forEach(function(id){$('w-'+id).hidden=SH[shp].indexOf(id)<0});
+$('w-deep').hidden=!sp;
+$('lb-shallow').textContent=sp?'Shallow-end depth':'Average depth';
+['rect','round','oval','kidney'].forEach(function(s){$('g-'+s).style.display=s===shp?'':'none'});
+$('tk2').textContent=imp?'12 in':'30 cm';$('tk3').textContent=imp?'24 in':'60 cm';
+$('dropOut').textContent=$('drop').value+' '+S;
+}
+function draw(o){
+var U=o.imp?' ft':' m',S=o.imp?' in':' cm',v=o.v;
+if(o.shp==='rect'){T('rL','L = '+t(v.len)+U);T('rW','W = '+t(v.wid)+U)}
+else if(o.shp==='round'){T('cD','D = '+t(v.dia)+U)}
+else if(o.shp==='oval'){T('oL','L = '+t(v.len)+U);T('oW','W = '+t(v.wid)+U)}
+else{T('kL','L = '+t(v.len)+U);T('kA','A = '+t(v.ka)+U);T('kB','B = '+t(v.kb)+U)}
+var mx=Math.max(o.sh,o.dp),px=100/mx,hs=Math.max(o.sh*px,24),hd=Math.max(o.dp*px,24),top=225;
+var pts='50,225 310,225 310,'+(top+hd)+' 50,'+(top+hs);
+A('cp',{points:pts});A('pp',{points:pts});
+var dpx=Math.max(0,Math.min(o.dropU*px,Math.min(hs,hd)-4));
+A('wr',{y:top+dpx});A('wl',{y1:top+dpx,y2:top+dpx});
+var x=o.sp?72:180;
+A('dS',{x1:x,x2:x,y2:top+hs});A('tS',{x:x+6,y:top+hs/2+4});
+T('tS',(o.sp?'Shallow ':'Depth ')+t(o.sh)+U);
+$('dD').style.display=o.sp?'':'none';$('tD').style.display=o.sp?'':'none';
+if(o.sp){A('dD',{y2:top+hd});A('tD',{y:top+hd/2+4});T('tD','Deep '+t(o.dp)+U)}
+T('wcap',o.drop===0?'Water level: at top of wall':'Water level: '+t(o.drop)+S+' below top of wall');
+T('vcap','Volume ≈ '+o.vol);
+}
+function fdur(h){
+var s=f(Math.ceil(h*10)/10,1)+' hours';
+if(h>=24){var c=Math.ceil(h),d=Math.floor(c/24),hh=c%24;s+=' (about '+d+(d===1?' day ':' days ')+hh+' hr)'}
+else if(h<1){s=Math.ceil(h*60)+' minutes'}
+return s}
+function calc(){
+clr();
+var imp=$('units').value==='imp',shp=$('shape').value,sp=$('profile').value==='slope';
+var U=imp?'ft':'m',S=imp?'in':'cm',res=$('results');
+var maxL=imp?500:150,maxD=imp?30:10,ok=true,v={};
+function chk(id,max,unit,req){
+var raw=$(id).value.trim();
+if(raw===''){if(req){err(id,'Enter a value.');ok=false}return NaN}
+var x=Number(raw);
+if(!isFinite(x)||x<=0){err(id,'Enter a number greater than 0.');ok=false;return NaN}
+if(x>max){err(id,'That looks too large. The maximum is '+t(max)+' '+unit+'.');ok=false;return NaN}
+return x}
+SH[shp].forEach(function(id){v[id]=chk(id,maxL,U,true)});
+var sh=chk('shallow',maxD,U,true),dp=sp?chk('deep',maxD,U,true):sh;
+var flow=chk('flow',imp?5000:20000,imp?'gal/min':'L/min',false);
+var drop=Number($('drop').value),dropU=drop/(imp?12:100);
+if(ok&&dropU>=Math.min(sh,dp)){err('drop','The water level is at or below the shallowest part of the floor. Lower the setting or check your depths.');ok=false}
+if(!ok){res.innerHTML='';res.classList.remove('in');shown=false;return}
+var area=shp==='rect'?v.len*v.wid:shp==='round'?Math.PI*v.dia*v.dia/4:shp==='oval'?Math.PI/4*v.len*v.wid:0.45*(v.ka+v.kb)*v.len;
+var avg=(sh+dp)/2,k3=imp?0.0283168466:1;
+function m3(d){return area*(avg-d)*k3}
+var V=m3(dropU),gal=V*264.172052,lit=V*1000,ft3=V*35.3146667,ig=V*219.969157,lb=lit*2.20462262;
+var lowF=0.95,highF=1.05,pu=imp?' gal':' L',pv=imp?gal:lit;
+var big=imp?f(gal)+' gallons':f(lit)+' liters';
+var sub=imp?f(lit)+' liters · '+f(ft3)+' ft³':f(gal)+' US gallons · '+f(V,2)+' m³';
+var aU=imp?'ft²':'m²';
+var rows='<tr><td>US gallons</td><td class="r">'+f(gal)+'</td></tr><tr><td>Imperial gallons</td><td class="r">'+f(ig)+'</td></tr><tr><td>Liters</td><td class="r">'+f(lit)+'</td></tr><tr><td>Cubic feet</td><td class="r">'+f(ft3,1)+'</td></tr><tr><td>Cubic meters</td><td class="r">'+f(V,2)+'</td></tr>';
+var hi=imp?gal*highF:lit*highF;
+var plan='<tr><td>Surface area</td><td class="r">'+f(area,1)+' '+aU+'</td></tr><tr><td>Average water depth</td><td class="r">'+f(avg-dropU,2)+' '+U+'</td></tr><tr><td>Weight of water</td><td class="r">'+f(lb)+' lb ('+f(lit)+' kg)</td></tr>';
+var tg=imp?gal*highF/480:lit*highF/480;
+plan+='<tr><td>Flow for 8-hour turnover (upper est.)</td><td class="r">'+f(tg,1)+(imp?' gal/min':' L/min')+'</td></tr>';
+if(isFinite(flow)){plan+='<tr><td>Fill time at '+t(flow)+(imp?' gal/min':' L/min')+' (upper est.)</td><td class="r">'+fdur(hi/flow/60)+'</td></tr>'}
+var base=imp?[0,2,4,6,8,12]:[0,5,10,15,20,30];
+if(base.indexOf(drop)<0)base.push(drop);
+base.sort(function(a,b){return a-b});
+var lv='';
+base.forEach(function(d){var du=d/(imp?12:100);if(du>=Math.min(sh,dp))return;var vm=m3(du);
+lv+='<tr'+(d===drop?' style="font-weight:700"':'')+'><td>'+d+' '+S+(d===drop?' (your setting)':'')+'</td><td class="r">'+f(avg-du,2)+' '+U+'</td><td class="r">'+f(vm*264.172052)+'</td><td class="r">'+f(vm*1000)+'</td></tr>'});
+lastText='Pool volume: '+f(gal)+' US gallons ('+f(lit)+' liters, '+f(ft3,1)+' ft³, '+f(V,2)+' m³). Shape: '+NAMES[shp]+'. Average water depth: '+f(avg-dropU,2)+' '+U+', water level '+drop+' '+S+' below top of wall. Range: '+f(imp?gal*lowF:lit*lowF)+' to '+f(imp?gal*highF:lit*highF)+pu+'. Estimate only; calculated at toolwick.com/pool-volume-calculator/';
+var html='<div class="key"><div class="k">Estimated pool volume</div><div class="big">'+big+'</div><div class="s">'+sub+'</div></div>'+
+'<div class="est"><div>Low estimate (−5%)<br>for chemical dosing<b>'+f(pv*lowF)+pu+'</b></div><div>High estimate (+5%)<br>for fill and equipment<b>'+f(pv*highF)+pu+'</b></div></div>'+
+'<p class="rh">Volume in other units</p><div class="tw"><table><thead><tr><th>Unit</th><th class="r">Volume</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+'<p class="rh">Planning figures</p><div class="tw"><table><thead><tr><th>Item</th><th class="r">Value</th></tr></thead><tbody>'+plan+'</tbody></table></div>'+
+'<p class="rh">Volume by water level</p><div class="tw"><table><thead><tr><th>Level below wall top</th><th class="r">Avg depth</th><th class="r">US gal</th><th class="r">Liters</th></tr></thead><tbody>'+lv+'</tbody></table></div>'+
+'<div class="note"><strong>Safety note:</strong> use the low estimate for chemical dosing and add chemicals in stages, following the product label. Use the high estimate for fill, pump and heater sizing. Formulas use standard geometry (7.48052 gal per ft³) and rules of thumb, not a code edition. Local codes vary. This is not engineering, permit or inspection approval.</div>'+
+'<button type="button" class="btn cp" id="copyBtn">Copy results</button>';
+res.innerHTML=html;
+if(!shown){res.classList.remove('in');requestAnimationFrame(function(){res.classList.add('in')})}
+shown=true;
+draw({imp:imp,shp:shp,sp:sp,sh:sh,dp:dp,drop:drop,dropU:dropU,v:v,vol:big});
+}
+function go(){requestAnimationFrame(calc)}
+$('calcBtn').addEventListener('click',go);
+document.querySelectorAll('input').forEach(function(i){i.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();go()}})});
+$('drop').addEventListener('input',function(){$('dropOut').textContent=this.value+' '+($('units').value==='imp'?'in':'cm');go()});
+['shape','profile'].forEach(function(id){$(id).addEventListener('change',function(){updateUI();go()})});
+$('units').addEventListener('change',function(){
+var imp=this.value==='imp';if(imp===prevImp)return;
+var k=imp?1/0.3048:0.3048;
+NUMF.forEach(function(id){var x=parseFloat($(id).value);if(isFinite(x))$(id).value=+(x*k).toFixed(2)});
+var fl=parseFloat($('flow').value);if(isFinite(fl))$('flow').value=+(fl*(imp?1/3.78541:3.78541)).toFixed(1);
+var d=$('drop'),dv=Number(d.value);d.max=imp?24:60;d.value=Math.round(dv*(imp?1/2.54:2.54));
+prevImp=imp;updateUI();go()});
+$('results').addEventListener('click',function(e){
+if(e.target.id!=='copyBtn')return;
+var b=e.target;
+function done(){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy results'},2000)}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastText).then(done,done)}
+else{var ta=document.createElement('textarea');ta.value=lastText;document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(x){}document.body.removeChild(ta);done()}
+});
+$('yr').textContent=new Date().getFullYear();
+updateUI();go();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
