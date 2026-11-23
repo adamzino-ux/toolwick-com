@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Cathedral Ceiling Insulation Calculator | Toolwick</title>
+<meta name="description" content="Free cathedral ceiling insulation calculator: find R-value, rafter cavity depth, vent gap, rigid foam needed and material quantities for sloped ceilings.">
+<link rel="canonical" href="https://toolwick.com/cathedral-ceiling-insulation-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Cathedral Ceiling Insulation Calculator", "url": "https://toolwick.com/cathedral-ceiling-insulation-calculator/", "description": "Free cathedral ceiling insulation calculator: find R-value, rafter cavity depth, vent gap, rigid foam needed and material quantities for sloped ceilings.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Cathedral Ceiling Insulation Calculator", "item": "https://toolwick.com/cathedral-ceiling-insulation-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much insulation does a cathedral ceiling need?", "acceptedAnswer": {"@type": "Answer", "text": "IECC 2021 calls for R-30 in climate zone 1, R-49 in zones 2–3 and R-60 in zones 4–8 for ceilings. Some jurisdictions still enforce older editions with lower values, and the code allows a limited R-30 exception where there is not enough space. Check with your local building department."}}, {"@type": "Question", "name": "Do cathedral ceilings need ventilation?", "acceptedAnswer": {"@type": "Answer", "text": "Either approach can work. A vented roof needs at least 1 inch of clear airspace under the sheathing from soffit to ridge (IRC R806.3). An unvented roof needs air-impermeable insulation, like closed-cell foam, in contact with the underside of the deck (IRC R806.5). Batts alone are not enough in an unvented assembly."}}, {"@type": "Question", "name": "Can I meet code with 2×6 rafters?", "acceptedAnswer": {"@type": "Answer", "text": "Rarely with cavity insulation alone. A vented 2×6 bay holds 4.5 in., about R-14 in fiberglass or R-27 in closed-cell foam. Most builders add continuous rigid foam above the deck or below the rafters, or use deeper framing, to reach R-49 or R-60."}}, {"@type": "Question", "name": "What R-value does a 2×10 or 2×12 bay give me?", "acceptedAnswer": {"@type": "Answer", "text": "A vented 2×10 leaves 8.25 in., which is about R-26 in fiberglass and R-49 in closed-cell foam. A vented 2×12 leaves 10.25 in., about R-32 in fiberglass and R-61 in closed-cell foam. Use the comparison table above for your exact inputs."}}, {"@type": "Question", "name": "How do I calculate the area of a sloped ceiling?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply the horizontal length by the horizontal width, then multiply by the slope factor, √(rise² + 12²) ÷ 12. At 6/12 pitch the factor is 1.118, and at 12/12 it is 1.414. Subtract skylights, then subtract the framing share to get the cavity area."}}, {"@type": "Question", "name": "Should I compress batts to fit a shallow rafter bay?", "acceptedAnswer": {"@type": "Answer", "text": "No. Compression reduces the batt's R-value. Buy a batt rated for the bay depth, or use a higher R-per-inch product like mineral wool or spray foam. Compressed batts also tend to block the vent channel."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #eee}
+nav a{display:inline-block;min-height:44px;line-height:44px;font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem}
+h1{font-size:1.85rem;line-height:1.25;margin:1.5rem 0 .75rem}
+h2{font-size:1.3rem;margin:2.5rem 0 .75rem;line-height:1.3}
+h3{font-size:1.05rem;margin:1.5rem 0 .5rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{display:flex;flex-wrap:wrap;gap:.5rem;background:#f8f9fa;border-radius:8px;padding:.75rem;margin-bottom:.5rem}
+.diagram svg{flex:1 1 240px;min-width:0;max-width:100%;height:auto}
+.t{fill:#1a1a2e;font-size:12px}.b{font-weight:700}
+.dnote{font-size:.8rem;color:#666;margin:0 0 1.5rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem 1.25rem}
+.full{grid-column:1/-1}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;font-size:1rem;background:#fff;color:#1a1a2e}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:1px;border-color:#0077b6}
+input[type=range]{padding:0;border:0;height:44px;accent-color:#0077b6;background:transparent}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.invalid{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.hint{font-size:.8rem;color:#666;margin-top:.25rem}
+.btn{display:block;width:100%;min-height:44px;margin-top:1.5rem;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-size:1rem;font-weight:600;cursor:pointer}
+.btn:hover{background:#006299}
+.btn:focus-visible,.copy:focus-visible,summary:focus-visible{outline:2px solid #1a1a2e;outline-offset:2px}
+.results{opacity:0;transition:opacity .3s ease;margin-top:2rem}
+.results.show{opacity:1}
+.results:empty{margin-top:0}
+.keybox{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center}
+.lbl{font-size:.85rem;color:#444;font-weight:500}
+.big{font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1.15}
+.status{display:inline-block;padding:.3rem .8rem;border-radius:99px;font-size:.88rem;font-weight:600;margin-top:.4rem}
+.ok{background:#e6f6ec;color:#17613a}.bad{background:#fdecea;color:#a12622}
+.tw{overflow-x:auto;margin:.5rem 0 1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:.6rem .75rem;border-bottom:1px solid #ddd;font-weight:600}
+td{padding:.6rem .75rem;border-bottom:1px solid #eee;background:#fff}
+tr:nth-child(odd) td{background:#fafafa}
+.n{text-align:right;white-space:nowrap}
+th.n{text-align:right}
+.sel td{font-weight:700}
+.box{background:#f8f9fa;border-left:4px solid #0077b6;padding:.9rem 1rem;margin:1rem 0;border-radius:0 6px 6px 0;font-size:.94rem}
+.warn{background:#fff6e5;border-left-color:#d68910}
+.copy{min-height:44px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font:inherit;font-size:.88rem;font-weight:600;cursor:pointer}
+.small{font-size:.82rem;color:#666}
+.formula{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.9rem 1rem;overflow-x:auto;font-family:Consolas,Menlo,monospace;font-size:.85rem;line-height:1.7;white-space:pre}
+details{border-bottom:1px solid #e0e0e0}
+summary{min-height:44px;padding:.6rem 0;cursor:pointer;font-weight:600}
+details p{margin:0 0 1rem}
+.ad-slot{min-height:0;margin:0}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.88rem;color:#666}
+footer a{display:inline-block;min-height:44px;line-height:44px;margin-right:1rem;color:#0077b6;text-decoration:underline}
+@media(max-width:640px){.card{padding:1.25rem}.grid{grid-template-columns:1fr}h1{font-size:1.55rem}.big{font-size:2.3rem}}
+@media(prefers-reduced-motion:reduce){.results{transition:none}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/cathedral-ceiling-insulation-calculator/">
+<meta property="og:title" content="Cathedral Ceiling Insulation Calculator">
+<meta property="og:description" content="Free cathedral ceiling insulation calculator: find R-value, rafter cavity depth, vent gap, rigid foam needed and material quantities for sloped ceilings.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Cathedral Ceiling Insulation Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This cathedral ceiling insulation calculator shows how much R-value your rafter bays can hold, whether that meets your climate-zone target, and how much insulation to buy for a sloped or vaulted ceiling. Enter the ceiling size, roof pitch, rafter depth and material to get sloped area, R-value and quantities.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="g1" viewBox="0 0 300 280" role="img" aria-label="Gable cross-section showing width, rise, slope length and roof pitch">
+<defs><marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L8,4L0,8z" fill="#0077b6"/></marker></defs>
+<text id="gPitch" class="t b" x="8" y="18">Pitch 6/12</text>
+<line id="gBase" x1="18" y1="205" x2="282" y2="205" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="5 4"/>
+<polyline id="gRoof" points="30,205 150,205 270,205" fill="#0077b6" fill-opacity=".07" stroke="#0077b6" stroke-width="3" stroke-linejoin="round"/>
+<line id="gRise" x1="150" y1="130" x2="150" y2="205" stroke="#0077b6" stroke-dasharray="4 3"/>
+<text id="gRiseT" class="t" x="150" y="120" text-anchor="middle">Rise</text>
+<text id="gSlopeT" class="t" x="82" y="160" text-anchor="end">Slope</text>
+<path id="gArc" d="M64,205 A34,34 0 0 0 63,193" fill="none" stroke="#0077b6" stroke-width="1.5"/>
+<line id="gE1" x1="30" y1="205" x2="30" y2="238" stroke="#e0e0e0"/>
+<line id="gE2" x1="270" y1="205" x2="270" y2="238" stroke="#e0e0e0"/>
+<line id="gDim" x1="30" y1="232" x2="270" y2="232" stroke="#0077b6" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="gWidthT" class="t" x="150" y="252" text-anchor="middle">Width</text>
+<text id="gAreaT" class="t b" x="150" y="272" text-anchor="middle">Sloped area</text>
+</svg>
+<svg id="d1" viewBox="0 0 300 280" role="img" aria-label="Rafter bay cross-section showing roof deck, vent gap, insulation, optional rigid foam and drywall">
+<rect x="20" y="40" width="128" height="10" fill="#e0e0e0"/>
+<text class="t" x="158" y="47">Roof deck</text>
+<rect id="dGap" x="34" y="50" width="100" height="9" fill="#fff" stroke="#0077b6" stroke-dasharray="4 3"/>
+<text id="dGapT" class="t" x="158" y="59">1 in. vent gap</text>
+<rect id="dIns" x="34" y="59" width="100" height="74" fill="#0077b6" fill-opacity=".18" stroke="#0077b6"/>
+<text id="dIns1" class="t" x="158" y="95">Insulation</text>
+<text id="dIns2" class="t" x="158" y="109">—</text>
+<rect id="dRL" x="20" y="50" width="14" height="83" fill="#fff" stroke="#0077b6" stroke-width="1.5"/>
+<rect id="dRR" x="134" y="50" width="14" height="83" fill="#fff" stroke="#0077b6" stroke-width="1.5"/>
+<rect id="dFoam" x="20" y="133" width="128" height="9" fill="#0077b6" fill-opacity=".35" stroke="#0077b6" display="none"/>
+<text id="dFoamT" class="t" x="158" y="141" display="none">Rigid foam</text>
+<rect id="dDry" x="20" y="133" width="128" height="10" fill="#e0e0e0"/>
+<text id="dDryT" class="t" x="158" y="143">Drywall</text>
+<line id="dDim" x1="9" y1="50" x2="9" y2="133" stroke="#0077b6" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dC1" class="t" x="150" y="190" text-anchor="middle">—</text>
+<text id="dC2" class="t b" x="150" y="208" text-anchor="middle">—</text>
+</svg>
+</div>
+<p class="dnote">Diagram updates as you type. Left: symmetrical gable (area math works for any single-pitch roof plane). Right: rafter bay layers.</p>
+
+<div id="box">
+<div class="grid">
+<div class="f"><label for="len">Ceiling length along ridge (ft)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="30"></div>
+<div class="f"><label for="wid">Horizontal width of vaulted ceiling (ft)</label><input id="wid" type="number" inputmode="decimal" step="any" min="0" value="16"></div>
+<div class="f full"><label for="pitch">Roof pitch: <span id="pv">6/12</span></label><input id="pitch" type="range" min="1" max="18" step="1" value="6"><div class="ticks" aria-hidden="true"><span>1/12</span><span>9/12</span><span>18/12</span></div></div>
+<div class="f"><label for="rd">Rafter size (actual depth)</label><select id="rd"><option value="5.5" data-n="2×6">2×6 (5.5 in.)</option><option value="7.25" data-n="2×8">2×8 (7.25 in.)</option><option value="9.25" data-n="2×10" selected>2×10 (9.25 in.)</option><option value="11.25" data-n="2×12">2×12 (11.25 in.)</option></select></div>
+<div class="f"><label for="sp">Rafter spacing (on center)</label><select id="sp"><option value="12">12 in.</option><option value="16" selected>16 in.</option><option value="24">24 in.</option></select></div>
+<div class="f"><label for="vent">Roof ventilation</label><select id="vent"><option value="v" selected>Vented (1 in. air gap + baffles)</option><option value="u">Unvented (insulation fills bay)</option></select></div>
+<div class="f"><label for="mat">Insulation between rafters</label><select id="mat"><option value="0" selected>Fiberglass batt</option><option value="1">Mineral wool batt</option><option value="2">Dense-pack cellulose</option><option value="3">Open-cell spray foam</option><option value="4">Closed-cell spray foam</option><option value="5">Rigid polyiso (cut-to-fit)</option></select></div>
+<div class="f"><label for="foam">Continuous rigid foam layer (polyiso)</label><select id="foam"><option value="0" selected>None</option><option value="1">1 in.</option><option value="1.5">1.5 in.</option><option value="2">2 in.</option><option value="2.5">2.5 in.</option><option value="3">3 in.</option><option value="4">4 in.</option><option value="5">5 in.</option><option value="6">6 in.</option></select></div>
+<div class="f"><label for="waste">Waste allowance (%)</label><input id="waste" type="number" inputmode="decimal" step="any" min="0" max="50" value="10"></div>
+<div class="f"><label for="open">Skylights / openings (sq ft)</label><input id="open" type="number" inputmode="decimal" step="any" min="0" value="0"></div>
+<div class="f"><label for="cr">Custom target R-value (optional)</label><input id="cr" type="number" inputmode="decimal" step="any" min="1" max="100" placeholder="Leave blank for zone target"></div>
+<div class="f full"><label for="zone">Climate zone (sets target R-value)</label><select id="zone"><option value="1">Zone 1 — Miami, Honolulu (R-30)</option><option value="2">Zone 2 — Houston, Phoenix (R-49)</option><option value="3">Zone 3 — Atlanta, Dallas (R-49)</option><option value="4">Zone 4 — Seattle, Washington DC (R-60)</option><option value="5" selected>Zone 5 — Chicago, Denver, Boston (R-60)</option><option value="6">Zone 6 — Minneapolis, Burlington (R-60)</option><option value="7">Zone 7 — Duluth, Fairbanks area (R-60)</option><option value="8">Zone 8 — Northern Alaska (R-60)</option></select></div>
+</div>
+<button class="btn" id="calc" type="button">Calculate Insulation</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</div>
+
+<div id="results" class="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/cathedral-ceiling-insulation-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Cathedral Ceiling Insulation Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/cathedral-ceiling-insulation-calculator/&quot;&gt;Cathedral Ceiling Insulation Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/cathedral-ceiling-insulation-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Cathedral Ceiling Insulation Calculator</h2>
+<p>Enter the length and horizontal width of the vaulted section, set the roof pitch with the slider, then choose your rafter size, spacing, ventilation style and insulation material. Add any skylights, an optional layer of continuous rigid foam, and your climate zone. The calculator returns sloped area, nominal and effective R-value, how far you are from the code target, the quantity to buy, and a side-by-side comparison of all six materials.</p>
+
+<h2>Why This Matters</h2>
+<p>Cathedral ceilings are among the hardest parts of a house to insulate well. There is no attic to pile loose-fill into, so rafter depth caps how much insulation fits. A 2×6 roof bay holds only 4.5 inches once you leave a vent gap, which is roughly R-14 with fiberglass. That is far below the R-49 to R-60 that current energy codes call for in most of the country. Homeowners finishing an attic, replacing a roof or chasing ice dams often learn this the hard way.</p>
+<p>Contractors need the same numbers to quote work. A 30 × 16 ft vault at 6/12 pitch is really about 537 sq ft of sloped surface, not 480, and the rafters take up nearly 10% of it. Getting area, depth and R-value right before you buy prevents two expensive outcomes: ordering batts too thin to pass inspection, or cramming thick batts into a shallow bay and losing the R-value you paid for. Comparing materials side by side shows when you need spray foam, a layer of rigid board, or deeper framing.</p>
+
+<h2>How It's Calculated</h2>
+<p>The tool uses simple geometry and a parallel-path heat-flow estimate. Target R-values follow IECC 2021 Table R402.1.3 for ceilings (R-30 in zone 1, R-49 in zones 2–3, R-60 in zones 4–8), and the vent gap follows the 1 inch clearance in IRC R806.3. Local codes and amendments vary, and your building department has the final word.</p>
+<div class="formula">Slope factor   = √(rise² + 12²) ÷ 12
+Sloped area    = length × width × slope factor
+Framing share  = 1.5 in. ÷ rafter spacing
+Cavity area    = (sloped area − openings) × (1 − framing share)
+Insulation depth = rafter depth − 1 in. (vented) or full depth
+Cavity R       = depth × R per inch (rounded down)
+Effective R    = 1 ÷ [ share ÷ (1.25 × depth + foam R)
+                     + (1 − share) ÷ (cavity R + foam R) ]</div>
+<div class="tw"><table><thead><tr><th>Material</th><th class="n">R per inch used</th></tr></thead><tbody>
+<tr><td>Fiberglass batt</td><td class="n">3.2</td></tr><tr><td>Mineral wool batt</td><td class="n">4.0</td></tr><tr><td>Dense-pack cellulose</td><td class="n">3.5</td></tr><tr><td>Open-cell spray foam</td><td class="n">3.6</td></tr><tr><td>Closed-cell spray foam</td><td class="n">6.0</td></tr><tr><td>Polyiso rigid board (also the continuous layer)</td><td class="n">5.7</td></tr></tbody></table></div>
+<p>These are deliberately conservative averages, and wood framing is taken as R-1.25 per inch. Real products vary, so always use the R-value printed on the package. Results are rounded the cautious way: R-values down, quantities and foam thickness up. This is a planning estimate, not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>Take a 30 ft × 16 ft vaulted section at 6/12 pitch, 2×10 rafters at 16 in. on center, vented, zone 5, fiberglass batts, no skylights, 10% waste.</p>
+<ul>
+<li><strong>Slope factor:</strong> √(6² + 12²) ÷ 12 = 13.416 ÷ 12 = 1.118.</li>
+<li><strong>Sloped area:</strong> 30 × 16 = 480 sq ft × 1.118 = 536.7 sq ft.</li>
+<li><strong>Framing share:</strong> 1.5 ÷ 16 = 9.4%, so cavity area = 536.7 × 0.906 = 486.3 sq ft.</li>
+<li><strong>Depth:</strong> 9.25 − 1 = 8.25 in. of insulation. 8.25 × 3.2 = R-26.4.</li>
+<li><strong>Target:</strong> zone 5 is R-60, so the assembly is short by R-33.6. Effective R after framing is about R-23.5.</li>
+<li><strong>Fix:</strong> 33.6 ÷ 5.7 = 5.9, rounded up to 6.0 in. of polyiso. Total becomes 26.4 + 34.2 = R-60.6 nominal, about R-58.8 effective.</li>
+<li><strong>Buy:</strong> 486.3 × 1.10 = 535 sq ft of batts. For 6 in. of polyiso: 536.7 × 1.10 = 590.3 sq ft, so 19 sheets (4×8) per layer and 3,542 board feet.</li>
+</ul>
+<p>Six inches of rigid board is a lot, which is why many builders put part of it above the roof deck or switch to closed-cell foam. The comparison table in the results shows that tradeoff for every material.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use sloped area, not floor area.</strong> Ordering from the room's floor dimensions under-buys by 10–25% on typical pitches.</li>
+<li><strong>Never compress batts.</strong> A batt jammed into a shallower bay loses R-value. Pick a batt thickness equal to the bay depth minus the vent gap.</li>
+<li><strong>Install baffles first.</strong> In a vented roof, keep a clear 1 in. channel from soffit to ridge. Blocked soffits cause moisture and ice-dam problems.</li>
+<li><strong>Measure real rafter depth.</strong> Old or rough-sawn lumber, I-joists and trusses differ from nominal sizes, and skylight shafts need their own insulation.</li>
+<li><strong>Air seal and cover foam.</strong> Seal gaps before insulating. Foam plastic on the interior generally needs a code-approved thermal barrier such as ½ in. drywall (IRC R316). Confirm vapor control for your climate.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much insulation does a cathedral ceiling need?</summary><p>IECC 2021 calls for R-30 in climate zone 1, R-49 in zones 2–3 and R-60 in zones 4–8 for ceilings. Some jurisdictions still enforce older editions with lower values, and the code allows a limited R-30 exception where there is not enough space. Check with your local building department.</p></details>
+<details><summary>Do cathedral ceilings need ventilation?</summary><p>Either approach can work. A vented roof needs at least 1 inch of clear airspace under the sheathing from soffit to ridge (IRC R806.3). An unvented roof needs air-impermeable insulation, like closed-cell foam, in contact with the underside of the deck (IRC R806.5). Batts alone are not enough in an unvented assembly.</p></details>
+<details><summary>Can I meet code with 2×6 rafters?</summary><p>Rarely with cavity insulation alone. A vented 2×6 bay holds 4.5 in., about R-14 in fiberglass or R-27 in closed-cell foam. Most builders add continuous rigid foam above the deck or below the rafters, or use deeper framing, to reach R-49 or R-60.</p></details>
+<details><summary>What R-value does a 2×10 or 2×12 bay give me?</summary><p>A vented 2×10 leaves 8.25 in., which is about R-26 in fiberglass and R-49 in closed-cell foam. A vented 2×12 leaves 10.25 in., about R-32 in fiberglass and R-61 in closed-cell foam. Use the comparison table above for your exact inputs.</p></details>
+<details><summary>How do I calculate the area of a sloped ceiling?</summary><p>Multiply the horizontal length by the horizontal width, then multiply by the slope factor, √(rise² + 12²) ÷ 12. At 6/12 pitch the factor is 1.118, and at 12/12 it is 1.414. Subtract skylights, then subtract the framing share to get the cavity area.</p></details>
+<details><summary>Should I compress batts to fit a shallow rafter bay?</summary><p>No. Compression reduces the batt's R-value. Buy a batt rated for the bay depth, or use a higher R-per-inch product like mineral wool or spray foam. Compressed batts also tend to block the vent channel.</p></details>
+
+<h2>Related Tools</h2>
+<ul>
+<li><a href="/garage-insulation-calculator/">Garage Insulation Calculator</a></li>
+<li><a href="/attic-insulation-depth-r-value-calculator/">Attic Insulation Depth &amp; R-Value Calculator</a></li>
+<li><a href="/rim-joist-insulation-calculator/">Rim Joist Insulation Calculator</a></li>
+<li><a href="/insulation-installation-cost-calculator/">Insulation Installation Cost Calculator</a></li>
+<li><a href="/basement-wall-insulation-calculator/">Basement Wall Insulation Calculator</a></li>
+<li><a href="/fiberglass-batt-insulation-calculator/">Fiberglass Batt Insulation Calculator</a></li>
+</ul>
+
+<nav class="cluster-nav" aria-label="More Drywall, Paint &amp; Finishes Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Drywall, Paint &amp; Finishes Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/ceiling-drywall-hanger-spacing-load-calculator/">Ceiling Drywall Hanger Spacing &amp; Load Calculator</a></li><li><a href="/ceiling-texture-spray-compressor-calculator/">Ceiling Texture Hopper Gun Air Compressor Calculator</a></li><li><a href="/drop-ceiling-grid-calculator/">Dropped Ceiling Grid Material Calculator</a></li><li><a href="/suspended-ceiling-load-capacity-calculator/">Suspended Ceiling Load Capacity Calculator</a></li><li><a href="/baseboard-crown-molding-calculator/">Baseboard &amp; Crown Molding Material Calculator</a></li><li><a href="/bathroom-remodel-cost-calculator/">Bathroom Remodel Cost Calculator</a></li><li><a href="/bathroom-tile-layout-planner/">Bathroom Tile Layout Planner</a></li><li><a href="/drywall-calculator/">Drywall Calculator</a></li><li><a href="/flooring-drywall-paint-calculators/"><strong>All Drywall, Paint &amp; Finishes calculators →</strong></a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<a href="/about/">About</a> <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> <a href="/contact/">Contact</a>
+<div>© <span id="yr">2025</span> toolwick.com. Estimates only; not engineering, permit or inspection approval.</div>
+</footer>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const fmt=(n,d=0)=>Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const nf=n=>Number(n).toLocaleString('en-US',{maximumFractionDigits:1});
+const fl1=x=>Math.floor(x*10+1e-9)/10;
+const RG=5.7,ZR=[0,30,49,49,60,60,60,60,60],BW={12:'11 in.',16:'15 in.',24:'23 in.'};
+const MATS=[{n:'Fiberglass batt',r:3.2,a:1},{n:'Mineral wool batt',r:4,a:1},{n:'Dense-pack cellulose',r:3.5,a:1},{n:'Open-cell spray foam',r:3.6,a:0},{n:'Closed-cell spray foam',r:6,a:0},{n:'Rigid polyiso (cut-to-fit)',r:5.7,a:0}];
+const res=$('results');let txt='';
+const val=id=>{const v=$(id).value.trim();return v===''?NaN:Number(v)};
+const set=(id,k,v)=>$(id).setAttribute(k,v);
+const tx=(id,t)=>{$(id).textContent=t};
+const tf=t=>Number.isInteger(t)?fmt(t):fmt(t,1);
+
+function setErr(id,msg){const el=$(id),d=document.createElement('div');d.className='err';d.id=id+'-err';d.setAttribute('role','alert');d.textContent=msg;el.classList.add('invalid');el.setAttribute('aria-invalid','true');el.setAttribute('aria-describedby',id+'-err');el.parentNode.appendChild(d)}
+function clearErr(){document.querySelectorAll('.err').forEach(e=>e.remove());document.querySelectorAll('.invalid').forEach(e=>{e.classList.remove('invalid');e.removeAttribute('aria-invalid');e.removeAttribute('aria-describedby')})}
+
+function model(){
+const L=val('len'),W=val('wid'),p=+$('pitch').value,sp=+$('sp').value,op=$('open').value.trim()===''?0:val('open'),wp=val('waste'),dep=+$('rd').value,vent=$('vent').value==='v',foam=+$('foam').value,zone=+$('zone').value,m=MATS[+$('mat').value];
+const cr=$('cr').value.trim(),cu=cr===''?NaN:Number(cr),custom=cu>=1&&cu<=100;
+const target=custom?cu:ZR[zone];
+const sf=Math.sqrt(p*p+144)/12,ff=1.5/sp,gross=L*W*sf,net=gross-op,cav=net*(1-ff),ins=dep-(vent?1:0),rr=foam*RG;
+const rcav=fl1(m.r*ins),total=fl1(rcav+rr),eff=fl1(1/(ff/(1.25*dep+rr)+(1-ff)/(rcav+rr)));
+return{L,W,p,sp,op,wp,dep,vent,foam,zone,custom,cu,target,m,sf,ff,gross,net,cav,ins,rr,rcav,total,eff,rn:$('rd').selectedOptions[0].dataset.n};
+}
+
+function draw(o){
+const r=o.p/12,hs=r>1?120/r:120,h=hs*r,cx=150,by=205,ay=by-h,th=Math.atan(r),R=34,x0=cx-hs;
+set('gRoof','points',x0+','+by+' '+cx+','+ay+' '+(cx+hs)+','+by);
+set('gBase','x1',x0-12);set('gBase','x2',cx+hs+12);
+set('gRise','y1',ay);set('gRiseT','y',ay-9);
+set('gSlopeT','x',cx-hs/2-8);set('gSlopeT','y',by-h/2-4);
+set('gArc','d','M'+(x0+R)+','+by+' A'+R+','+R+' 0 0 0 '+(x0+R*Math.cos(th))+','+(by-R*Math.sin(th)));
+set('gDim','x1',x0);set('gDim','x2',cx+hs);
+set('gE1','x1',x0);set('gE1','x2',x0);set('gE2','x1',cx+hs);set('gE2','x2',cx+hs);
+const ok=n=>isFinite(n)&&n>0;
+tx('gPitch','Pitch '+o.p+'/12 · '+nf(th*180/Math.PI)+'°');
+tx('gRiseT','Rise '+(ok(o.W)?nf(o.W/2*r)+' ft':'—'));
+tx('gSlopeT','Slope '+(ok(o.W)?nf(o.W/2*o.sf)+' ft':'—'));
+tx('gWidthT','Width '+(ok(o.W)?nf(o.W)+' ft':'—'));
+tx('gAreaT','Sloped area ≈ '+(ok(o.gross)?nf(o.gross)+' sq ft':'—'));
+const s=9,gapH=o.vent?s:0,rb=50+o.dep*s,fH=o.foam*s,insH=o.ins*s,dry=rb+fH,mid=50+gapH+insH/2;
+set('dGap','display',o.vent?'inline':'none');tx('dGapT','1 in. vent gap');set('dGapT','display',o.vent?'inline':'none');
+set('dIns','y',50+gapH);set('dIns','height',insH);
+set('dIns1','y',mid-1);set('dIns2','y',mid+13);
+tx('dIns2',nf(o.ins)+' in. · R-'+fmt(o.rcav,1));
+set('dRL','height',o.dep*s);set('dRR','height',o.dep*s);
+set('dFoam','display',o.foam>0?'inline':'none');set('dFoamT','display',o.foam>0?'inline':'none');
+set('dFoam','y',rb);set('dFoam','height',fH||1);set('dFoamT','y',rb+fH/2+4);tx('dFoamT','Rigid foam '+o.foam+' in.');
+set('dDry','y',dry);set('dDryT','y',dry+10+(o.foam>0?2:0));
+set('dDim','y2',rb);
+set('dC1','y',dry+34);set('dC2','y',dry+52);
+tx('dC1',o.rn+' rafters @ '+o.sp+' in. o.c. — '+nf(o.dep)+' in. deep');
+tx('dC2','Total R-'+fmt(o.total,1)+' · target R-'+tf(o.target));
+}
+
+function calculate(){
+clearErr();
+const o=model();let bad=false;
+const chk=(c,id,msg)=>{if(c){setErr(id,msg);bad=true}};
+chk(!(o.L>0&&o.L<=1000),'len','Enter a length between 0.1 and 1,000 ft.');
+chk(!(o.W>0&&o.W<=1000),'wid','Enter a width between 0.1 and 1,000 ft.');
+chk(!(o.op>=0),'open','Enter 0 or a positive area in sq ft.');
+chk(!(o.wp>=0&&o.wp<=50),'waste','Enter a waste allowance from 0 to 50%.');
+chk($('cr').value.trim()!==''&&!o.custom,'cr','Enter an R-value from 1 to 100, or leave it blank.');
+if(!bad&&o.op>=o.gross)chk(true,'open','Openings must be less than the total sloped area ('+fmt(o.gross,1)+' sq ft).');
+if(bad){requestAnimationFrame(()=>{res.className='results';res.innerHTML='';txt='';const f=document.querySelector('.invalid');if(f)f.focus()});return}
+const mi=+$('mat').value,m=o.m,w=1+o.wp/100;
+const ok=o.total>=o.target,sh=o.target-o.total,extra=ok?0:Math.ceil(sh/RG*2)/2;
+const need=Math.ceil(o.target/m.r*4)/4;
+const q=[];
+if(mi<2)q.push(['Batts / blanket to cover cavities',fmt(Math.ceil(o.cav*w))+' sq ft'],['Batt width for '+o.sp+' in. spacing',BW[o.sp]]);
+else if(mi===2){const cf=o.cav*o.ins/12*w;q.push(['Dense-pack cellulose volume',fmt(cf,1)+' cu ft'],['25-lb bags (about 7 cu ft each)',fmt(Math.ceil(cf/7))+' bags'])}
+else if(mi<5)q.push(['Spray foam (1 sq ft × 1 in. = 1 bd ft)',fmt(Math.ceil(o.net*o.ins*w))+' bd ft']);
+else q.push(['Polyiso between rafters',fmt(Math.ceil(o.cav*o.ins*w))+' bd ft'],['Polyiso 4×8 sheets per layer',fmt(Math.ceil(o.cav*w/32))+' sheets']);
+if(o.foam>0)q.push(['Continuous rigid foam, '+o.foam+' in. thick',fmt(Math.ceil(o.net*w*o.foam))+' bd ft'],['Continuous foam 4×8 sheets per layer',fmt(Math.ceil(o.net*w/32))+' sheets']);
+const rows=[['Sloped ceiling area (gross)',fmt(o.gross,1)+' sq ft'],['Skylights / openings',fmt(o.op,1)+' sq ft'],['Net insulated area',fmt(o.net,1)+' sq ft'],['Framing share ('+o.sp+' in. spacing)',fmt(o.ff*100,1)+'%'],['Cavity area between rafters',fmt(o.cav,1)+' sq ft'],['Rafter depth ('+o.rn+')',fmt(o.dep,2)+' in.'],['Insulation depth'+(o.vent?' (after 1 in. vent gap)':' (unvented)'),fmt(o.ins,2)+' in.'],[m.n+' in cavity','R-'+fmt(o.rcav,1)],['Continuous rigid foam layer',o.foam>0?o.foam+' in. = R-'+fmt(o.rr,1):'None'],['Total nominal R-value','R-'+fmt(o.total,1)],['Target ('+(o.custom?'custom':'IECC 2021, zone '+o.zone)+')','R-'+tf(o.target)],['Effective R after framing (est.)','R-'+fmt(o.eff,1)],['Depth needed with '+m.n.toLowerCase()+' alone',fmt(need,2)+' in.']];
+const tr=a=>a.map(r=>'<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>').join('');
+let cmp='';
+MATS.forEach((M,i)=>{const rc=fl1(M.r*o.ins),t=fl1(rc+o.rr),good=t>=o.target,ex=good?0:Math.ceil((o.target-t)/RG*2)/2;
+cmp+='<tr'+(i===mi?' class="sel"':'')+'><td>'+M.n+(!o.vent&&M.a?'<br><small>Air-permeable</small>':'')+'</td><td class="n">R-'+fmt(rc,1)+'</td><td class="n">R-'+fmt(t,1)+'</td><td class="n">'+(good?'Yes':'No')+'</td><td class="n">'+(good?'—':fmt(ex,1)+' in.')+'</td></tr>'});
+let h='<div class="keybox"><div class="lbl">Total nominal R-value</div><div class="big">R-'+fmt(o.total,1)+'</div><span class="status '+(ok?'ok':'bad')+'">'+(ok?'Meets the R-'+tf(o.target)+' target':'Short of the R-'+tf(o.target)+' target by R-'+fmt(sh,1))+'</span></div>';
+h+='<div class="box">'+(ok?'This assembly reaches R-'+fmt(o.total,1)+' nominal, at or above the target. Framing lowers the effective value to about R-'+fmt(o.eff,1)+'. Confirm the target with your local building department.':'To close the R-'+fmt(sh,1)+' gap, add about '+fmt(extra,1)+' in. more continuous polyiso (R-'+RG+' per inch), choose a higher R-per-inch material, or deepen the framing. Round up to the next available board thickness.')+'</div>';
+if(!o.vent&&m.a)h+='<div class="box warn"><strong>Unvented roof warning:</strong> '+m.n+' is air-permeable. IRC R806.5 requires an air-impermeable layer (closed-cell foam or rigid board) against the underside of the roof deck. Treat this result as a hybrid-assembly planning figure only.</div>';
+if(o.vent)h+='<div class="box">Keep a clear 1 in. air space from soffit to ridge with baffles (IRC R806.3). The calculation already removes it from the usable depth.</div>';
+h+='<h3>Assembly details</h3><div class="tw"><table><thead><tr><th>Item</th><th class="n">Value</th></tr></thead><tbody>'+tr(rows)+'</tbody></table></div>';
+h+='<h3>Material to buy (includes '+fmt(o.wp,0)+'% waste, rounded up)</h3><div class="tw"><table><thead><tr><th>Item</th><th class="n">Quantity</th></tr></thead><tbody>'+tr(q)+'</tbody></table></div>';
+h+='<h3>Material comparison (same rafters'+(o.foam>0?' + '+o.foam+' in. foam layer':'')+')</h3><div class="tw"><table><thead><tr><th>Material</th><th class="n">Cavity R</th><th class="n">Total R</th><th class="n">Meets?</th><th class="n">Extra foam</th></tr></thead><tbody>'+cmp+'</tbody></table></div>';
+h+='<button type="button" class="copy" id="copyBtn">Copy results</button><p class="small">Planning estimate based on IECC 2021 Table R402.1.3 ceiling values and IRC R806 venting rules of thumb. R-values rounded down, quantities rounded up. Local codes vary; this is not engineering, permit or inspection approval.</p>';
+txt='Cathedral ceiling insulation estimate\nSloped area: '+fmt(o.gross,1)+' sq ft (net '+fmt(o.net,1)+' sq ft)\nCavity area: '+fmt(o.cav,1)+' sq ft\nRafters: '+o.rn+' @ '+o.sp+' in. o.c., '+(o.vent?'vented':'unvented')+', insulation depth '+fmt(o.ins,2)+' in.\nMaterial: '+m.n+' = R-'+fmt(o.rcav,1)+(o.foam>0?' + '+o.foam+' in. polyiso':'')+'\nTotal nominal R-'+fmt(o.total,1)+' vs target R-'+tf(o.target)+(ok?' (meets)':' (short by R-'+fmt(sh,1)+'; add about '+fmt(extra,1)+' in. polyiso)')+'\nEffective R after framing: R-'+fmt(o.eff,1)+'\n'+q.map(r=>r[0]+': '+r[1]).join('\n');
+requestAnimationFrame(()=>{
+res.className='results';res.innerHTML=h;draw(o);
+requestAnimationFrame(()=>{res.className='results show'});
+});
+}
+
+function pitchUI(){const p=+$('pitch').value,a=Math.atan(p/12)*180/Math.PI;$('pv').textContent=p+'/12 ('+fmt(a,1)+'°)';$('pitch').setAttribute('aria-valuetext',p+' in 12, '+fmt(a,1)+' degrees')}
+let pend=false;
+function live(){if(pend)return;pend=true;requestAnimationFrame(()=>{pend=false;pitchUI();draw(model())})}
+const go=()=>requestAnimationFrame(calculate);
+$('calc').addEventListener('click',go);
+$('box').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName!=='BUTTON'){e.preventDefault();go()}});
+$('box').addEventListener('input',live);
+$('box').addEventListener('change',live);
+res.addEventListener('click',e=>{
+const b=e.target.closest('#copyBtn');if(!b)return;
+const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+function fb(){const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(_){}t.remove()}
+if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(done,fb);else fb();
+});
+$('yr').textContent=new Date().getFullYear();
+pitchUI();draw(model());go();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
