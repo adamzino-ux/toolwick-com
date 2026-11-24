@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Roofing Dumpster Size Calculator | Toolwick</title>
+<meta name="description" content="Free roofing dumpster calculator: estimate debris volume and weight from roof size, material, and layers to pick the right dumpster size.">
+<link rel="canonical" href="https://toolwick.com/roofing-dumpster-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Roofing Dumpster Size Calculator", "url": "https://toolwick.com/roofing-dumpster-calculator/", "description": "Free roofing dumpster calculator: estimate debris volume and weight from roof size, material, and layers to pick the right dumpster size.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Roofing Dumpster Size Calculator", "item": "https://toolwick.com/roofing-dumpster-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What size dumpster do I need for a roof replacement?", "acceptedAnswer": {"@type": "Answer", "text": "Most single-layer residential jobs of 15 to 30 squares land in the 20 to 30 yard range. A 10-yard works only for small roofs of roughly 8 to 9 squares of architectural shingles. Use the calculator above to account for material, layers and decking."}}, {"@type": "Question", "name": "How many squares of shingles fit in a 20-yard dumpster?", "acceptedAnswer": {"@type": "Answer", "text": "By this tool's assumptions and a typical 4-ton limit, a 20-yard holds roughly 19 squares of single-layer architectural shingles with 10% decking replaced, or about 25 squares of 3-tab. Weight, not volume, is the limit. By volume alone it would hold nearly twice as much."}}, {"@type": "Question", "name": "How much does a square of shingles weigh?", "acceptedAnswer": {"@type": "Answer", "text": "A square of 3-tab asphalt typically weighs 200 to 250 lb, and architectural shingles 300 to 400 lb. Old shingles saturated with water or granules can weigh more. This tool uses 250 and 350 lb per square plus 15 lb for underlayment and metal."}}, {"@type": "Question", "name": "Do I need a permit for a roofing dumpster?", "acceptedAnswer": {"@type": "Answer", "text": "A dumpster on your own driveway usually needs no permit, but one placed on a public street often does. Many HOAs and cities have their own rules about placement and duration, so ask your hauler and local office before delivery."}}, {"@type": "Question", "name": "Can I put roofing debris in a regular dumpster?", "acceptedAnswer": {"@type": "Answer", "text": "Often yes, but tell the hauler up front. Roofing waste is heavy, and some haulers use dedicated roofing or heavy-debris containers with different weight limits and recycling options. Mixing in household trash, paint or hazardous items can lead to extra fees or rejection."}}, {"@type": "Question", "name": "Should I measure the footprint or the roof surface?", "acceptedAnswer": {"@type": "Answer", "text": "Either works. Surface area is better, as it is what roofing reports and shingle orders use. If you only know the footprint of the house (including overhangs), choose the footprint option and enter the pitch so the calculator multiplies by the slope factor. At 6:12 that factor is about 1.118."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:1rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.15rem}
+h1{font-size:1.75rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.5rem 0 .75rem;line-height:1.3}
+h3{font-size:1rem;margin:1.5rem 0 .5rem}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input[type=number],select{width:100%;min-height:48px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{width:100%;min-height:44px;accent-color:#0077b6;margin:0}
+input[type=range]:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+.row{display:grid;grid-template-columns:1fr 160px;gap:.75rem}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.chk{display:flex;align-items:center;gap:.6rem;min-height:44px}
+.chk input{width:22px;height:22px;accent-color:#0077b6;margin:0;flex:none}
+.chk label{margin:0;font-size:.95rem;color:#1a1a2e}
+.hide{display:none}
+.invalid{border-color:#e74c3c!important}
+.err{color:#c0392b;font-size:.85rem;margin-top:.4rem;display:none}
+.err.on{display:block}
+button.main{width:100%;min-height:48px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+button.main:hover{background:#006299}
+#results{margin-top:1.5rem}
+.res-in{animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.res-in{animation:none}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center}
+.key .lbl{font-size:.85rem;color:#666;font-weight:500}
+.big{font-size:2.25rem;font-weight:800;color:#0077b6;line-height:1.2;margin:.25rem 0}
+.key .sub{font-size:.95rem;color:#444}
+.barlbl{display:flex;justify-content:space-between;font-size:.85rem;color:#444;margin:.75rem 0 .25rem}
+.bar{height:10px;background:#e8e8e8;border-radius:5px;overflow:hidden}
+.bar span{display:block;height:100%;background:#0077b6}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:.6rem .75rem;border-bottom:1px solid #ddd;font-weight:600}
+td{padding:.6rem .75rem;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right}
+.tw table{min-width:470px}
+tr.rec td{background:#e6f2f9;font-weight:600}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;margin-top:1rem}
+.copy{margin-top:1rem;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;min-height:44px;font-size:.9rem;cursor:pointer;font-family:inherit}
+.copy:hover{background:#f0f7fb}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:.75rem 0;min-height:44px}
+details p{margin:0 0 1rem}
+code,.formula{background:#f8f9fa;border-radius:4px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem}
+.formula{display:block;padding:.75rem 1rem;margin:0 0 .75rem;overflow-x:auto}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.related{list-style:none;padding:0}
+.related li{margin:0}
+.related a{display:block;padding:.7rem 0;border-bottom:1px solid #e8e8e8;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:480px){.row{grid-template-columns:1fr}.card{padding:1.25rem}h1{font-size:1.5rem}.big{font-size:1.9rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/roofing-dumpster-calculator/">
+<meta property="og:title" content="Roofing Dumpster Size Calculator">
+<meta property="og:description" content="Free roofing dumpster calculator: estimate debris volume and weight from roof size, material, and layers to pick the right dumpster size.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<h1>Roofing Dumpster Size Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This roofing dumpster calculator estimates how much debris your tear-off will create, by volume and by weight, and recommends the dumpster size to order. Enter your roof area, material, and number of layers to get started.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="diagram" viewBox="0 0 600 270" role="img" aria-labelledby="dgT dgD">
+<title id="dgT">Roof cross-section and dumpster diagram</title>
+<desc id="dgD">A gable roof cross-section showing plan span, rise and slope factor, next to a dumpster showing the estimated debris and recommended size.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a2e"/></marker></defs>
+<rect x="40" y="200" width="340" height="26" fill="#f0f0f0" stroke="#e0e0e0"/>
+<line x1="20" y1="226" x2="400" y2="226" stroke="#e0e0e0" stroke-width="2"/>
+<polygon id="roofPoly" points="40,200 210,115 380,200" fill="#e6f2f9" stroke="#0077b6" stroke-width="3" stroke-linejoin="round"/>
+<line id="riseLn" x1="210" y1="200" x2="210" y2="115" stroke="#999" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text id="riseTx" x="218" y="162" font-size="16" fill="#1a1a2e">rise</text>
+<text id="slopeTx" x="113" y="151" font-size="16" fill="#0077b6" font-weight="700" text-anchor="end"></text>
+<text id="peakTx" x="210" y="105" font-size="16" fill="#1a1a2e" font-weight="600" text-anchor="middle">Measured on slope</text>
+<line x1="40" y1="240" x2="380" y2="240" stroke="#1a1a2e" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="spanTx" x="210" y="262" font-size="16" fill="#1a1a2e" text-anchor="middle">Roof surface (on slope)</text>
+<text id="dSq" x="420" y="38" font-size="17" fill="#1a1a2e">—</text>
+<text id="dLay" x="420" y="62" font-size="17" fill="#1a1a2e">—</text>
+<text id="dVol" x="420" y="86" font-size="17" fill="#1a1a2e">—</text>
+<text id="dWt" x="420" y="110" font-size="17" fill="#1a1a2e">—</text>
+<polygon points="425,140 585,140 568,204 442,204" fill="#fff" stroke="#0077b6" stroke-width="3" stroke-linejoin="round"/>
+<line x1="425" y1="152" x2="585" y2="152" stroke="#e0e0e0" stroke-width="2"/>
+<text id="dSize" x="505" y="185" font-size="20" font-weight="700" fill="#0077b6" text-anchor="middle">—</text>
+<circle cx="465" cy="212" r="8" fill="#1a1a2e"/><circle cx="545" cy="212" r="8" fill="#1a1a2e"/>
+<text x="505" y="246" font-size="15" fill="#1a1a2e" text-anchor="middle">Recommended</text>
+</svg>
+</div>
+
+<div class="field">
+<label for="area">Roof area</label>
+<div class="row">
+<input type="number" id="area" min="0" step="any" inputmode="decimal" value="2400" aria-describedby="areaErr">
+<select id="unit" aria-label="Roof area unit"><option value="sf">sq ft</option><option value="sq">squares</option></select>
+</div>
+<div class="err" id="areaErr" role="alert"></div>
+</div>
+
+<div class="field">
+<label for="basis">How was the area measured?</label>
+<select id="basis"><option value="surf">Actual roof surface (already includes slope)</option><option value="fp">Footprint / plan view (add slope for me)</option></select>
+</div>
+
+<div class="field hide" id="pitchBox">
+<label for="pitch">Roof pitch (rise per 12 in. of run)</label>
+<select id="pitch">
+<option value="2">2:12 (very low)</option><option value="3">3:12</option><option value="4">4:12</option><option value="5">5:12</option><option value="6" selected>6:12 (common)</option><option value="7">7:12</option><option value="8">8:12</option><option value="9">9:12</option><option value="10">10:12</option><option value="11">11:12</option><option value="12">12:12 (steep)</option>
+</select>
+</div>
+
+<div class="field">
+<label for="mat">Roofing material being removed</label>
+<select id="mat">
+<option value="three">3-tab asphalt shingles</option>
+<option value="arch" selected>Architectural (laminated) asphalt shingles</option>
+<option value="shake">Wood shake / shingles</option>
+<option value="metal">Metal roofing</option>
+<option value="slate">Slate</option>
+<option value="conc">Concrete tile</option>
+<option value="clay">Clay tile</option>
+</select>
+</div>
+
+<div class="field">
+<label for="layers">Layers to tear off</label>
+<select id="layers"><option value="1" selected>1 layer</option><option value="2">2 layers</option><option value="3">3 layers</option></select>
+</div>
+
+<div class="field">
+<label for="deck">Roof decking (plywood/OSB) to replace: <output id="deckVal">10%</output></label>
+<input type="range" id="deck" min="0" max="100" step="5" value="10">
+<div class="ticks"><span>0%</span><span>50%</span><span>100%</span></div>
+</div>
+
+<div class="chk"><input type="checkbox" id="wet"><label for="wet">Debris may sit in the rain (adds 15% weight)</label></div>
+
+<button class="main" id="calcBtn" type="button">Calculate Dumpster Size</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/roofing-dumpster-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Roofing Dumpster Size Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/roofing-dumpster-calculator/&quot;&gt;Roofing Dumpster Size Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/roofing-dumpster-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<h2>How to Use This Roofing Dumpster Size Calculator</h2>
+<p>Enter your roof area in square feet or in roofing squares (one square is 100 sq ft). If your number came from a satellite report or a ground-level measurement of the building outline, choose "Footprint" and pick the pitch so the calculator can add the extra surface that slope creates. Then select the material you are removing, the number of layers, and how much of the decking you expect to replace. Press the button to see the recommended dumpster, a fill gauge, a debris estimate, a table comparing every common size, and a quick look at what happens if you find extra layers.</p>
+
+<h2>Why This Matters</h2>
+<p>Roofing debris is heavy, and that is what surprises most homeowners and small contractors. A 24-square architectural shingle roof can produce about 5 tons of waste, even though it only fills roughly 12 cubic yards. Order a 10-yard container because the volume looks small and you will hit the weight limit before the bin is half full, which means overweight fees or a second haul, often $300 to $600 each time. Order a 40-yard container "just in case" and you pay more for the rental, may not fit on the driveway, and may need a street permit.</p>
+<p>Getting the size right matters most for tear-offs that go beyond the basics: a 2,800 sq ft ranch with two layers of 3-tab shingles, a cedar shake roof with rotted decking, or a clay tile roof that weighs 700+ lb per square. Roofers use estimates like this to quote jobs, and homeowners use them to avoid paying for a dumpster twice. Scheduling matters as well, since most rentals are priced by the week, and a swap-out mid-job can stall a crew for a day.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator converts your area to roofing squares, multiplies by layers and material factors, adds decking, and applies a safety margin. If you chose footprint, the slope multiplier is applied first:</p>
+<code class="formula">Surface sq ft = footprint sq ft × √(1 + (pitch ÷ 12)²)</code>
+<code class="formula">Squares = surface sq ft ÷ 100</code>
+<code class="formula">Volume (yd³) = (squares × layers × V + deck squares × 0.20) × 1.10</code>
+<code class="formula">Weight (lb) = (squares × layers × (W + 15) + deck squares × 180) × 1.10 × (1.15 if wet)</code>
+<p>W and V come from the table below. The extra 15 lb per square covers underlayment, nails, drip edge and flashing. Decking is assumed at 1.8 lb per sq ft (about 5/8" plywood or OSB), and loose debris from decking at 0.20 yd³ per square replaced. The 10% margin covers ridge caps, hidden damage and estimating error. For each dumpster size, the tool calculates how many are needed by volume and by weight, takes the larger number, and recommends the smallest size that works in a single container. Volumes are rounded up to 0.1 yd³ and weights up to 0.1 ton, so every result leans toward the larger, safer side.</p>
+<div class="tw"><table>
+<thead><tr><th>Material</th><th class="n">lb per square</th><th class="n">Loose yd³ per square</th></tr></thead>
+<tbody>
+<tr><td>3-tab asphalt</td><td class="n">250</td><td class="n">0.35</td></tr>
+<tr><td>Architectural asphalt</td><td class="n">350</td><td class="n">0.45</td></tr>
+<tr><td>Wood shake</td><td class="n">300</td><td class="n">0.60</td></tr>
+<tr><td>Metal roofing</td><td class="n">150</td><td class="n">0.50</td></tr>
+<tr><td>Slate</td><td class="n">1,000</td><td class="n">0.35</td></tr>
+<tr><td>Concrete tile</td><td class="n">900</td><td class="n">0.40</td></tr>
+<tr><td>Clay tile</td><td class="n">700</td><td class="n">0.45</td></tr>
+</tbody></table></div>
+<p>Typical weight limits used for comparison are 2 tons (10 yd), 3 tons (15 yd), 4 tons (20 yd), 6 tons (30 yd) and 8 tons (40 yd). These are common industry rules of thumb, not a code requirement. No building code sets dumpster sizes, and hauler policies and local rules vary. This is a planning estimate, not a quote, permit or engineering approval.</p>
+
+<h2>Worked Example</h2>
+<p>A homeowner has a 2,400 sq ft roof surface of architectural shingles, one layer, with about 10% of the decking expected to need replacement and dry weather.</p>
+<ul>
+<li><strong>Squares:</strong> 2,400 ÷ 100 = 24.0 squares. Decking to replace: 24 × 10% = 2.4 squares.</li>
+<li><strong>Volume:</strong> (24 × 1 × 0.45 + 2.4 × 0.20) × 1.10 = (10.8 + 0.48) × 1.10 = 12.408, shown as <strong>12.5 yd³</strong>.</li>
+<li><strong>Weight:</strong> (24 × (350 + 15) + 2.4 × 180) × 1.10 = (8,760 + 432) × 1.10 = 10,111 lb, or about <strong>5.1 tons</strong>.</li>
+<li><strong>By size:</strong> a 10-yard needs 3 containers (weight), a 15-yard needs 2, a 20-yard needs 2 (5.06 tons exceeds its 4-ton limit), and a 30-yard needs 1 (6-ton limit).</li>
+<li><strong>Result:</strong> a <strong>30-yard dumpster</strong>. Volume alone would fit a 15-yard, but weight pushes the recommendation up.</li>
+</ul>
+<p>A 20-yard with an overage fee for the extra 1.1 tons could also work. This tool recommends the size that stays within typical limits, so confirm your hauler's actual per-ton overage rate before choosing the cheaper option.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Don't include shingle waste.</strong> The 10-15% extra material you order for cuts and hips is not tear-off debris. Use the actual roof surface area.</li>
+<li><strong>Check weight limits, not just yards.</strong> Asphalt and especially tile, slate and concrete are weight-limited long before the container is full. Ask whether the hauler offers heavy-debris or roofing containers.</li>
+<li><strong>Never fill above the rim.</strong> Haulers can refuse to haul overfilled containers, and loose debris is a road hazard. Round up to the next size if you are close.</li>
+<li><strong>Count your layers before ordering.</strong> Check an exposed edge or the attic for a second layer. Each extra layer nearly doubles the debris, and local code often limits roofs to two layers.</li>
+<li><strong>Test older roofs.</strong> Roofing felts, cements and some shingles installed before the 1980s may contain asbestos. Have material tested before tear-off, since disposal rules differ.</li>
+<li><strong>Plan for rain.</strong> Wet shingles and decking can weigh noticeably more. Tick the rain option, or tarp the container.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What size dumpster do I need for a roof replacement?</summary><p>Most single-layer residential jobs of 15 to 30 squares land in the 20 to 30 yard range. A 10-yard works only for small roofs of roughly 8 to 9 squares of architectural shingles. Use the calculator above to account for material, layers and decking.</p></details>
+<details><summary>How many squares of shingles fit in a 20-yard dumpster?</summary><p>By this tool's assumptions and a typical 4-ton limit, a 20-yard holds roughly 19 squares of single-layer architectural shingles with 10% decking replaced, or about 25 squares of 3-tab. Weight, not volume, is the limit. By volume alone it would hold nearly twice as much.</p></details>
+<details><summary>How much does a square of shingles weigh?</summary><p>A square of 3-tab asphalt typically weighs 200 to 250 lb, and architectural shingles 300 to 400 lb. Old shingles saturated with water or granules can weigh more. This tool uses 250 and 350 lb per square plus 15 lb for underlayment and metal.</p></details>
+<details><summary>Do I need a permit for a roofing dumpster?</summary><p>A dumpster on your own driveway usually needs no permit, but one placed on a public street often does. Many HOAs and cities have their own rules about placement and duration, so ask your hauler and local office before delivery.</p></details>
+<details><summary>Can I put roofing debris in a regular dumpster?</summary><p>Often yes, but tell the hauler up front. Roofing waste is heavy, and some haulers use dedicated roofing or heavy-debris containers with different weight limits and recycling options. Mixing in household trash, paint or hazardous items can lead to extra fees or rejection.</p></details>
+<details><summary>Should I measure the footprint or the roof surface?</summary><p>Either works. Surface area is better, as it is what roofing reports and shingle orders use. If you only know the footprint of the house (including overhangs), choose the footprint option and enter the pitch so the calculator multiplies by the slope factor. At 6:12 that factor is about 1.118.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="related">
+<li><a href="/roofing-nails-per-square-calculator/">Roofing Nails Per Square Calculator</a></li>
+<li><a href="/roofing-squares-calculator/">Roofing Squares Calculator</a></li>
+<li><a href="/horizontal-slat-fence-calculator/">Horizontal Slat Fence Calculator</a></li>
+<li><a href="/drywall-kerf-calculator/">Drywall Kerf Cut Calculator for Curved Walls</a></li>
+<li><a href="/cathedral-ceiling-insulation-calculator/">Cathedral Ceiling Insulation Calculator</a></li>
+<li><a href="/tank-volume-calculator/">Tank Volume Calculator</a></li>
+</ul>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<a href="/about/">About</a><a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a>
+<div>© <span id="yr">2025</span> toolwick.com</div>
+</footer>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const fmt=(n,d=0)=>Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const up1=x=>Math.ceil(x*10-1e-9)/10;
+const MATS={three:{n:'3-tab asphalt shingles',w:250,v:.35},arch:{n:'Architectural asphalt shingles',w:350,v:.45},shake:{n:'Wood shake',w:300,v:.6},metal:{n:'Metal roofing',w:150,v:.5},slate:{n:'Slate',w:1000,v:.35},conc:{n:'Concrete tile',w:900,v:.4},clay:{n:'Clay tile',w:700,v:.45}};
+const SIZES=[{y:10,t:2},{y:15,t:3},{y:20,t:4},{y:30,t:6},{y:40,t:8}];
+const EXTRA=15,DECKW=180,DECKV=.2,CONT=1.1;
+let lastText='',lastInfo=null;
+$('yr').textContent=new Date().getFullYear();
+
+function est(sq,L,m,dp,wet){const ds=sq*dp/100;return{vol:(sq*L*m.v+ds*DECKV)*CONT,lb:(sq*L*(m.w+EXTRA)+ds*DECKW)*CONT*(wet?1.15:1)};}
+function size(vol,tons){
+ const rows=SIZES.map(s=>{const nv=Math.max(1,Math.ceil(vol/s.y-1e-9)),nw=Math.max(1,Math.ceil(tons/s.t-1e-9));return{y:s.y,t:s.t,nv:nv,nw:nw,n:Math.max(nv,nw)};});
+ let best=rows.find(r=>r.n===1);
+ if(!best){best=rows[0];rows.forEach(r=>{if(r.n<best.n)best=r;});}
+ return{rows:rows,best:best};
+}
+const lab=b=>b.n===1?b.y+'-yard':b.n+' × '+b.y+'-yard';
+const short=b=>b.n===1?b.y+' yd':b.n+'×'+b.y+' yd';
+
+function geo(){
+ const p=+$('pitch').value,fp=$('basis').value==='fp';
+ const py=200-170*p/12,mid=(200+py)/2;
+ $('roofPoly').setAttribute('points','40,200 210,'+py+' 380,200');
+ $('riseLn').setAttribute('y2',py);
+ $('riseTx').setAttribute('y',mid+5);
+ $('slopeTx').setAttribute('y',mid-6);
+ $('slopeTx').textContent=fp?'×'+fmt(Math.sqrt(1+Math.pow(p/12,2)),3):'';
+ $('peakTx').setAttribute('y',Math.max(py-10,18));
+ $('peakTx').textContent=fp?p+':12 pitch':'Measured on slope';
+ let t=(lastInfo?lastInfo.fp:fp)?'Footprint (plan view)':'Roof surface (on slope)';
+ if(lastInfo)t=(lastInfo.fp?'Footprint: ':'Roof surface: ')+fmt(lastInfo.input)+' sq ft';
+ $('spanTx').textContent=t;
+}
+function panel(i){
+ $('dSq').textContent=fmt(i.sq,1)+' squares';
+ $('dLay').textContent=i.L+(i.L>1?' layers':' layer');
+ $('dVol').textContent=fmt(up1(i.vol),1)+' yd³';
+ $('dWt').textContent=fmt(up1(i.tons),1)+' tons';
+ $('dSize').textContent=short(i.best);
+}
+
+function setErr(msg){
+ const e=$('areaErr'),i=$('area');
+ e.textContent=msg;e.classList.toggle('on',!!msg);
+ i.classList.toggle('invalid',!!msg);
+ i.setAttribute('aria-invalid',msg?'true':'false');
+}
+
+function calculate(){
+ const res=$('results');
+ const raw=$('area').value.trim(),unit=$('unit').value,fp=$('basis').value==='fp',p=+$('pitch').value;
+ const v=parseFloat(raw);
+ const max=unit==='sq'?1000:100000;
+ let msg='';
+ if(raw===''||isNaN(v))msg='Enter your roof area as a number, for example 2400.';
+ else if(v<=0)msg='Roof area must be greater than zero.';
+ else if(v>max)msg='That is larger than this tool supports (max '+fmt(max)+' '+(unit==='sq'?'squares':'sq ft')+'). Split big projects into phases or ask your hauler directly.';
+ setErr(msg);
+ if(msg){res.innerHTML='';return;}
+ const inputSf=unit==='sq'?v*100:v;
+ const factor=fp?Math.sqrt(1+Math.pow(p/12,2)):1;
+ const surf=inputSf*factor,sq=surf/100;
+ const L=+$('layers').value,mk=$('mat').value,m=MATS[mk],dp=+$('deck').value,wet=$('wet').checked;
+ const e=est(sq,L,m,dp,wet),tons=e.lb/2000;
+ const sz=size(e.vol,tons),best=sz.best;
+ const volSize=SIZES.find(s=>s.y>=e.vol);
+ let reason;
+ if(best.n>1)reason='No single container fits this load within typical limits, so plan for '+best.n+' dumpsters or loads.';
+ else if(volSize&&volSize.y<best.y)reason='Volume alone would fit a '+volSize.y+'-yard, but weight pushes you to a '+best.y+'-yard to stay within its typical '+best.t+'-ton limit.';
+ else reason='Fits by volume and by the typical '+best.t+'-ton weight limit.';
+ const cap=best.n*best.y,wcap=best.n*best.t;
+ const vp=Math.min(100,e.vol/cap*100),wp=Math.min(100,tons/wcap*100);
+ const lb=Math.ceil(e.lb/10)*10;
+ let html='<div class="res-in"><div class="key"><div class="lbl">Recommended dumpster</div><div class="big">'+lab(best)+'</div><div class="sub">'+reason+'</div></div>';
+ html+='<div class="barlbl"><span>Volume used</span><span>'+fmt(up1(e.vol),1)+' of '+fmt(cap)+' yd³ ('+fmt(vp)+'%)</span></div><div class="bar"><span style="width:'+vp.toFixed(1)+'%"></span></div>';
+ html+='<div class="barlbl"><span>Weight used (typical limit)</span><span>'+fmt(up1(tons),1)+' of '+fmt(wcap)+' tons ('+fmt(wp)+'%)</span></div><div class="bar"><span style="width:'+wp.toFixed(1)+'%"></span></div>';
+ html+='<h3>Debris estimate</h3><div class="tw"><table><thead><tr><th>Item</th><th class="n">Value</th></tr></thead><tbody>';
+ html+='<tr><td>Roof surface area</td><td class="n">'+fmt(surf)+' sq ft</td></tr>';
+ html+='<tr><td>Roofing squares</td><td class="n">'+fmt(sq,1)+'</td></tr>';
+ html+='<tr><td>Material × layers</td><td class="n">'+m.n+' × '+L+'</td></tr>';
+ html+='<tr><td>Decking replaced</td><td class="n">'+fmt(dp)+'% ('+fmt(sq*dp/100,1)+' squares)</td></tr>';
+ html+='<tr><td>Debris volume (incl. 10% margin)</td><td class="n">'+fmt(up1(e.vol),1)+' yd³</td></tr>';
+ html+='<tr><td>Debris weight</td><td class="n">'+fmt(lb)+' lb ('+fmt(up1(tons),1)+' tons)</td></tr></tbody></table></div>';
+ html+='<h3>Every common size</h3><div class="tw"><table><thead><tr><th>Dumpster</th><th class="n">Capacity</th><th class="n">Typical limit</th><th class="n">By volume</th><th class="n">By weight</th><th class="n">Needed</th></tr></thead><tbody>';
+ sz.rows.forEach(r=>{html+='<tr'+(r===best?' class="rec"':'')+'><td>'+r.y+' yd</td><td class="n">'+r.y+' yd³</td><td class="n">'+r.t+' tons</td><td class="n">'+r.nv+'</td><td class="n">'+r.nw+'</td><td class="n">'+r.n+(r===best?' ✔':'')+'</td></tr>';});
+ html+='</tbody></table></div>';
+ html+='<h3>What if you find more layers?</h3><div class="tw"><table><thead><tr><th>Layers</th><th class="n">Volume</th><th class="n">Weight</th><th class="n">Suggested</th></tr></thead><tbody>';
+ const lines=[];
+ [1,2,3].forEach(n=>{const x=est(sq,n,m,dp,wet),t=x.lb/2000,s=size(x.vol,t);
+  html+='<tr'+(n===L?' class="rec"':'')+'><td>'+n+'</td><td class="n">'+fmt(up1(x.vol),1)+' yd³</td><td class="n">'+fmt(up1(t),1)+' tons</td><td class="n">'+lab(s.best)+'</td></tr>';
+  lines.push(n+' layer(s): '+fmt(up1(x.vol),1)+' yd³, '+fmt(up1(t),1)+' tons, '+lab(s.best));});
+ html+='</tbody></table></div>';
+ let note='Estimate only, based on industry rules of thumb and typical hauler weight limits, which vary. Confirm limits, overage fees and local rules with your hauler. This is not a quote, permit or engineering approval. Never fill above the rim. Roofs installed before the 1980s may contain asbestos, so test before tear-off.';
+ if(mk==='slate'||mk==='conc'||mk==='clay')note='Tile and slate are extremely heavy. Many haulers restrict fill height or require smaller, heavy-material containers, so ask before ordering. '+note;
+ html+='<div class="note">'+note+'</div><button class="copy" id="copyBtn" type="button">Copy summary</button></div>';
+ lastText='Roofing dumpster estimate (toolwick.com)\nRoof surface: '+fmt(surf)+' sq ft ('+fmt(sq,1)+' squares)\nMaterial: '+m.n+', '+L+' layer(s), '+dp+'% decking replaced\nDebris: '+fmt(up1(e.vol),1)+' yd³, '+fmt(up1(tons),1)+' tons\nRecommended: '+lab(best)+' dumpster\n'+lines.join('\n');
+ lastInfo={fp:fp,input:inputSf,sq:sq,L:L,vol:e.vol,tons:tons,best:best};
+ requestAnimationFrame(()=>{res.innerHTML=html;panel(lastInfo);geo();});
+}
+
+function copyText(t){
+ if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t);
+ return new Promise((ok,no)=>{const a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')?ok():no();}catch(x){no();}document.body.removeChild(a);});
+}
+$('results').addEventListener('click',e=>{
+ if(e.target.id!=='copyBtn')return;
+ const b=e.target;
+ copyText(lastText).then(()=>{b.textContent='Copied!';},()=>{b.textContent='Copy failed';});
+ setTimeout(()=>{b.textContent='Copy summary';},2000);
+});
+$('calcBtn').addEventListener('click',()=>{requestAnimationFrame(calculate);});
+['area','unit','basis','pitch','mat','layers','deck','wet'].forEach(id=>{
+ $(id).addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();requestAnimationFrame(calculate);}});
+});
+$('deck').addEventListener('input',()=>{$('deckVal').textContent=$('deck').value+'%';});
+$('basis').addEventListener('change',()=>{
+ $('pitchBox').classList.toggle('hide',$('basis').value!=='fp');
+ lastInfo=null;geo();
+});
+$('pitch').addEventListener('change',geo);
+$('area').addEventListener('input',()=>{if($('areaErr').classList.contains('on'))setErr('');});
+geo();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
