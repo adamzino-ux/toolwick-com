@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Deck Joist Hanger Calculator | Toolwick</title>
+<meta name="description" content="Free deck joist hanger calculator: enter deck size and joist spacing to get hanger, tie and nail counts, with a joist layout table and diagram.">
+<link rel="canonical" href="https://toolwick.com/deck-joist-hanger-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0;padding:.9rem 0}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 1rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram text{font-family:inherit;fill:#1a1a2e}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.25rem}
+.f{margin-bottom:0}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin:.3rem 0 0;min-height:0}
+.hint{font-size:.8rem;color:#666;margin:.3rem 0 0}
+button{font-family:inherit;font-size:1rem;cursor:pointer;min-height:44px}
+.btn{width:100%;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-weight:600;margin-top:1.5rem}
+.btn:hover{background:#006299}
+.ghost{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;margin-top:.75rem}
+.ghost:hover{background:#f0f8fc}
+#results{margin-top:1.5rem}
+.fade{opacity:0;transition:opacity .3s ease}
+.fade.in{opacity:1}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.big{font-size:2.8rem;font-weight:800;color:#0077b6;line-height:1.1}
+.klbl{color:#444;font-size:.95rem;margin-top:.25rem}
+.rh{font-weight:700;margin:1.5rem 0 .5rem}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e5e5e5}
+tr:nth-child(even) td{background:#fafafa}
+th.n,td.n{text-align:right}
+tr.sel td{font-weight:700;background:#e8f4fa}
+.lay:not(.all) tr.x{display:none}
+.notes{background:#f8f9fa;border-left:4px solid #0077b6;padding:.75rem 1rem;border-radius:0 6px 6px 0;font-size:.92rem;margin:0 0 1rem}
+.notes ul{margin:0;padding-left:1.1rem}
+.disc{font-size:.85rem;color:#555;margin-top:1.25rem}
+.copy{background:#fff;color:#0077b6;border:1px solid #ccc;border-radius:6px;padding:8px 14px;font-size:.88rem;margin-top:1rem}
+.cm{font-size:.85rem;color:#0a6b2c;margin-left:.5rem}
+.ad-slot{min-height:0;margin:0}
+.content ul{padding-left:1.2rem}
+.content li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;padding:.75rem 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;overflow-x:auto;margin-bottom:1rem;white-space:pre-wrap}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;padding:.75rem 0;min-height:44px}
+details p{color:#333}
+.rel{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.rel a{display:block;padding:12px 14px;border:1px solid #e0e0e0;border-radius:6px;background:#f8f9fa;font-weight:500;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.88rem;color:#555;text-align:center}
+footer a{margin:0 .5rem;display:inline-block;min-height:44px;line-height:44px}
+@media(max-width:640px){
+.grid{grid-template-columns:1fr}
+.card{padding:1.25rem}
+.rel{grid-template-columns:1fr}
+h1{font-size:1.6rem}
+.big{font-size:2.4rem}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/deck-joist-hanger-calculator/">
+<meta property="og:title" content="Deck Joist Hanger Calculator">
+<meta property="og:description" content="Free deck joist hanger calculator: enter deck size and joist spacing to get hanger, tie and nail counts, with a joist layout table and diagram.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<nav><div class="wrap"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Deck Joist Hanger Calculator</h1>
+<p>This deck joist hanger calculator tells you how many joists your deck needs, how many joist hangers or framing ties to buy, and roughly how many hanger nails or screws to bring home. Enter your deck size, joist size and spacing, and choose how each end of the joists connects.</p>
+
+<section class="card" aria-label="Deck joist hanger calculator">
+<div class="diagram">
+<svg id="dg" viewBox="0 0 400 280" role="img" aria-labelledby="dgt">
+<title id="dgt">Plan view of deck framing showing the ledger, joists, outer beam, dimensions and hanger locations</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<g id="dgDyn"></g>
+<rect x="105" y="257" width="9" height="9" fill="#0077b6"/><text x="120" y="266" font-size="12">Hanger</text>
+<rect x="185" y="257" width="9" height="9" fill="#fff" stroke="#1a1a2e"/><text x="200" y="266" font-size="12">Tie / rests on beam</text>
+</svg>
+</div>
+
+<div class="grid">
+<div class="f"><label for="len">Deck length along ledger (ft)</label><input id="len" type="number" inputmode="decimal" step="any" min="0" value="12" aria-describedby="e-len"><p class="err" id="e-len"></p></div>
+<div class="f"><label for="wid">Joist run / deck projection (ft)</label><input id="wid" type="number" inputmode="decimal" step="any" min="0" value="10" aria-describedby="e-wid"><p class="err" id="e-wid"></p></div>
+<div class="f"><label for="sp">Joist spacing (on center)</label><select id="sp"><option value="12">12 in</option><option value="16" selected>16 in</option><option value="24">24 in</option></select></div>
+<div class="f"><label for="sz">Joist size</label><select id="sz"><option value="2x6">2x6</option><option value="2x8" selected>2x8</option><option value="2x10">2x10</option><option value="2x12">2x12</option></select></div>
+<div class="f"><label for="inn">Inner end (house side)</label><select id="inn"><option value="h" selected>Ledger or flush beam: face-mount hangers</option><option value="t">Resting on a beam: framing ties</option></select></div>
+<div class="f"><label for="out">Outer end</label><select id="out"><option value="h">Flush beam: face-mount hangers</option><option value="t" selected>Resting on a beam: framing ties</option></select></div>
+<div class="f"><label for="ex">Extra doubled joists (stairs, posts)</label><input id="ex" type="number" inputmode="numeric" step="1" min="0" value="0" aria-describedby="e-ex"><p class="err" id="e-ex"></p></div>
+</div>
+<button class="btn" id="go" type="button">Calculate Hangers</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</section>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<div class="content">
+<h2>How to Use This Deck Joist Hanger Calculator</h2>
+<p>Type the deck length measured along the ledger board and the projection (how far the joists run out from the house). Pick your joist spacing and lumber size, then choose whether each joist end is hung with a face-mount hanger or rests on top of a beam and is held by framing ties. The calculator returns the joist count, hangers, ties, a fastener estimate with spares, a spacing comparison and a joist-by-joist layout table.</p>
+
+<h2>Why This Matters</h2>
+<p>Joist hangers are the connection that keeps a deck from pulling apart, and they are the part builders most often under-buy. A modest 12 x 10 ft deck at 16 in on center has 10 joists. That is 10 hangers on the ledger, plus 20 ties if the outer ends sit on a beam. Add a doubled joist under a bench or stair stringer and the count climbs again. Running out mid-build means a trip to the store with half-finished framing waiting, and a quick substitution with the wrong hanger is exactly how weak connections happen.</p>
+<p>This tool is for homeowners pricing a weekend deck, contractors writing a materials list, and anyone comparing 12, 16 and 24 inch layouts. Tighter spacing adds joists, and each joist adds hangers, nails and cost. At 12 ft long, going from 24 in to 12 in spacing nearly doubles the connectors, from 7 joists to 13. Knowing that before you buy helps you balance decking requirements, stiffness and budget. It also makes it easier to order the correct corrosion-resistant hardware in one trip.</p>
+
+<h2>How It's Calculated</h2>
+<p>Joist count comes from the ledger length divided by spacing, rounded up so spacing is never wider than you selected. One joist is added because a run of joists has a joist at both ends. Each joist then gets one hanger or two ties per hanger-type or tie-type end.</p>
+<div class="formula">Joists = ceil(Length × 12 ÷ Spacing) + 1 + Extra joists
+Actual spacing = Length × 12 ÷ (Joists − Extra − 1)
+Hangers = Joists × number of hanger ends (0, 1 or 2)
+Ties = Joists × number of tie ends × 2 (one each side)
+Fasteners = (Hangers × nails per hanger + Ties × 10) × 1.10
+Buy quantity = Needed + the larger of 2 or 5%</div>
+<p>Nails per hanger are conservative planning figures (2x6: 6, 2x8: 10, 2x10: 14, 2x12: 16). Rounding always goes up. The hanger's own installation table controls, and every nail hole specified must be filled. The layout follows common deck framing practice and the connection principles in IRC Section R507 (Exterior Decks). Connectors in contact with preservative-treated lumber must be hot-dip galvanized or stainless steel (IRC R317.3). Local codes vary, so confirm with your building department.</p>
+
+<h2>Worked Example</h2>
+<p>Take a deck 12 ft long and 10 ft out from the house, with 2x8 joists at 16 in on center. The inner ends are hung from the ledger, the outer ends rest on a beam with ties, and there are no extra joists.</p>
+<ul>
+<li><strong>Joists:</strong> 12 × 12 = 144 in; 144 ÷ 16 = 9; 9 + 1 = <strong>10 joists</strong> (actual spacing exactly 16 in).</li>
+<li><strong>Hangers:</strong> 10 joists × 1 hanger end = <strong>10 hangers</strong>. Add the larger of 2 or 5% (0.5, so 2 spares) to get <strong>12 to buy</strong>.</li>
+<li><strong>Ties:</strong> 10 joists × 2 = <strong>20 ties</strong>, plus 2 spares = <strong>22 to buy</strong>.</li>
+<li><strong>Fasteners:</strong> 10 × 10 = 100 hanger nails; 20 × 10 = 200 tie nails; 300 × 1.10 = <strong>330 fasteners</strong>.</li>
+</ul>
+<p>The calculator shows these same figures in the shopping list.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Match the hanger to the joist.</strong> Use a hanger sized for the full joist depth, and never less than about 60% of it. A 2x10 in a 2x6 hanger is not a connection you can trust.</li>
+<li><strong>Use approved hardware only.</strong> Choose connectors rated for exterior and treated lumber (hot-dip galvanized to ASTM A153 or stainless steel), and use the fasteners the manufacturer specifies. Ordinary drywall or deck screws are not a substitute for hanger nails or structural screws.</li>
+<li><strong>Fill every hole.</strong> Skipping nail holes cuts the connection's rated capacity. Do not oversize or undersize the nail.</li>
+<li><strong>Do not forget doubled joists.</strong> Stair openings, picture-frame borders and railing post blocking add joists and hangers. Enter them in the extra field.</li>
+<li><strong>Check spans separately.</strong> This tool counts hardware only. Verify allowable joist span for your species and grade in IRC Table R507.6 or with a design professional.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How many joist hangers do I need for a deck?</summary><p>You need one hanger for every joist end that is face-mounted to a ledger or flush beam. Divide the deck length in inches by the spacing, round up and add one. A 12 ft deck at 16 in has 10 joists, so 10 hangers per hung end.</p></details>
+<details><summary>Do I need hangers on both ends of a deck joist?</summary><p>Each end needs a positive connection, but not always a hanger. Joists on a ledger are normally hung, while joists resting on top of a beam usually use framing ties. A flush outer beam needs hangers on that end too.</p></details>
+<details><summary>What size joist hanger fits a 2x8?</summary><p>A 2x8 joist is 1½ x 7¼ in actual, so you need a hanger with a 1½ in wide seat and a tall face that covers most of the 7¼ in depth. Look for the "2x8" size on the package, and never use a hanger shorter than about 60% of the joist depth.</p></details>
+<details><summary>Can I use regular nails or deck screws in joist hangers?</summary><p>Only if the hanger manufacturer allows them. Use the specified hanger nails (such as 10d x 1½ in) or listed structural screws, and fill every hole. Standard deck screws are brittle in shear and are not a code-approved substitute.</p></details>
+<details><summary>What kind of hangers should I use for pressure-treated lumber?</summary><p>Use hot-dip galvanized connectors (typically G185 or heavier) or stainless steel, and match the fasteners. Modern copper-based treatments corrode plain galvanized steel quickly, which is why IRC R317.3 requires protected hardware.</p></details>
+<details><summary>Does 12-inch spacing use a lot more hangers than 16-inch?</summary><p>Yes. On a 12 ft deck, 12 in spacing needs 13 joists and 16 in needs 10, which is 30% more hangers, ties and nails. Check the comparison table in the results to see the difference for your own deck.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/rim-joist-insulation-calculator/">Rim Joist Insulation Calculator</a></li>
+<li><a href="/deck-skirting-calculator/">Deck Skirting Calculator</a></li>
+<li><a href="/deck-post-size-calculator/">Deck Post Size Calculator</a></li>
+<li><a href="/deck-screws-calculator/">Deck Screws Calculator</a></li>
+<li><a href="/deck-cantilever-calculator/">Deck Cantilever Calculator</a></li>
+<li><a href="/deck-stain-calculator/">Deck Stain Calculator</a></li>
+</ul>
+</div>
+
+</main>
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/deck-joist-hanger-calculator/">Toolwick</a></p>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var fmt=function(n,d){d=d||0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var fmtT=function(n){return Number(n.toFixed(2)).toLocaleString('en-US',{maximumFractionDigits:2})};
+var SZ={'2x6':{d:'5½',n:6},'2x8':{d:'7¼',n:10},'2x10':{d:'9¼',n:14},'2x12':{d:'11¼',n:16}};
+var summary='',lastShow=false;
+$('yr').textContent=new Date().getFullYear();
+
+function spare(c){return c>0?c+Math.max(2,Math.ceil(c/20)):0}
+function joistsFor(L,s,ex){return Math.ceil(L*12/s-1e-9)+1+ex}
+
+function draw(L,W,base,sp,total,inT,outT){
+  var sc=Math.min(250/L,130/W),w=Math.max(L*sc,110),h=Math.max(W*sc,50),x0=185-w/2,y0=60,y1=y0+h;
+  var gap=w/(base-1),mw=Math.max(1.5,Math.min(6,gap-1)),i,x,p='',hm='';
+  for(i=0;i<base;i++){
+    x=x0+i*gap;
+    p+='M'+x.toFixed(1)+' '+y0+'V'+y1;
+    hm+=mk(x,y0,mw,inT)+mk(x,y1-6,mw,outT);
+  }
+  var s='';
+  s+='<line x1="'+x0+'" y1="22" x2="'+(x0+w)+'" y2="22" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  s+='<path d="M'+x0+' 16V'+(y0-8)+'M'+(x0+w)+' 16V'+(y0-8)+'" stroke="#e0e0e0" stroke-dasharray="3 3"/>';
+  s+='<text x="185" y="14" font-size="14" font-weight="600" text-anchor="middle">Length '+fmtT(L)+' ft</text>';
+  s+='<rect x="'+(x0-6)+'" y="'+(y0-8)+'" width="'+(w+12)+'" height="8" fill="#e0e0e0" stroke="#1a1a2e"/>';
+  s+='<text x="185" y="42" font-size="12" text-anchor="middle">Ledger / inner support</text>';
+  s+='<path d="'+p+'" stroke="#0077b6" stroke-width="'+(gap<4?1:1.5)+'" fill="none"/>'+hm;
+  s+='<rect x="'+(x0-6)+'" y="'+y1+'" width="'+(w+12)+'" height="8" fill="#e0e0e0" stroke="#1a1a2e"/>';
+  var rx=x0+w+26;
+  s+='<line x1="'+rx+'" y1="'+y0+'" x2="'+rx+'" y2="'+y1+'" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>';
+  s+='<path d="M'+(x0+w+10)+' '+y0+'H'+(rx+6)+'M'+(x0+w+10)+' '+y1+'H'+(rx+6)+'" stroke="#e0e0e0" stroke-dasharray="3 3"/>';
+  s+='<text x="'+(rx+9)+'" y="'+((y0+y1)/2+5)+'" font-size="14" font-weight="600">'+fmtT(W)+' ft</text>';
+  s+='<text x="185" y="'+(y1+28)+'" font-size="12" text-anchor="middle">Outer beam / rim</text>';
+  s+='<text x="185" y="'+(y1+47)+'" font-size="14" font-weight="600" text-anchor="middle">'+sp+' in o.c. · '+fmt(total)+' joists</text>';
+  $('dgDyn').innerHTML=s;
+}
+function mk(x,y,mw,t){
+  return t==='h'?'<rect x="'+(x-mw/2).toFixed(1)+'" y="'+y+'" width="'+mw.toFixed(1)+'" height="6" fill="#0077b6"/>'
+  :'<rect x="'+(x-mw/2).toFixed(1)+'" y="'+y+'" width="'+mw.toFixed(1)+'" height="6" fill="#fff" stroke="#1a1a2e" stroke-width="1"/>';
+}
+
+function setErr(id,msg){
+  var inp=$(id),e=$('e-'+id);
+  e.textContent=msg||'';
+  if(msg){inp.classList.add('bad');inp.setAttribute('aria-invalid','true')}
+  else{inp.classList.remove('bad');inp.removeAttribute('aria-invalid')}
+  return !msg;
+}
+
+function calculate(){
+  var Lr=$('len').value.trim(),Wr=$('wid').value.trim(),Er=$('ex').value.trim();
+  var L=parseFloat(Lr),W=parseFloat(Wr),ex=Er===''?0:Number(Er);
+  var ok=true;
+  ok=setErr('len',Lr===''||isNaN(L)?'Enter the deck length in feet.':L<=0?'Length must be greater than zero.':L>100?'Length over 100 ft is not supported. Split the deck into sections.':'')&&ok;
+  ok=setErr('wid',Wr===''||isNaN(W)?'Enter the joist run in feet.':W<=0?'Projection must be greater than zero.':W>40?'Projection over 40 ft is not supported.':'')&&ok;
+  ok=setErr('ex',isNaN(ex)||ex<0?'Enter 0 or a positive whole number.':(ex%1!==0)?'Use a whole number of joists.':ex>50?'Extra joists above 50 is not supported.':'')&&ok;
+  var res=$('results');
+  if(!ok){res.innerHTML='';return}
+  var sp=parseInt($('sp').value,10),sz=$('sz').value,inT=$('inn').value,outT=$('out').value;
+  var info=SZ[sz];
+  var hEnds=(inT==='h'?1:0)+(outT==='h'?1:0),tEnds=(inT==='t'?1:0)+(outT==='t'?1:0);
+  var base=Math.ceil(L*12/sp-1e-9)+1,total=base+ex;
+  var actual=L*12/(base-1);
+  var hang=total*hEnds,ties=total*tEnds*2;
+  var nails=Math.ceil((hang*info.n+ties*10)*11/10);
+  var hangBuy=spare(hang),tieBuy=spare(ties);
+  var notes=[];
+  if(actual<sp-0.01)notes.push('Joist count rounded up so spacing is never wider than '+sp+' in. Actual spacing is '+fmt(actual,2)+' in.');
+  if(sp===24)notes.push('24 in spacing is not permitted by many decking products. Check your decking manufacturer\'s maximum joist spacing (often 16 in, or 12 in for diagonal or some composite boards).');
+  notes.push('Choose a hanger that covers the full depth of your '+sz+' joist ('+info.d+' in actual). Never go below about 60% of the joist depth.');
+  notes.push('Use hot-dip galvanized (G185 or heavier) or stainless connectors and matching fasteners with treated lumber (IRC R317.3).');
+  notes.push('Joist span is not checked here. Verify it with IRC Table R507.6 or a design professional.');
+
+  var keyN=hang>0?hang:ties,keyL=hang>0?'joist hangers needed ('+fmt(hangBuy)+' to buy with spares)':ties>0?'framing ties needed ('+fmt(tieBuy)+' to buy with spares)':'connectors needed';
+  var rows='<tr><td>Joist hangers, '+sz+' size</td><td class="n">'+fmt(hang)+'</td><td class="n">'+fmt(hangBuy)+'</td></tr>'+
+    '<tr><td>Framing ties (2 per joist end)</td><td class="n">'+fmt(ties)+'</td><td class="n">'+fmt(tieBuy)+'</td></tr>'+
+    '<tr><td>Hanger and tie nails or screws (est.)</td><td class="n">'+fmt(nails)+'</td><td class="n">'+fmt(nails)+'</td></tr>';
+  var cmp='';
+  [12,16,24].forEach(function(s){
+    var n=joistsFor(L,s,ex);
+    cmp+='<tr'+(s===sp?' class="sel"':'')+'><td>'+s+' in'+(s===sp?' (selected)':'')+'</td><td class="n">'+fmt(n)+'</td><td class="n">'+fmt(n*hEnds)+'</td><td class="n">'+fmt(n*tEnds*2)+'</td></tr>';
+  });
+  var lay='',i,pos,r,ft,inch;
+  for(i=0;i<base;i++){
+    pos=i*actual;r=Math.round(pos*100)/100;ft=Math.floor(r/12+1e-9);inch=r-ft*12;
+    lay+='<tr'+(i>=12?' class="x"':'')+'><td>'+(i+1)+'</td><td class="n">'+fmt(r,2)+'</td><td class="n">'+fmt(ft)+' ft '+fmt(inch,2)+' in</td></tr>';
+  }
+  var showBtn=base>12?'<button type="button" class="ghost" id="showAll">Show all '+fmt(base)+' joists</button>':'';
+  var html='<div class="fade" id="fd"><div class="key"><div class="big">'+fmt(keyN)+'</div><div class="klbl">'+keyL+'</div></div>'+
+    '<div class="notes"><ul>'+notes.map(function(n){return '<li>'+n+'</li>'}).join('')+'</ul></div>'+
+    '<p class="rh">Hardware shopping list ('+fmt(total)+' joists'+(ex?' including '+fmt(ex)+' extra':'')+')</p>'+
+    '<div class="tw"><table><thead><tr><th>Item</th><th class="n">Needed</th><th class="n">Suggested to buy</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+    '<p class="rh">Spacing comparison</p>'+
+    '<div class="tw"><table><thead><tr><th>Spacing</th><th class="n">Joists</th><th class="n">Hangers</th><th class="n">Ties</th></tr></thead><tbody>'+cmp+'</tbody></table></div>'+
+    '<p class="rh">Joist layout (measured from the left end of the ledger)</p>'+
+    '<div class="tw lay" id="lay"><table><thead><tr><th>Joist</th><th class="n">Position (in)</th><th class="n">Position (ft-in)</th></tr></thead><tbody>'+lay+'</tbody></table></div>'+showBtn+
+    '<div><button type="button" class="copy" id="copyBtn">Copy summary</button><span class="cm" id="cm"></span></div>'+
+    '<p class="disc">Planning estimate only. It is not engineering, permit or inspection approval. Follow the hanger manufacturer\'s installation instructions and your local building code, which may differ from IRC R507.</p></div>';
+  summary='Deck joist hanger estimate ('+fmtT(L)+' ft x '+fmtT(W)+' ft, '+sz+' joists @ '+sp+' in o.c.)\n'+
+    'Joists: '+total+' (actual spacing '+fmt(actual,2)+' in)\n'+
+    'Joist hangers: '+hang+' needed, '+hangBuy+' to buy\n'+
+    'Framing ties: '+ties+' needed, '+tieBuy+' to buy\n'+
+    'Fasteners (est.): '+nails+'\nPlanning estimate only. Verify with local code and manufacturer instructions.';
+  requestAnimationFrame(function(){
+    draw(L,W,base,sp,total,inT,outT);
+    res.innerHTML=html;
+    requestAnimationFrame(function(){var f=$('fd');if(f)f.classList.add('in')});
+  });
+}
+
+function wrapCalc(){requestAnimationFrame(calculate)}
+$('go').addEventListener('click',wrapCalc);
+['len','wid','sp','sz','inn','out','ex'].forEach(function(id){
+  $(id).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();wrapCalc()}});
+});
+$('results').addEventListener('click',function(e){
+  var t=e.target;
+  if(t.id==='showAll'){
+    var l=$('lay');lastShow=!l.classList.contains('all');
+    l.classList.toggle('all');
+    t.textContent=lastShow?'Show first 12 only':'Show all joists';
+  }
+  if(t.id==='copyBtn'){
+    var done=function(){var m=$('cm');if(m){m.textContent='Copied!';setTimeout(function(){m.textContent=''},2000)}};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(summary).then(done,fallback)}else fallback();
+    function fallback(){
+      var ta=document.createElement('textarea');ta.value=summary;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy');done()}catch(x){}
+      document.body.removeChild(ta);
+    }
+  }
+});
+draw(12,10,10,16,10,'h','t');
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
