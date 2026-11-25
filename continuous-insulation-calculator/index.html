@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Exterior Continuous Insulation Calculator | Toolwick</title>
+<meta name="description" content="Use this continuous insulation r-value calculator to find the exterior foam thickness for your climate zone, effective wall R-value, and screw length.">
+<link rel="canonical" href="https://toolwick.com/continuous-insulation-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Exterior Continuous Insulation Calculator", "url": "https://toolwick.com/continuous-insulation-calculator/", "description": "Use this continuous insulation r-value calculator to find the exterior foam thickness for your climate zone, effective wall R-value, and screw length.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Exterior Continuous Insulation Calculator", "item": "https://toolwick.com/continuous-insulation-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much continuous insulation do I need on a 2×6 wall?", "acceptedAnswer": {"@type": "Answer", "text": "In IECC Zones 4–8, a 2×6 wall with an R-20 batt needs R-5 of continuous insulation under the prescriptive table. If you use a vapor-retarder-paint interior, the IRC condensation table can require R-7.5 in Zone 5 and more in colder zones. This calculator shows both and uses the larger one."}}, {"@type": "Question", "name": "How long should screws be for siding over exterior foam?", "acceptedAnswer": {"@type": "Answer", "text": "Add the foam thickness, sheathing, furring and at least 1½ inches of embedment into the stud, then round up to the next stock length. For 1.5 in. of foam, that is about 4.25 in., so use a 5 in. screw. Always check the screw manufacturer's tables for your cladding weight."}}, {"@type": "Question", "name": "Does polyiso lose R-value in cold weather?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Polyiso's rated R-value is measured at a mean temperature of 75°F, and it performs noticeably lower when the foam is very cold. In Zones 6–8 many designers prefer XPS, EPS or mineral wool for exterior walls, or they add thickness to compensate."}}, {"@type": "Question", "name": "Is continuous insulation the same as exterior sheathing?", "acceptedAnswer": {"@type": "Answer", "text": "No. Structural sheathing such as OSB or plywood adds only about R-0.5. Continuous insulation is an unbroken insulating layer over the framing, usually rigid foam or mineral wool board. Some products combine both, but only the insulating layer counts toward the ci requirement."}}, {"@type": "Question", "name": "Can exterior insulation replace cavity insulation?", "acceptedAnswer": {"@type": "Answer", "text": "Usually not under the prescriptive code. Most paths require both a cavity R-value and a ci R-value. Some performance or U-factor paths allow other combinations, so confirm with your building department or energy rater."}}, {"@type": "Question", "name": "Will exterior insulation cause moisture problems?", "acceptedAnswer": {"@type": "Answer", "text": "Done correctly, it reduces risk because it keeps the sheathing warmer than the dew point. Problems arise when the foam is too thin for the climate, seams are left open, or flashing is not integrated. That is why the condensation-control minimums are included here."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+a{color:#0077b6}
+.wrap,.nav-in{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{border-bottom:1px solid #e0e0e0}
+.nav-in a{display:inline-block;padding:12px 0;font-weight:700;font-size:1.1rem;text-decoration:none;min-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;line-height:1.3;margin:2rem 0 .75rem}
+p{margin:0 0 1rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+figure{margin:0 0 1.5rem;background:#f8f9fa;border-radius:8px;padding:.5rem}
+figcaption{font-size:.85rem;color:#666;padding:0 .5rem .5rem}
+svg text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;fill:#1a1a2e}
+.field{margin-bottom:1.25rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:6px}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;cursor:pointer}
+.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:4px}
+.hint{font-size:.85rem;color:#666;margin-top:4px}
+.grid{display:block}
+@media(min-width:641px){.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.val{font-weight:700;color:#0077b6}
+.primary{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit}
+.primary:hover{background:#006299}
+.safety{background:#f8f9fa;border-radius:6px;padding:12px 16px;font-size:.85rem;color:#555;margin-top:1.25rem}
+#results{margin-top:1.5rem}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.fade{animation:none}}
+.key{text-align:center;background:#f8f9fa;border-radius:8px;padding:1.25rem}
+.big{display:block;font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.15}
+.key span.sub{font-size:.95rem;color:#444}
+.status{padding:12px 16px;border-radius:6px;margin:1rem 0;font-weight:500}
+.ok{background:#e8f5e9;color:#1b5e20}
+.warn{background:#fff4e5;color:#7a4100}
+.scroll{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #eee}
+tr:nth-child(even) td{background:#fafafa}
+.n{text-align:right}
+th.n{text-align:right}
+.tag{font-size:.75rem;color:#0077b6;font-weight:600;display:block}
+.copy{min-height:44px;background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 16px;font-size:.9rem;cursor:pointer;font-family:inherit}
+.copy:hover{background:#f0f8fc}
+.small{font-size:.85rem;color:#555}
+.ad-slot{min-height:0;margin:0}
+ul{padding-left:1.25rem;margin:0 0 1rem}
+li{margin-bottom:.5rem}
+details{border-bottom:1px solid #e0e0e0}
+summary{cursor:pointer;font-weight:600;padding:12px 0;min-height:44px}
+details p{margin:0 0 1rem}
+.formula{background:#f8f9fa;border-left:3px solid #0077b6;padding:12px 16px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9rem;margin:0 0 1rem;overflow-x:auto}
+.rel{display:grid;gap:.25rem;padding:0;list-style:none}
+.rel li{margin:0}
+.rel a{display:block;padding:10px 0;min-height:44px}
+footer{border-top:1px solid #e0e0e0;margin-top:2rem;padding:1.5rem 0;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;margin-right:1rem;display:inline-block;padding:10px 0}
+@media(max-width:480px){.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/continuous-insulation-calculator/">
+<meta property="og:title" content="Exterior Continuous Insulation Calculator">
+<meta property="og:description" content="Use this continuous insulation r-value calculator to find the exterior foam thickness for your climate zone, effective wall R-value, and screw length.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<nav><div class="nav-in"><a href="/">Toolwick</a></div></nav>
+<main class="wrap">
+<h1>Exterior Continuous Insulation Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p>This continuous insulation r-value calculator tells you how thick your exterior rigid foam or mineral wool needs to be for your climate zone, what your wall will really perform at once studs are accounted for, and how long your cladding screws must be.</p>
+
+<section class="card" aria-label="Continuous insulation calculator">
+<figure>
+<svg id="diag" viewBox="0 0 420 250" role="img" aria-labelledby="dt dd" style="width:100%;height:auto;display:block">
+<title id="dt">Wall cross-section with exterior continuous insulation</title>
+<desc id="dd">Plan-view section through a wood-framed wall showing drywall, stud cavity, sheathing, continuous insulation, furring and siding, with thickness labels and a cladding screw.</desc>
+<defs><marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L8 4L0 8z" fill="#0077b6"/></marker></defs>
+<rect id="dw" y="50" height="120" fill="#e0e0e0" stroke="#1a1a2e" stroke-width=".8"/>
+<rect id="bt" y="66" height="88" fill="#fff3b0" stroke="#1a1a2e" stroke-width=".8"/>
+<rect id="st1" y="50" height="16" fill="#d9b98a" stroke="#1a1a2e" stroke-width=".8"/>
+<rect id="st2" y="154" height="16" fill="#d9b98a" stroke="#1a1a2e" stroke-width=".8"/>
+<rect id="sh" y="50" height="120" fill="#c9a66b" stroke="#1a1a2e" stroke-width=".8"/>
+<rect id="ci" y="50" height="120" fill="#cdeaf8" stroke="#0077b6" stroke-width="1.5"/>
+<rect id="fu1" y="50" height="16" fill="#d9b98a" stroke="#1a1a2e" stroke-width=".8"/>
+<rect id="fu2" y="154" height="16" fill="#d9b98a" stroke="#1a1a2e" stroke-width=".8"/>
+<rect id="sd" y="50" height="120" fill="#cfd8dc" stroke="#1a1a2e" stroke-width=".8"/>
+<line id="sc" y1="58" y2="58" stroke="#0077b6" stroke-width="2.5"/>
+<rect id="scH" y="53" width="3" height="10" fill="#0077b6"/>
+<line id="gC1" y1="36" y2="50" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="3 3"/>
+<line id="gC2" y1="36" y2="50" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="3 3"/>
+<line id="dC" y1="36" y2="36" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tC" y="27" font-size="12" text-anchor="middle"></text>
+<line id="gI1" y1="170" y2="190" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="3 3"/>
+<line id="gI2" y1="170" y2="190" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="3 3"/>
+<line id="dI" y1="190" y2="190" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="tI" y="208" font-size="12" text-anchor="middle"></text>
+<text x="24" y="238" font-size="11">Interior</text>
+<text x="258" y="238" font-size="11" text-anchor="end">Exterior</text>
+<rect x="270" y="53" width="10" height="10" fill="#e0e0e0" stroke="#1a1a2e" stroke-width=".6"/><text x="286" y="62" font-size="11">Drywall ½ in</text>
+<rect x="270" y="73" width="10" height="10" fill="#fff3b0" stroke="#1a1a2e" stroke-width=".6"/><text id="lgCav" x="286" y="82" font-size="11"></text>
+<rect x="270" y="93" width="10" height="10" fill="#d9b98a" stroke="#1a1a2e" stroke-width=".6"/><text x="286" y="102" font-size="11">Studs / furring</text>
+<rect x="270" y="113" width="10" height="10" fill="#c9a66b" stroke="#1a1a2e" stroke-width=".6"/><text x="286" y="122" font-size="11">Sheathing ½ in</text>
+<rect x="270" y="133" width="10" height="10" fill="#cdeaf8" stroke="#0077b6" stroke-width="1"/><text id="lgCi" x="286" y="142" font-size="11"></text>
+<rect x="270" y="153" width="10" height="10" fill="#cfd8dc" stroke="#1a1a2e" stroke-width=".6"/><text x="286" y="162" font-size="11">Siding</text>
+<line id="lgScL" x1="270" x2="280" y1="178" y2="178" stroke="#0077b6" stroke-width="2.5"/><text id="lgSc" x="286" y="182" font-size="11"></text>
+</svg>
+<figcaption>Plan-view wall section. It updates as you change the inputs.</figcaption>
+</figure>
+
+<div class="grid">
+<div class="field"><label for="zone">IECC climate zone</label>
+<select id="zone">
+<option value="1">Zone 1</option><option value="2">Zone 2</option><option value="3">Zone 3</option><option value="4">Zone 4 (not marine)</option><option value="4C">Zone 4C (marine)</option><option value="5" selected>Zone 5</option><option value="6">Zone 6</option><option value="7">Zone 7</option><option value="8">Zone 8</option>
+</select></div>
+<div class="field"><label for="frame">Wall framing</label>
+<select id="frame"><option value="2x4">2×4 (3.5 in. cavity)</option><option value="2x6" selected>2×6 (5.5 in. cavity)</option></select></div>
+</div>
+<div class="grid">
+<div class="field"><label for="cavR">Cavity insulation R-value</label>
+<input id="cavR" type="number" inputmode="decimal" min="0" step="any" value="20" aria-describedby="e-cavR">
+<div class="err" id="e-cavR"></div></div>
+<div class="field"><label for="sp">Stud spacing</label>
+<select id="sp"><option value="16" selected>16 in. o.c. (25% framing)</option><option value="24">24 in. o.c. (22% framing)</option></select></div>
+</div>
+<div class="grid">
+<div class="field"><label for="mat">Continuous insulation type</label>
+<select id="mat">
+<option value="eps">EPS Type II (R-4.0/in)</option><option value="gps">Graphite EPS (R-4.7/in)</option><option value="xps">XPS (R-5.0/in)</option><option value="pir" selected>Polyiso, foil-faced (R-5.7/in)</option><option value="mw">Mineral wool board (R-4.2/in)</option>
+</select></div>
+<div class="field"><label for="custom">Custom ci target, R-value (optional)</label>
+<input id="custom" type="number" inputmode="decimal" min="0" step="any" placeholder="Leave blank to use code" aria-describedby="e-custom">
+<div class="err" id="e-custom"></div></div>
+</div>
+<div class="field"><label for="thick">Planned insulation thickness: <span class="val" id="thickOut">1.5 in</span></label>
+<input id="thick" type="range" min="0" max="6" step="0.25" value="1.5">
+<div class="ticks" aria-hidden="true"><span>0 in</span><span>3 in</span><span>6 in</span></div></div>
+<button class="primary" id="calcBtn" type="button">Calculate</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+<p class="safety">Targets follow the 2021 IECC R402.1.3 prescriptive table and the 2021 IRC R702.7 condensation-control table. Thickness and screw length are rounded up. Many jurisdictions use older or amended editions, so local codes vary. Results are planning estimates, not engineering, permit or inspection approval.</p>
+</section>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/continuous-insulation-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Exterior Continuous Insulation Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/continuous-insulation-calculator/&quot;&gt;Exterior Continuous Insulation Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/continuous-insulation-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<section>
+<h2>How to Use This Exterior Continuous Insulation Calculator</h2>
+<p>Pick your IECC climate zone, your framing size, and the R-value of the batt or foam already in the stud cavities. Choose the board you plan to use and set the thickness slider. The calculator returns a recommended thickness rounded up to the next half inch. It also shows whether your planned thickness meets the target, your effective whole-wall R-value after studs are counted, and the minimum cladding screw length. If your local code or energy modeler gives you a different target, type it into the custom field.</p>
+
+<h2>Why This Matters</h2>
+<p>Wood studs at 16 inches on center make up roughly a quarter of a wall's area, and wood insulates at only about R-1.25 per inch. A 2×4 wall with an R-13 batt therefore performs closer to R-11.8 than R-13, and a 2×6 wall with R-20 lands near R-16.6. Continuous insulation (ci) covers the studs, cuts that thermal bridging, and keeps the sheathing warmer so it is less likely to collect condensation in winter.</p>
+<p>The people who need this number are builders in Zones 4–8, where current energy codes use combinations like R-20+5 or R-13+10. They also include homeowners re-siding a 1970s house in Minneapolis or Boston who want to add 2 inches of polyiso while the old siding is off, and designers who must prove compliance before a permit. It also matters for budget. A 2,000 sq ft wall area at an extra inch of foam is a real material and labor decision, so it pays to know whether you need 1 inch or 2 before you order. Thicker foam also changes window jamb depth, trim details and screw length, all of which are cheaper to plan on paper.</p>
+
+<h2>How It's Calculated</h2>
+<p><strong>Code target.</strong> The 2021 IECC lists prescriptive wall options as cavity R + continuous R. Zones 1–2 need R-13. Zone 3 needs R-20 or R-13+5. Zones 4–8 need R-30, R-20+5, or R-13+10. The calculator finds the smallest ci that works with your cavity R-value. If your cavity is below R-13, it adds the shortfall to the ci requirement as a conservative make-up.</p>
+<p><strong>Condensation control.</strong> The IRC (R702.7) sets a minimum ci for walls that rely on a Class III interior vapor retarder such as latex paint. For 2×4 / 2×6 walls the minimums are R-2.5 / R-3.75 in Zone 4C, R-5 / R-7.5 in Zone 5, R-7.5 / R-11.25 in Zone 6, R-10 / R-15 in Zone 7 and R-15 / R-20 in Zone 8. Zones 1–4 (not marine) list none. The calculator uses the larger of the code and condensation values unless you enter a custom target.</p>
+<div class="formula">Thickness = ci target ÷ R per inch (round up to ½ in)<br>R paths: cavity = R_cav + R_ci + R_other; stud = 1.25 × depth + R_ci + R_other<br>U = (1 − f) ÷ R_cavity-path + f ÷ R_stud-path; Effective R = 1 ÷ U<br>Screw = ci + ½ sheathing + ¾ furring + 1½ stud embedment (round up to stock length)</div>
+<p>R_other is 2.5, covering air films, drywall, sheathing and siding. The framing fraction f is 0.25 at 16 in. o.c. and 0.22 at 24 in. o.c. Effective R-values are rounded down. Fastener heat loss and window and door penetrations are ignored. Stock screw lengths used are 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 10 and 12 inches.</p>
+
+<h2>Worked Example</h2>
+<p>A new 2×6 wall in Zone 5, 16 in. o.c., with an R-20 batt and foil-faced polyiso (R-5.7 per inch), planned at 1.5 inches.</p>
+<ul>
+<li><strong>Code target:</strong> R-20 cavity qualifies for the R-20+5 option, so ci = R-5.</li>
+<li><strong>Condensation minimum:</strong> Zone 5, 2×6 = R-7.5, which is larger, so the target is R-7.5.</li>
+<li><strong>Thickness:</strong> 7.5 ÷ 5.7 = 1.32 in., rounded up to <strong>1.5 in.</strong> That delivers 1.5 × 5.7 = R-8.55.</li>
+<li><strong>No ci:</strong> stud path = 6.875 + 2.5 = 9.375 and cavity path = 22.5. U = 0.75/22.5 + 0.25/9.375 = 0.0600, so effective R is about 16.6.</li>
+<li><strong>With 1.5 in.:</strong> cavity path = 31.05 and stud path = 17.925. U = 0.0381, so effective R is about 26.2, roughly 57% better.</li>
+<li><strong>Screws:</strong> 1.5 + 0.5 + 0.75 + 1.5 = 4.25 in., rounded up to a <strong>5 in.</strong> screw.</li>
+</ul>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Don't confuse nominal and effective R.</strong> R-20+8.55 is R-28.55 on paper, but the whole wall performs closer to R-26 because studs carry heat around the batt.</li>
+<li><strong>Use long enough screws, and plenty of them.</strong> Cladding screws must reach solid framing, not just sheathing. Follow the foam and cladding manufacturers' spacing tables, and have heavy cladding such as stone or brick engineered.</li>
+<li><strong>Tape seams and integrate the water barrier.</strong> Foil-faced foam can act as the water-resistive barrier only if the manufacturer allows it and every seam is taped. Otherwise put a WRB behind or in front of the foam.</li>
+<li><strong>Plan the openings.</strong> Windows, doors and roof edges need deeper jamb extensions, flashing and trim returns. Thick foam changes all of them.</li>
+<li><strong>Don't assume polyiso's labeled R-value in extreme cold.</strong> Its performance drops at low temperatures, so in Zones 6–8 consider XPS, EPS or mineral wool or add a margin.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How much continuous insulation do I need on a 2×6 wall?</summary><p>In IECC Zones 4–8, a 2×6 wall with an R-20 batt needs R-5 of continuous insulation under the prescriptive table. If you use a vapor-retarder-paint interior, the IRC condensation table can require R-7.5 in Zone 5 and more in colder zones. This calculator shows both and uses the larger one.</p></details>
+<details><summary>How long should screws be for siding over exterior foam?</summary><p>Add the foam thickness, sheathing, furring and at least 1½ inches of embedment into the stud, then round up to the next stock length. For 1.5 in. of foam, that is about 4.25 in., so use a 5 in. screw. Always check the screw manufacturer's tables for your cladding weight.</p></details>
+<details><summary>Does polyiso lose R-value in cold weather?</summary><p>Yes. Polyiso's rated R-value is measured at a mean temperature of 75°F, and it performs noticeably lower when the foam is very cold. In Zones 6–8 many designers prefer XPS, EPS or mineral wool for exterior walls, or they add thickness to compensate.</p></details>
+<details><summary>Is continuous insulation the same as exterior sheathing?</summary><p>No. Structural sheathing such as OSB or plywood adds only about R-0.5. Continuous insulation is an unbroken insulating layer over the framing, usually rigid foam or mineral wool board. Some products combine both, but only the insulating layer counts toward the ci requirement.</p></details>
+<details><summary>Can exterior insulation replace cavity insulation?</summary><p>Usually not under the prescriptive code. Most paths require both a cavity R-value and a ci R-value. Some performance or U-factor paths allow other combinations, so confirm with your building department or energy rater.</p></details>
+<details><summary>Will exterior insulation cause moisture problems?</summary><p>Done correctly, it reduces risk because it keeps the sheathing warmer than the dew point. Problems arise when the foam is too thin for the climate, seams are left open, or flashing is not integrated. That is why the condensation-control minimums are included here.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/cathedral-ceiling-insulation-calculator/">Cathedral Ceiling Insulation Calculator</a></li>
+<li><a href="/garage-insulation-calculator/">Garage Insulation Calculator</a></li>
+<li><a href="/attic-insulation-depth-r-value-calculator/">Attic Insulation Depth &amp; R-Value Calculator</a></li>
+<li><a href="/rim-joist-insulation-calculator/">Rim Joist Insulation Calculator</a></li>
+<li><a href="/house-painting-cost-calculator/">Exterior House Painting Cost Calculator</a></li>
+<li><a href="/insulation-installation-cost-calculator/">Insulation Installation Cost Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<nav class="cluster-nav" aria-label="More Insulation Calculators" style="max-width:640px;margin:2rem auto;padding:0 1.5rem"><h2 style="font-size:1.1rem;margin-bottom:.5rem">More Insulation Calculators</h2><ul style="padding-left:1.1rem;line-height:1.9"><li><a href="/attic-insulation-depth-r-value-calculator/">Attic Insulation Depth &amp; R-Value Calculator</a></li><li><a href="/blown-in-insulation-coverage-calculator/">Blown-In Insulation Coverage Calculator</a></li><li><a href="/fiberglass-batt-insulation-calculator/">Fiberglass Batt Insulation Calculator</a></li><li><a href="/insulation-installation-cost-calculator/">Insulation Installation Cost Calculator</a></li><li><a href="/spray-foam-insulation-calculator/">Spray Foam Insulation Coverage Calculator</a></li><li><a href="/crawl-space-vapor-barrier-calculator/">Crawl Space Vapor Barrier Calculator</a></li></ul></nav>
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer><div class="wrap">
+<a href="/about/">About</a><a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a>
+<p>© 2025 toolwick.com</p>
+</div></footer>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const fmt=(n,d)=>{d=d===undefined?2:d;const p=Math.pow(10,d);return (Math.round(n*p)/p).toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:0})};
+const flo=n=>(Math.floor(n*10+1e-9)/10).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
+const O1=[[13,0]],O3=[[20,0],[13,5]],O4=[[30,0],[20,5],[13,10]];
+const Z={'1':{o:O1,l:'Zone 1'},'2':{o:O1,l:'Zone 2'},'3':{o:O3,l:'Zone 3'},'4':{o:O4,l:'Zone 4'},'4C':{o:O4,cd:[2.5,3.75],l:'Zone 4C (marine)'},'5':{o:O4,cd:[5,7.5],l:'Zone 5'},'6':{o:O4,cd:[7.5,11.25],l:'Zone 6'},'7':{o:O4,cd:[10,15],l:'Zone 7'},'8':{o:O4,cd:[15,20],l:'Zone 8'}};
+const M={eps:['EPS Type II',4],gps:['Graphite EPS',4.7],xps:['XPS',5],pir:['Polyiso',5.7],mw:['Mineral wool board',4.2]};
+const LEN=[2,2.5,3,3.5,4,5,6,7,8,10,12];
+let has=false,last='';
+const res=$('results');
+function A(id,o){const e=$(id);for(const k in o)e.setAttribute(k,o[k])}
+function vis(id,b){$(id).setAttribute('display',b?'inline':'none')}
+function codeCi(o,c){let b=null;for(const p of o){if(c>=p[0]&&(b===null||p[1]<b))b=p[1]}if(b!==null)return b;const l=o[o.length-1];return l[1]+(l[0]-c)}
+function effR(c,d,f,ci){const r=2.5,rc=c+ci+r,rf=d*1.25+ci+r;return 1/((1-f)/rc+f/rf)}
+function screw(ci){if(ci<=0)return 0;const n=ci+2.75;const l=LEN.find(x=>x>=n-1e-9);return l||-1}
+function scTxt(s){return s===0?'—':s<0?'Engineered':fmt(s)+' in'}
+function setErr(id,m){$('e-'+id).textContent=m;$(id).classList.add('bad');$(id).setAttribute('aria-invalid','true')}
+function clr(id){$('e-'+id).textContent='';$(id).classList.remove('bad');$(id).removeAttribute('aria-invalid')}
+function draw(depth,ci,c,rpi){
+const s=17,x0=24,cw=depth*s,cx=x0+8.5,sx=cx+cw,ix=sx+8.5,iw=ci*s,fx=ix+iw,fe=fx+12.75,sdx=fe;
+A('dw',{x:x0,width:8.5});['st1','st2','bt'].forEach(i=>A(i,{x:cx,width:cw}));
+A('sh',{x:sx,width:8.5});A('ci',{x:ix,width:iw});vis('ci',ci>0);
+A('fu1',{x:fx,width:12.75});A('fu2',{x:fx,width:12.75});A('sd',{x:sdx,width:8});
+A('dC',{x1:cx,x2:sx});A('gC1',{x1:cx,x2:cx});A('gC2',{x1:sx,x2:sx});
+$('tC').setAttribute('x',cx+cw/2);$('tC').textContent=fmt(depth,1)+' in cavity · R-'+fmt(c);
+const sl=screw(ci);
+if(ci>0){A('dI',{x1:ix,x2:ix+iw});A('gI1',{x1:ix,x2:ix});A('gI2',{x1:ix+iw,x2:ix+iw});['dI','gI1','gI2'].forEach(i=>vis(i,true));
+$('tI').setAttribute('x',Math.max(ix+iw/2,70));$('tI').textContent=fmt(ci,2)+' in ci · R-'+fmt(ci*rpi)}
+else{['dI','gI1','gI2'].forEach(i=>vis(i,false));$('tI').setAttribute('x',sx+30);$('tI').textContent='No continuous insulation'}
+if(sl>0){A('sc',{x1:fe-sl*s,x2:fe});A('scH',{x:fe-2});vis('sc',true);vis('scH',true)}else{vis('sc',false);vis('scH',false)}
+$('lgCav').textContent='Cavity R-'+fmt(c);
+$('lgCi').textContent=ci>0?'Cont. ins. R-'+fmt(ci*rpi):'No cont. insulation';
+vis('lgScL',sl!==0);$('lgSc').textContent=sl>0?'Screw '+fmt(sl)+' in min.':sl<0?'Screw: engineered':'';
+}
+function sync(){
+const th=+$('thick').value,fr=$('frame').value==='2x4'?3.5:5.5,c=Number($('cavR').value),rp=M[$('mat').value][1];
+$('thickOut').textContent=fmt(th)+' in';
+draw(fr,th,isFinite(c)&&c>=0&&$('cavR').value!==''?c:0,rp);
+}
+function read(){
+clr('cavR');clr('custom');
+const o={zone:$('zone').value,frame:$('frame').value,sp:+$('sp').value,mat:$('mat').value,plan:+$('thick').value};
+o.depth=o.frame==='2x4'?3.5:5.5;let ok=true;
+const cs=$('cavR').value.trim(),c=Number(cs);
+if(cs===''||!isFinite(c)||c<0){setErr('cavR','Enter the cavity insulation R-value (0 or more), for example 13 or 20.');ok=false}
+else if(c>o.depth*7+1e-9){setErr('cavR','R-'+fmt(c)+' is more than a '+o.depth+' in. cavity can hold (about R-'+fmt(o.depth*7,1)+' maximum, even with spray foam). Please check the value.');ok=false}
+o.c=c;o.cust=null;
+const ct=$('custom').value.trim();
+if(ct!==''){const t=Number(ct);if(!isFinite(t)||t<0||t>60){setErr('custom','Enter a target between 0 and 60, or leave this blank.');ok=false}else o.cust=t}
+return ok?o:null;
+}
+function calc(){
+const o=read();
+if(!o){res.innerHTML='';last='';has=false;return}
+const z=Z[o.zone],mt=M[o.mat],rpi=mt[1],nm=mt[0];
+const code=codeCi(z.o,o.c),cond=z.cd?z.cd[o.frame==='2x4'?0:1]:0;
+const gov=o.cust!==null?o.cust:Math.max(code,cond);
+const rec=gov>0?Math.ceil(gov/rpi*2-1e-9)/2:0;
+const f=o.sp===16?0.25:0.22,pr=o.plan*rpi,recR=rec*rpi;
+const e0=effR(o.c,o.depth,f,0),eP=effR(o.c,o.depth,f,pr),imp=Math.floor((eP/e0-1)*100+1e-9);
+const sp=screw(o.plan),short=gov-pr;
+let st;
+if(gov<=0&&o.cust===null)st='<div class="status ok">No continuous insulation target applies for this zone and cavity R-value. Your planned '+fmt(o.plan)+' in. still raises effective wall R to about '+flo(eP)+'.</div>';
+else if(short<=1e-9)st='<div class="status ok">Your planned '+fmt(o.plan)+' in. of '+nm+' provides R-'+fmt(pr)+', which meets the R-'+fmt(gov)+' target used here.</div>';
+else st='<div class="status warn">Your planned '+fmt(o.plan)+' in. of '+nm+' provides R-'+fmt(pr)+', which is short of the R-'+fmt(gov)+' target by R-'+fmt(short)+'. Plan for at least '+fmt(rec)+' in.</div>';
+const recS=rec>0?fmt(rec)+' in':'0 in';
+const rows=[
+['Zone · framing · cavity',z.l+' · '+o.frame.replace('x','×')+' · R-'+fmt(o.c)],
+['Code ci target (IECC 2021 R402.1.3)','R-'+fmt(code)],
+['Condensation minimum ci (IRC R702.7)',cond>0?'R-'+fmt(cond):'None listed'],
+[o.cust!==null?'Target used (your custom value)':'Target used (larger of the two)','R-'+fmt(gov)],
+['Recommended thickness of '+nm,recS+' → R-'+fmt(recR)],
+['Planned thickness → ci R-value',fmt(o.plan)+' in → R-'+fmt(pr)],
+['Nominal wall R (cavity + ci), planned','R-'+fmt(o.c+pr)],
+['Effective whole-wall R, planned','R-'+flo(eP)],
+['Effective whole-wall R, no ci','R-'+flo(e0)],
+['Improvement from ci','+'+fmt(imp,0)+'%'],
+['Min. cladding screw length, planned',scTxt(sp)]
+];
+let h='<div class="fade"><div class="key"><span class="big">'+recS+'</span><span class="sub">recommended '+nm+' ('+(rec>0?'R-'+fmt(recR)+' continuous insulation, rounded up to the next ½ in.':'none required by the target used')+')</span></div>'+st;
+h+='<div class="scroll"><table><thead><tr><th>Item</th><th class="n">Result</th></tr></thead><tbody>';
+rows.forEach(r=>{h+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>'});
+h+='</tbody></table></div>';
+let ts=[0,0.5,1,1.5,2,2.5,3,4,o.plan];if(rec>0&&rec<=12)ts.push(rec);
+ts=ts.filter((v,i,a)=>a.indexOf(v)===i).sort((a,b)=>a-b);
+h+='<h2 style="font-size:1.1rem">Thickness comparison</h2><div class="scroll"><table style="min-width:520px"><thead><tr><th class="n">Thickness</th><th class="n">ci R</th><th class="n">Cavity + ci R</th><th class="n">Effective R</th><th class="n">Min. screw</th><th>Meets target?</th></tr></thead><tbody>';
+ts.forEach(t=>{const r=t*rpi,mk=(t===o.plan?'planned':'')+(t===o.plan&&t===rec?' / ':'')+(t===rec&&rec>0?'recommended':'');
+h+='<tr><td class="n">'+fmt(t)+' in'+(mk?'<span class="tag">'+mk+'</span>':'')+'</td><td class="n">'+fmt(r)+'</td><td class="n">'+fmt(o.c+r)+'</td><td class="n">'+flo(effR(o.c,o.depth,f,r))+'</td><td class="n">'+scTxt(screw(t))+'</td><td>'+(r>=gov-1e-9?'Yes':'No')+'</td></tr>'});
+h+='</tbody></table></div><button class="copy" id="copyBtn" type="button">Copy results</button> <span class="small" id="copyMsg"></span>';
+h+='<p class="small" style="margin-top:1rem">Effective R uses a parallel-path estimate and ignores fastener and opening losses. Verify targets, vapor-retarder strategy and cladding attachment with your local code official and the product manufacturers.</p></div>';
+last='Exterior continuous insulation estimate\n'+rows.map(r=>r[0]+': '+r[1]).join('\n')+'\n(Planning estimate; local codes vary. toolwick.com)';
+res.innerHTML=h;has=true;
+draw(o.depth,o.plan,o.c,rpi);
+}
+function run(){requestAnimationFrame(calc)}
+$('calcBtn').addEventListener('click',run);
+document.querySelectorAll('input,select').forEach(e=>{
+e.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();run()}});
+});
+['zone','frame','sp','mat','thick','cavR','custom'].forEach(id=>{
+$(id).addEventListener('input',()=>{
+if(id==='frame'){const v=$('cavR').value;if(v===''||v==='13'||v==='20')$('cavR').value=$('frame').value==='2x4'?'13':'20'}
+requestAnimationFrame(()=>{sync();if(has)calc()});
+});
+});
+res.addEventListener('click',ev=>{
+if(ev.target.id!=='copyBtn')return;
+const done=()=>{const m=$('copyMsg');if(m){m.textContent='Copied!';setTimeout(()=>{m.textContent=''},2000)}};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(last).then(done,done)}
+else{const t=document.createElement('textarea');t.value=last;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);done()}
+});
+sync();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
