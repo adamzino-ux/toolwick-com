@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Gas Pipe Sizing Calculator | Toolwick</title>
+<meta name="description" content="Free gas pipe sizing calculator: size natural gas or propane pipe from BTU load, run length and pressure drop using IFGC / NFPA 54 formulas.">
+<link rel="canonical" href="https://toolwick.com/gas-pipe-sizing-calculator/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.intro{color:#333}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram text{fill:#1a1a2e;font-family:inherit}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;color:#1a1a2e;background:#fff}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{padding:0;min-height:44px;accent-color:#0077b6;border:0}
+input.bad,select.bad{border-color:#e74c3c}
+.err{color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.field{margin-bottom:1.25rem}
+.grid2{display:grid;grid-template-columns:1fr;gap:0 1rem}
+@media(min-width:520px){.grid2{grid-template-columns:1fr 1fr}}
+fieldset{border:0;padding:0;margin:0 0 1.25rem}
+legend{font-weight:600;font-size:.95rem;margin-bottom:.75rem;padding:0}
+.total{background:#f8f9fa;border-radius:6px;padding:.75rem 1rem;font-size:.95rem;margin-bottom:1.25rem}
+.total strong{color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;min-height:44px;font-size:1rem;font-weight:600;cursor:pointer;width:100%;font-family:inherit}
+button:hover{background:#006299}
+button.copy{width:auto;background:#fff;color:#0077b6;border:1px solid #0077b6;padding:8px 16px;font-size:.85rem;margin-top:1rem}
+button.copy:hover{background:#f0f8fc}
+#results:empty{display:none}
+#results{margin-top:1.75rem}
+.fade{animation:fin .3s ease}
+@keyframes fin{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.key .big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.key .sub{color:#444;font-size:.95rem;margin-top:.4rem}
+.warn{background:#fff4e5;border:1px solid #f0b86b;border-radius:6px;padding:.75rem 1rem;font-size:.9rem;margin-bottom:1rem;color:#5a3a00}
+.note{font-size:.85rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;margin-top:1rem;border-radius:0 6px 6px 0}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tr:nth-child(even) td{background:#fafafa}
+td.n,th.n{text-align:right}
+tr.sel td{background:#e6f3fa;font-weight:600}
+.ad-slot{min-height:0;margin:0}
+details{border-bottom:1px solid #e8e8e8;padding:.75rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .5rem;color:#333}
+ul{padding-left:1.25rem}
+li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;padding:1rem;border-radius:6px;font-family:Consolas,Menlo,monospace;font-size:.9rem;overflow-x:auto;margin-bottom:1rem}
+footer{border-top:1px solid #eee;margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.9rem;color:#555}
+footer a{margin-right:1rem;display:inline-block;min-height:44px;line-height:44px}
+[hidden]{display:none!important}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/gas-pipe-sizing-calculator/">
+<meta property="og:title" content="Gas Pipe Sizing Calculator">
+<meta property="og:description" content="Free gas pipe sizing calculator: size natural gas or propane pipe from BTU load, run length and pressure drop using IFGC / NFPA 54 formulas.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+<meta name="robots" content="noindex, follow">
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+<main>
+<h1>Gas Pipe Sizing Calculator</h1>
+<p class="intro">Use this gas pipe sizing calculator to find the right pipe diameter for natural gas or propane. Enter your appliance BTU/h ratings, the longest pipe run and the allowable pressure drop. It applies the IFGC / NFPA 54 longest length method and rounds up to the next nominal size.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="diagram" viewBox="0 0 600 250" role="img" aria-label="Diagram of a gas piping run from the meter and regulator to three appliances, showing run length, pipe size, load and pressure drop">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<line x1="80" y1="46" x2="80" y2="96" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="5 4"/>
+<line x1="500" y1="46" x2="500" y2="96" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="5 4"/>
+<line x1="80" y1="60" x2="500" y2="60" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text id="dLen" x="290" y="46" text-anchor="middle" font-size="13" font-weight="600">Run L = 50 ft</text>
+<rect x="20" y="70" width="60" height="60" rx="6" fill="#f8f9fa" stroke="#0077b6" stroke-width="2"/>
+<text x="50" y="97" text-anchor="middle" font-size="11">Meter</text>
+<text x="50" y="112" text-anchor="middle" font-size="10">regulator</text>
+<line x1="80" y1="100" x2="500" y2="100" stroke="#0077b6" stroke-width="6" stroke-linecap="round"/>
+<line x1="205" y1="100" x2="205" y2="150" stroke="#0077b6" stroke-width="4"/>
+<line x1="345" y1="100" x2="345" y2="150" stroke="#0077b6" stroke-width="4"/>
+<line x1="500" y1="100" x2="500" y2="150" stroke="#0077b6" stroke-width="4"/>
+<rect x="165" y="150" width="80" height="40" rx="6" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="1.5"/>
+<rect x="305" y="150" width="80" height="40" rx="6" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="1.5"/>
+<rect x="460" y="150" width="80" height="40" rx="6" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="1.5"/>
+<text x="205" y="175" text-anchor="middle" font-size="11">Furnace</text>
+<text x="345" y="175" text-anchor="middle" font-size="11">Water heater</text>
+<text x="500" y="175" text-anchor="middle" font-size="11">Range</text>
+<text id="dSize" x="290" y="86" text-anchor="middle" font-size="13" font-weight="700" fill="#0077b6" style="fill:#0077b6">Pipe size: —</text>
+<text id="dLoad" x="300" y="217" text-anchor="middle" font-size="13">Load: 207,000 BTU/h</text>
+<text id="dDrop" x="300" y="238" text-anchor="middle" font-size="13">Allowable drop: 0.3 in. w.c.</text>
+</svg>
+</div>
+
+<fieldset>
+<legend>Gas &amp; system</legend>
+<div class="grid2">
+<div class="field"><label for="gas">Gas type</label>
+<select id="gas"><option value="ng">Natural gas (0.60 sp. gr.)</option><option value="lp">Propane (1.52 sp. gr.)</option></select></div>
+<div class="field"><label for="mat">Pipe material</label>
+<select id="mat"><option value="st">Schedule 40 steel / black iron</option><option value="cu">Copper tube, Type L</option></select></div>
+<div class="field"><label for="mode">Supply pressure</label>
+<select id="mode"><option value="low">Low pressure (under 1.5 psi)</option><option value="high">Elevated (1.5 psi and above)</option></select></div>
+<div class="field"><label for="hv">Heating value (BTU per cubic foot)</label>
+<input id="hv" type="number" inputmode="decimal" min="500" max="3000" step="any" value="1000" aria-describedby="e-hv">
+<div class="err" id="e-hv"></div></div>
+</div>
+<div class="grid2">
+<div class="field" id="lowBox"><label for="dh">Allowable pressure drop (in. w.c.)</label>
+<input id="dh" type="number" inputmode="decimal" min="0.1" step="any" value="0.3" aria-describedby="e-dh dhhint">
+<div class="hint" id="dhhint">0.3 is typical for 7 in. w.c. natural gas; 0.5 for 11 in. w.c. propane.</div>
+<div class="err" id="e-dh"></div></div>
+<div class="field" id="highBox1" hidden><label for="inlet">Inlet pressure (psig)</label>
+<input id="inlet" type="number" inputmode="decimal" min="1.5" step="any" value="2" aria-describedby="e-inlet">
+<div class="err" id="e-inlet"></div></div>
+<div class="field" id="highBox2" hidden><label for="dp">Allowable pressure drop (psi)</label>
+<input id="dp" type="number" inputmode="decimal" min="0.1" step="any" value="1" aria-describedby="e-dp">
+<div class="err" id="e-dp"></div></div>
+</div>
+</fieldset>
+
+<fieldset>
+<legend>Appliance input ratings (BTU/h, from nameplates)</legend>
+<div class="grid2">
+<div class="field"><label for="a1">Furnace / boiler</label><input id="a1" type="number" inputmode="decimal" min="0" step="any" value="80000" aria-describedby="e-a1"><div class="err" id="e-a1"></div></div>
+<div class="field"><label for="a2">Water heater</label><input id="a2" type="number" inputmode="decimal" min="0" step="any" value="40000" aria-describedby="e-a2"><div class="err" id="e-a2"></div></div>
+<div class="field"><label for="a3">Range / cooktop</label><input id="a3" type="number" inputmode="decimal" min="0" step="any" value="65000" aria-describedby="e-a3"><div class="err" id="e-a3"></div></div>
+<div class="field"><label for="a4">Dryer</label><input id="a4" type="number" inputmode="decimal" min="0" step="any" value="22000" aria-describedby="e-a4"><div class="err" id="e-a4"></div></div>
+<div class="field"><label for="a5">Other (fireplace, grill, generator)</label><input id="a5" type="number" inputmode="decimal" min="0" step="any" value="0" aria-describedby="e-a5"><div class="err" id="e-a5"></div></div>
+</div>
+<div class="total">Total connected load: <strong id="totalLoad">207,000 BTU/h</strong></div>
+<div class="err" id="e-load" style="margin-top:-.75rem;margin-bottom:1rem"></div>
+</fieldset>
+
+<fieldset>
+<legend>Pipe run</legend>
+<div class="field"><label for="len">Longest run, meter or regulator to farthest appliance (ft)</label>
+<input id="len" type="number" inputmode="decimal" min="1" max="2000" step="any" value="50" aria-describedby="e-len">
+<div class="err" id="e-len"></div></div>
+<div class="field"><label for="fit">Fitting allowance: <span id="fitv">25%</span> added to length</label>
+<input id="fit" type="range" min="0" max="50" step="5" value="25">
+<div class="ticks" aria-hidden="true"><span>0%</span><span>25%</span><span>50%</span></div></div>
+</fieldset>
+
+<button type="button" id="calcBtn">Calculate Pipe Size</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+
+<section>
+<h2>How to Use This Gas Pipe Sizing Calculator</h2>
+<p>Pick your gas type, pipe material and supply pressure, then enter the input BTU/h rating from each appliance nameplate. Enter the longest run from the meter (or second-stage regulator) to the farthest appliance, and set a fitting allowance with the slider. The calculator returns the smallest nominal pipe size that carries your total load within the allowable pressure drop, plus a capacity table for every size so you can compare.</p>
+
+<h2>Why This Matters</h2>
+<p>Undersized gas piping is one of the most common hidden defects in remodels and new builds. A pipe that is too small works fine until every appliance runs at once. Then the furnace, water heater and range compete for gas, pressure at the appliance regulators sags, and burners starve. Symptoms include yellow flames, nuisance lockouts, and a furnace that short-cycles on the coldest night of the year.</p>
+<p>Typical cases: adding a 75,000 BTU/h tankless water heater to a house plumbed with 1/2-inch lines; running a new 60-foot line to a detached garage heater or outdoor kitchen; swapping a 40,000 BTU/h tank heater for a 199,000 BTU/h tankless unit; or converting a home from oil to gas. A tankless heater alone can pull more than 190 cubic feet of natural gas per hour, which a 3/4-inch line over 80 feet cannot deliver at a 0.5 in. w.c. drop.</p>
+<p>Homeowners use the result to sanity-check a quote. Contractors use it for a quick take-off before laying out the system. Inspectors and licensed gas fitters will still size the system against the adopted code tables, but an early estimate avoids surprises on the plan review.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator uses the equations behind the IFGC (2021) Section 402.4 and NFPA 54 (National Fuel Gas Code) sizing tables, applied with the longest length method. Flow is in cubic feet per hour (cfh), found by dividing total BTU/h by the gas heating value (about 1,000 BTU/ft³ for natural gas, 2,500 BTU/ft³ for propane).</p>
+<div class="formula">Low pressure (under 1.5 psi):<br>D = Q^0.381 / ( 19.17 × (ΔH / (Cr × L))^0.206 )<br><br>Elevated pressure (1.5 psi and above):<br>D = Q^0.381 / ( 18.93 × ((P1² − P2²) × Y / (Cr × L))^0.206 )</div>
+<p>D is inside diameter in inches, Q is flow in cfh, ΔH is allowable drop in inches of water column, L is length in feet, and P1 and P2 are inlet and outlet absolute pressures in psia. For natural gas Cr = 0.6094 and Y = 0.9992; for propane Cr = 1.2462 and Y = 0.9910.</p>
+<p>The tool rearranges the same equation to find each pipe's capacity. Effective length is your run times (1 + fitting allowance), then rounded <em>up</em> to the next standard table length (10, 20, 30 ft, and so on). The result is the smallest nominal size whose actual inside diameter gives enough capacity. The fitting allowance is a rule-of-thumb stand-in for elbow and tee equivalent lengths, not a code value. Local codes vary, and this tool is an estimate, not engineering, permit or inspection approval.</p>
+
+<h2>Worked Example</h2>
+<p>A house has a 80,000 BTU/h furnace, a 40,000 BTU/h water heater, a 65,000 BTU/h range and a 22,000 BTU/h dryer on natural gas at 7 in. w.c., with a 0.3 in. w.c. allowable drop. The longest run is 50 feet and the fitting allowance is 25%.</p>
+<ol>
+<li>Total load = 80,000 + 40,000 + 65,000 + 22,000 = 207,000 BTU/h.</li>
+<li>Flow Q = 207,000 ÷ 1,000 = 207 cfh.</li>
+<li>Effective length = 50 × 1.25 = 62.5 ft, rounded up to the 70 ft table length.</li>
+<li>Minimum inside diameter: D = 207^0.381 ÷ (19.17 × (0.3 ÷ (0.6094 × 70))^0.206) ≈ 7.63 ÷ 6.90 ≈ 1.10 in.</li>
+<li>1-inch Schedule 40 (ID 1.049 in.) carries only about 181 cfh, which is too small. 1-1/4-inch (ID 1.380 in.) carries about 371 cfh.</li>
+<li>Result: 1-1/4-inch Schedule 40 pipe, about 56% utilized, with an estimated drop near 0.10 in. w.c.</li>
+</ol>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use input ratings, not output.</strong> A 96% efficient furnace labelled 80,000 BTU/h output may have a different input. Size on the input BTU/h printed on the nameplate.</li>
+<li><strong>Measure to the farthest appliance.</strong> The longest length method uses the full length from the meter to the most distant outlet for every section, which keeps the answer on the safe side.</li>
+<li><strong>Do not forget future appliances.</strong> Adding a generator, pool heater or tankless unit later can force a full re-pipe. Add the expected load to the "Other" field now.</li>
+<li><strong>Match the pressure drop to your supply.</strong> Natural gas at 7 in. w.c. is normally sized for 0.3 in. w.c. drop; check the drop your utility or regulator maker allows.</li>
+<li><strong>CSST needs manufacturer tables.</strong> Corrugated stainless tubing is sized by EHD number from the maker's data. Do not substitute steel results. Check also that copper is permitted locally, since many jurisdictions restrict it for fuel gas.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What size gas pipe do I need for a tankless water heater?</summary><p>A 199,000 BTU/h tankless unit draws about 199 cfh of natural gas. Over a 50 ft run at 0.5 in. w.c. drop, that usually calls for 1-inch pipe or larger, and the total includes every other appliance on the same line. Run the calculator with all loads for a reliable answer.</p></details>
+<details><summary>How do I convert BTU/h to cubic feet per hour?</summary><p>Divide the BTU/h rating by the heating value of the gas. Natural gas is about 1,000 BTU per cubic foot, so 100,000 BTU/h is 100 cfh. Propane is about 2,500 BTU per cubic foot, so the same load is 40 cfh of vapor.</p></details>
+<details><summary>Why does propane need smaller pipe than natural gas?</summary><p>Propane carries about 2.5 times the energy per cubic foot, so the same BTU load needs far less volume. Propane is also typically supplied at 11 in. w.c. rather than 7, which allows a larger pressure drop. Both factors reduce the required diameter.</p></details>
+<details><summary>What is the longest length method?</summary><p>It sizes every pipe section using the total length from the meter to the farthest appliance, even for short branches. Each section carries only the load it serves. The method is simple and conservative, which is why it is widely used for residential layouts.</p></details>
+<details><summary>Does this calculator size CSST or polyethylene tubing?</summary><p>No. CSST and PE tubing are sized from manufacturer-specific capacity tables, because their flow resistance differs from rigid pipe. This tool covers Schedule 40 steel and Type L copper only.</p></details>
+<details><summary>Is the result enough to get a permit?</summary><p>No. It is an estimate based on the IFGC / NFPA 54 formulas, and local amendments, utility rules and inspector judgment all apply. Have a licensed gas fitter confirm the design and obtain the required permit and pressure test before any gas is turned on.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul>
+<li><a href="/culvert-pipe-size-calculator/">Culvert Pipe Size Calculator</a></li>
+<li><a href="/boiler-btu-output-pipe-size-calculator/">Boiler BTU Output &amp; Pipe Size Calculator</a></li>
+<li><a href="/pipe-sizing-flow-rate-calculator/">Pipe Sizing &amp; Flow Rate Calculator</a></li>
+<li><a href="/deck-joist-hanger-calculator/">Deck Joist Hanger Calculator</a></li>
+<li><a href="/continuous-insulation-calculator/">Exterior Continuous Insulation Calculator</a></li>
+<li><a href="/roofing-dumpster-calculator/">Roofing Dumpster Size Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<p style="text-align:center;font-size:13px;margin:1rem 0">Calculator by <a href="https://toolwick.com/gas-pipe-sizing-calculator/">Toolwick</a></p>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var ST=[["1/2",0.622],["3/4",0.824],["1",1.049],["1-1/4",1.38],["1-1/2",1.61],["2",2.067],["2-1/2",2.469],["3",3.068],["4",4.026]];
+var CU=[["3/8",0.43],["1/2",0.545],["5/8",0.666],["3/4",0.785],["1",1.025],["1-1/4",1.265],["1-1/2",1.505],["2",1.985],["2-1/2",2.465],["3",2.945]];
+var LENS=[10,20,30,40,50,60,70,80,90,100,125,150,175,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000];
+var GAS={ng:{cr:0.6094,y:0.9992,hv:1000,dh:0.3,name:"Natural gas"},lp:{cr:1.2462,y:0.991,hv:2500,dh:0.5,name:"Propane"}};
+var APPS=['a1','a2','a3','a4','a5'];
+var FIELDS=['hv','dh','inlet','dp','a1','a2','a3','a4','a5','len'];
+var lastCopy='';
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function fm(n,d){return n.toLocaleString('en-US',{maximumFractionDigits:d})}
+function num(id){var v=$(id).value.trim();return v===''?NaN:Number(v)}
+function setErr(id,m){var e=$('e-'+id),f=$(id);if(e)e.textContent=m||'';if(f){if(m){f.classList.add('bad');f.setAttribute('aria-invalid','true')}else{f.classList.remove('bad');f.removeAttribute('aria-invalid')}}}
+function updTotal(){var t=0;APPS.forEach(function(id){var n=Number($(id).value);if(isFinite(n)&&n>0)t+=n});$('totalLoad').textContent=fmt(t,0)+' BTU/h'}
+function setMode(){var h=$('mode').value==='high';$('lowBox').hidden=h;$('highBox1').hidden=!h;$('highBox2').hidden=!h}
+function calc(){
+var errs={},first=null,load=0,i;
+function E(k,m){if(!errs[k]){errs[k]=m;if(!first)first=k}}
+APPS.forEach(function(id){var v=$(id).value.trim(),n=v===''?0:Number(v);if(!isFinite(n)||n<0)E(id,'Enter a BTU/h value of 0 or more.');else load+=n});
+if(!Object.keys(errs).length){if(load<=0)E('load','Enter at least one appliance rating above 0 BTU/h.');else if(load>50000000)E('load','That load is beyond residential or light commercial sizing. Consult an engineer.')}
+var hv=num('hv');if(!(hv>=500&&hv<=3000))E('hv','Enter a heating value between 500 and 3,000 BTU/ft³.');
+var L=num('len');if(!(L>0))E('len','Enter a pipe length greater than 0 ft.');else if(L>2000)E('len','This tool covers runs up to 2,000 ft.');
+var mode=$('mode').value,dh=0,p1=0,dp=0;
+if(mode==='low'){dh=num('dh');if(!(dh>0&&dh<=5))E('dh','Enter a drop above 0 and up to 5 in. w.c.')}
+else{var pg=num('inlet');dp=num('dp');
+if(!(pg>=1.5&&pg<=125))E('inlet','Elevated mode needs 1.5 to 125 psig. Use low pressure below 1.5 psi.');
+if(!(dp>0))E('dp','Enter a drop greater than 0 psi.');else if(pg>=1.5&&dp>=pg)E('dp','Drop must be less than the inlet pressure.');
+p1=pg+14.7}
+var fit=Number($('fit').value),Leff=0,tl=0;
+if(!errs.len){Leff=L*(1+fit/100);for(i=0;i<LENS.length;i++){if(LENS[i]>=Leff-1e-9){tl=LENS[i];break}}if(!tl)E('len','With the fitting allowance the effective length exceeds 2,000 ft. Reduce the length or allowance.')}
+if(first){requestAnimationFrame(function(){FIELDS.concat(['load']).forEach(function(k){setErr(k,errs[k]||'')});$('results').innerHTML='';lastCopy='';var f=$(first);if(f)f.focus()});return}
+var g=GAS[$('gas').value],q=Math.ceil(load/hv*10)/10;
+var K,x;
+if(mode==='low'){K=19.17;x=dh/(g.cr*tl)}else{var p2=p1-dp;K=18.93;x=(p1*p1-p2*p2)*g.y/(g.cr*tl)}
+var list=$('mat').value==='cu'?CU:ST,matName=$('mat').value==='cu'?'Type L copper tube':'Schedule 40 steel pipe';
+var minD=Math.pow(q,0.381)/(K*Math.pow(x,0.206));
+var rows=list.map(function(s){var cap=Math.pow(s[1]*K*Math.pow(x,0.206),1/0.381);return{n:s[0],id:s[1],cap:cap,ok:cap>=q}});
+var sel=null;for(i=0;i<rows.length;i++){if(rows[i].ok){sel=rows[i];break}}
+var dropTxt='—',allow=mode==='low'?fmt(dh,2)+' in. w.c.':fmt(dp,2)+' psi';
+if(sel){var r=Math.pow(Math.pow(q,0.381)/(K*sel.id),1/0.206);
+if(mode==='low'){dropTxt=fmt(g.cr*tl*r,2)+' in. w.c.'}else{var dl=g.cr*tl/g.y*r,p2b=Math.sqrt(Math.max(p1*p1-dl,0));dropTxt=fmt(p1-p2b,2)+' psi'}}
+var h='<div class="fade">';
+if(sel){h+='<div class="key"><div class="big">'+sel.n+'&quot;</div><div class="sub">Minimum nominal size: '+matName+'<br>'+g.name+', '+fmt(q,1)+' cfh over '+fm(tl,0)+' ft effective length</div></div>'}
+else{h+='<div class="warn"><strong>Load exceeds the largest size in this tool ('+list[list.length-1][0]+'&quot; '+matName+').</strong> Reduce the run length or load, raise the supply pressure, or have a licensed professional design the system.</div>'}
+h+='<div class="tw"><table><thead><tr><th>Item</th><th class="n">Value</th></tr></thead><tbody>';
+function R(a,b){h+='<tr><td>'+a+'</td><td class="n">'+b+'</td></tr>'}
+R('Total load',fmt(load,0)+' BTU/h');
+R('Flow required',fmt(q,1)+' cfh');
+R('Measured run',fmt(L,1)+' ft');
+R('With '+fit+'% fitting allowance',fmt(Leff,1)+' ft');
+R('Table length used (rounded up)',fm(tl,0)+' ft');
+R('Minimum inside diameter',fmt(minD,3)+' in.');
+if(sel){R('Selected inside diameter',fmt(sel.id,3)+' in.');R('Capacity at selected size',fmt(sel.cap,0)+' cfh');R('Utilization',fmt(q/sel.cap*100,0)+'%');R('Estimated drop at selected size',dropTxt)}
+R('Allowable drop',allow);
+h+='</tbody></table></div>';
+h+='<div class="tw"><table><thead><tr><th>Nominal size</th><th class="n">ID (in.)</th><th class="n">Capacity (cfh)</th><th class="n">Capacity (BTU/h)</th><th>Status</th></tr></thead><tbody>';
+rows.forEach(function(w){h+='<tr'+(sel&&w===sel?' class="sel"':'')+'><td>'+w.n+'&quot;</td><td class="n">'+fmt(w.id,3)+'</td><td class="n">'+fmt(w.cap,0)+'</td><td class="n">'+fmt(w.cap*hv,0)+'</td><td>'+(w.ok?(sel&&w===sel?'Recommended':'Adequate'):'Too small')+'</td></tr>'});
+h+='</tbody></table></div>';
+h+='<div class="note">Estimate only. Follows the IFGC 2021 &sect;402.4 / NFPA 54 longest length method, rounded to the next larger size and table length. Local codes vary. This is not engineering, permit or inspection approval; have a licensed gas fitter confirm the design.</div>';
+h+='<button type="button" class="copy" id="copyBtn">Copy results</button></div>';
+lastCopy='Gas pipe sizing ('+g.name+', '+matName+')\nLoad: '+fmt(load,0)+' BTU/h = '+fmt(q,1)+' cfh\nRun: '+fmt(L,1)+' ft + '+fit+'% fittings = '+fmt(Leff,1)+' ft (table length '+fm(tl,0)+' ft)\nAllowable drop: '+allow+'\n'+(sel?'Recommended size: '+sel.n+'" (ID '+fmt(sel.id,3)+' in., '+fmt(sel.cap,0)+' cfh capacity, '+fmt(q/sel.cap*100,0)+'% used)':'Load exceeds largest size available in tool')+'\nEstimate only; verify with local code and a licensed gas fitter.';
+requestAnimationFrame(function(){
+FIELDS.concat(['load']).forEach(function(k){setErr(k,'')});
+$('results').innerHTML=h;
+$('dLen').textContent='Run L = '+fm(L,1)+' ft (effective '+fm(Math.round(Leff*10)/10,1)+' ft, table '+fm(tl,0)+' ft)';
+$('dSize').textContent=sel?'Pipe size: '+sel.n+'" '+(($('mat').value==='cu')?'copper':'Sch 40'):'Pipe size: over range';
+$('dLoad').textContent='Load: '+fmt(load,0)+' BTU/h = '+fmt(q,1)+' cfh';
+$('dDrop').textContent='Allowable drop: '+allow+(sel?' (est. '+dropTxt+')':'');
+});
+}
+function copyTxt(){
+var b=$('copyBtn');
+function done(){b.textContent='Copied!';setTimeout(function(){var c=$('copyBtn');if(c)c.textContent='Copy results'},2000)}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(lastCopy).then(done,function(){fb()})}else fb();
+function fb(){var t=document.createElement('textarea');t.value=lastCopy;document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(t)}
+}
+$('calcBtn').addEventListener('click',calc);
+$('results').addEventListener('click',function(e){if(e.target&&e.target.id==='copyBtn')copyTxt()});
+Array.prototype.forEach.call(document.querySelectorAll('input,select'),function(el){el.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();calc()}})});
+APPS.forEach(function(id){$(id).addEventListener('input',updTotal)});
+$('fit').addEventListener('input',function(){$('fitv').textContent=this.value+'%'});
+$('mode').addEventListener('change',setMode);
+$('gas').addEventListener('change',function(){var g=GAS[this.value];$('hv').value=g.hv;$('dh').value=g.dh});
+$('yr').textContent=new Date().getFullYear();
+setMode();updTotal();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
