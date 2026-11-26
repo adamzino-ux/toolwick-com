@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Fillet Weld Size Calculator | Toolwick</title>
+<meta name="description" content="Free fillet weld size calculator: find the minimum fillet weld leg size for your load, plate thickness, electrode and weld length using AISC 360.">
+<link rel="canonical" href="https://toolwick.com/fillet-weld-size-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Fillet Weld Size Calculator", "url": "https://toolwick.com/fillet-weld-size-calculator/", "description": "Free fillet weld size calculator: find the minimum fillet weld leg size for your load, plate thickness, electrode and weld length using AISC 360.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Fillet Weld Size Calculator", "item": "https://toolwick.com/fillet-weld-size-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What size fillet weld do I need for 1/4 inch plate?", "acceptedAnswer": {"@type": "Answer", "text": "AISC sets a minimum of 1/8 in for plate up to 1/4 in thick, and the maximum along an edge of 1/4 in plate is 3/16 in. The right size within that range depends on load and weld length, so run your numbers through the calculator instead of defaulting to 3/16 in."}}, {"@type": "Question", "name": "Is the fillet weld size the leg or the throat?", "acceptedAnswer": {"@type": "Answer", "text": "Size is the leg, measured along the plate faces from the root to each toe. The effective throat is the shortest distance from the root to the face and equals about 0.707 times the leg for an equal-leg, flat-face weld."}}, {"@type": "Question", "name": "Why does the calculator round the weld size up?", "acceptedAnswer": {"@type": "Answer", "text": "Welds are specified in standard increments, and a smaller weld would have less capacity than your load requires. Rounding up to the next 1/16 in (or 1 mm) keeps the result on the safe side of the calculated requirement."}}, {"@type": "Question", "name": "Does a transverse weld get stronger than a longitudinal weld?", "acceptedAnswer": {"@type": "Answer", "text": "AISC allows up to a 1.5 times increase in weld metal strength when the load is perpendicular to the weld. This calculator also checks base metal shear on the fusion face at 0.60·Fu, which limits the gain. For E70XX on A36 plate the effective increase is about 17%."}}, {"@type": "Question", "name": "Should I use ASD or LRFD?", "acceptedAnswer": {"@type": "Answer", "text": "Use whichever your project, drawings or engineer specify. ASD takes the actual service load and divides weld strength by 2.00. LRFD takes a load already multiplied by code load factors and multiplies weld strength by 0.75."}}, {"@type": "Question", "name": "Can I use this for aluminum, stainless or fatigue-loaded welds?", "acceptedAnswer": {"@type": "Answer", "text": "No. The tool is built around carbon steel with E60XX to E90XX electrodes under AISC 360 static loading. Aluminum, stainless, cyclic loads and lifting equipment use different standards and safety factors."}}]}]}</script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;background:#fff;line-height:1.65}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+nav{padding:1rem 0;border-bottom:1px solid #eee}
+nav a{font-weight:700;font-size:1.15rem;color:#0077b6;text-decoration:none}
+h1{font-size:1.9rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.35rem;margin:2.5rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+a{color:#0077b6}
+.lead{color:#444;font-size:1.05rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:2rem 0}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{display:block;width:100%;max-width:400px;height:auto;margin:0 auto}
+.st{font:13px -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;fill:#1a1a2e}
+.sb{font-weight:700}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 1rem}
+.field{margin-bottom:1.1rem}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font-size:1rem;font-family:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+input[type=range]{padding:0;border:0;accent-color:#0077b6;min-height:44px}
+input.err{border-color:#e74c3c}
+.msg{color:#c0392b;font-size:.85rem;margin-top:.3rem;min-height:0}
+.hint{font-size:.8rem;color:#666;margin-top:.3rem}
+.ticks{display:flex;flex-wrap:wrap;justify-content:space-between;font-size:.75rem;color:#666;gap:.25rem}
+button{background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font-size:1rem;font-weight:600;min-height:44px;width:100%;cursor:pointer;font-family:inherit}
+button:hover{background:#006299}
+button.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;width:auto;padding:8px 16px;font-size:.85rem;margin-top:1rem}
+button.copy:hover{background:#f0f8fc}
+#results{margin-top:1.5rem}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1rem}
+.big{font-size:2.6rem;font-weight:800;color:#0077b6;line-height:1.1}
+.sub{color:#444;font-size:.95rem;margin-top:.4rem}
+.badge{padding:.75rem 1rem;border-radius:6px;font-size:.9rem;margin-bottom:.75rem;border:1px solid}
+.ok{background:#eef8f1;border-color:#8fcfa2;color:#1e5b32}
+.warn{background:#fff4e5;border-color:#f0b25a;color:#7a4a00}
+.bad{background:#fdecea;border-color:#e74c3c;color:#8e2418}
+.rh{font-weight:700;margin:1.25rem 0 .5rem}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+.r{text-align:right}
+th.r{text-align:right}
+tr.rec td{font-weight:700;color:#005a8c}
+.bar{height:6px;background:#e8e8e8;border-radius:3px;margin-top:4px;min-width:60px}
+.bar i{display:block;height:100%;background:#0077b6;border-radius:3px}
+.bar i.o{background:#e74c3c}
+.note{font-size:.82rem;color:#666;margin-top:1rem}
+.ad-slot{min-height:0;margin:0}
+.content ul{padding-left:1.2rem;margin:0 0 1rem}
+.content li{margin-bottom:.5rem}
+.formula{background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;margin:0 0 1rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;overflow-x:auto}
+details{border-bottom:1px solid #e8e8e8}
+summary{min-height:44px;padding:10px 0;cursor:pointer;font-weight:600;display:flex;align-items:center}
+details p{color:#333}
+.rel{list-style:none;padding:0;display:grid;gap:.5rem}
+.rel a{display:block;padding:12px 16px;background:#f8f9fa;border:1px solid #e0e0e0;border-radius:6px;min-height:44px}
+footer{margin-top:3rem;padding:1.5rem 0 2rem;border-top:1px solid #eee;font-size:.9rem;color:#666}
+footer a{color:#0077b6;text-decoration:underline;margin-right:1rem}
+@media(max-width:520px){.card{padding:1.25rem}h1{font-size:1.6rem}.big{font-size:2.2rem}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://toolwick.com/fillet-weld-size-calculator/">
+<meta property="og:title" content="Fillet Weld Size Calculator">
+<meta property="og:description" content="Free fillet weld size calculator: find the minimum fillet weld leg size for your load, plate thickness, electrode and weld length using AISC 360.">
+<meta property="og:site_name" content="Toolwick">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<main>
+<h1>Fillet Weld Size Calculator</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p class="lead">Use this fillet weld size calculator to find the minimum fillet weld leg size for a given load, weld length, electrode strength and plate thickness. It follows the AISC 360 Chapter J method and rounds every answer up to the next standard size.</p>
+
+<div class="card">
+<div class="diagram">
+<svg viewBox="0 0 400 420" role="img" aria-labelledby="dt dd">
+<title id="dt">Fillet weld diagram</title>
+<desc id="dd">Section view of a T-joint showing weld leg size, throat and plate thickness, and a plan view showing weld length and load angle.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0077b6"/></marker></defs>
+<text class="st sb" x="10" y="18">Section view</text>
+<rect x="40" y="150" width="220" height="26" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<rect x="130" y="60" width="40" height="90" fill="#fff" stroke="#0077b6" stroke-width="2"/>
+<polygon points="170,150 170,112 208,150" fill="#0077b6" fill-opacity=".35" stroke="#0077b6" stroke-width="2"/>
+<polygon points="130,150 130,112 92,150" fill="#0077b6" fill-opacity=".35" stroke="#0077b6" stroke-width="2"/>
+<line x1="130" y1="150" x2="111" y2="131" stroke="#1a1a2e" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="111" y1="131" x2="82" y2="98" stroke="#1a1a2e" stroke-width="1"/>
+<text class="st" id="svT3" x="10" y="92">a = 0.707 w</text>
+<line x1="130" y1="56" x2="130" y2="40" stroke="#e0e0e0" stroke-width="1.5"/>
+<line x1="170" y1="56" x2="170" y2="40" stroke="#e0e0e0" stroke-width="1.5"/>
+<line x1="131" y1="46" x2="169" y2="46" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="st" id="svT" x="150" y="34" text-anchor="middle">t</text>
+<line x1="172" y1="112" x2="236" y2="112" stroke="#e0e0e0" stroke-width="1.5"/>
+<line x1="210" y1="150" x2="236" y2="150" stroke="#e0e0e0" stroke-width="1.5"/>
+<line x1="230" y1="113" x2="230" y2="149" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="st" id="svW" x="240" y="135">w</text>
+<line x1="170" y1="178" x2="170" y2="196" stroke="#e0e0e0" stroke-width="1.5"/>
+<line x1="208" y1="178" x2="208" y2="196" stroke="#e0e0e0" stroke-width="1.5"/>
+<line x1="171" y1="190" x2="207" y2="190" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="st" x="189" y="209" text-anchor="middle">w</text>
+<line x1="20" y1="222" x2="380" y2="222" stroke="#e0e0e0" stroke-width="1"/>
+<text class="st sb" x="10" y="244">Plan view (weld seen from above)</text>
+<text class="st" id="svP" x="10" y="266">P</text>
+<text class="st" id="svA" x="10" y="284">θ = 0° from weld axis</text>
+<line x1="200" y1="359" x2="375" y2="359" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="5 4"/>
+<rect x="60" y="352" width="280" height="14" fill="#0077b6" fill-opacity=".3" stroke="#0077b6" stroke-width="2"/>
+<text class="st" x="64" y="345">weld</text>
+<g id="svArrow" transform="rotate(0 200 359)"><line x1="200" y1="359" x2="285" y2="359" stroke="#0077b6" stroke-width="3" marker-end="url(#ar)"/></g>
+<line x1="60" y1="368" x2="60" y2="396" stroke="#e0e0e0" stroke-width="1.5"/>
+<line x1="340" y1="368" x2="340" y2="396" stroke="#e0e0e0" stroke-width="1.5"/>
+<line x1="61" y1="390" x2="339" y2="390" stroke="#0077b6" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<text class="st" id="svL" x="200" y="411" text-anchor="middle">L</text>
+</svg>
+</div>
+
+<form id="f" novalidate>
+<div class="row">
+<div class="field"><label for="units">Unit system</label>
+<select id="units"><option value="us">US customary (in, lbf)</option><option value="si">Metric (mm, kN)</option></select></div>
+<div class="field"><label for="method">Design method</label>
+<select id="method"><option value="asd">ASD — enter service load (Ω = 2.00)</option><option value="lrfd">LRFD — enter factored load (φ = 0.75)</option></select></div>
+<div class="field"><label for="elec">Electrode (filler metal strength)</label>
+<select id="elec"><option value="60">E60XX — 60 ksi</option><option value="70" selected>E70XX — 70 ksi</option><option value="80">E80XX — 80 ksi</option><option value="90">E90XX — 90 ksi</option></select></div>
+<div class="field"><label for="base">Base metal (tensile strength Fu)</label>
+<select id="base"><option value="58" selected>A36 — Fu 58 ksi</option><option value="65">A572 Gr 50 / A992 — Fu 65 ksi</option><option value="75">A572 Gr 60 — Fu 75 ksi</option></select></div>
+<div class="field"><label for="load" id="lLoad">Applied load (lbf)</label>
+<input id="load" type="number" inputmode="decimal" step="any" value="20000" aria-describedby="e_load">
+<div class="msg" id="e_load"></div></div>
+<div class="field"><label for="thick" id="lThick">Thinner plate thickness (in)</label>
+<input id="thick" type="number" inputmode="decimal" step="any" value="0.375" aria-describedby="e_thick">
+<div class="msg" id="e_thick"></div></div>
+<div class="field"><label for="len" id="lLen">Weld length per run (in)</label>
+<input id="len" type="number" inputmode="decimal" step="any" value="4" aria-describedby="e_len">
+<div class="msg" id="e_len"></div></div>
+<div class="field"><label for="runs">Number of weld runs carrying the load</label>
+<select id="runs"><option value="1">1 (one side)</option><option value="2" selected>2 (both sides)</option><option value="3">3</option><option value="4">4</option></select></div>
+</div>
+<div class="field"><label for="angle">Load angle from weld axis: <strong id="angVal">0°</strong></label>
+<input id="angle" type="range" min="0" max="90" step="5" value="0">
+<div class="ticks"><span>0° parallel</span><span>45°</span><span>90° transverse</span></div>
+<div class="hint">Use 0° if unsure — it is the conservative case for weld metal.</div></div>
+<button type="submit" id="go">Calculate fillet weld size</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+</form>
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/fillet-weld-size-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Fillet Weld Size Calculator&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/fillet-weld-size-calculator/&quot;&gt;Fillet Weld Size Calculator&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/fillet-weld-size-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<section class="content">
+<h2>How to Use This Fillet Weld Size Calculator</h2>
+<p>Pick your unit system, design method, electrode and base metal, then enter the load the joint must carry, the thickness of the thinner plate, the length of each weld run and how many runs share the load. Set the slider to the angle between the load and the weld axis. The calculator returns the smallest standard leg size that passes strength, minimum-size and maximum-size checks, plus a comparison table of common sizes.</p>
+
+<h2>Why This Matters</h2>
+<p>Fillet welds are the most common weld in structural steel, trailer frames, machine bases, brackets, tabs and gussets, and picking the leg size is a daily decision for fabricators. Too small and the weld can fail in shear well below the load you expect. Too large and you burn extra filler metal, add heat and distortion, and waste labor, because weld volume grows with the square of the leg size. Going from 1/4 in to 3/8 in more than doubles the weld metal for a 50% increase in leg.</p>
+<p>Typical cases: a welder building a 20,000 lb hoist bracket, a farmer adding a hitch plate to a skid steer, a fabricator checking whether a 3/16 in weld is enough on a 3/8 in gusset, or an inspector sanity-checking a detail. In each case you want a fast, defensible answer based on a published method instead of a guess or a rule of thumb like "weld size equals plate thickness." That rule is often wrong in both directions. This tool gives you a conservative starting size you can then confirm with the drawings, the welding procedure and a qualified engineer.</p>
+
+<h2>How It's Calculated</h2>
+<p>The calculator uses the simplified method in AISC 360 (Specification for Structural Steel Buildings), Chapter J, Section J2.4, with minimum and maximum sizes from Table J2.4 and Section J2.2b. The nominal strength of a linear fillet weld group is:</p>
+<div class="formula">Rn = 0.60 · FEXX · (0.707 · w) · L · (1 + 0.5 · sin<sup>1.5</sup>θ)</div>
+<p>Here FEXX is the electrode classification strength, w is the leg size, 0.707·w is the effective throat of an equal-leg weld, L is the total length of all runs, and θ is the angle between the load and the weld axis. Allowable strength is Rn/Ω with Ω = 2.00 (ASD), or design strength is φRn with φ = 0.75 (LRFD).</p>
+<p>As a conservative extra check, the calculator also limits the shear on the base metal fusion face to 0.60·Fu·w·L, without the directional bonus. The smaller of the two strengths governs. The required leg is then solved directly:</p>
+<div class="formula">w(required) = Load ÷ [ (1/Ω or φ) · governing stress · L(total) ]</div>
+<p>The result is rounded <strong>up</strong> to the next 1/16 in (US) or the next whole millimeter (metric) and raised to the minimum size if needed. The minimum is 1/8 in for plate up to 1/4 in, 3/16 in up to 1/2 in, 1/4 in up to 3/4 in and 5/16 in above that. The maximum along a plate edge is the plate thickness for material under 1/4 in, or 1/16 in less for thicker plate. Metric minimums are the inch values rounded up to whole millimeters.</p>
+<p>This is a simplified, single-weld-group check. It does not cover eccentric loads, fatigue, seismic detailing, weld groups with mixed directions, or code editions other than AISC 360. Local codes and AWS D1.1 may differ, so always have critical connections reviewed by a licensed engineer.</p>
+
+<h2>Worked Example</h2>
+<p>Take a bracket in 3/8 in A36 plate with E70XX electrodes, an ASD service load of 20,000 lbf parallel to the weld (0°), and two welds each 4 in long.</p>
+<ul>
+<li>Total weld length = 2 × 4 = 8 in. Angle factor = 1 + 0.5·sin<sup>1.5</sup>(0°) = 1.000.</li>
+<li>Weld metal stress = 0.60 × 70 × 0.707 × 1.000 = 29.70 ksi. Base metal stress = 0.60 × 58 = 34.8 ksi. Weld metal governs.</li>
+<li>Allowable stress = 29.70 ÷ 2.00 = 14.85 ksi.</li>
+<li>Required leg = 20 kip ÷ (14.85 ksi × 8 in) = 0.168 in, which rounds up to 3/16 in (0.1875 in).</li>
+<li>Minimum size for 3/8 in plate = 3/16 in. Maximum = 3/8 − 1/16 = 5/16 in. The 3/16 in size fits between them.</li>
+<li>Allowable strength at 3/16 in = 14.85 × 0.1875 × 8 ≈ 22.27 kip, so utilization is about 90%.</li>
+</ul>
+<p>A 1/8 in weld would carry only about 14,850 lbf and fails, which is why the comparison table flags it as "Too small." Weld length is 4 in, more than 4 times the leg (0.75 in), so the length rule is satisfied.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Don't confuse leg with throat.</strong> Weld size callouts on drawings are the leg. The throat is only 0.707 times the leg, and strength depends on the throat.</li>
+<li><strong>Count only runs that actually carry the load.</strong> A weld that is hidden, short or poorly accessible should not be counted. When in doubt, use fewer runs.</li>
+<li><strong>Match the load basis to the method.</strong> Enter a service load for ASD and a factored load for LRFD. Mixing them gives an answer that is 40–60% off.</li>
+<li><strong>Keep length at least 4 times the leg size.</strong> Very short welds are not effective, and long end-loaded welds over 100 times the leg lose efficiency.</li>
+<li><strong>Don't forget fit-up and penetration.</strong> Strength figures assume sound welds with full fusion at the root. Dirty steel, gaps and undercut reduce real capacity.</li>
+<li><strong>Don't use it for lifting, fatigue or safety-critical gear</strong> without engineering review and the applicable standard.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>What size fillet weld do I need for 1/4 inch plate?</summary><p>AISC sets a minimum of 1/8 in for plate up to 1/4 in thick, and the maximum along an edge of 1/4 in plate is 3/16 in. The right size within that range depends on load and weld length, so run your numbers through the calculator instead of defaulting to 3/16 in.</p></details>
+<details><summary>Is the fillet weld size the leg or the throat?</summary><p>Size is the leg, measured along the plate faces from the root to each toe. The effective throat is the shortest distance from the root to the face and equals about 0.707 times the leg for an equal-leg, flat-face weld.</p></details>
+<details><summary>Why does the calculator round the weld size up?</summary><p>Welds are specified in standard increments, and a smaller weld would have less capacity than your load requires. Rounding up to the next 1/16 in (or 1 mm) keeps the result on the safe side of the calculated requirement.</p></details>
+<details><summary>Does a transverse weld get stronger than a longitudinal weld?</summary><p>AISC allows up to a 1.5 times increase in weld metal strength when the load is perpendicular to the weld. This calculator also checks base metal shear on the fusion face at 0.60·Fu, which limits the gain. For E70XX on A36 plate the effective increase is about 17%.</p></details>
+<details><summary>Should I use ASD or LRFD?</summary><p>Use whichever your project, drawings or engineer specify. ASD takes the actual service load and divides weld strength by 2.00. LRFD takes a load already multiplied by code load factors and multiplies weld strength by 0.75.</p></details>
+<details><summary>Can I use this for aluminum, stainless or fatigue-loaded welds?</summary><p>No. The tool is built around carbon steel with E60XX to E90XX electrodes under AISC 360 static loading. Aluminum, stainless, cyclic loads and lifting equipment use different standards and safety factors.</p></details>
+</section>
+
+<section>
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/weld-weight-calculator/">Weld Weight Calculator</a></li>
+<li><a href="/gas-pipe-sizing-calculator/">Gas Pipe Sizing Calculator</a></li>
+<li><a href="/deck-joist-hanger-calculator/">Deck Joist Hanger Calculator</a></li>
+<li><a href="/continuous-insulation-calculator/">Exterior Continuous Insulation Calculator</a></li>
+<li><a href="/roofing-dumpster-calculator/">Roofing Dumpster Size Calculator</a></li>
+<li><a href="/horizontal-slat-fence-calculator/">Horizontal Slat Fence Calculator</a></li>
+</ul>
+</section>
+</main>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<p><a href="/about/">About</a><a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a><a href="/contact/">Contact</a></p>
+<p>© 2025 toolwick.com. Results are estimates for planning only and are not engineering, permit or inspection approval. Verify with a licensed engineer and your local code.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const KSI=6.894757,LBF=4.4482216;
+const fmt=(n,d)=>n.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});
+function frac(n){const w=Math.floor(n/16);let r=n%16,d=16;while(r&&r%2===0){r/=2;d/=2}let s=r?r+'/'+d:'';if(w)s=w+(s?' '+s:'');return s||'0'}
+let prevUs=true,summary='';
+const isUs=()=>$('units').value==='us';
+function setLabels(){const u=isUs();$('lLoad').textContent='Applied load ('+(u?'lbf':'kN')+')';$('lThick').textContent='Thinner plate thickness ('+(u?'in':'mm')+')';$('lLen').textContent='Weld length per run ('+(u?'in':'mm')+')'}
+function conv(id,f,d){const el=$(id),v=parseFloat(el.value);if(isFinite(v))el.value=+(v*f).toFixed(d)}
+function clr(id){$(id).classList.remove('err');$(id).removeAttribute('aria-invalid');$('e_'+id).textContent=''}
+function err(id,m){$(id).classList.add('err');$(id).setAttribute('aria-invalid','true');$('e_'+id).textContent=m}
+function drawArrow(th){$('svArrow').setAttribute('transform','rotate('+(-th)+' 200 359)');$('svA').textContent='θ = '+th+'° from weld axis';$('angVal').textContent=th+'°'}
+$('angle').addEventListener('input',()=>drawArrow(+$('angle').value));
+$('units').addEventListener('change',()=>{const u=isUs();if(u!==prevUs){conv('thick',u?1/25.4:25.4,u?3:1);conv('len',u?1/25.4:25.4,u?3:1);conv('load',u?1000/LBF:LBF/1000,u?0:2);prevUs=u}setLabels();$('results').innerHTML='';summary=''});
+['load','len','thick'].forEach(id=>$(id).addEventListener('input',()=>clr(id)));
+$('f').addEventListener('submit',e=>{e.preventDefault();requestAnimationFrame(calc)});
+
+function calc(){
+const us=isUs();
+['load','len','thick'].forEach(clr);
+const P=parseFloat($('load').value),L=parseFloat($('len').value),t=parseFloat($('thick').value),th=+$('angle').value,runs=+$('runs').value;
+const lim={load:us?1e8:5e5,len:us?1200:30000,thick:us?12:300};
+const units={load:us?'lbf':'kN',len:us?'in':'mm',thick:us?'in':'mm'};
+let bad=false;
+[['load',P],['len',L],['thick',t]].forEach(a=>{const id=a[0],v=a[1];
+if(!(v>0)){err(id,'Enter a number greater than zero.');bad=true}
+else if(v>lim[id]){err(id,'That looks too large. Enter a value up to '+fmt(lim[id])+' '+units[id]+'.');bad=true}});
+if(bad){$('results').innerHTML='';summary='';return}
+
+const FE=+$('elec').value*KSI,Fu=+$('base').value*KSI;
+const k=1+0.5*Math.pow(Math.sin(th*Math.PI/180),1.5);
+const cW=0.6*FE*Math.SQRT1_2*k,cB=0.6*Fu,c=Math.min(cW,cB);
+const gov=cW<=cB?'Weld metal (throat shear)':'Base metal (fusion-face shear)';
+const asd=$('method').value==='asd',fac=asd?0.5:0.75;
+const PN=us?P*LBF:P*1000,Lmm=us?L*25.4:L,tmm=us?t*25.4:t,Lt=Lmm*runs;
+const step=us?25.4/16:1,toMm=n=>n*step;
+const wReq=PN/(fac*c*Lt);
+const reqN=Math.max(1,Math.ceil(wReq/step-1e-9));
+const tin=tmm/25.4;
+const minTab=tin<=0.25+1e-9?3.175:tin<=0.5+1e-9?4.7625:tin<=0.75+1e-9?6.35:7.9375;
+const maxMm=tin<0.25-1e-9?tmm:tmm-1.5875;
+const maxN=Math.max(1,Math.floor(maxMm/step+1e-9));
+const minN=Math.min(Math.max(1,Math.ceil(minTab/step-1e-9)),maxN);
+const recN=Math.max(reqN,minN),recMm=toMm(recN);
+const over=recN>maxN;
+const sz=n=>us?frac(n)+' in':n+' mm';
+const thr=n=>us?fmt(toMm(n)*Math.SQRT1_2/25.4,3)+' in':fmt(toMm(n)*Math.SQRT1_2,2)+' mm';
+const capN=n=>fac*c*toMm(n)*Lt;
+const dl=N=>us?fmt(Math.floor(N/LBF),0)+' lbf':fmt(Math.floor(N/10)/100,2)+' kN';
+const capRec=capN(recN),util=Math.ceil(PN/capRec*1000)/10;
+const perLen=us?fmt(Math.floor(capRec/LBF/(Lt/25.4)),0)+' lbf/in':fmt(Math.floor(capRec/Lt),0)+' N/mm';
+const other=us?'= '+fmt(recMm,2)+' mm':'≈ '+frac(Math.ceil(recMm/25.4*16-1e-9))+' in';
+const reqStr=us?fmt(wReq/25.4,3)+' in':fmt(wReq,2)+' mm';
+
+const warns=[];
+if(over)warns.push(['bad','Required size ('+sz(recN)+') exceeds the maximum permitted along this plate edge ('+sz(maxN)+'). Increase weld length or the number of runs, use a thicker plate, a stronger electrode, or redesign the joint.']);
+if(Lmm<4*recMm-1e-6)warns.push(['warn','Weld length per run is under 4× the weld size. Use at least '+(us?fmt(recN/4,2)+' in':fmt(4*recN,0)+' mm')+' per run, otherwise the effective weld size is reduced.']);
+if(Lmm/recMm>100)warns.push(['warn','Length exceeds 100× the weld size. AISC reduces the effective length of long end-loaded welds, so have an engineer verify this joint.']);
+if(cW>cB)warns.push(['warn','Base metal shear on the fusion face governs over weld metal. A stronger electrode will not reduce the size.']);
+let html='<div class="fade"><div class="key"><div class="big">'+sz(recN)+'</div><div class="sub">Recommended minimum fillet weld leg size ('+other+')</div></div>';
+if(!over)html+='<div class="badge ok">Passes the simplified AISC 360 strength, minimum and maximum size checks at '+fmt(util,1)+'% utilization. Estimate only, not an engineering approval.</div>';
+warns.forEach(w=>{html+='<div class="badge '+w[0]+'">'+w[1]+'</div>'});
+html+='<div class="rh">Calculation details</div><div class="tw"><table><tbody>'+
+[['Load basis',asd?'Service load, ASD (Ω = 2.00)':'Factored load, LRFD (φ = 0.75)'],
+['Load angle factor 1 + 0.5·sin<sup>1.5</sup>θ',fmt(k,3)],
+['Total weld length ('+runs+' × '+fmt(L,us?2:1)+(us?' in':' mm')+')',us?fmt(Lt/25.4,2)+' in':fmt(Lt,1)+' mm'],
+['Governing limit state',gov],
+['Required leg size (calculated)',reqStr],
+['Minimum leg size (AISC Table J2.4)',sz(minN)],
+['Maximum leg size (AISC J2.2b)',sz(maxN)],
+['Recommended leg size',sz(recN)],
+['Effective throat (0.707 × leg)',thr(recN)],
+[(asd?'Allowable strength Rn/Ω':'Design strength φRn')+' at recommended size',dl(capRec)],
+['Strength per unit length',perLen],
+['Utilization',fmt(util,1)+'%<div class="bar"><i class="'+(util>100?'o':'')+'" style="width:'+Math.min(100,util)+'%"></i></div>']
+].map(r=>'<tr><td>'+r[0]+'</td><td class="r">'+r[1]+'</td></tr>').join('')+'</tbody></table></div>';
+
+let list=us?[2,3,4,5,6,7,8]:[3,4,5,6,8,10,12];
+if(list.indexOf(recN)<0){list.push(recN);list.sort((a,b)=>a-b)}
+html+='<div class="rh">Size comparison for your load</div><div class="tw"><table><thead><tr><th>Leg size</th><th class="r">Throat</th><th class="r">'+(asd?'Allowable':'Design')+'</th><th class="r">Utilization</th><th>Status</th></tr></thead><tbody>';
+list.forEach(n=>{const cp=capN(n),u=Math.ceil(PN/cp*1000)/10;
+const s=n<minN?'Below minimum':n>maxN?'Exceeds max':cp>=PN?'OK':'Too small';
+html+='<tr'+(n===recN?' class="rec"':'')+'><td>'+sz(n)+(n===recN?' ★':'')+'</td><td class="r">'+thr(n)+'</td><td class="r">'+dl(cp)+'</td><td class="r">'+fmt(u,1)+'%</td><td>'+s+'</td></tr>'});
+html+='</tbody></table></div><button type="button" class="copy" data-copy="1">Copy results</button>'+
+'<p class="note">Method: AISC 360 Ch. J (Eq. J2-5, Tables J2.4, J2.2b), equal-leg welds, static load. Weld sizes are rounded up. Local codes and AWS D1.1 may differ. Have critical joints reviewed by a licensed engineer.</p></div>';
+
+summary='Fillet weld size: '+sz(recN)+' ('+other+')\nLoad: '+fmt(P,us?0:2)+(us?' lbf':' kN')+' ('+(asd?'ASD':'LRFD')+'), angle '+th+'°\nWeld: '+runs+' run(s) × '+fmt(L,us?2:1)+(us?' in':' mm')+', E'+$('elec').value+'XX on Fu '+$('base').value+' ksi\nStrength at this size: '+dl(capRec)+' ('+fmt(util,1)+'% utilization)\nEstimate only (AISC 360 simplified); verify with a licensed engineer.';
+
+$('results').innerHTML=html;
+$('svW').textContent='w = '+sz(recN);
+$('svT3').textContent='a = '+thr(recN);
+$('svT').textContent='t = '+(us?fmt(t,3)+' in':fmt(t,1)+' mm');
+$('svP').textContent='P = '+fmt(P,us?0:2)+(us?' lbf':' kN');
+$('svL').textContent='L = '+fmt(L,us?2:1)+(us?' in':' mm')+' × '+runs+(runs>1?' runs':' run');
+drawArrow(th);
+}
+
+document.addEventListener('click',e=>{
+const b=e.target.closest('[data-copy]');if(!b||!summary)return;
+const done=()=>{b.textContent='Copied!';setTimeout(()=>{b.textContent='Copy results'},2000)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(summary).then(done,()=>fb())}else fb();
+function fb(){const ta=document.createElement('textarea');ta.value=summary;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(x){}document.body.removeChild(ta)}
+});
+setLabels();
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
