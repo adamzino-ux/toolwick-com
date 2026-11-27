@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Right Triangle Calculator (Rise, Run &amp; Diagonal) | Toolwick</title>
+<meta name="description" content="Free right triangle calculator: enter any two of rise, run, diagonal or angle to get the missing side, angles, pitch, slope and cut length.">
+<link rel="canonical" href="https://toolwick.com/right-triangle-calculator/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Right Triangle Calculator (Rise, Run & Diagonal)", "url": "https://toolwick.com/right-triangle-calculator/", "description": "Free right triangle calculator: enter any two of rise, run, diagonal or angle to get the missing side, angles, pitch, slope and cut length.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Toolwick", "url": "https://toolwick.com/", "logo": "https://toolwick.com/logo.png"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Toolwick", "item": "https://toolwick.com/"}, {"@type": "ListItem", "position": 2, "name": "Right Triangle Calculator (Rise, Run & Diagonal)", "item": "https://toolwick.com/right-triangle-calculator/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I find the diagonal of a right triangle with rise and run?", "acceptedAnswer": {"@type": "Answer", "text": "Square the rise, square the run, add them and take the square root. For a 3 ft rise and 4 ft run, 9 + 16 = 25, so the diagonal is 5 ft. This calculator does it instantly and also gives a rounded-up cut length."}}, {"@type": "Question", "name": "How do I square a deck or foundation with a diagonal measurement?", "acceptedAnswer": {"@type": "Answer", "text": "Measure both diagonals corner to corner. If the rectangle is square, they will be equal and match the Pythagorean result. For a 12 ft by 16 ft frame, enter rise 12 and run 16 to get a 20 ft target, then adjust the frame until both diagonals match."}}, {"@type": "Question", "name": "What is the difference between rise, run and diagonal?", "acceptedAnswer": {"@type": "Answer", "text": "Rise is the vertical distance, run is the horizontal distance and the diagonal is the sloped straight line joining their ends. On stairs the diagonal is the stringer length, and on a roof it is the rafter length measured along the slope."}}, {"@type": "Question", "name": "How do I convert pitch like 6:12 to degrees?", "acceptedAnswer": {"@type": "Answer", "text": "Take arctan of the pitch divided by 12. For 6:12, arctan(0.5) is 26.57°. To go the other way, enter your run and angle in this calculator, and the pitch appears in the results as rise per 12 of run."}}, {"@type": "Question", "name": "Can I use this right triangle calculator for metric measurements?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Select millimeters, centimeters or meters and every result uses that unit. The math is identical in any unit as long as rise and run share the same one, and the cut length is rounded up to a practical metric step."}}, {"@type": "Question", "name": "Why does it say my diagonal must be longer than the rise or run?", "acceptedAnswer": {"@type": "Answer", "text": "The hypotenuse is always the longest side of a right triangle. If your diagonal is equal to or shorter than a leg, the numbers cannot form a triangle, so check for a typo or a measurement taken between the wrong points."}}]}]}</script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Right Triangle Calculator (Rise, Run &amp; Diagonal)">
+<meta property="og:description" content="Free right triangle calculator: enter any two of rise, run, diagonal or angle to get the missing side, angles, pitch, slope and cut length.">
+<meta property="og:site_name" content="Toolwick">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;color:#1a1a2e;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:0 1.5rem}
+.topnav{padding:1rem 0;border-bottom:1px solid #e0e0e0}
+.topnav a{font-weight:700;color:#0077b6;text-decoration:none;font-size:1.1rem;display:inline-block;min-height:44px;line-height:44px}
+a:focus-visible,button:focus-visible,summary:focus-visible,.tw:focus-visible{outline:2px solid #0077b6;outline-offset:2px}
+h1{font-size:1.75rem;line-height:1.25;margin:2rem 0 .75rem}
+h2{font-size:1.3rem;margin:2rem 0 .75rem;line-height:1.3}
+p{margin:0 0 1rem}
+.intro{color:#333;font-size:1.05rem}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);margin:1.5rem 0 2rem}
+.diagram{background:#f8f9fa;border-radius:8px;padding:.5rem;margin-bottom:1.5rem}
+.diagram svg{width:100%;height:auto;display:block}
+.row{display:grid;grid-template-columns:1fr;gap:1rem}
+.field{margin-bottom:1rem}
+.field.hide{display:none}
+label{display:block;font-size:.85rem;font-weight:500;color:#444;margin-bottom:.35rem}
+input,select{width:100%;min-height:44px;padding:12px 16px;border:1px solid #ddd;border-radius:6px;font:inherit;background:#fff;color:#1a1a2e}
+input:focus,select:focus{outline:2px solid #0077b6;outline-offset:0;border-color:#0077b6}
+input.err{border-color:#e74c3c}
+.msg{color:#c0392b;font-size:.85rem;margin-top:.3rem}
+.msg:empty{display:none}
+input[type=range]{padding:0;min-height:44px;border:0;accent-color:#0077b6}
+.ticks{display:flex;justify-content:space-between;font-size:.8rem;color:#666;margin-top:-.4rem}
+button.main{width:100%;min-height:44px;background:#0077b6;color:#fff;border:0;border-radius:6px;padding:12px 24px;font:inherit;font-weight:600;cursor:pointer}
+button.main:hover{background:#006299}
+.note{font-size:.85rem;color:#666;margin:1rem 0 0}
+#results{margin-top:1.5rem}
+.fade{animation:f .3s ease}
+@keyframes f{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.fade{animation:none}}
+.key{background:#f8f9fa;border-radius:8px;padding:1.25rem;text-align:center;margin-bottom:1.25rem}
+.key .big{font-size:2.2rem;font-weight:800;color:#0077b6;line-height:1.2;word-break:break-word}
+.key .sub{color:#444;font-size:.95rem}
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th{background:#f0f0f0;text-align:left;padding:10px 12px;border-bottom:1px solid #ddd;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #e8e8e8}
+tbody tr:nth-child(odd){background:#fafafa}
+tbody tr:nth-child(even){background:#fff}
+th.n,td.n{text-align:right;white-space:nowrap}
+h3{font-size:1rem;margin:1.25rem 0 .5rem}
+.copy{background:#fff;color:#0077b6;border:1px solid #0077b6;border-radius:6px;padding:8px 14px;min-height:44px;font:inherit;font-size:.9rem;cursor:pointer;width:100%;margin-bottom:.5rem}
+.safe{font-size:.85rem;color:#555;background:#f8f9fa;border-left:3px solid #0077b6;padding:.75rem 1rem;margin-top:1rem;border-radius:0 6px 6px 0}
+.ad-slot{min-height:0;margin:0}
+.content a,footer a{color:#0077b6;text-decoration:underline}
+details{border-bottom:1px solid #e0e0e0;padding:.25rem 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details p{margin:.25rem 0 .75rem}
+ul{padding-left:1.25rem}li{margin-bottom:.5rem}
+.rel{list-style:none;padding:0;display:grid;gap:.5rem}
+.rel li{margin:0}
+.rel a{display:flex;align-items:center;padding:10px 16px;background:#f8f9fa;border-radius:6px;min-height:44px}
+code,.formula{background:#f0f0f0;padding:2px 6px;border-radius:4px;font-size:.92em}
+.formula{display:block;padding:.75rem 1rem;margin-bottom:.5rem;overflow-x:auto}
+footer{border-top:1px solid #e0e0e0;margin-top:3rem;padding:1.5rem 0 2rem;font-size:.9rem;color:#666;text-align:center}
+footer a{margin:0 .5rem;display:inline-block;padding:10px 0}
+@media(min-width:640px){.row{grid-template-columns:1fr 1fr}.copy{width:auto}}
+@media(max-width:420px){.card{padding:1.25rem}h1{font-size:1.5rem}}
+</style>
+<meta property="og:url" content="https://toolwick.com/right-triangle-calculator/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6658979295707401" crossorigin="anonymous"></script>
+<style id="ad-css">.ad-slot{margin:2rem auto;text-align:center;clear:both}.ad-slot:empty{margin:0}.ad-slot .ad-label{display:block;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#666;margin-bottom:.35rem}ins.adsbygoogle[data-ad-status=unfilled]{display:none!important}</style>
+<style id="a11y-css">input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #0b57d0!important;outline-offset:1px;box-shadow:0 0 0 4px #fff!important}footer a,.footer a,p a,li p a,.safety-notice a,.terms-note a{text-decoration:underline}</style>
+</head>
+<body>
+<header id="site-header" style="background:#ffffff;border-bottom:3px solid #0077b6;margin:0 0 1.25rem"><div style="max-width:1100px;margin:0 auto;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif"><a href="/" style="display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#0077b6;font-weight:700;font-size:1.15rem"><img src="/favicon.svg" width="28" height="28" alt="" style="display:block;border-radius:6px">Toolwick</a><a href="/" style="color:#0077b6;font-size:.9rem;text-decoration:underline">All calculators</a></div></header>
+<div class="wrap">
+<nav class="topnav" aria-label="Site"><a href="/">Toolwick</a></nav>
+<main>
+<h1>Right Triangle Calculator (Rise, Run &amp; Diagonal)</h1>
+<p class="embed-jump" style="margin:.25rem 0 .75rem"><a href="#embed" style="display:inline-block;padding:.3rem .75rem;border:1px solid #0077b6;border-radius:999px;color:#0077b6;font-size:.85rem;font-weight:600;text-decoration:none">&lt;/&gt; Embed this calculator on your site</a></p>
+<p class="intro">This right triangle calculator finds the missing side, both angles, pitch, slope and area from any two known values. Enter rise, run, diagonal or an angle, and it works out the rest for squaring layouts, stair stringers, ramps and roof framing.</p>
+
+<div class="card">
+<div class="diagram">
+<svg id="svg" viewBox="0 0 420 210" role="img" aria-label="Right triangle diagram showing rise, run, diagonal and angle A">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1a1a2e"/></marker></defs>
+<g id="dyn"></g>
+</svg>
+</div>
+
+<div class="row">
+<div class="field">
+<label for="mode">I know these two values</label>
+<select id="mode">
+<option value="rr">Rise and run</option>
+<option value="rd">Rise and diagonal</option>
+<option value="nd">Run and diagonal</option>
+<option value="na">Run and angle</option>
+<option value="ra">Rise and angle</option>
+</select>
+</div>
+<div class="field">
+<label for="unit">Unit of length</label>
+<select id="unit">
+<option value="in">Inches (in)</option>
+<option value="ft" selected>Feet (ft)</option>
+<option value="mm">Millimeters (mm)</option>
+<option value="cm">Centimeters (cm)</option>
+<option value="m">Meters (m)</option>
+</select>
+</div>
+</div>
+
+<div class="field" id="f-rise"><label for="rise">Rise (vertical height)</label><input id="rise" type="text" inputmode="decimal" autocomplete="off" aria-describedby="e-rise" value="6"><div class="msg" id="e-rise"></div></div>
+<div class="field" id="f-run"><label for="run">Run (horizontal length)</label><input id="run" type="text" inputmode="decimal" autocomplete="off" aria-describedby="e-run" value="8"><div class="msg" id="e-run"></div></div>
+<div class="field hide" id="f-diag"><label for="diag">Diagonal (hypotenuse)</label><input id="diag" type="text" inputmode="decimal" autocomplete="off" aria-describedby="e-diag"><div class="msg" id="e-diag"></div></div>
+<div class="field hide" id="f-angle">
+<label for="angle">Angle A at the run end (degrees)</label><input id="angle" type="text" inputmode="decimal" autocomplete="off" aria-describedby="e-angle" value="30"><div class="msg" id="e-angle"></div>
+<label for="slider" style="margin-top:.75rem">Angle slider</label>
+<input id="slider" type="range" min="1" max="89" step="0.5" value="30">
+<div class="ticks" aria-hidden="true"><span>1°</span><span>45°</span><span>89°</span></div>
+</div>
+
+<button class="main" id="calcBtn" type="button">Calculate Triangle</button><p class="terms-note" style="flex-basis:100%;width:100%;font-size:.75rem;color:#6b6b6b;margin:.5rem 0 0;line-height:1.4">Estimates only. By using this calculator you agree to our <a href="/terms/">Terms</a>.</p>
+<p class="note">Geometry only (Pythagorean theorem and trigonometry). Local codes vary; results are not engineering, permit or inspection approval.</p>
+
+<div id="results" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+<aside class="safety-notice" role="note" style="max-width:640px;margin:1.25rem auto;padding:.8rem 1rem;border-left:3px solid #e0a800;background:#fff8e1;font-size:.85rem;line-height:1.5;color:#4a3b00">Estimates for planning only. Building codes and conditions vary by location. Verify results with your local building department, and use a licensed electrician, engineer or contractor for electrical, structural, gas and excavation work. See our <a href="/terms/">terms</a>.</aside>
+<div class="ad-slot" id="ad-mid"></div>
+<section class="embed-box" id="embed" aria-labelledby="embed-h" style="max-width:640px;margin:1.75rem auto;padding:1rem 1.25rem;border:2px solid #0077b6;border-radius:10px;background:#fff;color:#1a1a1a;font-size:.95rem;line-height:1.5;box-sizing:border-box"><h2 id="embed-h" style="margin:0 0 .35rem;font-size:1.15rem;color:#0077b6">&lt;/&gt; Embed this calculator on your site</h2><p style="margin:0 0 .6rem">Free for any website, blog, classroom or intranet. No sign-up, no ads inside the embed. Copy the code and paste it into your page.</p><textarea readonly rows="3" aria-label="Embed code" onclick="this.select()" style="width:100%;box-sizing:border-box;font:12px/1.4 monospace;padding:.5rem;border:1px solid #bbb;border-radius:6px;background:#f7f7f7;color:#1a1a1a">&lt;iframe src=&quot;https://toolwick.com/embed/right-triangle-calculator/&quot; width=&quot;100%&quot; height=&quot;760&quot; loading=&quot;lazy&quot; title=&quot;Right Triangle Calculator (Rise, Run &amp;amp; Diagonal)&quot; style=&quot;border:1px solid #ddd;border-radius:8px;max-width:720px&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:13px;margin:4px 0 0&quot;&gt;&lt;a href=&quot;https://toolwick.com/right-triangle-calculator/&quot;&gt;Right Triangle Calculator (Rise, Run &amp;amp; Diagonal)&lt;/a&gt; by &lt;a href=&quot;https://toolwick.com/&quot;&gt;Toolwick&lt;/a&gt;&lt;/p&gt;</textarea><div style="display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.5rem"><button type="button" onclick="var t=this.parentNode.previousElementSibling;t.select();navigator.clipboard&&navigator.clipboard.writeText(t.value);this.textContent='Copied!'" style="padding:.55rem 1.1rem;min-height:44px;border:0;border-radius:6px;background:#0077b6;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer">Copy embed code</button><a href="/embed/right-triangle-calculator/" target="_blank" rel="noopener" style="color:#0077b6;text-decoration:underline">Preview the embed</a></div></section>
+
+<div class="content">
+<h2>How to Use This Right Triangle Calculator</h2>
+<p>Choose the two measurements you already know from the "I know these two values" menu: rise and run, rise and diagonal, run and diagonal, or one leg plus an angle. Pick a unit, type your numbers and press Calculate (or hit Enter). You get the missing side, both acute angles, pitch as rise per 12 of run, slope percent, area, perimeter and a diagonal cut length rounded up to the next 1/16 inch. The diagram redraws to match your triangle, and a table shows the same run at common roof pitches.</p>
+
+<h2>Why This Matters</h2>
+<p>Almost every layout job in carpentry, concrete and landscaping hides a right triangle. The classic case is squaring a deck or slab form: if a 12 ft by 16 ft rectangle has two diagonals that both measure 20 ft, the corners are square. If one reads 20 ft 1 in and the other 19 ft 11 in, the frame is racked, and the decking, siding or slab edge will show it for years.</p>
+<p>Stair builders use the same math. A flight rising 108 in over a 144 in run has a 180 in stringer diagonal, which is 15 ft of lumber before waste. Roofers convert between pitch and angle all day: an 8:12 roof is a 33.7° slope, and a 12 ft run needs 8 ft of rise. Ramp designers check that a 30 in rise over 360 in of run gives a 1:12 slope, about 8.3%. Fence installers, surveyors and anyone bracing a wall or gate rely on a quick diagonal check too. Knowing the diagonal before you cut saves lumber, trips to the yard and rework.</p>
+
+<h2>How It's Calculated</h2>
+<p>In a right triangle the rise and run are the two legs, and the diagonal is the hypotenuse opposite the 90° corner. Angle A sits where the run meets the diagonal, so it measures the slope from horizontal. The calculator uses these relationships:</p>
+<span class="formula">diagonal² = rise² + run²</span>
+<span class="formula">Angle A = arctan(rise ÷ run)</span>
+<span class="formula">rise = run × tan(A) &nbsp;|&nbsp; diagonal = run ÷ cos(A) &nbsp;|&nbsp; run = rise ÷ tan(A)</span>
+<p>When you enter a diagonal and one leg, the missing leg is the square root of the diagonal squared minus the known leg squared. Angle B at the top is always 90° − A. Pitch is rise ÷ run × 12, slope percent is rise ÷ run × 100, area is rise × run ÷ 2, and perimeter is the sum of all three sides.</p>
+<p>For safe cutting, the diagonal cut length is always rounded <em>up</em>: to the next 1/16 in for inches and feet, to the next whole millimeter, 0.1 cm, or 0.001 m for metric. That leaves the piece slightly long so you can trim to fit. Every other value is rounded normally for display only.</p>
+
+<h2>Worked Example</h2>
+<p>Say you are bracing a gate frame with a rise of 6 ft and a run of 8 ft, entered in feet.</p>
+<ul>
+<li><strong>Diagonal:</strong> 6² + 8² = 36 + 64 = 100, and √100 = 10.000 ft. The cut length shows as 10'.</li>
+<li><strong>Angle A:</strong> arctan(6 ÷ 8) = arctan(0.75) = 36.87°. Angle B is 90° − 36.87° = 53.13°.</li>
+<li><strong>Pitch:</strong> 6 ÷ 8 × 12 = 9.00 : 12.</li>
+<li><strong>Slope:</strong> 6 ÷ 8 × 100 = 75.00%.</li>
+<li><strong>Area:</strong> 6 × 8 ÷ 2 = 24 ft². <strong>Perimeter:</strong> 6 + 8 + 10 = 24 ft.</li>
+</ul>
+<p>This is the familiar 3-4-5 triangle scaled by 2, which is why the diagonal comes out to a whole number.</p>
+
+<h2>Tips &amp; Common Mistakes</h2>
+<ul>
+<li><strong>Use one unit for everything.</strong> Mixing feet for the run and inches for the rise is the most common source of wrong answers. Convert first, then enter both values in the same unit.</li>
+<li><strong>Measure the angle from the right place.</strong> Angle A here is measured from the horizontal run, not from the vertical rise. A 30° roof angle is not the same as a 60° angle from the wall.</li>
+<li><strong>A diagonal must be the longest side.</strong> If you enter a diagonal shorter than the rise or run, no triangle exists, and the calculator will flag it. Re-measure before trusting any layout.</li>
+<li><strong>Allow for kerf and connections.</strong> The cut length is a theoretical long-point-to-long-point length. Brace ends, plumb cuts and hardware change the real piece length, so mark and test-fit.</li>
+<li><strong>Check codes separately.</strong> This tool does not apply building code limits. For stairs, the IRC (R311.7) generally caps riser height at 7¾ in and sets a minimum tread of 10 in, but local amendments vary. Confirm with your inspector and have structural members designed by a qualified professional.</li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<details><summary>How do I find the diagonal of a right triangle with rise and run?</summary><p>Square the rise, square the run, add them and take the square root. For a 3 ft rise and 4 ft run, 9 + 16 = 25, so the diagonal is 5 ft. This calculator does it instantly and also gives a rounded-up cut length.</p></details>
+<details><summary>How do I square a deck or foundation with a diagonal measurement?</summary><p>Measure both diagonals corner to corner. If the rectangle is square, they will be equal and match the Pythagorean result. For a 12 ft by 16 ft frame, enter rise 12 and run 16 to get a 20 ft target, then adjust the frame until both diagonals match.</p></details>
+<details><summary>What is the difference between rise, run and diagonal?</summary><p>Rise is the vertical distance, run is the horizontal distance and the diagonal is the sloped straight line joining their ends. On stairs the diagonal is the stringer length, and on a roof it is the rafter length measured along the slope.</p></details>
+<details><summary>How do I convert pitch like 6:12 to degrees?</summary><p>Take arctan of the pitch divided by 12. For 6:12, arctan(0.5) is 26.57°. To go the other way, enter your run and angle in this calculator, and the pitch appears in the results as rise per 12 of run.</p></details>
+<details><summary>Can I use this right triangle calculator for metric measurements?</summary><p>Yes. Select millimeters, centimeters or meters and every result uses that unit. The math is identical in any unit as long as rise and run share the same one, and the cut length is rounded up to a practical metric step.</p></details>
+<details><summary>Why does it say my diagonal must be longer than the rise or run?</summary><p>The hypotenuse is always the longest side of a right triangle. If your diagonal is equal to or shorter than a leg, the numbers cannot form a triangle, so check for a typo or a measurement taken between the wrong points.</p></details>
+
+<h2>Related Tools</h2>
+<ul class="rel">
+<li><a href="/hot-tub-pad-concrete-calculator/">Hot Tub Pad Concrete Calculator</a></li>
+<li><a href="/fillet-weld-size-calculator/">Fillet Weld Size Calculator</a></li>
+<li><a href="/gas-pipe-sizing-calculator/">Gas Pipe Sizing Calculator</a></li>
+<li><a href="/deck-joist-hanger-calculator/">Deck Joist Hanger Calculator</a></li>
+<li><a href="/continuous-insulation-calculator/">Exterior Continuous Insulation Calculator</a></li>
+<li><a href="/roofing-dumpster-calculator/">Roofing Dumpster Size Calculator</a></li>
+</ul>
+</div>
+</main>
+
+<div class="ad-slot" id="ad-bottom"></div>
+
+<footer>
+<div><a href="/about/">About</a> | <a href="/privacy/">Privacy</a> <a href="/terms/">Terms</a> <a href="/accessibility/">Accessibility</a> | <a href="/contact/">Contact</a></div>
+<div>© <span id="yr">2025</span> toolwick.com</div>
+</footer>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var U={in:{d:3},ft:{d:3},mm:{d:1},cm:{d:2},m:{d:3}};
+var modes={rr:['rise','run'],rd:['rise','diag'],nd:['run','diag'],na:['run','angle'],ra:['rise','angle']};
+var ALL=['rise','run','diag','angle'];
+var lastText='';
+$('yr').textContent=new Date().getFullYear();
+function fmt(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:d})}
+function sv(n){return n>=1e6?n.toExponential(2):fmt(n,2)}
+function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
+function setMode(){
+  var need=modes[$('mode').value];
+  ALL.forEach(function(k){$('f-'+k).classList.toggle('hide',need.indexOf(k)<0)});
+}
+function clearErr(){
+  ALL.forEach(function(k){$(k).classList.remove('err');$(k).removeAttribute('aria-invalid');$('e-'+k).textContent=''});
+}
+function setErr(k,m){$(k).classList.add('err');$(k).setAttribute('aria-invalid','true');$('e-'+k).textContent=m}
+function parse(s){
+  s=String(s).trim().replace(/,/g,'');
+  if(s==='')return{e:'Enter a value.'};
+  var n=Number(s);
+  if(!isFinite(n))return{e:'Enter a number, for example 12.5.'};
+  if(n<=0)return{e:'Value must be greater than zero.'};
+  if(n>1e9)return{e:'That value is too large.'};
+  return{v:n};
+}
+function gcd(a,b){return b?gcd(b,a%b):a}
+function ftIn(inches){
+  var n=Math.ceil(inches*16-1e-9),ft=Math.floor(n/192),r=n-ft*192,i=Math.floor(r/16),f=r%16,g=f?gcd(f,16):1,p=[],ip=[];
+  if(ft)p.push(fmt(ft,0)+"'");
+  if(i)ip.push(i);
+  if(f)ip.push((f/g)+'/'+(16/g));
+  if(ip.length)p.push(ip.join(' ')+'"');
+  if(!p.length)p.push('0"');
+  return p.join(' ');
+}
+function cut(x,u){
+  if(u==='in')return ftIn(x);
+  if(u==='ft')return ftIn(x*12);
+  var k=u==='mm'?1:u==='cm'?10:1000;
+  return fmt(Math.ceil(x*k-1e-9)/k,u==='mm'?0:u==='cm'?1:3)+' '+u;
+}
+function txt(x,y,s,o){
+  var fs=s.length>15?10:12;
+  return '<text x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" font-size="'+fs+'" font-weight="'+(o.b||600)+'" fill="'+(o.c||'#1a1a2e')+'"'+(o.a?' text-anchor="'+o.a+'"':'')+'>'+s+'</text>';
+}
+function draw(o){
+  var w=190,h=105;
+  if(o){var s=Math.min(200/o.run,110/o.rise);w=clamp(o.run*s,70,200);h=clamp(o.rise*s,40,110)}
+  var x0=90,x1=x0+w,yb=150,yt=yb-h,th=Math.atan2(h,w),len=Math.hypot(w,h);
+  var u=o?' '+o.u:'';
+  var tr=o?'Rise '+sv(o.rise)+u:'Rise',tn=o?'Run '+sv(o.run)+u:'Run',td=o?'Diagonal '+sv(o.diag)+u:'Diagonal',ta=o?'A = '+fmt(o.ang,2)+'°':'A';
+  var g='<line x1="20" y1="'+yb+'" x2="'+(x1+30)+'" y2="'+yb+'" stroke="#e0e0e0" stroke-dasharray="5 4"/>'
+   +'<line x1="'+x0+'" y1="'+yb+'" x2="'+x0+'" y2="'+(yb+28)+'" stroke="#e0e0e0" stroke-dasharray="4 3"/>'
+   +'<line x1="'+x1+'" y1="'+yb+'" x2="'+x1+'" y2="'+(yb+28)+'" stroke="#e0e0e0" stroke-dasharray="4 3"/>'
+   +'<line x1="'+x1+'" y1="'+yt+'" x2="'+(x1+28)+'" y2="'+yt+'" stroke="#e0e0e0" stroke-dasharray="4 3"/>'
+   +'<polygon points="'+x0+','+yb+' '+x1+','+yb+' '+x1+','+yt+'" fill="#eef7fb" stroke="#0077b6" stroke-width="3" stroke-linejoin="round"/>'
+   +'<path d="M'+(x1-12)+' '+yb+' L'+(x1-12)+' '+(yb-12)+' L'+x1+' '+(yb-12)+'" fill="none" stroke="#1a1a2e" stroke-width="1.5"/>'
+   +'<path d="M'+(x0+34)+' '+yb+' A34 34 0 0 0 '+(x0+34*Math.cos(th)).toFixed(1)+' '+(yb-34*Math.sin(th)).toFixed(1)+'" fill="none" stroke="#0077b6" stroke-width="2"/>'
+   +'<line x1="'+x0+'" y1="'+(yb+22)+'" x2="'+x1+'" y2="'+(yb+22)+'" stroke="#1a1a2e" stroke-width="1.2" marker-start="url(#ar)" marker-end="url(#ar)"/>'
+   +'<line x1="'+(x1+22)+'" y1="'+yt+'" x2="'+(x1+22)+'" y2="'+yb+'" stroke="#1a1a2e" stroke-width="1.2" marker-start="url(#ar)" marker-end="url(#ar)"/>'
+   +txt((x0+x1)/2,yb+42,tn,{a:'middle'})
+   +txt(x1+30,yb-h/2+4,tr,{})
+   +txt(x0-6,yb+4,ta,{a:'end'})
+   +txt((x0+x1)/2-6,(yb+yt)/2-6,td,{a:'end',c:'#0077b6',b:700});
+  $('dyn').innerHTML=g;
+  $('svg').setAttribute('aria-label',o?'Right triangle diagram: rise '+sv(o.rise)+' '+o.u+', run '+sv(o.run)+' '+o.u+', diagonal '+sv(o.diag)+' '+o.u+', angle A '+fmt(o.ang,2)+' degrees':'Right triangle diagram showing rise, run, diagonal and angle A');
+}
+function copyText(txt,btn){
+  var done=function(){btn.textContent='Copied!';setTimeout(function(){btn.textContent='Copy results'},2000)};
+  function fb(){var a=document.createElement('textarea');a.value=txt;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(a);done()}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fb)}else fb();
+}
+function calculate(){
+  var m=$('mode').value,u=$('unit').value,need=modes[m],v={},bad=false,res=$('results');
+  clearErr();
+  need.forEach(function(k){
+    var r=parse($(k).value);
+    if(r.e){setErr(k,r.e);bad=true;return}
+    if(k==='angle'&&(r.v<0.01||r.v>=90)){setErr(k,'Angle must be greater than 0° and less than 90°.');bad=true;return}
+    v[k]=r.v;
+  });
+  if(!bad){
+    if(m==='rd'&&v.diag<=v.rise){setErr('diag','Diagonal must be longer than the rise.');bad=true}
+    if(m==='nd'&&v.diag<=v.run){setErr('diag','Diagonal must be longer than the run.');bad=true}
+  }
+  if(bad){res.innerHTML='';draw(null);return}
+  var rise,run,diag,rad;
+  if(m==='rr'){rise=v.rise;run=v.run;diag=Math.hypot(rise,run)}
+  else if(m==='rd'){rise=v.rise;diag=v.diag;run=Math.sqrt(diag*diag-rise*rise)}
+  else if(m==='nd'){run=v.run;diag=v.diag;rise=Math.sqrt(diag*diag-run*run)}
+  else if(m==='na'){run=v.run;rad=v.angle*Math.PI/180;rise=run*Math.tan(rad);diag=run/Math.cos(rad)}
+  else{rise=v.rise;rad=v.angle*Math.PI/180;run=rise/Math.tan(rad);diag=rise/Math.sin(rad)}
+  if(!isFinite(rise)||!isFinite(run)||!isFinite(diag)||rise<=0||run<=0||rise/run<1e-7||run/rise<1e-7){res.innerHTML='';draw(null);setErr(need[1],'Those values do not form a usable triangle (one side is almost zero). Check your numbers.');return}
+  var ang=Math.atan2(rise,run)*180/Math.PI,angB=90-ang,dd=U[u].d;
+  var f=function(x){return fmt(x,dd)},L=function(x){return f(x)+' '+u};
+  var pitch=rise/run*12,slope=rise/run*100,area=rise*run/2,per=rise+run+diag;
+  var keyLabel=m==='rd'?'Run':m==='nd'?'Rise':'Diagonal',keyVal=m==='rd'?run:m==='nd'?rise:diag;
+  var rows=[['Rise',L(rise)],['Run',L(run)],['Diagonal (hypotenuse)',L(diag)],['Diagonal cut length (rounded up)',cut(diag,u)],['Angle A (run end)',fmt(ang,2)+'°'],['Angle B (rise end)',fmt(angB,2)+'°'],['Pitch (rise per 12 of run)',fmt(pitch,2)+' : 12'],['Slope',fmt(slope,2)+'%'],['Area',f(area)+' '+u+'²'],['Perimeter',L(per)]];
+  var tb='',txtOut='Right triangle ('+u+')\n';
+  rows.forEach(function(r){tb+='<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td></tr>';txtOut+=r[0]+': '+r[1]+'\n'});
+  var pt='';
+  for(var p=1;p<=12;p++){var rr=run*p/12;pt+='<tr><td>'+p+' : 12</td><td class="n">'+f(rr)+'</td><td class="n">'+f(Math.hypot(rr,run))+'</td><td class="n">'+fmt(Math.atan(p/12)*180/Math.PI,2)+'°</td></tr>'}
+  var html='<div class="fade"><div class="key"><div class="sub">'+keyLabel+'</div><div class="big">'+L(keyVal)+'</div><div class="sub">Angle A '+fmt(ang,2)+'° · Pitch '+fmt(pitch,2)+' : 12</div></div>'
+   +'<div class="tw" tabindex="0" role="region" aria-label="Results table"><table><thead><tr><th>Measurement</th><th class="n">Value</th></tr></thead><tbody>'+tb+'</tbody></table></div>'
+   +'<button class="copy" id="copyBtn" type="button">Copy results</button>'
+   +'<h3>Same run ('+L(run)+') at common pitches</h3><div class="tw" tabindex="0" role="region" aria-label="Pitch comparison table"><table><thead><tr><th>Pitch</th><th class="n">Rise ('+u+')</th><th class="n">Diagonal ('+u+')</th><th class="n">Angle</th></tr></thead><tbody>'+pt+'</tbody></table></div>'
+   +'<div class="safe">Cut length is rounded up so the piece starts slightly long; trim to fit. Geometry only, not engineering, permit or inspection approval. Local codes vary.</div></div>';
+  lastText=txtOut;
+  requestAnimationFrame(function(){res.innerHTML=html;draw({rise:rise,run:run,diag:diag,ang:ang,u:u})});
+}
+$('mode').addEventListener('change',function(){setMode();clearErr();$('results').innerHTML='';draw(null)});
+$('slider').addEventListener('input',function(){$('angle').value=this.value});
+$('angle').addEventListener('input',function(){var n=Number(this.value);if(n>=1&&n<=89)$('slider').value=n});
+$('calcBtn').addEventListener('click',function(){requestAnimationFrame(calculate)});
+document.querySelector('.card').addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')){e.preventDefault();requestAnimationFrame(calculate)}
+});
+$('results').addEventListener('click',function(e){if(e.target.id==='copyBtn')copyText(lastText,e.target)});
+setMode();
+draw(null);
+requestAnimationFrame(calculate);
+})();
+</script>
+<script id="a11y-js">(function(){function run(){
+var d=document,ctl=d.querySelectorAll('input:not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),select,textarea');
+function named(e){if(e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label'))return true;
+if(e.id){try{if(d.querySelector('label[for="'+CSS.escape(e.id)+'"]'))return true}catch(x){}}return false}
+function txt(n){return n?(n.textContent||'').replace(/\s+/g,' ').trim():''}
+function orphan(e){var p=e.previousElementSibling;while(p){if(p.tagName==='LABEL'&&!p.htmlFor&&!p.querySelector('input,select,textarea'))return p;
+if(p.matches('input,select,textarea'))return null;p=p.previousElementSibling}
+var s=e.parentElement&&e.parentElement.querySelector(':scope>label:not([for])');return s&&!s.querySelector('input,select,textarea')?s:null}
+function lab(e){if(!e)return'';if(e.getAttribute('aria-label'))return e.getAttribute('aria-label');
+if(e.id){var l=d.querySelector('label[for="'+e.id+'"]');if(l)return txt(l)}var w=e.closest('label');return w?txt(w):''}
+for(var i=0;i<ctl.length;i++){var e=ctl[i];if(named(e))continue;var o=orphan(e);
+if(o&&e.id){o.htmlFor=e.id;continue}if(o){e.setAttribute('aria-label',txt(o));continue}
+var n='';if(e.tagName==='SELECT'){var p=e.previousElementSibling;while(p&&!p.matches('input,select,textarea'))p=p.previousElementSibling;
+var b=lab(p);if(b)n=b+' unit'}
+if(!n)n=e.getAttribute('placeholder')&&isNaN(e.getAttribute('placeholder'))?e.getAttribute('placeholder'):'';
+if(!n&&e.id)n=e.id.replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\b(range|slider|input|sel)\b/gi,'').trim();
+if(n)e.setAttribute('aria-label',n.charAt(0).toUpperCase()+n.slice(1))}
+if(!d.querySelector('[aria-live]')){var r=d.querySelector('#results,#result,#resultsSection,#results-section,#output,#resultBox,#result-box,.results,.result-hero,.result,[id^=result]');
+if(r){r.setAttribute('aria-live','polite');r.setAttribute('aria-atomic','true')}}scroll()}
+function scroll(){var a=document.querySelectorAll('div,section,figure,pre');for(var i=0;i<a.length;i++){var e=a[i];
+if(e.hasAttribute('tabindex')||e.scrollWidth<=e.clientWidth+1)continue;var o=getComputedStyle(e).overflowX;if(o!=='auto'&&o!=='scroll')continue;
+if(e.querySelector('a[href],button,input,select,textarea,[tabindex]'))continue;e.tabIndex=0;if(!e.getAttribute('role'))e.setAttribute('role','region');
+if(!e.getAttribute('aria-label'))e.setAttribute('aria-label',e.querySelector('table')?'Scrollable table':'Scrollable content')}}
+var t;function later(){clearTimeout(t);t=setTimeout(scroll,400)}document.addEventListener('click',later);document.addEventListener('keyup',later);window.addEventListener('resize',later);window.addEventListener('load',later);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script>
+</body>
+</html>
